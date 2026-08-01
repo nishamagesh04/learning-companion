@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+
+load_dotenv()
 import hashlib
 import time
 from typing import List, Callable, Optional

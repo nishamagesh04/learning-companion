@@ -1,5 +1,5 @@
 import re
-from typing import List, Dict, Set
+from typing import Optional, List, Tuple, Dict, Set
 from app.core.logging import get_logger
 from app.models.response_models import ExtractedPage
 
