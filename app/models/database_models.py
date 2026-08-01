@@ -82,3 +82,30 @@ class ProcessingLog(Base):
     created_at = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
 
     resource = relationship("LearningResource", back_populates="logs")
+
+class ConversationSession(Base):
+    __tablename__ = 'conversation_sessions'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
+    messages = relationship("ChatMessage", back_populates="session", cascade="all, delete-orphan")
+
+
+class ChatMessage(Base):
+    __tablename__ = 'chat_messages'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    session_id = Column(Integer, ForeignKey('conversation_sessions.id', ondelete='CASCADE'), nullable=False)
+    role = Column(String(20), nullable=False)
+    message_text = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
+    session = relationship("ConversationSession", back_populates="messages")
+    response = relationship("ChatResponse", back_populates="message", uselist=False, cascade="all, delete-orphan")
+
+
+class ChatResponse(Base):
+    __tablename__ = 'chat_responses'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    message_id = Column(Integer, ForeignKey('chat_messages.id', ondelete='CASCADE'), nullable=False, unique=True)
+    answer_text = Column(Text, nullable=False)
+    model_name = Column(String(100), nullable=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
+    message = relationship("ChatMessage", back_populates="response")

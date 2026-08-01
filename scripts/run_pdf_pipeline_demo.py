@@ -2,6 +2,11 @@
 Demo script to demonstrate the PDF Content Ingestion Pipeline.
 Executes Extraction -> Cleaning -> Chunking -> Embedding -> Database Storage -> Reprocessing.
 """
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
 import os
 import sys
 from sqlalchemy import create_engine
@@ -33,7 +38,7 @@ def run_demo():
     file_name = "sample_ai_engineering.pdf"
 
     # Mock text extraction for demo purposes
-    def mock_extract_demo(file_bytes, file_name):
+    def mock_extract_demo(file_bytes, file_name, progress_callback=None):
         pages = [
             ExtractedPage(
                 page_number=1,
