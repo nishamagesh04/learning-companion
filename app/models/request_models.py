@@ -23,3 +23,11 @@ class PDFReprocessRequest(BaseModel):
     max_chunk_size: Optional[int] = Field(None, description="New max chunk size if overriding")
     chunk_overlap: Optional[int] = Field(None, description="New chunk overlap if overriding")
     generate_embeddings: bool = Field(True, description="Whether to regenerate vector embeddings")
+
+class RetrievalRequest(BaseModel):
+    """Payload for executing a vector search retrieval query."""
+    query: str = Field(..., min_length=1, description="User search query string")
+    top_k: int = Field(default=3, ge=1, le=50, description="Number of top relevant chunks to retrieve")
+    resource_id: Optional[int] = Field(default=None, description="Optional filter by specific learning resource ID")
+    min_similarity_score: float = Field(default=0.0, ge=0.0, le=1.0, description="Minimum cosine similarity threshold")
+

@@ -43,3 +43,22 @@ class IngestionStatusResponse(BaseModel):
     uploaded_at: datetime.datetime
     processed_at: Optional[datetime.datetime] = None
     logs: List[ProcessingLogItem] = []
+
+class RetrievedChunk(BaseModel):
+    """Individual chunk item returned by retrieval with similarity score."""
+    chunk_id: int
+    resource_id: int
+    chunk_index: int
+    chunk_text: str
+    similarity_score: float
+    page_number: Optional[int] = None
+    section_heading: Optional[str] = None
+    token_count: int
+
+class RetrievalResponse(BaseModel):
+    """Overall response returned by retrieval query."""
+    query: str
+    total_matches: int
+    top_k: int
+    retrieved_chunks: List[RetrievedChunk]
+

@@ -80,3 +80,54 @@ class ChunkRepository:
     def get_chunks_by_resource_id(self, resource_id: int) -> List[ContentChunk]:
         """Fetches chunks for a resource ordered by chunk_index."""
         return self.db.query(ContentChunk).filter(ContentChunk.resource_id == resource_id).order_by(ContentChunk.chunk_index.asc()).all()
+
+    def find_similar_chunks(
+        self,
+        query_embedding: List[float],
+        top_k: int = 3,
+        resource_id: Optional[int] = None,
+        min_score: float = 0.0
+    ) -> List[tuple]:
+        """
+        Computes Cosine Similarity between query_embedding and all persisted chunk embeddings.
+        Returns a list of (ContentChunk, similarity_score) tuples sorted descending by score.
+        """
+        import math
+
+        query = self.db.query(ContentChunk).filter(ContentChunk.embedding.isnot(None))
+        if resource_id is not None:
+            query = query.filter(ContentChunk.resource_id == resource_id)
+
+        chunks = query.all()
+        if not chunks or not query_embedding:
+            return []
+
+        q_norm = math.sqrt(sum(x * x for x in query_embedding))
+        if q_norm == 0:
+            return []
+
+        scored_chunks = []
+        for chunk in chunks:
+            emb = chunk.embedding
+            if not emb or len(emb) != len(query_embedding):
+                continue
+
+            c_norm = math.sqrt(sum(y * y for y in emb))
+            if c_norm == 0:
+                continue
+
+            dot_product = sum(x * y for x, y in zip(query_embedding, emb))
+            similarity = dot_product / (q_norm * c_norm)
+
+            if similarity >= min_score:
+                scored_chunks.append((chunk, float(similarity)))
+
+        # Sort by similarity score descending
+        scored_chunks.sort(key=lambda item: item[1], reverse=True)
+        return scored_chunks[:top_k]
+        query = self.db.query(ContentChunk).join(ContentChunk.resource).filter(ContentChunk.embedding.isnot(None))
+        if resource_id is not None:
+            query = query.filter(ContentChunk.resource_id == resource_id)
+        if module_id is not None:
+            query = query.filter(LearningResource.module_id == module_id)
+
