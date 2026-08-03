@@ -5,7 +5,7 @@ from app.core.config import settings
 from app.core.exceptions import IngestionPipelineError
 from app.core.logging import get_logger
 from app.models.request_models import PDFUploadRequest, PDFReprocessRequest
-from app.models.response_models import IngestionStatusResponse, ProcessingLogItem, ExtractedPage, ChunkPreview
+from app.models.response_models import IngestionStatusResponse, ProcessingLogItem, ExtractedPage, ChunkPreview, ExtractedContentPreview
 from app.repositories.resource_repository import ResourceRepository
 from app.repositories.chunk_repository import ChunkRepository
 from app.services.text_extraction_service import TextExtractionService
@@ -267,7 +267,6 @@ class PDFIngestionService:
 
     def get_content_preview(self, resource_id: int) -> ExtractedContentPreview:
         """Retrieves raw and cleaned text content preview for admin inspection."""
-        from app.models.response_models import ExtractedContentPreview
         
         resource = self.resource_repo.get_resource_by_id(resource_id)
         if not resource:
