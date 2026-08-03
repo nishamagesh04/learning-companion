@@ -25,7 +25,11 @@ class GeminiEmbeddingClient:
                 self.client = genai.Client(api_key=self.api_key)
                 logger.info(f"Initialized Gemini client for embedding model '{self.model_name}'.")
             except Exception as e:
-                logger.warning(f"Failed to initialize google-genai client ({str(e)}). Falling back to mock embedding generator.")
+                logger.error(f"Failed to initialize google-genai client: {str(e)}")
+                raise EmbeddingError(f"Failed to initialize Gemini embedding client: {str(e)}") from e
+        else:
+            logger.error("No GEMINI_API_KEY provided - cannot generate real embeddings")
+            raise EmbeddingError("GEMINI_API_KEY is not configured - cannot generate embeddings")
 
     def generate_single_embedding_with_retry(self, text: str) -> List[float]:
         """Generates embedding for a single text chunk with exponential backoff retry logic."""
@@ -54,11 +58,11 @@ class GeminiEmbeddingClient:
                         logger.warning(f"Rate limit hit on attempt {attempt}/{max_retries}. Backing off for {sleep_time:.1f}s...")
                         time.sleep(sleep_time)
                     else:
-                        logger.error(f"Gemini API embedding call failed on attempt {attempt}: {err_str}. Using fallback generator.")
-                        break
+                        logger.error(f"Gemini API embedding call failed on attempt {attempt}/{max_retries}: {err_str}")
+                        raise EmbeddingError(f"Failed to generate embedding after {max_retries} attempts: {err_str}") from e
 
-        # Deterministic mock embedding fallback for local dev / testing / fallback
-        return self._generate_mock_embedding(text)
+        logger.error("No embedding client available - cannot generate real embeddings")
+        raise EmbeddingError("Embedding client not initialized - cannot generate embeddings")
 
     def generate_batch_embeddings(
         self,

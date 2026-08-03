@@ -89,7 +89,7 @@ class ChunkRepository:
         min_score: float = 0.0
     ) -> List[tuple]:
         """
-        Computes Cosine Similarity between query_embedding and all persisted chunk embeddings.
+        Computes cosine similarity between query_embedding and all persisted chunk embeddings.
         Returns a list of (ContentChunk, similarity_score) tuples sorted descending by score.
         """
         import math
@@ -122,12 +122,12 @@ class ChunkRepository:
             if similarity >= min_score:
                 scored_chunks.append((chunk, float(similarity)))
 
-        # Sort by similarity score descending
         scored_chunks.sort(key=lambda item: item[1], reverse=True)
         return scored_chunks[:top_k]
-        query = self.db.query(ContentChunk).join(ContentChunk.resource).filter(ContentChunk.embedding.isnot(None))
-        if resource_id is not None:
-            query = query.filter(ContentChunk.resource_id == resource_id)
-        if module_id is not None:
-            query = query.filter(LearningResource.module_id == module_id)
 
+    def get_chunk_preview(self, resource_id: int, chunk_index: int) -> Optional[ContentChunk]:
+        """Fetches a specific chunk by resource_id and chunk_index for preview."""
+        return self.db.query(ContentChunk).filter(
+            ContentChunk.resource_id == resource_id,
+            ContentChunk.chunk_index == chunk_index
+        ).first()

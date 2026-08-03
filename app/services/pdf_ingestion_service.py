@@ -5,10 +5,10 @@ from app.core.config import settings
 from app.core.exceptions import IngestionPipelineError
 from app.core.logging import get_logger
 from app.models.request_models import PDFUploadRequest, PDFReprocessRequest
-from app.models.response_models import IngestionStatusResponse, ProcessingLogItem, ExtractedPage
+from app.models.response_models import IngestionStatusResponse, ProcessingLogItem, ExtractedPage, ChunkPreview
 from app.repositories.resource_repository import ResourceRepository
 from app.repositories.chunk_repository import ChunkRepository
-from app.services.pdf_extraction_service import PDFExtractionService
+from app.services.text_extraction_service import TextExtractionService
 from app.services.text_cleaning_service import TextCleaningService
 from app.services.chunking_service import ChunkingService
 from app.services.embedding_service import EmbeddingService
@@ -21,7 +21,7 @@ class PDFIngestionService:
     def __init__(
         self,
         db_session: Session,
-        extraction_service: PDFExtractionService = None,
+        extraction_service: TextExtractionService = None,
         cleaning_service: TextCleaningService = None,
         chunking_service: ChunkingService = None,
         embedding_service: EmbeddingService = None
@@ -30,7 +30,7 @@ class PDFIngestionService:
         self.resource_repo = ResourceRepository(db_session)
         self.chunk_repo = ChunkRepository(db_session)
         
-        self.extraction_service = extraction_service or PDFExtractionService()
+        self.extraction_service = extraction_service or TextExtractionService()
         self.cleaning_service = cleaning_service or TextCleaningService()
         self.chunking_service = chunking_service or ChunkingService()
         self.embedding_service = embedding_service or EmbeddingService()
@@ -45,9 +45,9 @@ class PDFIngestionService:
 
         try:
             # Stage 1: Validation
-            self.resource_repo.add_processing_log(resource_id, "VALIDATION", "INFO", "Starting PDF file validation.")
-            self.extraction_service.validate_pdf_file(file_bytes, file_name)
-            self.resource_repo.add_processing_log(resource_id, "VALIDATION", "SUCCESS", "PDF file structure and size validated.")
+            self.resource_repo.add_processing_log(resource_id, "VALIDATION", "INFO", f"Starting {file_name.split('.')[-1].upper()} file validation.")
+            self.extraction_service.validate_document_file(file_bytes, file_name)
+            self.resource_repo.add_processing_log(resource_id, "VALIDATION", "SUCCESS", f"{file_name.split('.')[-1].upper()} file structure and size validated.")
 
             # Stage 2: Text Extraction
             self.resource_repo.update_processing_status(resource_id, "EXTRACTING")
@@ -60,7 +60,7 @@ class PDFIngestionService:
                         resource_id, "EXTRACTION", "INFO", f"Extraction progress: {current}/{total} pages ({pct}%)."
                     )
 
-            extracted_pages, raw_text, ext_method = self.extraction_service.extract_text_from_pdf_bytes(
+            extracted_pages, raw_text, ext_method = self.extraction_service.extract_text_from_document_bytes(
                 file_bytes, file_name, progress_callback=extraction_progress
             )
             self.resource_repo.add_processing_log(
@@ -263,4 +263,58 @@ class PDFIngestionService:
             uploaded_at=resource.uploaded_at,
             processed_at=resource.processed_at,
             logs=log_items
+        )
+
+    def get_content_preview(self, resource_id: int) -> ExtractedContentPreview:
+        """Retrieves raw and cleaned text content preview for admin inspection."""
+        from app.models.response_models import ExtractedContentPreview
+        
+        resource = self.resource_repo.get_resource_by_id(resource_id)
+        if not resource:
+            raise IngestionPipelineError(f"Resource ID={resource_id} not found.")
+
+        content = self.resource_repo.get_resource_content_preview(resource_id)
+        if not content:
+            raise IngestionPipelineError(f"Content not found for resource ID={resource_id}.")
+
+        return ExtractedContentPreview(
+            resource_id=resource_id,
+            file_name=resource.file_name,
+            extraction_method=content.extraction_method,
+            total_pages=len(content.cleaned_text.split("--- Page")) if "--- Page" in content.cleaned_text else 1,
+            raw_text=content.raw_text[:5000] + "..." if len(content.raw_text) > 5000 else content.raw_text,
+            cleaned_text=content.cleaned_text[:5000] + "..." if len(content.cleaned_text) > 5000 else content.cleaned_text
+        )
+
+    def get_chunk_previews(self, resource_id: int, limit: int = 50) -> List[ChunkPreview]:
+        """Retrieves chunk previews for admin inspection."""
+        chunks = self.chunk_repo.get_chunks_by_resource_id(resource_id)
+        if not chunks:
+            raise IngestionPipelineError(f"No chunks found for resource ID={resource_id}.")
+
+        return [
+            ChunkPreview(
+                chunk_index=chunk.chunk_index,
+                chunk_text=chunk.chunk_text[:1000] + "..." if len(chunk.chunk_text) > 1000 else chunk.chunk_text,
+                token_count=chunk.token_count,
+                page_number=chunk.page_number,
+                section_heading=chunk.section_heading,
+                has_embedding=chunk.embedding is not None and len(chunk.embedding) > 0
+            )
+            for chunk in chunks[:limit]
+        ]
+
+    def get_single_chunk_preview(self, resource_id: int, chunk_index: int) -> ChunkPreview:
+        """Retrieves a single chunk preview for admin inspection."""
+        chunk = self.chunk_repo.get_chunk_preview(resource_id, chunk_index)
+        if not chunk:
+            raise IngestionPipelineError(f"Chunk {chunk_index} not found for resource ID={resource_id}.")
+
+        return ChunkPreview(
+            chunk_index=chunk.chunk_index,
+            chunk_text=chunk.chunk_text,
+            token_count=chunk.token_count,
+            page_number=chunk.page_number,
+            section_heading=chunk.section_heading,
+            has_embedding=chunk.embedding is not None and len(chunk.embedding) > 0
         )

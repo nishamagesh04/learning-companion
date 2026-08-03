@@ -130,3 +130,7 @@ class ResourceRepository:
     def get_resource_by_id(self, resource_id: int) -> Optional[LearningResource]:
         """Fetches resource by ID."""
         return self.db.query(LearningResource).filter(LearningResource.id == resource_id).first()
+
+    def get_resource_content_preview(self, resource_id: int) -> Optional[ResourceContent]:
+        """Fetches resource content for preview."""
+        return self.db.query(ResourceContent).filter(ResourceContent.resource_id == resource_id).first()

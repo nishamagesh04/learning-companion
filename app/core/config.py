@@ -13,7 +13,7 @@ class Settings:
     
     # PDF File Constraints (Scaled for 500+ Page Company Manuals)
     MAX_FILE_SIZE_MB: int = int(os.getenv("MAX_FILE_SIZE_MB", "250"))
-    ALLOWED_EXTENSIONS: set = {".pdf"}
+    ALLOWED_EXTENSIONS: set = {".pdf", ".docx", ".md", ".csv"}
     
     # Chunking Configuration
     DEFAULT_CHUNK_STRATEGY: Literal["semantic", "fixed"] = os.getenv("DEFAULT_CHUNK_STRATEGY", "semantic")
