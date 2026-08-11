@@ -1,32 +1,30 @@
-import numpy as np
 from sqlalchemy.orm import Session
 from google import genai
 from app.core.config import settings
-from app.integrations.embedding_client import GeminiEmbeddingClient
-from app.models.database_models import ContentChunk
+from app.services.retrieval_service import RetrievalService
+from app.models.request_models import RetrievalRequest
 
-_embed_client = GeminiEmbeddingClient()
 _gen_client = genai.Client(api_key=settings.GEMINI_API_KEY) if settings.GEMINI_API_KEY else None
 
+
 def answer_question(db: Session, question: str, top_k: int = 4):
-    q_vec = np.array(_embed_client.generate_single_embedding_with_retry(question))
+    retrieval_service = RetrievalService(db_session=db)
 
-    chunks = db.query(ContentChunk).filter(ContentChunk.embedding.isnot(None)).all()
-    scored = []
-    for c in chunks:
-        c_vec = np.array(c.embedding)
-        sim = float(np.dot(q_vec, c_vec) / (np.linalg.norm(q_vec) * np.linalg.norm(c_vec) + 1e-8))
-        scored.append((sim, c))
-    scored.sort(key=lambda x: x[0], reverse=True)
-    top_chunks = [c for _, c in scored[:top_k]]
+    try:
+        request = RetrievalRequest(query=question, top_k=top_k, min_similarity_score=0.3)
+        retrieval_response = retrieval_service.retrieve_context(request)
+    except Exception as e:
+        return f"I'm temporarily unable to search the knowledge base ({type(e).__name__}). Please try again shortly.", []
 
-    if not top_chunks:
-        return "This topic isn't covered in the indexed learning material yet.", []
+    if not retrieval_response.retrieved_chunks:
+        return "I couldn't find anything on that in the uploaded material yet — try rephrasing, or check if the relevant file has been uploaded.", []
 
-    context = "\n\n".join(f"[Source {i+1}] {c.chunk_text}" for i, c in enumerate(top_chunks))
-    prompt = f"""Answer the learner's question using ONLY the context below. If the answer isn't in the context, say so clearly.
+    context = retrieval_service.format_context_for_prompt(retrieval_response)
+    prompt = f"""You are a friendly, knowledgeable learning assistant helping a student understand their course material.
+Answer naturally and conversationally, the way a helpful tutor would - not like you're reading from a manual.
+Use ONLY the context below to answer. If the context doesn't cover the question, say so plainly and warmly,
+don't guess or make things up.
 
-Context:
 {context}
 
 Question: {question}
@@ -37,8 +35,8 @@ Answer:"""
             resp = _gen_client.models.generate_content(model="gemini-flash-lite-latest", contents=prompt)
             answer = resp.text
         except Exception as e:
-            answer = f"I couldn't generate an answer right now (Gemini API error: {type(e).__name__}). Please try again shortly."
+            answer = f"I couldn't generate an answer right now ({type(e).__name__}). Please try again shortly."
     else:
         answer = "Gemini API key not configured — cannot generate an answer."
 
-    return answer, top_chunks
+    return answer, retrieval_response.retrieved_chunks
