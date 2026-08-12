@@ -1,0 +1,608 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/hH6AlfbnWWA
+
+00:00:00.550 [Music]
+00:00:10.320 All right. Thanks everyone. Thanks. Um,
+00:00:12.559 how was the launch?
+00:00:15.599 No, good. Good. Okay. Great. Of course,
+00:00:17.600 we can talk about later. All right. And
+00:00:20.400 here we are. Uh, I want you to quick
+00:00:22.400 before I go into the talk. Anyone from
+00:00:24.640 the New York local?
+00:00:26.880 Great. Anyone visiting from other
+00:00:28.800 cities?
+00:00:30.160 All right. So you probably can imagine
+00:00:31.439 like from our social media everyone
+00:00:33.600 imagine that New York is like a great
+00:00:35.520 place you have a lot of things the food
+00:00:37.520 the culture but however in the reality
+00:00:40.079 you might probably spot something for
+00:00:41.520 example the train is always late there
+00:00:43.840 also food truck everywhere so imagine
+00:00:46.800 you are dealing in the business your
+00:00:48.239 company are facing the digital
+00:00:50.160 transformation using agent agentic AI
+00:00:52.800 this is a world we are facing now
+00:00:54.239 there's kind of chaotic so many dynamics
+00:00:56.719 how do we learn from that about how to
+00:00:58.399 conquer that so that's what I talk about
+00:00:59.920 today. Okay,
+00:01:02.640 cool. I want to share a personal story.
+00:01:05.360 Uh this is probably uh one of the
+00:01:07.360 biggest projecting got involved. Anyone
+00:01:09.680 heard about the Wizard of Oz unaferee
+00:01:12.159 projects? Yes. So what we trying to do
+00:01:15.920 uh back in the day is my team got
+00:01:18.080 involved into the the project called
+00:01:19.600 Wizard of Oz and we're trying to use AI
+00:01:22.000 to transform the video become like in
+00:01:24.400 the seir theater in Vegas 180 degrees.
+00:01:28.159 So a lot of things was not in the
+00:01:30.000 original movie. So we're using AI to do
+00:01:31.920 that. But that's a challenge. Think
+00:01:34.479 about using AI is not the way to solve
+00:01:37.040 it. How do we using AI in different
+00:01:39.040 ways? We need to have the agentic maybe
+00:01:41.439 design a way. That's how we start
+00:01:43.600 thinking how do we solve the problem.
+00:01:45.920 Right? So I want to bring into this
+00:01:48.079 topic. Um this is me Jonathan Chen. Um
+00:01:51.360 nice meeting you all. And I'm the
+00:01:53.200 manager for the generative AI solution
+00:01:55.280 architect at Google Cloud. And my team's
+00:01:58.399 main mission, here's what we've been
+00:02:00.399 really privileged working with. My team
+00:02:02.560 building uh the cutting edge frontier AI
+00:02:05.520 prototype and solution. And our mission
+00:02:07.759 is to showcase what is possible for
+00:02:10.080 different scenarios, industry and maybe
+00:02:12.640 also different use cases. So we got very
+00:02:15.040 lucky and privileged working very
+00:02:16.720 closely with a high uh leadership at
+00:02:18.640 Google. We've been working with Sergey
+00:02:20.000 Buin if you know he know him that he's
+00:02:23.360 the founder of Google. So we've been
+00:02:24.560 working with a prototype for building
+00:02:26.080 for X game for SE brain but we also have
+00:02:28.800 a privilege working with a Sundar for
+00:02:30.800 Google AI but also with a Thomas Korean
+00:02:33.680 our CEO of a Google cloud that working
+00:02:36.000 on very many of the high visibility
+00:02:38.000 events. So my team's job is to taking
+00:02:41.200 sure what's the scenario what's the use
+00:02:43.280 cases what's the challenge for different
+00:02:44.800 industry then we build prototype to
+00:02:47.360 showcase this is the way to do it.
+00:02:49.440 That's why a lot of time we have so many
+00:02:51.519 many of the opportunity to think through
+00:02:53.840 hey saying using AI is not a solution
+00:02:57.280 how do we use the AI in the right way
+00:02:59.200 how do we use agentic AI in the right
+00:03:01.120 way that's what kind of challenge that
+00:03:02.879 we're facing my team facing every day
+00:03:05.200 okay
+00:03:06.800 all right so I want to frame today's
+00:03:09.360 talk it's not about hey here's a
+00:03:11.440 solution you can take away and starting
+00:03:14.239 but I want to frame this talk about
+00:03:16.000 here's some ideas here's some trend that
+00:03:18.640 we've been observing in the market and
+00:03:20.720 here's we've been seeing other companies
+00:03:22.720 other customer they've been using AI or
+00:03:24.560 aentic AI in different ways what kind of
+00:03:26.959 challenges they are facing and what kind
+00:03:28.480 of pitfall what kind of things we need
+00:03:30.159 to be aware I want to frame this today's
+00:03:32.239 talk about this way of course there will
+00:03:34.000 be a lot of talk about hey here's a
+00:03:35.680 genetic agentic AI that become the
+00:03:37.840 future that can become one of the things
+00:03:39.680 but I want to throw a few ideas for you
+00:03:42.400 and that will be your takeaway today
+00:03:46.560 all right so take a us. Think about how
+00:03:49.519 we got this stage today, right? And
+00:03:52.159 maybe a 100 couple hundred years ago,
+00:03:53.760 there's industrial revolution. You can
+00:03:55.519 imagine that was a time when the steam
+00:03:57.920 engine invented. There will be other
+00:04:00.159 cool things that come out from the
+00:04:02.080 revolution, right? And how that become
+00:04:04.959 the full automation today. You can
+00:04:06.959 imagine there is a time when there's
+00:04:08.720 comes an engine and people put together
+00:04:10.799 become assembling line and making sure
+00:04:12.959 there's all efficiency about how to make
+00:04:15.120 the product more faster and the cheaper
+00:04:18.160 and but coming out today maybe past a
+00:04:20.320 decade a lot of enterprises starting
+00:04:22.800 using the what they call rulebased
+00:04:24.639 engine or rulebased automation right as
+00:04:27.040 you can imagine here's how you think
+00:04:28.800 about the logic when A then does B or
+00:04:31.680 when B then does C this kind of linear
+00:04:34.479 logic that become like a full
+00:04:36.160 fundamental uh for the automation for
+00:04:38.479 the last past three uh maybe two or
+00:04:40.160 three decade right but of course you can
+00:04:42.400 imagine there could be a lot of
+00:04:43.680 limitation coming out if there's anomy
+00:04:46.639 there's exception there's always
+00:04:48.320 something that we've never seen before
+00:04:50.080 then thing can break pretty quickly
+00:04:52.080 right that's why a lot of companies
+00:04:53.759 spending a lot of time even including
+00:04:55.600 like consulting firm they're trying to
+00:04:57.199 come in understand the whole flow and
+00:04:59.040 try to manage this right so a lot of
+00:05:02.240 cost are coming into this that's why we
+00:05:04.720 kind of going into the AI error. So on
+00:05:08.560 the left hand side we all know that
+00:05:10.639 there will be a newer network. So doing
+00:05:12.560 prediction a predictive AI you have a
+00:05:14.960 model that can predict hey what your
+00:05:17.120 customer turn rates what's the weather
+00:05:19.840 for tomorrow or what's the bitcoin price
+00:05:22.080 for tomorrow show I want to know but now
+00:05:24.800 we going to into the next phase of a
+00:05:26.960 generated AI this will be powerful for
+00:05:29.520 by for example Gemini for example the
+00:05:31.600 open AI also and many many company
+00:05:34.000 coming out with the LM models right so
+00:05:36.960 and a lot of time being very repetitive
+00:05:39.120 but this is where we seeing what's the
+00:05:41.120 next chapter
+00:05:42.400 when we talk about the automation right
+00:05:45.280 the industry automation is the first way
+00:05:47.759 maybe a couple couple years back uh then
+00:05:50.720 here's the next evolution of the
+00:05:52.800 automation now take a pause here what
+00:05:56.560 does that mean to us what do you try to
+00:05:58.639 automate a lot of time we think hey
+00:06:01.120 automation could be just taking one task
+00:06:03.280 and making automatic done by human being
+00:06:06.160 here's a one scenario throwing out way
+00:06:08.720 but however we are facing a lots of
+00:06:10.880 challenges
+00:06:11.680 We may see some unpredictable things,
+00:06:13.840 complexities. There can be other
+00:06:15.759 scenario never seen before. Can we use
+00:06:18.240 this technology to design a way that
+00:06:20.880 solve your problem for you and more
+00:06:22.880 productive? Right?
+00:06:25.840 This is a number that you probably seen
+00:06:27.440 that before. However, Garner, they
+00:06:30.080 project that by 2027 more than 40% of
+00:06:33.680 the enterprise they will having been
+00:06:35.680 embedded with agentic AI. So, think
+00:06:38.160 about that. What does that mean? Does
+00:06:40.080 that mean like this is a solution? This
+00:06:41.680 is a way to go. Everybody has to adopt a
+00:06:44.160 genta maybe. Put that a thought. But the
+00:06:48.560 way that people starting to master a
+00:06:51.600 gentic AI today will be the thought
+00:06:54.000 leader in the market tomorrow. Think
+00:06:55.680 about that. Yeah. So that's why some
+00:06:58.400 ideas I want to throw out here to that
+00:07:00.400 you to take away. It's not about hey you
+00:07:02.880 have to use a jetting AI but it's more
+00:07:04.800 about can you do that something for
+00:07:06.560 today. Okay, everyone knows about LM,
+00:07:10.000 right? Yes.
+00:07:11.919 Okay, if we can give a talk later on.
+00:07:15.199 Yes, here's the problem. You throw into
+00:07:17.599 the model and the model give you
+00:07:19.199 something as output. Cool. Easy. Let's
+00:07:21.520 go zero shot approach. You can have
+00:07:23.759 multiple shot. You can have some
+00:07:25.120 examples. You can give it some output
+00:07:27.039 examples. So you give it something out.
+00:07:29.120 But this is still more like reactive
+00:07:32.160 model. You have to tell what the model
+00:07:34.319 to do exactly what you want. So we are
+00:07:37.280 seeing the trend which basically this my
+00:07:39.599 our observation across the whole
+00:07:41.440 industry we are seeing the evolution
+00:07:43.680 from out from LM starting from the
+00:07:46.319 single prom the single LM you get some
+00:07:48.639 output that you want yes that's great
+00:07:51.199 and people starting building maybe last
+00:07:52.639 year two years ago the people starting
+00:07:54.160 building rack right the retrieval
+00:07:56.240 augmentation uh the model basically you
+00:07:58.720 got some kind of infra infrastructure
+00:08:01.360 getting information you have a context
+00:08:03.520 from your databases all from that become
+00:08:05.680 augmentation about your information all
+00:08:08.000 from LM what's the next step people
+00:08:10.639 thought about hey maybe I can get
+00:08:11.840 multiple tools I can get to databases I
+00:08:14.400 can connect to maybe your ticket system
+00:08:16.400 I can connect to other things that
+00:08:17.759 become the LM rack and the tools that's
+00:08:20.720 why there lot of framework coming out
+00:08:22.240 for example lchan the ADK and many
+00:08:24.319 things out but we people not stopping
+00:08:27.199 there we're seeing many many more coming
+00:08:29.039 out become wrapping this together make
+00:08:31.520 that become agent that's why the concept
+00:08:33.839 agent comes out right it's not Because
+00:08:36.080 just one model you have other things
+00:08:37.839 supporting this agent this model to
+00:08:40.320 support you to get more context to get
+00:08:42.080 more responsive. So that's why people
+00:08:45.200 kind of grouping them become agent but
+00:08:47.279 the next wave is about can you put
+00:08:49.600 multiple agent together to achieve the
+00:08:51.680 one thing autonomously that's the trend
+00:08:54.240 was thinking about and this is happening
+00:08:56.160 today.
+00:08:58.240 So bringing back to the agent what is
+00:09:00.240 the agentic cycle what is agent actually
+00:09:03.200 doing right imagine I'm a person I'm a
+00:09:06.000 human uh maybe so I may be thinking
+00:09:09.600 about hey when I learn a new thing for
+00:09:11.200 example the last day yesterday I was
+00:09:12.720 learning about Japanese I try to
+00:09:14.800 perceive I try to read those characters
+00:09:16.800 and see what I understand that's the
+00:09:19.279 perceived stage then the next one is
+00:09:21.440 reasoning do I understand those
+00:09:23.279 characters how do I put them together
+00:09:25.120 become the sentences then the act
+00:09:27.440 meaning I put those tendencies I state
+00:09:29.120 it out to my Japanese friends then they
+00:09:32.160 don't really even understand what I'm
+00:09:33.600 saying then I learn I got the feedback
+00:09:36.320 this is same way when you design the
+00:09:38.080 agent become the for loop of learning so
+00:09:40.480 it's not that different from how human
+00:09:42.080 being learned about so imagine this is a
+00:09:44.560 full learning process you observe a per
+00:09:48.080 perceive then you also reasoning what's
+00:09:51.120 going on then also acts then become the
+00:09:53.600 full cycle of the learning then put that
+00:09:56.640 into more complex Like example, imagine
+00:09:59.040 you may have a one master agent that may
+00:10:01.839 be taking care of your master uh the
+00:10:04.160 goal, the main mission. For example, I
+00:10:06.000 want to master Japanese. Then the master
+00:10:09.600 agent will say, "Hey, okay, cool. Let's
+00:10:11.360 breaking down to sub aent for you,
+00:10:12.800 subtask for you." The first you want to
+00:10:15.120 learn some characters, you want to learn
+00:10:16.880 some sentences, you want to learn other
+00:10:18.160 things. Those sub agent will taking care
+00:10:20.320 what breaking down into submission. Then
+00:10:23.120 we'll be attached with different tools.
+00:10:25.120 For example, the tool can be going to
+00:10:26.560 your microservices, your API endpoint or
+00:10:29.200 maybe your database or internal
+00:10:30.640 document. Those will be the whole
+00:10:32.640 architecture look like hey if you want
+00:10:34.640 to put one mission just like in you're
+00:10:37.360 running a company you may have a CEO
+00:10:39.519 that CEO say hey that's breaking down
+00:10:41.600 the mission maybe to your marketing
+00:10:43.760 department maybe to your engineing
+00:10:45.360 department then sub agent will taking
+00:10:47.839 care subst task for you right that's one
+00:10:50.560 approach of it we'll cover many many
+00:10:52.399 more architecture there
+00:10:55.600 do you recognize all the organization
+00:10:57.519 chart from the social media
+00:11:00.720 I don't want to name the company I maybe
+00:11:03.360 uh insult them but you may recognize
+00:11:05.600 this chapter this organization diagram
+00:11:08.560 imagine when you designing a gentic
+00:11:10.720 system a janking AI sometimes it may
+00:11:13.279 feel like you're designing organization
+00:11:15.279 how you put those master or maybe the
+00:11:17.760 agent together how you put who taking
+00:11:20.000 care of the charge how you frame your
+00:11:22.480 architecture in a way what largely
+00:11:25.600 influences how this outcome become right
+00:11:30.160 all All right then I want to make sure
+00:11:32.720 uh this is very important think about
+00:11:34.800 automation
+00:11:36.560 but however when we say automation is
+00:11:38.480 not just making sure the task can be
+00:11:40.160 done automatically most of time in the
+00:11:42.560 business especially when we come when we
+00:11:44.240 doing a lot of like organization chart
+00:11:46.640 or maybe structure
+00:11:49.440 more about the workflow transformation
+00:11:51.920 right how you how you put the place how
+00:11:54.959 you starting the uh the task how you're
+00:11:57.120 breaking down the subtask into different
+00:11:59.040 department that basically the whole end
+00:12:01.120 to end workflow transformation.
+00:12:06.079 So this is way we think about maybe
+00:12:08.800 traditionally say hey let's do
+00:12:10.399 automation let's do step one two three
+00:12:13.040 then four then five that's how we design
+00:12:15.279 for example the rulebased engine that's
+00:12:16.720 how we design the task load that's how
+00:12:18.240 we design all the traditional automation
+00:12:21.200 but going to the agent AI era agent era
+00:12:25.040 world we are not doing this type of step
+00:12:27.440 by step we're basically framing AI agent
+00:12:30.880 in the center and putting together what
+00:12:33.360 the context
+00:12:34.399 what is all the things to support what
+00:12:36.320 could be the edge cases what the
+00:12:37.600 examples and putting and letting AI to
+00:12:40.160 learn by itself as you can see the sites
+00:12:41.839 the site code again perceive reason act
+00:12:44.800 and the learn the very important part is
+00:12:46.560 learn and we put the center agent in the
+00:12:49.040 center making sure all the things
+00:12:50.959 supporting that learning of course
+00:12:53.040 there'll be some time you need to make
+00:12:54.720 sure the AI actually learn and pick up
+00:12:56.720 but once it learn you don't need to deal
+00:12:58.720 with the maybe redesign the old steps
+00:13:01.040 imagine if there's any like exception In
+00:13:03.680 your workflow, you have to redesign the
+00:13:05.600 whole workflow. This is what in the
+00:13:07.279 past, right? That's why we think about
+00:13:09.440 it's not about automation, it's about
+00:13:11.360 the digital is no, serious, it's about
+00:13:13.600 workflow transformation.
+00:13:17.680 A few quick example for you is we are
+00:13:21.120 already seeing a gent AI everywhere,
+00:13:23.839 right? AI been transforming your
+00:13:25.680 shopping experience already. But it's
+00:13:27.760 not only the shopping on the website.
+00:13:30.240 You can think about is actually a master
+00:13:32.959 agent taking your request breaking down
+00:13:36.000 to other sub agent and doing for you.
+00:13:37.920 For example, there will be search agent,
+00:13:39.839 there'll be other for example your
+00:13:41.200 recommendation engine, there'll be also
+00:13:43.279 other things that doing all the subtasks
+00:13:45.040 together for you. So you already seeing
+00:13:46.880 that every day and this actually not
+00:13:49.519 just happening at Google but also for
+00:13:52.000 any any other company as well. They're
+00:13:53.760 thinking ahead how can they bring this
+00:13:56.000 agentic AI framework to the world. also
+00:13:58.959 happening same thing happening for the
+00:14:00.399 travel right imagine you are asking say
+00:14:02.720 hey I want to go to for example next
+00:14:04.720 month I want to go to Norway hey I want
+00:14:07.199 to get some maybe a really nice trip to
+00:14:09.440 see the northern light then I'll be the
+00:14:11.279 sub agent to taking care what should I
+00:14:13.440 prove what should I book where should I
+00:14:15.519 go what's my itinerary look like sub
+00:14:17.839 agent will been taking care of the rest
+00:14:19.519 and collecting together become the
+00:14:21.040 result right we are also been working
+00:14:23.920 many of the tribal company they already
+00:14:25.839 thinking ahead how can they side in a
+00:14:28.720 way that can be futurep proof
+00:14:31.680 but that's also the moment to for you to
+00:14:34.079 think about what's your business how can
+00:14:36.480 you bring the agentic AI for your
+00:14:38.320 business would that be just for
+00:14:40.240 efficiency adaptive how does that
+00:14:43.440 transform your workflow right this agent
+00:14:46.320 can be broken down many different way
+00:14:47.839 we'll cover that later but how would
+00:14:49.920 that become your goal what the problem
+00:14:51.839 you are solving I want to make sure this
+00:14:54.240 is also a very important key point
+00:14:58.399 But now let's take a look at okay cool
+00:15:00.480 we understand what aentic AI it sounds
+00:15:02.959 great it sounds a lot of opportunity you
+00:15:05.839 can do but how do you do that now we're
+00:15:08.000 going to the how part
+00:15:12.000 of you don't want to build from scratch
+00:15:13.760 you want to leverage like existing
+00:15:15.600 frameworks the tools the library the
+00:15:17.600 things technologies you probably heard
+00:15:20.079 like a lchen lingraph there's a google's
+00:15:22.240 ADK agent engine there's also autogen
+00:15:25.440 and many many things MCP and many things
+00:15:28.560 but even though those names differ maybe
+00:15:31.519 they have a slightly different in their
+00:15:33.199 design the pro the tool they provided
+00:15:35.440 however the concept still the same what
+00:15:38.560 we are providing is a framework a way
+00:15:42.000 that people can choose and pick what
+00:15:43.839 kind of architect you want to implement
+00:15:45.760 for your agentic AI this is probably the
+00:15:48.160 same same thing why Google offer not
+00:15:50.399 just basically a tool we are providing a
+00:15:53.199 ecosystem for example we have a agent
+00:15:56.480 engine you can host a multiple different
+00:15:58.320 things you have of agent framework you
+00:16:00.880 can use whatever you want lchain lane
+00:16:02.720 graphs uh Google's ADK or you can choose
+00:16:05.600 different models from the m garden right
+00:16:08.240 so what we seeing as a future is not
+00:16:11.199 just saying hey we as a Google we're
+00:16:13.440 taking care of everything it's more
+00:16:15.680 about the community what we're building
+00:16:17.279 as a whole ecosystem
+00:16:20.079 but it's the same it doesn't really
+00:16:21.920 matter
+00:16:24.240 but the core core concept the core core
+00:16:26.560 probabilities uh properties for agentic
+00:16:28.959 AI is the same you want to make sure
+00:16:31.120 your agents are atomic you also have a
+00:16:34.240 goal driven very important everybody
+00:16:36.399 think about hey can I just throw AI
+00:16:38.160 agent for this problem not solve
+00:16:40.000 automatically but you have to take a
+00:16:42.160 step back what the problem are you
+00:16:44.000 solving right and also important thing
+00:16:46.399 is adaptivity right how does agent being
+00:16:49.279 also quickly adapt to whatever they
+00:16:51.519 never seen before the new scenarios
+00:16:53.759 anomaly maybe exception right so those
+00:16:56.480 will be how agentic system being really
+00:16:58.880 powerful
+00:17:00.639 now let's go into really in details how
+00:17:02.880 we actually implement or build a a
+00:17:05.280 gentic AI system right from the left you
+00:17:08.400 can imagine you could just have one
+00:17:10.079 agent taking care of everything for you
+00:17:12.640 maybe one small task that can be what we
+00:17:14.880 saw before which is you have the the
+00:17:17.039 gentic cycle you have perceive learn
+00:17:19.839 sorry perceive reason act and learn
+00:17:22.079 right that's a whole cycle for the agent
+00:17:23.599 to take care It of course in the single
+00:17:26.079 agent architecture you can imagine this
+00:17:28.480 agent can be taking care of being
+00:17:30.000 responsible for too many things you
+00:17:32.080 probably heard there'll be hallucination
+00:17:33.760 there can be not enough example maybe
+00:17:35.679 agent not sure which one to go that's
+00:17:38.240 why the people introducing a lot of
+00:17:39.679 company introducing the multi- aent
+00:17:41.360 architecture the central part is what we
+00:17:44.000 saw is one way down you have a top down
+00:17:46.480 decision top down the one agent passing
+00:17:49.120 down to sub agent and going through
+00:17:51.039 different tasks right and that can be
+00:17:53.840 talking to different tools the re the
+00:17:55.679 resources like databases API endpoint
+00:17:58.160 microservices
+00:17:59.760 but the new wave that we are observing
+00:18:02.000 now is the last one which is called
+00:18:04.080 multi- aent collaboration so imagine you
+00:18:07.600 are not you are creating a company the
+00:18:10.080 structure is not like hey the one top
+00:18:12.320 down decision it's more like people
+00:18:14.160 collaborate maybe more like academic you
+00:18:17.039 have a sub agent many agents they take
+00:18:19.679 taking care of their own uh territories
+00:18:22.400 but at the same time they can even
+00:18:23.840 debate they can say hey I don't agree
+00:18:26.880 with other agent the output you can have
+00:18:28.559 a multi- agent become like a committees
+00:18:30.799 so that's a new wave that we think we
+00:18:32.480 are also observing how you define your
+00:18:36.000 agentic structure will largely influence
+00:18:38.320 his outputs right so I want to pause
+00:18:41.360 here to throw the idea it's not we
+00:18:43.520 saying hey you have to use this one or
+00:18:45.440 that one it's more about think about
+00:18:47.360 what kind of problems that you are
+00:18:49.280 solving
+00:18:51.360 okay So on top of that of course you
+00:18:55.760 have a lot of agents in the place and
+00:18:58.320 how do you orchestrate that how do you
+00:19:00.000 manage that together is also an art. For
+00:19:02.320 example you can have a sequence
+00:19:03.760 organization orchestration for example
+00:19:06.320 one agent pass down the task to the
+00:19:08.799 second one and pass out the third one
+00:19:11.039 once they have the third one has the
+00:19:12.400 result they coming back to the first one
+00:19:14.320 that's called the sequence or
+00:19:15.679 orchestration. You can also have a
+00:19:17.520 concurrent orchestration like the first
+00:19:19.679 one passing down to the second the tier
+00:19:22.240 they all walking together in the
+00:19:24.080 parallel or maybe you can have the
+00:19:26.240 hands-off pattern say hey this agent I'm
+00:19:28.799 done my agent A I've done my job I pass
+00:19:31.760 over to agent B and B just working in
+00:19:35.039 independently isolatedally and passing
+00:19:37.360 down the third one so there are multiple
+00:19:39.280 different patterns that we've been
+00:19:40.480 experimenting about but more so like I
+00:19:43.200 said it's not about which pattern you're
+00:19:45.200 choosing it's more about problem you try
+00:19:47.200 to solve, right?
+00:19:50.160 Okay, I want to quickly go to um this
+00:19:53.200 type of the risk. So imagine you have so
+00:19:57.280 many agent that being taking care of
+00:19:59.919 your task. You have the credential from
+00:20:01.840 you, the agent able to get the token
+00:20:05.039 access to the database you have. But
+00:20:07.679 think about that become more
+00:20:08.880 complicated. You have multiple layer
+00:20:10.400 agent, right? You may have the agent you
+00:20:12.320 trust able to access databases. you have
+00:20:14.960 other chief of agent try to get talking
+00:20:17.520 to the agent that you trusted but able
+00:20:19.840 to passing down to your databases that's
+00:20:22.799 a huge security potential risk that we
+00:20:24.880 are seeing today so I want to make sure
+00:20:27.360 this is really good uh takeaway for you
+00:20:29.760 the first one
+00:20:31.679 uh think about the days when there's a
+00:20:33.840 javascript ajax been coming out maybe 20
+00:20:36.400 years ago there'll be a lot of people
+00:20:38.159 trying to do what trying to insert the
+00:20:41.360 code or insert some JavaScript code to
+00:20:43.679 trick the API to execute for you. So now
+00:20:46.960 we are seeing the same thing for agent
+00:20:48.559 tech AI cycle. People may be trying to
+00:20:51.200 think about hey how can I make the AI
+00:20:53.760 hey make LM to do the things I want
+00:20:55.679 maybe getting your username your
+00:20:57.440 password credential that is exact the
+00:21:00.000 remote code execution and second part is
+00:21:03.280 the we call it memory poisoning right
+00:21:06.240 the LM has a long-term and shortterm
+00:21:08.159 memory and most of time people keeping
+00:21:10.720 that short-term memory become something
+00:21:12.720 you can extract from right you can say
+00:21:15.200 hey LM tell me about what's the last
+00:21:17.360 conversation tell me about what's the
+00:21:19.200 last database This is a table you
+00:21:20.640 execute it something about that. So that
+00:21:22.799 would be the memory poisoning trying to
+00:21:24.559 influence also memory extraction as well
+00:21:26.880 trying to influence the agent able to
+00:21:30.000 getting something out from it.
+00:21:33.039 So I want to pause here a little bit
+00:21:34.960 quick is now right now we are providing
+00:21:39.200 a ecosystem but we are also think really
+00:21:42.080 ahead. It's not about this is the way to
+00:21:44.559 go but this is about hey we've been
+00:21:46.559 observing it different ways
+00:21:49.520 but I want to pause here it's not
+00:21:53.120 hey here's a AI then let's do it people
+00:21:55.679 might think about hey that's a thorny AI
+00:21:57.600 genic every way every problem I seeing
+00:21:59.840 but this probably is basically a
+00:22:01.360 traditional problems hammer and nail
+00:22:03.919 everything looks like a nail right now
+00:22:06.159 right so what is really a takeaway for
+00:22:08.960 you I think we're out of time but
+00:22:11.280 thinking about AI A genetic AI cycle, a
+00:22:14.159 genic AI structure. It's a workflow
+00:22:16.799 transformation. It's not purely just
+00:22:18.880 automate your task. It's redesigning for
+00:22:22.080 example your or your workflow end to
+00:22:24.480 end. Think about that. But also the
+00:22:26.960 second part is making sure you have
+00:22:28.480 really good governance. Like we talked
+00:22:30.000 about security risk, your token, your
+00:22:32.480 credential, your privileges. Is that
+00:22:34.640 good enough? Is that covered? Is it
+00:22:36.240 content? Making sure you have that
+00:22:38.240 governance in place from day one. But
+00:22:41.280 also very important start from small.
+00:22:43.360 Don't try to reinvent the wheel for the
+00:22:45.200 whole company for the everything you've
+00:22:46.640 been observing. We don't want to replace
+00:22:48.159 people. We want to people but we also
+00:22:51.120 want to start from small something you
+00:22:53.039 can test. You can have the really good
+00:22:54.960 experiments or something you can start
+00:22:57.039 from working and just doing tomorrow.
+00:23:00.480 Okay.
+00:23:02.080 All right. I think we have about on
+00:23:04.480 time.
+00:23:05.200 Saves two minutes for questions. Who has
+00:23:07.919 questions for Jonathan? That was by the
+00:23:09.919 way.
+00:23:13.039 Thanks everyone.

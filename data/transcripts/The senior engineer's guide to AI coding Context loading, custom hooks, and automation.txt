@@ -1,0 +1,1421 @@
+# tactiq.io free youtube transcript
+# Advanced Claude Code techniques: context loading, mermaid diagrams, stop hooks, and more
+# https://www.youtube.com/watch/LvLdNkgO-N0
+
+00:00:00.080 There are people out there definitely
+00:00:01.439 like me that really want to know the
+00:00:03.600 advanced techniques that can leverage
+00:00:05.759 the most powerful parts of these AI
+00:00:07.839 powered coding tools. Where do you want
+00:00:10.480 us to get started that you think many
+00:00:12.320 people don't think [music] about in
+00:00:13.840 terms of how they can use these tools?
+00:00:15.599 >> Context and diagrams is a great place to
+00:00:17.760 start. They're definitely the best way
+00:00:19.520 to get AI to do what you want. So, they
+00:00:21.520 have what are called mermaid diagrams.
+00:00:23.199 This is a way of visualizing database
+00:00:25.920 operations and it's a way of essentially
+00:00:28.080 compressing your application down into
+00:00:30.880 very small lines of text that show how
+00:00:33.360 your application works. Now for a human
+00:00:35.360 to read this, this is a big challenge.
+00:00:37.520 But an AI can consume this easily. I
+00:00:40.000 could even just say, &quot;Please explain the
+00:00:42.399 authentication flow.&quot; And because it
+00:00:44.800 already has it in the context, it's not
+00:00:46.399 going to have to do a bunch of file
+00:00:48.079 reads [music] and codebase exploration
+00:00:50.160 to figure this out. It's going to come
+00:00:51.600 up with results much quicker.
+00:00:53.280 >> If I gave you infinite junior to
+00:00:56.160 mid-career talent who [music] is always
+00:00:58.320 available, who would do the work you
+00:01:00.879 would do if you had unlimited amount of
+00:01:03.120 time and no meetings? What would you do
+00:01:05.119 when a ticket came in? Like what would
+00:01:06.640 you do?
+00:01:10.085 [music]
+00:01:10.640 Welcome back to How I AI. I'm Claire
+00:01:13.360 Vio, product leader and AI obsessive
+00:01:15.360 here on a mission to help you build
+00:01:16.960 better with these new tools. Today we
+00:01:19.439 have John Linquist at egghead.io
+00:01:22.560 who is a super user of AI powered
+00:01:26.159 engineering tools like cursor [music]
+00:01:28.400 and claude code. Now, I love all you
+00:01:31.200 nontechnical folks out there, but this
+00:01:32.799 is an episode for the senior software
+00:01:34.640 engineers who really want to understand
+00:01:37.119 how they can use the power features of
+00:01:39.439 some of these AI engineering tools to
+00:01:42.640 really both optimize the quality of code
+00:01:45.119 that they're generating, but also become
+00:01:47.280 more efficient as they use their IDE,
+00:01:50.159 terminal, and AI assistance to write,
+00:01:53.360 check, and deploy code. This is a great
+00:01:56.880 episode for any of our advanced users
+00:01:58.640 out there. VPs of engineering, CTO, pay
+00:02:00.960 attention. Send this to your staff,
+00:02:02.479 engineers. Let's get to it. This episode
+00:02:06.240 is brought to you by work OS. [music] AI
+00:02:09.038 has already changed how we work. Tools
+00:02:11.200 are helping teams write better code,
+00:02:13.040 analyze customer data, and even handle
+00:02:15.440 support tickets automatically. [music]
+00:02:17.440 But there's a catch. These tools only
+00:02:19.680 work well when they have deep access to
+00:02:21.680 company systems. [music] Your co-pilot
+00:02:23.760 needs to see your entire codebase. Your
+00:02:26.239 chatbot needs to search across [music]
+00:02:27.680 internal docs. And for enterprise
+00:02:29.840 buyers, that raises serious security
+00:02:32.400 concerns. That's why these apps face
+00:02:34.879 intense IT scrutiny from day one. To
+00:02:37.599 pass, they need secure authentication,
+00:02:39.760 access [music] controls, audit logs, the
+00:02:42.160 whole suite of enterprise features.
+00:02:44.560 Building all that from scratch, [music]
+00:02:46.080 it's a massive lift. That's where Work
+00:02:48.400 OS comes in. Work OS gives you [music]
+00:02:50.959 drop-in APIs for enterprise features so
+00:02:53.760 your app can become enterprise ready and
+00:02:55.920 scale [music] up market faster. Think of
+00:02:58.080 it like Stripe for enterprise features.
+00:03:00.800 OpenAI, Perplexity, [music] and Cursor
+00:03:03.040 are already using work OS to move faster
+00:03:05.599 and meet enterprise demands. Join them
+00:03:08.560 and hundreds of other industry leaders
+00:03:10.720 at works.com.
+00:03:13.519 Start building today.
+00:03:15.599 John, welcome to How I AI. I have to put
+00:03:19.040 some context here which is we have done
+00:03:22.000 quite a bit of coding with cursor vibe
+00:03:25.519 coding episodes but a lot of what our
+00:03:27.440 audience has asked for is early maturity
+00:03:31.120 less technical introductions to these
+00:03:33.280 tools. But there are people out there
+00:03:36.080 definitely like me um and definitely
+00:03:37.920 like folks that follow you that really
+00:03:40.319 do know how to write great software and
+00:03:42.959 want to you know as people say of course
+00:03:44.959 I'm a 9x engineer but how do I become a
+00:03:46.879 10x engineer with some of these tools
+00:03:48.959 want to know really the advanced
+00:03:50.400 techniques that can leverage the most
+00:03:52.959 powerful parts of these AI powered
+00:03:55.599 coding tools and get you really high
+00:03:58.239 quality software. So I'm really excited
+00:03:59.920 about what you're going to show us
+00:04:01.760 today. And so where do you want us to
+00:04:04.720 get started that you think many people
+00:04:06.400 don't think about in terms of how they
+00:04:08.640 can use these tools?
+00:04:09.760 >> Yeah, I think uh context and diagrams is
+00:04:12.480 a great place to start for us. Um
+00:04:14.319 they're definitely the
+00:04:16.478 best way to get AI to do what you want.
+00:04:19.199 So um and we'll be using cloud code
+00:04:21.199 throughout.
+00:04:21.918 >> Oh, great. Okay. And so yeah, we've
+00:04:24.320 we've gotten a lot of kind of markdown
+00:04:27.680 files in How AI, but not a lot of
+00:04:30.320 diagrams. So why don't you walk us
+00:04:32.080 through
+00:04:33.040 >> how you use those those assets to help
+00:04:36.400 you code better.
+00:04:38.160 >> Yeah. So these diagrams are all
+00:04:40.000 generated from I can share a prompt with
+00:04:42.400 however you want to share with the
+00:04:43.440 audience um that can walk through your
+00:04:45.520 codebase and generate diagrams based on
+00:04:48.320 uh user actions or user interactions the
+00:04:51.680 events the channels whatever happens in
+00:04:53.520 your code to help the AI understand the
+00:04:56.479 flow and how the pieces are connected.
+00:04:58.479 Um I think Windinsurf recently came out
+00:05:00.800 with something called code maps, a
+00:05:03.040 similar concept. Um
+00:05:06.000 essentially preloading valuable context
+00:05:08.880 so that you have to remember that every
+00:05:11.199 time an AI starts it has no memory, no
+00:05:14.800 idea of what's going on in your
+00:05:15.840 application and people try and set up
+00:05:17.840 lots of rules and all the stuff around
+00:05:19.360 it. Um, but they usually don't include a
+00:05:22.400 lot of how does my application work and
+00:05:24.240 how do the pieces fit and so you get a
+00:05:26.800 lot of really bad edits because it
+00:05:29.440 doesn't understand if it if it modifies
+00:05:31.840 A, how does that impact B? Um, so we
+00:05:35.520 want to preload a lot of that. We can do
+00:05:37.280 that using diagrams. Uh, so for example,
+00:05:40.400 one of these diagrams um will have I I
+00:05:44.080 call they're markdown files with
+00:05:45.360 diagrams in them. So they have what are
+00:05:47.680 called mermaid diagrams and mermaid is a
+00:05:50.240 standard format for rendering diagrams
+00:05:52.080 inside of markdown. So this is a a way
+00:05:55.759 of visualizing uh database operations.
+00:05:59.600 And if you to zoom zoom in and look at
+00:06:01.680 uh how if a record exists then do this
+00:06:04.000 and that. Yes. No. And it's a a way of
+00:06:07.360 essentially compressing your application
+00:06:09.919 down into very small lines of text that
+00:06:13.919 show how your application works. Now for
+00:06:16.319 a human to read this, this is a big
+00:06:18.560 challenge. Uh we need to open up this
+00:06:20.800 big visual and it turns into like looks
+00:06:22.880 like an image. But an AI can consume
+00:06:25.360 this easily and it's like a very
+00:06:27.919 compressed very um robust way of
+00:06:30.800 explaining application. So we can feed
+00:06:33.440 these into our application at at the
+00:06:36.639 startup time. Um, and for the more
+00:06:40.000 advanced pro or the larger projects you
+00:06:42.000 get on, the more diagrams you'll have,
+00:06:43.360 and you can kind of pick and choose
+00:06:44.479 which ones to load. Um, I'm going to
+00:06:46.960 load them all in. And I'm just going to
+00:06:49.919 open um terminal up the editor area.
+00:06:54.319 So, the way I'm going to do this, if we
+00:06:56.319 look at Claude and we look at look at
+00:06:58.800 its options, um, you'll see a bunch of
+00:07:01.280 options. The one we're going to focus on
+00:07:02.880 is called append system prompt. So in
+00:07:06.639 there before we load in uh any sort of
+00:07:11.599 user prompt or anything we're actually
+00:07:13.599 going to say claude append system prompt
+00:07:17.840 system prompt and then you can drop in
+00:07:21.280 some text and we're going to drop in a
+00:07:23.759 command and this command can read in
+00:07:27.360 from our memory from AI/diagrams
+00:07:33.120 and then this is going to read through
+00:07:35.280 this is a called a glob pattern read
+00:07:37.280 through all of the markdown files
+00:07:39.680 essentially force them into claude once
+00:07:42.160 I do this. So this is reading all the
+00:07:44.800 files all the markdown files and this is
+00:07:47.680 cat will kind of concatenate them all
+00:07:50.400 together into a single uh text read.
+00:07:53.759 >> Yeah. One thing I want to call out for
+00:07:55.039 folks that are watching this that or or
+00:07:57.120 are listening and maybe not watching is
+00:07:59.199 two things. It seems like, you know, in
+00:08:01.840 your in your standard repos, you're
+00:08:04.240 creating a a memory um directory where
+00:08:07.680 you're going to structure some of the
+00:08:09.039 context and files you might want any of
+00:08:10.879 these AI tools to use. And I think
+00:08:13.199 everybody's like, &quot;Oh yeah, I've created
+00:08:14.560 my agents markdown file or my clawed
+00:08:16.639 one.&quot; And I think you can actually
+00:08:18.639 structure your um context for these
+00:08:21.599 tools a lot more purposefully. And so I
+00:08:24.080 think this is a really good example of
+00:08:25.759 this. The other thing that I I think a
+00:08:28.000 lot of people are quite lazy about is
+00:08:29.599 they haven't explored the surface area
+00:08:32.719 of all the system commands available in
+00:08:36.000 cloud code. And so by using that help
+00:08:38.240 command, you can actually see things
+00:08:40.559 that not just chatting with clot code
+00:08:42.559 you can do, but you can actually inject
+00:08:45.279 into how claude operates. And appending
+00:08:47.200 system prompt is one of those ones that
+00:08:48.720 I think people probably underuse.
+00:08:51.200 >> Yeah, absolutely. Um, it's one I use
+00:08:54.160 constantly. Um, great points there. Um,
+00:08:58.000 so when when I let this run, you'll
+00:09:00.399 notice that there's um it's now
+00:09:03.519 prompting the user to do something. And
+00:09:05.920 we don't have to try and reference all
+00:09:07.920 of the files, which you normally do with
+00:09:09.920 AT. We don't have to try and tell it,
+00:09:13.120 you know, what we're going to work on. I
+00:09:14.560 could even just say, like, I use
+00:09:16.399 dictation all the time. Uh, please
+00:09:18.880 explain the authentication flow.
+00:09:23.440 And because it already has it in the
+00:09:25.120 context, it's not going to have to do a
+00:09:26.640 bunch of file reads and codebase
+00:09:29.839 exploration to figure this out. It's
+00:09:32.560 going to come up with results much
+00:09:34.399 quicker. This this does come at the cost
+00:09:36.720 of a lot more context, a lot more um
+00:09:40.000 tokens being used up front, but the work
+00:09:43.120 that you do, the time that you spend on
+00:09:45.920 these tasks is more valuable than that
+00:09:48.000 to me. So, you'll notice that there were
+00:09:51.680 no file reads in this. There were no um
+00:09:56.080 it did not search the codebase. It
+00:09:58.000 didn't do any of that stuff. It just
+00:09:59.839 simply had all that in context. And now
+00:10:02.480 I could take this and look through it,
+00:10:04.720 start creating plans, swap over to plan
+00:10:07.279 mode to how we want to uh update and um
+00:10:10.160 change authentication. So
+00:10:13.440 this saves again the the the trade-off
+00:10:16.079 here is the cost of many tokens up front
+00:10:19.200 but the value is you get a lot faster
+00:10:21.760 and a lot more valuable output as the
+00:10:25.360 tasks complete much faster the tasks are
+00:10:27.440 much more reliable because it
+00:10:28.720 understands what's going on in the
+00:10:30.079 codebase.
+00:10:31.279 >> Two things I think people should think
+00:10:33.360 about with this flow. one is I've said
+00:10:35.920 this in a couple episodes and and we'll
+00:10:38.880 call it out again in yours is I think
+00:10:40.959 that with LLM starting to become more of
+00:10:45.040 a part of how we do work and feed
+00:10:47.040 context and understand things like
+00:10:50.000 documentation or business context. This
+00:10:51.920 is the era of the the file type and I
+00:10:54.320 think so many people think about
+00:10:56.000 markdown and JSON files as effective
+00:10:59.519 ways to inject context into LLMs. I see
+00:11:03.279 a lot of course markdown files. I think
+00:11:05.920 more people now write markdown than they
+00:11:07.920 h than they have in many many years. And
+00:11:10.240 then a lot of we've had some episodes on
+00:11:12.480 using JSON for example to put realistic
+00:11:15.519 or semi-realistic data into prototypes.
+00:11:18.320 But we are having more and more episodes
+00:11:20.800 where people are discovering
+00:11:23.839 specific file types that have a specific
+00:11:26.399 context structure that are really useful
+00:11:29.279 for a use case. In this one, you have
+00:11:31.600 mermaid diagrams, which again are hard
+00:11:33.440 to parse as a human. And even if they
+00:11:35.440 turn into graphics, are still hard to
+00:11:37.200 parse as a human. Like I looked at that
+00:11:39.519 big diagram of my eyes crossed and I
+00:11:41.360 said, I don't I don't want to read this.
+00:11:43.200 But to a machine, it's very effective.
+00:11:45.839 We've also in some episodes talked about
+00:11:48.640 um image and multimedia file formats
+00:11:51.120 that not only contain image data, but
+00:11:53.760 contain metadata that you can use. And
+00:11:56.880 so I think this is an interesting moment
+00:11:58.640 where we can all use different file
+00:12:00.560 types in a more extensive way than our
+00:12:02.959 kind of human brains could because the
+00:12:04.959 machines are so good at using the
+00:12:07.120 different component structures or syntax
+00:12:08.880 of of those files. So I think that's
+00:12:10.639 pretty interesting and I think mermaid
+00:12:12.480 diagrams are one of those examples um of
+00:12:14.800 something that can be used really well.
+00:12:16.720 >> Yeah, absolutely. There's a lot of
+00:12:18.079 research being done into how they can
+00:12:19.600 compress all of this information down
+00:12:21.440 into like a single image. So, if I could
+00:12:23.120 take all of the diagram files and
+00:12:25.279 somehow come up with an image format
+00:12:27.120 that would store everything in there,
+00:12:28.880 could would the trade-off on tokens be
+00:12:30.800 there and would the trade-off on
+00:12:32.800 understanding be there as well? Um it's
+00:12:36.560 uh we we'll see if there's more file
+00:12:39.440 types that emerge and I'm huge um on
+00:12:43.519 video and using videos
+00:12:46.320 uh Gemini being the best model for
+00:12:47.760 uploading video and understanding um and
+00:12:51.279 recently built a tool that can take one
+00:12:52.720 of my six-hour workshops and uh process
+00:12:56.399 the entire thing and take out notes and
+00:12:58.240 examples and thoughts and frequently
+00:12:59.680 asked questions. And so each time I
+00:13:01.040 teach a workshop, I can iterate on it
+00:13:02.720 and um I don't have to go like search
+00:13:05.680 through the video some other way. It's
+00:13:07.680 >> you and I will have to trade notes
+00:13:09.040 because I did a very similar thing with
+00:13:10.480 our episodes which is it takes a video
+00:13:12.160 of our episode. It pulls out all the
+00:13:14.639 learnings, all the code snippets,
+00:13:17.360 screenshots where the guest and I look
+00:13:19.200 cute and put it into into a blog post.
+00:13:22.480 So So I agree on that. You know, the
+00:13:24.480 second question I had for you though is
+00:13:26.560 going back to these diagram files in
+00:13:30.160 this memory directory. Where in your
+00:13:32.480 development process do you find that you
+00:13:35.440 generate those files? So for me, I
+00:13:38.880 actually have a GitHub action that
+00:13:41.680 generates files almost exactly like you
+00:13:44.160 have with documentation and diagrams for
+00:13:46.880 new features um of a of a specific
+00:13:49.440 scope. And so I do it when a pull
+00:13:50.880 request is closed and then I go back and
+00:13:53.120 um update update our diagrams. I'm I'm
+00:13:55.440 curious where this falls in your where
+00:13:57.040 documentation like this falls into your
+00:13:58.720 workflow.
+00:13:59.839 >> Yeah, usually I think pull request is a
+00:14:01.680 a good paradigm there. Uh as soon as you
+00:14:04.399 have something working where you want it
+00:14:06.639 to be working and then you can say okay
+00:14:08.880 now this is working as expected. Please
+00:14:10.800 diagram it. I think for a lot of the
+00:14:12.240 projects, we already have pre-existing
+00:14:14.720 um code bases that don't have diagrams.
+00:14:17.360 And so that's that's been the major use
+00:14:20.240 case is taking existing stuff and um
+00:14:23.519 diagramming all of that so that our AI
+00:14:26.160 development is accelerated, I guess, is
+00:14:28.000 the buzzword. Um but yeah, if you're
+00:14:30.800 starting from scratch, you definitely
+00:14:31.920 just want to spike spike things out, get
+00:14:34.160 it working. Um don't worry about
+00:14:36.480 diagrams up front. um just use a plan
+00:14:38.800 mode, build something and once it's
+00:14:40.399 working, then diagram it out. And then
+00:14:43.199 even with the diagrams, um they're great
+00:14:46.480 to help walk you through like what did I
+00:14:48.240 just build? Like I didn't look any of
+00:14:49.920 this code. Uh show me diagrams of what
+00:14:51.440 the code is doing. And then if the
+00:14:52.639 diagrams look kind of wonky, you can
+00:14:54.959 just say there there's there's tools in
+00:14:57.600 there that people are working on where
+00:14:58.720 you can like drag around pieces of the
+00:15:00.160 diagram to say, well, I don't want this
+00:15:02.000 to navigate there. I don't want this
+00:15:03.680 user do that. We could I don't there's
+00:15:06.480 going to be so many tools in the next
+00:15:07.760 few years that emerge from all this.
+00:15:10.720 >> Yeah. And then I will give folks just a
+00:15:12.639 couple other use cases of generating
+00:15:15.920 mermaid diagrams from code that are not
+00:15:18.000 just about improving the efficiency of
+00:15:20.720 using something like cloud code. Um I
+00:15:23.199 use a lot of diagram generating out of
+00:15:25.040 our repo to answer very complex security
+00:15:28.240 and data flow requirements from our
+00:15:30.160 customers. This is a it's a workflow
+00:15:32.560 that is actually like pretty expensive
+00:15:34.079 if you ask an engineer to do it which is
+00:15:36.639 I have specific customer A they need a
+00:15:39.199 very specific data flow diagram of this
+00:15:41.360 part of our application so they can
+00:15:43.199 understand the third party parts of it
+00:15:45.600 again also if you're going through sock
+00:15:47.040 2 compliance or any compliance like
+00:15:48.800 these are these are assets that
+00:15:50.880 historically have just been so tedious
+00:15:52.959 to create efficiently and effectively
+00:15:55.839 and now you can kind of generate them on
+00:15:58.000 demand. My last question for you on this
+00:16:00.639 diagram flow is do you find that you
+00:16:05.040 have the AI write or you would write
+00:16:07.839 documentation any differently than you
+00:16:10.240 would for a human audience or do you
+00:16:12.000 feel like there's enough overlap that
+00:16:14.160 the content format etc can be pretty
+00:16:16.399 consistent between the two?
+00:16:17.600 >> I would say could be pretty consistent.
+00:16:19.920 I I think they serve as a nice bridge
+00:16:21.920 between kind of human and AI. Um
+00:16:26.079 definitely think I I know people
+00:16:27.839 generate documents like you'll write
+00:16:29.920 code and then generate documentation
+00:16:31.519 around it using AI for both steps which
+00:16:33.839 is just wild but um yeah I think the
+00:16:38.480 markdown is kind of the language of the
+00:16:40.320 future for a lot of this um text and
+00:16:43.199 then there you can do images and
+00:16:45.759 everything inside of markdown files as
+00:16:47.120 well. So they can kind of and the front
+00:16:49.839 matter metadata. Um you'll you see
+00:16:52.000 claude using that extensively for their
+00:16:54.399 skills and commands.
+00:16:55.759 >> Yep.
+00:16:56.399 >> And everything. So um and anthropic is
+00:16:59.519 pretty good at pioneering all this
+00:17:00.880 stuff. So
+00:17:02.079 >> if they're using markdown then
+00:17:04.319 >> everybody else can.
+00:17:05.520 >> Yeah.
+00:17:06.160 >> Yeah. Uh again for people who want to
+00:17:08.400 like pull the thread a little further uh
+00:17:10.880 what what I do is yeah we generate a lot
+00:17:13.039 of AI code then on poll request we
+00:17:15.199 generate AI documentation internally for
+00:17:18.000 engineers and for AI obviously to use
+00:17:20.160 this context and then we take that code
+00:17:23.039 and we generate markdown customerf
+00:17:24.880 facing support documents again that
+00:17:26.720 really benefit from these workflows
+00:17:28.160 because then you say click button A move
+00:17:30.559 to section B save this and so you can
+00:17:33.919 really pull the thread on docu
+00:17:36.080 documentation from one asset and I think
+00:17:38.480 you're showing a place where it's really
+00:17:39.600 useful from the engineering perspective
+00:17:41.120 but it can start to become customerf
+00:17:43.120 facing and all sorts of interesting
+00:17:44.480 things.
+00:17:45.280 >> Yeah. And you could summarize the
+00:17:47.120 documents for customers. Um you could
+00:17:48.880 have it build little interactive demos.
+00:17:51.120 I mean there's the sky's is the limit.
+00:17:53.200 Like how however much you want to
+00:17:54.320 support customers there is if this is
+00:17:57.360 enough then then great. If it's not then
+00:18:00.400 it's an AI prompt away from
+00:18:03.039 >> something pretty. I guess
+00:18:04.320 >> this episode is brought to you by
+00:18:06.002 [music] Times, the intelligent workflow
+00:18:08.000 platform powering the world's most
+00:18:10.240 important work. Business moves faster
+00:18:12.559 than the systems meant to support it.
+00:18:14.559 Teams are stuck with repetitive [music]
+00:18:16.160 tasks, scattered tools, and hard to
+00:18:18.640 reach data. AI has huge promise, but
+00:18:21.600 struggles when everything underneath is
+00:18:23.360 fragmented. Times [music] fixes that. It
+00:18:26.400 unifies your tools, data, and processes
+00:18:29.280 in one secure, flexible platform.
+00:18:31.919 Blending [music] Agette AI, automation,
+00:18:34.400 and human-led intervention. Teams get
+00:18:36.960 their time back, workflows run smarter,
+00:18:39.120 and AI [music] actually delivers real
+00:18:41.440 value. Customers now automate over 1.5
+00:18:45.679 billion actions every week. Times is
+00:18:49.200 trusted by companies like Canva,
+00:18:51.520 Coinbase, [music] Datab Bricks, GitLab,
+00:18:53.840 Mars, and Reddit. Try Time Tines at
+00:18:57.280 times.com/h
+00:18:59.058 [music] how I AI.
+00:19:01.919 Great. So, you showed us how to just
+00:19:04.640 pull all of these documents into a
+00:19:06.720 system prompt. You get much more um
+00:19:09.840 performant use of something like Claude
+00:19:12.960 Code. And this seems like a command that
+00:19:15.039 you're using over and over again. And
+00:19:16.640 that's something you and I talked about
+00:19:18.000 before we started recording, which is
+00:19:20.480 how to alias and make more efficient
+00:19:22.720 your use of of different commands. So,
+00:19:24.799 should we should we pop over to that or
+00:19:26.400 anything else you want to show on
+00:19:27.440 diagrams?
+00:19:28.160 >> That's that's great. Let's do that. Um,
+00:19:31.039 so there are a lot of uh with with on
+00:19:33.760 Mac it's DSH is the default shell. Um,
+00:19:37.360 on Windows I do PowerShell. So, this
+00:19:39.039 look very different. Um, but depending
+00:19:41.760 on what tools you use the most, you can
+00:19:44.240 easily set up aliases for things like
+00:19:46.240 setting the default model for for claude
+00:19:49.440 or setting like if you want to do
+00:19:51.200 something completely dangerously so that
+00:19:53.679 once you open a new terminal, if you
+00:19:56.080 just type X now, anything I type has
+00:19:59.440 bypass permissions enabled. Or if I type
+00:20:03.760 H, this will be Haiku. It'll be much
+00:20:05.919 faster, but not quite as smart. Um or if
+00:20:08.720 I type in the scenario CDI um this will
+00:20:12.799 do that diagram loading um where once
+00:20:16.720 you have these systems in place these
+00:20:18.640 commands in place then you can just uh
+00:20:21.679 kind of capture them in the smallest
+00:20:24.000 like because I only because I use these
+00:20:26.799 a lot I I I keep them in very short
+00:20:29.760 shortcuts.
+00:20:31.360 Yeah, and I can imagine you could you
+00:20:33.600 could do something like this for project
+00:20:36.320 specific context to so you could do like
+00:20:38.880 CC dash whatever project you're working
+00:20:40.880 on. You could pull in the diagrams for
+00:20:42.640 just that initiative. So if you're going
+00:20:45.280 back over and over again into specific
+00:20:48.159 things that need specific context, this
+00:20:50.000 would be just a cheap shortcut to to get
+00:20:52.640 you into the mode of for example cloud
+00:20:54.799 code that you want.
+00:20:55.919 >> Yeah, absolutely.
+00:20:56.880 >> And you showed a lot of cloud examples
+00:20:58.480 here. Are there any other ones that you
+00:21:00.000 think are really really useful for folks
+00:21:02.799 or creative uses of this you think we
+00:21:04.720 should think about?
+00:21:05.679 >> So I tend to build any idea I come up
+00:21:09.200 with. Um so for example this is one I'm
+00:21:13.760 working on called sketch
+00:21:16.559 and this feeds into the Gemini uh Gemini
+00:21:20.799 CLI. So like what type of website do
+00:21:23.120 want to do I want to build? Let's do a
+00:21:26.880 store for selling uh Christmas
+00:21:30.400 decorations.
+00:21:33.200 And then let's make the homepage of
+00:21:35.120 that. Let's make it creative and
+00:21:36.799 artistic for a desktop website. We'll do
+00:21:40.960 the GitHub light theme for it. No
+00:21:43.520 reference image. Let's do five images
+00:21:46.400 and go ahead and generate it. And this
+00:21:48.240 is the sort of thing where um kind of
+00:21:51.120 beyond
+00:21:53.360 beyond the simple alias if you uh if
+00:21:57.039 you've never dived into creating what's
+00:21:59.120 called a CLI you can tell an AI like
+00:22:02.720 listen I want to use like this is a
+00:22:04.720 wrapper around um Gemini
+00:22:08.320 where it will execute Gemini with
+00:22:10.640 specific prompts. So you have to
+00:22:12.480 remember that you have these tools on
+00:22:13.679 your desktop which can do incredible
+00:22:15.760 things but you can also script them and
+00:22:18.480 this is a scripted way of generated
+00:22:20.320 generating images based on all of these
+00:22:22.960 um all these topics with or these
+00:22:25.520 concepts with pre-loaded prompts and I
+00:22:27.600 can say if I want to add another feature
+00:22:30.159 like you can just go in there and say
+00:22:31.760 please tweak the prompts or please add
+00:22:33.440 this feature please do this and then
+00:22:35.120 instead of um
+00:22:37.840 constantly thinking of oh what was that
+00:22:39.679 prompt again or was that idea I had. You
+00:22:42.720 can have these little CLIs and these
+00:22:44.720 little projects that are be just for
+00:22:46.480 you. Um because you just like build the
+00:22:50.000 tools that you need now. And um this is
+00:22:52.720 just spitting out these um my my mom
+00:22:56.159 lives with me and she's setting up
+00:22:57.360 Christmas decorations upstairs. This is
+00:22:59.600 why I'm thinking about this.
+00:23:01.840 >> So this
+00:23:03.120 >> Yeah, this is Gemini generating based on
+00:23:04.880 the prompt we fed in based on the color
+00:23:06.559 scheme. This is GitHub light Christmas
+00:23:08.880 store color theme. Um, and I told it to
+00:23:12.000 generate five variations of it. And then
+00:23:14.159 we could take one of these images and
+00:23:15.600 drop it into one of the um, drop it into
+00:23:18.640 one of the AIS and say, &quot;Let's start
+00:23:20.000 building out this website. Let's break
+00:23:21.679 this into sections and go from there.&quot;
+00:23:24.080 And this is kind of like my uh, ideation
+00:23:27.840 inspiration sort of thing that that I
+00:23:29.760 use.
+00:23:30.720 One reason I want to make sure people
+00:23:33.280 are paying attention to this use case
+00:23:35.039 which is essentially you've exposed a
+00:23:37.520 command line interface to do a couple
+00:23:40.480 you know script a couple workflows
+00:23:42.480 around calling um nanobanana and some of
+00:23:45.600 the Gemini models to um
+00:23:48.480 >> to to do some things and there are two
+00:23:50.799 benefits I think to this that are really
+00:23:52.880 important. One is
+00:23:55.760 building command line tools has been so
+00:23:58.640 opaque and just kind of not fun for so
+00:24:02.320 many people for so long. Um I've built
+00:24:04.640 lots of them and how easy it is to build
+00:24:07.280 a really nice command line tool is such
+00:24:10.320 a treat for anybody who's ever had to
+00:24:12.480 build them and make them look good.
+00:24:14.960 Everybody has these cool ASKY only logos
+00:24:17.679 if in their in their command line tools
+00:24:19.919 which have been very tedious to make
+00:24:22.000 before. So I think one thing is these
+00:24:23.760 tools are just a lot easier to build.
+00:24:25.840 Two, from a product builder perspective,
+00:24:28.159 the reason why I like this move to these
+00:24:30.159 command line tools is the constrained UI
+00:24:33.120 space of the terminal actually make sure
+00:24:36.080 you don't get distracted in building UI
+00:24:38.720 around something as simple as this.
+00:24:40.559 Right? You just had like five questions
+00:24:42.559 you had to answer, a couple multi
+00:24:44.400 select. You could tab through those with
+00:24:45.919 your keyboard. If you were creating like
+00:24:48.159 a little wizzywig walkth through web
+00:24:50.960 editor thing here, I mean, one, I would
+00:24:53.200 have gotten really distracted about how
+00:24:54.559 it looks. Yeah.
+00:24:55.840 >> Two, you'd have to type into, you know,
+00:24:57.919 you'd have to run localhost and type
+00:24:59.600 into um your your your web browser. And
+00:25:04.480 so, I actually like the constrained UI
+00:25:06.480 space for speed of of prototyping on
+00:25:08.799 some of these ideas because you just
+00:25:10.880 don't get distracted by anything but the
+00:25:13.120 essential kind of toolkit. Um, and then
+00:25:16.000 you can get a really cool thing out the
+00:25:17.600 other end.
+00:25:18.320 >> My only problem is I've built more tools
+00:25:21.120 than I can remember and sometimes
+00:25:23.200 >> after like where was that thing? Um,
+00:25:26.080 >> yeah. I uh I also like what you how you
+00:25:28.799 started this this little segment which
+00:25:30.720 is you said you just build every idea
+00:25:32.480 you have. I think that is totally the
+00:25:36.000 move. While you have an idea, kick off
+00:25:38.799 something, get it built, build yourself
+00:25:41.039 a little throwaway repo. Um, you know,
+00:25:44.240 eventually the AI can crawl it and
+00:25:46.320 remind you everything that you built
+00:25:47.679 before, but this is pretty cool.
+00:25:49.520 >> And that's that's why I love dictation
+00:25:51.840 because all you have to do is start up a
+00:25:54.480 new terminal in a new folder and just
+00:25:57.279 kind of brain dump in there and then
+00:25:59.679 it'll try something and once you have
+00:26:02.480 something even if it's wrong, you can
+00:26:04.320 iterate on it. Yeah.
+00:26:05.440 >> If you have nothing, you can't iterate
+00:26:07.120 on nothing. And I think that's the magic
+00:26:09.200 of uh even for people who who hate AI
+00:26:12.159 tools. Like a sheet of paper full of
+00:26:16.480 things that are wrong is much better
+00:26:18.559 than a blank than than nothing because
+00:26:21.279 even if it's wrong, you you recognize
+00:26:24.240 it's wrong and it helps you think of
+00:26:25.760 what's right and what you want to build.
+00:26:28.400 >> Yeah, I say this a lot. It's easier to
+00:26:30.000 edit than author. So, let's get the
+00:26:32.240 authoring out of the way and then even
+00:26:34.480 if you completely revise the whole
+00:26:36.480 thing, it's a much easier starting
+00:26:38.400 sprouting point to work with something.
+00:26:40.240 >> Y
+00:26:40.640 >> Okay. So, I think we're going to close
+00:26:43.039 out and spend uh a little bit of time on
+00:26:46.400 your workflow for when you're doing more
+00:26:49.279 complex coding projects or features, how
+00:26:52.159 you keep those really high quality using
+00:26:54.480 some advanced techniques in um I think
+00:26:57.039 in cloud code and cursor. So when
+00:26:59.840 working on any excuse me when working on
+00:27:01.840 any project um often when the AI is
+00:27:06.880 generating code it'll often build out
+00:27:08.960 mistakes and so even it will say it's
+00:27:11.760 done you're like wait a second there
+00:27:13.440 were a ton of mistakes there why did you
+00:27:14.799 stop just fix it until the mistakes are
+00:27:16.640 done so for example um let's say it
+00:27:20.880 wrote out this code and there was this
+00:27:22.799 error in here and this error is
+00:27:24.640 something you'd usually catch with tools
+00:27:27.279 such as TypeScript uh or maybe it's
+00:27:30.720 formatting or linting or any sort of
+00:27:33.440 complexity tools um that
+00:27:38.000 they're code quality tools that you run
+00:27:39.679 before before you think the work is
+00:27:42.080 done. So you would run something like
+00:27:44.559 bun type check and you would see that it
+00:27:48.480 has this error but your uh claude code
+00:27:52.480 and the other agents don't know that
+00:27:54.320 this error exists. What Claude has and
+00:27:58.000 what cursor cursor and a few others have
+00:28:01.279 is the concept of hooks.
+00:28:03.840 And what this can do is so inside of
+00:28:08.880 claw, let's go here.
+00:28:12.080 You can set up what are called hooks.
+00:28:15.360 And um [snorts] I'm going to set what's
+00:28:17.520 called a stop hook
+00:28:20.480 and hit add new hook. And just it shows
+00:28:23.840 you a bunch of examples. I'm accepting
+00:28:25.840 responsibility for all this. Bunch of
+00:28:27.440 warnings because it can run scripts that
+00:28:30.159 aren't checked by the AI.
+00:28:33.200 And I'm going to say the command for now
+00:28:36.320 is just be echo, which does nothing. And
+00:28:40.000 I'm going to add it to my project local
+00:28:41.919 settings. And now we have this echo
+00:28:45.440 hook. And this is defined
+00:28:48.640 in this settings local uh.json file. And
+00:28:53.440 this is for uh this is a local file for
+00:28:56.960 me. If you want it to be with your team,
+00:28:58.240 it' be settings.json settings.lojson is
+00:29:00.640 distribute. What we're going to do is
+00:29:03.600 instead of running this command,
+00:29:06.240 we're going to run a custom uh claw
+00:29:10.320 claude hook which I've defined inside of
+00:29:12.559 claude hooks. Uh and I called it index
+00:29:15.760 index.ts. You could call it stop or
+00:29:17.840 whatever. So from this script which is
+00:29:21.120 in this directory um I need to run this
+00:29:24.080 uh install for this package because I
+00:29:25.919 don't have it installed right now. So
+00:29:27.679 I'm going to bun install and propic and
+00:29:31.039 this is their um their clawed agent SDK.
+00:29:35.200 Now in the SDK they have um what are
+00:29:38.559 called hook inputs and other types you
+00:29:40.640 can use so that when you're dealing with
+00:29:42.640 hooks you have a lot more information.
+00:29:44.320 So like on this input you have all of
+00:29:46.880 this information around what the input
+00:29:49.039 name is and then what the session ID is
+00:29:52.880 and the current working directory
+00:29:54.159 permission mode and all that and you can
+00:29:55.520 use that to customize your hook. But
+00:29:58.080 we're gonna but what we are going to
+00:29:59.520 focus on is we're going to see step one
+00:30:04.480 were their files changed uh when we
+00:30:07.120 stopped. And a stop is once uh Claude
+00:30:10.159 has kind of finished its conversation
+00:30:11.840 and it's now waiting for you to do
+00:30:13.520 something. So we're going to check are
+00:30:15.520 there files changed? And we're going to
+00:30:18.640 if there's files changed we're going to
+00:30:22.240 say okay then let's go ahead and run
+00:30:24.240 that bun type check. And if there is a
+00:30:27.520 type check then we can say back to
+00:30:30.559 claude we can say hey there were
+00:30:32.480 typescript errors this is the report and
+00:30:35.679 then send them back the output that we
+00:30:37.919 showed in the terminal before and it'll
+00:30:40.159 continue. Otherwise, if there were files
+00:30:43.360 changed, then we can tell Claude to
+00:30:46.559 please, there's a prompt way down here.
+00:30:49.200 It says, &quot;Please commit essentially. Uh,
+00:30:52.399 get the files, don't commit anything,
+00:30:53.919 anything sensitive, and go ahead and
+00:30:55.840 commit it.&quot; So, we set up this workflow
+00:30:57.760 of once a conversation is finished,
+00:31:00.080 check to see if any files have changed.
+00:31:01.840 If they have, you check to see if
+00:31:04.080 there's any TypeScript errors, which
+00:31:05.600 could be a type check or build errors or
+00:31:08.000 any sort of other um code quality uh
+00:31:11.120 guards you have in place. And if there
+00:31:13.600 are none, then go ahead and commit. And
+00:31:15.919 this saves you a lot of the overhead in
+00:31:17.760 your mind of uh here's all this extra
+00:31:20.159 stuff I have to do once something's
+00:31:21.600 done.
+00:31:22.320 >> Yeah. And what I want to call out for
+00:31:24.000 folks that are maybe listening and not
+00:31:25.919 seeing this code here is it's really
+00:31:28.559 what's nice about this is it's a
+00:31:30.159 combination of commands that you would
+00:31:33.039 run in the terminal to to just generate
+00:31:36.159 errors and see them yourselves, but then
+00:31:38.000 you can feed those back into clawed code
+00:31:41.039 in a more natural language way and give
+00:31:44.320 natural language instructions on what to
+00:31:47.200 fix or again default to some command um
+00:31:51.200 that's different which is this GitHub
+00:31:52.960 commit command. And so I like this
+00:31:55.519 combination of kind of like structured
+00:31:58.159 commands in in the terminal combined
+00:32:01.440 with natural language calls back into CL
+00:32:04.480 claude to then kind of put the bow on
+00:32:07.279 the end of any work that this AI system
+00:32:09.519 does. Is that kind of how you think
+00:32:10.640 about it?
+00:32:11.440 >> Yeah, exactly. um that the gotchas you
+00:32:14.720 have to think about here are when you're
+00:32:18.240 uh when you're communicating from a hook
+00:32:21.679 back to Claude, you're essentially using
+00:32:24.000 console log, which is one of the first
+00:32:25.519 things any JavaScript developer learns
+00:32:28.640 and you're sending back a JSON object.
+00:32:30.880 So, it's going to find that first
+00:32:32.399 console log and whatever gets back,
+00:32:35.600 uh that's what it's going to see as its
+00:32:38.799 uh as its input, its standard input.
+00:32:41.760 So you have to be careful if you're
+00:32:43.200 running commands like this. You you tell
+00:32:45.919 this one, please be quiet because if
+00:32:48.080 it's not quiet, then it would log back
+00:32:50.480 to the console and maybe interfere with
+00:32:52.399 something. Or if you want other logs or
+00:32:54.640 you're debugging the script, just use
+00:32:56.000 console error or any other way of
+00:32:58.880 showing logs. Um otherwise, console log
+00:33:02.480 turn it turns into this feeding
+00:33:05.200 instructions back to the agent. So, it's
+00:33:07.519 one of those gotchas that everyone falls
+00:33:09.120 into when when building this out. Uh,
+00:33:12.000 and just to just to demo it real quick,
+00:33:14.159 um, I'll just turn on Claude
+00:33:17.279 and I'll say um well, actually for this
+00:33:21.600 to work correctly,
+00:33:24.559 let's make sure we have everything
+00:33:27.279 staged and set up so that when it does
+00:33:29.039 the get check,
+00:33:31.120 um, let's just generate a message.
+00:33:33.919 So yeah, let's uh please create a fu.ts
+00:33:38.159 file on the root of the project.
+00:33:40.799 And we'll go ahead and accept this.
+00:33:44.320 And you'll see that it says stop hook
+00:33:46.880 returned a blocking error. And that
+00:33:49.200 error returns, please fix the TypeScript
+00:33:51.039 errors. And here's our prompt right here
+00:33:53.120 with this block. And it says I I'll fix
+00:33:56.159 a TypeScript error. So this is when it
+00:33:57.919 would have stopped. It would have
+00:33:59.039 stopped right here. But we hit the stop
+00:34:01.039 hook. Now it sees these errors. So it's
+00:34:03.919 going to go ahead and read that and
+00:34:05.679 says, &quot;Oh, I found the mismatch quote. I
+00:34:07.840 fixed it.&quot; And now behind the scenes
+00:34:10.879 there's a cloud running which should it
+00:34:14.159 commit that fix. You make this a bit
+00:34:17.679 smaller. Show our graph here. And you'll
+00:34:20.719 see um this is the fix that it made was
+00:34:23.440 correct the quote syntax. This is what
+00:34:25.040 the little ha coup did in the
+00:34:28.079 background. So the stop hook ran twice.
+00:34:31.280 It ran once where it found the error and
+00:34:34.000 had files changed. And then the second
+00:34:35.679 time there were no more errors and so it
+00:34:38.239 ran the commit. And so that saved us all
+00:34:40.560 of that work of both passes. And now we
+00:34:42.960 have a completed task
+00:34:45.599 that has been error checked, fixed, and
+00:34:47.760 then commit um and conditionally
+00:34:51.679 enscripted in a way where this will be
+00:34:53.679 different for every single project based
+00:34:55.359 on your requirements, based on your
+00:34:57.200 codebase. Um, so this is definitely
+00:34:59.040 something that you have to like think
+00:35:00.240 through and set up yourself. It
+00:35:02.320 definitely saves so much time where you
+00:35:04.400 don't have to go back in and say, &quot;Well,
+00:35:05.839 please fix this or please run this
+00:35:07.760 command or please do this.&quot; When you
+00:35:09.760 know part of your workflow is always the
+00:35:12.800 like if these things should always run,
+00:35:14.480 you might as well run them
+00:35:15.359 automatically.
+00:35:16.720 >> And something I have to say is I get so
+00:35:19.200 much push back from software engineers
+00:35:21.440 saying these tools don't really make me
+00:35:23.760 faster. The quality isn't as good. And I
+00:35:26.480 think if you make the investment as
+00:35:28.320 you've shown us in, okay, well, what
+00:35:31.280 things would it do to make the quality
+00:35:33.440 better or what things would it do that
+00:35:35.599 you can automate that would make you a
+00:35:38.560 little bit faster? And you put that
+00:35:40.160 effort in to understanding all the
+00:35:43.280 things that these um tools can do for
+00:35:45.920 you either programmatically
+00:35:48.640 or through prompting. I think you can
+00:35:51.359 actually see a lot of those
+00:35:52.400 efficiencies. And then I want to call
+00:35:53.839 out something that that you said which
+00:35:55.680 is you have this local settings but you
+00:35:58.240 can create settings that are shared
+00:35:59.680 across your team for anybody that's
+00:36:01.359 working in the repo and that's for our
+00:36:03.599 engineering leaders out there or larger
+00:36:05.520 engineering teams to really think about
+00:36:07.280 if you haven't created these hooks for
+00:36:09.760 key repos or key projects where
+00:36:12.079 everybody is benefiting from this when
+00:36:13.839 they're using something like clawed code
+00:36:15.760 then you're missing out on some of the
+00:36:17.200 scaled leverage I think of of these
+00:36:19.839 tools. And so I'd love to put somebody
+00:36:22.000 in charge in an engineering organization
+00:36:24.480 of figuring how stuff like this can work
+00:36:27.920 inside your codebase and then scaling it
+00:36:30.400 out either through training or through
+00:36:32.320 configuration
+00:36:34.000 into all the other engineers so that
+00:36:35.599 everybody's getting this baseline
+00:36:36.800 quality and this baseline efficiency.
+00:36:38.880 >> Yeah.
+00:36:40.400 >> Amazing. Well, okay. Other than you know
+00:36:42.880 type T type script errors, just pratt
+00:36:45.520 off a couple other use cases. You
+00:36:47.040 deleted a bunch of stuff from this hook.
+00:36:48.960 So, what are the things you think that
+00:36:50.640 people should bake into a stop hook like
+00:36:53.280 this for cloud code?
+00:36:55.200 >> Uh, definitely formatting. Um, I there's
+00:36:57.839 there's kind of the the mindset we've
+00:36:59.760 always had before of like pre-commit
+00:37:01.599 hooks or pre- push hooks, things that
+00:37:03.200 operate on the CI and these are a lot of
+00:37:05.839 things that can be um fixed before those
+00:37:08.880 are even run. So whether it's there's a
+00:37:12.000 lot of tools around um with linting it
+00:37:15.520 it could constrain the length of files
+00:37:18.160 um there's things like uh circular
+00:37:20.560 dependencies where I could check the
+00:37:21.839 imports to make sure that files don't
+00:37:24.079 reference each other um there's code
+00:37:27.200 complexity there's tools that say does
+00:37:31.280 this code look like any other code in
+00:37:32.880 the codebase where um this could be
+00:37:36.400 extracted into a function or something
+00:37:37.839 because there's like duplicate code
+00:37:39.040 throughout the codebase There's all
+00:37:40.480 sorts of analytics and tools you could
+00:37:42.320 run. Um
+00:37:45.119 some of them probably not as often as
+00:37:47.920 others because it's more expensive and
+00:37:49.839 you just have to make those um decisions
+00:37:52.560 based on you know the size of your team,
+00:37:54.960 the size of your application. But
+00:37:58.320 there's just just put into an AI prompt
+00:38:00.880 of chat GBT or any of them to say what
+00:38:03.040 are all make a long list of uh developer
+00:38:05.920 tools people run on pre- push or uh on
+00:38:09.200 pre-commit and you'll see the a huge
+00:38:12.320 list of them that you could uh pick and
+00:38:14.079 choose from. Well, and I'm going to take
+00:38:16.160 a tiny detour for um our very patient
+00:38:19.280 non-technical audience members that have
+00:38:21.040 maybe listened to this, which is these
+00:38:24.000 um posttool call hooks or post stop
+00:38:26.480 hooks in Claude can also be used when
+00:38:30.240 you're working on non-code. So, we have
+00:38:32.240 so many people using claude code to
+00:38:34.480 write documents to do all sorts of
+00:38:36.640 things. And so you could just think
+00:38:37.920 about what do I want automated after
+00:38:40.480 this tool is called or what do I want
+00:38:42.000 automated after Claude finishes writing
+00:38:44.240 my my document. And you could think
+00:38:46.160 about ways to use something like this
+00:38:49.599 not even for code quality review just
+00:38:52.320 for a post kind of task completion
+00:38:56.160 check. So I think just the general
+00:38:57.920 framework's really useful. It's
+00:38:59.200 obviously highly applicable to software
+00:39:01.520 development but I think people can think
+00:39:02.880 of other creative use cases for this as
+00:39:04.880 well.
+00:39:05.760 Yeah, absolutely. The the diagramming
+00:39:07.839 stuff, create an image of what we just
+00:39:10.720 did and send it to my mom to show her
+00:39:13.359 I'm working hard. Like anything you
+00:39:15.920 want, right? It's it's the sky's is the
+00:39:18.240 limit. So,
+00:39:19.520 >> okay. So, just to wrap up, these have
+00:39:21.359 been super useful use cases. I want to
+00:39:23.520 call them out. One is using um
+00:39:26.320 documentation and diagramming,
+00:39:28.400 specifically mermaid diagrams to preload
+00:39:31.680 as a system prompt in your claude code
+00:39:34.640 instance so that you don't have to waste
+00:39:37.280 the time of doing context discovery and
+00:39:40.640 you can really make sure that that
+00:39:42.240 context is preloaded. It's a little more
+00:39:44.560 expensive on the token side but a lot
+00:39:46.480 faster and these diagrams are much more
+00:39:50.000 um easily read by machines than by
+00:39:52.320 humans. So, it's a good format to get
+00:39:54.160 things in. We looked at aliasing some of
+00:39:56.720 your favorite Claude code instances and
+00:39:59.760 settings so that you can pop into your
+00:40:02.960 live dangerously mode. You can pop into
+00:40:04.960 your you have all my diagrams mode. Um,
+00:40:07.680 you can just pop into those with one,
+00:40:10.320 you know, one one or two letters, which
+00:40:12.000 I like. Uh, we got a little side preview
+00:40:14.960 that we didn't call out, but just how
+00:40:17.680 casually you use voice and transcription
+00:40:21.280 to enter in and out of these tools. What
+00:40:24.480 I like about the way you use AI is you
+00:40:26.400 were just like highly efficient. You're
+00:40:27.680 like, the minimum number of things I can
+00:40:29.599 type the better and you're pretty fluent
+00:40:31.760 in switching between voice and typing.
+00:40:34.480 So, we saw we saw a little of that. uh
+00:40:36.960 you encouraged us to create in
+00:40:39.760 particular little command line tools to
+00:40:42.480 build one-off ideas or tools. Yours was
+00:40:45.359 a website design generator using Nano
+00:40:47.760 Banana. And then you showed us how to
+00:40:49.680 use um claude hooks and in particular a
+00:40:52.960 stop hook to do some quality and other
+00:40:56.480 checks on code written by these AI tools
+00:40:59.359 and automate some of the processes um
+00:41:02.000 that you might do as a software engineer
+00:41:04.400 that you want our little AI software
+00:41:06.960 engineers to do instead.
+00:41:09.040 >> Just that in I'm looking 40 minutes. We
+00:41:12.160 did it pretty fast.
+00:41:13.359 >> Nice.
+00:41:14.079 >> This is great. Okay. Well, I'm going to
+00:41:15.520 ask you a couple lightning round
+00:41:17.200 questions and then we will get you back
+00:41:18.960 to your very efficient AI coding. My
+00:41:22.000 first question again, you're like me. We
+00:41:24.560 love cursor, we love Claude, we love VS
+00:41:26.720 Code. We have all of them open. You
+00:41:29.920 know, I think everybody's I think
+00:41:32.079 there's interface wars happening right
+00:41:34.480 now. Are are people going to love these
+00:41:37.040 terminal UIs and command line tools like
+00:41:39.599 Claude Code? Do people want the the IDE?
+00:41:44.400 I I noticed that you're on cursor 20, so
+00:41:46.640 you have the agents view, which is very
+00:41:48.160 simple and abstracts away some of the
+00:41:49.680 code, and you're in the editor view. I'm
+00:41:52.400 going to give you two two wars. I wanted
+00:41:54.160 your quick opinion right now. We won't
+00:41:55.920 hold you to it, of what you think wins
+00:41:58.079 for, I would say real software
+00:42:00.160 engineers, you know, writing real code
+00:42:02.720 out there. um the the friends that I
+00:42:05.200 talk to,
+00:42:07.119 you know, terminal UI, IDE or both. And
+00:42:11.839 then do you do do you have any
+00:42:13.680 hypothesis on I think particular in the
+00:42:16.640 the VS fork world, VS Code fork world,
+00:42:20.160 are there any modes or you know what do
+00:42:22.480 you think how do you think people can
+00:42:23.920 compete in the IDE world?
+00:42:26.800 >> Yeah, so I think you need both. I think
+00:42:29.839 you need an IDE and there are so many
+00:42:32.480 use cases for the CLIs. Uh the reason
+00:42:35.200 being that the CLIs have a lot of
+00:42:39.040 configuration and a lot of settings
+00:42:41.280 where um as you saw with the aliases, I
+00:42:44.480 could launch a version of cloud that
+00:42:46.720 loaded up a specific set of MCPS or a
+00:42:49.280 specific set of prompts and preload a
+00:42:51.040 bunch of things and do that in a single
+00:42:53.520 terminal command and be very um quick
+00:42:56.480 and fast with that and then set it off
+00:42:58.240 in the background and just have it
+00:42:59.680 running. Um, currently inside of uh
+00:43:03.920 inside of a cursor or inside of any of
+00:43:05.680 these um idees, there's usually a lot of
+00:43:09.200 okay, open the UI, navigate to this, and
+00:43:11.440 then navigate that, then switch over to
+00:43:13.040 this, then switch over to that. Um, and
+00:43:14.800 they try and streamline as much as
+00:43:16.240 possible with slash commands and
+00:43:17.839 whatnot. Um, but it's just not quite the
+00:43:20.560 same. But if you have an IDE and you're
+00:43:25.280 reading through the files and you're
+00:43:26.960 selecting lines and you want to modify
+00:43:29.119 certain bits like focused work, um
+00:43:32.640 there's so many use cases for IDE where
+00:43:36.319 um there there's a recent cloud tool
+00:43:39.440 where it has a IDE integration where it
+00:43:43.200 can check the diagnostics from the IDE
+00:43:45.839 and you'll see that with VS Code as well
+00:43:47.760 like the extensions you put into an IDE
+00:43:50.640 can be fed back into the agent. So
+00:43:53.200 there's a whole robust extensions
+00:43:55.280 ecosystem from idees because people
+00:43:58.720 build on top of these things their own
+00:44:00.160 workflows. And I don't think we've quite
+00:44:01.760 reached like we build our own CLIs from
+00:44:03.680 AI. I don't see a lot of people building
+00:44:06.240 their own cursor extensions or VS Code
+00:44:08.720 extensions which are very possible and
+00:44:11.359 you could feed those errors and warnings
+00:44:13.200 and
+00:44:14.880 company rules and everything um in very
+00:44:18.000 complex ways back into the agents. Um so
+00:44:21.680 that that will happen as well. And I
+00:44:23.359 think for
+00:44:26.079 one IDE to stand out above the other
+00:44:28.720 they have to separate themselves like
+00:44:31.280 cursor is doing with their agent mode.
+00:44:33.200 Um they have to make something unique
+00:44:36.800 and user friendly that once like people
+00:44:40.800 are not going to give you a bunch of
+00:44:42.480 time to convince them. uh you're going
+00:44:44.960 to have to open the agent and you're
+00:44:46.319 going to have to like see that click on
+00:44:48.000 browser mode and it's going to have to
+00:44:49.359 launch your dev server and you're going
+00:44:50.560 to have to click on the element and say
+00:44:52.000 I want this to look uh uh with more pink
+00:44:56.160 or purple or whatever and then um and
+00:44:59.440 then they want that to just work. um
+00:45:01.920 you'll see any sort of friction or
+00:45:04.079 frustration from any AI tool anybody
+00:45:06.079 puts out there um is is just instant uh
+00:45:12.000 dismissal from so many people like
+00:45:14.000 there's just the bar for quality is so
+00:45:16.800 high in the AI landscape because
+00:45:20.000 everyone can build anything that you
+00:45:23.280 have to focus on the UX you have to make
+00:45:25.839 that experience better than everyone
+00:45:27.280 else and that's where you you can see
+00:45:30.000 the cursor making the bold moves of
+00:45:31.680 like, okay, let's go full on agents.
+00:45:33.440 Like, you have to make those leaps.
+00:45:35.760 >> Yeah, I I agree. And, you know, just
+00:45:38.079 talking about this skepticism and high
+00:45:40.160 bar, what I love about this episode that
+00:45:42.720 we recorded today is it's really most
+00:45:44.880 relevant for software engineers with
+00:45:48.160 more experience, who are shipping
+00:45:50.000 highquality code, and who want to write
+00:45:53.119 production level code more efficiently
+00:45:55.119 using some of these tools. It's this is
+00:45:57.040 not, you know, I hope you all hung out
+00:45:59.200 and listened to it, but it's not for our
+00:46:00.560 vibe coders and our non-technical folks.
+00:46:02.960 Um, and so what would you tell kind of
+00:46:07.359 senior principal software engineers,
+00:46:10.319 engineering leaders? I get asked this a
+00:46:12.319 lot about how do I sell the value
+00:46:15.280 proposition of these tools into very
+00:46:17.760 skeptical organizations and what are as
+00:46:21.599 a more advanced software engineer the
+00:46:24.000 things that have just changed your life
+00:46:25.359 in the last year say you should never go
+00:46:27.280 back to doing it this way kind of how do
+00:46:30.000 you how do you make that pitch that
+00:46:32.079 >> the the first thing that jumps to mind
+00:46:33.440 is anytime an issue is opened like you
+00:46:36.400 can set up streamlined workflows that
+00:46:38.480 someone opens an issue and you can have
+00:46:41.359 claude automatically tackle it. You can
+00:46:43.599 set up triggers for linear, GitHub,
+00:46:46.960 whatever that once something happens,
+00:46:49.680 you can get that first pass to see,
+00:46:52.240 okay, can we at least find this without
+00:46:54.480 doing any work? Can we at least
+00:46:57.280 get that initial uh review in there of
+00:47:00.960 what's going on so that
+00:47:05.119 once we jump into the task I mean for my
+00:47:08.079 entire career someone throws an issue at
+00:47:11.119 you spend the first you know probably
+00:47:13.839 day or two orienting yourself to like
+00:47:16.560 okay I didn't write this code this is
+00:47:18.319 legacy from let's you get blame let's do
+00:47:20.400 all this stuff like all of that busy
+00:47:23.440 drudgery that you're going through to
+00:47:25.280 even get started on the issue. Um, it
+00:47:28.800 can wipe out so much of that. It can
+00:47:30.800 find who touched the files, who did
+00:47:32.960 this, like if if you have the diagram
+00:47:34.720 set up, what are the risks, the impacts,
+00:47:37.119 are there potential security things? Are
+00:47:39.200 there like it it's so great at surfacing
+00:47:43.040 um the you don't know what you don't
+00:47:45.200 know sort of scenarios where you hire so
+00:47:48.160 many contractors, you hire so many
+00:47:49.760 people who uh are new to these things
+00:47:52.640 and then you throw them into these tasks
+00:47:55.280 and they just don't know like they
+00:47:58.079 haven't spent time with the codebase and
+00:48:00.880 then um you ask them to fix these things
+00:48:03.440 they just have zero idea what sort of
+00:48:05.040 impact their changes going to have. The
+00:48:07.280 AIS can surface a lot of that and they
+00:48:08.960 can just be like, &quot;Okay, we need to be
+00:48:10.319 super careful. This is, you know, in
+00:48:12.400 production and um this is cost going to
+00:48:15.680 cost us money if this goes wrong. Just
+00:48:18.079 tell me everything I need to look at.&quot;
+00:48:19.680 Like find every single debug path. Find
+00:48:21.760 every single um uh every why has this
+00:48:26.319 file changed over the course of history.
+00:48:28.000 Like write a summary of everybody who's
+00:48:29.359 touched this file so I can know why this
+00:48:31.599 function is the way it is. like there's
+00:48:33.200 just so much work that is just not
+00:48:35.760 writing code. Um, and all the
+00:48:39.760 exploration work is just so much easier
+00:48:42.400 to just say like everything I just said
+00:48:45.440 over the past, you know, 30 seconds is a
+00:48:47.520 prompt, which I could have just
+00:48:48.800 dictated, right? Um, and you just have
+00:48:51.680 to walk up to your computer and say, &quot;I
+00:48:53.920 have this issue. Like, guide me through
+00:48:56.480 all this stuff.&quot; And um it's just
+00:49:01.520 it blows my mind that people be hesitant
+00:49:04.720 for those sorts of tools. I I understand
+00:49:07.200 if they're like, &quot;Okay, maybe some of
+00:49:08.720 the code isn't perfect. We still have to
+00:49:11.599 do code reviews. We still have to like
+00:49:13.119 check for quality. We still have to run
+00:49:14.480 our tools to validate things.&quot; But if
+00:49:17.040 you're not using it to do to like
+00:49:19.839 inspect and investigate and write
+00:49:22.160 orientation and all that stuff, then
+00:49:24.559 like you're really missing out.
+00:49:26.800 like in in the enterprise space.
+00:49:29.359 >> Yeah. And on the other end, if you're
+00:49:30.960 not using it to document, so the next
+00:49:33.040 time somebody has to do that
+00:49:34.400 investigation, you have a little bit of
+00:49:36.240 an easier time, um you're al also
+00:49:39.440 missing out. So I do think on that that
+00:49:41.119 front and the back end. And what I often
+00:49:43.119 tell people is a good way to think about
+00:49:45.920 how to design your AI workflows is do
+00:49:49.200 not think in a task level orientation
+00:49:51.359 like I'm going to write code. I say,
+00:49:54.079 think about if I gave you infinite
+00:49:57.520 junior to mid-career talent who is
+00:50:00.480 always available, who would do the work
+00:50:02.960 you would do if you had unlimited amount
+00:50:06.160 of time and no meetings. What would you
+00:50:08.720 do when a ticket came in? Like, what
+00:50:10.400 would you do? And you'd say, well, I'd
+00:50:11.920 go trace who wrote the code. I would go
+00:50:14.400 figure out the history. I would make
+00:50:16.160 myself a really good tech spec. I would
+00:50:18.880 call out the risks. I would publish this
+00:50:21.839 in a way that my team could review it. I
+00:50:24.960 would have a senior engineer look at it
+00:50:27.280 and give me some really hard feedback.
+00:50:29.359 All of that could just become a prompt
+00:50:31.359 and then you know but so many people are
+00:50:33.440 just constrained by their time and and
+00:50:35.920 cognitive capacity and so they just go
+00:50:38.480 well I'm going to read the issue and I
+00:50:40.400 bounce around in the code a little bit
+00:50:42.000 and I guess I'm going to start coding.
+00:50:43.760 And so, um, you can kind of get to this
+00:50:47.520 model of
+00:50:49.520 optimal, not perfect, but like optimal
+00:50:52.079 workflow and then figure out how you can
+00:50:54.079 prompt or build workflows or hooks that
+00:50:56.400 would replicate that at least in an 80%
+00:50:59.280 way. Um, which is a lot better than not
+00:51:02.079 doing it.
+00:51:03.680 >> And something as simple as the commit
+00:51:05.599 messages are so much better than they
+00:51:07.440 used to be because developers didn't
+00:51:09.040 have to write them. I
+00:51:10.480 >> so much better
+00:51:11.839 >> for for people who are new to
+00:51:12.960 programming. Um, commit messages used to
+00:51:15.599 be like second attempt or like please
+00:51:19.359 work swear words like
+00:51:21.440 >> my my favorite one is just like 17 FS
+00:51:23.920 like or like trying this, trying that,
+00:51:27.119 trying this other thing.
+00:51:29.119 >> Yeah. Not these work plz.
+00:51:32.240 >> Yes.
+00:51:33.920 Yeah. You know, if anybody wants to vibe
+00:51:35.520 code a product, I always thought that
+00:51:37.359 startups would want a printed book of
+00:51:40.640 all their first years commit messages
+00:51:43.680 >> with like calling out the really funny
+00:51:45.200 ones. Oh, if somebody wants to vibe code
+00:51:48.000 a little uh GitHub API powered print uh
+00:51:51.760 business, I'm sure you could get a
+00:51:53.280 couple startups to print those out.
+00:51:55.040 Okay, last question. Yeah,
+00:51:57.839 >> this is probably challenging for you
+00:51:59.040 because you do a lot of dictation. So,
+00:52:00.880 you're probably actually pretty polite
+00:52:02.880 to AI given you would have to say
+00:52:05.520 frustrating things to it if you wanted
+00:52:07.040 to be mean. But when our our little
+00:52:10.559 friend Claude is going off the rails or
+00:52:12.319 you're really not getting what you want,
+00:52:14.079 what is your prompting reset
+00:52:18.319 start over technique? Have you found any
+00:52:20.480 any tricks that work particularly well?
+00:52:23.440 Yeah, it's it's really the um take the
+00:52:27.520 conversation, export it. A lot of them
+00:52:29.920 have the export commands.
+00:52:32.160 um drop the conversation with some of
+00:52:34.400 the code files into the um into chat GPT
+00:52:39.359 pro 5 or whatever it's called or Gemini
+00:52:42.480 uh deep think I believe is the and have
+00:52:45.280 it have them do a second set of eyes on
+00:52:47.520 it and then kind of start over rather
+00:52:51.280 than like if if things go off the rails
+00:52:54.720 and
+00:52:56.319 you can't fix it in about maybe one
+00:52:59.200 prompt of like where you see what's
+00:53:01.280 going wrong and just revert to the
+00:53:03.760 previous commit and kind of start over
+00:53:07.280 because there there there's always this
+00:53:09.520 underlying the AI is trying to go
+00:53:11.359 somewhere and you want it to go over
+00:53:13.839 here and you keep on telling it to to
+00:53:18.079 join on your path but it still wants to
+00:53:20.079 like get somewhere else that you don't
+00:53:21.680 quite understand. And so starting over
+00:53:24.079 from uh ground zero and like revising
+00:53:27.599 your original prompt is better than like
+00:53:30.000 trying to steer it to where you are when
+00:53:32.079 you've like drifted so far away. Um and
+00:53:35.359 that has to do it's so different with
+00:53:36.880 every model. It's so different with
+00:53:38.720 every prompt and all the context and
+00:53:40.720 project that it's like it can't give you
+00:53:42.880 like the here's instructions that work
+00:53:45.280 every time. But like starting over works
+00:53:47.280 every time. tossing a second set of eyes
+00:53:49.359 on the entire conversation where that AI
+00:53:52.880 isn't
+00:53:54.480 uh isn't invested in that conversation.
+00:53:57.680 It's instead critiquing the
+00:53:59.040 conversation. Um th those are my my two
+00:54:02.480 >> I think that second um that second
+00:54:05.520 workflow is so funny because I I think
+00:54:08.319 as somebody who's been a manager and a
+00:54:10.640 leader so many times sometimes I feel
+00:54:13.040 like I'm the reasoning model being
+00:54:14.880 brought in to mediate the the
+00:54:17.200 misunderstanding between two smart but
+00:54:20.400 misalign misaligned resources and so
+00:54:23.520 it's really funny to hear the idea okay
+00:54:25.440 like I am having a debate with my AI
+00:54:27.920 let's bring in like the third party.
+00:54:30.319 Let's mediate this conversation, have an
+00:54:32.400 objective set of eyes to see where we
+00:54:34.640 maybe are misunderstanding each other or
+00:54:36.400 going wrong and then reset and start
+00:54:39.119 start over. So again, I think you know
+00:54:41.119 this is the moment for folks with a lot
+00:54:42.720 of organizational and social skill
+00:54:44.559 thinking um to apply this to how you
+00:54:47.359 might design some of these flows um for
+00:54:49.599 for AI even though there are um beep
+00:54:53.599 boop machines that we're really using.
+00:54:55.920 >> Yeah. And and I would say kind of last
+00:54:58.079 thought on that is the recent planning
+00:55:00.559 modes that have been released with cloud
+00:55:02.079 code and cursor and all of them have
+00:55:04.240 eliminated a vast majority of that of
+00:55:06.480 that drift.
+00:55:07.520 >> Um so they've been fantastic releases
+00:55:09.839 which I strongly recommend for anything
+00:55:12.559 >> beyond like a small file change.
+00:55:14.400 Planning is awesome.
+00:55:15.839 >> Yeah, I love I love those features too.
+00:55:17.520 Okay, well John, this has been great.
+00:55:18.880 Where can we find you and how can we be
+00:55:21.440 helpful?
+00:55:22.480 >> Yeah, I'm on eggghhead.io.
+00:55:25.119 um that is I have tons of courses on AI
+00:55:28.160 tooling. I teach workshops through
+00:55:29.920 egghead.io. I send a newsletter out
+00:55:32.240 every week called AI dev essentials. Um
+00:55:34.960 you can find me on X and other platforms
+00:55:38.160 as well under my name. And that's it. I
+00:55:41.440 love to talk with anyone about all this
+00:55:43.599 stuff. Um my workshops are fun and we
+00:55:46.559 talk go way deeper into this super
+00:55:48.880 advanced stuff. So yeah.
+00:55:51.040 >> Great. and then maybe some of us can
+00:55:52.799 shop your possibly to be created
+00:55:56.160 Christmas and holiday decoration site.
+00:55:58.400 So you let us know
+00:55:59.599 >> back on then
+00:56:01.200 >> you let us know if that goes live. We'll
+00:56:02.880 drop into the show notes. Thank you so
+00:56:04.880 much for joining us and sharing your
+00:56:07.040 workflows.
+00:56:07.920 >> Thanks Claire.
+00:56:10.079 >> Thanks so much for [music] watching. If
+00:56:11.680 you enjoyed this show, please like and
+00:56:13.680 subscribe here on YouTube or even better
+00:56:15.760 leave us a comment with your thoughts.
+00:56:17.680 You can also find this podcast [music]
+00:56:19.200 on Apple Podcasts, Spotify, or your
+00:56:22.240 favorite podcast app. Please consider
+00:56:24.559 leaving us a rating and review, which
+00:56:26.400 will help others find the [music] show.
+00:56:28.640 You can see all our episodes and learn
+00:56:31.040 more about the show at howiipod.com.
+00:56:34.960 See you next time.

@@ -1,0 +1,883 @@
+# tactiq.io free youtube transcript
+# LLM Function Calling - AI Tools Deep Dive
+# https://www.youtube.com/watch/gMeTK6zzaO4
+
+00:00:00.120 hello everybody Adam LK here and today
+00:00:02.120 we're going to be diving into tool and
+00:00:03.560 function calling with language models
+00:00:05.400 now what tool and function calling is is
+00:00:07.200 it's essentially the ability to reliably
+00:00:09.320 connect language models to external
+00:00:10.920 tools functions or apis you've likely
+00:00:14.440 seen and used some form of function
+00:00:16.160 calling when using something like chat
+00:00:17.600 GPT which has the ability to write
+00:00:20.160 python code and then can use the
+00:00:21.760 function of actually executing the
+00:00:23.160 python code to show something like a
+00:00:24.720 graph or it can use the tool of
+00:00:27.320 searching the web and then execute that
+00:00:29.519 function to get realtime data or even
+00:00:32.000 when you ask it to generate an image
+00:00:33.800 it's not actually the language model
+00:00:35.079 that's generating the image but it uses
+00:00:36.719 the function of do the image generator
+00:00:39.760 with a prompt that it makes to actually
+00:00:42.160 generate this image and so being able to
+00:00:43.960 connect language models with existing
+00:00:46.160 and custom functions like the ones that
+00:00:48.199 we just saw really gives them the
+00:00:50.320 ability to do way more than just
+00:00:52.199 generate text and so at the heart of it
+00:00:54.239 function calling is the ability for
+00:00:55.879 language models to reason through when
+00:00:57.879 they need to actually use some sort of
+00:01:00.039 of external tool and then what it can do
+00:01:02.000 is it can generate some form of
+00:01:03.640 structured response that's parsible in a
+00:01:05.799 way that we can grab the arguments for
+00:01:07.520 that tool and then be able to execute
+00:01:09.400 them ourselves in more digestible words
+00:01:11.560 though it's essentially just going to
+00:01:13.520 let the language model know that it has
+00:01:15.240 some sort of functions available to it
+00:01:17.159 some examples might be like I send an
+00:01:18.920 email or get current weather and then
+00:01:21.040 it'll also know what the input Arguments
+00:01:23.680 for these functions are so for example
+00:01:25.720 like get current weather takes the
+00:01:27.079 location as a string and then it takes a
+00:01:29.159 unit for the tempure temperature as
+00:01:30.360 either Celsius or Fahrenheit and then if
+00:01:32.600 you were to ask to language model
+00:01:33.840 something like what is the weather in
+00:01:36.000 San Francisco it would then generate
+00:01:38.240 some sort of response that's parsible
+00:01:40.399 that tells you to call the get current
+00:01:42.640 weather function along with the location
+00:01:44.960 as San Francisco and the unit as maybe
+00:01:47.320 Fahrenheit and this functionality is
+00:01:48.759 super useful as some of the common use
+00:01:50.439 cases outlined by open AI here is the
+00:01:52.520 ability to use function calling for
+00:01:53.920 something like creating assistance that
+00:01:55.320 answer questions by calling external
+00:01:57.280 apis converting natural language into
+00:02:00.119 API calls or even extracting structured
+00:02:03.000 data from text and so to briefly just go
+00:02:05.039 over the basic sequence of function
+00:02:06.920 calling before we show this all in
+00:02:08.440 action and defining our own it
+00:02:10.119 essentially follows this flow you're
+00:02:11.760 going to call the model with the user
+00:02:13.360 query and some sort of user question and
+00:02:15.800 then the model is also going to have a
+00:02:17.080 set of functions defined and its
+00:02:18.519 functions parameter this is how it's
+00:02:20.280 going to know what functions it has
+00:02:21.840 available and also the different
+00:02:23.800 arguments to those functions the model
+00:02:25.920 itself then can choose to call one or
+00:02:27.760 more functions and if it does its
+00:02:30.120 response then will be a Json output and
+00:02:33.040 the Json output will specify what
+00:02:34.800 function it wants to call and then all
+00:02:36.480 of the arguments that it wants to call
+00:02:37.879 the function too and then what we have
+00:02:39.760 to do then is parse that Json into code
+00:02:42.480 and then call the functions with the
+00:02:43.800 provided arguments and then we append
+00:02:46.400 all of that context back to the messages
+00:02:49.319 and call the model again giving it all
+00:02:51.280 that and letting the model summarize the
+00:02:52.760 results back to the user so really well
+00:02:54.440 the name implies that the model is kind
+00:02:56.000 of Performing some action it's really
+00:02:57.920 not the case the model itself is is
+00:03:00.280 deciding to use some sort of function
+00:03:02.640 and then coming up with the arguments to
+00:03:04.400 that function or tool it's not actually
+00:03:06.440 running the tool that's up to us to
+00:03:08.400 parse and do ourselves so with the
+00:03:10.159 introduction and background out of the
+00:03:11.400 way let's actually take a look at how
+00:03:12.920 some of these functions look and how to
+00:03:14.760 use them with language models and to do
+00:03:17.080 this we're going to be using the example
+00:03:19.200 of open AIS tools and then eventually
+00:03:21.959 later on down the line we're going to
+00:03:23.080 show how you can use Lang chain to make
+00:03:24.840 your own custom Universal tools for any
+00:03:26.959 sort of model but the format that the
+00:03:28.400 model is actually going to be looking
+00:03:29.799 for to know what tools are available to
+00:03:31.720 it is actually going to look a little
+00:03:33.360 bit like this this Json schema and for
+00:03:36.480 this example we're going to be looking
+00:03:37.840 at a tool that will be getting the
+00:03:39.360 exchange rate and within this schema
+00:03:41.519 we're going to have the type which is a
+00:03:42.959 function and then within the function it
+00:03:45.080 takes in a name so that's going to be
+00:03:46.799 get exchange rate and then a description
+00:03:49.200 and the description is really important
+00:03:50.720 because this is what the model is going
+00:03:52.159 to know kind of when to use or what the
+00:03:55.239 function is actually useful for so for
+00:03:57.439 getting the exchange rate we put in get
+00:03:59.079 the current exchange rate of a base
+00:04:00.599 currency and a Target currency so that
+00:04:03.200 when you do actually interact with a
+00:04:05.040 model that has this tool available it
+00:04:07.200 will know that it can use this tool to
+00:04:09.079 find the current exchange rate and then
+00:04:11.040 within that we have to specify the
+00:04:12.959 different parameters or the different
+00:04:14.400 function arguments that are in here and
+00:04:16.478 for that we have base currency Target
+00:04:18.600 currency and date within all of these
+00:04:20.918 you have to specify a type so for base
+00:04:22.880 currency and Target currency that's just
+00:04:24.600 going to be a string and then also
+00:04:26.840 another description because this is what
+00:04:29.039 the models going to look at to know what
+00:04:30.960 to put in as these actual arguments so
+00:04:34.199 for base currency that's obviously going
+00:04:36.000 to be the base currency for exchange
+00:04:38.000 rate calculation and then some examples
+00:04:40.120 of what that might look like Target
+00:04:41.759 currency is going to be the target
+00:04:43.440 currency for exchange rate calculations
+00:04:46.000 and then what that might look like and
+00:04:47.639 then here on date I also have it as a
+00:04:49.160 type string and then the description
+00:04:51.080 being a specific day to reference in
+00:04:53.680 year month date format you can also pass
+00:04:56.199 in this required parameter here to tell
+00:04:59.039 the model that it's it's required when
+00:05:00.600 calling this function to put in a base
+00:05:02.520 currency and a Target currency however
+00:05:04.919 it's not necessarily required to put in
+00:05:06.520 a date in this example the schema that
+00:05:08.280 we're passing to the language model
+00:05:10.039 would then kind of line up to an actual
+00:05:12.479 function here that we have defined which
+00:05:14.440 is this git exchange rate function which
+00:05:16.880 takes in the base currency as a string
+00:05:18.560 the target currency as a string and the
+00:05:20.240 date as a string but has a default to
+00:05:21.840 latest and then it returns a float and
+00:05:24.199 so then this is what we're actually
+00:05:25.639 going to be executing once we get the
+00:05:27.479 inputed arguments from the language
+00:05:29.160 model and as a quick second example
+00:05:30.759 before we show what that execution
+00:05:32.160 actually looks like I have a second tool
+00:05:34.000 defined here that's going to search the
+00:05:35.600 internet and that of course takes in the
+00:05:37.280 name of search internet the description
+00:05:39.199 is get internet search results for
+00:05:40.720 real-time information and then the
+00:05:42.560 properties are just going to be one
+00:05:44.120 search query that's a string and takes
+00:05:46.000 the description of the query to search
+00:05:47.800 the web for which is of course the one
+00:05:50.120 required argument there so to get a tool
+00:05:52.240 response we'll be using the openai
+00:05:54.240 direct API just so that we can call this
+00:05:57.000 and we're going to pass in the model as
+00:05:58.280 GPT 40 we're going to pass in our
+00:06:00.360 messages which is going to contain our
+00:06:01.840 prompt of how much is a dollar worth in
+00:06:03.680 Japan and then we can put in the tools
+00:06:06.400 as a list so I have these first tools
+00:06:08.800 here defined up above within a list in
+00:06:11.840 and of itself and then that goes in
+00:06:13.919 there and then you can also pass in a
+00:06:15.520 tool Choice which we'll expand on a
+00:06:17.039 little bit later but let us see what is
+00:06:20.000 actually output from the model when we
+00:06:21.919 ask how much is a dollar worth in Japan
+00:06:24.280 so that'll run for just a second and
+00:06:26.280 then if we print out the responses
+00:06:27.880 nicely it looks a little bit like this
+00:06:29.680 so the full response is up here but
+00:06:31.479 breaking it down a little bit with just
+00:06:33.080 this quick parsing function that I've
+00:06:34.599 got here you can see that the chat
+00:06:36.160 completion message looks a little bit
+00:06:37.880 like this and it actually didn't return
+00:06:39.880 any text whatsoever but it did return
+00:06:42.319 one tool call and so we can see that the
+00:06:44.599 tool call was to call git exchange rate
+00:06:47.039 and then it responded with its arguments
+00:06:48.639 of Base currency of USD and Target
+00:06:50.960 currency of JPY and so this is perfectly
+00:06:53.560 in line with our defined schema for this
+00:06:55.240 tool that takes in the base currency the
+00:06:57.160 target currency as a string and then
+00:06:59.280 once it kind of in this format so it was
+00:07:01.800 able to understand that that it had that
+00:07:04.000 tool available to it and so then when I
+00:07:06.160 asked for how much the dollar worth it
+00:07:08.639 called that tool and then these are the
+00:07:10.199 arguments that it wants to pass into it
+00:07:12.000 so to give our model a little bit of a
+00:07:13.360 more complex Challenge and see if we can
+00:07:15.160 use multiple tool calls at once I'm
+00:07:17.080 going to now ask how much is the dollar
+00:07:18.479 worth in Japan how about Poland and
+00:07:20.360 what's the current news in Argentina My
+00:07:22.319 Hope here is that it will call our git
+00:07:24.199 exchange rate twice and then our search
+00:07:26.160 internet function once so let's give
+00:07:28.960 that a whirl and then print it
+00:07:33.560 out and great yeah we can see that it
+00:07:36.360 returned a lot more now and it didn't
+00:07:38.639 return any message as is on par with
+00:07:41.199 what we just saw but we did see that we
+00:07:43.440 have three tool calls two to get
+00:07:45.960 exchange rate one with USD and JPY one
+00:07:48.960 with USD and pln and then one search
+00:07:51.520 internet query with the search query
+00:07:53.919 here and then it wants to search for
+00:07:55.680 current news in Argentina so now we've
+00:07:57.440 seen that this is working out well the
+00:07:58.919 model understands that it has the two
+00:08:00.840 available functions to it and then it
+00:08:02.759 also has enough reasoning capabilities
+00:08:04.680 to know when it actually wants to use
+00:08:06.599 these and so when it wants to use these
+00:08:08.560 it returns a tool call and then the
+00:08:10.599 arguments for that tool in this
+00:08:13.000 dictionary or Json format The Next Step
+00:08:15.680 then is of course executing these
+00:08:17.720 functions and then returning the context
+00:08:19.599 back to the language model which as we
+00:08:21.440 saw a little bit earlier I have these
+00:08:23.520 functions clearly defined as actual
+00:08:25.159 functions that will return actual
+00:08:26.759 results down here we have the G exchange
+00:08:29.199 rate which I showed earlier and then a
+00:08:31.400 search results which uses the duck ducko
+00:08:33.719 search API to just take in a string text
+00:08:36.919 and then return some Snippets from the
+00:08:38.839 web using duck ducko so now that we have
+00:08:40.799 the functions defined and then we also
+00:08:42.240 have a model that knows that it has the
+00:08:43.958 tools with the correct corresponding
+00:08:46.240 schemas that match the inputs to the
+00:08:48.240 functions and can generate the arguments
+00:08:49.959 for them what we need to do then is put
+00:08:51.959 it all together and so to do this it's
+00:08:53.480 going to be a bit of a multi-step
+00:08:54.920 process we're first going to get our
+00:08:56.800 initial response by passing in our user
+00:08:58.600 message which is just our original
+00:09:00.079 prompt which might be something like you
+00:09:01.880 know how much is the dollar worth in
+00:09:03.600 Japan right now and then we're going to
+00:09:05.440 get our first response back from the
+00:09:07.000 model and the model similar to what we
+00:09:08.640 showed up above will have all of the
+00:09:10.600 tools that we just defined available to
+00:09:12.920 us and so we're likely then going to get
+00:09:15.560 a full response that looks a little bit
+00:09:17.160 like this that may contain one or more
+00:09:19.399 tool call and from the tool call we know
+00:09:21.720 what the function name is and the
+00:09:23.399 arguments so what we're going to do is
+00:09:25.680 actually look at all of the tool calls
+00:09:27.839 extract the tool call name extract the
+00:09:30.000 tool called arguments and then what
+00:09:31.760 we're going to do is call that function
+00:09:34.000 with the arguments that we parsed from
+00:09:36.680 the response of the language model and
+00:09:38.640 once we get the output from whatever
+00:09:40.160 function was called what we want to do
+00:09:42.040 is send it right back into the language
+00:09:44.120 model to get our final answer with the
+00:09:46.279 context from that called function and to
+00:09:48.440 do that we have to put in a specific
+00:09:50.320 tool message which if you're familiar
+00:09:52.240 with the way that open AI handles things
+00:09:54.519 like assistant versus user messages the
+00:09:57.200 tool message is what it uses to specify
+00:09:59.680 what tool call actually returned what
+00:10:02.320 and so it'll take in a tool call ID the
+00:10:04.760 role which is of course going to be the
+00:10:06.279 tool the name of the function and then
+00:10:08.399 the content which is the function
+00:10:09.880 response and so then what we're going to
+00:10:11.640 do is we're going to append any and all
+00:10:13.880 tool messages to our total messages
+00:10:17.320 which at this point our messages will
+00:10:19.079 have the original user message the AI
+00:10:21.680 assistant response here which will
+00:10:24.240 likely have all of the tool calls in
+00:10:25.959 there and then it'll now have the tool
+00:10:28.040 output messages with all of the outputs
+00:10:30.440 from those tools and then what we do is
+00:10:32.440 we pass in all of those messages all at
+00:10:34.800 once to get our second response which is
+00:10:36.839 just going back into GPT 40 here with
+00:10:39.639 all of those messages to get our quote
+00:10:42.079 unquote second response that has all of
+00:10:44.279 the context from the called tools this
+00:10:46.279 is a lot easier to understand in action
+00:10:48.040 so let's actually run it with how much
+00:10:49.480 is the dollar worth in Japan right now
+00:10:51.720 and we'll see that the initial message
+00:10:53.120 was of course the user saying how much
+00:10:54.880 is the dollar worth in Japan right now
+00:10:56.680 we see that the response message is this
+00:10:58.639 and we see that contains a tool call and
+00:11:01.040 the tool call ID is right here and then
+00:11:03.200 it wants to run the base currency of USD
+00:11:06.519 and the target currency of JPY through
+00:11:08.720 the git exchange rate function we then
+00:11:11.120 execute that function here with this
+00:11:13.079 line the function response gives us 158
+00:11:16.399 we append the tool call and its output
+00:11:18.200 to all the messages pass it all back in
+00:11:20.560 for that second response and so then our
+00:11:22.880 quote unquote second response which in
+00:11:26.000 other words would be the first response
+00:11:27.760 to our original question would be as of
+00:11:30.000 the most recent data one USD is
+00:11:32.000 equivalent to approximately 158.523
+00:11:59.680 return this just like before our first
+00:12:01.920 message is going to be our prompt and
+00:12:03.399 then the response from the language
+00:12:04.760 model are going to be all of these tool
+00:12:06.399 calls which it's going to do three in
+00:12:08.360 particular it's going to call get
+00:12:10.040 exchange rate with USD to JPY get
+00:12:12.720 exchange rate with USD to pln and then
+00:12:15.360 it's also going to call search internet
+00:12:17.279 with current news in Argentina so we can
+00:12:20.279 see that all of these function calls
+00:12:22.920 came in as tool calls and then we called
+00:12:25.560 all of them and got the responses here
+00:12:28.680 and then here here and then all of this
+00:12:30.560 stuff here and then we appended all of
+00:12:32.680 the tool calls with their respective IDs
+00:12:35.000 and then the outputs back into all of
+00:12:38.360 our messages and then the lm's final
+00:12:40.959 response was then our exchange rates of
+00:12:43.480 USD to JPY USD to pln and then some
+00:12:46.519 current news in Argentina so even with
+00:12:49.480 more advanced function calls you can see
+00:12:51.519 that it's actually able to call multiple
+00:12:53.760 things at once which we then execute and
+00:12:55.600 then use as context to get our final
+00:12:57.760 response back to the user couple things
+00:12:59.839 to note here is that we're passing in
+00:13:01.600 this tool Choice option which we have
+00:13:03.720 defaulted to Auto and then also the
+00:13:06.399 model is calling a bunch of functions at
+00:13:08.519 once so you can actually specify a few
+00:13:10.600 of these things and it takes a few
+00:13:12.120 different arguments which I have laid
+00:13:14.000 out here so the default behavior for
+00:13:16.519 function calling is set to Auto and this
+00:13:18.560 lets the model decide whether to call a
+00:13:20.320 function and if so which functions to
+00:13:22.560 call however there's three main ways
+00:13:24.760 that you can actually customize the
+00:13:25.959 default Behavior depending on your use
+00:13:27.600 case you can force a model to to always
+00:13:29.639 call one or more function if you set
+00:13:31.920 tool choice to required then the model
+00:13:34.399 will select any function to call at
+00:13:36.760 least once you can also Force the model
+00:13:38.800 to call one specific function if you
+00:13:41.279 pass in tool Choice and then this
+00:13:42.760 dictionary here of the type with the
+00:13:44.680 name and then you can also disable
+00:13:46.519 function calling and force the model to
+00:13:48.199 only generate user facing messages with
+00:13:50.279 tool choice of none and so these options
+00:13:52.279 give you a little bit of the flexibility
+00:13:54.079 to say when you want a function to be
+00:13:55.720 called if you need a function to be
+00:13:57.320 called what function to be called or if
+00:13:58.839 you want functions to be called at all
+00:14:00.839 one of the other things is that there
+00:14:02.199 also exists the option for parallel
+00:14:04.560 function calling and so what parallel
+00:14:06.759 function calling is is essentially
+00:14:08.800 what's been happening up here it it'll
+00:14:10.759 pass out multiple tool calls and then we
+00:14:13.399 can parse all of them and run all of
+00:14:15.519 these tools in parallel and so if you
+00:14:18.279 have this on it'll do multiple function
+00:14:20.320 calls together in batches but if you
+00:14:22.160 turn it off what it'll do is it'll
+00:14:24.399 actually only call one function at a
+00:14:26.279 time so you won't get these three all at
+00:14:29.480 once that could be multiple tools if you
+00:14:31.600 just want something to be going on once
+00:14:33.880 but with these two optional parameters
+00:14:36.000 you can really specify exactly how many
+00:14:38.279 tools you want to be called what tools
+00:14:39.639 to be called and when so super useful
+00:14:41.839 for getting more granular into your
+00:14:43.800 specific use case with function calling
+00:14:45.639 great so now that we have a general
+00:14:47.320 understanding of what functions are how
+00:14:49.160 to set up some pretty simple ones and
+00:14:51.079 then looking at actually executing them
+00:14:53.320 and getting your full response back from
+00:14:55.199 the language model let's look at a bit
+00:14:57.079 more Advanced Techniques and ways to set
+00:14:59.360 up functions and so for more advanced
+00:15:01.880 functions what we can actually use are
+00:15:04.440 pantic Json schemas to simplify things a
+00:15:06.800 little bit because what you don't want
+00:15:08.399 to really be doing is getting lost in
+00:15:11.040 all of the indents and the wonderful
+00:15:14.360 Json that's happening up here so a
+00:15:16.800 really easy way to generate the
+00:15:19.480 parameters for a model is by actually
+00:15:21.440 using a pantic base model class and so
+00:15:23.639 using pantic and being able to take
+00:15:25.199 advantage of things like python typing
+00:15:27.320 can let you set out some very
+00:15:29.319 complicated and involved function
+00:15:32.000 parameters for my example here of a more
+00:15:34.199 advanced function I have one that covers
+00:15:36.279 sending an entire email campaign and so
+00:15:38.920 this will take in recipients a subject
+00:15:40.959 body text any attachments different
+00:15:43.040 personalization a send time the priority
+00:15:45.480 for it different tracking options and a
+00:15:47.160 campaign ID and then using the typings
+00:15:50.079 and using this pantic class of the base
+00:15:52.240 model what I'm able to do is actually
+00:15:54.600 Define my parameters and how I want them
+00:15:57.079 to be treated all nicely here in an
+00:15:59.279 organized manner for example I can say
+00:16:01.399 that for recipients I want it to be a
+00:16:03.279 list of strings for something like
+00:16:05.319 attachments I want it to be an optional
+00:16:06.959 list of HTTP URLs for things like
+00:16:09.880 personalization that might even be an
+00:16:11.720 optional dictionary that's a string that
+00:16:14.839 has dictionaries of strings in there or
+00:16:17.839 something like you know tracking which
+00:16:19.720 might be an optional dictionary that has
+00:16:21.519 a string and Boolean values so you can
+00:16:24.120 see now where using um pantic and
+00:16:27.079 different typing hints you can actually
+00:16:29.079 set up a lot more complicated flows
+00:16:31.199 without having to do all of the fancy
+00:16:33.600 Json schema writing yourself and then
+00:16:35.600 with all of these we can pass in our
+00:16:36.920 descriptions so that the language model
+00:16:38.519 will know what it should put there if
+00:16:40.560 it's looking at putting something in
+00:16:42.000 here so for example like our subject it
+00:16:44.360 might be string specifying the email
+00:16:46.000 subject line or for personalization it
+00:16:48.319 might be dictionary for personalizing
+00:16:49.959 email content with a little bit about
+00:16:52.279 what the key and value is and some
+00:16:54.000 examples there or something like
+00:16:56.240 priority we might have it as an
+00:16:58.160 enumerator set they can only choose from
+00:17:00.680 different things here these three
+00:17:02.160 options of low normal or high and you
+00:17:04.400 can pass in all of this super nice
+00:17:06.199 advanced stuff and set it up a little
+00:17:07.959 bit easier than actually writing out all
+00:17:09.559 of the plane ja on yourself putting the
+00:17:11.280 tool together in a way that open AI can
+00:17:13.720 actually ingest it then is as simple as
+00:17:15.919 just passing in the type the function
+00:17:17.640 name and description and then in the
+00:17:19.280 parameters you can use then your schema
+00:17:22.079 here the do schema method from our
+00:17:24.400 pantic base model class and so what that
+00:17:27.000 will then look like is all of this
+00:17:29.840 lovely customization that has all of the
+00:17:32.679 different parameters with every single
+00:17:35.679 typing thing and optional and required
+00:17:39.600 stuff all here nice and lovely and this
+00:17:42.120 ability to use the pantic base models
+00:17:44.280 really just makes it a lot easier to
+00:17:45.880 Define these more advanced more in-depth
+00:17:48.480 and more granular functions like this
+00:17:50.320 that aren't just going to be taking in
+00:17:51.600 you know one or two string values so
+00:17:53.280 let's actually try this out in action
+00:17:55.120 and my prompt here is going to be can
+00:17:56.320 you send an email to adaml youtube.com
+00:17:59.200 Sam ultman open.com and Elon Musk
+00:18:01.880 twitter.com about the cool YouTube
+00:18:03.600 channel youtube.com/ adaml for July 20th
+00:18:07.520 at 8: a.m. Pacific this is a high
+00:18:09.799 priority and include just click tracking
+00:18:12.200 with name personalization campaign is
+00:18:14.360 going to be campaign 13 also have my
+00:18:16.559 LinkedIn as the attachment here and sign
+00:18:18.520 off your response with Adam l in the
+00:18:20.320 body and so passing that all off to the
+00:18:24.120 language model we can see what we get so
+00:18:27.000 we can see that we indeed get a
+00:18:29.280 completion that has a function call and
+00:18:31.440 it wants to call the send email campaign
+00:18:33.720 function it gave me a list of the
+00:18:35.799 recipients a string of the subject it's
+00:18:38.320 giving me some body text here it has
+00:18:40.679 some attachments as a list of HTTP URLs
+00:18:43.400 it's personalization is then going to be
+00:18:46.039 by the email for first name here in a
+00:18:49.360 lovely dictionary form it's giving me a
+00:18:51.679 send time in the specific date time
+00:18:54.200 format give me my priority as high and
+00:18:56.520 the tracking as the specific dictionary
+00:18:58.480 here and also my campaign ID so you can
+00:19:00.960 see that even with these super super
+00:19:03.280 Advanced functions the language models
+00:19:05.280 are pretty good at knowing when to use
+00:19:06.880 them and then actually inputting in the
+00:19:08.799 arguments so just to give a little bit
+00:19:11.520 of exam of an example of what this might
+00:19:13.880 look like in the final State I have this
+00:19:16.360 function here that will simulate sending
+00:19:19.440 off an email campaign with all of this
+00:19:21.799 stuff so with that simulation ran you
+00:19:24.080 can see that my email campaign campaign
+00:19:26.280 13 with was sent out with a high
+00:19:28.760 priority it was sent out to adaml
+00:19:31.640 youtube.com with this subject and then
+00:19:33.799 all of this nice personalization went
+00:19:35.640 into it and then it had the body text it
+00:19:39.400 had the attachments here my scheduled
+00:19:41.520 send time is correct for 8: a.m. and
+00:19:44.240 then it had the tracking as just for
+00:19:46.480 clicks and it being true great so
+00:19:48.679 hopefully that got you thinking about
+00:19:50.360 some of the cool ways that you can
+00:19:51.919 actually Implement and use more advanced
+00:19:54.520 functions and the advanced function
+00:19:56.320 calling capabilities of these models so
+00:19:58.760 now that we've gone over how you can set
+00:20:00.400 up your own functions use them and
+00:20:02.400 execute them with open AI models you're
+00:20:05.000 probably wondering does it look the same
+00:20:07.120 for other models and other capabilities
+00:20:09.799 and the answer there is generally no
+00:20:12.440 while open ai's tool calling
+00:20:14.080 functionality is tuned so that it takes
+00:20:16.080 in kind of a Json schema like this
+00:20:18.480 something like anthropic is actually
+00:20:20.360 going to be this list here with
+00:20:22.720 different things like this so there's no
+00:20:25.240 one really standardized format for
+00:20:28.000 function calling a second issue too is
+00:20:30.240 that being able to understand and use
+00:20:32.520 function calling is a fine-tuned ability
+00:20:34.559 in these larger models so not every
+00:20:36.400 model even has the ability to do this
+00:20:39.080 however there are a lot of models that
+00:20:40.480 are currently available from open AI
+00:20:42.320 from anthropic from Google and then some
+00:20:44.400 other companies here as well that have
+00:20:46.720 this ability and so the easiest way to
+00:20:49.200 kind of Define your own tools and then
+00:20:50.679 be able to plug and play with different
+00:20:52.280 models that have function calling
+00:20:53.600 abilities is actually using linkchain
+00:20:55.520 standardized framework as they give you
+00:20:57.679 a standardized way way of setting up an
+00:20:59.840 llm and defining a tool and then they
+00:21:02.159 handle all of the different formatting
+00:21:04.320 things in the back end that will make it
+00:21:06.240 compatible with the different llms this
+00:21:08.799 makes it really easy to just plug and
+00:21:10.400 play with different llms and different
+00:21:12.159 tools across different providers making
+00:21:14.840 it super easy so to show what that looks
+00:21:17.000 like let's actually set it up in link
+00:21:18.480 chain and of course we're going to
+00:21:19.919 instantiate an llm and for this example
+00:21:22.679 I didn't want to use open AI since
+00:21:24.240 that's all that we used before so we're
+00:21:26.200 going to be using clae 35 Sonet there's
+00:21:28.159 then three really straightforward ways
+00:21:29.880 of actually defining your tools with
+00:21:31.400 laying chain you can either use the tool
+00:21:33.400 decorator which is just at tool over an
+00:21:36.000 existing function and then what I did
+00:21:38.480 also is you have to put in a bit of a
+00:21:40.840 descriptor here and then this is of
+00:21:42.240 course going to be the tool description
+00:21:43.840 that gets passed and then it's also
+00:21:45.760 helpful to put in the different typing
+00:21:47.919 here in your actual input to your
+00:21:49.960 function but just attaching the tool
+00:21:52.039 decorator to an existing function on top
+00:21:54.480 of it we'll turn it into an invocable
+00:21:56.679 tool meaning then that if we use the
+00:21:58.799 object that Lang chain will then make
+00:22:00.240 for us with this git exchange rate and
+00:22:02.240 use the invoke method with the expected
+00:22:04.360 parameters here you can actually just
+00:22:06.200 run this with the arguments and then get
+00:22:09.000 your desired output plain and simple
+00:22:11.080 like that they similarly support pantic
+00:22:13.360 base models similar to what we did with
+00:22:15.200 the marketing email campaign so I have a
+00:22:17.000 shortened version here as an example and
+00:22:19.120 then they also have a bunch of different
+00:22:20.720 tool Integrations so instead of using
+00:22:23.559 the duck duck goo API directly what we
+00:22:26.320 can do is actually use their Lang chain
+00:22:28.200 community tools of duck duug go search
+00:22:30.159 results and then in just one or two
+00:22:32.120 lines actually set up that tool with
+00:22:34.440 just a quick function like this which
+00:22:36.640 similar to our exchange rate function
+00:22:38.279 can also be invocable like this and we
+00:22:40.880 can get those Snippets there and then to
+00:22:42.559 pass the tools in along with the
+00:22:44.279 language model object that we put they
+00:22:46.240 just have this very simple bind tools
+00:22:48.320 method where if you take your list of
+00:22:50.440 the tools that we have here and then
+00:22:52.200 pass in your llm which we have up here
+00:22:54.679 as CLA 35 Sonet and then have bind tools
+00:22:58.760 with the tools list that will then give
+00:23:00.919 you another object where the llm
+00:23:03.480 actually then knows that it has all of
+00:23:05.279 these tools available to it and so this
+00:23:07.520 is different from actually having to
+00:23:08.880 pass in the tools as a list every single
+00:23:10.799 time we invoke it like what we were
+00:23:12.240 using with the open AI API and once
+00:23:14.159 we've bound the tools to the llm it's
+00:23:16.080 now ready to be used so what we can do
+00:23:18.640 is then just invoke the llm object with
+00:23:21.200 something like when was linkchain
+00:23:22.760 founded and how much is a dollar worth
+00:23:24.559 in Japan right now and then the output
+00:23:26.799 that we'll actually get is so anthropic
+00:23:29.080 if we head back over here will actually
+00:23:31.400 output some form of text where it's
+00:23:33.919 thinking a little bit of what it should
+00:23:35.799 do so it put out to answer your
+00:23:37.400 questions I'll need to use two different
+00:23:38.919 tools one for search and one for
+00:23:40.679 currency exchange rate and it knows that
+00:23:42.520 it has the search and the currency
+00:23:44.279 exchange rate and then we get back these
+00:23:46.880 tool calls and the tool calls are for
+00:23:49.159 duck Dugo results Json with the
+00:23:51.400 arguments of the query here and then the
+00:23:53.440 other one is get exchange rates with the
+00:23:55.520 arguments of the base currency and
+00:23:57.480 Target currency so almost exactly
+00:24:00.279 similar to what we were seeing with open
+00:24:02.080 AI but now this is just using Lang chain
+00:24:04.679 in a standardized format and the great
+00:24:06.320 part about having the tools actually in
+00:24:08.279 a format where we can directly execute
+00:24:10.360 them with the invoke method is that it
+00:24:12.159 makes it super super easy to then take
+00:24:14.799 all these tool calls pass them back into
+00:24:17.440 our tools and then do the full circle of
+00:24:19.919 what we did with actually passing in the
+00:24:21.880 user query executing the tools and then
+00:24:24.520 having the AI respond with the executed
+00:24:26.440 tool context doing that with Lang chain
+00:24:28.480 a little bit like this we're going to be
+00:24:30.000 taking our initial prompt converting it
+00:24:31.919 into a human message with the human
+00:24:33.960 message function here and then passing
+00:24:35.840 that into our llm with tools to get the
+00:24:38.600 original llm response back and so the
+00:24:41.480 llm here is going to give us our tool
+00:24:43.559 calls and then what we can do is just go
+00:24:46.440 through all of the tool calls select
+00:24:48.559 which one we want and then we can just
+00:24:50.799 directly invoke them with the tool call
+00:24:53.080 arguments that the llm provided we're
+00:24:55.520 then able to use the tool message
+00:24:57.840 function to just properly format the
+00:25:00.080 tool output back into the proper
+00:25:03.559 formatting for the full conversation
+00:25:05.919 that we're keeping track of and then of
+00:25:07.720 course this full conversation with the
+00:25:10.279 humans prompt the ai's tool calls and
+00:25:12.720 then the results of all of the AI tool
+00:25:14.679 calls us tool messages will be passed in
+00:25:16.559 to get our final message but before we
+00:25:18.600 get the final message we can see that
+00:25:20.840 this has my original prompt we then see
+00:25:23.159 that the AI says to answer your
+00:25:24.760 questions I'll need to use two different
+00:25:26.000 tools one to search for information and
+00:25:28.000 one to to check the currency rate let me
+00:25:29.960 do that and then it has a few inputs
+00:25:33.880 here so it wants to use duck duck goo
+00:25:36.520 for when was l chain founded and then it
+00:25:38.640 wants to use the git exchange rate for
+00:25:42.039 the base currency of USD and the target
+00:25:43.960 currency of JPY and then we can see that
+00:25:47.679 we actually have all of the tool
+00:25:49.200 messages here now because we are able to
+00:25:51.559 directly invoke them we have the first
+00:25:53.919 tool message from Duck Duck Go search
+00:25:55.880 that responded with all of that and then
+00:25:57.600 we have the second tool output which is
+00:26:00.760 from the exchange rate tool that has
+00:26:03.559 this content here and then passing all
+00:26:05.880 of this right back into the language
+00:26:08.399 model we'll then get our final response
+00:26:11.039 which looks a little bit like this now
+00:26:13.640 let me answer your questions based on
+00:26:15.000 the information I've gathered when was
+00:26:16.559 it founded this is all this how much is
+00:26:19.120 the dollar worth right now and $1 is
+00:26:22.279 8.51 ETC then a little bit of a summary
+00:26:25.159 of those so this is really the exact
+00:26:27.279 same thing that we did with all of the
+00:26:29.720 open aai functions with parsing out the
+00:26:32.360 arguments from them and parsing out
+00:26:33.760 which function to call at what time and
+00:26:36.120 then attaching that all in the right
+00:26:38.279 messages to then pass all back and to
+00:26:40.960 get our final response with the tool
+00:26:42.960 calls but now done with Lang chain which
+00:26:44.960 will then allow you to of course plug-
+00:26:47.200 Inplay different llms and it'll cover
+00:26:49.799 all of the formatting and expedite a lot
+00:26:52.279 of the executing of the tools for you as
+00:26:54.320 well with their standardized framework
+00:26:56.360 so to round out our discussion of tools
+00:26:58.200 to and function calls I wanted to talk
+00:26:59.880 of course about one of the main use
+00:27:01.760 cases that I'm seeing for tools and for
+00:27:04.159 functions and that is of course for
+00:27:05.880 creating agentic systems which the brief
+00:27:08.279 overview of what this kind of llm agent
+00:27:10.880 idea is is taking in a user request some
+00:27:13.880 sort of llm will then have access to a
+00:27:16.039 memory or of course the prior list of
+00:27:18.320 messages some form of tools and some
+00:27:20.760 sort of Chain of Thought reasoning or
+00:27:23.360 planning module to better approach the
+00:27:25.520 user's request we've gone over all sorts
+00:27:27.640 of different kinds of agents and setting
+00:27:29.399 up our own agents on this channel so
+00:27:31.600 I'll link to some videos right now and
+00:27:33.360 also in the description below but
+00:27:35.440 linkchain actually has a few automated
+00:27:37.399 ways of putting together some of these
+00:27:39.159 agents and the first more simpler ones
+00:27:41.640 will actually just handle all of what we
+00:27:43.440 were doing before with setting up
+00:27:45.840 invoking the tools and then attaching
+00:27:47.760 all of that to our memory and putting it
+00:27:49.519 together to get our final output all in
+00:27:51.640 a few different lines of code here so
+00:27:53.960 this will allow you to also very easily
+00:27:56.720 set up your flows with your different
+00:27:58.360 Tools in your model providers and then
+00:28:00.480 create kind of this workflow of actually
+00:28:03.880 taking in the input message invoking the
+00:28:06.039 tools and then getting your output
+00:28:07.559 message without having to go through all
+00:28:10.240 of those steps the most simple form of
+00:28:12.039 this is just going to be their create
+00:28:13.600 tool calling agent function that they
+00:28:15.519 have here that takes in a prompt an llm
+00:28:17.960 and different tools which you put into
+00:28:19.880 an agent and then you can wrap it all up
+00:28:21.720 into a nice executor that actually
+00:28:23.559 executes everything and this is just
+00:28:26.000 going to essentially do everything that
+00:28:27.679 we were doing in just a few lines so if
+00:28:30.159 we put this together and then actually
+00:28:33.480 run the query of when was langra Cloud
+00:28:36.080 released and how much is a dollar worth
+00:28:37.720 in Japan right now you can see that
+00:28:40.360 it'll actually automate doing all of
+00:28:42.679 these different steps so it'll invoke
+00:28:44.640 duck ducko it'll invoke get exchange
+00:28:47.559 rate and then it'll handle passing all
+00:28:49.559 of that back into the language model
+00:28:51.360 which will get our final output text
+00:28:53.240 here which I've printed a little bit
+00:28:54.960 nicer here so that just packages up all
+00:28:58.760 of what we were doing with the
+00:29:00.519 intermediary steps of appending the
+00:29:02.720 different tool messages executing the
+00:29:04.559 different tools figuring all that stuff
+00:29:06.720 out into one nice line so that you can
+00:29:09.519 actually just put this together and run
+00:29:11.679 it with your queries right off the bat
+00:29:13.360 and then you can start to get a little
+00:29:14.480 bit more advanced with their create
+00:29:16.640 react agent which is based on this paper
+00:29:18.760 here react synergizing reasoning and
+00:29:20.600 acting and language models which is one
+00:29:22.360 of my favorite ones to show simple
+00:29:24.320 demonstrations of and it follows a
+00:29:26.440 different prompt of asking questions
+00:29:28.600 making the llm go through different
+00:29:30.320 thoughts and then having the llm
+00:29:32.279 actually take actions and then doing
+00:29:34.039 different observations on those actions
+00:29:36.279 and then repeating until it's happy with
+00:29:38.120 the final result that it's put so we can
+00:29:40.799 actually put that together very easily
+00:29:42.600 by grabbing their preset react prompt
+00:29:44.760 making a react agent with just create
+00:29:46.559 react agent and then packaging it all up
+00:29:48.559 into an agent executor here and so if we
+00:29:51.399 run the same thing we can then see that
+00:29:53.880 it enters into this agent executor chain
+00:29:56.000 we can see a little bit more of this
+00:29:57.200 reasoning to answer this question I'll
+00:29:58.679 need to search for information about
+00:30:00.399 oops about Lang graph cloud and Lang
+00:30:03.120 chain and then it'll take that action
+00:30:06.039 and it says I don't have specific
+00:30:07.399 information about Lang Chain's founding
+00:30:09.080 date yet let's break this down and then
+00:30:11.279 let's search for Lang Chain's founding
+00:30:13.200 date so it even went a little bit
+00:30:14.600 further than that and so it was able to
+00:30:18.000 give me Lang graph Cloud Lang chains
+00:30:20.080 founding date and then give me a nice
+00:30:22.120 final answer there all in this sort of
+00:30:24.159 reasoning action and observation flow so
+00:30:26.440 you can really see the power of
+00:30:28.640 combining the ability for a language
+00:30:30.519 model and its Advanced reasoning
+00:30:32.519 together with external tools like web
+00:30:34.880 search or like sending an email or
+00:30:36.760 something like that alt together into
+00:30:39.080 really more advanced flows which can be
+00:30:41.640 really impactful to whatever use case
+00:30:43.760 you're handling and to whatever data
+00:30:45.279 you're managing as an end user that
+00:30:47.480 being said after going through all this
+00:30:49.080 you should have a pretty good
+00:30:50.240 understanding of what llm tool and
+00:30:52.159 function calling is how to set up your
+00:30:54.120 own tools how to set up Advanced tools
+00:30:56.320 and where some of those tools and
+00:30:57.960 function calling capabilities are
+00:30:59.519 starting to be used today so if you have
+00:31:01.799 any questions please leave comments in
+00:31:03.559 the comment section below if you liked
+00:31:05.360 what you were seeing consider dropping a
+00:31:06.760 like and if you want to support the
+00:31:07.799 channel and see more like this make sure
+00:31:09.519 to hit that subscribe button thank you
+00:31:11.519 and I hope you learn something
+00:31:12.760 interesting today

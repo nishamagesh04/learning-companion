@@ -1,0 +1,43 @@
+# tactiq.io free youtube transcript
+# What Is Prompt Engineering, and How Does It Work? (Explained Clearly) - AI Prompts
+# https://www.youtube.com/watch/3I36Sugmne8
+
+00:00:00.000 In this video, we're going to break down whatprompt engineering is, so that you can stop
+00:00:04.783 getting totally useless answers from AI andfinally use it to save a massive amount of time in
+00:00:10.483 your daily life. Let's get into it.
+00:00:13.873 The Basics | Talking to the Machine
+00:00:17.252 So, you've probably played around with ChatGPT orClaude by now. You type something in, and it spits
+00:00:23.412 something out.
+00:00:24.533 That text you type in is called a prompt. Promptengineering is basically the science and art of
+00:00:30.122 figuring out exactly what to say to an ArtificialIntelligence, or AI, to get the absolute best
+00:00:35.862 possible result. Think of it like givinginstructions to an ultra-fast intern who literally
+00:00:41.431 knows everything but has zero common sense. If youjust say, write an email to my boss, you're going
+00:00:47.840 to get a stiff, weirdly formal robotic message.But if you engineer that prompt, you tell it the
+00:00:53.601 tone, the goal, and the background. I'm going toshow you the exact formula to do this perfectly in
+00:00:59.089 just a minute, but first, we really need to talkabout why things usually go wrong.
+00:01:05.578 The Problem | Why Your Outputs Sort of Suck
+00:01:09.737 A lot of people get really frustrated because theyask the AI for help and get total garbage back. Or
+00:01:15.837 worse, the AI just makes things up entirely. Inthe tech world, we call that a hallucination.
+00:01:21.946 This happens because Large Language Models, orLLMs, which is just the fancy term for the tech
+00:01:27.607 powering these bots, are really just predictingthe next word in a sentence based on patterns.
+00:01:32.715 They don't actually know you or your specificsituation. You can't just throw vague ideas at it
+00:01:37.975 and expect mind-reading. You don't want to end uptaking life advice from a bot that thinks you're a
+00:01:42.644 19th-century blacksmith. You've gotta give itclear boundaries. And let me tell you exactly how
+00:01:48.086 to set those boundaries right now. By the way, ifyou're getting value out of this video, hit like,
+00:01:53.153 subscribe, and tap the notification bell to getmore valuable content like this. The Formula |
+00:01:58.308 Crafting the Perfect Request
+00:02:01.166 Alright, here is the cheat code. Good promptengineering usually comes down to four specific
+00:02:06.126 things. Role, task, context, and format. First,give the AI a role. Tell it, act as an expert
+00:02:14.135 marketer.
+00:02:15.416 Next, give it a specific task. Say, write a300-word blog post. Then, add the context. This is
+00:02:22.184 where you feed it the background info so itdoesn't hallucinate. Tell it who your audience is
+00:02:26.985 and what your product actually does. Finally, giveit a format. Tell it to output the answer as a
+00:02:32.613 bulleted list, or a table, or a casual email. Whenyou get all of that out of your head and into the
+00:02:39.002 prompt, you get absolute magic. You stop treatingthe AI like a magic eight ball and start treating
+00:02:45.143 it like a tool you can actually control. Okay, nowwhat does all of this actually mean for you? It
+00:02:51.491 means you have the power to automate the boringparts of your job, brainstorm ideas ten times
+00:02:57.111 faster, and totally future-proof your career. Youaren't just typing random words into a box
+00:03:02.740 anymore. You're basically programming an AI usingplain English to do exactly what you want to do.
+00:03:08.881 It puts you way ahead of everyone else who isstill just asking it to tell knock-knock jokes.
+00:03:15.409 If this video helped, leave a comment below. Ifyou want to keep learning, check out this video
+00:03:19.649 next. Thanks for watching, and I'll see you in thenext video.

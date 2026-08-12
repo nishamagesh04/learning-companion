@@ -1,0 +1,843 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/M81pfi64eeM
+
+00:00:00.080 Hey there. How's it going everybody? In this video, we're going to be learning how to use Pyantic. Pyantic is Python's
+00:00:05.759 most popular data validation library and it uses Typants to do this validation. So, if you're already using Typants in
+00:00:12.800 your code, then this should feel pretty natural to add to our projects. Basically, Pyantic's primary purpose is
+00:00:19.520 to ensure that the data coming into our application meets certain expectations. So, if you've ever struggled with data
+00:00:26.240 coming into your applications not being the right type or format, or if you've written a lot of manual validation code
+00:00:32.960 that's ugly and hard to maintain, then Pyantic is going to make all of this a
+00:00:38.000 lot easier for us. And Pyanic is going to be important for us to learn because it's being used in so many different
+00:00:44.000 libraries lately. So, for example, fast API uses this for validating API
+00:00:49.360 requests and responses. It's used in data processing to ensure clean data.
+00:00:55.120 And if you've worked with any AI tools, there's also Pantic AI and that allows
+00:01:00.480 us to build AI agents with structured and validated outputs. So really anywhere that you need to make sure that
+00:01:07.040 your data is what you expect it to be. Uh Pyantic is going to be our go-to.
+00:01:12.320 Now, since Pidantic uses Python type hints for validation, if you're totally new to types or static type checking in
+00:01:19.439 Python, I'd recommend watching my typing and type checking video first and then
+00:01:24.640 coming back to this one. I'll have that linked in the description section below if anyone is interested. But with that
+00:01:30.560 said, let's go ahead and get started. So, first, let's take a look at why Pyantic is so useful. We can do our own
+00:01:37.360 checks on our data manually. So why would we use something like paidantic instead of writing this from scratch? So
+00:01:44.640 I have a quick example here of what some manual validation might look like. So we have this create user function that
+00:01:51.439 takes a username, email, and age. And look at all the validation code that we're writing in here so far. Uh so
+00:01:58.799 we're checking if the username is a string. We're checking if the email is a string and if the age is an integer. So
+00:02:06.079 let me run this real quick and we can see how this works. So I'll run this.
+00:02:11.120 Let me make this output a little larger here. So first let me look at uh both of
+00:02:16.480 the test users that I created here. So we have user one create user. We pass it
+00:02:21.520 in a username as a string, an email as a string, and an age as an integer. For this second user, I passed in uh the
+00:02:29.680 username as a string, the email as none, and the age as a string. So we can see
+00:02:35.680 that it creates that first user successfully and printed that out. But when we try to create the second user
+00:02:41.360 with the invalid data, we get an error. Now it fails on the first validation error that it hits. So even though we
+00:02:48.560 have multiple problems with this data, uh the email is none and the age is a
+00:02:53.599 string. We have multiple problems there. We only find out about one error at a time. Right now it's reporting that the
+00:03:00.560 email is invalid. And if I was to go back and fix that invalid email error that it tells us about, then we'd hit
+00:03:07.120 that next problem that it didn't tell us about uh as soon as I rerun this. So going back and fixing those things one
+00:03:13.519 at a time isn't really a great user experience. Also, this is a simple example with just three fields that
+00:03:19.840 we're validating. Uh and look how much code that we have just for that small bit of validation. Imagine if we had a
+00:03:26.959 complex object with nested data, lists, uh, dates, and other types. That
+00:03:32.239 validation code would get extremely overwhelming and super hard to maintain very quickly. So, let me show you what
+00:03:38.879 this same validation would look like with paidantic. So, I'm going to uh just
+00:03:44.159 delete the manual validation that we had before. Actually, let me just comment that out. And now, let me uncomment it
+00:03:52.480 the uh pyantic code here. and save that. Okay, so this is some very simple
+00:03:58.319 pyantic code. Now, if you've ever used data classes, uh you can see that pyantic gives us syntax that looks very
+00:04:04.959 similar to a data class. But data classes don't actually validate anything at runtime. So, Pyantic gives us both
+00:04:12.239 the benefits of a nice syntax uh with type hints and it actually validates your data at runtime. And Pyantic will
+00:04:19.519 collect all of those validation errors at once. So we don't just get the first error like we saw in our manual
+00:04:25.840 validation example. So now instead of all of that manual validation, we have a
+00:04:31.840 class here that inherits from base model and then we just define our fields with
+00:04:36.960 type hints and that's it. Uh we can create the user. Uh pidantic
+00:04:42.000 automatically validates everything for us and then we are printing that out. So, let me go ahead and run this simple
+00:04:49.199 example here. And just like before, uh I'm using those same users that I had
+00:04:55.520 before where the first one is good and the second one is bad. And now we can
+00:05:00.720 see here that the first user prints out successfully. On the second user, we can
+00:05:06.479 see that it's saying that we have two validation errors for the user. Uh one
+00:05:11.600 is the email, it should be a valid string. and uh the age it should be a valid integer and it also gives us a
+00:05:18.960 little bit of extra information there. So now let me uh minimize that a little
+00:05:25.280 bit. So now we're getting both of those validation errors at once and we didn't have to write uh any of the validation
+00:05:32.000 code ourselves. So that's just the bare minimum of what we can do with Pyantic. Uh there's so much more to cover, but
+00:05:38.400 before we get started, I wanted to show you what this looked like uh compared to trying to manually validating this stuff
+00:05:44.880 ourselves. Uh so now that we've seen that quick intro, let's start from scratch and see how we get this
+00:05:50.880 installed and then look at some more complex examples. So uh I can go ahead
+00:05:57.440 and just delete everything that I have here so far. And now if we were to
+00:06:02.880 install this, I'm just going to bring up my terminal here. Uh, installing this is pretty straightforward. If you're using
+00:06:09.280 pip, then you could say uh pip install pyantic. Um, now I'm going to be using
+00:06:15.919 uh UV for this tutorial. Uh, if you haven't watched my uh UV tutorial, I have a video on that as well, but that
+00:06:22.639 will just be uh UV add pyantic. Now, I've already got this installed, so it
+00:06:28.800 shouldn't really need to uh install anything else there. So, I'll clear that out. Now, one thing that I do want to
+00:06:34.240 point out is that we're going to be using Pyantic version two in this tutorial. And that's important because
+00:06:39.600 the transition from version one to version two was pretty significant. Uh, a lot of the method names changed. Uh,
+00:06:46.160 so for example, in version one, you would use uh DICT to convert a model to
+00:06:51.680 a dictionary, but in version two, that's now model dump. And in version one,
+00:06:56.800 you'd use JSON to convert to JSON, but now it's model dump JSON. And there's
+00:07:02.000 several others as well. So if you're following along with older tutorials uh or documentation, you might see some of
+00:07:08.560 those old method names. Uh and it's good to know which version uh they are using and which version you're using just so
+00:07:15.120 you don't get confused there. So let me go ahead and verify really quick uh the version that I have installed. If I just
+00:07:21.280 open up the Python interpreter here, uh, and then I import paidantic, then I can
+00:07:29.199 check out the version just by saying, uh, pyantic and checking out double
+00:07:35.120 version and run that. We can see that we are on 2.12.3.
+00:07:41.759 But as long as you are using uh, version two, then you should be able to follow along just fine with this tutorial. Uh,
+00:07:48.960 so go ahead and clear that out. Okay, so now that we have Pyantic installed and we verified that we're on version two,
+00:07:54.800 we can actually start diving into how to actually use this. And we already saw a quick example at the beginning, but now
+00:08:00.960 let's create our first proper pidantic model from scratch and really understand what's going on. So we already removed
+00:08:08.080 all the code that we had before. Um, so now let's just import what we need to
+00:08:14.080 import and that's going to be the base model. So I'll say from paidantic import
+00:08:20.400 and this is going to be base model and I'm also going to import uh validation
+00:08:26.080 error because we are going to use that in a bit as well. And while I'm importing some stuff here I'm also going
+00:08:32.559 to be using uh some datetimes for some of our fields later on. Uh so let me go
+00:08:38.399 ahead and import datetime as well. So I'll say from datetime import uh
+00:08:44.080 datetime. Okay. And don't worry about those rearranging there. I just uh it's
+00:08:49.519 how my editor is set up to where it auto sorts my imports. Okay. So now let's
+00:08:55.200 create our user model. To create a pyantic model, we create a class that
+00:09:00.720 inherits from base model. So let's create a user class. So we'll say class
+00:09:06.560 user and this is going to inherit from base model. And now we define our fields
+00:09:14.240 using type annotations. So let's start simple with just a couple of required fields. So let's add a username here and
+00:09:22.640 that'll be a string. And let's also add an email and that will be a string as
+00:09:28.880 well. And that's really all there is to it for a basic model. These are required fields because they don't have default
+00:09:35.200 values. Pyantic will require these to be passed in when we create a user
+00:09:40.320 instance. Uh, and these type hints aren't just documentation like they would be with a regular class or data
+00:09:47.040 class. Pyantic actually uses these to validate the data at runtime. So let me
+00:09:52.480 go ahead and create a user and show how this works. So we'll say user is equal
+00:09:57.839 to and let's just leave that empty for now and we will print out that user. So
+00:10:05.839 if I just create an empty user there, then this won't be valid because like I said, if we don't have any default value
+00:10:13.920 for the username or email, then they're going to be treated as a required field.
+00:10:19.360 So if I run this now, then we can see here that this is saying that we have
+00:10:26.800 two validation errors for the user and that the username field is required and the email field is required. So now let
+00:10:33.600 me go ahead and fill those in with some um fields here. So I'll just uh use
+00:10:39.440 strings for both of those so that it's a valid user. So for the username I'll just say coreyms and then for the email
+00:10:46.880 I will say email is equal to uh corem
+00:10:52.320 shaergmail.com. Okay. So if I save that and run it now
+00:10:58.320 uh then we can see that that works. So now let me add in a few more fields to
+00:11:03.920 show the different types of fields that we can have. So right now username and email are required fields but we can
+00:11:10.959 also have optional fields with defaults. So let me add a bio and an is active
+00:11:16.720 field with default values. So up here in our user class, I will go ahead and add a bio. And the bio is going to be a
+00:11:24.880 string. And we are going to set a default value here of just an empty string for the bio. And now we'll also
+00:11:32.480 have is active. And let's make this a boolean. And I'll set the default of
+00:11:38.160 that equal to true. So now since these have default values, then these are going to be optional fields. So, if I
+00:11:44.480 rerun this without adding any additional information to our user here that we're creating. If I save this and run it,
+00:11:51.680 then we can see that that still works and it just used those default values here of bio equal to an empty string and
+00:11:58.959 is active is equal to true. Okay. But what if we want a truly optional value that isn't required and is none by
+00:12:07.040 default? So, for example, let's say that I have an optional full name field. uh
+00:12:12.399 it wouldn't make any sense to give someone a default full name. So, we'd want to set this to none by default. So,
+00:12:20.320 if I come up here and say full name and I say that this is going to be a string
+00:12:27.680 and set this equal to none. Now, this might look like what we want, but let's
+00:12:33.200 think about what we're doing here. We're immediately saying that our full name is
+00:12:38.399 going to be a string. uh but that its default value is none but none is not a
+00:12:45.519 string so that doesn't make any sense. So to do this we can use the union
+00:12:50.720 syntax to say that our full name can either be a string and then use that
+00:12:57.680 pipe character for the union syntax and say string or none and then the default
+00:13:03.200 is none. So you can see that it had that underlined there for a second because I have my type checker on. If you have
+00:13:09.440 your type checker on uh and do it this way, then it should stop yelling at you
+00:13:14.480 for that. Okay, so now let me add a few more fields that we uh might expect when
+00:13:20.560 creating a user. So we might have a unique ID for each user and I'll just
+00:13:26.399 set that to a required field that's an integer for now. So above our username
+00:13:32.480 here, I will say UID and I'm going to uh set that as an integer. Now sometimes in
+00:13:39.760 Python, you'll see people use ID as the field name. I don't like using ID
+00:13:45.600 because ID is a uh built-in keyword in Python. So I like to use something like
+00:13:51.279 UID instead. Okay. So what else might we want for a user? Uh, so we might want to
+00:13:56.959 track when a user was verified, but that might not happen right away. So I will
+00:14:02.959 have a field here called verified and that will be a datetime. And since
+00:14:11.279 this can be none by default, then I'll use a union there of none. Set that as
+00:14:17.040 none for the default. Okay. So now we have a mix of required fields, optional fields with defaults and optional fields
+00:14:24.240 that can also be none. So let me update our user here to include that required
+00:14:30.480 uh UID. And let's just set this equal to uh I
+00:14:36.240 think I said that that was going to be an integer. Yep. So I'll just set that equal to 1 2 3. And let me go ahead and
+00:14:42.320 run this to make sure it still works. Okay, so that still works fine. Uh so now let's talk about accessing and
+00:14:49.199 modifying data. We can access fields using dot notation just like any other
+00:14:55.040 Python object. So so far we've just been printing out the entire user here. Uh
+00:15:00.399 but if I wanted to grab a specific field, then I could use that with the dot notation. So for example, if I
+00:15:07.519 wanted the username, then I could say user username. And if I save that and
+00:15:13.040 run it, then we can see that it's giving us that username back. Now, we can also use this uh to set specific fields. Now,
+00:15:20.639 one thing to be aware of is that model instances are mutable by default and
+00:15:26.240 also by default they don't revalidate uh when you change a field. So, for
+00:15:32.160 example, if I come down here and say user.bio
+00:15:37.760 is equal to 1 2 3. Now, if you remember, our bio was set to a string up here. Uh,
+00:15:44.480 so if I print out that bio and run that, then you can see that when we reassign
+00:15:51.120 this, it ran just fine. So, it's not revalidating on assignment, and that's
+00:15:56.800 the default. Now, you can change that behavior in the model configuration, and we'll look at that later in the
+00:16:03.440 tutorial, but just be aware that this is the default. uh changing fields after
+00:16:08.480 creation doesn't trigger revalidation. So let me go ahead and set that to a
+00:16:13.920 proper string now the way it should. I'll just say Python developer for our bio. Save that and run it. And we can
+00:16:21.040 see that that works fine. So now let me show you a couple of useful methods for working with pyantic models. If we want
+00:16:27.600 to convert our model to a dictionary then we can use the model dump method.
+00:16:32.800 So instead of bio here if we do model_dump
+00:16:39.120 and that is a method. So we need to put a parenthesis after that to execute that. If I save that and run it then we
+00:16:46.800 can see that it gives us a dictionary representation of our model. Now this is
+00:16:51.839 a Python dictionary. If we wanted JSON instead then this is going to be
+00:16:57.600 model_dump_json. And if I save that and run it, then this
+00:17:03.519 is going to be a JSON string now. And just like when we're working with the JSON module, we can pass options to
+00:17:10.959 format this nicely. Uh here as well. Uh so for example, one of the arguments
+00:17:16.000 that this takes is an indent. So I could say indent is equal to two. If I save
+00:17:21.599 that and run it, then you can see that now our JSON string is nice and formatted uh with two spaces there. So
+00:17:28.880 those model dump and model dump JSON methods are really useful when you need
+00:17:34.240 to serialize your models for storage or sending over a network. And by serialize
+00:17:40.240 I mean converting your Python object into a simple format that can be easily saved to a file or sent to another
+00:17:47.600 system. Okay. So now let's look more into what happens when validation fails. Remember at the beginning of the video I
+00:17:54.640 showed that pyantic catches multiple errors at once. So let me demonstrate that. Uh I'll create a try accept block
+00:18:02.080 here and try to create a user with bad data. So let me close down that output
+00:18:08.559 for now. So let me put this inside of a try accept block. So I will indent that.
+00:18:16.400 And then we will accept and this is going to be a validation error. We imported that earlier and I'll just set
+00:18:23.760 that as E. And now we can just print out that error. Now the fields that we have
+00:18:30.799 in there right now are fine. Uh so that's not going to throw an exception there. Let me go ahead and I'll put our
+00:18:37.840 username as none. And I'll set our email equal to something like one two three.
+00:18:44.240 Save that. And that should go ahead and throw an error. Now, now you don't need to use a try accept block here, but I
+00:18:51.120 wanted to show you an example of using one because usually you'd probably want to handle these validation errors in
+00:18:57.280 some way. Uh in this example, I'm just printing out the error. Uh so here I am
+00:19:03.760 passing in actually let's go ahead and just do all the fields. Uh so let me
+00:19:09.120 also do a UID of 1 123 as a string there also so I can show you something u
+00:19:16.480 specific about that. So I'm passing in a string for the UID uh which should be an
+00:19:22.240 integer none for the username uh which is a required and should be a string and
+00:19:27.679 passing in an integer for an email which should also be a string. So let me go ahead and run this. Now, this is a bit
+00:19:34.720 interesting here because we only got two errors, not three. Uh, it's complaining
+00:19:40.000 about uh the username should be a valid string and the email being an integer
+00:19:46.240 when it should be a string. But notice that the UID is not in that error list.
+00:19:51.679 Uh, that's because Pyantic has type coercion enabled by default. So when we
+00:19:57.600 passed in this string of 1 2 3, it automatically converted this to an
+00:20:04.400 integer of 1 2 3. So that's actually a valid conversion and didn't raise an
+00:20:10.160 error. But the email that we passed in as an integer that was not converted to
+00:20:15.600 a string. Now that might seem weird, but the reason for that is that it's extremely common to receive numeric data
+00:20:23.200 as strings, whether that's from JSON, form inputs, uh URL parameters, or
+00:20:29.360 whatever. It's not as common to expect a string and get an integer. So, it's
+00:20:35.600 actually nice to have some type coercions, and that's enabled by default. Uh but we'll later see in the
+00:20:42.080 video uh how you can make validation more strict if you want to prevent this
+00:20:47.120 type of coercion from taking place. Uh for now just know that by default pyantic will try to convert types when
+00:20:54.240 it makes sense to do so. If it doesn't make sense then you'll obviously get an error. So if I change this UID to test
+00:21:03.520 instead of 1 2 3 and rerun this then we can see that now we're getting three
+00:21:09.360 validation errors because it could not uh convert that to an integer. Now
+00:21:15.280 actually this would be a lot more uh clean here. It still get has a trace back there. That's just because I am
+00:21:23.039 trying to print this out afterwards. Uh let me comment out that code and rerun
+00:21:28.400 this. And we can see that that is more clean. Now we can see that we get the three validation errors and it tells us
+00:21:34.559 exactly uh why each of these failed validation and even has links uh to
+00:21:40.640 their documentation if you need to see more about that. Okay. So now that we understand the basics of creating
+00:21:47.200 models, let's talk about the different types that we can use and how pi pyantic validates them. Pyantic supports all the
+00:21:54.720 standard Python types that you'd expect. uh things like strings, integers, floats, booleans, uh list, dictionaries,
+00:22:02.480 uh tupil, sets, and also datetime objects like datetime, date, time, and
+00:22:07.919 time delta, things like that. And we can use unions uh to say that a field can be
+00:22:13.520 one of several types. And we can use optionals to allow none values and uh
+00:22:19.919 like we've seen already. And we could even use literal types to specify exact
+00:22:25.039 values that are allowed. So to demonstrate some of these, let's create a new model. And I'll add a blog post
+00:22:33.039 model uh below our user class. So I'm just going to overwrite everything that
+00:22:38.880 we have so far. And now let's create a new class. So I will call this blog
+00:22:45.760 post. And we are also going to inherit from that base model. And now let's just
+00:22:51.600 add uh some things that we might expect in a blog post. So we're going to have a title. We're going to have Whoops. Okay.
+00:22:59.280 So a title, that's going to be a string. We'll have a uh section for content that will be a string. We'll have view count
+00:23:07.200 that'll be an integer. We'll set the default of that equal to zero. We'll do
+00:23:12.640 an ispublished boolean here and set this equal to false by default.
+00:23:20.400 And now let's take a look at a couple of other types here. So now let's say that
+00:23:25.919 we want a list of tags. So for lists we can specify what type the items should
+00:23:32.640 be in that list. So the so if we had something like tags uh then this is
+00:23:39.039 going to be a list of strings. So to specify that we can say list and then
+00:23:45.840 within the brackets here say str for strings. Now I'll set a default here and
+00:23:53.360 let me set this default and then I will explain it afterwards. So I'm going to set a default field and this is going to
+00:24:01.280 be a default factory and that default factory is going to be a list. So first
+00:24:08.000 we can see that it's yelling at me here that field needs to be imported. So I will go up here and import field and
+00:24:15.120 that's from paidantic that we're importing that field. Okay. And now we have this default factory equal to list.
+00:24:22.640 So the default factory is simply a function that gets called uh to create a
+00:24:27.760 new default value each time you create an instance. So here every time we
+00:24:34.240 create a user it calls list to create a fresh empty list for each user. Default
+00:24:40.640 factories are super useful for a lot of things and we'll look at more complicated example right after this. Uh
+00:24:47.440 but for now we're just using it to create an empty list. Now in paidantic you can actually just use an empty list
+00:24:54.240 as a default uh instead of the default factory. So I could do something uh like
+00:25:00.240 this just a default value of an empty list. Um but I'm not going to do that
+00:25:05.679 because I just don't want to teach any bad habits here. Um, in regular Python
+00:25:11.360 classes, uh, using a mutable default like an empty list is a problem because
+00:25:16.640 that same list object gets shared across all instances. Uh, data classes won't
+00:25:22.080 even let you do it and requires you to use a default factory. Also, so even
+00:25:27.440 though Pyantic handles that safely, uh, I'm just going to stick with using the default factory pattern here. Uh if you
+00:25:34.720 want to learn more about why mutable defaults are a problem in Python, I have a video on that and I'll leave a link to
+00:25:41.360 that video in the description section below. All right, so now let me show you another example of a default factory
+00:25:47.679 with a slightly more complicated default value. Uh let's say that we wanted a
+00:25:53.840 created at timestamp that defaults to the current time. Uh now you might think
+00:26:00.240 that you could just do something like this. So, we'll say that that's going to be uh datetime and that we could do
+00:26:07.279 datetime dot now and do UTC for the
+00:26:12.960 datetime uh or for the time zone I mean and I would also need to import UTC from
+00:26:21.039 the datetime library as well. Okay, so you might think that you'd be able to do
+00:26:26.159 something like this, but this wouldn't work the way that you'd expect. uh that
+00:26:31.200 would call datetime.now once when the class is defined not when
+00:26:37.200 each instance is created. So every blog post would have the same time stamp. Uh
+00:26:42.799 instead we need to use a default factory with a function that will be executed
+00:26:48.480 each time that we create an instance. So let me copy this. Uh so just like before
+00:26:56.000 we're going to use a field with that default factory and then again you might
+00:27:01.120 be thinking that we can just put here uh datetime.now let's do tz is equal to uh
+00:27:08.240 UTC. Now you might be thinking that we're good now since we're using that default factory. But this still isn't
+00:27:15.039 good because we're still executing our function here. So we need to somehow not
+00:27:20.559 execute our function but also set our time zone to UTC. Uh because again the
+00:27:27.039 way that we have this now all of our blog post will have the same timestamp
+00:27:32.240 since it will just run this function once when we define our class not the actual timestamp of when we create each
+00:27:39.279 post like we're hoping for. So there are a couple ways that we can fix this and a
+00:27:44.960 couple ways that we can do this. uh if you understand lambda functions then we can use one of these here. So we could
+00:27:52.240 just say that our default factory we need to pass in a function that is unexecuted. Right now we are executing
+00:27:59.679 that function. So that unexecuted function I could just have this be a lambda and then that lambda will run
+00:28:07.919 datetime.now uh tz is equal to UTC and lambda is just
+00:28:13.279 an anonymous function. So here we're saying that every time we create a blog post, we want the default factory to run
+00:28:20.480 this anonymous lambda function and when that lambda function is run, we wanted to calculate the current date time uh
+00:28:27.279 with the time zone of UTC and that will work uh just fine. You'll see a lot of people doing it this way. Uh so I wanted
+00:28:33.760 to show you this uh but there's actually another way to do this uh that some people might prefer and I'll show you
+00:28:40.159 that also just in case uh you might see that in some code as well and that other
+00:28:45.600 way is using the funk tools.parial. So let me import that. So here at the
+00:28:52.000 top uh we will say from funk tools and we will import partial. And now partial
+00:29:01.120 lets us prefill some arguments to a function. So it allows us to pass in a
+00:29:07.520 function and some arguments and it returns a new unexecuted function that
+00:29:12.640 is the original function with those specific arguments already set. So what
+00:29:18.640 I could say here is I could let me just cut that out. So I could say that our
+00:29:25.760 default factory is a partial and partial we want datetime.now
+00:29:32.720 to be the unexecuted original function. And now we can say what arguments we
+00:29:38.240 want set with that datetime.now uh function and we want the argument of
+00:29:43.279 tz equal to UTC. Actually that needs to be all caps. Okay. So what partial is
+00:29:50.000 doing here again is we are uh partial is going to return an unexecuted uh
+00:29:56.799 function that is the datetime.now function uh with tz equal to UTC and uh
+00:30:04.159 ready to go. So that'll work also. And let's add a couple more fields here just
+00:30:09.760 so we can see some more examples. So uh here's an example of a union type. So
+00:30:16.000 let's say that we have an author ID and the author ID could either be uh you
+00:30:22.000 know something like user 123 or it could be an integer uh just like 1 2 3. So we
+00:30:29.440 can use a union type here and we could just say that this is going to be a
+00:30:34.720 string and then we'll use that pipe character which is that union and we'll put int as well. So it can be a string
+00:30:41.039 or an integer. And finally let me also show you literal types. So these are great when you have a field that can
+00:30:47.760 only be specific exact values. So let's say for a status field uh we maybe only
+00:30:55.760 want to allow you know a status of draft published and archived for our uh blog
+00:31:02.799 post status. But first I'll need to import literal and that is from uh the
+00:31:08.399 typing module. So we can say from typing import literal. And now I can create a
+00:31:16.640 new status field here. And this is going to be literal. And like I said for this
+00:31:23.919 we'll say that it can be a literal of draft or published if I can spell. And
+00:31:31.919 then let's do one for archived as well. And we'll set a default here. Uh the
+00:31:37.679 default let's set as draft. So now status can only be one of those three
+00:31:42.720 exact strings. If you p try to pass in anything else, then it'll fail validation. All right. So now let's
+00:31:49.120 create a blog post and show that all this works. Uh and we're getting to the point where I'm going to be creating a
+00:31:55.200 lot of objects to show how these things work. Uh so I don't want to waste your time by you watching me type all these
+00:32:01.039 out. So I have a snippets file here. Uh let me go ahead and grab these from my snippets file and then we'll go over
+00:32:07.760 them. Uh, all of the code that I'm using in this video, by the way, is going to be available on GitHub and I'll have a
+00:32:14.000 link to that in the description section below. But from my snippets file here, let me go ahead and grab this and then I
+00:32:20.159 will explain it. So, let's test this out. So, if I look at the blog post
+00:32:26.640 again, we can see that we only have three required fields here. Uh, so it is
+00:32:32.240 the title, the content, and the author ID here are the ones that do not have uh
+00:32:38.480 defaults. Now, let me go ahead and put all of those required fields together
+00:32:43.600 there. Now, sometimes I'll spread these out based on um, you know, just whenever I'm typing them uh, to kind of let you
+00:32:51.200 see a little bit better. But let me go ahead and clean that up and just put those all together there. So, a blog
+00:32:56.320 post has those three required fields. uh the title, the content, and the author ID. And I'm passing all those in. So,
+00:33:03.760 let's uh print this out and see if that works. Whoops. And I ran that uh without
+00:33:09.600 printing that out. So, let me print out that post that I created. And now we can
+00:33:15.600 see that that works. Okay. So, we'll notice a few things here. So, our default values uh seem to work just
+00:33:21.679 fine. Our tags are an empty list and we also have a created at uh timestamp that
+00:33:29.600 was generated when we created this instance. And also you'll notice that uh
+00:33:35.279 since we said that our author ID could either be a string or an integer since
+00:33:40.640 we passed in an integer as a string it did not coersse that into an integer and
+00:33:46.559 just kept that as a string. uh which is fine. If we wanted it to try to coorse
+00:33:51.600 those values like that uh then we could have explicitly said that we only wanted
+00:33:56.960 integers but we said that strings were fine. So now that we've seen the basic types that we can use let's talk about
+00:34:02.960 adding constraints to our fields. So we've already been using field for
+00:34:08.079 things like default factory. But field can do a lot more than that. uh we can
+00:34:13.359 use it to add constraints like minimum and maximum values uh length requirements and patterns things like
+00:34:20.239 that. Now in Pyanic version two the recommended way to add these constraints
+00:34:25.520 is using the annotated type from Python's typing module. So let me add
+00:34:30.560 that to our imports. So up here at the top uh from the typing module we are
+00:34:36.079 going to import annotated. Okay. Oops. And I think I spelled that wrong. Yeah,
+00:34:42.000 that is annotated. And now let's update our user model here to add some constraints. So for the UID,
+00:34:49.679 instead of saying that this is just an integer, let's add a constraint that it has to be greater than zero. So to do
+00:34:57.040 this, I can use an annotated type here. And within here, I can say that this is
+00:35:03.920 going to be an integer. And now we can add in our constraints. So to do this, I
+00:35:10.320 can say uh that we want a field that is GT greater than equal to zero. If you've
+00:35:18.160 never seen this annotated type before, basically it's a way to add metadata to
+00:35:23.200 our current type. So in this example, we're saying that we want an integer, but the metadata included with this
+00:35:29.839 integer is that it is a value greater than zero. And for username, let's add
+00:35:35.599 some length requirements. So let's say that we want a username to be between 3
+00:35:40.960 and 20 characters. So here I could say that I want an annotated type and that's
+00:35:47.599 going to be a string. And now for the constraints here we can say that uh we
+00:35:53.200 want a field and the we want this to be the min length equal to three. And then
+00:35:59.520 we'll have a max length here and we'll set that equal to 20. So let's keep
+00:36:04.800 looking at some other examples here. Uh so for example uh let's say that we wanted an age. I can do an age and I'll
+00:36:12.480 do annotated on that as well. Let's say that we only want people greater than or
+00:36:17.520 equal to the age of 13 uh that can sign up. So I can say that this is going to
+00:36:22.880 be an integer. Again, we're going to have this be a field. And let's do this
+00:36:28.240 was greater than zero. I want this to be greater than or equal to. So that'll be G. So greater than or equal to 13 and
+00:36:36.560 let's do less than or equal to. We'll set that to I don't know 130 years old or something like that. So you can see
+00:36:43.280 the pattern here. We use GT for greater than uh GE for greater than equal to. It
+00:36:49.040 would be LT for less than and LE for less than or equal to. And for strings we have min length and max length. Uh
+00:36:56.640 now let's update our blog post model to add some constraints there as well. Uh so for the title, let's say that this is
+00:37:04.400 going to be annotated and it will be a string and we'll have this be a field
+00:37:10.800 with a min length of one and we'll set a
+00:37:16.400 max length on our title. Uh we'll have that be 200 characters. For our content,
+00:37:22.800 I'm just going to go ahead and copy this so I don't have to type it out again. for our content. Uh let's just have this
+00:37:29.599 be a minimum length. We'll say that the minimum length uh for the content has to be at least 10 characters. Now, we could
+00:37:36.480 keep adding constraints for a lot of these, but I think you all get the idea. Uh but let me bring uh let me add one
+00:37:42.880 more field here uh to show you how pattern matching with regular expressions. So, for our blog post here,
+00:37:50.000 let me add a slug. and the slug. Let's have this be uh annotated as well. And
+00:37:58.000 this is going to be a string. Now, a slug field for a URL, you usually want
+00:38:03.680 some URL friendly identifiers in here. So, let's say that a slug should only
+00:38:09.200 contain lowercase letters, numbers, and hyphens. To do this, I can say that the
+00:38:15.680 field is going to have a pattern. And for this pattern, we can set this uh to
+00:38:22.000 a regular expression. So I will have this be I don't know how familiar you
+00:38:27.520 all are with regular expressions, but basically this part here is the beginning. This part here is the end. Uh
+00:38:34.800 and in between these we will have all lowercase letters uh all digits. So 0 to
+00:38:42.800 9 and we will also have hyphens. And this plus here is just saying that we can have one or more of those. If you've
+00:38:49.680 never used regular expressions before, then I do have uh a separate video specifically on those. Uh I'll leave a
+00:38:56.560 link to that video in the description section below as well if you're in more interested in learning how these work
+00:39:02.400 explicitly, but I just wanted to quickly show that here uh to show that we can pretty easily add these to our
+00:39:08.480 validation as well. So now the slug has to match that regular expression pattern
+00:39:13.920 uh or the validation will fail. All right. So now let's test these constraints and see what happens when we
+00:39:19.440 try to create a user that violates them. So I'm going to comment out the blog post uh here before uh where we were
+00:39:27.040 printing this out. And so let me comment that. And now let's create a user. And
+00:39:33.280 again I'm going to grab this from my snippets. So, from my snippets file here, uh, I'm going to grab an invalid
+00:39:40.960 user and paste this in. So, here we have a UID set to zero, which violates our
+00:39:47.200 greater than zero constraint. We have a username that's only two characters, which is too short. And we have an age
+00:39:54.079 of 12, which is below our minimum of 13. So, let me save this and run it. And
+00:40:02.160 let's see what we get here. And we can see that we're getting all three of these validation errors. It's telling us
+00:40:07.520 that the UID needs to be greater than zero. Uh the username should have at
+00:40:12.960 least three characters and that the age should be greater than or equal to 13.
+00:40:19.119 So Panic caught all those uh constraint violations. But not only that, but it
+00:40:24.240 gave us a clear error message of exactly what's wrong. So that's how you add constraints using field and annotated.
+00:40:32.000 Now this pattern is really flexible and you can combine multiple constraints on the same field and this is the more
+00:40:40.000 modern uh pyantic version two uh way of doing things. If you're looking at older
+00:40:46.000 code or tutorials you might see things like con stir or con int and I think
+00:40:53.440 that stood for constrained integer constrained uh string things like that. Those are now deprecated in favor of
+00:41:00.880 this annotated pattern that we're using here. Now, in addition to adding constraints manually with field like
+00:41:07.760 we've done here, Pideantic also provides a bunch of specialized types that uh
+00:41:13.200 have constraints built in. And these are really convenient for common uh validation scenarios. Let me pull up the
+00:41:20.160 documentation here really quick to show you what all is available. And I'll have links to these in the description
+00:41:25.359 section below as well. But if I look at these pidantic types, uh we can see here like there's a shorthand for positive
+00:41:32.319 int uh negative int. Uh let's scroll through. We can see all these on the
+00:41:37.520 right side here as well. Um but we have if I go down further, we have non-
+00:41:44.720 negative float, strict floats, things like that. Um here we have UIDs, so
+00:41:50.400 unique identifiers. You can see it even has things like file path and things
+00:41:55.599 like that as well. So a lot of these uh are built in here. Now a lot of these are just shorthands for the annotated
+00:42:02.240 field uh with um that we saw before. So for example if I look at this positive
+00:42:08.240 integer here we can see that this is basically uh just a annotated integer
+00:42:15.359 with greater than zero. That's what we saw before and there are a bunch of other shortorthhands like this. Uh so
+00:42:21.520 these save you from having to write all these out yourself. Um they also break these out into network types as well. So
+00:42:28.640 let me open this page also. We can see that we have network types here. And these contain a few others that we'll be
+00:42:35.599 using also. So some of the most useful ones that we'll be using from these two pages are things like email string for
+00:42:43.760 validating email addresses. Um HTTP URL for validating URLs. um the UID for
+00:42:51.440 unique identifiers and secret string for sensitive data like passwords and I can
+00:42:57.680 see that it's on this networking page is where they have the uh HTTP URL and also
+00:43:04.319 the email string down here as well. Now some of these require extra dependencies. So for example, email
+00:43:11.839 string requires the email validator library and when you install pyantic by
+00:43:17.359 default you just get the core library. Uh to get these extras you need to install them uh explicitly. So let me
+00:43:24.240 show you how to do that. So I'm going to install the email extra so that we can use the email string. So here in my
+00:43:32.640 terminal uh we can just say uv add and this is going to be paidantic and then
+00:43:41.040 in brackets we will say email. So if I run this then it should install all of
+00:43:48.240 that. Okay. And that would be the same with a pip install. So those brackets when installing uh packages with pip or
+00:43:55.839 UV are optional dependencies that can be installed with the package. You might see that from time to time and that's
+00:44:02.480 what that is. All right. So now that we have that installed, let's update our user model to use some of the special
+00:44:08.960 types. So first let me import uh what we need. So up here at the top let's add to
+00:44:16.800 our pyantic imports here. Um so I will import email str and also let's do http
+00:44:27.040 url and also let's do uh secret string
+00:44:32.319 uh secret str and also I'm going to use uh uids for the unique identifiers. So
+00:44:39.040 that's actually going to come from the uid module. So I'll say from uyu id
+00:44:45.839 import import uyu id and let's also import uyu ID4 is the one that we are
+00:44:53.440 going to use. So now let's update our user model. So instead of UID being a
+00:44:59.040 constrained integer here, let's make it a UID with a default factory that
+00:45:04.800 generates a new unique ID for each user. So instead of this annotated here, I'm
+00:45:12.000 going to say that this is a UYU ID. And let's go ahead and have a default
+00:45:18.960 factory. And I will use that UU ID4 function that we imported. Uh we do not
+00:45:25.920 want to put the parenthesis because we don't want to execute that. We want the unexecuted function there as our default
+00:45:32.079 factory. And what that'll do is it'll generate a new unique ID for each user
+00:45:37.440 when we create one. Okay. So let's also change the email from a regular string
+00:45:43.119 to an email string. So here for email, I'm going to use that email stred.
+00:45:50.880 And I find that one super useful because we could try to come up with our own constraints or regular expressions to
+00:45:57.359 check for valid emails. But this just allows us to easily specify that we want
+00:46:02.800 an email string and paidantic does all that background work for us. So we don't have to worry about it which is super
+00:46:09.040 nice. And let's add a couple of other new fields here as well. Uh let's say
+00:46:14.079 that a user can have a website and for that we can use that HTTP URL that we uh
+00:46:21.760 had before. Now this will be optional. So I'll say that this can be an HTTP URL
+00:46:27.119 or none. set that equal to none by default. And let's also add a password
+00:46:32.480 field uh using that uh secret string that we imported. Uh so I can say
+00:46:39.119 password and that is just going to be a secret. Let me spell that correctly.
+00:46:45.680 Secret str. So the secret string type here is great for sensitive data because
+00:46:51.680 it will hide the password and logs and things like that when you print out the model. All right. So now let's test
+00:46:57.680 these special types. So let me remove that try except block that we had uh
+00:47:03.680 before and create a valid user here. Now I actually think I have this in my
+00:47:09.119 snippets file as well. Yeah, I do. Okay. So I have a valid user here. Let me grab
+00:47:15.119 this and I will just overwrite that try accept block there. Okay. So notice
+00:47:21.680 we're not passing in a UID anymore because that'll now be autogenerated and
+00:47:27.200 we're now passing in a password since it is required. Now I am getting a warning
+00:47:32.880 here. I think that is probably a rough warning uh that I have set up that just
+00:47:38.640 says that I'm probably hard- coding a password into my code. Uh that's fine.
+00:47:44.800 So I'll ignore that for now. So if I run this and it's printing out this user
+00:47:50.000 then we can see that the UID was generated for us and also look at the
+00:47:55.440 password here. It's showing as a secret string with these asterisk instead of
+00:48:00.560 the actual password. And if we dump the model to a dictionary or JSON uh the
+00:48:06.800 password will be hidden there too. But if we need to access the actual value
+00:48:12.640 then we can actually do that. All we'd have to do is say user.p password and then on that password we
+00:48:20.640 can use this get secret value method here. So if I save that and run it then
+00:48:26.960 you can see with that get secret value we actually do uh get that printed out. So it blurs out that password for
+00:48:33.680 security but if you need to grab it then it's easy to get that. So these special pyanic types are super convenient. Uh
+00:48:41.280 they give you complex validation with just a simple type annotation. Uh email
+00:48:47.520 string validates the email format. HTTP URL validates URLs and secret string
+00:48:53.760 protects sensitive data. And there are tons more in that documentation if you need them. So I'll be sure to leave uh
+00:49:00.319 links to these pages in the description section below because there's a lot of useful ones in there. So, now that we've
+00:49:06.319 seen how to use built-in constraints and special types, now let's talk about creating our own custom validators.
+00:49:13.280 Sometimes the built-in validation isn't enough, and you need to add in your own logic. Pyantic makes this really easy
+00:49:20.960 with decorators. So, let me import what we need for custom validators. Um, I'll
+00:49:26.640 add these to our Pyantic import. So right here at the end of our pyanic import, uh the custom validators I'm
+00:49:34.079 going to be taking a look at here. It's going to be field validator and we're
+00:49:40.000 also going to import model validator. And we are also going to import this
+00:49:48.240 validation info as well. And once I save that, my code's going to auto format
+00:49:54.240 here and put these on different lines since that's now getting a little long. Now, one thing to mention before we dive
+00:50:00.079 into these is that in Pyanic version two, we use field validator and model
+00:50:06.559 validator. In version one, there was just a validator decorator. So, if
+00:50:12.400 you're looking at older tutorials or documentation, you might see the old validator decorator being used, but
+00:50:18.720 we're using the new latest decorators here. Okay. So, let's add a custom validator to our user model. So let's
+00:50:26.000 say that we want to validate that usernames only contain alpha numeric characters and underscores and we want
+00:50:33.119 to normalize them to lowercase. I'll add this method inside the user class. And
+00:50:40.000 I'm also going to grab this from my snippets as well and then we'll go over it uh really quick. Let me go ahead and
+00:50:46.800 clean up our user model here because I have all these on different lines so
+00:50:52.880 far. Okay. Now, this is going to be in my snippets as well. Let me grab these.
+00:50:59.680 Okay. So, I'll grab this and I will just put this after the fields in our user
+00:51:05.359 model and indent that. Okay. So, let me explain what's happening here. So, we
+00:51:12.079 use the field validator decorator and pass in the name of the field that we
+00:51:17.200 are going to be validating and that's going to be username. So this needs to be a class method also. So we add that
+00:51:25.680 decorator as well. We're calling this validate username. Since it's a class method, it takes the class first and
+00:51:33.280 then we are receiving this value v as a string and then we do our validation
+00:51:40.640 logic. So our validation logic here we are just uh saying okay we're going to
+00:51:45.839 get rid of underscores here and then check if that is an alpha numeric value
+00:51:51.280 and if it's not if that doesn't equal uh true then we're just going to raise a
+00:51:57.599 value error here that says our username must be alpha numeric uh underscores are
+00:52:02.640 allowed. Um, if everything goes well, then we're just going to return that alpha numeric value with underscores uh
+00:52:10.240 all lowercase. Really, the takeaway here for this specific pyantic video, I don't want you to get too bogged down in uh
+00:52:17.440 the exact checks that we're doing on the values here. Uh the what I want you to take away is that this is, you know,
+00:52:24.960 we're doing a check here. If something is wrong in our custom validator, we're raising a value error with a message.
+00:52:31.920 And if everything's fine then what we return here. So this is doing validation
+00:52:37.200 and normalization at the same time. We're normalizing this uh by returning all lowercase or it can be you know
+00:52:44.319 whatever it is that you want to do. So let me test this really quick. So I'll add some uh uppercase letters here to my
+00:52:52.800 username. So I'll say that the username is Corey_chafer.
+00:52:58.319 And now when I print this out, I no longer just want to get that password value. Uh let's print out the entire
+00:53:04.960 user. So if I run this, then we can see our username right here. So we can see
+00:53:11.680 that our username gets validated and also normalized to be all lowercase. Now
+00:53:17.599 we could have added this extra alpha numeric validation to our field section
+00:53:22.960 but I just wanted to show some extra validation here uh along with the normalization as well. So let me scroll
+00:53:30.160 back to our field validator. Now this is an after validation which is the
+00:53:37.359 default. That means that it runs after paidantic has already done its type
+00:53:42.800 checking and bas basic validation that we've had before. But sometimes you want
+00:53:49.040 to uh pre-process data before the main validation happens. For that you use the
+00:53:55.760 mode of before. Now let me show you an example with the website field. Uh but
+00:54:02.079 first let me show you how the current website validation works. So, let me add
+00:54:07.359 an invalid URL uh to my created user. So, down here, um let's also add a URL
+00:54:15.760 here. I'll say website is equal to uh corems.com.
+00:54:21.520 That might seem like it's valid, but if I save this and run it, then you can see
+00:54:27.200 that we get an error here. Now, the reason that this is an invalid URL is because it doesn't start with HTTP or
+00:54:35.280 HTTPS. Now, if I added that, then it would work just fine. So, I'm going to add a custom
+00:54:42.000 validator here so that if we pass in a URL without an HTTP or HTTPS, then we'll
+00:54:49.280 at least attempt to add that before the URL is validated. So, let me grab this
+00:54:55.200 from my snippets here. and then we will explain what is going on. So here after
+00:55:04.880 this username validator here, let me make sure all my indents are right. Now
+00:55:10.720 this is similar to the one that we had before. We're saying that this is a validator for our website field. We're
+00:55:17.920 checking if there is a website value uh since this field can also be none. uh
+00:55:23.760 and if there is a value if it start doesn't start with an HTTP or HTTPS
+00:55:30.480 then we are just adding that in but remember I said that by default these
+00:55:36.240 custom validators are run after paidantic has already done its type checking and basic validation that we
+00:55:42.720 have above. So, this isn't going to work because it's going to do that HTTP URL
+00:55:49.599 validation before uh this custom one is even run. So, if I run this as it
+00:55:55.440 currently is, you can see that we're still getting the same error. So, what we need to do here is we need to pass in
+00:56:04.319 a mode of before. So here within our field validator decorator, I'm going to
+00:56:10.000 say mode is equal to and we'll set that equal to before. That will tell pyantic
+00:56:16.720 that we want to run this custom validation and modification before it does the HTTP URL validation uh that we
+00:56:24.880 have above. It checks if the value starts with HTTP or HTTPS. If not, it
+00:56:30.880 adds that to beginning uh and then when the HTTP URL validation runs, it'll get
+00:56:37.280 that properly formatted URL. So if I run this now, then we can see that this
+00:56:43.920 works uh and that we have a proper URL here. Now in addition to field validators, we also have model
+00:56:50.720 validators. These are useful when you need to validate multiple fields together or validate the complete model.
+00:56:58.319 Uh, so a super common use case for this is checking if a password and confirm
+00:57:04.400 password field match. So again, let me grab this as some code from my snippets
+00:57:11.839 and then we will take a look at all of this. So this is a good bit of code from my snippets that I'm grabbing here. But
+00:57:18.079 don't worry, I will uh explain all of this as we go. So let me comment out the
+00:57:24.880 user that we are creating here and let me paste in this new model here. So let
+00:57:31.839 me scroll up and I will explain this. So what we've done here is we've created a
+00:57:37.280 new model and it's just a simple user registration model. So all this has is
+00:57:42.880 an email that's set to an email string, a password here which is a string and
+00:57:48.160 then we also have a confirm password field here as well. I just put these to strings so that we can easily see this
+00:57:54.720 example. Now we also have a validator that checks if the password and confirm
+00:58:01.839 password fields match. Now model validators are a bit different here. Uh
+00:58:07.359 instead of just receiving the value, we're actually receiving self uh which
+00:58:13.040 is the whole model instance and we can access all the fields to do our
+00:58:18.240 validation. So this runs after all the fields have been validated individually.
+00:58:23.680 That's why we're not using the uh class method decorator anymore like we had
+00:58:28.880 with the field validators. So down here I'm creating a new user registration
+00:58:34.400 here. And we can see that we are creating an instance of a user
+00:58:39.520 registration that does not have matching passwords. So this has secret 123. This
+00:58:45.040 is secret 456. So let me run this and we can see that we get a validation error
+00:58:50.640 here that says value error uh passwords do not match. So using this model validator we were able to uh check both
+00:58:58.480 of those fields and compare those together. Okay. So now let me talk about some best practices for validators. So
+00:59:05.440 first you should always return uh the value even if you're not modifying it.
+00:59:11.119 So the validator should either return the value or raise an error. Uh second,
+00:59:17.520 you'll usually want to raise a value error for validation errors. Pyantic
+00:59:22.960 will catch that and convert it to a validation error automatically. You can see that what we're catching down here
+00:59:29.760 uh is a validation error, not a value error. Uh but it's going to catch this
+00:59:34.799 value error and turn that into a validation error automatically for us. And lastly, if you're going to raise an
+00:59:42.000 error, uh don't mutate the value first. So either return the modified value or
+00:59:48.000 raise an error but not both. So that covers some custom validators. So we've seen field validators for individual
+00:59:54.960 fields. Uh model validators for validating the complete model and how to
+01:00:00.480 access other fields during validation. Uh these give you complete control over your validation logic uh when the
+01:00:07.359 built-in constraints that we saw before aren't enough. Okay. So now let's talk about computed fields. So sometimes you
+01:00:14.640 want to have fields that are calculated from other fields and you want them to be included when you serialize your
+01:00:21.760 model to a dictionary or JSON. So for example, maybe you want a display name
+01:00:27.280 that is generated from the first name and last name or you want to calculate if someone is an influencer based on
+01:00:34.960 their follower count. Uh, by the way, I hate the word influencer, but I just wanted something quick and easy for this
+01:00:41.280 tutorial. Uh I guess I could have called it silver user or whatever. Uh but let's
+01:00:46.720 ignore that. But anyways, Pyantic has computed fields for exactly this kind of
+01:00:52.400 purpose. So let me add computed field to our imports here so that we can see what
+01:00:59.119 this looks like. So from pyantic I'm going to import computed
+01:01:06.160 field. And now let's add some fields to our user model that we can use for
+01:01:11.200 computed values. And I'll add a first name, last name, and a follower count.
+01:01:18.079 Uh so let me grab these from my snippets here. So first I just have these new
+01:01:24.240 fields that I'm going to be adding in here. So for the user, let me add these
+01:01:30.880 here at the bottom so that we can see them and indent them correctly. And let
+01:01:37.440 me also remove full name here uh because we are going to use a computed field to
+01:01:45.280 compute a display name instead. And now let me grab these computed fields from our snippets and I'll add these to the
+01:01:52.640 end of our model. So, let me grab these and I will just add these to the end of
+01:02:00.000 our model here. Make sure that we're indented correctly. Okay, let's walk
+01:02:05.119 through these. So, this is a property decorator combined with a computed field
+01:02:11.119 decorator. Now, I should have mentioned this earlier, but the validator decorators that we saw before and this
+01:02:18.000 computed field decorator, these are specific to paidantic. I mean, we imported those. But the class method uh
+01:02:25.920 decorator that we saw before and this property decorator, these are related to
+01:02:31.200 Python classes themselves. They're outside the scope of this video. But if you don't know what those decorators
+01:02:37.680 mean or what they do, then I'd recommend watching my playlist on Python classes
+01:02:43.119 if you want to know uh exactly what those do. And again, just like everything else, I'll leave a link to
+01:02:48.319 that playlist in the description section below. Uh but for now, let's go over these computed fields. So we can see
+01:02:54.799 that our computed field here is display name. And what we're doing in here is if
+01:03:00.079 we have a first name and a last name, uh then we just return those together uh
+01:03:06.079 with a space in between. Uh if we don't have the a first name and a last name,
+01:03:11.599 then we just return the username. And because we use this computed field, uh this will be included when we serialize
+01:03:18.799 our model. And I also included a more simple one here just to really knock the point home. This one doesn't even have
+01:03:25.760 any conditionals or anything. It is uh purely just a computed field. So we can
+01:03:32.079 see that we have a computed field called is influencer and all it does here is it
+01:03:37.440 returns whether our follower count is greater than 10,000. Okay. So let's test
+01:03:43.280 these computed fields here. So uh let me I'm going to uh comment out our user
+01:03:51.520 registration here from before and let me uncomment where we are creating a user
+01:03:58.640 here. So right now if I run this as is uh then you can see that we have a
+01:04:06.559 display name here now and since we didn't have a first name or a last name
+01:04:11.760 that just returned our uh username and that's how we had that set up. Um and we
+01:04:18.160 can also see here that we have is influencer equal to false because our
+01:04:23.359 follower count by default is zero. uh but let me add in a first name and last
+01:04:29.280 name and we can see how that gets uh computed differently if we have those
+01:04:35.599 values. So I'll say first name is Corey. We will set a last name equal to
+01:04:41.920 Schaffefer. So now if I rerun this again then we can see that we now have those
+01:04:48.319 first name and last names in there and we have the display name that is basically that full name. So it's the
+01:04:55.039 first name and last name with a space in between. So these computed fields even though we didn't specify these fields
+01:05:02.240 explicitly um since they are computed they get uh displayed whenever we
+01:05:08.720 serialize this data. So that's nice to have as an option. Um and these get
+01:05:14.240 computed from other fields. So, also if I wanted to update the follower count to
+01:05:19.839 10,000 or so, then I could show you that and get that coveted influencer status,
+01:05:25.440 but I'm going to go ahead and skip past that. Now, like I said before, uh these computed fields will show up in our
+01:05:31.599 dictionary and JSON dumps as well. Uh so, let me dump this to JSON really quick. So, I'll say uh model dump JSON.
+01:05:40.799 And let's go ahead and set an indent of two because I want to have this
+01:05:46.240 formatted nicely here. So let's look at this. And like I was saying before, uh
+01:05:52.079 our uh computed fields of display name and isfluencer um they get added to our
+01:05:58.079 JSON output as well and also to the dictionary output if I was to just do a model dump. Okay. So another thing that
+01:06:05.280 I wanted to talk about uh was about using nested models. Now one of the more
+01:06:12.240 powerful features of pyantic is that you can use other pyantic models as field
+01:06:18.880 types. So you can have models within models and paidantic will automatically
+01:06:25.039 validate everything recursively. Now that might sound complicated but once
+01:06:30.079 you see an example of this it's super straightforward. So to demonstrate this,
+01:06:35.119 let me add in a simple comment model above our blog post model. So let me go
+01:06:42.880 up to our blog post here. And again, I'm going to grab this from my snippets
+01:06:49.039 here. So I have a very simple comment model here. So I will copy this and
+01:06:55.039 paste this in here. So for a comment, we just have some content, an author's
+01:07:02.319 email, and the count uh a likes count. So now let's update our blog post to use
+01:07:09.599 nested models. Right now we have author ID as just a string or an integer. We
+01:07:17.039 can see that here. But what if we wanted to store the full author information
+01:07:23.119 instead of just this author ID? Well, we can just use our user model as the type.
+01:07:30.240 So, instead of having author ID here as a string or an integer, I'm just going
+01:07:35.599 to call this author and we will just have this be a user type. So, now we'll
+01:07:41.599 have this uh full user object nested in our blog post. And let's say that a blog
+01:07:48.799 post is also going to have a list of comments. So to do this uh down here at
+01:07:55.280 the bottom I will add another field here called comments and let's have a list
+01:08:02.559 and this is going to be a list of comment which we created right here.
+01:08:10.000 Okay. And I'm also going to have this be
+01:08:15.359 a default factory of an empty list by default. And if you think about it,
+01:08:21.520 there's all kinds of different things that we could add here. So, we could even add a computed field like we saw
+01:08:27.279 before that counts the number of comments or something like that. Uh, but I'm not going to worry about adding that
+01:08:34.000 here. Uh, I'm just giving some ideas of what you could easily add to this uh to get some more useful functionality.
+01:08:40.799 Okay. So, now we have a blog post that contains a user as the author and a list
+01:08:46.960 of comments. So now let's create a blog post with all of this nested data. So
+01:08:53.198 instead of creating this with keyword arguments like we've been doing, let me instead create this from a dictionary to
+01:09:00.158 show what that might look like. Uh if you receive this data from an API or a
+01:09:05.279 form or something like that. So down here I'm going to comment out uh what we
+01:09:12.000 had before where we were creating this user. And now let me go ahead and make
+01:09:17.439 some space here. I'm also going to grab this from my snippets as well. This is a
+01:09:23.279 little bit longer here since we are creating a big dictionary of data here.
+01:09:30.000 Let me paste this in. Okay, so let me go over what this post data dictionary
+01:09:35.198 looks like. So we can see that we have uh we are creating a blog post here. So
+01:09:40.880 we have a title, content, a slug. All of that is perfectly fine and normal. Once
+01:09:47.040 we get to the author, we have a nested dictionary here. And this is going to be
+01:09:53.198 a user. So now we have a user here and it has to pass all the user validation
+01:09:59.920 checks. So we have a username of corems, email, age, password, things like that.
+01:10:06.080 For comments, we now have a list here. And this is a list of comments. And each
+01:10:13.280 one of these comments has to pass the comment validation. So for the comment validation, we have content, author,
+01:10:20.159 email, likes, uh, and I think that's all we had for comments. So now we're taking
+01:10:26.719 that post data dictionary and unpacking that to create a blog post. And
+01:10:32.800 Pideantic will automatically validate everything recursively. So, not only does it validate the blog post fields,
+01:10:39.679 but it also makes sure that our user and comment fields are good, too. Now, this
+01:10:44.880 is one way that you'll see it done, but if you're unfamiliar with unpacking like this with the asterisk uh or lists in
+01:10:52.880 Python, then another way that you can do this is by saying uh blog post.od
+01:10:59.920 model validate and then just pass in that
+01:11:05.440 directly without unpacking that. And those are essentially doing the exact same thing. They're just creating a blog
+01:11:12.320 post from our post data. So after we're creating that blog post, I am uh
+01:11:18.400 printing this out in a JSON format. So let's run this and see what this looks
+01:11:24.080 like. So we can see that that works. Not only did it create our blog post, uh,
+01:11:29.440 but we also have all of this user information as well, uh, so we have the
+01:11:34.960 autogenerated, uh, unique ID for the author. Uh, there's the autogenerated uh, timestamp
+01:11:41.840 for our blog post that we have here. Uh, and all of the optional fields for all
+01:11:47.120 of these models. So nested models gives you a really powerful way to structure
+01:11:52.800 complex data with automatic validation all the way down. Okay, so we're just
+01:11:58.320 about finished up here. Uh but let's talk about some more advanced serial
+01:12:03.520 serialization and working with JSON. So so far we've been using model dump and
+01:12:10.960 model dump JSON, but there are a lot more options for controlling how your data is serialized. One common use case
+01:12:18.640 is working with APIs where the external representation uh representation uses
+01:12:24.719 different field names than your internal Python names. So for example, maybe
+01:12:30.320 you're working with a JavaScript frontend that uses camel case, but you want snake case in Python. Or maybe you
+01:12:38.320 have internal fields that you don't want to expose when serialized. So to show
+01:12:43.360 you some of this, we're going to need to import config dict from paidantic. So
+01:12:49.120 let me go up here and do that. So from paidantic, we are uh importing config
+01:12:57.040 dict. Okay. And this is going to allow us to configure our models further. Uh
+01:13:03.840 let me actually copy that there. So for example, let's configure our user model.
+01:13:09.600 So to do this, we'll add an attribute to the model called model
+01:13:16.800 config. And we'll set this equal to that config dictionary there. And now we can
+01:13:22.800 configure our model by passing in arguments to this config dictionary class. Uh the first one that I'll set is
+01:13:31.440 populate by name. So that is populate by name. I will set that equal to true. And
+01:13:38.400 this tells Pantic to accept both the field name and an alias when loading data. So for example uh for an ID we are
+01:13:48.080 using UID for the field name which is usually what you want to do in Python
+01:13:53.280 because like I said before ID is a built-in keyword that we don't want to
+01:13:58.560 overwrite. But some of the data that we load in might actually use uh ID as the
+01:14:05.040 field name. So let's add that as an alias. So here at the beginning I'm
+01:14:10.080 going to say alias is equal to ID. So again quick recap there. So first we
+01:14:17.040 have this model config uh and we have this populate by name set to true. This
+01:14:22.560 tells paid to accept both the field name and the alias when loading data. So that
+01:14:27.760 allows us to be a little more flexible when loading or exporting data with different naming conventions. So, let me
+01:14:34.640 grab some more data to load in here. And all of our commented out code down here
+01:14:40.560 is getting a little messy. So, let me go ahead and just overwrite all of this
+01:14:46.800 right now. And then I will paste in some new stuff from our snippets here. Okay.
+01:14:53.199 So, from our snippets here, let me grab a little bit more here. Like I said,
+01:14:58.480 we're getting close to the end, so there are no more snippets after this. Okay. Okay, so let me go over what we pasted
+01:15:04.719 in here. So you can see that the user data that we're loading in uh uses this
+01:15:10.480 ID field instead of UID like we have specified in our Python model. Uh but
+01:15:16.880 since we have model config with populate by name set to true and told that field
+01:15:23.760 uh the UID field to use ID as an alias, then I should be able to run this just
+01:15:29.520 fine. So if I save this and run it, then we can see that that works and that we
+01:15:35.280 get that uh unique ID that we passed in there. Those match up. But you can also
+01:15:40.320 see that when it outputs the user, it's still using our field names. So it's still using uh UID here. So even though
+01:15:48.480 it was able to load in that data just fine, it's still outputting our own field names. And that might be what we
+01:15:55.199 want. uh but if you want it to use the aliases on output also then we can just
+01:16:01.679 specify that uh whenever we dump that out. So whenever I'm dumping this out
+01:16:06.719 here I'm already passing in an indent of two but I can also uh pass in a by alias
+01:16:14.480 equal to true. And now if I run this you can see that instead of UID we are
+01:16:21.199 getting ID. So when we're sending data to a front-end or external API, uh we
+01:16:27.520 can use the aliases to match their naming conventions. So now let's look at
+01:16:33.600 excluding and including specific fields. So sometimes you don't want to serialize
+01:16:39.360 everything. Uh maybe you have sensitive data or internal fields that you want to exclude. So for example, even though
+01:16:46.640 it's blurring out our password already, uh let's say that we don't want to include it in our output at all. Let's
+01:16:53.520 just exclude the password from serialization. So to do that, we can
+01:16:59.280 just say here with our when we are dumping this out, I will exclude that
+01:17:06.239 password and this is going to be in brackets here. So I will exclude that
+01:17:11.760 password. If I save that and run it, then you can see that we no longer have
+01:17:16.800 that password. It was excluded. Now, the inverse of that, if we wanted our output
+01:17:22.239 to be limited to only a few fields and we don't want to go through and exclude,
+01:17:27.280 you know, a whole bunch of fields and we just want to include some uh then what we can do is we can just be explicit
+01:17:34.960 about what we want to include. So let's say that I just wanted to include the
+01:17:40.239 username and email in our output here. What I could do is I could just say
+01:17:46.000 include and let's say that we just want the username and also the email. So if I
+01:17:54.880 save that and run it, then you can see that now all we have are those two included fields and everything else is
+01:18:01.440 excluded. Now, another thing that you might end up doing a lot is loading in data from JSON directly. So far, we've
+01:18:09.520 been creating users directly or loading them in from Python dictionaries. But
+01:18:14.560 let's create a user directly from a JSON string. So, to do this, I'm going to
+01:18:20.080 import the built-in uh JSON library here or the JSON module. So, I'll import
+01:18:27.360 that. Scroll back down here to the bottom. And now if our data was a JSON
+01:18:32.719 string instead of a dictionary, we could load that in with model validate uh JSON
+01:18:40.239 instead of just model validate. So model validate_json.
+01:18:47.120 And now this is going to be expecting a JSON string. Uh what I'll do here is I
+01:18:52.480 will just use that JSON module to dump our current dictionary to a JSON string.
+01:19:00.560 Now in a real world example, that JSON string would be coming from a different source because if you already had the
+01:19:07.199 Python dictionary, then you'd just load that in directly like we did before. Um so you wouldn't need to do this. Uh but
+01:19:14.320 if I run this just to show you that that does work, uh we can see that that validates just fine. So this model
+01:19:20.880 validate JSON method is really useful when uh you're receiving JSON data from
+01:19:27.120 an API or reading from a file. So these serialization features give you a lot of
+01:19:32.719 flexibility when working with external systems. Uh you can use aliases for
+01:19:38.480 different naming conventions. Uh control which fields get serialized with include and exclude and easily convert between
+01:19:46.239 your models and JSON. Now let's talk a little bit more about model configuration. So Pyantic gives you a
+01:19:53.360 lot of control over uh how your models behave through the model config
+01:19:58.560 attribute uh that we saw up here. Where was that? It was in the user module.
+01:20:04.800 Okay, right here. So we've seen this a bit with the populate by name uh that we just now used. But there are a lot more
+01:20:11.760 options. And I should mention uh that in pyantic version one uh you would use the
+01:20:17.679 config class for this. But in version two uh we use this model config with
+01:20:22.880 config dict like we see here. But if you see in older code someone using the
+01:20:28.080 config class uh just know that that's the old way. Now one of the most common configuration options is controlling
+01:20:34.480 type coercion. Remember how pyantic normally coerces types uh like converting the string uh 39 to the
+01:20:42.239 integer of 39? Well, sometimes you want stricter validation where no type coercion happens at all. Uh to do this,
+01:20:49.440 it's just as easy as adding uh strict is equal to true to our config dict here.
+01:20:56.560 So, let me add that really quick. I'll say strict is equal to true. And let's
+01:21:03.360 put this on some new lines here so that we can see uh all of these configurations. So now the data that
+01:21:10.480 I've been using to create this user um has an age of 39, but it's coming in as
+01:21:18.239 a string. So pyantic has been converting this to an integer. But now with strict
+01:21:24.080 equal to true, it should reject this and tell us that an integer is required. So
+01:21:30.400 if I save this and run it, you can see that this string of 39 was working uh
+01:21:37.360 before. But now it's saying that our input should be an integer. So now uh we
+01:21:42.560 are in that strict mode. Now if I was to change this to be an integer of 39
+01:21:48.320 instead. Save that and run it. Then you can see that that works just fine. And
+01:21:53.360 also we're just printing out that username and email uh just so I can uh
+01:21:58.960 show all this. Let me go ahead and print out that entire user again. Okay, there
+01:22:05.360 we go. So that strict mode is useful when you want to be very explicit about types and catch cases where you're
+01:22:12.800 receiving the wrong type of data. Uh you can also use uh strict types for
+01:22:18.000 individual fields like strict string or strict integer if you only want strict
+01:22:23.840 validation on certain fields rather than on the whole model. Now another useful
+01:22:29.120 configuration is the extra option which uh controls what happens when you pass
+01:22:34.960 fields that aren't defined in your model. Uh by default paidantic just
+01:22:40.639 ignores extra fields but we can change that. So if I wanted to be able to add
+01:22:45.840 extra fields, then I could uh come up here to our user model here and where we
+01:22:52.480 have our configurations, I can say extra equals allow. And now with the data I
+01:23:01.280 was loading in, if I add extra fields that aren't explicitly in our model,
+01:23:07.040 then it should accept them. Uh so let's add a note to our user here. So I'll
+01:23:13.520 just add in another field called notes and let's just set this equal to um I
+01:23:19.280 don't know kind of a Karen. So with extra equals allow that we have in our
+01:23:25.840 configuration any extra fields that we pass in uh should be preserved. So this can be useful for things like plug-in
+01:23:32.719 systems or when you want future compatibility where new fields might be added. Um, so if I run what we have here
+01:23:40.560 now, then we can see right here we have our extra field uh that was included
+01:23:46.960 even though that field's not explicitly uh in our user model. Now you could also
+01:23:52.719 set extra to forbid if you want to raise an error when extra fields are passed uh
+01:23:58.639 which is useful when you want to catch typos or ensure that you're only getting expected fields. Or you could use ignore
+01:24:06.080 which is the default behavior uh of paidantic where the extra fields are accepted but just silently ignored. And
+01:24:13.600 now another one that we can change here is validate assignment. So remember
+01:24:19.199 earlier when I mentioned that by default paidantic doesn't revalidate when you change a field after it's uh created.
+01:24:27.040 Well, you can change that within the configuration. So if I go up to the configuration here, if I add in uh
+01:24:36.239 validate assignment here and set that equal to uh true, then with this
+01:24:42.639 configuration set, it'll revalidate any time that we make changes uh which it
+01:24:48.159 didn't before. So if I go down here to the bottom after our user is created, if
+01:24:55.840 I change this user.e and change this to something that isn't
+01:25:01.840 an email, so something like Corey M. Schaefer, if I run this now, then you
+01:25:07.040 can see that we are getting a validation error here uh because it is revalidating
+01:25:12.719 when uh on assignment whenever we change values. So that is not the default
+01:25:18.560 behavior of paidantic. You actually have to uh set that to have it revalidate. So
+01:25:23.600 that is super useful when you have models that uh get modified after creation and you want to ensure that
+01:25:29.760 they stay valid. And one more configuration that I want to show you here is frozen models. So sometimes you
+01:25:36.239 want to create immutable models where the data can't be changed at all after
+01:25:41.840 creation. So this can be useful for things like configuration objects or
+01:25:47.040 just when you want to ensure that data integrity and that nothing changes. So up here let me change this validate
+01:25:56.000 assignment setting and instead of validate assignment I'll set this as frozen equals true. So now if I rerun
+01:26:04.800 this I'm still going to get an error here. Uh but the error is going to be
+01:26:10.719 because the instance is frozen, not because the email doesn't validate. Even
+01:26:16.239 if the email validated. So let me do cordiumshaper 2@gmail.com.
+01:26:21.520 So that is a valid email. Even if the email is valid, if I run this, we're
+01:26:27.520 still going to get uh a validation error here because our instance is frozen and
+01:26:32.800 we can't make changes to it after it's been created. So that can be super useful if that's what you want and we uh
+01:26:39.199 and you don't want to make any changes once that's been created. And frozen models can also have uh a small
+01:26:46.400 performance benefit since Pyantic knows that the data isn't going to change. So these configuration options that we've
+01:26:52.719 seen, they give you a lot of control over how your models behave. So you can
+01:26:58.000 make validation stricter to prevent surprises. uh validate on assignment to
+01:27:03.120 keep uh data valid after it's created. Um control how extra fields are handled
+01:27:09.120 and make models immutable uh when you need that guarantee. Okay, so that
+01:27:14.320 covers everything that I wanted to look at for model configurations. So I know that we've covered a lot in this
+01:27:20.639 tutorial, but I hope that you see uh why pyantic is so useful for data validation
+01:27:26.560 and the flexibility that we have here. Uh, and the best part is that Pyantic
+01:27:32.159 does all of this with pretty minimal boilerplate. So you just add type hints to your models and Pantic handles the
+01:27:39.600 rest. And those type hints aren't just for validation. They also give you great
+01:27:45.199 IDE support uh with autocomplete and inline documentation. So your code
+01:27:51.440 almost becomes self-documenting. Now Pyantic also has a really strong ecosystem. So if you're interested in
+01:27:58.080 building web APIs, fast API uses paidantic under the hood for request and
+01:28:04.320 response validation. Uh SQL model which is a library for working with SQL
+01:28:10.400 databases. It also uses pyantic models. Uh so once you learn pyantic then you're
+01:28:16.800 you're going to see it pop up everywhere in the Python ecosystem. Uh, in the next videos I'm going to plan on covering
+01:28:23.840 fast API which will show you how Pantic is used in a realworld web framework. So
+01:28:30.560 be sure to subscribe so that you don't miss that. But I think that is going to do it for this video. Hopefully now you
+01:28:36.800 have a good idea of how to use Pyantic for its powerful data validation in
+01:28:42.560 Python. But if anyone has any questions about what we covered in this video, then feel free to ask in the comment
+01:28:48.800 section below and I'll do my best to answer those. And if you enjoy these tutorials and would like to support them, then there are several ways you
+01:28:55.040 can do that. The easiest way is to simply like the video and give it a thumbs up. Also, it's a huge help to
+01:29:00.400 share these videos with anyone who you think would find them useful. And if you have the means, you can contribute through Patreon or YouTube, and there
+01:29:06.719 are links to those pages in the description section below. Be sure to subscribe for future videos, and thank you all for watching.

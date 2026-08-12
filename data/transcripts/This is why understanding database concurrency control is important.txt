@@ -1,0 +1,281 @@
+# tactiq.io free youtube transcript
+# This is why understanding database concurrency control is important
+# https://www.youtube.com/watch/wEsPL50Uiyo
+
+00:00:00.040 so something that's really important to
+00:00:01.640 understand when you're building out web
+00:00:03.000 applications is race conditions and how
+00:00:05.240 to set up your code in such a way to
+00:00:07.399 prevent these race conditions from
+00:00:09.080 happening this is more common when you
+00:00:11.160 have an application where multiple users
+00:00:12.880 can modify the same items in a database
+00:00:15.679 and you kind of have to make sure that
+00:00:16.880 your code is written properly so that
+00:00:18.840 you don't have people kind of completely
+00:00:20.439 overwriting the changes of others so
+00:00:22.800 let's do a quick little scenario here
+00:00:24.160 with the diagram I have two users user a
+00:00:26.199 and user B and we have a database and
+00:00:28.560 let's say that they're trying to access
+00:00:30.199 an API they both click a button around
+00:00:32.119 the same time and that hits an API
+00:00:34.079 endpoint let's talk about the race
+00:00:36.160 condition scenario the first person is
+00:00:38.600 going to hit an endpoint to basically
+00:00:40.239 increment a counter in a row on a table
+00:00:43.039 right and so this logic is going to go
+00:00:44.920 ahead and fetch the current count from
+00:00:47.079 the table and then at the same time the
+00:00:49.760 other user is also going to select the
+00:00:52.719 current count from the database so
+00:00:54.800 remember both of these API endpoints are
+00:00:56.600 running basically concurrently one is
+00:00:59.000 probably a little bit faster than the
+00:01:00.680 other so now somewhere in your code you
+00:01:02.920 have to basically take that record you
+00:01:04.360 got back from the database you add one
+00:01:05.880 to it and the other user is doing the
+00:01:07.520 same thing his code is doing the same
+00:01:08.799 thing and then finally you write back
+00:01:10.880 that count of one because it's 0 + one
+00:01:14.240 back to this database but unfortunately
+00:01:17.159 the other user also writes the exact
+00:01:18.880 same thing they are writing 0 + one back
+00:01:21.759 to the database now this is a race
+00:01:23.240 condition that can happen if you not
+00:01:24.880 careful with how you write your code and
+00:01:26.840 ultimately this count is going to be one
+00:01:28.720 in this database but we want to B2 so
+00:01:30.799 this is obviously the most trivial
+00:01:32.240 example but it really highlights the
+00:01:34.119 issue of you can to have multiple users
+00:01:36.479 all trying to modify the same record and
+00:01:38.560 one user's request May overwrite another
+00:01:41.159 user's request and cause a lot of data
+00:01:43.439 inconsistencies and problem all right so
+00:01:45.040 let's go over to code because I know you
+00:01:46.439 guys love seeing code so let's go and
+00:01:48.640 look at this endpoint called count and
+00:01:51.799 when you do a post request to this
+00:01:53.119 endpoint what it's doing is it's doing
+00:01:54.840 that same logic it tries to get a record
+00:01:56.799 from the database and then it tries to
+00:01:59.200 do that record + one and then it
+00:02:02.399 rewrites it to the database using a db.
+00:02:04.600 update and that's it let me go ahead and
+00:02:06.960 make sure my local postest databas is
+00:02:08.878 running and I have and I have jural
+00:02:10.679 Studio running so let's go to the counts
+00:02:12.920 and notice here we have a count of zero
+00:02:14.760 so I have a script that's going to hit
+00:02:16.080 this inpoint with about 100 concurrent
+00:02:18.840 requests and it's going to highlight
+00:02:20.800 this issue so I have a script down here
+00:02:22.519 in bash um and it's called test so I'm
+00:02:25.560 going to make a new tab down here I'm
+00:02:27.360 going to say
+00:02:28.760 test.sh and let's run this and what this
+00:02:31.239 does is it's just going to make 100 post
+00:02:33.560 requests through that SL count inpoint
+00:02:36.959 all as background processes so this is
+00:02:38.920 going to try to fire off as fast as
+00:02:40.599 possible and then when it's all done
+00:02:42.640 we're going to go back and look at the
+00:02:43.879 database refresh and notice that count
+00:02:46.280 is set to two so as we kind of
+00:02:48.760 diagrammed here you have 100 requests
+00:02:51.200 but they all ultimately ended up
+00:02:53.200 overriding the previous rights and now
+00:02:55.400 your count is two so huge issue now this
+00:02:57.879 is more apparent on like systems that
+00:02:59.360 actually have a lot of users and a lot
+00:03:00.800 of traffic and concurrent rights but
+00:03:03.200 this is still an issue you don't want
+00:03:04.360 that count to be off you want it to be
+00:03:05.920 100 so let's kind of go and look at a
+00:03:08.400 fix so I have a count fixed one endpoint
+00:03:12.040 now obviously the easiest solution to do
+00:03:13.799 this is probably just use an update
+00:03:15.959 clause in your database right you don't
+00:03:17.599 need to select the data first just to
+00:03:20.200 get the count if it's something trivial
+00:03:22.280 like this you could just go ahead and
+00:03:23.480 increment that count by one directly in
+00:03:25.400 your SQL statement and this is how I'd
+00:03:27.360 recommend doing it but this but this
+00:03:28.840 really only works for like trivial tasks
+00:03:30.680 it doesn't work for more complicated
+00:03:32.239 things let's just go ahead and run the
+00:03:33.439 second test so test fix one and now if I
+00:03:35.959 were to go back and let's just clear
+00:03:37.799 this count out so that we can start at a
+00:03:39.599 fresh state I'm going to run this test
+00:03:42.720 and obviously this is going to make our
+00:03:44.400 count equal to 100 that's the expected
+00:03:46.239 output so that is one solution for that
+00:03:48.879 race condition is just make sure your
+00:03:50.159 queries are written properly so that
+00:03:52.439 every time you're doing a rights you're
+00:03:54.400 going to Leverage The Power of post
+00:03:55.920 Crest which is going to do kind of
+00:03:57.400 transactions under the hood and do lock
+00:03:59.840 on the rows so that every time it does a
+00:04:01.680 right it's going to be the latest
+00:04:02.720 greatest um value that it's updating all
+00:04:05.079 right so let's move on to another fix so
+00:04:06.959 fix two now this is going to Leverage
+00:04:09.159 The Power of a transaction but more
+00:04:11.280 specifically we're doing a four update
+00:04:14.360 suffix at the end of the SQL statement
+00:04:16.399 so if we using postgress you can
+00:04:18.079 actually add something called for update
+00:04:21.040 at the very end of your SQL statement
+00:04:23.720 and what this is kind of doing is that
+00:04:25.120 the first transaction is going to put
+00:04:26.600 like a lock on this row so that if other
+00:04:29.320 people come along and try to also read
+00:04:31.880 that same row they are going to you know
+00:04:34.240 be delayed they're going to wait until
+00:04:36.000 that first request is completely done
+00:04:38.240 with this entire transaction now I will
+00:04:40.360 say be sure to correct me in the
+00:04:41.840 comments if I say anything incorrect um
+00:04:43.600 I'm not like a super expert at this
+00:04:44.840 stuff I've been trying to read through
+00:04:45.919 some blog posts which I'll put the links
+00:04:47.600 in the descriptions below I highly
+00:04:49.280 recommend reading them if you want to
+00:04:50.360 become a better engineer uh they're
+00:04:51.960 written by people probably a lot smarter
+00:04:53.360 than me I've been reading through this
+00:04:54.800 one as well about anti- patterns for SQL
+00:04:57.080 and postgress and then also if you go to
+00:04:58.840 the postgress stocks if you can stomach
+00:05:01.400 it and read through all this crazy text
+00:05:03.600 in engineering jargon Um this can really
+00:05:06.520 help you understand how transactions
+00:05:08.240 work as well so let me just kind of Dem
+00:05:10.160 with this real quick and I'll kind of
+00:05:11.039 talk about some downsides to this
+00:05:12.600 approach so I'm going to reset that
+00:05:13.680 count back to zero I'm going to go over
+00:05:15.520 here and I'm going to say test two so
+00:05:19.560 now when I run this this is going to do
+00:05:21.360 the exact same thing as before the count
+00:05:23.000 will go up to 100 so it's all working
+00:05:24.840 fine but there are some limitations to
+00:05:26.600 this this approach will reduce the
+00:05:28.919 performance because it is creating some
+00:05:31.000 type of lock under the hood right you
+00:05:32.520 can't just have a bunch of queries
+00:05:33.639 concurrently execute you know the one
+00:05:35.639 has to kind of wait for the other lock
+00:05:37.680 to be relinquished before you can kind
+00:05:39.319 of go through this will cause lower
+00:05:41.280 performance because there's going to be
+00:05:42.440 more contention on the database and like
+00:05:44.759 on that record itself so let's move on
+00:05:46.600 to fix number three so when you're using
+00:05:48.440 postgress in SQL typically you have the
+00:05:51.080 ability to set isolation levels on your
+00:05:53.080 transaction so in this case I'm sending
+00:05:54.479 to
+00:05:55.240 serializable and this is basically going
+00:05:57.319 to do the blocking like I said before
+00:05:59.520 but instead of it just kind of waiting
+00:06:01.280 for the lock to be relinquished and then
+00:06:02.919 it'll go ahead and just do its logic
+00:06:05.120 this will actually throw an error if
+00:06:06.919 someone currently has a lock on this
+00:06:08.960 record and you try to write to it okay
+00:06:11.479 so let's just go ahead and run fix test
+00:06:13.639 three and I want to show you what
+00:06:15.080 happens when I run this and I go back to
+00:06:18.160 the counts notice that the count is only
+00:06:19.960 incremented by 10 so there's there's a
+00:06:21.720 raise condition going on here and the
+00:06:23.880 reason is because we're getting a ton of
+00:06:25.639 Errors we have all of these could not
+00:06:27.680 serialize access due to concurrent value
+00:06:31.160 issues or concurrent update issues and
+00:06:33.520 again that's because there is a second
+00:06:35.360 transaction trying to update on a
+00:06:37.720 previous transaction that's currently in
+00:06:39.080 the process of like running now this
+00:06:40.720 will give you the strongest consistency
+00:06:42.720 in your database and it kind of gives
+00:06:44.240 you a way to react as a developer if you
+00:06:46.840 want to kind of catch that error and do
+00:06:48.680 something specific maybe you want to
+00:06:50.000 send back an error to the user saying
+00:06:51.759 hey you know someone has already
+00:06:53.479 modifying this document try again later
+00:06:55.840 but again this is going to have more
+00:06:57.240 performance issues because of all the
+00:06:58.919 Locking that's going on all right let's
+00:07:00.520 move on to the last one this is another
+00:07:01.879 strategy you can potentially do and this
+00:07:03.639 is called an optimistic update so the
+00:07:06.319 idea is on your record itself you'll
+00:07:08.560 have like a a version or maybe you'll
+00:07:10.639 have like a a last updated Tim stamp so
+00:07:13.560 the key to the optimistic update is you
+00:07:15.120 have a wear Clause here and you
+00:07:16.400 basically say I only want to run this
+00:07:18.160 update if the current version that's in
+00:07:20.599 the database matches the version that I
+00:07:23.360 found on line 7 when I did the query if
+00:07:25.360 it doesn't match then you know that
+00:07:27.479 someone else already updated that record
+00:07:29.440 you need to gracefully handle that error
+00:07:32.759 now again with this approach and the
+00:07:33.919 last approach errors are going to be
+00:07:35.319 thrown so it's kind of up to you to
+00:07:37.479 figure out the best scenarios to kind of
+00:07:39.879 clean this all up although this is a
+00:07:41.879 transaction so stuff will be rolled back
+00:07:44.319 you still want to either tell the user
+00:07:46.400 that something went wrong and they can
+00:07:47.840 retry or you need to add some type of
+00:07:49.879 nice user experience where it just
+00:07:51.240 retries for them automatically and if
+00:07:53.400 for some reason they just cannot get
+00:07:54.800 this transaction through maybe let them
+00:07:56.479 know so the reason this approach is good
+00:07:58.240 is because it's not going to going to
+00:07:59.560 really add locks to records and rows so
+00:08:01.879 it's going to allow more concurrent data
+00:08:03.800 reads and wrs but it just requires more
+00:08:06.319 work to basically make sure that you're
+00:08:07.840 handling these failover scenarios
+00:08:09.800 gracefully now I do want to end this
+00:08:11.400 video saying I'm not an expert at this
+00:08:13.080 stuff I'm not like a database
+00:08:14.319 administrator or an expert um I've been
+00:08:16.840 working the past 5 years using Dynamo DB
+00:08:19.440 which is a basically like a key value
+00:08:21.680 store and a lot of the stuff is
+00:08:23.879 abstracted away you don't have to worry
+00:08:25.360 about it Dynamo does have the ability to
+00:08:27.639 do strong consistent rights in reads
+00:08:29.960 from the Dynamo DB table so the concepts
+00:08:32.399 still kind of apply I just haven't
+00:08:33.919 really been immersed as much in SQL in
+00:08:36.120 like you know professional SQL in my
+00:08:37.599 day-to-day work uh again like I said I
+00:08:39.599 use Dynamo DB so if there's anything
+00:08:40.919 that you found really useful give me a
+00:08:42.559 thumbs up it really helps my channel
+00:08:43.919 grow and leave a comment below if
+00:08:45.560 there's anything I said wrong about
+00:08:47.160 these approaches or if you wanted maybe
+00:08:49.120 I didn't elaborate enough on something
+00:08:51.320 feel free to leave a comment so other
+00:08:52.720 people can learn from my Miss teachings
+00:08:55.680 uh like always I have a Discord Channel
+00:08:56.800 you guys are welcome to join the link is
+00:08:58.200 in the description if you want to find a
+00:08:59.480 place to kind of hang out and ask
+00:09:00.720 questions to some other developers all
+00:09:02.680 right have a good day happy coding

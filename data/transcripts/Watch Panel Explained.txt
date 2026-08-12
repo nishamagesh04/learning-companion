@@ -1,0 +1,345 @@
+# tactiq.io free youtube transcript
+# #VSCodedebugging Watch Panel Explained | #Debug Python Code Smarter (Lecture 2)
+# https://www.youtube.com/watch/cY9lr6i2ptE
+
+00:00:00.560 Hey. Hi YouTube. How are you? I hope you
+00:00:02.399 all guys are doing great. In this video,
+00:00:04.400 we are going to see about watch panels.
+00:00:07.279 So, we are going to see what actually
+00:00:08.960 watch panels are and how it can be
+00:00:10.559 helpful in our debugging journey. Uh if
+00:00:14.000 if in any case you have missed the
+00:00:17.520 previous video which was about
+00:00:18.800 breakpoints, you can go and watch it.
+00:00:21.520 And if you have explicitly came for
+00:00:23.840 watch panel, you are most welcome. And
+00:00:26.960 basically we are going to explore about
+00:00:28.560 watch panels and but before moving to it
+00:00:30.960 if you want to see uh if you are if you
+00:00:33.920 want to follow me along with this code
+00:00:36.160 then definitely you can find it in this
+00:00:39.280 um GitHub repo where this is the lecture
+00:00:41.760 two and I will definitely post this uh
+00:00:44.320 link of this GitHub repo in the
+00:00:46.559 description box and it's in master
+00:00:49.039 branch not in main branch. Okay. So
+00:00:52.160 first let's see what actually watch
+00:00:53.760 panel is. So let's see
+00:00:57.520 watch panel uh it's basically a tool
+00:01:00.320 which lets you monitor variables or
+00:01:02.239 expressions while debugging even if they
+00:01:04.720 don't appear in your current code or
+00:01:06.479 current line. It's help you to add the
+00:01:10.799 add those expressions and to look up to
+00:01:13.280 your variables and monitor your
+00:01:14.799 variables. Um it you can say it is
+00:01:17.280 setting up uh your own conspector.
+00:01:20.799 Okay. So let's uh understand it with an
+00:01:23.040 example. So here we have a code we have
+00:01:25.680 a grades so it's basically a marks and
+00:01:28.240 we have a v method which is calculating
+00:01:30.560 the average simple basic maths and then
+00:01:33.119 we have a variable which a method which
+00:01:35.600 is checking whether it is passed or not.
+00:01:38.000 So according to the business rule it
+00:01:40.159 says that if the average is more than or
+00:01:43.040 equals to 40 written true means pass
+00:01:45.680 otherwise is fail. Okay now how this
+00:01:48.399 watch expression can help. So in
+00:01:50.159 previous video we have seen how we can
+00:01:51.759 apply some break points. So let's
+00:01:52.880 suppose I am applying three break
+00:01:54.079 points. It completely depends upon you.
+00:01:56.880 Uh why I am applying this breakpoint
+00:01:58.719 here because here there is a method
+00:02:00.799 which I want to show you. Here again
+00:02:03.040 there is a method call which I want to
+00:02:04.560 show you. That's why I'm applying
+00:02:05.759 breakpoint here. Okay. So now let's go
+00:02:08.160 to debug. Simply you can click here or
+00:02:10.560 you can do this python debugger debug
+00:02:12.959 python file. Okay. Um
+00:02:16.239 so what was actually breakpoint?
+00:02:18.480 Breakpoint was a marker that pause your
+00:02:20.640 execution. So first time we found this
+00:02:23.200 break point here because this uh this uh
+00:02:26.080 program starts from grades in the 17th
+00:02:28.480 line and the first breakpoint is at 19th
+00:02:30.400 line. So that's why it's basically
+00:02:32.400 helpful and we have basically we've got
+00:02:35.120 the first break point at this 19th line.
+00:02:38.000 So if you want to see what is happening
+00:02:39.840 we can go this because this uh we
+00:02:42.400 already have talked about this menu. So
+00:02:44.080 this is the third one which is step
+00:02:46.160 into. So we stepped into the method and
+00:02:48.319 here in local we have a grade. This is
+00:02:50.560 the variable that we can see it here and
+00:02:52.959 we can just go we found total sum like
+00:02:55.680 uh currently total items. So total items
+00:02:58.080 is this. So total items is five. Now how
+00:03:00.800 watch can helpful? Okay. So let's
+00:03:02.480 suppose you want to see like what is
+00:03:05.519 inside grades. Just write an expression
+00:03:07.680 and just click it. So you got what is
+00:03:09.680 inside grades.
+00:03:11.599 Let's suppose uh you want to see what is
+00:03:14.239 in grades at maybe minus1 index. So 50
+00:03:19.519 minus one means last index. Okay. So
+00:03:21.840 what is at last index? You can see
+00:03:23.680 simply. Okay. So you u you you can
+00:03:26.080 directly uh use this kind of
+00:03:28.400 expressions. Okay. Now uh let's move
+00:03:31.120 inside uh let's move a bit in this
+00:03:34.080 method. Okay. So just go inside it and
+00:03:36.720 you can just watch how it's happening.
+00:03:39.360 So this helps us to understand the code
+00:03:41.440 better. Okay. So you can see it here how
+00:03:43.840 it is happening and currently total uh
+00:03:46.640 total uh so we are at this line which
+00:03:48.799 have total sum and we have total items.
+00:03:51.519 So you can directly also find the
+00:03:52.879 average. Okay, currently it's uh we
+00:03:54.480 don't have the average. So how we can
+00:03:55.840 find the average? It's simple. So we can
+00:03:57.599 do total sum
+00:04:00.319 divide by total items. So we can get the
+00:04:04.400 um we can say we can get the average. So
+00:04:07.360 we got the average is 60. Now if I will
+00:04:09.120 click it, we got the average is 60 only.
+00:04:11.360 Okay, because currently total items is
+00:04:13.760 not in this scope because it was a local
+00:04:15.519 variable. Now the scope has been
+00:04:17.120 destroyed. So that's why it is saying
+00:04:18.798 name error. The name error says that uh
+00:04:21.279 total sum is not defined. So that's not
+00:04:22.960 a problem. Okay. Now we got at this
+00:04:25.280 line. So currently we have grades and
+00:04:27.199 let's move to next line. So now we have
+00:04:29.199 a variable which is average that we
+00:04:31.360 already saw in the previous video. So
+00:04:33.600 currently we have average which is 60.
+00:04:35.600 So this is the variable which was
+00:04:37.759 populated because of this calculated
+00:04:39.360 average because the calculated average
+00:04:41.040 method returned 60. Okay. Now um so we
+00:04:45.040 got the grades and if you move to next
+00:04:47.440 line um um we can get a status. Okay. So
+00:04:51.440 it is status is true. Now uh maybe you
+00:04:54.479 want to check okay uh whether it is pass
+00:04:57.120 or not. Okay. I'm just trying to create
+00:04:59.199 a very basic uh you can say um
+00:05:02.720 expression. Okay. So what we can do is
+00:05:04.639 let's suppose uh in some situation we
+00:05:06.960 need something like uh if I want to see
+00:05:10.720 whether I have a great student or not.
+00:05:12.479 Okay. You can write any kind of
+00:05:13.919 expression. Okay. Great. Okay. Uh great
+00:05:16.800 if uh the
+00:05:19.360 we can say if average is more than 90 we
+00:05:23.280 can say is great. Otherwise the student
+00:05:25.680 is still good like he's okay. Okay.
+00:05:28.800 Okay. So he the student is okay. Okay.
+00:05:31.120 Why? because the average is like uh
+00:05:34.320 around 60. It's not uh 90. Okay. Um so
+00:05:38.160 this is how you can write any kind of
+00:05:40.160 expression. Okay. Uh maybe we can move
+00:05:42.720 to next line and uh I can see status is
+00:05:47.199 here. Okay. And maybe you can write uh
+00:05:49.280 you can print pass or fail. Okay. Uh you
+00:05:51.520 want to see okay pass
+00:05:55.120 if status means if status is true. So we
+00:05:58.000 can directly write directly because this
+00:06:00.639 if status is true. Okay. So you can
+00:06:03.440 write is equals to true or either you
+00:06:05.280 can just write status. So if it is true
+00:06:08.400 only then the if block will came into
+00:06:10.720 the picture. Okay. Else uh I can say
+00:06:13.440 fail. Okay. So if I will click it so I
+00:06:16.000 got pass because the average is 60 and
+00:06:18.880 status is true. Okay. Now let's suppose
+00:06:21.440 I made it as 90. Okay. And let me
+00:06:23.840 restart it. Okay. Restart the debug.
+00:06:26.319 Okay. And here one more thing uh even if
+00:06:28.639 I stop the debugger this watch
+00:06:30.800 expressions will still exist. Okay. If I
+00:06:32.720 go here and come back here the watch
+00:06:35.120 expression will still exist. So it's a
+00:06:37.280 good feature. Okay. So now let's uh we
+00:06:40.080 have the two 3D booles debug it. Uh and
+00:06:43.680 uh we can I don't want to go again
+00:06:45.680 inside the function. So I'm just going
+00:06:47.520 to do the next one. Okay. So currently
+00:06:51.039 we are at this point. So now see the
+00:06:53.440 status is we got the status as fail
+00:06:55.360 because now our logic has been changed
+00:06:57.600 okay because our if our average is more
+00:07:00.639 than or equals to 90 then only the
+00:07:02.240 status will be true. So now we are
+00:07:03.680 getting status as false and this
+00:07:05.199 expression made it to fail. Okay now you
+00:07:08.560 might think how this grades this line I
+00:07:11.759 have made minus one how it can be really
+00:07:13.680 helpful. Uh okay. So now um it doesn't
+00:07:17.039 seems very helpful at this moment to you
+00:07:19.039 but let me tell you what happens in real
+00:07:20.960 life scenario when you are in
+00:07:22.240 development journey or something else
+00:07:24.000 when you see a response where you you
+00:07:26.400 are seeing a payload. The payload is
+00:07:28.720 very very huge. It can be more than
+00:07:30.160 1,000 lines or something else. Okay. So
+00:07:32.080 you got a data payload which is let's
+00:07:34.319 suppose a JSON file. There are multiple
+00:07:36.319 keys. Okay. One of the keys is let's
+00:07:38.240 suppose user info. Okay. And uh it is
+00:07:42.080 containing again a JSON object or
+00:07:45.680 dictionary whatever you can say. Uh
+00:07:48.080 inside this there are like th hundreds
+00:07:50.960 of fields uh the fields itself is
+00:07:53.840 containing an object and um it is
+00:07:56.960 containing uh list uh string uh
+00:08:00.160 primitive data type what not okay and
+00:08:02.160 then let's suppose we have some other
+00:08:04.240 things like payment info. Okay, maybe in
+00:08:07.840 some of the video I can show you a real
+00:08:09.680 payload and how it looks like. Okay, so
+00:08:12.240 like this and let's suppose just you
+00:08:15.199 want to look at what actually uh is we
+00:08:18.479 have in user info. Okay, whenever you
+00:08:20.639 got a very big code which is completely
+00:08:22.960 messed up and you are debugging it
+00:08:25.280 because in real life uh this this
+00:08:27.919 calculate average will be in uh another
+00:08:31.120 package. Okay, it's not even in the same
+00:08:33.200 module or maybe not even in the same
+00:08:35.760 file. It will be uh it will be in
+00:08:38.399 another package. So it's very very hard
+00:08:41.039 to debug it to understand the flow to
+00:08:43.599 see uh let's suppose we got a data uh a
+00:08:46.000 data uh a variable or a simple memory
+00:08:48.959 variable as data. You want to see what
+00:08:50.800 actually is in data. So what you can do
+00:08:52.640 is data. So it will print the data. But
+00:08:54.880 definitely if you are just going to work
+00:08:56.880 on user info, you are working on some
+00:08:59.360 authentication, logging or whatever it
+00:09:01.440 is. Okay, but you know that I have to
+00:09:03.760 deal with the user info key. So no need
+00:09:06.320 to see all the data. What you can do is
+00:09:08.480 you can just do user info. Okay, and
+00:09:13.279 maybe inside user info also you just
+00:09:15.760 want to see the address. Okay, maybe
+00:09:18.720 there would be or
+00:09:21.279 um maybe there will be a key here as
+00:09:24.160 address. So what you can do is simply
+00:09:25.920 also you can edit it. Okay, so edit
+00:09:27.920 expression. Okay, so you can definitely
+00:09:30.080 play around it. Okay, so you can just go
+00:09:32.560 and find address. Okay, so if you click
+00:09:35.600 it currently we don't have a data named
+00:09:37.920 variable but in this way you can get uh
+00:09:40.880 your data uh your user info address data
+00:09:44.959 in very easy manner. Okay. So any kind
+00:09:47.120 of expression you can have one um more
+00:09:49.600 use case I can give you is like let's
+00:09:51.279 suppose there is a for loop where there
+00:09:53.519 are 100 of iterations but you want to
+00:09:55.680 see uh a specific condition like once my
+00:09:59.040 total sum is or maybe once my grade is
+00:10:04.000 um less than 10 I want some error. So
+00:10:06.959 you can write a very basic thing. Okay
+00:10:09.279 let me I think I should write it. Okay.
+00:10:11.760 So what we can do is if grade is maybe
+00:10:17.360 for now if it is less than 40. Okay. Um
+00:10:21.920 so if grade is less than 40 I want to uh
+00:10:26.399 show some message uh error. Okay. Error.
+00:10:31.040 Okay. If grade is less than 40 uh sorry
+00:10:34.800 less than 40. So uh I want to do this
+00:10:40.399 error is grid is or else
+00:10:44.399 nothing maybe uh
+00:10:47.279 go okay so let's do it this okay so this
+00:10:51.839 is one of the thing okay so and also you
+00:10:54.800 can remove some of the I can say
+00:10:58.320 expressions so let me remove this this
+00:11:01.760 uh maybe this okay or maybe this also
+00:11:05.839 Okay. So let's uh debug it once again.
+00:11:08.240 Okay. So let's
+00:11:11.360 restart it. So currently we are at this
+00:11:14.160 position. So let's move inside calculate
+00:11:16.399 average. Okay. So we have total items.
+00:11:19.200 So we moved into total sum. Um
+00:11:22.240 everything is good. Okay. So go. So we
+00:11:25.839 see see here we got it. Go because the
+00:11:28.079 current the grade value is 80. Okay. Now
+00:11:31.279 let's move again. Go. Go. go
+00:11:37.760 error why because the current value of
+00:11:40.320 grade is 35 and we saw okay if grade is
+00:11:43.600 40 it's if it is less than 40 I want to
+00:11:46.240 show something which is error okay and
+00:11:48.480 sometimes we can also automate this okay
+00:11:51.600 uh only when it will be notified only
+00:11:54.480 when the grade is or if it is meeting
+00:11:57.760 some specific condition only that at
+00:11:59.920 that point only we have we are going to
+00:12:01.680 prompt it okay so we can see in future
+00:12:03.920 videos Okay. So currently we are getting
+00:12:05.920 an error. So this is how it can help. So
+00:12:08.560 there can be hundred of iterations and I
+00:12:10.320 can't look at every iteration. I can
+00:12:12.079 just move over the iterations and once I
+00:12:15.120 got the grade as 40 less than 40 I can
+00:12:17.920 just print it. Okay. This is an error
+00:12:19.360 and stop it here. Okay. So you can do
+00:12:21.600 that kind of thing also. Okay. Uh
+00:12:23.200 definitely uh a better uh applica or you
+00:12:27.839 can say better uses uh will be
+00:12:30.240 conditional breakpoint. Then we will uh
+00:12:32.000 explore about conditional break points
+00:12:33.600 means when a condition will uh hit the
+00:12:36.160 break point will be hit. Okay. So if a
+00:12:38.480 condition will met then the break point
+00:12:40.800 will hit. Okay. So we will look at it uh
+00:12:43.839 look at it but this is what watch
+00:12:45.839 expressions are. So okay so it can be
+00:12:48.399 helpful to monitor your variables. Uh
+00:12:51.120 you can apply some expressions do some
+00:12:52.959 filterings. Uh it's more of a custom
+00:12:55.440 inspector. Okay. And such kind of things
+00:12:57.680 where there is a huge data it can help
+00:12:59.839 to watch some expressions. Maybe you can
+00:13:02.240 just want you every time you have to
+00:13:04.880 watch your expression that suppose you
+00:13:07.120 want to watch every time what the value
+00:13:08.959 of grade is currently is 35 then in
+00:13:12.160 future it's 50. So maybe you want a
+00:13:14.720 custom inspector kind of thing. Now it
+00:13:16.240 is 50. Okay. So it can be really really
+00:13:19.600 helpful this kind of watch thing. Okay.
+00:13:22.079 So that's it for this video. In the next
+00:13:23.839 video we are going to see some
+00:13:26.320 challenges. So for now we have explored
+00:13:29.040 about break points and also the watch
+00:13:31.680 panel. Now I will I will give you some
+00:13:33.600 very basic examples or very basic task
+00:13:37.120 where we can evaluate we will together
+00:13:39.200 we will evaluate maybe you can try it
+00:13:41.760 once uh you can try it first and then
+00:13:44.639 see the solutions how I am debugging it
+00:13:46.959 and whether you have absorbed everything
+00:13:49.200 or not and how you are debug because
+00:13:51.040 there is no right or wrong you can go
+00:13:52.800 choose your own path to debug okay this
+00:13:54.800 all about smartness okay smartness and
+00:13:57.360 practice okay so that's it in this video
+00:14:00.000 we have seen about watch and Next two
+00:14:02.240 videos we are going to have some
+00:14:03.680 challenges and uh then in the next
+00:14:06.079 lecture we are going to explore about
+00:14:08.639 call stack then some conditional break
+00:14:10.720 points and what not. Okay. So uh if you
+00:14:14.399 like this video please subscribe and if
+00:14:16.800 you have any complaints any doubts
+00:14:18.480 please add in the comment box. I will
+00:14:21.360 happy to reply you. That's all. Meet you
+00:14:23.839 in the next video. Till then bye-bye.

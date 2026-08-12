@@ -1,0 +1,1552 @@
+# tactiq.io free youtube transcript
+# Let AI Agents Tell You What They Need — Raj Navakoti, IKEA
+# https://www.youtube.com/watch/_QAVExf_1uw
+
+00:00:15.519 uh thank you. Maybe we can get started.
+00:00:18.640 Uh first of all, thank you so much for
+00:00:20.800 uh coming for the workshop especially
+00:00:23.279 ones who didn't get the seat. Uh I I
+00:00:26.560 promise you I'll do my best to make it
+00:00:28.960 entertaining especially for you who are
+00:00:30.800 studying. Uh thank you so much.
+00:00:34.160 >> Yeah. Uh actually it it makes sense. So
+00:00:37.440 now I know like why the tickets got sold
+00:00:39.520 out, right? Uh which workshop actually
+00:00:41.600 sold out the tickets.
+00:00:45.280 So uh let's start with uh my
+00:00:48.879 introduction. So I'm Raj. Uh I work as a
+00:00:52.079 staff software engineer uh at IKEA.
+00:00:54.879 uh I work for a domain called
+00:00:56.320 deliverance services. Uh basically we
+00:00:58.719 are like almost more than 100 engineers
+00:01:01.039 and six pedex teams altogether. It's
+00:01:03.039 like a mini company within the company
+00:01:04.319 itself. Uh I'm very interested with
+00:01:07.520 architecture, neuroscience and
+00:01:09.119 linguistics and now AI. So if anyone has
+00:01:13.040 some cool projects because everybody is
+00:01:14.720 building cool projects these days,
+00:01:16.799 please find me after this meeting.
+00:01:20.159 So quick pulse check uh with the uh
+00:01:23.439 audience. Uh who is visiting London for
+00:01:25.680 the first time?
+00:01:28.400 Okay, cool. Welcome to London. Uh who is
+00:01:32.159 here uh from the engineering background
+00:01:36.159 also with white coding and prototyping?
+00:01:38.880 >> No, all of okay. So uh who actively uses
+00:01:42.159 agents like co-pilot?
+00:01:44.799 Okay, this is going to be tough for me
+00:01:46.720 then.
+00:01:48.159 So extensions.
+00:01:50.880 Okay. So everybody's pro. Okay. Fine.
+00:01:52.640 >> Not so much as I want.
+00:01:54.000 >> Okay. So much tension now. Uh
+00:01:58.240 so you're going to sit here in this hot
+00:02:00.159 room for more than an hour. So first I
+00:02:02.719 will uh give a bit of introduction of
+00:02:05.040 what I'm going to present today. Uh it's
+00:02:07.680 basically on agent and the context
+00:02:10.318 management. Uh I I divided into three
+00:02:12.640 parts. One is the situation which all of
+00:02:15.040 you already know. So I'll keep it tight
+00:02:17.200 and short like five minutes. Uh then
+00:02:19.360 I'll talk about the problem. This is
+00:02:21.200 where I'll spend a bit more time on the
+00:02:23.120 slides because I think like uh nobody is
+00:02:26.959 actually seriously looking into the
+00:02:28.640 problem. Uh and I want to bring it up
+00:02:31.920 then less slides and more into some kind
+00:02:34.959 of a hands-on uh how the uh actual
+00:02:38.560 demand driven context actually works.
+00:02:40.800 All good.
+00:02:45.120 Okay. So, let's start with the first
+00:02:47.760 one. How many have seen this movie?
+00:02:51.840 Momento.
+00:02:53.680 >> Okay. Okay. Okay. Cool. So, I I'll give
+00:02:56.239 the gist of the movie. So, this guy is
+00:02:58.879 very skilled uh very talented. The only
+00:03:01.280 problem he has is uh he can't hold
+00:03:03.840 memory more than 15 minutes. So every 15
+00:03:06.239 minutes he has to take his notebook uh
+00:03:08.800 watch his tattoos that he put it on his
+00:03:10.959 one and figure out okay what I was doing
+00:03:12.959 before the 15 minutes and he does it
+00:03:14.959 again and again. If you relate to the AI
+00:03:17.360 and AA agents things and all it actually
+00:03:19.760 fits exactly how the movie is and how
+00:03:22.080 the agents are right now. If you go and
+00:03:24.319 watch this movie you don't need to watch
+00:03:26.959 YouTube or blogs to understand agents
+00:03:28.720 and MCP. This movie actually tells you
+00:03:30.560 about everything literally. uh and as
+00:03:33.760 this guy has a memory problem uh in the
+00:03:36.239 same way the AI uh that we got
+00:03:38.720 introduced couple of years ago uh is
+00:03:40.799 very good with reasoning computation uh
+00:03:43.200 code generation it's it's benchmark as
+00:03:45.360 like uh above the par the only problem
+00:03:47.920 is the institutional knowledge right the
+00:03:50.080 domain knowledge that you have that's
+00:03:51.440 that's the only thing we have to be uh a
+00:03:53.680 bit problematic
+00:03:55.840 so from AI to agent if you look at the
+00:03:59.840 uh evolution uh it exploded So it
+00:04:02.319 started from prompt engineering first of
+00:04:03.760 all uh then there was rags uh now MCPS
+00:04:08.080 then multi- aent now it is deep agents
+00:04:11.439 uh I recently found out like uh using
+00:04:15.120 replet actually you can build a full
+00:04:16.880 stack app in 10 minutes that means the
+00:04:19.839 by the time you make the instant noodles
+00:04:21.759 you already have a million dollar app
+00:04:23.440 already working on your laptop so we we
+00:04:25.440 got it to this point like it's
+00:04:28.000 extraordinarily good
+00:04:31.120 now That's AI and agents. So let's talk
+00:04:33.360 about enterprise AI.
+00:04:36.880 Okay. Uh I don't know how how many of
+00:04:40.080 you have this question but most of the
+00:04:41.840 enterprises I see the question is okay.
+00:04:44.479 A is pretty smart. It's doing uh code
+00:04:47.360 generation fullstack apps reviewing your
+00:04:49.440 PRs uh doing incident management all
+00:04:52.240 those things. Uh right. So if I is doing
+00:04:55.360 that much why is the Jira tickets or
+00:04:57.919 Apex are not moving on the dashboard
+00:04:59.520 right? Why do I don't see the delivery
+00:05:01.680 actually? So everybody is speaking about
+00:05:03.280 look at like 3 minutes everything is
+00:05:04.800 ready. Yeah. Okay fine. Why are my J
+00:05:07.440 pics are not moving? Because that
+00:05:08.880 defines the business delivery and that
+00:05:10.720 defines the return of investment, right?
+00:05:13.600 Uh and as you see like uh it's it's from
+00:05:16.479 the Mckenzie this year like 80 8% of all
+00:05:19.280 companies use AI but they only see like
+00:05:21.759 uh 6% of value creation.
+00:05:33.440 Okay. So I think this is the problem uh
+00:05:36.240 that we have. Uh I have four Jira
+00:05:40.800 tickets different ones uh sample ones
+00:05:43.600 and you can see the green ones that I
+00:05:45.680 have uh marked is basically which LLM is
+00:05:49.199 or already trained on like API standards
+00:05:51.199 or like uh things very they already know
+00:05:54.000 it's a general knowledge right that's
+00:05:55.680 fine those tasks from the ticket it can
+00:05:57.600 pick up and it can do it now there are
+00:05:59.759 second part orange ones which we have to
+00:06:01.680 teach them actually so you have you know
+00:06:04.000 this but do this in this way so all this
+00:06:06.560 kind of an orange ular things will fit
+00:06:08.639 into you know your agent extension like
+00:06:11.120 skills or like uh
+00:06:16.400 but the red ones that's what the
+00:06:19.039 institutional knowledge is which sits
+00:06:21.360 within the company and within the
+00:06:23.039 people. So unless if it picks a task uh
+00:06:27.520 if it picks a ticket it has to fulfill
+00:06:29.919 all of them. It is so good with uh green
+00:06:34.080 ones and orange ones but it struggles
+00:06:36.400 with the red one with the institutional
+00:06:37.840 knowledge and what I believe is uh right
+00:06:42.080 now the coding agents are getting so so
+00:06:44.240 better. I feel like if there is an AGI
+00:06:47.600 coming the first AGI will be a coding
+00:06:49.440 agent for sure. uh
+00:06:56.400 so to fix the uh giving the
+00:07:01.199 institutional knowledge to uh the agents
+00:07:03.840 so we have an industry solution already
+00:07:06.240 so this is basically your return of
+00:07:08.000 investment on AI pipeline will look like
+00:07:10.160 right so you have LLM model quality uh
+00:07:13.360 you have agents and you have agent
+00:07:15.520 harness and your institutional knowledge
+00:07:18.319 sits under conflence jira sharepoint
+00:07:20.560 gith GitHub all those things and
+00:07:22.319 basically retrieval layer is what
+00:07:24.400 industry is telling us will fix that
+00:07:26.240 issue. So you build that retrieval layer
+00:07:28.639 and then it will fetch all those things
+00:07:30.319 and give it to an agent and agent should
+00:07:31.919 be able to do it right. So basically uh
+00:07:35.680 so 40% uh actu factual accuracy can be
+00:07:41.039 achieved through rag or like knowledge
+00:07:43.120 graphs actually uh but with a documented
+00:07:46.880 uh knowledge base.
+00:07:52.479 Now basically if you build a retrieval
+00:07:55.280 layer it has to work right now let me
+00:07:57.120 ask you a question. How many have you
+00:07:58.400 built uh retrieval layer things like
+00:08:00.720 rags and mcps? Okay, cool. All of them.
+00:08:03.360 Okay, now the question is how many did
+00:08:05.919 you build? How many MCPS did you build?
+00:08:09.120 How many have you built more than 20 MCP
+00:08:11.280 servers?
+00:08:13.440 Okay. Okay. So, nobody beats my record
+00:08:16.240 then. Uh so what I see is uh mostly in
+00:08:21.120 the enterprise organizations and all
+00:08:23.280 people are building like 10 to 15 or
+00:08:25.440 like 20 MCP servers or like rags uh
+00:08:28.160 knowledge graphs on top of their
+00:08:29.919 institutional knowledge and to the agent
+00:08:33.120 right so the assumption is if we if I
+00:08:35.839 can build all those MCP servers and give
+00:08:39.279 that agent I don't need to work anything
+00:08:41.200 like it will do but the thing is when
+00:08:44.959 you plugging this MCP servers basically
+00:08:48.080 all this data coming out is mostly
+00:08:50.480 undeterministic
+00:08:52.080 it's unreliable and it's untested right
+00:08:54.800 so especially in engineering nobody does
+00:08:57.040 evals actually it's it's more like a
+00:08:58.800 data machine learning concept but we
+00:09:01.279 don't do eval so for me if you sorry uh
+00:09:05.839 uh if you plug uh an MCP or like a rag
+00:09:09.200 and all we see whether the output is
+00:09:11.920 coming or not rather than is it really
+00:09:14.080 valuable actually is it really solving
+00:09:15.920 the problem or not. Uh that's the main
+00:09:18.480 problem that I see. I'm not saying
+00:09:20.480 pointing other people because I was that
+00:09:23.040 person. I was like okay let me build all
+00:09:25.519 MCP servers plug in my institutional
+00:09:27.600 knowledge. I'm going to prove that point
+00:09:29.600 that agents can semi-autonomously can
+00:09:32.720 continue and fill those zero tickets and
+00:09:34.640 finish it. Right? But every time when I
+00:09:38.080 build those MCP servers 10% 20% 30% of
+00:09:42.240 time it was accurate but rest of the
+00:09:44.080 time I was doing the data enter job for
+00:09:45.920 them actually. So I was filling the gaps
+00:09:47.920 asking the questions. So basically I'm
+00:09:49.920 doing more work than actually doing less
+00:09:51.760 work. Uh so I think this is the main
+00:09:56.160 problem and I I actually was in this
+00:09:58.320 fourth stage where I literally started
+00:10:00.399 to write the domain context with
+00:10:03.279 handwritten actually. So okay let me
+00:10:04.800 write everything and prove the point but
+00:10:06.480 I got really exhausted of doing it.
+00:10:11.920 Okay so how I don't know how many can
+00:10:15.279 you relate uh with this pie chart uh but
+00:10:17.760 most of the enterprise uh the
+00:10:20.560 institutional knowledge is kind of
+00:10:22.079 something like this. So 20% if you see
+00:10:24.560 it's outdated, 20% it's unreliable. Uh
+00:10:29.040 20% 10% is always duplicated with
+00:10:31.839 different places. And the major problem
+00:10:33.920 is 40% of the knowledge is always uh
+00:10:37.040 tribal knowledge which means people know
+00:10:39.760 how things work. So it's it's never
+00:10:42.880 documented actually. So in this
+00:10:45.279 situation of an enterprise and you build
+00:10:47.920 like 100 MCP servers and plug into that
+00:10:50.000 monolith, it doesn't matter how many you
+00:10:51.920 build, it won't work because basically
+00:10:54.480 your whole institutional knowledge is a
+00:10:56.560 is a monolith. Uh I think like because
+00:10:59.040 you're all from the engineering
+00:11:00.240 background so you already know uh the
+00:11:03.200 transformation of monolith legacy system
+00:11:05.200 to microservices, right? So in the same
+00:11:07.600 way unless we break down that monolith
+00:11:10.560 knowledge base into some kind of a
+00:11:12.800 context blocks which are useful for
+00:11:14.320 agents then only we can actually make it
+00:11:17.680 useful for them uh for the agents and
+00:11:20.320 actually make them semi-autonomously can
+00:11:22.399 actually do the tasks.
+00:11:24.880 So that said uh we are going to talk in
+00:11:28.160 this workshop mostly on that monolith
+00:11:30.640 how to break it uh what is the approach
+00:11:32.959 to break it and how it is useful uh when
+00:11:35.600 once we break it and this is a job we
+00:11:37.839 need to do because uh uh the LLM
+00:11:40.480 providers will focus on the uh LLM model
+00:11:44.240 quality the agents will focus on the
+00:11:46.320 harness things and there is a big uh uh
+00:11:50.640 retrieval market of 9 billion they're
+00:11:52.399 focusing on retrieval but nobody is
+00:11:54.160 going to come to your company and fix
+00:11:55.600 your knowledge base. You have to fix it
+00:11:56.959 yourself, right? So, how can we do it?
+00:11:59.040 Uh,
+00:12:02.720 okay. So, the demand-driven context uh
+00:12:06.079 is what the as a solution I was trying
+00:12:08.720 to propose, right? So, basically if I
+00:12:10.880 have to give an abstract of it what it
+00:12:12.560 is like we have my uh monolith
+00:12:16.880 uh services and we have this process of
+00:12:19.200 breaking them into microservices. We
+00:12:21.040 have waterfall model which we
+00:12:22.480 transformed into agile. In the same way
+00:12:24.160 when you have a monolith of
+00:12:26.079 institutional knowledge how do you
+00:12:27.760 transform into a context blocks using an
+00:12:29.920 approach. So this is an approach of how
+00:12:31.600 we can do it.
+00:12:34.079 Uh before starting uh just not an idea.
+00:12:37.360 So uh we already tried with some data
+00:12:40.320 sets and try to prove this approach
+00:12:42.800 works and uh in the March we have
+00:12:44.560 published a preprint uh uh in RXV. So if
+00:12:48.000 anyone interested in reading academic
+00:12:50.000 papers uh you can find it with the
+00:12:52.000 demanddriven context or I can I can also
+00:12:54.320 give you a link after the uh workshop.
+00:12:59.200 Okay.
+00:13:01.920 So how does it work actually uh
+00:13:06.480 when we are giving institutional
+00:13:08.240 knowledge to agents basically what we
+00:13:09.920 are trying to do is we're trying to do a
+00:13:11.600 push strategy right so we build
+00:13:13.760 everything and we push it to uh to it.
+00:13:16.639 So in in this approach it's more pull
+00:13:19.040 approach which means for example let's
+00:13:21.760 say a new joiny has joined your company
+00:13:24.000 right how do you onboard a person so you
+00:13:27.200 onboard them for a one two days you give
+00:13:29.839 some initial orientation and then you
+00:13:32.079 tell them like okay these are the
+00:13:33.200 confluence links these are the github
+00:13:34.800 this is the some some kind of a
+00:13:36.320 documentation you have to follow things
+00:13:38.160 and all then you just assign a task to
+00:13:41.200 that person so but you're not going to
+00:13:43.920 tell okay go and get graduated on on
+00:13:46.560 this knowledge and come back then I will
+00:13:47.839 give you work right so you'll just
+00:13:49.440 assign the work item and when you assign
+00:13:51.920 the work item the person will start
+00:13:53.839 asking questions fill the gaps if the
+00:13:55.920 person is very much into documentation
+00:13:57.600 he will also fill the documentation for
+00:13:59.360 you uh he gradually uh get his knowledge
+00:14:02.800 of of the institutional knowledge right
+00:14:04.800 in the same way we don't push all the
+00:14:07.839 knowledge to the agent rather than we
+00:14:10.160 start giving problems to agents like
+00:14:12.000 work items and let them actually pull
+00:14:14.560 the information from us
+00:14:17.360 and once uh pull the information
+00:14:21.040 also ask them to document it
+00:14:24.480 uh in in a in a better way rather than
+00:14:26.480 in a monolithic structure. So if you so
+00:14:30.240 that's the four layers. So you have a
+00:14:32.560 monolith uh a framework and it actually
+00:14:35.120 pulls and actually creates a good better
+00:14:37.519 context uh blocks you can actually
+00:14:39.519 relate it to more into a legacy monolith
+00:14:42.240 to microservices directly if you have to
+00:14:44.320 have an knowledge of it. So this is how
+00:14:46.399 it works.
+00:14:48.560 So this is one cycle of uh how
+00:14:55.920 a problem to an agent and the in the
+00:14:58.639 first attempt the agent will fail to do
+00:15:00.399 it. So it will say you know what you
+00:15:02.720 gave me a problem but most of the uh
+00:15:05.440 documentation I couldn't able to find
+00:15:07.120 anything I couldn't able to do it then
+00:15:09.600 these are the things I need to do to
+00:15:12.560 finish this task and it gives a
+00:15:14.160 checklist of things so we fulfill the
+00:15:16.880 checklist like we fulfill this checklist
+00:15:19.360 so once it is uh given the problem is
+00:15:22.160 solved it will take that knowledge and
+00:15:25.199 also it will update that means curate
+00:15:27.680 the knowledge in a particular place so
+00:15:29.680 that it can reuse or like other agents
+00:15:31.440 can also reuse. This is one cycle. So
+00:15:33.920 the idea is if we can do it in multiple
+00:15:37.199 uh sessions with multiple problems. So
+00:15:40.399 it will gradually uh curate your
+00:15:43.120 knowledge monolithic knowledge base uh
+00:15:45.440 and also document it for you.
+00:15:49.600 Uh you can also relate it to TDD. So how
+00:15:52.399 many are uh do TDD or like nobody hates
+00:15:57.199 TDD right before I uh Yeah.
+00:16:00.720 >> Okay. Okay. So, uh in in the same way,
+00:16:03.279 right, in in a TDD approach, what we do,
+00:16:05.199 we just write the failed test cases. We
+00:16:07.120 don't build the product first of all. We
+00:16:08.880 just write the failed test cases. Uh we
+00:16:11.040 see what is the code that is missing uh
+00:16:13.839 for the failed test case to pass and we
+00:16:16.720 just give the code and we gradually
+00:16:18.720 build the product based on the failed
+00:16:20.240 test cases. In the same way we give
+00:16:22.240 problems that agent will definitely fail
+00:16:24.560 and we gradually uh fill those gaps and
+00:16:27.600 at a certain point it becomes semi-
+00:16:29.279 autonomous with a good uh institutional
+00:16:31.759 knowledge already.
+00:16:35.360 Okay.
+00:16:38.079 So I think I can jump into uh some kind
+00:16:41.279 of a demo already. Uh so I will use
+00:16:46.560 terminal. So don't hate me. Uh I think
+00:16:50.320 like all of you from engineering
+00:16:51.839 background so I think like you'll like
+00:16:53.360 terminal. Uh let me switch to terminal.
+00:17:03.279 Okay.
+00:17:10.880 Okay. So on the on the far left what uh
+00:17:14.240 right what you see is how uh under the
+00:17:16.880 hood it works actually. So when you have
+00:17:19.760 given a problem uh how does the agent
+00:17:22.240 will fail? How does it demand for the
+00:17:24.640 knowledge uh that the problem has to be
+00:17:27.199 solved and a human like a domain expert
+00:17:29.520 and all uh fills those gaps and then it
+00:17:32.960 will curate uh a new knowledge base for
+00:17:36.080 you which is which is much better and
+00:17:38.880 then the agent succeeds and you repeat
+00:17:41.360 on the next problems. So that is how one
+00:17:43.679 cycle uh things. So how I it can be
+00:17:46.960 implemented? It can be implemented using
+00:17:49.200 any agent. There is no uh it can be
+00:17:51.440 implemented on cloud or copilot because
+00:17:53.120 it's an approach you can uh do uh in any
+00:17:55.679 way you want. At work I use copilot. Uh
+00:17:58.559 so I implemented this using copilot. Uh
+00:18:01.360 but because everybody I I believe loves
+00:18:04.160 more cloud code. So uh I created this
+00:18:07.679 demo with cloud code. Uh and you can see
+00:18:10.000 it's just a combination of skills,
+00:18:11.760 rules, uh agents and hooks and some kind
+00:18:14.720 of a place to save the knowledge base.
+00:18:17.760 On the middle pane, what you're seeing
+00:18:19.520 on the top is your monolith basically.
+00:18:22.480 Uh this is a representation of your
+00:18:24.720 conflence, Slack, GitHub and all. But
+00:18:27.120 just for a sake of demo, I just put some
+00:18:29.520 flat files that look like them. Uh so
+00:18:32.480 that is how your monolith uh knowledge
+00:18:34.320 base will look like. On the down, what
+00:18:36.080 you're seeing is on a live. So when it's
+00:18:38.400 solving a problem how it is actually
+00:18:40.320 adding the new knowledge uh to it. So
+00:18:44.400 this is how uh it is. So, let me
+00:18:49.840 So, what I'm going to do is I'm going to
+00:18:52.480 go to an agent.
+00:19:12.240 Okay, I'm going to basically give an
+00:19:13.919 incident problem to do the root cause
+00:19:15.360 analysis, right? So, okay, what I did is
+00:19:19.120 you remember in the previous slide there
+00:19:20.480 is a GT samples that I showed, right?
+00:19:22.480 It's a combination of uh knowledge that
+00:19:25.120 is documented, not documented things at
+00:19:26.720 all. So, this incident also represent
+00:19:29.840 the same kind of combination. So, there
+00:19:32.320 is some knowledge that is documented
+00:19:34.320 already on your monolith. some it is not
+00:19:37.200 there or outdated or things like that
+00:19:39.520 and most of it it doesn't couldn't
+00:19:41.919 wouldn't able to find because it's never
+00:19:43.679 written down actually so when I gave
+00:19:45.600 this problem so it uses those skills
+00:19:48.799 that I have developed using this
+00:19:50.160 approach and it will try to actually
+00:19:52.880 first go to your uh monolith actually on
+00:19:56.559 the knowledge base and try to find
+00:19:57.840 information on what is uh there so
+00:20:03.120 think about it like this so
+00:20:05.760 First part is retrieval. That means it's
+00:20:08.240 already doing what RA and MCP is doing
+00:20:10.080 first part. But what else it is doing is
+00:20:12.880 after it fetches the data, what it will
+00:20:14.960 do with the data actually. So that is a
+00:20:17.360 missing part. For example, when you give
+00:20:19.039 a new conference links to a new
+00:20:21.440 employee, the employee goes there, looks
+00:20:23.840 into it, but doesn't find information.
+00:20:25.919 But it he doesn't stop there actually.
+00:20:28.000 He continue asking questions. So to
+00:20:31.120 solve the problem, then then just adding
+00:20:32.799 more knowledge and things and all.
+00:20:34.080 Right? Those are the next steps missing
+00:20:36.400 right now. It's we just stop at
+00:20:38.400 retrieval. So this is the next three
+00:20:40.720 steps it does actually. So you can see
+00:20:42.799 the confidence score is almost 1 to five
+00:20:44.960 because it says
+00:20:50.799 these are the particular terminologies.
+00:20:52.559 I don't understand actually these
+00:20:53.840 terminologies and these business logics
+00:20:56.240 uh is not needed. So one thing you need
+00:20:58.640 to look at here is whatever it has said
+00:21:01.760 this is the undocumented information
+00:21:04.240 that means it was never written down. So
+00:21:06.960 unless you don't do this way you will
+00:21:09.200 never know what is not documented. For
+00:21:11.679 example if somebody says like okay there
+00:21:13.520 is documentation missing we need to
+00:21:14.960 write okay what do you want me to write
+00:21:16.960 actually so there is so much in the
+00:21:19.039 people's head I can't write so much
+00:21:21.360 right somehow it has to surface. So when
+00:21:24.320 you give a problem it actually surfaces
+00:21:26.320 what is not documented and it tells me
+00:21:28.720 okay this is missing I need to have a
+00:21:30.320 new information there. Uh so what I will
+00:21:33.120 do is so it does all the three steps. So
+00:21:37.280 then what I will do is I already have a
+00:21:39.600 pre-prepared answer
+00:21:49.679 very high level prepare uh answer I gave
+00:21:51.919 it to it uh of like what is the missing
+00:21:55.120 information so okay this is the missing
+00:21:56.640 information you asked me uh to solve
+00:21:58.880 this problem can you solve this problem
+00:22:00.400 now uh
+00:22:04.640 I didn't expected this one
+00:22:06.559 Uh notifications is yes. I'll just say
+00:22:09.600 yes.
+00:22:14.159 >> It asks also what fictional name should
+00:22:16.240 I use.
+00:22:17.360 >> Okay. I didn't see it. See when I did
+00:22:19.520 the test run, it didn't ask me the
+00:22:20.880 questions.
+00:22:21.840 >> Let's see. It knows it is a demo.
+00:22:25.840 >> I trained it to Okay.
+00:22:30.799 No, it is already what it is doing is
+00:22:33.520 already.
+00:22:36.159 So you can see on the live it is already
+00:22:38.559 adding the entities that uh the new
+00:22:40.720 knowledge base has been come into the
+00:22:42.640 place.
+00:22:48.320 >> So the knowledge base uh manage as a
+00:22:51.200 file system right as a system of files.
+00:22:53.760 For the demo, I'm just showing it as a
+00:22:55.600 file system, but it's basically your MCP
+00:22:58.720 servers. Uh the data will stay in
+00:23:01.200 conflence, slack or things. Uh you can
+00:23:04.159 just plug in and use the same MCP
+00:23:06.240 servers or rag and all. So it no need to
+00:23:09.120 be a flat file.
+00:23:10.159 >> You treat this as your persistence layer
+00:23:12.159 for for this,
+00:23:14.240 >> right?
+00:23:15.360 >> It's like a me do you use any like a
+00:23:17.440 memory tool for for this? Yeah, I will
+00:23:20.799 show you on the next look like how I'm
+00:23:22.400 going to see uh
+00:23:29.760 okay so it started from 56 entities or
+00:23:32.400 something with the uh this one right now
+00:23:35.200 one problem actually surfaced six
+00:23:38.240 entities that are never been documented
+00:23:40.960 and when I gave that information to it
+00:23:42.960 it is able to actually discover curate
+00:23:45.679 another five or six uh new entities that
+00:23:48.320 were never documented. So it does
+00:23:50.320 discovery of the gaps. It also gets
+00:23:52.960 information from me and also stores
+00:23:55.919 information, new information and all.
+00:23:59.679 Uh this is one. Okay. Next let's see
+00:24:05.919 this is a busy window. I tried to
+00:24:07.919 actually do things but uh it didn't
+00:24:09.840 worked out. Okay. So what you are seeing
+00:24:12.159 on the on the window is like 14
+00:24:13.840 incidents. You have seen one problem
+00:24:16.080 that I solved with an agent, right? The
+00:24:17.679 communication. What if I took like 14
+00:24:20.159 incidents uh and I just go and have 14
+00:24:24.240 cycles of this thing and how it does? So
+00:24:26.640 if you see on the left side it was the
+00:24:28.320 first incident right. So right now it
+00:24:31.120 has 1.5 confidence and everything is
+00:24:34.720 critical every so basically nothing is
+00:24:37.760 documented so everything is critical
+00:24:39.679 high the data is missing. So I started
+00:24:42.080 giving answers to on the first incident
+00:24:44.080 then I repeated for the same second and
+00:24:45.919 third and continuously for like 14
+00:24:48.080 incidents but on the 14 incidents it
+00:24:51.200 basically actually able to go to a
+00:24:53.520 confidence level of 4.4 because first it
+00:24:56.480 disco on every incident it got the list
+00:24:59.520 of answers for me and also it documented
+00:25:02.159 everything for me. So it gradually from
+00:25:04.559 1.4 four to almost like five range of
+00:25:07.520 knowledge uh it improved. uh so if you
+00:25:11.360 look at the traditional way in
+00:25:12.559 traditional way what we do is we solve
+00:25:14.320 all the context problem right we have to
+00:25:16.880 deal with it first then I have to give
+00:25:18.799 it to agent in this one we are moving
+00:25:21.440 agent from a consumer to a knowledge
+00:25:23.360 manager so you just don't consume from
+00:25:25.919 me I'm going to tell you but the whole
+00:25:27.919 knowledge management is also your job
+00:25:29.520 and you have to do it for
+00:25:41.679 Okay, I think we can get back to the
+00:25:44.480 slides a bit. Okay, so what we have seen
+00:25:48.880 is uh we have I have run one cycle and
+00:25:52.000 also I have shown how it look like when
+00:25:54.880 I run in like 15 or 16 different cycles,
+00:25:57.120 right?
+00:25:58.320 But if you have want to do it manually,
+00:26:00.640 it would be really painful because I
+00:26:03.200 tried it after 15 cycles like nobody
+00:26:05.760 would like to actually sit with an agent
+00:26:07.360 and you know you have an incident but
+00:26:09.360 you won't be sitt with your agent and
+00:26:11.279 keep actually asking questions and
+00:26:13.200 telling you about your problems right so
+00:26:15.520 that is super painful. Uh so but the
+00:26:19.520 thing is we can automate this process.
+00:26:21.600 So this is where actually it's it's
+00:26:23.600 really good and gets interesting. So
+00:26:25.840 here is the thing
+00:26:27.840 you all we already have all the work
+00:26:30.559 items right we have Jira we have
+00:26:32.880 incidents uh we have uh customer support
+00:26:36.400 tickets like that all those kind of a
+00:26:38.159 work items already there right sitting
+00:26:40.080 in the archive so why can't we take uh
+00:26:43.760 them and actually use the framework uh
+00:26:47.039 and uh validate across your monolith
+00:26:49.440 database run an automation and see
+00:26:51.760 actually what is the state of your
+00:26:53.679 actually right
+00:27:02.880 Okay, let me see let me show you how it
+00:27:05.200 looks like. So rather than actually
+00:27:08.080 doing it manually at a scale if we do
+00:27:10.640 this approach. So how does it look like?
+00:27:13.039 So the demo that you're seeing is almost
+00:27:16.000 like everything is preset. Uh
+00:27:19.120 for example, I have the demo. I have
+00:27:20.720 like a platform operations agent and uh
+00:27:23.600 I'm saying okay these are the recent
+00:27:25.840 incidents let's say I have 20 recent
+00:27:27.840 past incidents I have uh like an MD file
+00:27:30.320 or a JSON file right it has all the
+00:27:32.000 details of description of it things and
+00:27:34.240 all uh comments and everything and the
+00:27:36.559 rest of the files are your knowledge
+00:27:38.320 base so it's it's a file system but you
+00:27:40.559 can also actually connect with the same
+00:27:42.400 way the conflence and things and all
+00:27:44.159 just for a demo purpose and just showing
+00:27:45.840 it as a flat files now what I'm trying
+00:27:48.480 to do is I'm going take all those
+00:27:51.039 incidents and validate each incident
+00:27:53.520 across my knowledge base and ask the
+00:27:56.240 agent okay tell me uh how much of the
+00:28:00.159 document is good how much of the
+00:28:02.159 documentation is I can't trust it or
+00:28:04.720 like old or outdated and how much is
+00:28:07.279 actually missing not documented as per
+00:28:09.279 this incident so let me
+00:28:13.919 run it
+00:28:16.159 okay it will take some time so it will
+00:28:17.919 take three steps actually so one is uh
+00:28:20.480 it generates probes which means a basic
+00:28:22.960 test it will write to actually test your
+00:28:25.279 knowledge. Then it will run those tests
+00:28:28.240 and then analyze the gaps actually.
+00:28:36.320 Okay.
+00:28:40.720 It's a little bit hot in the room
+00:28:42.000 actually.
+00:28:48.240 I mean the apps it's just like a clever
+00:28:51.039 problem I imagine.
+00:28:53.200 Uh okay for example let's let's say you
+00:28:55.200 have an instant call the notification
+00:28:56.960 service is not sending uh customer uh
+00:29:00.960 messages to
+00:29:03.600 uh SMS service right so the notification
+00:29:06.480 service then you mentioned that the
+00:29:08.000 agent sees is there a documentation
+00:29:10.000 related to notification service
+00:29:11.760 >> so it doesn't find that means you never
+00:29:13.760 wrote a documentation and notification
+00:29:15.200 service I do understand what is a
+00:29:16.960 customer SMSS and all the customer
+00:29:20.399 notification service when you mention
+00:29:22.000 it's a gap because it's never documented
+00:29:24.399 or it takes a customer notification
+00:29:26.880 service goes to conflence and sees like
+00:29:28.960 the documentation how old it is. If it
+00:29:31.200 is says like uh it's like one year old,
+00:29:34.399 it will tell you look I looked into it.
+00:29:36.799 It's like one year old. I don't know
+00:29:38.320 whether I need to trust this
+00:29:39.440 documentation or not or like incomplete
+00:29:42.080 uh documentation. So if you see it
+00:29:44.720 scored each incident it took it and it
+00:29:47.840 looked at all the knowledge uh base that
+00:29:50.320 you have connected and have a
+00:29:52.159 consolidated list of like scoring of
+00:29:54.080 like okay partially the agents can
+00:29:56.159 handle uh the basic edge cases of the
+00:29:59.440 incidents that you give uh because your
+00:30:01.919 knowledge base is not complete and it
+00:30:03.520 will show you how much of the tribal
+00:30:05.360 knowledge is missing system information
+00:30:07.679 business process what are actually are
+00:30:09.520 missing from your uh uh institutional
+00:30:11.520 knowledge when whatever is not
+00:30:12.960 documented. Uh these are the probes
+00:30:22.720 and it will also identify uh what is
+00:30:25.600 critical and what is high. This is
+00:30:27.200 really important because let's say there
+00:30:29.760 is some kind of an example of
+00:30:31.840 notification service which I mentioned
+00:30:33.279 right it is repeatedly
+00:30:36.399 uh appearing in like 20 occasions and
+00:30:38.799 you don't have
+00:30:41.520 this is the first that you need to fix
+00:30:43.039 as per your documentation. So it will
+00:30:45.919 also help us actually understand when
+00:30:47.919 you're
+00:30:50.000 uh breaking down your uh knowledge base
+00:30:53.760 you need to understand what is critical
+00:30:55.200 actually what I need to focus on first
+00:30:56.799 what makes value for me
+00:30:59.919 so organized into critical high medium
+00:31:07.120 so this is what like uh I showed the
+00:31:10.080 flat files but you can also connect it
+00:31:11.840 to the various data sources that we
+00:31:15.520 So the step one is basically what it
+00:31:17.600 does demand extraction. That means every
+00:31:20.399 incident it will extract uh the
+00:31:23.360 checklist of information what is
+00:31:24.799 missing.
+00:31:26.559 On the second step is what it will
+00:31:28.720 consolidate everything what is missing.
+00:31:30.880 So it will create like systems and APS
+00:31:33.679 and all and how many are clean, how many
+00:31:35.679 are stale, which is incomplete, what is
+00:31:38.000 entirely missing. Uh something is
+00:31:40.720 tribal. uh those kind of a
+00:31:43.039 classification it will also do
+00:31:46.880 and it will create a kban board for you.
+00:31:49.279 So what happens is so if you want to fix
+00:31:51.519 your institutional knowledge base
+00:31:52.960 basically you just just like Jira
+00:31:55.120 tickets we finish it we actually has to
+00:31:57.279 document these missing pieces and all
+00:31:59.519 and the the moment you started to so it
+00:32:02.799 also saves in the context lake so it
+00:32:04.480 also has to build its own uh uh
+00:32:06.640 knowledge base
+00:32:08.720 and you can see the performance so once
+00:32:10.640 you're fixing the sticks on the can uh
+00:32:22.720 the knowledge.
+00:32:25.360 So
+00:32:32.559 that's how so what we've seen is one is
+00:32:35.120 the approach first of all which means
+00:32:36.880 not the pull push approach but the pull
+00:32:38.720 approach how to do it one cycle or
+00:32:41.120 multiple cycle how it look like but if
+00:32:43.120 you put it in a scale of automation then
+00:32:45.600 how much valuable it uh would
+00:32:55.120 Okay. Now, uh uh the important question
+00:32:58.399 is
+00:33:01.039 >> sorry about this.
+00:33:04.960 >> Double mic. Yeah, it's cutting out a
+00:33:07.120 bit. So, I'm just going to put that one
+00:33:08.720 on as well.
+00:33:09.679 >> Should I do a voice over later?
+00:33:11.200 Actually,
+00:33:13.840 >> I think you need to repeat.
+00:33:17.120 I have the patience who has the patience
+00:33:18.799 for a second.
+00:33:22.000 >> So the question is so I was all all the
+00:33:25.760 time I was talking about okay it
+00:33:27.840 receives the context so we give the
+00:33:30.320 information it will store it but the
+00:33:32.399 question is where does it actually store
+00:33:34.159 it? So I have a very opinionated
+00:33:36.159 opinion. Uh hear me out. Uh I prefer uh
+00:33:39.519 it has to go to a GitHub repository. Uh
+00:33:41.919 because eventually somebody will
+00:33:43.600 actually come up with a you know 20
+00:33:46.000 million seedfunded uh SAS solution for
+00:33:48.720 you. Uh but before that I prefer uh to
+00:33:52.640 actually put it in GitHub as a
+00:33:54.320 repository. Why? Because if you look at
+00:33:56.559 at a scale, if you want to do this,
+00:33:59.039 there will be multiple agents, multiple
+00:34:00.960 teams actually contributing to the same
+00:34:02.960 knowledge base and there will be
+00:34:04.640 conflicts and resolutions, right? So the
+00:34:07.360 uh the easiest way to do is using GitHub
+00:34:09.760 because it actually comes with inbuilt
+00:34:12.399 uh uh PR processes uh review processes
+00:34:16.079 things and all. So if multiple domain
+00:34:18.719 expert are sitting and uploading the
+00:34:20.320 files or like agents are contributing to
+00:34:22.159 it the most efficient way to manage is
+00:34:24.960 in a GitHub something like a structure
+00:34:26.879 like this and the other advantage is
+00:34:29.440 also if you put it on GitHub you can
+00:34:31.199 also publish it to conference later or
+00:34:32.879 like slack wherever you want to publish
+00:34:34.960 it to another uh uh solution that you
+00:34:37.599 want to use. uh so I prefer to have it
+00:34:41.199 on GitHub but if you want to directly
+00:34:43.679 integrate it to conflence and all you
+00:34:45.119 can also insert do it.
+00:34:47.679 Next is uh a meta model. Uh how many are
+00:34:51.599 aware of the word meta model in the okay
+00:34:55.280 maybe I can quickly show you how does it
+00:34:57.520 look like.
+00:35:00.960 So meta model is basically something
+00:35:02.720 like this right. So and uh how does your
+00:35:07.599 uh domain actually structured around
+00:35:09.760 like uh is a business process or uh how
+00:35:12.640 it is related to a systems how systems
+00:35:15.119 are related to uh APIs and how is this
+00:35:19.359 uh business jargon or like tech jarens
+00:35:22.079 are actually linked to which one. So
+00:35:24.000 these kind of a relationship uh meta
+00:35:26.400 model is really important. It's not
+00:35:28.480 necessary uh for the approach that I
+00:35:31.440 have proposed but it's an add-on and why
+00:35:34.960 uh you need to have this one is right
+00:35:36.800 now think of it as like a map right now
+00:35:39.119 your agents doesn't have any map
+00:35:40.800 actually to navigate with your uh
+00:35:42.640 knowledge base basically what you're
+00:35:44.160 doing is you're dumping like uh these
+00:35:46.079 many number of files and it need to
+00:35:47.680 figure out which file I need to need
+00:35:49.359 right but your file structure is
+00:35:51.839 actually a representation of your meta
+00:35:54.480 model it actually knows how to navigate
+00:35:57.359 For example, let's say can you fix this
+00:35:59.599 system? It will understand if I make
+00:36:02.079 changes, which business processes will
+00:36:03.599 be affected and which APIs I need to
+00:36:05.280 change or like touch these kind of a
+00:36:07.119 things. So, it's also important to have
+00:36:09.119 a meta model. If you have it,
+00:36:12.880 uh then it will produce more value. So,
+00:36:16.560 I strongly prefer to have a meta model
+00:36:18.560 along with this approach.
+00:36:26.000 Okay.
+00:36:27.839 So the last part uh is what is the value
+00:36:30.960 it created. So
+00:36:33.760 there's a lot of slides that you have
+00:36:35.119 seen lot of demos that you've seen. So
+00:36:36.880 personally I need to also share like
+00:36:38.320 what is the value that I see when we uh
+00:36:41.680 I was using it or like uh the other
+00:36:43.599 people who I shared with already were
+00:36:45.119 using it came back with the feed
+00:36:46.800 feedback and told me uh first the most
+00:36:49.520 valuable thing is
+00:36:51.680 knowing the unknown. So what is never
+00:36:54.400 documented is something can be surfaced
+00:36:56.960 only by this approach actually. Uh
+00:36:59.200 otherwise you'll just end up in u an
+00:37:02.560 endless mroboard of like putting tickets
+00:37:04.960 on okay this is missing this is missing
+00:37:06.400 I need to add it I need to add it and uh
+00:37:08.160 keep on doing it. So this is the fastest
+00:37:10.240 and better way to discover uh with your
+00:37:12.640 previous work items and all what is
+00:37:14.480 never documented uh things and all. uh
+00:37:17.200 second is uh basically I can now give
+00:37:22.800 work to agents rather than I do all
+00:37:24.800 those things like uh rather than I
+00:37:26.800 become I give the agents all this
+00:37:29.440 information let it manage my knowledge
+00:37:31.760 management I don't want to be the
+00:37:33.200 knowledge manager of it so let let it do
+00:37:35.359 it so those are the two big values that
+00:37:38.480 I have seen if you want to use it I
+00:37:40.480 think like you will also see the those
+00:37:42.079 two as the most valuable uh but these
+00:37:45.280 are the other things what I seen
+00:37:51.280 now. Okay. So, I also need to tell you
+00:37:54.400 like what is the drawbacks of also using
+00:37:57.359 it, right? First of all, if you are
+00:37:59.119 coming from a small team or like if you
+00:38:01.440 say like no no no my documentation, my
+00:38:03.359 knowledge base is really good. I'm like
+00:38:05.599 super happy for you. Uh you're the lucky
+00:38:08.160 ones in this world right now with
+00:38:09.599 agents. uh for you it might not be
+00:38:13.040 really relevant unless you have a very
+00:38:15.520 uh very complicated uh uh documentation
+00:38:19.119 that you have uh second is I already
+00:38:21.520 mentioned the manual manually doing is
+00:38:24.160 it's very painful I don't prefer anyone
+00:38:26.960 to do it if you want to just try it for
+00:38:29.040 testing purposes you can also do it but
+00:38:31.440 u automation is the most best way to
+00:38:33.920 actually use this one
+00:38:36.320 uh this is very early this approach so
+00:38:39.119 by tomorrow warning on YouTube somebody
+00:38:41.040 would have already posted something
+00:38:43.040 differently uh better than me. So uh in
+00:38:46.480 the in the uh era of AI nobody knows
+00:38:49.280 like uh how long a thesis or an approach
+00:38:52.079 or an app product going to survive. So
+00:38:55.040 for now I see this is the best approach.
+00:38:58.880 Okay. So the whole workshop so we
+00:39:02.079 started with uh one pipeline right on
+00:39:05.040 the ROI and so the demanddriven context
+00:39:09.839 actually sits between this monolith and
+00:39:12.960 also the retrieval layer actually and
+00:39:15.680 what it does is uh it actually helps you
+00:39:19.599 build curated context blocks for you.
+00:39:22.160 You can also think of it like a cache
+00:39:24.640 database that you have. So every time
+00:39:26.960 you agent doesn't need to go and know
+00:39:30.160 boil the ocean for fixing an issue
+00:39:32.800 rather than if you have a good context
+00:39:34.880 block of information most of the time
+00:39:36.880 80% of the time that can be usable
+00:39:39.119 because what I also believe is it's
+00:39:41.040 always the 80/20% rule so 20% of your
+00:39:44.160 documentation is most useful 80% is some
+00:39:48.160 corner cases you have to look into it so
+00:39:50.240 rather than giving 100% of things you
+00:39:52.960 need to figure out what is my 20% of
+00:39:55.599 that uh that is super helpful for agent
+00:39:57.839 and have it like a cache database uh the
+00:40:00.320 context block of it using it and rest of
+00:40:02.640 it you can leave it like a links so
+00:40:05.200 whenever agent feels I need more
+00:40:06.720 information then only it can go and
+00:40:08.240 check uh the whole monolithical uh
+00:40:11.119 institution knowledge
+00:40:15.280 okay so from here what you can take from
+00:40:18.079 this workshop is three things one uh I
+00:40:21.359 hope uh I makes I made sense of this
+00:40:24.720 approach
+00:40:25.440 So uh there is a GitHub repo uh which I
+00:40:29.920 detailed it out and also a starter guide
+00:40:31.839 on it one if you want to go home and try
+00:40:33.839 with it you can you can try it. Uh you
+00:40:36.480 already have know how the framework
+00:40:38.560 works. So you want to go home and just
+00:40:40.720 remix the whole approach you can do it
+00:40:42.480 and let me also know uh I'll leave this
+00:40:44.480 one and I'll join with you for
+00:40:45.760 contribution. Uh you have a context gap
+00:40:48.560 gap scanner that I showed you which is
+00:40:50.320 live already with presets. Uh I think
+00:40:53.200 like added like $20 on it. So hit it as
+00:40:56.400 much as possible as well. 200 right?
+00:40:58.319 Okay. Okay.
+00:40:59.440 >> So after $20 so first serve.
+00:41:04.720 Uh so all these three you can use uh you
+00:41:07.920 can take away from this workshop.
+00:41:11.280 Okay. So because this is a workshop so I
+00:41:15.280 also would like to
+00:41:17.760 want you to try something. Uh what you
+00:41:20.400 can try is three things. One is either
+00:41:24.240 uh if if you say like you know what I'm
+00:41:27.440 so so tired already it's almost like 4
+00:41:30.160 uh it's almost about to go for a party I
+00:41:32.319 don't want to do it so you can just go
+00:41:33.839 to the context gap scanner uh everything
+00:41:36.319 is a preset here you can just try it out
+00:41:39.119 hit it and see how it works if you think
+00:41:42.160 it can be done better let me know so
+00:41:44.160 that we can work together
+00:41:46.800 uh
+00:41:48.560 or otherwise uh let's say now I I'm very
+00:41:52.319 technical. I want to know how it works
+00:41:54.400 under the hood. Uh this is a GitHub
+00:41:56.400 repository. Uh it's it's under uh maybe
+00:42:00.160 I'll just take this out.
+00:42:05.680 Uh this is a GitHub repository and it
+00:42:08.400 has all the information. Uh plus there's
+00:42:11.280 a starter guide also if you want to if
+00:42:13.200 you want to try it out. But uh if you
+00:42:16.319 still feel like no, I want much more
+00:42:19.200 simpler
+00:42:30.880 You can also try this one. So you don't
+00:42:32.800 need to do anything. Basically take this
+00:42:35.680 prompt uh take one of your Jira ticket
+00:42:38.880 or incident that you have right now. If
+00:42:40.960 you already built MCP servers uh or like
+00:42:43.839 uh any other kind of a things, you just
+00:42:46.480 use that uh prompt, give it to your
+00:42:48.400 agent uh with the incident or a Jira
+00:42:51.280 ticket and ask it uh give me the quality
+00:42:55.280 of the knowledge base that I have as per
+00:42:57.040 this incident or uh Jira ticket in this
+00:42:59.760 way and see how many how much of it
+00:43:02.319 comes in red which is never documented.
+00:43:04.960 So you can you can try also the simple
+00:43:07.040 one.
+00:43:09.839 I'll just leave it like this. Maybe you
+00:43:12.560 can take a picture. Maybe I can switch
+00:43:14.160 to the slide if any anyone want to.
+00:43:23.359 Cool.
+00:43:33.359 >> This is your
+00:43:35.760 >> So
+00:43:38.400 this approach find it very interesting.
+00:43:40.560 So first question is have you already
+00:43:42.880 used this way of working at scale or
+00:43:45.520 because we've seen most of the toy
+00:43:46.720 examples right
+00:43:47.680 >> y
+00:43:49.599 >> uh I used it uh not at a scale uh I
+00:43:52.960 started with simpler because you also
+00:43:55.599 need to see what is the scope of it
+00:43:57.839 let's say I have an enterprise and I try
+00:44:00.160 an enterprise level I can't do it
+00:44:02.319 because it's multiple domains things and
+00:44:04.240 all even if I do it at domain level I
+00:44:06.640 need to understand I tried it at a
+00:44:08.000 domain level then even at a domain level
+00:44:10.880 there is so much of a domain expertise I
+00:44:12.720 need to fill it up and uh fill those
+00:44:15.520 gaps. So again I cut down into maybe
+00:44:18.480 what is the smallest team that I have
+00:44:20.960 and the smallest teams Jira tickets the
+00:44:23.200 smallest teams instance and the team's
+00:44:26.319 confluence page uh with a bit of a scope
+00:44:29.280 then if I drill down the scope then I
+00:44:32.000 feel like it's more uh fast more useful
+00:44:35.599 but if I do it at a bigger scope what
+00:44:38.079 happens is not one person has the whole
+00:44:41.839 uh domain expertise so basically it
+00:44:44.240 again becomes like uh somebody has to
+00:44:46.480 come and uh you know five or six people
+00:44:48.400 has to sit down and start doing this
+00:44:50.319 things.
+00:44:50.560 >> Yeah, I'm a bit concerned that this
+00:44:52.240 might denial of service attack your team
+00:44:54.800 members in a certain way because our
+00:44:57.440 LLMs are fine tuned to keep eliciting
+00:45:00.880 information to keep getting more
+00:45:03.359 information to ask follow
+00:45:06.560 >> so I think it will be hard on the
+00:45:08.000 engineers that have to do the question
+00:45:09.680 answering
+00:45:11.359 and secondly the scanner is nice but
+00:45:14.319 still built on the assumption that all
+00:45:17.200 of your team members and the rest of the
+00:45:18.720 enterprise are still using your
+00:45:20.319 enterprise it
+00:45:22.079 >> well as planned that they're actually
+00:45:24.079 filling in their tickets with all the
+00:45:25.839 details etc and I know from practice
+00:45:28.000 that is most of the time not the case
+00:45:31.119 >> that is true that is true I agree with
+00:45:32.480 you even if I go my my assumption is
+00:45:35.200 also even if I go to a leadership to buy
+00:45:37.760 in like hey can you give me a bandwidth
+00:45:40.160 or like uh you know I need these people
+00:45:42.480 to actually sit and fix the context. I
+00:45:46.000 don't think right at this point of time
+00:45:47.520 nobody will do but I think it will
+00:45:49.599 happen because slowly I think we are
+00:45:53.280 slowly moving towards an agent managers
+00:45:56.079 where agents are becoming
+00:45:57.839 semi-autonomous or autonomous and we
+00:45:59.839 manage them but at the certain point of
+00:46:01.920 time somebody has to fix that knowledge
+00:46:04.319 because it's not going to come from
+00:46:06.000 anywhere you have to so then the
+00:46:08.319 enterprise focus will shift towards the
+00:46:10.319 gap that's what I started saying I don't
+00:46:13.040 think nobody is looking into the problem
+00:46:15.280 Yet uh everybody is very focused with
+00:46:18.160 agent how good the agent is, how good
+00:46:20.960 the retrieval is but how good the
+00:46:22.960 context is uh you're not solving it. I
+00:46:26.720 think like in down the line in a year or
+00:46:28.720 so I think people will realize
+00:46:31.040 importance of it and uh the KBAN board
+00:46:33.680 will definitely come into reality
+00:46:35.040 actually very soon.
+00:46:37.680 >> Yeah. Thanks.
+00:46:39.920 >> I think actually the same point I think
+00:46:42.480 when we look at large
+00:46:45.839 search actually documentation actually
+00:46:48.400 code. Just wondering have you applied it
+00:46:50.160 to the code base?
+00:46:51.359 >> Uh I did uh I also applied the code
+00:46:54.000 base. Uh but I got a mixed result when I
+00:46:57.440 uh so so here is the thing. What
+00:46:59.839 happened is when I only use codebase uh
+00:47:03.599 it is particularly good or when I only
+00:47:06.160 use conflence or like textual data uh
+00:47:08.800 like uh uh it gives a good results. But
+00:47:11.760 when I combine it somehow actually uh it
+00:47:15.040 conflicts because it it creates a theory
+00:47:18.240 out of the GitHub repository but the
+00:47:20.240 same GitHub repository documentation is
+00:47:22.319 also on confluence.
+00:47:24.319 So there it gets a conflict of okay what
+00:47:26.960 is the source of truth to it code says
+00:47:28.880 this should I implement it this way as
+00:47:30.640 per the documentation. So then again I
+00:47:33.040 need to create an additional skill or
+00:47:34.880 rules like okay what is the ranking that
+00:47:37.359 you need to give if you see it in GitHub
+00:47:39.280 that means that is the source of truth
+00:47:41.520 or if you see it if you don't see it
+00:47:43.599 then you have to uh look the information
+00:47:46.560 in confluence things and all but those
+00:47:48.640 are still I'm trying to fix those things
+00:47:51.760 actually so seeing the gaps and fix
+00:47:53.280 those but I definitely see uh that issue
+00:47:55.839 combining those two
+00:47:57.040 >> and the second question is um
+00:47:59.680 interestingly actually
+00:48:02.000 skills because what we find out is
+00:48:03.920 actually like you have your kind of like
+00:48:07.440 your um like the process that's like run
+00:48:11.280 a context and identify the right
+00:48:15.680 >> then you do the task
+00:48:19.119 identify
+00:48:21.280 >> you go back
+00:48:23.839 and then you're fixing the knowledge
+00:48:28.800 back
+00:48:30.720 Okay.
+00:48:40.960 >> Uh I think right now the skill that I
+00:48:43.040 have built is static but what you are
+00:48:44.960 more proposing if I'm not wrong it's
+00:48:46.640 like evolving skill right if the skill
+00:48:49.280 fails it has to evolve right I agree
+00:48:51.520 with you I never tried it but I think
+00:48:53.040 like it has to be uh like that because
+00:48:55.520 I'm also more concentrating on how to do
+00:48:58.800 it at scale. uh the reason is also
+00:49:02.800 uh I I want I want the context to be
+00:49:06.160 fixed before retrieval itself
+00:49:08.800 not during operational. So first when I
+00:49:11.040 started with it I I started doing with
+00:49:13.280 when operational which means oh I have a
+00:49:15.440 work item I will assign to it it will
+00:49:17.839 fail then I'll start giving context and
+00:49:20.160 all but it takes a lot of time it takes
+00:49:22.000 a lot of patience for me so rather than
+00:49:24.079 doing it you know what I'm going to fix
+00:49:26.000 the context but before retrieving so if
+00:49:29.119 I can uh while I was answering her
+00:49:32.400 question if you take a team the context
+00:49:35.599 that you need to fix is very small so
+00:49:37.839 you can use a uh context gap scanner uh
+00:49:40.960 kind of a thing and maybe if you're good
+00:49:44.480 have a good demoing expert I think like
+00:49:46.640 couple of weeks you can actually fix
+00:49:48.240 your documentation not like 100% at
+00:49:51.119 least like 60 70 80% of a good quality
+00:49:53.760 that you can already build it so my
+00:49:56.960 proposal would always be don't do it at
+00:49:59.040 an operational level uh at an real-time
+00:50:01.839 level but do it before retrieval uh
+00:50:04.240 itself that is much better in this
+00:50:05.920 approach
+00:50:07.520 >> y
+00:50:10.720 especially
+00:50:14.079 sitting in
+00:50:17.359 situations where you ask questions that
+00:50:19.839 may need I don't know like five or six
+00:50:22.160 different
+00:50:24.880 there
+00:50:35.520 >> right now after cloud code announced 1
+00:50:38.000 million of tokens in the context window.
+00:50:40.000 I know I don't have any problem. So I
+00:50:42.000 calculated it uh at an average it's like
+00:50:44.800 uh 96k tokens because I tried with
+00:50:48.079 different domains actually per domain I
+00:50:49.760 see like around 96k tokens. uh if I
+00:50:52.960 consolidate everything like confluence
+00:50:54.480 things and all uh so easily fits in the
+00:50:56.800 context window actually uh I tried to do
+00:50:59.760 some experimentation around you know a
+00:51:01.920 graph rag put them there rather than
+00:51:04.000 just take all the files use a graph rag
+00:51:06.319 understand the intent but for me just
+00:51:09.359 putting the whole context right now in
+00:51:11.520 the window gives you more results than
+00:51:14.000 actually doing uh uh rack unless you
+00:51:17.599 have a very big uh almost around a
+00:51:21.200 million tokens of a context that you
+00:51:22.720 want to fit in maybe then you have to
+00:51:24.720 use a bit more uh retrieval mechanisms
+00:51:27.680 between it but otherwise I think like uh
+00:51:29.680 it should be fine.
+00:51:32.319 >> I have a question uh I opened your paper
+00:51:35.839 and could you explain this graph like
+00:51:38.960 comparison between different techniques
+00:51:40.720 like domain knowledge strategy knowledge
+00:51:42.559 access uh
+00:51:47.119 >> uh which one? Yep. Sure.
+00:51:51.839 Okay. So, uh I also did the citations
+00:51:54.160 from other papers. Okay. Uh so, not
+00:51:56.800 directly related but u you have the
+00:51:58.880 paper of ACE uh uh which is also does a
+00:52:03.440 similar thing. So, uh but ACE is not
+00:52:06.960 exactly into uh uh how do you say uh
+00:52:11.119 discovery and curation actually uh if I
+00:52:14.640 remember it correctly.
+00:52:17.119 Maybe I need to refresh my memory.
+00:52:18.720 >> What do you mean between uh the
+00:52:20.880 difference between domain knowledge and
+00:52:22.480 strategic knowledge here.
+00:52:24.400 >> Okay. So strategic knowledge. Okay. So
+00:52:28.480 what as and all uh are doing is when you
+00:52:31.760 are trying to have a conversation with
+00:52:34.400 uh AI uh you can see in the cloud code
+00:52:36.720 and all it updates its uh memory or like
+00:52:39.839 the relationship with your things like
+00:52:41.520 that right. So and also from the chat
+00:52:43.839 history it understands what is the most
+00:52:45.839 important context I need to remember
+00:52:47.359 those kind of a things. So when you are
+00:52:49.839 in communication with it that
+00:52:52.079 operational conversations with AI
+00:52:54.400 improvement they propose. So what I my
+00:52:57.839 proposal is not based upon your
+00:52:59.839 conversation with an AI but rather than
+00:53:02.559 your domain knowledge which is
+00:53:04.720 documented actually.
+00:53:10.240 >> Uh somebody else has a question.
+00:53:12.720 >> Sorry.
+00:53:14.480 When to remote knowledge so things are
+00:53:17.200 confident
+00:53:19.680 how do you ensure that your agent only
+00:53:22.880 points to the
+00:53:25.920 relevant documentation
+00:53:28.400 in your local you have liked
+00:53:35.200 >> okay so when I wrote a pipeline for
+00:53:37.520 extracting from conflence it also allows
+00:53:39.760 actually to give you a date and also
+00:53:42.480 last updated who created kind of an
+00:53:44.240 analytics on on the space. So you can
+00:53:46.240 use it uh to actually put a threshold of
+00:53:48.640 like okay on this particular date
+00:53:51.520 whatever is is old consider it as an
+00:53:53.839 outdated one and let me know. Don't just
+00:53:56.480 consider it as an outdated one you let
+00:53:58.000 me know because sometimes the document
+00:54:00.240 can be stale for so long but it could be
+00:54:02.559 an important document actually. So it
+00:54:04.400 lets you know but not like take
+00:54:06.160 decisions actually right now on this
+00:54:08.000 one. So you decide uh which one is stale
+00:54:10.160 and which one is not. you don't have
+00:54:12.160 like an intermediate layer where in the
+00:54:14.400 repo you store this is still
+00:54:17.920 >> okay so uh when it is curated in the
+00:54:20.160 context uh also it updates with a uh
+00:54:23.280 date and also the state of the document
+00:54:25.280 like stale active and clean so it also
+00:54:27.760 looks into okay this is st I don't I'm
+00:54:29.440 not going to touch it and I'll just go
+00:54:30.800 to look for any other new other
+00:54:32.800 documents are there uh in this one
+00:54:37.359 >> you think about how to manage access
+00:54:46.319 accessible.
+00:54:50.880 >> Okay. So, because it's not a product or
+00:54:53.599 a SAS solution, it's just basically
+00:54:55.359 GitHub for me right now permissions and
+00:54:58.400 things are not difficult to implement
+00:55:00.079 because GitHub out of the box gives me
+00:55:03.280 who I can give the permission to is
+00:55:04.880 GitHub. who can have write read access
+00:55:07.200 things and all who can merge those
+00:55:09.200 things and all but in case if it evolves
+00:55:11.760 into a product and for example context
+00:55:14.319 gap scanner as a product and I want you
+00:55:16.480 to test it because the the reason why I
+00:55:18.880 was using presets for this uh workshop
+00:55:21.680 not actually asking you to upload the
+00:55:23.200 files is because I don't want to take
+00:55:24.800 your IP data on this one right so unless
+00:55:28.079 it becomes a product you don't have any
+00:55:29.920 problem uh GitHub and all but if you
+00:55:32.559 have a SAS solution for this
+00:55:35.359 uh then it's between how the SAS
+00:55:37.440 solution will manage it right right now
+00:55:39.760 but the approach has nothing to do with
+00:55:41.520 the access things and all how you
+00:55:44.480 implement those access on on the
+00:55:46.000 knowledge is up to you
+00:55:48.640 >> you have so this is of course about
+00:55:51.520 documentation but did you give any
+00:55:54.240 consideration about using it on some
+00:55:57.680 like central tooling that a company
+00:56:00.480 would use like let's say that you have a
+00:56:01.920 platform team and you have a CLI that
+00:56:04.160 the different teams are using and so now
+00:56:06.240 it's used by different agents right
+00:56:08.319 >> okay
+00:56:08.640 >> and so the agents can also be like well
+00:56:10.559 this action is available for a resource
+00:56:12.400 but I don't want to do 500 calls just
+00:56:14.720 because I have a list of 500 resource
+00:56:16.559 okay
+00:56:16.799 >> it would be nice if the tool could do
+00:56:18.079 that
+00:56:19.680 I don't know if if you've given any
+00:56:20.960 consideration to this
+00:56:21.920 >> I think that is how it has to work uh in
+00:56:24.400 an organization you need to have a
+00:56:25.839 central solution for it but how you want
+00:56:28.400 to do the solution is up to the
+00:56:30.559 organization for example we are doing
+00:56:32.400 agile right So agile can do by scrum
+00:56:35.040 kban or like lean or something and also
+00:56:37.280 you can do different apps to do it. The
+00:56:40.000 the process is the same but how you do
+00:56:42.400 it which method you will choose and
+00:56:44.319 which app will you choose in your
+00:56:46.480 organization is different. In the same
+00:56:48.000 way what we have discussed is the
+00:56:49.520 approach. If you want to put it in the
+00:56:52.640 organization you can use the approach
+00:56:54.799 and you do you can do it in whichever
+00:56:58.000 way you want. My point is more like so
+00:57:00.720 with this you can identify gaps in your
+00:57:03.359 >> right could you use it to identify gaps
+00:57:07.200 on your tooling for
+00:57:09.359 >> okay uh when you say tooling it's the
+00:57:11.680 agentic
+00:57:12.400 >> internal tools that I don't know maybe a
+00:57:14.640 team is building for the rest of the
+00:57:16.319 company
+00:57:17.599 >> infrastructure in general right
+00:57:19.040 >> maybe yeah
+00:57:20.240 >> uh can you give me an example of uh like
+00:57:22.559 uh how
+00:57:23.359 >> let's say that uh I don't know you build
+00:57:25.280 some sort of abstraction on top of
+00:57:26.559 kubernetes
+00:57:27.680 >> okay
+00:57:28.000 >> you don't want your developers to
+00:57:29.680 necessarily know what to do with that.
+00:57:31.359 Okay.
+00:57:31.680 >> Then you have a different CLI or you
+00:57:33.440 have something right.
+00:57:34.720 >> Um but then like I say I don't know
+00:57:36.799 maybe you thought that they would
+00:57:39.359 release one of your custom applications
+00:57:42.079 or corporate applications one by one
+00:57:44.559 >> but a team has grown into using more of
+00:57:46.960 that and suddenly they have a lot and
+00:57:48.400 they don't want to do that many calls or
+00:57:50.720 >> perhaps even the agent is like well this
+00:57:52.559 is inefficient. I would like this
+00:57:54.319 internal tool to work in a different
+00:57:56.000 way.
+00:57:56.559 >> Okay. And in that way you would identify
+00:57:58.319 like gap in the tool or a performance
+00:58:00.559 improvement kind of like this does for
+00:58:03.280 documentation
+00:58:04.559 >> could be extended actually.
+00:58:07.040 >> So uh because uh we have seen the
+00:58:09.920 business processes also right. So it can
+00:58:12.319 also document business process. The
+00:58:13.920 business process is nothing but how uh
+00:58:16.160 the process in the application it
+00:58:17.920 actually runs and does things right. So
+00:58:19.680 you can extend it to also find out the
+00:58:22.319 gaps in the business process or like how
+00:58:24.079 it works. It could be an extinction to
+00:58:26.400 it.
+00:58:33.359 >> Sorry.
+00:58:34.319 >> How would you ensure that
+00:58:37.119 you know
+00:58:40.160 changes?
+00:58:41.280 >> Yeah. The answer for question is
+00:58:44.400 tomorrow
+00:58:46.400 on Friday
+00:58:51.440 to identify B1 and B and over
+00:58:57.040 text that's problem.
+00:58:59.119 >> Okay. So uh when I showed the context
+00:59:01.599 gap scanner you also saw like an
+00:59:04.240 indicator of duplication right? So if
+00:59:07.119 today you have a document tomorrow you
+00:59:08.960 have version 2.0 zero and something else
+00:59:11.119 actually it will find out the same
+00:59:13.040 information is having in three different
+00:59:15.440 it it will also will find it. If you
+00:59:18.160 have only one it is changed it will take
+00:59:20.160 the latest updated one because as a
+00:59:21.680 human you changed it so it will take it
+00:59:23.920 as a source of truth right but if you
+00:59:26.319 have three versions of the same document
+00:59:28.559 that's a duplication and it will flag it
+00:59:31.040 as a duplicate
+00:59:33.119 >> right but it's a s how do you ensure
+00:59:38.000 the performance Let's say document of
+00:59:40.880 100,000 words
+00:59:43.440 >> just change a word like let's say there
+00:59:48.240 for example right has changed
+00:59:49.920 >> okay
+00:59:50.240 >> so you have to find
+00:59:52.799 compare those three documents
+01:00:02.240 tools you use to ensure
+01:00:08.799 >> uh Um I didn't quite get your question
+01:00:11.359 actually. Uh is it like the token usage
+01:00:14.319 you're worried about like uh the that
+01:00:16.400 many tokens that we used how how is what
+01:00:19.119 is the costsaving? Yeah, precisely
+01:00:27.119 changes
+01:00:28.720 maintain maintain that whole database
+01:00:31.280 right
+01:00:33.599 >> I don't know
+01:00:35.520 whatever right
+01:00:38.160 my question is well because what you
+01:00:41.119 presented is sort of a happy path where
+01:00:43.520 you have a cup it and then you reuse it
+01:00:47.920 >> but in a while you will have a where you
+01:00:50.960 pretend to have that gap
+01:00:53.760 but actually it doesn't contain up to
+01:00:56.079 date information
+01:00:59.920 contains wrong information. So you want
+01:01:01.839 to preserve that.
+01:01:03.280 >> Ah okay. Okay. Uh so it can flag as per
+01:01:09.520 when it is created or last updated. You
+01:01:12.559 can set such kind of a filters. But
+01:01:14.960 let's say you have a latest document
+01:01:16.480 which has a wrong information.
+01:01:19.119 >> Right. know that right?
+01:01:20.559 >> No that's true. uh but as for example as
+01:01:23.200 a human being right so you go and look
+01:01:25.280 into documentation you told somebody to
+01:01:26.880 look into documentation and the person
+01:01:28.720 looked into the documentation and as per
+01:01:30.319 the documentation this is be implemented
+01:01:32.480 in this way the person will do it right
+01:01:34.880 it's not an agent or a human issue
+01:01:36.720 >> too late I mean you solved one
+01:01:40.799 >> and the agent is trying to assume
+01:01:46.880 >> so it's solving it but the solution is
+01:01:49.119 wrong
+01:01:52.160 Okay.
+01:01:52.559 >> So you say there is a scanner fine. Do
+01:01:55.200 you run it daily? How much will it cost?
+01:01:57.839 >> You you can have another process spot
+01:02:00.480 that would try to see like last updated
+01:02:04.079 >> uh try to see on some cadence try to run
+01:02:06.319 a process that will update the
+01:02:07.920 knowledge.
+01:02:08.559 >> Fantastic. How much will it cost?
+01:02:11.280 >> Uh for for example uh sorry you're
+01:02:13.920 saying
+01:02:14.319 >> less than than doing more meetings uh
+01:02:17.359 every day to onboard someone or
+01:02:20.960 That's a strong claim
+01:02:22.079 >> but I don't think it will cost that much
+01:02:23.920 as
+01:02:24.400 >> premise of AI.
+01:02:25.520 >> Yep. As I said like uh when I tested it
+01:02:29.119 there is none of the domains which cross
+01:02:31.280 more than 100k tokens actually. So I
+01:02:34.640 don't think we will for example contact
+01:02:36.640 gap scanner right you I don't think like
+01:02:38.880 you have to do it like on a daily basis
+01:02:41.520 or anything even if you run daily basis
+01:02:43.680 like 100 tokens and do one scan for
+01:02:46.319 example right if you try to start
+01:02:48.319 hitting all of them uh all of you the
+01:02:50.799 context cap scanner I think you can't
+01:02:52.880 even burn like one $1 I think so if I'm
+01:02:55.760 not wrong it already had like oh you're
+01:02:58.000 ready okay uh okay I'll I'll cancel the
+01:03:00.720 subscription now
+01:03:03.280 But I
+01:03:04.400 >> go back and defend two things. One is a
+01:03:06.319 compository
+01:03:15.440 system documentation for so I agree with
+01:03:17.920 you.
+01:03:20.400 So scale you would have to solve this
+01:03:23.839 question.
+01:03:24.559 >> Okay. which is going to be depend also
+01:03:26.880 how fast the
+01:03:29.039 how fast the the data change I think not
+01:03:33.839 that much you get to like 80%
+01:03:42.160 >> yeah use case by use case yeah any other
+01:03:45.440 questions
+01:03:51.039 >> okay
+01:03:52.960 >> how do I know that's
+01:03:56.079 uh
+01:03:58.079 >> it it
+01:04:00.160 >> it actually tries to detail out as much
+01:04:02.319 as possible. Right now I haven't
+01:04:04.400 actually exposed everything what it did
+01:04:06.480 just for the UI purpose. Uh but the all
+01:04:09.280 the per ticket what it actually found
+01:04:12.319 like uh it writes like a 100 or like 150
+01:04:15.280 lines of uh markdown files and save it
+01:04:17.520 somewhere. So that gives you more
+01:04:19.839 details in case if you want to know
+01:04:21.440 actually. So for for the demo I just put
+01:04:23.920 the you know nice UX stuff on on top of
+01:04:26.480 it but you also have a detailed
+01:04:27.839 information at uh test.
+01:04:31.039 >> Anyone else has any questions?
+01:04:33.599 >> Can I have one?
+01:04:34.640 >> Yeah, sure. Go on.
+01:04:35.520 >> Right.
+01:04:36.160 >> Easy one. Huh?
+01:04:39.039 I destroy
+01:04:48.640 >> if I translation right your claim is
+01:04:56.799 >> not
+01:05:02.000 >> not fill the gaps uh but discover but if
+01:05:05.520 you scope down to a team within weeks
+01:05:07.920 you can do
+01:05:09.440 I mean if you wouldn't feel it and keep
+01:05:13.200 asking those questions then make sense
+01:05:16.160 right so at some point you have another
+01:05:21.200 value
+01:05:21.839 >> yeah so you do it one time first of all
+01:05:24.640 or like multiple times at first see the
+01:05:27.119 whole picture first of all what is the
+01:05:29.200 state of your knowledge base first fix
+01:05:32.160 it uh at that level then you go into
+01:05:34.480 operations right you still can actually
+01:05:36.880 uh also
+01:05:38.400 you you can still continue doing it with
+01:05:40.559 the agent with skills.
+01:05:46.400 >> Yep.
+01:05:46.799 >> And
+01:05:48.799 I think the same process of kind of
+01:05:51.200 providing that knowledge is
+01:05:58.160 >> happens pretty frequently when a new
+01:06:00.400 member joins
+01:06:02.799 >> the organization. So
+01:06:04.640 >> wouldn't a replacement that be just Zoom
+01:06:07.839 calls, transfer them and use them as
+01:06:10.799 source. Assuming all the calls or all
+01:06:13.839 the knowledge transfers or maybe
+01:06:15.920 introductions happen
+01:06:20.480 >> or team or whatever the
+01:06:23.680 new member join asking questions and you
+01:06:26.559 have access to that.
+01:06:31.119 >> Okay. So you mean like you can also give
+01:06:33.359 all the transcripts rather than uh uh
+01:06:36.240 doing the cycle you mean uh that can
+01:06:38.960 also be done uh if you're only have the
+01:06:43.599 all the time you have discussions in
+01:06:45.599 everything is documented meetings
+01:06:47.520 transcript itself but I don't think like
+01:06:49.359 that's the same case for everyone at
+01:06:51.680 least uh
+01:06:53.359 >> but easier
+01:06:58.079 that I don't know I'm unsure
+01:07:04.240 I think the amount of time people
+01:07:06.079 spending in teams if you do use the
+01:07:08.720 transcripts actually those are the ones
+01:07:10.319 actually who which uh have more tokens
+01:07:13.520 actually there are so many useless
+01:07:15.280 meetings uh the transcripts actually
+01:07:20.400 >> totally agree but compression only one
+01:07:23.119 and then part of the database
+01:07:25.760 >> could be again it depends upon
+01:07:27.599 institution to institution right so are
+01:07:29.440 you like more into meetings, have
+01:07:30.960 solving problems within the
+01:07:32.559 conversations and those conversations
+01:07:34.480 has the data or like your conflence or
+01:07:37.119 things has the data. If you have it, use
+01:07:38.720 that those transcripts as your knowledge
+01:07:40.400 base and at the same time like the
+01:07:42.799 compression actually that works actually
+01:07:44.240 that that is more useful. Yeah.
+01:07:49.839 Anyone else? Any questions? No. All
+01:07:51.920 good.
+01:07:54.880 Uh then uh thank you so much uh for
+01:07:58.319 attending this session.

@@ -1,0 +1,520 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/8kMaTybvDUw
+
+00:00:01.720 [Music]
+00:00:15.120 who here's building agents
+00:00:17.760 who here's your hand up if you built
+00:00:19.279 like 10 plus agents anyone here built
+00:00:22.080 like a hundred agents
+00:00:24.080 all right we got a few awesome love it
+00:00:26.160 um so I think a lot of us have been on
+00:00:28.160 this journey of building agents um and
+00:00:31.279 what happened with me was you know I
+00:00:32.558 decided I want to build an agent we
+00:00:33.920 figured out what we wanted it to do uh
+00:00:35.760 we want to move fast we're developers so
+00:00:37.200 we use libraries we don't write
+00:00:38.320 everything from scratch um and you get
+00:00:40.079 it to like 70 80% it's enough to get the
+00:00:42.000 CEO excited and get six more people
+00:00:43.600 added to your team but then you kind of
+00:00:45.680 realize that 70 80% isn't quite good
+00:00:47.920 enough and that if you want to get past
+00:00:50.559 that 70 80% quality bar you're seven
+00:00:53.760 layers deep in a call stack trying to
+00:00:55.199 reverse engineer how does this prompt
+00:00:56.559 get built or how do these tools get
+00:00:57.920 passed in where does this all come from
+00:00:59.840 uh and if you're like me you eventually
+00:01:01.199 just throw it all away and start from
+00:01:02.559 scratch um or you may even find out that
+00:01:05.438 this is not a good problem for agents i
+00:01:06.960 remember one of the first agents that I
+00:01:08.400 tried to build was uh a DevOps agent i
+00:01:11.200 was like "Here's my make file you can
+00:01:12.799 run make commands go build the project."
+00:01:14.880 Couldn't figure it out did all the
+00:01:16.080 things in the wrong order i'm like "Cool
+00:01:17.360 let's fix the prompt." And I over the la
+00:01:19.600 next two hours I'm more and more detail
+00:01:21.520 about what everything was and every
+00:01:22.960 single step and the exact until I got to
+00:01:24.560 the point where I was like this is the
+00:01:25.600 exact order to run the build steps it
+00:01:27.520 was a cool exercise but at the end of it
+00:01:29.360 I was like you know I could have written
+00:01:30.640 the bash script to do this in about 90
+00:01:32.479 seconds not every problem needs an agent
+00:01:35.200 um and so I've been on this journey i
+00:01:37.840 think a lot of you have been on similar
+00:01:39.680 journeys um and what happened was is I
+00:01:42.799 went and talked um in trying to help
+00:01:44.799 people build better more reliable agents
+00:01:46.479 i talked to a 100 plus founders builders
+00:01:49.680 engineers um and I started to notice
+00:01:52.399 patterns one was that most production
+00:01:54.399 agents weren't that agentic at all they
+00:01:56.960 were mostly just software but that there
+00:01:59.119 were these core things that a lot of
+00:02:00.880 people were doing there were these
+00:02:01.920 patterns that were making their LLM
+00:02:04.000 based apps really really good um and
+00:02:06.320 none of them were doing kind of a green
+00:02:07.680 field rewrite rather they were taking
+00:02:09.199 these small modular concepts that didn't
+00:02:11.200 have names and didn't have definitions
+00:02:13.040 and they were applying them to their
+00:02:14.480 existing code um and what's really cool
+00:02:16.560 about this is I don't think you need an
+00:02:17.680 AI background to do this this is
+00:02:19.200 software engineering 101 well probably
+00:02:21.120 not 101 but just like Heroku needed to
+00:02:24.560 define what it meant to build cloud we
+00:02:26.080 didn't even call them cloud native back
+00:02:27.280 then but this was how you built
+00:02:28.400 applications that could run in the cloud
+00:02:30.319 10 years ago um I decided to put
+00:02:33.440 together what I thought would be the 12
+00:02:35.040 factors of AI agents um from everything
+00:02:38.640 that I've seen working in the field um
+00:02:41.200 so we put up this GitHub repo you can go
+00:02:42.959 read it um turns out a lot of other
+00:02:44.720 people agreed and felt the same thing um
+00:02:47.360 so we were on the front page of Hacker
+00:02:48.720 News all day 200k impressions on social
+00:02:51.680 uh I'm just going to put this one up and
+00:02:53.280 no comment
+00:02:55.200 um and just for context we got to like
+00:02:58.000 4,000 stars in like a month or two uh
+00:03:00.560 there's 14 active contributors um it's
+00:03:03.440 very easy to read that thing and and
+00:03:05.040 hear the talk and say like oh we're here
+00:03:06.959 this is the anti-framework talk i am not
+00:03:09.440 here to bash frameworks i would think of
+00:03:11.680 this as much as anything as a wish list
+00:03:14.400 a a list of feature requests is how can
+00:03:16.319 we make frameworks serve the needs of
+00:03:18.560 really good builders who need a really
+00:03:20.159 high reliability and want to move fast
+00:03:22.239 still um so what am I here to do uh I
+00:03:26.080 want you to kind of forget everything
+00:03:27.360 you know about agents and kind of
+00:03:28.959 rethink from first principles how we can
+00:03:30.799 apply everything we've learned from
+00:03:32.080 software engineering to the practice of
+00:03:34.239 building really reliable agents um so
+00:03:37.120 we're going to mix the order up a little
+00:03:38.239 bit if you want all 12 factors in order
+00:03:39.760 that's a 30-minute talk so we're going
+00:03:40.959 to bundle some stuff together there will
+00:03:42.319 be a QR code at the end you can go dig
+00:03:44.000 through it at your leisure um factor one
+00:03:46.720 the most magical things that LMS can do
+00:03:49.280 has nothing to do with loops or switch
+00:03:50.879 statements or code or tools or anything
+00:03:53.200 it is turning a sentence like this into
+00:03:55.599 JSON that looks like this doesn't even
+00:03:57.920 matter what you do with that JSON uh
+00:03:59.920 those are what the other factors are for
+00:04:01.680 but if you're doing that that's one
+00:04:02.959 piece that you can bring into your app
+00:04:04.239 today um factor four this leads right to
+00:04:07.680 uh did anyone read this paper uh go to
+00:04:09.840 considered harmful or maybe just heard
+00:04:11.439 about it i never actually read it uh but
+00:04:13.120 it was all about we had this abstraction
+00:04:14.400 in the C programming language and a
+00:04:16.000 bunch of other programming languages at
+00:04:17.358 the time that said this thing go to it
+00:04:20.160 makes code terrible it's the wrong
+00:04:21.759 abstraction it no one should use it i'm
+00:04:24.479 going to go ahead and go on a limb here
+00:04:26.400 and say tool use is harmful and I put it
+00:04:28.960 in quotes because I'm not talking about
+00:04:30.160 giving an agent access to the world
+00:04:31.759 obviously that's super badass but what I
+00:04:35.199 think is making things hard is the idea
+00:04:37.520 that tool use is this magical thing
+00:04:39.040 where this ethereal alien entity is
+00:04:41.040 interacting with its environment because
+00:04:42.880 what is happening is our LM is putting
+00:04:44.720 out JSON we're going to give that to
+00:04:46.479 some deterministic code that's going to
+00:04:47.919 do something and then maybe we'll feed
+00:04:49.680 it back but again those are other
+00:04:50.800 factors so if you have structures like
+00:04:53.120 this and you can get the LLM to output
+00:04:55.280 something that generates them then you
+00:04:57.360 can pass it into a loop like this or a
+00:04:59.040 switch statement like this there's
+00:05:00.880 nothing special about tools it's just
+00:05:02.560 JSON and code uh that's factor four
+00:05:06.479 factor eight and these are we're going
+00:05:07.840 to do a couple kind of bundled together
+00:05:09.280 here owning your control flow um and I
+00:05:12.400 want to take a step back and kind of
+00:05:13.520 talk about how we got here um we've been
+00:05:15.759 writing DAGs in software for a long time
+00:05:17.680 if you've written an if statement you've
+00:05:19.039 written a directed graph uh code is a
+00:05:21.440 graph you may also be familiar with DAG
+00:05:24.160 orchestra anyone ever use like Airflow
+00:05:25.919 or Prefect or any of these things um so
+00:05:28.400 like this kind of concept of breaking
+00:05:29.919 things up into nodes gives you certain
+00:05:31.600 reliability guarantees but what agents
+00:05:33.919 were supposed to do and I think a lot of
+00:05:35.360 people talk about this and I think in
+00:05:36.400 some cases this is realized is you don't
+00:05:38.720 have to write the deck you just tell the
+00:05:40.320 LM here's the goal and LM will find its
+00:05:44.160 way there and we model this as a really
+00:05:46.240 simple loop you know LM is determining
+00:05:48.000 the next step you're building up some
+00:05:49.600 context window until the LM says "Hey
+00:05:51.520 we're done."
+00:05:53.199 Um so what this looks like kind of in
+00:05:55.120 practice is you know you have an event
+00:05:56.560 come in you pass it into your prompt uh
+00:05:59.120 it says you want to call an API and you
+00:06:00.880 get your result put that on the context
+00:06:02.400 window pass the whole thing back into
+00:06:04.880 the prompt this is like the most naive
+00:06:06.960 simple way of building agents and the
+00:06:08.800 LM's going to call a couple steps and
+00:06:10.800 then eventually it's going to say cool
+00:06:12.160 we've done all the tasks from the
+00:06:13.440 initial event which maybe was a user
+00:06:14.880 message asking it to do something maybe
+00:06:16.560 it's an outage um but then we get our
+00:06:19.039 final answer and our materialized DAG is
+00:06:22.160 just these three steps in order um
+00:06:25.360 turns out this doesn't really work uh
+00:06:27.120 especially when you get to longer
+00:06:28.160 workflows mostly it's long context
+00:06:30.160 windows there's other reasons you could
+00:06:31.680 poke at as well um and people say "Oh
+00:06:34.080 like even as anyone put like two million
+00:06:35.759 tokens into Gemini before and like try
+00:06:37.360 to see what happens." Like you can do it
+00:06:39.680 you'll get an answer the API will return
+00:06:41.440 you something but I don't think anyone
+00:06:43.039 will argue with you that you will always
+00:06:44.800 get like tighter better higher
+00:06:47.120 reliability results by controlling and
+00:06:49.520 limiting the number of tokens you put in
+00:06:51.199 that context window um so it doesn't
+00:06:53.440 quite work but we're going to use that
+00:06:54.479 as our abstraction to build on what's an
+00:06:56.560 agent really you have your prompt which
+00:06:58.720 gives instructions about how to select
+00:07:00.319 the next step you have your switch
+00:07:02.000 statement which takes whatever the model
+00:07:03.599 output JSON uh and does something with
+00:07:05.840 it you have a way of building up your
+00:07:07.680 context window and then you have a loop
+00:07:10.080 uh that determines when and where and
+00:07:11.840 how and why you exit um and if you own
+00:07:14.240 your control flow you can do fun things
+00:07:15.360 like break and switch and summarize and
+00:07:16.880 LM is judge and all this stuff um and
+00:07:19.680 this leads right into kind of how we
+00:07:21.840 manage execution state and business
+00:07:23.360 state of our agents um a lot of tools
+00:07:25.919 will give you things like current step
+00:07:27.360 next step retry counts all these like
+00:07:28.880 DAG orchestrators they all have this
+00:07:30.080 kind of concepts in them um but you also
+00:07:32.080 have your business state what are the
+00:07:33.199 messages that have happened what data
+00:07:34.560 are we displaying to the user what
+00:07:36.160 things are we waiting on approval for um
+00:07:38.240 and we want to be able to launch pause
+00:07:39.680 resume these things like we do for any
+00:07:41.680 standard APIs um this is all just
+00:07:44.240 software and so if you can put your
+00:07:46.080 agent behind a REST API or an MCP server
+00:07:50.080 um and manage that loop in such a way
+00:07:52.800 that normal request comes in and we load
+00:07:55.599 that context window to the LLM um we're
+00:07:58.240 going to allow our agent to call
+00:07:59.440 longunning tool so we can interrupt the
+00:08:01.440 workflow serialize that context window
+00:08:03.360 straight into a database because we own
+00:08:04.800 the context window we'll get into that
+00:08:06.639 um and then when we launch the workflow
+00:08:08.960 um eventually it's going to call back
+00:08:10.400 with that state ID and the result we use
+00:08:12.720 the state ID to load the state back out
+00:08:14.240 of the database and then we can append
+00:08:16.080 the result to the program and then send
+00:08:18.479 it right back into the LM the agent
+00:08:20.080 doesn't even know that things happened
+00:08:21.199 in the background um agents are just
+00:08:23.759 software so let's build software um and
+00:08:26.080 building really good ones need requires
+00:08:27.759 a lot of flexibility and so you really
+00:08:29.680 want to own that inner loop of of how
+00:08:31.360 all that stuff is fitting together um
+00:08:34.000 that's unifying that's pause and resume
+00:08:36.320 uh factor two this one is I think most
+00:08:38.159 people find first is like you really
+00:08:39.760 want to own your prompts there's some
+00:08:41.279 good extractions that if you don't want
+00:08:42.640 to spend a lot of time handwriting a
+00:08:43.919 prompt you can put stuff in and you'll
+00:08:46.000 get out um a really good set of
+00:08:50.240 primitives um and a really good prompt
+00:08:52.160 like this will make you a banger prompt
+00:08:53.760 that like you would have to go to prompt
+00:08:55.040 school for like three months to build a
+00:08:57.040 prompt this good but eventually if you
+00:08:58.720 want to get past some quality bar you're
+00:09:00.880 going to end up writing every single
+00:09:02.080 token by hand um because LM are pure
+00:09:05.200 focus functions and the only thing that
+00:09:07.040 determines the reliability of your agent
+00:09:09.040 is how good of tokens can you get out
+00:09:11.440 and the only way the only thing that
+00:09:12.640 determines the tokens you get out other
+00:09:13.839 than like retraining your own model and
+00:09:15.680 something like that is being really
+00:09:17.279 careful about what tokens you put in
+00:09:20.160 um I don't know what's better i don't
+00:09:21.519 know how you want to build your prompt
+00:09:22.560 but I know the more things you can try
+00:09:23.839 and the more knobs you can test and the
+00:09:25.360 more things you can evaluate the more
+00:09:26.800 likely you are to find something really
+00:09:28.399 really good um owning your prompts you
+00:09:30.880 also want to own how you build your
+00:09:31.920 context window um so you can do the
+00:09:33.360 standard open II messages format or in
+00:09:35.680 this moment where you're telling the LLM
+00:09:37.440 pick the next step your only job is to
+00:09:39.519 tell it what's happened so far you can
+00:09:41.279 put all that information however you
+00:09:42.640 want into a single user message and ask
+00:09:44.720 hey what's happening next or put in the
+00:09:46.560 system message so you can model your
+00:09:48.720 event state your thread model however
+00:09:50.959 you want um and stringify it however you
+00:09:53.360 want and some of the traces that we use
+00:09:54.880 in some of the agents we build
+00:09:55.839 internally I'll get into that in a sec
+00:09:57.600 um might look like this um but if you're
+00:09:59.920 not looking at every single token and if
+00:10:01.760 you're not optimizing the density and
+00:10:03.839 the clarity of the way that you're
+00:10:06.080 passing information to an LLM you might
+00:10:09.040 be missing out on upside and quality so
+00:10:12.240 LMS are pure functions token in tokens
+00:10:14.079 out and everything everything in making
+00:10:16.000 agents good is context engineering so
+00:10:18.720 you have your prompt you have your
+00:10:20.160 memory you have your rag you have your
+00:10:21.440 history it's all just how do we get the
+00:10:23.360 right tokens into the model so it gives
+00:10:24.720 us a really good answer and solves the
+00:10:26.560 user's problem solves my problem mostly
+00:10:28.959 um I don't know what's better but I know
+00:10:31.120 you want to try everything um so let's
+00:10:33.040 own your context building um this one's
+00:10:35.440 a little controversial uh that's why
+00:10:36.959 it's a it's a standalone factor and the
+00:10:39.040 way you make it good is by integrating
+00:10:40.640 it with other factors but you could um
+00:10:43.920 when the model screws up and it calls an
+00:10:45.680 API wrong or it calls an API that's down
+00:10:48.160 um you could take the tool call that it
+00:10:49.839 made and grab the error that was
+00:10:52.000 associated with it put that on the
+00:10:53.920 context window and have it try again
+00:10:56.480 anyone ever had a bad time with this
+00:10:59.440 seen like this thing just like kind of
+00:11:01.040 spin out and like go crazy and lose
+00:11:03.120 context and just get stuck um that's why
+00:11:05.920 you need to own your context window
+00:11:07.360 don't just blindly put things on if you
+00:11:09.200 have errors and then you get a valid
+00:11:10.320 tool call clear all the air pending
+00:11:11.760 errors out summarize them don't put the
+00:11:13.519 whole stack trace on your context figure
+00:11:15.760 out what you want to tell the model so
+00:11:17.360 you get better results um contacting
+00:11:20.000 humans with tools this one's a little
+00:11:21.279 subtle um but I've seen this is just
+00:11:23.120 like what I've seen in the wild almost
+00:11:25.120 everybody is like avoiding this very
+00:11:27.200 important choice at the very beginning
+00:11:28.640 of output where you're deciding between
+00:11:30.560 tool call and message to the human um if
+00:11:33.839 you can push that emphasis to a natural
+00:11:35.519 language token you can one give the
+00:11:37.120 model different ways you can be I'm done
+00:11:38.880 or I need clarification or I need to
+00:11:40.640 talk to a manager or whatever it is and
+00:11:43.040 two you push the intent on that first
+00:11:45.600 token generation and the sampling to
+00:11:47.839 something that is natural language that
+00:11:49.200 the model understands um so your traces
+00:11:52.240 might look like this if you're pulling
+00:11:53.279 in human input here um this lets you
+00:11:55.519 build out auto outloop agents i'm not
+00:11:57.279 going to talk about this if you go on
+00:11:58.320 the site there's a link to this this
+00:11:59.440 post i've written a lot about this um I
+00:12:02.160 don't know what's better but you should
+00:12:03.600 probably try everything um that's
+00:12:06.240 contacting humans with tools goes right
+00:12:07.839 along with trigger things from anywhere
+00:12:09.440 and meet users exactly where they are
+00:12:11.600 people don't want to have seven tabs
+00:12:13.200 open of different chat GPT style agents
+00:12:15.760 just let people email with the agents
+00:12:17.279 you're building let them slack with the
+00:12:18.399 agents you're building discord SMS
+00:12:20.560 whatever it is we see this taking off
+00:12:22.079 all over the place um and you should
+00:12:24.720 have small focused agents so we talked
+00:12:26.320 about this structure and why it doesn't
+00:12:28.079 really work so what does work um the
+00:12:30.959 things that people are doing that work
+00:12:32.000 really well are micro agents so you
+00:12:33.920 still have a mostly deterministic DAG
+00:12:35.760 and you have these very small agent
+00:12:37.120 loops with like three to 10 steps we do
+00:12:39.120 this at human layer we have a bot that
+00:12:40.880 manages our deployments most of our
+00:12:42.800 deploy pipeline is deterministic CI/CD
+00:12:44.959 code but when we get to the point where
+00:12:47.279 the GitHub PR is merged and the tests
+00:12:51.040 are passing on development excuse me we
+00:12:55.279 send it to a model we say get this thing
+00:12:56.560 deployed says cool I'm going to deploy
+00:12:58.240 the front end uh and then you can send
+00:13:00.000 that to a human the human says actually
+00:13:01.200 no do the back end first this is taking
+00:13:02.800 natural language and turning it into
+00:13:04.320 JSON that is the next step in our
+00:13:05.920 workflow um backend gets proposed that
+00:13:08.560 gets approved it gets deployed then the
+00:13:10.480 agent knows okay I have to go back and
+00:13:11.920 deploy the front end once that's all
+00:13:13.839 done and it's successful we go right
+00:13:15.600 back out into deterministic code so now
+00:13:18.160 we're going to run the end to end test
+00:13:19.200 against prod if it's done otherwise we
+00:13:20.800 hand it back to a little roll back agent
+00:13:22.720 that is very similar on the inside um
+00:13:25.360 I'm not going to go into it but here's
+00:13:26.399 it working in our Slack channel um yeah
+00:13:30.320 100 tools 20 steps easy um manageable
+00:13:33.600 context clear responsibilities um a lot
+00:13:35.760 of people say "What what if LM do keep
+00:13:37.360 getting smarter what if I can put two
+00:13:38.720 million tokens in and it can do it?" Um
+00:13:40.880 and I think we very much will see
+00:13:43.600 something like this where you start with
+00:13:45.040 a mostly deterministic workflow and you
+00:13:47.360 start sprinkling LMS into your code into
+00:13:49.600 your backend into your logic over time
+00:13:51.600 the LMS are able to do bigger more
+00:13:53.440 complex tasks until this whole API
+00:13:55.920 endpoint or pipeline or whatever it is
+00:13:57.440 is just run by an agent that's great uh
+00:14:00.560 but you still want to know how to
+00:14:01.600 engineer these things to get the best
+00:14:02.800 quality this is someone from notebook LM
+00:14:04.480 and it's basically their take and I
+00:14:06.720 think they did this well is find
+00:14:08.079 something that is right at the boundary
+00:14:09.519 of what the model can do reliably like
+00:14:11.839 that it can't get right all the time and
+00:14:13.760 if you can figure out how to get it
+00:14:15.760 right reliably anyways because you've
+00:14:17.760 engineered reliability into your system
+00:14:20.399 then you will have created something
+00:14:21.680 magical and you will have created
+00:14:22.959 something that's better than what
+00:14:23.920 everybody else is building so that's
+00:14:26.079 small focused agents there's a meme here
+00:14:28.160 about stateless reducers i guess someone
+00:14:29.760 actually tweeted at me it's not a
+00:14:30.800 reducer it's a transducer because
+00:14:32.560 there's multiple steps um but basically
+00:14:34.880 agents should be stateless you should
+00:14:36.079 own the state manage it however you want
+00:14:38.720 um so we're all still finding the right
+00:14:40.000 abstractions um there's a couple blog
+00:14:42.000 posts I link in the paper um frameworks
+00:14:45.120 versus libraries there's a really old
+00:14:46.560 one from Ruby Comp about like do we want
+00:14:48.720 duplication or is like do we want to try
+00:14:50.880 to figure out these abstractions um if
+00:14:53.120 you want to make a 12-factor agent we
+00:14:55.040 are working on something called create
+00:14:56.399 12-factor agent because I believe that
+00:14:58.160 what agents need is not bootstrap you
+00:15:00.639 don't need a wrapper around an internal
+00:15:02.399 thing you need something more like shad
+00:15:04.240 CN which is like scaffolded out and then
+00:15:06.079 I'll own it and I'll own the code and
+00:15:07.440 I'm okay with that
+00:15:09.519 so in summary agents are software you
+00:15:12.320 all can build software anyone ever
+00:15:13.600 written a switch statement before
+00:15:16.320 while loop yeah okay so we can do this
+00:15:18.000 stuff lm are stateless functions which
+00:15:20.079 means just make sure you put the right
+00:15:21.360 things in the context and you'll get the
+00:15:22.800 best results own your state and your
+00:15:24.720 control flow and just do it and just
+00:15:26.240 understand it because it's going to give
+00:15:27.199 you flexibility and then find the
+00:15:29.760 bleeding edge find ways to do things
+00:15:31.920 better than everybody else by really
+00:15:34.000 curating what you put in the model and
+00:15:35.680 how you control what comes out um and my
+00:15:38.880 tech agents are better with people find
+00:15:40.399 ways to let agents collaborate with
+00:15:41.760 humans um there are hard things in
+00:15:44.320 building agents but you should probably
+00:15:46.240 do them anyways at least for now and you
+00:15:48.639 should do most of them um I think a lot
+00:15:50.399 of frameworks try to take away the hard
+00:15:53.600 AI parts of the problem so that you can
+00:15:55.839 just kind of drop it in and go and uh I
+00:15:58.560 think it should be the opposite i think
+00:15:59.759 the tools that we get should take away
+00:16:02.160 the other hard parts so that we can
+00:16:03.920 spend all our time focusing on the hard
+00:16:05.920 AI parts on getting the prompts right on
+00:16:07.759 getting the flow right on getting the
+00:16:08.959 tokens right so the reason why I'm here
+00:16:10.880 is like I do run a small business um we
+00:16:13.839 have a startup where we try to help you
+00:16:15.600 do a lot of what we do we do in the open
+00:16:18.000 is open source and I think it's really
+00:16:19.759 important and we need to work on it
+00:16:20.720 together there's some other things that
+00:16:22.320 are hard but not that important and not
+00:16:23.920 that interesting so that's what we're
+00:16:25.120 solving at human layer um working on
+00:16:28.320 something called the A2 protocol come
+00:16:29.920 find me if you want to talk about this
+00:16:31.199 but this is a way to get like
+00:16:32.959 consolidation around how agents can
+00:16:34.639 contact humans um but mostly I just love
+00:16:37.120 automating things i've built tons and
+00:16:38.880 tons of agents internally for my
+00:16:40.320 personal stuff for finding apartments
+00:16:42.000 for all kinds of internal business stuff
+00:16:43.759 we do at human layer um so thank you all
+00:16:47.920 for watching let's go build something
+00:16:50.639 i'll see you in the hallway track uh I'd
+00:16:52.399 love to chat if you want to riff on
+00:16:53.519 agents or building or control flow or
+00:16:55.360 any of this stuff that's 12actor agents
+00:16:58.200 [Applause]

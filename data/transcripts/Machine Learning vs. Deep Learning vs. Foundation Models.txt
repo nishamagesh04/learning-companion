@@ -1,0 +1,62 @@
+# tactiq.io free youtube transcript
+# Machine Learning vs.  Deep Learning  vs.  Foundation Models
+# https://www.youtube.com/watch/Beh13Cd_QbY
+
+00:00:00.360 You've probably seen all sorts of items flying around recently, and it can get a little confusing as to how they all relate to one another.
+00:00:08.444 Machine learning, deep learning, foundation models. And you've probably seen other terms like generative AI and large language models.
+00:00:15.310 So let's bring an end to the confusion and put these terms in their place.
+00:00:21.480 There's one thing they all have in common.
+00:00:24.246 They are all terms related to the field of artificial intelligence or A.I.
+00:00:30.444 Now A.I. refers to the simulation of human intelligence in machines enabling them to perform tasks that typically require human thinking.
+00:00:37.444 Now and its various forms and paradigms has been around for decades.
+00:00:42.884 Perhaps you've heard of the chat bot called Eliza, that was developed in the mid 1960s, and that   could mimic human like conversation, to an extent.
+00:00:54.746 Now a subfield of A.I. is called machine learning, so this sits within the field of AI. Now what's machine learning?
+00:01:06.786 Well, it focuses on developing algorithms that allow computers to learn from and make decisions based upon data,
+00:01:13.786 rather than being explicitly programed to perform a specific task.
+00:01:19.923 These algorithms use statistical techniques to learn patterns in data and make predictions or decisions without human intervention. 
+00:01:27.360 But like A.I. ML or machine learning is a very broad term. It encompasses a range of techniques and approaches
+00:01:35.592 from traditional statistical methods through to complex neural networks. Now, some of the core categories within ML we can think of are firstly supervised learning,
+00:01:42.592 where models are trained on labeled data. There's also unsupervised learning,
+00:01:53.881 and that's where the models find patterns in data without predefined labels. And there's also reinforcement learning.
+00:02:00.881 And that's where models learn by interacting with an environment and receiving feedback.
+00:02:07.881 Okay, so where does deep learning come in? Well, deep learning is a subset of machine learning.
+00:02:20.485 Goes right there. Now, that specifically focuses on artificial neural networks with multiple layers,  
+00:02:28.740 and we can think of them looking bit like this. So these are nodes and all of our connections. 
+00:02:37.500 Now, those layers where we get the deep part from. And while traditional ML techniques might be efficient for linear separations or simpler patterns,
+00:02:44.500 deep learning excels at handling vast amounts of unstructured data like images or natural language
+00:02:51.500 and discovering intricate structures within them.
+00:02:56.287 Now, I do want to point out that not all machine learning is deep learning. Traditional machine learning methods still play a pivotal role in many applications. 
+00:03:07.020 So we've got techniques like linear regression, that's a popular technique, or decision trees, or support vector machines, or clustering algorithms.
+00:03:19.574 These are all other types of machine learning, and they've been widely used for a long time. In some scenarios, look, deep learning might be overkill  
+00:03:29.280 or it just isn't the most suitable approach. Okay, so machine learning, deep learning,
+00:03:34.975 what else ah, yeah, foundation models. Okay, so where do foundation models fit into this?
+00:03:42.335 Well, the term foundation model was popularized in 2021 by researchers at the Stanford Institute
+00:03:47.961 and it fits primarily within the realm of deep learning. So I'm going to put foundation models right here.  
+00:04:00.960 Now, these models are large scale neural networks trained on vast amounts of data, and they serve as a base or a foundation for a multitude of applications. 
+00:04:10.920 So instead of training a model from scratch for each specific task, you can take a Pre-trained foundation model and fine tune it for a particular application,
+00:04:17.920 which saves a bunch of time and resources. Now, foundation models have been trained on diverse datasets,  
+00:04:26.100 capturing a broad range of knowledge and can be adapted to tasks ranging from language translation to content generation to image recognition.
+00:04:34.207 So in the grand scheme of things foundation models, they sit within the deep learning category but represent a shift towards more generalized,  
+00:04:42.720 adaptable and scalable AI solutions.
+00:04:45.871 So look, I think this is hopefully looking a bit clearer now. But there are some other A.I. related terms. I think it's worth also explaining.
+00:04:52.871 And one of those is large language models or LLMs Now,
+00:05:01.708 these are a specific type of foundation model, so I've put them in this box here,
+00:05:06.365 and they are centered around processing and generating humanlike text. So let's break it down, LLM.
+00:05:13.030 The first L that's large, and that refers to the scale of the model. LLMs possess a vast number of parameters, often in the billions or even more. 
+00:05:22.800 And this enormity is part of what gives LLMs their nuanced understanding and capability.  
+00:05:29.460 Second, L that language that designed to understand and interact using human languages,
+00:05:35.184 as they are trained on massive data sets. LLMs can grasp grammar, context, idioms and even cultural references. 
+00:05:42.856 And the last letter and that's for model at the core that computational models
+00:05:47.655 a series of algorithms and parameters working together to process input and produce output. 
+00:05:53.100 LLMs can handle a broad spectrum of language tasks like answering questions, translating or even creative writing.
+00:06:00.260 Now, if LLMs one example of foundation models, what are some others? Well, there's a bunch we can think of.
+00:06:07.997 One of those is being vision models that can see in and in quotes, interpret and generate images. There are scientific models.
+00:06:18.000 Give that an S and scientific models, for example, are used in biology where there are models for predicting how proteins fold into 3D shapes,
+00:06:26.456 and there are audio models as well for generating human sounding speech or composing the next fake Drake hit song.
+00:06:35.848 And finally, one last term that's gaining traction. We've all heard about it. It's generative AI.  
+00:06:47.400 Now this term pertains to models and algorithms specifically crafted to generate new content.  
+00:06:53.040 Essentially, while foundation models provide the underlying structure and understanding,  
+00:06:57.540 generative AI is about harnessing that knowledge to produce something that is new.
+00:07:02.075 It's the creative expression that emerges from the vast knowledge base of these foundation models. 
+00:07:10.260 And with that, I think we've fully filled out a AI buzzword bingo scorecard.
+00:07:16.708 And look, we have detailed videos on all of these topics. So check those out to learn more.

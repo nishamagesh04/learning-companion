@@ -1,0 +1,158 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/vD0E3EUb8-8
+
+00:00:00.160 I think by now most of us are familiar
+00:00:03.060 with the term prompt engineering.
+00:00:05.360 It's the process of crafting the input text used to prompt a large language model,
+00:00:09.040 including instructions and examples and formatting cues. It's
+00:00:11.840 what steers the LLM's behavior and output. Now,
+00:00:15.260 context engineering, on the other hand,
+00:00:19.060 is the broader discipline of programmatically
+00:00:21.600 assembling everything the LLM sees during inference.
+00:00:24.880 Now that includes prompts, but also retrieve documents and memory and tools—everything
+00:00:30.200 needed to deliver accurate responses. So,
+00:00:34.080 to demonstrate the difference,
+00:00:36.400 let me introduce you to an agentic
+00:00:38.560 AI model that I like to call Graeme.
+00:00:41.540 Secret Agent Graeme.
+00:00:44.100 Agent Graeme specializes in travel booking. So, if I send Graeme
+00:00:48.760 this prompt, "Book me a hotel in Paris
+00:00:51.480 for the DevOps conference next month," well,
+00:00:53.440 the agent responds with "Sure thing.
+00:00:56.180 The Best Western Paris Inn has great
+00:00:58.420 wifi and free parking.
+00:01:00.330 It's booked." Cool.
+00:01:02.090 But the only trouble is the Best
+00:01:04.170 Western is located in Paris, Kentucky, and
+00:01:06.890 that DevOps conference is in Paris, France.
+00:01:09.230 Now, you could argue that that's a failing of prompt engineering.
+00:01:14.290 I wasn't specific on the location. But
+00:01:16.950 it could also be seen
+00:01:18.790 as a failing of context engineering
+00:01:21.290 because if Agent Graeme here was just a little smarter, well,
+00:01:25.510 they could have used a tool to check my calendar
+00:01:28.370 or look up the conference online to find the right location.
+00:01:30.970 So ... so let's try again with a follow-up prompt.
+00:01:34.330 My conference is in Paris, France.
+00:01:38.050 €900 a night. Ritz booked.
+00:01:40.790 Champagne. Breakfast included.
+00:01:42.730 Well, uh, wish me luck getting that one
+00:01:44.930 approved through my company expense reimbursement system.
+00:01:47.650 But Graeme here can't really be blamed for that one
+00:01:51.290 because I didn't provide sufficient context.
+00:01:54.410 I should have made my company's travel policy available to the agent.
+00:01:58.270 Perhaps there's a JSON file specifying things
+00:02:00.970 like maximum permissible hotel rates for the area.
+00:02:03.770 So, prompt engineering—that's
+00:02:05.410 the craft of wording the instruction itself.
+00:02:08.210 And context engineering is the system-level
+00:02:10.729 discipline of providing the model
+00:02:12.930 with what it needs to plausibly accomplish the task.
+00:02:16.630 So let's take a look at these two terms a bit closer.
+00:02:19.530 And we'll start with the key techniques
+00:02:21.890 that make prompt engineering effective.
+00:02:24.790 Now this is part art, part science.
+00:02:28.130 But there are several prompt engineering techniques
+00:02:30.290 that are now widely adopted. So,
+00:02:32.970 take for example, role assignment.
+00:02:37.730 This tells the LLM who it should be.
+00:02:40.210 So, you are a senior Python developer
+00:02:43.370 reviewing code for security vulnerabilities. Well,
+00:02:46.410 that produces vastly different outputs
+00:02:48.850 than a more generic code review request.
+00:02:51.830 The model adopts the expertise, the vocabulary
+00:02:54.610 and the concerns of that persona that we asked for. Uh
+00:02:58.080 ... another good technique
+00:03:00.440 comes down to few shot examples. So,
+00:03:04.180 this is show, don't
+00:03:05.860 just tell. So,
+00:03:07.100 providing 2 or 3 examples of input/output pairs ...
+00:03:10.620 that helps the model understand your exact format and style requirements.
+00:03:15.100 So, if you want JSON output with specific field names, well,
+00:03:19.820 show it. Show it in the examples. Now,
+00:03:23.060 before we had reasoning models trained on reinforcement
+00:03:27.140 learning, a pretty popular prompt engineering
+00:03:30.280 technique was called COT
+00:03:32.880 or chain of thought prompting.
+00:03:36.180 Now this forces the model to show its work. Adding
+00:03:39.240 "let's think step by step" or "explain your reasoning"—that
+00:03:43.060 prevents the LLM from jumping to conclusions.
+00:03:46.180 And it's particularly powerful for complex reasoning tasks.
+00:03:50.280 And then another technique is called
+00:03:53.100 constraint setting.
+00:03:55.360 Here you define boundaries explicitly. So,
+00:03:58.310 "limit your response to only 100 words"
+00:04:00.910 or "only use information from the provided context".
+00:04:04.110 And that helps prevent the model
+00:04:06.170 from going off on tangents.
+00:04:08.450 Context engineering—that helps build dynamic, agentic
+00:04:12.370 systems to orchestrate the entire agentic environment.
+00:04:16.070 And let's take a look at some of the components of that.
+00:04:18.709 Well, agentic AI.
+00:04:20.730 First of all, it needs memory.
+00:04:24.310 And memory management can be thought of in two
+00:04:28.350 forms. So there's short-term memory ... that
+00:04:32.030 might involve summarizing long conversations
+00:04:34.830 to stay within context windows so that past conversations are not forgotten.
+00:04:38.890 And then there's also long-term memory, and
+00:04:42.610 that uses vector databases to retrieve things
+00:04:45.110 like user preferences and past trips and learned patterns.
+00:04:48.930 Then there is state management. Now,
+00:04:52.570 this says where are we in a multi-step process? So,
+00:04:57.070 if an agent is booking a complete trip—the flight,
+00:04:59.690 the hotel, the ground transportation, all of it—
+00:05:03.190 well, the agent needs to maintain state across these operations.
+00:05:06.470 Did the flight booking succeed?
+00:05:08.070 What's the arrival time for scheduling
+00:05:10.310 the airport transfer? Stuff like that.
+00:05:12.230 So, state ensures that the agent doesn't lose context mid task. Now,
+00:05:18.550 another important component is retrieval augmented
+00:05:22.930 generation or RAG,
+00:05:25.190 that connects an agent to dynamic knowledge sources.
+00:05:29.670 So, RAG uses hybrid search which combines
+00:05:32.630 semantic and keyword matching based on context.
+00:05:36.070 So, when retrieving your company's travel policy,
+00:05:39.310 RAG isn't returning the entire travel policy document.
+00:05:43.510 There's a lot of stuff that's just kind of irrelevant to the context in there.
+00:05:47.290 So instead, it's picking out the relevant sections and the relevant exceptions
+00:05:52.330 and returning only those contextually relevant parts
+00:05:56.580 back to the agent.
+00:05:58.460 And agents also need access to tools
+00:06:03.500 so they can actually go out and do stuff.
+00:06:06.500 So LLMs by themselves,
+00:06:08.440 they can't check real databases or call APIs or execute code.
+00:06:12.980 It's tools that bridge that gap, and a tool
+00:06:15.360 might query a SQL database, or it might fetch live
+00:06:18.580 pricing data, it might deploy infrastructure.
+00:06:21.440 And where context engineering comes in
+00:06:24.220 is in defining the interfaces that guide
+00:06:26.840 the LLM toward the correct usage. And tool descriptions—
+00:06:30.760 they specify what the tool does,
+00:06:32.700 when to use it, and what constraints
+00:06:35.160 apply. And prompt engineering? Well,
+00:06:37.520 actually we should include that as well
+00:06:39.960 because that is also part of
+00:06:42.360 context engineering.
+00:06:44.580 You can take a base
+00:06:46.340 written prompt like "analyze security logs for anomalies".
+00:06:50.020 You can take that as your prompt and then at runtime,
+00:06:52.720 inject the prompt with current context,
+00:06:55.280 like recent alerts and known false positives.
+00:06:58.020 And all of those variables in the prompt,
+00:07:00.360 they get populated from the states
+00:07:02.360 and the memory and the RAG
+00:07:04.840 retrievals. So, that final prompt might be 80% dynamic content from there
+00:07:09.420 and 20% static instructions. So,
+00:07:12.180 prompt engineering ... it gives you better questions.
+00:07:15.840 Context engineering—that gives you better systems
+00:07:18.720 when you combine them properly.
+00:07:20.880 Hotel booked.
+00:07:22.020 Paris, France.
+00:07:23.380 Under budget. Near the venue.
+00:07:25.560 Excellent. Thank you, Agent Graeme.
+00:07:27.260 Pending approval from your manager, HR and finance.
+00:07:30.280 Estimated approval time:
+00:07:31.980 6 to 8 weeks.
+00:07:33.520 Uh, the conference is in two weeks.
+00:07:36.670 Have you tried prompt engineering your manager?

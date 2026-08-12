@@ -1,0 +1,534 @@
+# tactiq.io free youtube transcript
+# Python FastAPI Tutorial (Part 4): Pydantic Schemas - Request and Response Validation
+# https://www.youtube.com/watch/9GHxnttXxrA
+
+00:00:00.080 Hey there. How's it going everybody? In
+00:00:01.760 this video, we're going to be learning
+00:00:02.879 how to use pyantic schemas to validate
+00:00:05.200 our API request and responses in fast
+00:00:08.240 API. So in this series so far, we've set
+00:00:11.200 up the basic structure of our API with
+00:00:14.000 some getit endpoints that return our
+00:00:16.160 post. But right now, we're just
+00:00:18.320 returning plain dictionaries with no
+00:00:20.400 validation. And we don't have any way to
+00:00:23.039 create post through the API yet. So in
+00:00:25.840 this video we're going to introduce
+00:00:27.760 paidantic and create schema files uh
+00:00:30.960 with request and response models. We'll
+00:00:34.559 add field validations for things like
+00:00:37.360 minimum and maximum length. Then we'll
+00:00:40.079 update our git endpoints to use those
+00:00:42.800 response models and create a post
+00:00:45.360 endpoint to add new posts. So and then
+00:00:48.559 we'll test everything in the interactive
+00:00:50.719 docs as well. And at the end I'll show
+00:00:53.520 you why we need a database for the next
+00:00:56.079 tutorial. So first what is paidantic? So
+00:00:59.280 it is a data validation library that
+00:01:01.760 uses Python type hints and those type
+00:01:04.559 hints aren't just for documentation uh
+00:01:07.040 like in normal Python code. Pyantic
+00:01:10.000 actually enforces them at runtime and
+00:01:12.479 gives you detailed error messages when
+00:01:14.479 something doesn't match up. And the nice
+00:01:16.880 thing is that pyantic comes built in
+00:01:18.880 with fast API. So when we installed fast
+00:01:21.520 API, pyantic was automatically installed
+00:01:24.320 as a dependency. So we don't need to
+00:01:26.720 install anything extra. Now why are we
+00:01:29.840 covering this before the database? So
+00:01:32.640 fast API's biggest strength is how it
+00:01:34.960 integrates with paidantic. So these
+00:01:37.600 schemas define what data we accept from
+00:01:40.799 clients and what data we return. Uh the
+00:01:43.920 database which we'll cover next, it
+00:01:46.240 defines what we store. So we are keeping
+00:01:49.439 a nice separation of concerns here. Now
+00:01:52.159 if you're coming from a framework like
+00:01:54.240 Flask, uh validation usually looks like
+00:01:57.360 WT forms or manual checks. Uh Pyantic is
+00:02:01.119 more Pythonic since it uses typins and
+00:02:03.680 it gives us automatic API documentation
+00:02:06.560 and better IDE support with
+00:02:08.560 autocomplete. It's a really nice
+00:02:10.800 workflow how they have it set up. Now,
+00:02:13.200 if you want a deeper dive, then I do
+00:02:14.959 have a full Pyantic tutorial that goes
+00:02:17.120 way more in depth on all of those
+00:02:19.040 features, and I'll leave a link to that
+00:02:21.040 video in the description section below.
+00:02:23.280 But we're going to take a look at it
+00:02:24.720 here. Uh, but for now, let's look at our
+00:02:28.319 current docs. So, let me make sure I
+00:02:31.440 have my development server running here.
+00:02:34.640 Let's look at our current documentation.
+00:02:37.599 And this is still from the last
+00:02:39.040 tutorial. So, let me refresh that. So
+00:02:42.400 right now we have two API endpoints. We
+00:02:44.879 have one to get our post which returns a
+00:02:48.239 list of posts and then we have one for
+00:02:51.519 getting a single post uh with a post ID.
+00:02:55.120 Now if I expand one of these then if we
+00:02:58.239 look down through here there is no
+00:03:00.560 information about what a response looks
+00:03:03.280 like. It just says successful response
+00:03:06.080 with no details. And we can't create
+00:03:08.560 posts through our API yet either. So,
+00:03:10.959 we're going to fix this by adding a
+00:03:12.879 response model to our endpoints, which
+00:03:15.760 tells Fast API exactly what we're
+00:03:18.239 returning. So, after this tutorial, our
+00:03:20.720 docs will show the exact fields, types,
+00:03:23.680 and validation rules. So, let's go ahead
+00:03:26.000 and get started with this. So, first I'm
+00:03:28.800 going to create a new file for our
+00:03:31.120 schemas here. Uh, and this is going to
+00:03:33.280 be separate from our main. py file. So,
+00:03:36.239 up here in our project, I'm just going
+00:03:38.319 to create a new file. I'm going to call
+00:03:40.720 this schemas. py and I'll close down
+00:03:44.720 that sidebar. Now, first we need to
+00:03:47.200 import uh what we need from paidantic.
+00:03:50.239 So I'll say from paidantic we will
+00:03:53.920 import base model and we will also
+00:03:58.879 import config dict and also field and
+00:04:03.840 we'll go over all of these here. So base
+00:04:06.720 model is the base class that all of our
+00:04:09.599 paidantic models inherit from. Uh field
+00:04:12.879 lets us add constraints like minimum and
+00:04:16.000 maximum length and config dict is the
+00:04:18.959 modern pyantic version two way to
+00:04:21.918 configure models. So now let's create
+00:04:24.639 our base schema with the fields shared
+00:04:27.759 between creating and returning posts. So
+00:04:31.040 this follows the drive principle of not
+00:04:33.759 repeating ourselves here. So I will say
+00:04:36.479 that this is going to be the post base
+00:04:39.600 and this is going to inherit from base
+00:04:42.320 model. Now this is going to be what is
+00:04:45.280 shared between both creating and
+00:04:47.520 returning post. So when we're creating
+00:04:50.080 and returning a post, we want things
+00:04:52.320 like the title that's going to be a
+00:04:54.960 string. We want the content that is also
+00:04:58.720 going to be a string. And we also want
+00:05:03.120 the author and that is also going to be
+00:05:06.800 a string. Now if you've used data
+00:05:08.720 classes then you can tell that this
+00:05:10.320 looks a bit like a data class but
+00:05:12.320 paidantic uses these types to validate
+00:05:14.880 data at runtime. So right now these
+00:05:18.479 fields accept any string uh including
+00:05:21.919 empty strings. So let's add some
+00:05:24.160 constraints here. So if I say that we
+00:05:29.199 want this to be a field, we'll say that
+00:05:32.080 we want the min length for a title to at
+00:05:35.039 least be one. And let's set the maximum
+00:05:38.400 length to for a title to 100 characters.
+00:05:41.520 Sounds good there. Let me copy this
+00:05:44.960 here. And now for our content, let's not
+00:05:48.560 set a max length here. We'll just say
+00:05:50.320 that the min length is one. And for an
+00:05:54.479 author, let's say that we want a min
+00:05:57.600 length of one and a max length of 50
+00:06:00.400 characters. Now, you'll notice that
+00:06:02.320 we've set some constraints here like the
+00:06:04.479 minimum and maximum length, but we
+00:06:06.800 haven't given default values. So,
+00:06:09.680 without default values, it means that
+00:06:11.600 these fields are required. Okay. So, now
+00:06:15.039 let's create a post create schema. So
+00:06:19.199 this defines what we accept when
+00:06:21.280 creating a new post. So I will just call
+00:06:24.080 this post create and that's going to
+00:06:28.319 inherit from post base that we just
+00:06:31.759 created. And for now I'm just going to
+00:06:34.400 put in a pass here. So right now this is
+00:06:37.919 identical to post base. Uh but having uh
+00:06:41.280 this as a separate class shows our
+00:06:44.000 intent and also gives us some
+00:06:46.000 flexibility here. So for example when we
+00:06:49.280 add authentication later uh we might not
+00:06:52.639 need the author field here because we
+00:06:55.440 get that from the loggedin user but
+00:06:57.919 basically just by inheriting from post
+00:06:59.919 base here and then passing we're just
+00:07:02.000 saying when we create a post we also
+00:07:04.240 want the title the content and the
+00:07:06.880 author okay so now let's create a post
+00:07:10.720 response and so I will call this post
+00:07:14.240 response let me spell that correctly
+00:07:17.280 and that is also going to inherit from
+00:07:20.960 post base. Now this defines what we
+00:07:24.000 return from our API and this is going to
+00:07:26.880 include fields that the client doesn't
+00:07:29.039 provide. So let me go ahead and do this
+00:07:33.120 and I will explain all of this here in a
+00:07:35.840 second. So I'm going to do this thing
+00:07:37.520 here where we do this model config
+00:07:39.919 config dict and I am going to say from
+00:07:43.680 attributes is equal to true. Now I'll
+00:07:46.880 explain this in just a second here. Uh
+00:07:49.759 but now let's do the fields that we want
+00:07:52.800 in a response that are not provided by
+00:07:56.160 the client. So that would be something
+00:07:58.560 like an ID and an ID is an integer and
+00:08:02.240 then the date posted. uh that is just
+00:08:06.080 going to be a string for now. So that's
+00:08:10.080 going to be a string. So post response
+00:08:13.840 inherits uh title, content and author
+00:08:17.280 from the post base and then it adds the
+00:08:20.080 ID and the date posted uh fields that
+00:08:22.800 are generated by the system and not
+00:08:25.120 provided by the client. Now just a quick
+00:08:27.759 note about the ID field. In my pyantic
+00:08:30.560 video, I mentioned that you generally
+00:08:33.120 should avoid naming fields ID since it's
+00:08:36.159 a Python built-in. But for database
+00:08:38.559 models and API responses, using ID is
+00:08:42.320 basically the standard convention. Uh,
+00:08:44.720 so this is scoped to the class. It won't
+00:08:46.800 conflict with the global function and it
+00:08:50.320 won't trigger any llinter warnings or
+00:08:52.480 anything like that. And you're going to
+00:08:54.000 see this everywhere in real world APIs.
+00:08:56.560 So I'm just sticking to that convention.
+00:08:58.560 Now about this model config here uh in
+00:09:01.920 paidantic version two we configure
+00:09:04.560 models with config dict instead of the
+00:09:07.120 old config class. So setting from
+00:09:09.760 attributes equal to true that tells
+00:09:12.320 paidantic that it can read data from
+00:09:14.880 objects with attributes and not just
+00:09:17.760 dictionaries and this will be important
+00:09:20.080 when we add a database in the next
+00:09:22.560 tutorial. So you might see uh some older
+00:09:25.760 code using underscore or OM mode. Uh
+00:09:29.920 that's the paidantic version one name
+00:09:32.080 for the same thing. But if
+00:09:33.786 [clears throat] this didn't make sense
+00:09:35.120 uh let me explain it a little bit more
+00:09:37.680 concretely here. So right now our posts
+00:09:40.640 are dictionaries. So we access data with
+00:09:44.320 uh you know bracket notation like uh you
+00:09:47.120 know post and then we get uh title. But
+00:09:51.040 when we add a database, our uh data is
+00:09:55.360 going to be accessed through dot
+00:09:58.080 notation like post.title. So by default,
+00:10:00.959 paidantic uh knows how to read
+00:10:02.800 dictionaries. Uh but setting this from
+00:10:05.200 attributes equal to true, it teaches it
+00:10:07.360 how uh it allows it to also read from
+00:10:10.720 objects using that dot notation. So
+00:10:13.200 without that, when we would try to read
+00:10:15.680 from the database uh from our API,
+00:10:18.240 pyantic would fail. But with this uh
+00:10:20.640 it'll work just fine. Okay. So another
+00:10:23.040 thing here uh right now our date posted
+00:10:25.680 is a string uh because our in-memory
+00:10:28.720 data uses strings for dates. When we add
+00:10:31.360 a database we're going to change this to
+00:10:33.519 actually be a datetime. Okay. So I'm
+00:10:36.399 going to save that. And now let's update
+00:10:39.760 our main.py to use our schemas. So first
+00:10:44.959 we are going to import these from the
+00:10:47.600 top. So up here I'll say from schemas we
+00:10:52.800 want to import uh both the postcreate
+00:10:56.959 and the post response. Now we don't need
+00:11:01.200 post base in our main. py that is just
+00:11:04.720 our base class that others inherit from.
+00:11:07.920 Uh we only want uh what we are going to
+00:11:10.560 be creating posts with and uh our post
+00:11:13.360 response for uh returning posts from the
+00:11:16.160 API. So now let's update our get
+00:11:19.120 endpoints here. So if I scroll down to
+00:11:21.920 the API section here, for slappi for
+00:11:24.880 these, here's what we have now. So we
+00:11:27.680 can see that we're just returning these
+00:11:29.440 posts here. But in the decorator here,
+00:11:33.680 I'm going to add something called a
+00:11:36.240 response model. And now what are we
+00:11:40.480 responding with at this route? we are
+00:11:43.279 responding with a list of post
+00:11:46.959 responses. So I will add that in because
+00:11:50.560 remember this is the route that returns
+00:11:52.880 all of our posts. And now just by adding
+00:11:55.360 that in fast API will validate that each
+00:11:59.040 post uh matches our post response schema
+00:12:02.800 and the documentation will show that
+00:12:04.959 exact structure and it's not just for
+00:12:07.440 documentation. response model also acts
+00:12:10.480 as a safeguard for us here. So if our
+00:12:13.279 data had extra fields that aren't in the
+00:12:15.600 schema, then those would be filtered out
+00:12:18.000 and if we have missing required fields,
+00:12:20.720 then we'd get an error. Uh so it helps
+00:12:23.920 prevent accidentally exposing data that
+00:12:26.240 we shouldn't. Now for our single post
+00:12:28.720 route here, we are also going to do a
+00:12:31.600 response model, but here we're not
+00:12:33.920 returning a list of posts. we are just
+00:12:36.720 returning a single post. So I'll say
+00:12:39.120 that we expect a post response from a
+00:12:42.959 single post at this get endpoint. Okay.
+00:12:46.079 So so far we can uh get posts but we
+00:12:49.839 can't create post. So let's create uh
+00:12:53.360 that post endpoint. Now this is where
+00:12:55.920 pyantic really shines. So let me
+00:12:58.560 actually grab this from my snippets here
+00:13:00.639 since it's a lot to type out but we'll
+00:13:02.880 go over exactly what's going on here.
+00:13:05.279 So, let me grab this and I am going to
+00:13:10.079 uh let's put this right in between these
+00:13:13.279 here and I will save that. Okay. So, now
+00:13:17.040 let's go over exactly what's going on
+00:13:18.720 here. So, here you can see that we're
+00:13:21.360 using app.get for our decorator. Here
+00:13:24.639 we're using app.post. Uh a post request
+00:13:28.720 is what we use to create resources. So
+00:13:32.240 we are also so we're making a post to
+00:13:36.000 API post. Our response model is going to
+00:13:39.600 be post response and our status code
+00:13:42.320 here is HTTP201
+00:13:45.200 created. So that 2011 response that's a
+00:13:48.399 restful best practice uh when we create
+00:13:51.200 resources. It tells the client that a
+00:13:53.360 new resource was successfully created
+00:13:55.839 rather than just returning a 200
+00:13:58.320 success. But the key part here is that
+00:14:00.720 we're using our schema uh postcreate. So
+00:14:04.480 fast API sees this type hint and
+00:14:08.160 automatically parses the JSON body. It
+00:14:11.199 validates it against our schema and it
+00:14:14.240 returns a 422 validation error with
+00:14:18.240 details if anything is invalid. All
+00:14:21.040 before our function even runs. But if
+00:14:23.680 someone is trying to create a post and
+00:14:25.600 everything looks good and it matches all
+00:14:28.399 of the credentials that we set up in our
+00:14:30.800 schema here, which will be the title,
+00:14:32.959 content, and author with those fields
+00:14:34.959 and those constraints, uh, then it will
+00:14:38.079 run our function. So inside the
+00:14:40.079 function, right now we're generating a
+00:14:42.639 new ID. I know this might look a little
+00:14:45.279 complicated here. That is just because
+00:14:48.160 we are manually generating IDs since
+00:14:50.639 we're using dummy data. Don't worry
+00:14:52.639 about the complexity there. Once we set
+00:14:55.040 up our database, uh the database will
+00:14:57.440 handle ids for us. So, this is just like
+00:14:59.760 a temporary thing to where if our uh
+00:15:03.360 last post had an ID of two, this will
+00:15:05.920 generate an ID of three. It's really not
+00:15:08.720 important. So then after we get that new
+00:15:11.199 ID, then we're creating a dictionary
+00:15:14.240 using the validated data with, you know,
+00:15:17.680 post author, post title, and post
+00:15:20.320 content. and we have a hard-coded date
+00:15:23.600 for now. And then we are appending that
+00:15:26.160 to our post list which is up here at the
+00:15:28.880 top. Uh so we're appending that to our
+00:15:31.680 post list and then returning that new
+00:15:34.079 post. So now that we've added this uh
+00:15:36.959 post creation route here and also added
+00:15:39.760 in these pidantic schemas, let me save
+00:15:42.639 this. And now let's go back to our
+00:15:44.480 documentation and I'll show you that
+00:15:46.560 this has improved a bit. So if I reload
+00:15:49.519 this here then we can see that we now
+00:15:52.320 have our create post route there. But
+00:15:54.720 before I show you that let me show you
+00:15:56.639 our get post route here. If I click on
+00:16:00.399 this then we can see in this response
+00:16:04.000 section down here it now shows that we
+00:16:06.800 have this uh list of post response. The
+00:16:10.000 schema section shows all the fields uh
+00:16:12.880 with their types. And if I click on
+00:16:15.839 schema here, then we can also see the
+00:16:18.160 constraints as well. So we can see that
+00:16:20.320 this is a string. Uh shows us that it's
+00:16:23.199 between one and 100 characters, greater
+00:16:25.600 than one character and things like that.
+00:16:28.000 So that's pretty cool. And if I look at
+00:16:29.839 our single post endpoint, let's see if
+00:16:33.040 that's the same thing here. Uh so we can
+00:16:35.440 see an example value. If I click on the
+00:16:37.600 schema, then we can see the same thing
+00:16:39.360 that we're just getting a single post
+00:16:41.759 here. it's no longer in that list and we
+00:16:44.560 can see all of the constraints on that
+00:16:46.800 as well. Okay. So now here's our new
+00:16:50.079 post endpoint for creating resources. So
+00:16:53.279 if I look at this here, so we can see
+00:16:56.079 that the request body is expecting a
+00:16:58.880 title that is a string, a content, and
+00:17:01.279 an author. And again, if we click on
+00:17:03.839 schema, we can see exactly what this is
+00:17:06.400 expecting. So that's great because
+00:17:08.400 anybody using our API can see exactly
+00:17:11.839 what to send to the API to create a new
+00:17:14.959 post. So let's test this out. If I click
+00:17:18.160 on try it out here, then this is going
+00:17:21.439 to give us some sample values here. So
+00:17:24.559 now let's fill in some of these. So I'll
+00:17:26.559 just say my new post. Doesn't really
+00:17:30.160 matter if I spell everything correctly.
+00:17:32.640 This is my content. And let's just do a
+00:17:37.280 test user for that. And let me click
+00:17:40.160 execute here. And we can see that it
+00:17:42.720 gives us the curl command to do the
+00:17:44.559 exact same thing. We got a response code
+00:17:47.039 201 which means that uh it was
+00:17:49.520 successful and that it created
+00:17:51.039 something. And we can see that it
+00:17:52.720 included that generated ID. Uh we get
+00:17:55.840 our title back, content, author, and our
+00:17:58.000 hard-coded date posted. So everything
+00:18:00.400 worked well. So now let's test some
+00:18:02.559 validation here. Uh so for example,
+00:18:05.440 let's say that I tried to do a post
+00:18:07.760 here. I'll say this is my updated
+00:18:11.280 content, but I'm not going to add a
+00:18:13.200 title here. So if I execute that, then
+00:18:16.559 we can see that we get a 422 response.
+00:18:19.679 And in this response, it says string
+00:18:22.080 should have at least one character. So
+00:18:24.400 it's telling us exactly what went wrong
+00:18:27.200 there. So now let's try removing a
+00:18:29.760 required field uh that we required for
+00:18:33.360 our post creation. So if I go back to
+00:18:36.640 the schemas here then remember
+00:18:38.799 postcreate just inherits from post base.
+00:18:41.360 It's expecting title content and author.
+00:18:44.799 So let's take away one of those fields.
+00:18:46.480 So I'll just say that we didn't provide
+00:18:49.280 an author and I'll just say this is a
+00:18:53.600 test post. Let's execute that. Look at
+00:18:57.760 the response here. And it's saying, oh,
+00:19:00.240 let's see. This is uh expecting
+00:19:03.120 something in double quotes. Maybe it's
+00:19:05.039 because I have a comma there. Let me try
+00:19:08.480 that. Okay. Yeah, I think I had some bad
+00:19:10.480 JSON there. Uh, but now we're getting a
+00:19:12.480 422 here and it's saying uh that we are
+00:19:16.400 missing a required field of author. So
+00:19:19.440 all that validation, all of that is
+00:19:21.919 automatic. We didn't have to write any
+00:19:24.080 if statements, any try accept blocks,
+00:19:26.320 nothing like that. It just came built in
+00:19:28.559 with fast API and paidantic as long as
+00:19:31.440 we hook all of that up properly. Okay,
+00:19:34.240 so we did have that one successful
+00:19:36.480 created post. So let's see if uh that
+00:19:40.640 worked. So I'm going to go to uh try it
+00:19:43.120 out on get post here to get all of our
+00:19:46.559 post. We can see that the one that was
+00:19:48.960 successful, it actually is in our list
+00:19:51.840 of posts there. And let's also check
+00:19:54.080 this on our HTML front end here. So if I
+00:19:56.880 go back and reload our page, we can see
+00:19:59.440 down here at the bottom that we have our
+00:20:01.280 new post. So it's there as well. So
+00:20:03.120 that's nice. So the API and the
+00:20:05.360 templates share the same data. So posts
+00:20:08.160 created through the API also appear on
+00:20:10.880 the templates page as well. Now, one
+00:20:13.200 thing to point out here, our template
+00:20:15.039 routes work exactly as they did before.
+00:20:18.000 They're using dictionaries. They don't
+00:20:19.760 know about paidantic. Uh the schemas
+00:20:22.000 only apply to the a API endpoints uh
+00:20:24.880 where we set the response model or uh
+00:20:27.679 use pyantic types in parameters. And
+00:20:30.400 that's a nice separation that we have
+00:20:32.000 for now. API routes, they use pyantic
+00:20:34.720 for validation documentation. Uh
+00:20:37.120 template routes are just rendering the
+00:20:38.960 data for now. Now, our schemas are
+00:20:41.280 working great, but there's one big
+00:20:43.520 problem that we need to address here.
+00:20:45.280 So, we just created our post. Uh, but
+00:20:48.640 let me show you what happens when we
+00:20:51.280 restart our server. So, I'm going to
+00:20:53.200 kill our development server here. And
+00:20:55.840 now, let's rerun that. And now, if I go
+00:21:01.360 back to our page, reload our homepage,
+00:21:04.799 we can see that our new post is gone.
+00:21:06.960 And that's because we are just storing
+00:21:10.159 these posts in our if I go back to
+00:21:13.120 main.py, we are just storing these posts
+00:21:16.159 in a Python list in memory. So when the
+00:21:19.120 server restarts, that list is recreated
+00:21:21.440 with only the hard-coded post there. Any
+00:21:23.840 posts that we create are going to
+00:21:25.280 disappear. So obviously this isn't
+00:21:27.440 practical for real applications. We need
+00:21:30.000 data to persist across restarts and the
+00:21:33.360 solution obviously is to use a database
+00:21:36.080 and that's exactly what we're going to
+00:21:37.520 cover in the next tutorial. So quickly
+00:21:39.840 let's recap what we covered here. So we
+00:21:43.039 created this schemas py file and we have
+00:21:46.559 our three schemas here. We have our post
+00:21:49.120 base uh that has shared fields. We have
+00:21:52.400 our post create for what we accept when
+00:21:55.919 creating a post. And right now it's the
+00:21:58.559 exact same as our post base here. And we
+00:22:01.200 have a post response for what we will
+00:22:04.159 return. So it returns all the stuff that
+00:22:06.960 we accepted when we created the post,
+00:22:09.440 but also some things that are generated
+00:22:12.559 on the server like the ID and the date
+00:22:14.720 posted. We also added our field
+00:22:17.120 validation with uh constraints like min
+00:22:20.080 length and max length. and we updated
+00:22:22.799 our git endpoints uh to use these
+00:22:26.080 response models. And again, not only did
+00:22:29.200 that improve the documentation in our
+00:22:31.600 API documentation, but it vastly
+00:22:34.320 improves our app itself because of the
+00:22:36.880 built-in validation that it gives us
+00:22:39.120 there. So basically the key takeaway
+00:22:41.200 here is that the pyantic schemas, they
+00:22:44.240 define our APIs contract. They specify
+00:22:48.000 what data goes in and what comes out. So
+00:22:51.360 fast API uses these for validation,
+00:22:54.080 serialization, and documentation. It's a
+00:22:56.799 really elegant system how it all works
+00:22:59.360 together. So in the next tutorial when
+00:23:01.520 we add the database, we're going to
+00:23:03.360 restructure the schemas a bit to work
+00:23:05.200 with database relationships. Uh but the
+00:23:07.679 validation concepts that we learned here
+00:23:09.679 are still going to apply. But I think
+00:23:12.159 that's going to do it for this video.
+00:23:13.919 Hopefully now you have a good idea uh
+00:23:16.240 how to use paidantic schemas for
+00:23:18.559 validating API requests and responses in
+00:23:21.280 fast API. In the next video, we're
+00:23:23.919 setting up our database with SQL
+00:23:26.080 alchemy. We'll replace that in-memory
+00:23:28.799 list with real persistent storage. Uh we
+00:23:32.640 will create database models that are
+00:23:34.640 separate from our pyantic schemas and
+00:23:36.880 connect everything so that data sticks
+00:23:39.200 around after we restart our server. But
+00:23:41.679 if anyone has any questions about what
+00:23:43.360 we covered in this video, then feel free
+00:23:45.280 to ask in the comment section below, and
+00:23:47.039 I'll do my best to answer those. And if
+00:23:48.880 you enjoyed these tutorials and would
+00:23:50.400 like to support them, then there are
+00:23:51.919 several ways you can do that. The
+00:23:53.520 easiest way is to simply like the video
+00:23:55.120 and give it a thumbs up. Also, it's a
+00:23:56.960 huge help to share these videos with
+00:23:58.400 anyone who you think would find them
+00:23:59.840 useful. And if you have the means, you
+00:24:01.520 can contribute through Patreon or
+00:24:03.120 YouTube, and there are links to those
+00:24:04.640 pages in the description section below.
+00:24:06.720 Be sure to subscribe for future videos,
+00:24:08.400 and thank you all for watching.

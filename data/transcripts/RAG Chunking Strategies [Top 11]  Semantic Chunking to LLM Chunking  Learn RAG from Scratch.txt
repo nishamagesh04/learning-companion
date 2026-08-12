@@ -1,0 +1,604 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/-hsaiU6fmtQ
+
+00:00:00.280 do you know guys how to get correct
+00:00:02.200 output from the vector DB and how you
+00:00:04.440 decide the chunk size and what are the
+00:00:06.480 different checking strategies in the rag
+00:00:08.240 as well so in this video I'm explaining
+00:00:10.639 you all of this so hi guys welcome to
+00:00:12.960 Free ver to and welcome to the rag
+00:00:14.879 playlist in which I teach you about the
+00:00:16.720 rag and llm with different domain
+00:00:18.400 projects from the basic to advanced
+00:00:20.199 level this is the second part of the
+00:00:22.279 playlist in which I explain about rag
+00:00:24.640 chunking strategies and tell you about
+00:00:26.599 how chunking Works what are the
+00:00:28.519 different chunking strategies that you
+00:00:30.039 can use in your llm application for
+00:00:32.520 better responses in between I also
+00:00:34.920 showcase some of the projects or the
+00:00:37.239 python codes by using the Python and The
+00:00:39.360 Lang chain to apply the chunking on the
+00:00:41.640 different types of data so let's get
+00:00:43.760 started so when you pass a prompt with
+00:00:47.039 context to the large language model and
+00:00:50.000 on the other side you pass a prompt
+00:00:52.120 without context to the large language
+00:00:54.079 model then the prompt with context
+00:00:56.879 performs better and give you a better
+00:00:58.879 response as compared to The Prompt
+00:01:00.680 without context so that means you can
+00:01:03.680 pass more tokens and get the better
+00:01:05.920 response no that's no because uh let me
+00:01:09.920 just give you some of the terminologies
+00:01:12.840 first so the number of the maximum
+00:01:15.640 number of tokens that L language model
+00:01:18.400 can process in a single request is
+00:01:20.600 called the context length of that L
+00:01:23.000 language model okay that can be like uh
+00:01:26.040 80,000 1 million or 2 million as well so
+00:01:29.960 the short and the focused inputs produce
+00:01:32.640 better results than the long context
+00:01:35.280 because long context contain the more
+00:01:37.280 information the llm need to process the
+00:01:39.799 more information does increase the
+00:01:42.360 latency as well okay but with
+00:01:45.119 upgradations in the L language models
+00:01:47.680 like gp4 gp4 mini or met 3 the context
+00:01:51.840 length also increases so that means you
+00:01:54.040 can pass more tokens to the large
+00:01:56.439 language model it can accept and process
+00:01:58.479 in a short time as well okay and the
+00:02:01.200 context window it's include of the both
+00:02:04.280 input and the output tokens okay so
+00:02:07.000 that's how the token length also affect
+00:02:10.160 your input response but how how your
+00:02:13.520 response is affected by the token length
+00:02:16.120 so just before that you need to know how
+00:02:18.720 to calculate the tokens in a sentence or
+00:02:21.200 a text so with this thumb rule you can
+00:02:24.040 easily calculate the number of tokens in
+00:02:26.959 a a sentence or in a word that four
+00:02:30.280 characters of a text for a common
+00:02:32.680 English a token is correspond to the
+00:02:35.360 four characters of a text uh that
+00:02:37.440 translate to roughly 3x4 of a word of
+00:02:40.840 100 tokens that means 75 words for
+00:02:43.680 example a book containing the
+00:02:46.040 6233 words that means
+00:02:49.200 83,7 tokens as it so not always a word
+00:02:52.920 is equal to the to token okay so here is
+00:02:56.400 the python code as well that that can
+00:02:58.480 help you to count the number number of
+00:03:00.159 tokens in a file or in a text as so now
+00:03:03.799 we know that the number of tokens and
+00:03:06.239 also know the context length of a l
+00:03:08.280 language model so if we pass according
+00:03:10.959 to that will we get a correct response
+00:03:13.840 no because the context length and the
+00:03:16.519 context relevancy also matters your
+00:03:19.480 context need to be relevant as well
+00:03:22.200 because the longer context helps the L
+00:03:24.920 language model to understand better
+00:03:27.159 relationship and make better inferences
+00:03:29.200 but on the other hand the shorter
+00:03:31.000 context reduce the amount of data that a
+00:03:33.760 model need to understand does decrease
+00:03:36.400 the latency and gives the better
+00:03:38.720 response so there is a need to make
+00:03:41.760 better context or more relevant context
+00:03:44.080 from the vector DB that we need to fetch
+00:03:46.480 okay so how do you make a trade-off
+00:03:49.120 between the long and the short context
+00:03:51.599 that you fetch from the rag to make up
+00:03:53.920 your prompt so that's where the chunking
+00:03:56.079 comes in picture the in R the chunking
+00:03:58.799 is a process of breaking down the large
+00:04:01.720 documents or the large text into the
+00:04:03.680 smaller and the manageable pieces or
+00:04:06.120 chunks for Effective retrieval and the
+00:04:09.159 generation process so that you can get
+00:04:10.959 the correct uh correct context for your
+00:04:13.480 prompt as well so each chunk is encoded
+00:04:16.238 into the embedding Vector for the
+00:04:18.639 retrieval as well so as I just explain
+00:04:21.238 you in my first video that your chunk is
+00:04:24.360 need to go to the embedding model and
+00:04:27.000 then the vector embeddings are stored
+00:04:29.039 into the Chrome DB or any kind of vector
+00:04:31.880 DB as well so we split the data into the
+00:04:34.800 smaller chunks because large language
+00:04:37.400 models are the nonparametric memory that
+00:04:40.199 they have that can be used more
+00:04:42.320 effectively with smaller junks that's
+00:04:44.479 why we need the smaller junks here so
+00:04:47.639 there are many ways to split the data to
+00:04:50.400 improve the latency or the like
+00:04:53.199 retrieval process in the large language
+00:04:55.600 models but the chunk size always decide
+00:04:58.960 the retrieval accuracy and the reval
+00:05:01.080 efficiency as well so you know that the
+00:05:04.240 context can be long can be short can be
+00:05:06.560 medium but it should have the relevant
+00:05:09.639 information as well so let me just give
+00:05:12.360 you a smaller difference between that
+00:05:15.240 how do you decide the Chun size as well
+00:05:17.560 so if you have the smaller Chun size the
+00:05:20.280 advantages are it is fine grained search
+00:05:22.720 with the high accuracy for the specific
+00:05:25.280 queries as well it is useful for the
+00:05:28.080 data set that that has highly
+00:05:30.120 distributed information as well but the
+00:05:32.840 smaller chunk size comes with some kind
+00:05:34.639 of disadvantage as well that it has less
+00:05:37.759 contextual information and it has uh
+00:05:41.000 increased Resource consumptions as well
+00:05:43.240 because you need to search a vast amount
+00:05:45.360 of V DB as well and for the larger chunk
+00:05:48.600 size it is better for the context aware
+00:05:51.560 retrieval as well it it also reduce the
+00:05:54.639 embedding computation and the storage as
+00:05:57.080 well because you are chunking a larger
+00:05:59.400 kind of a chunk size or embedding a
+00:06:02.039 larger kind of a chunk size here but the
+00:06:04.919 it also risk with the irrelevant context
+00:06:08.080 or it also low recall for the specific
+00:06:10.680 keyword based queries as so there is
+00:06:12.880 always a kind of tradeoff between the
+00:06:15.880 larger chunk size or the smaller chunk
+00:06:17.800 size as well that you need to check so
+00:06:20.440 let me just give you a python code that
+00:06:22.800 can show you the effect of the larger
+00:06:25.280 chunk size and the smaller chunk size
+00:06:27.520 here that you can also decide on the B
+00:06:30.240 base of your own by doing
+00:06:32.080 experimentation with different chunk
+00:06:33.680 size sizes as well all guys so here you
+00:06:36.160 see my screen guys I just load the
+00:06:38.120 recursive scatter scor it is a kind of a
+00:06:40.319 chunking technique that we will uh learn
+00:06:42.759 in just a few seconds or few minutes and
+00:06:46.479 then load the chroma DB hugging F and
+00:06:48.720 Bings this is kind of a text that I I
+00:06:51.639 have and now I will show you that how
+00:06:54.440 the small chunk size and the larger
+00:06:56.800 chunk size shows me the difference as
+00:06:59.240 well so when first we use the recursive
+00:07:01.759 text spor and chunk size of 10 only and
+00:07:04.800 we need overlap of two that it will like
+00:07:08.360 Alan musk and then it it will show as
+00:07:10.720 musk is then is the CEO then CEO of the
+00:07:14.960 that is it just complete a uh chunk
+00:07:17.639 overlap of the last two words okay and
+00:07:20.800 then we have the large chunk size of the
+00:07:22.919 200 chunk size and with overlap of the
+00:07:25.560 10 okay and I just show you that how
+00:07:28.680 chunk size look like this is a smaller
+00:07:30.520 chunks you see alen musk is the CEO of
+00:07:33.639 Tesla Tesla's missions is to accelerate
+00:07:36.599 this is how the smaller chunks will look
+00:07:39.400 like and we will see the chunks of 200
+00:07:42.319 this is how the 200 chunk size will look
+00:07:44.440 like this complete contains the 200
+00:07:46.680 tokens okay 200 tokens are there 200
+00:07:51.560 tokens are there as well the that is how
+00:07:54.360 it just give you token just try to
+00:07:57.120 change the chunk size let Chase into 20
+00:08:00.639 okay when you put it here at 20 it will
+00:08:04.360 just a minute and it will starting
+00:08:06.599 running here just a minute oh Lang chain
+00:08:09.720 Community is not installed let's install
+00:08:11.560 this
+00:08:12.599 Library
+00:08:15.479 okay just a
+00:08:17.800 sec so you need to install all these
+00:08:20.360 kind of libraries first that these
+00:08:22.960 libraries are required and also install
+00:08:25.520 the chroma DB as well okay and uh yeah
+00:08:29.960 nothing else required and yes it is
+00:08:32.120 installed okay so now I just need to run
+00:08:35.080 it so when you run
+00:08:38.279 it it will show you the output here as
+00:08:41.360 you see I just make the chunk size of 20
+00:08:44.480 tokens it shows me the Len musk is the
+00:08:47.080 CEO of the Tesla Tesla's mission is
+00:08:49.800 accelerate we this is how it just goes
+00:08:52.600 like that okay it also uh consist of the
+00:08:55.880 white space at this token as well so
+00:08:58.320 that's how it g gives the 20 top tokens
+00:09:01.399 here okay so that's how you can uh the
+00:09:04.279 difference between the chunk size now
+00:09:06.320 when you try to make a embedding and try
+00:09:08.880 to get the answer from it okay the
+00:09:11.320 answer is quietly a different kind of
+00:09:14.519 game here because you need more
+00:09:16.320 information to see the kind of
+00:09:19.160 difference between the smaller and the
+00:09:21.200 larger chunk size as well as for up now
+00:09:24.200 it just loow my hugging face and Bings
+00:09:27.240 here and uh after loading all the
+00:09:30.120 embeddings is try to uh find this kind
+00:09:32.600 of a query that what's the musk view on
+00:09:34.920 AI and government regulations as well we
+00:09:37.680 need to see that how this response is
+00:09:40.560 with the small vectors and the larger
+00:09:43.320 kind of chunks as well so see here the
+00:09:46.680 response is almost same it is completely
+00:09:50.000 same because the information that we
+00:09:52.360 have is very small so when the
+00:09:54.160 information we have is very large in the
+00:09:56.360 larger Corpus you see that the chunk
+00:09:58.839 size with the smaller will always
+00:10:01.040 perform better than the chunk size
+00:10:03.120 larger okay that's how you can uh uh
+00:10:07.680 like chunk the text with the smaller
+00:10:10.120 chunk size and the larger chunk size as
+00:10:12.519 so now now let's talk about the chunking
+00:10:14.959 strategies okay so we have the different
+00:10:17.880 chunking strategies are here that can
+00:10:19.959 help you divide a larger Corpus of the
+00:10:22.519 text into the smaller and more
+00:10:24.200 manageable units okay for the faster
+00:10:27.160 retrieval process okay the first is
+00:10:29.560 called as fixed size chunking so fixed
+00:10:32.640 size chunking divide the text in into
+00:10:35.279 the fixed size pieces of chunks this is
+00:10:38.600 done by splitting the text into the
+00:10:41.040 predefined size and this can be helpful
+00:10:45.040 but it is inefficient for the longer
+00:10:47.360 text especially if if if the chunks
+00:10:49.880 contain the meaningful sections like the
+00:10:52.360 sentences so if if you have a complete
+00:10:54.560 sentence like this is a very long text
+00:10:57.240 that should so if you just try to chunk
+00:10:59.880 it in a fixed size of the uh let's say
+00:11:03.440 20 tokens only so let's say in the first
+00:11:06.440 20 tokens only this text will come this
+00:11:09.399 is very very long so that makes a
+00:11:11.480 meaning but the next is called text
+00:11:14.440 should be so that does not make a
+00:11:16.839 meaning as it okay so in that way the
+00:11:19.399 fixed size chunking is not that much
+00:11:21.880 good or that much meaningful as well
+00:11:24.440 when you do the fixed size chunking as
+00:11:26.760 it so that is here I just do it with the
+00:11:28.839 chunks of five you just see the first is
+00:11:31.920 this is very long text should be chumped
+00:11:34.200 into smaller piece of effent processing
+00:11:36.519 so that means these are the chunks and
+00:11:38.360 they don't have contain a more
+00:11:40.320 meaningful thought here okay so to make
+00:11:43.560 a more meaningful thought we make a new
+00:11:46.519 chunking that is called sentence-based
+00:11:48.519 chunking so this is we have the
+00:11:50.720 different different sentences and it
+00:11:53.000 Chunk on the base of the sentences as
+00:11:56.000 well okay uh this is useful when I have
+00:11:59.440 a structured data that contain the uh
+00:12:02.240 sentences as well so that is here I have
+00:12:04.760 the sentence this is sentence here
+00:12:06.240 another one here third one when I do the
+00:12:08.200 sentence tokenizer or the sentence based
+00:12:10.560 chunking it is called this is sentence
+00:12:13.320 with the first token second token and
+00:12:15.560 third token now I have the sentences
+00:12:18.440 that contain some kind of a meaning here
+00:12:21.079 but still it is not good when we have
+00:12:24.279 the larger documents like a complete
+00:12:27.560 PDFs kind of we have so in that way it
+00:12:30.519 it can be more uh kind of a complex or
+00:12:34.240 more kind of a memory consuming thing
+00:12:36.839 okay so that's where the thing come is
+00:12:39.040 called as document based chunking so I
+00:12:41.839 have this sample PDF here uh let me load
+00:12:44.760 just the sample
+00:12:46.120 PDF
+00:12:48.839 okay sample.pdf
+00:12:57.560 okay it is the is sample dot yeah let's
+00:13:01.440 load this kind of a PDF here it is a
+00:13:03.680 chat gbt prompts and name it as
+00:13:07.720 sample.pdf now now I just load the
+00:13:11.560 sample.pdf with my PDF loader as well
+00:13:14.399 and do the chunking of the first three
+00:13:17.240 uh pages so now let's see how it goes
+00:13:20.120 okay when I do is just load the
+00:13:24.560 PDF okay sorry the P PDF is not
+00:13:27.040 installed let's install the P PDF here
+00:13:30.440 pip install by
+00:13:32.959 PDF now as you see the document One
+00:13:36.160 content is CH GPD prompts for SEO and
+00:13:39.279 the document through the these are the
+00:13:41.639 like complete kind of uh content in the
+00:13:44.680 document and the document three the the
+00:13:47.000 document means the pages the pages we
+00:13:50.560 have on the PDF as well if I just show
+00:13:53.120 you this kind of PDF here that you can
+00:13:57.600 see ch PR for SEO this is like first
+00:14:01.199 page it fetch all the the content from
+00:14:03.639 it and then this is the second page it
+00:14:06.079 write it fetch all the kind of content
+00:14:08.040 from here and second is this so in that
+00:14:10.639 way it fetch all these content okay so
+00:14:13.800 now this makes more sense as well now
+00:14:16.880 this is less memory consuming because a
+00:14:19.920 page can contain so many kind of
+00:14:21.720 sentences and with the sentence kind of
+00:14:25.079 chunking it is so much memory consuming
+00:14:27.839 and the issue for the storage as well
+00:14:29.920 but with document based chunking this
+00:14:31.800 issue is resolved now okay so now the
+00:14:34.399 next kind of chunking is called semantic
+00:14:36.839 based chunking so the semantic based
+00:14:39.199 chunking is also more useful than the
+00:14:41.600 document based chunking because it also
+00:14:43.560 check for the semantic meanings that the
+00:14:46.959 chunking that we do it has some kind of
+00:14:49.880 a meaning as every kind of a chunk
+00:14:51.959 contains some kind of a meaning okay so
+00:14:54.920 there should not be a like meaningless
+00:14:57.560 chunks in your uh chunking strategies as
+00:15:00.959 well so the chunking the semantic based
+00:15:04.079 chunking involves the splitting of text
+00:15:05.800 into chunk by using a fixed length or
+00:15:08.480 the sentence boundaries the idea is to
+00:15:11.199 group The relevant in information which
+00:15:14.440 may be vary in the length into the
+00:15:16.800 semantic units that can be done by using
+00:15:19.360 the sentence Transformers or the
+00:15:21.120 embedding models and by you using the uh
+00:15:25.160 similarity Mayors as well to uh group
+00:15:28.240 the most similar kind of sentences or
+00:15:30.880 words together so that they can make a
+00:15:33.759 good sense okay in that way as just see
+00:15:36.720 here it is best useful where the
+00:15:39.920 meaningful uh semantic units or or the
+00:15:42.639 sentences or the paragraphs or the
+00:15:44.279 topics can be grouped together to make a
+00:15:46.759 chunk size so we use the sentence
+00:15:49.079 Transformer here and use the K means
+00:15:51.880 clustering as well to group those kind
+00:15:54.279 of similar topics or similar paragraphs
+00:15:57.079 or sentences together so as I have this
+00:15:59.440 kind of sentences here and when I encode
+00:16:02.240 it into the by using the sentence
+00:16:05.120 Transformer like create the embeddings
+00:16:07.720 okay and then I use the K means
+00:16:10.560 clustering as well to make two kind of
+00:16:12.519 clusters as well and it will give me
+00:16:15.440 this kind of a response that the chunk
+00:16:17.959 one contains all about the space and the
+00:16:20.759 astronauts kind of a thing that
+00:16:22.440 astronauts space space travels kind of
+00:16:25.240 thing and a chunk two contains all about
+00:16:27.720 the survival things okay so that's how
+00:16:31.000 you can like use the cementing chunking
+00:16:33.839 where you need to know about the context
+00:16:36.079 only okay and then we have the
+00:16:39.600 overlapping chunking so the overlapping
+00:16:42.160 chunking involves creating chunks that
+00:16:44.319 will overlap with each other so like uh
+00:16:48.639 sometimes you have uh like a very large
+00:16:51.079 kind of Corpus as well that the past
+00:16:54.480 line or the past paragraph contains some
+00:16:57.560 kind of a context that that is relevant
+00:17:00.240 in the next line or the next paragraph
+00:17:02.959 as well so that's where the overlapping
+00:17:05.599 chuning will be used because you need to
+00:17:08.720 know the context of the past line or the
+00:17:10.799 past paragraph into your current line or
+00:17:14.160 the paragraph aset Okay so as you see
+00:17:17.480 here one chunk might contain the last
+00:17:19.160 few word of the previous chunk this
+00:17:20.880 strategy is used to preserve the context
+00:17:22.679 between the chunks that no information
+00:17:24.760 is lost when dividing the chunks as that
+00:17:27.280 okay so it is very much for task live
+00:17:29.679 machine translations summarizations or
+00:17:32.080 question question answering here as said
+00:17:34.080 okay so we just use this kind of thing
+00:17:36.160 we make overlapping chunk function here
+00:17:38.880 that also try to make overlap of the two
+00:17:42.600 last tokens of the last words as said
+00:17:45.600 you just see here this is my complete
+00:17:47.440 sentence it is tokenized here as well
+00:17:49.880 this is the first example of then
+00:17:52.000 example of the overl Ching to then Ching
+00:17:54.559 to maintain and the content and like
+00:17:56.880 that so so that's how you can use the
+00:17:59.679 overlapping chunking here now the next
+00:18:02.200 thing is recursive chunking that we also
+00:18:04.880 use in our uh smaller chunks and the
+00:18:08.480 larger chunks comparison as well okay so
+00:18:11.080 this is the same kind of a chunking here
+00:18:13.440 so that's chunking divide the text into
+00:18:16.120 the heral iterative manner using a set
+00:18:19.720 of separators separators means the new
+00:18:22.520 line separator or the uh raw Tex
+00:18:25.520 separator or the tab separator as well
+00:18:28.039 okay so this method will allow the more
+00:18:30.640 structured chunking based on the content
+00:18:32.720 boundaries that how your content is
+00:18:34.840 written okay it can be written in the in
+00:18:37.159 the form of a paragraph in the form of
+00:18:39.480 book so in that way chunk it by using
+00:18:42.360 the boundaries only okay so we just load
+00:18:44.960 the recursive text splitter and here I
+00:18:47.200 just make a kind of this text this text
+00:18:49.880 then new line this text and then also a
+00:18:53.200 new line here because I press the enter
+00:18:55.799 and this is the new text now it will do
+00:18:57.760 the text splitter as well and the
+00:19:00.480 separators are like this okay it can
+00:19:02.799 also take the blank like this is the
+00:19:04.320 blank or the new line or the double new
+00:19:07.000 line as well it will try to do so in
+00:19:09.640 that way we have this first chunk here
+00:19:12.320 this is a paragraph second chunk here
+00:19:15.159 this is the second chunk and now the
+00:19:17.480 third chunk is here is the new paragraph
+00:19:20.080 because I just make a space extra space
+00:19:23.159 here it takes the chunes of the 50 only
+00:19:26.080 so that's where the chunes of 50 is over
+00:19:29.640 and then the next goes to the next chunk
+00:19:32.000 and the next chunk as so in that way try
+00:19:34.600 try to make the recursive chunking by
+00:19:36.679 taking only the sentence or the
+00:19:38.360 paragraph boundaries only okay so that's
+00:19:40.919 how it will work okay the next example
+00:19:43.919 you see the if I just pass a blank line
+00:19:46.159 here that this line will go to the chunk
+00:19:48.679 for guys so that's how the recursive
+00:19:51.159 chunking work so the next thing I have
+00:19:53.400 is the agenting chunking so agenting
+00:19:55.840 chunking use the large language model
+00:19:57.840 here to determine that how to chunk the
+00:20:00.559 text based on the context because now we
+00:20:03.440 are using a complete llm here to uh know
+00:20:06.280 the context to to understand the
+00:20:07.919 complete text and then make the chunks
+00:20:10.240 from it okay so this is used when we
+00:20:13.480 have to create the chunks of the
+00:20:15.280 relevant information this technique is
+00:20:18.080 more advanced than the semantic chunking
+00:20:20.960 as okay so we load a pre-trained lar
+00:20:24.400 language model here with their tokenizer
+00:20:27.039 as well make a complete function
+00:20:29.280 and then pass our text and this text
+00:20:32.039 converted into the tokens as well and
+00:20:34.559 also into the embeddings and then based
+00:20:37.120 on that we create the chunks as you see
+00:20:39.520 here this is our complete sentence and
+00:20:41.559 this is how the chunks are getting done
+00:20:44.320 so the next is content aware chunking so
+00:20:47.159 the this method adapt the chunking based
+00:20:49.280 on the content characteristics like the
+00:20:51.679 chunking of a paragraph Ching off a
+00:20:54.280 table or the separate entities as well
+00:20:57.080 this can be used in the like uh like
+00:21:00.120 books or the research papers as well or
+00:21:03.159 the manuals as well because in that we
+00:21:05.159 have the introduction section we have
+00:21:07.280 the overview section and the other kind
+00:21:09.679 of sections as well so it do the
+00:21:12.000 chunking section wise or the content
+00:21:14.400 aware kind of a thing is here so we pass
+00:21:17.159 our like kind of uh the sections here
+00:21:20.200 the Inu section or the conclusion
+00:21:22.679 section we want only these two sections
+00:21:24.840 chunks only so in that way it gives me
+00:21:27.279 the first chunk as the complete
+00:21:29.440 introduction section and the second
+00:21:31.760 chunk has the conclusion section only so
+00:21:34.520 that's how you can chunk a complete
+00:21:36.320 document or search paper aser okay the
+00:21:39.799 next is the token based chunking so
+00:21:42.799 token based chunking split the text for
+00:21:45.000 a fixed number of tokens only so that's
+00:21:47.760 very uh similar to the above kind of
+00:21:50.760 techniques that we just see here but
+00:21:52.919 this technique use the large language
+00:21:55.000 model here again okay so it is well
+00:21:57.360 versed with the Trans foral based kind
+00:21:59.440 of uh models as well it ensure the token
+00:22:03.039 limit as well but it can break the
+00:22:05.640 context because you know that the number
+00:22:08.600 of tokens so we know that the meaning of
+00:22:11.240 the sentence of the meaning of the line
+00:22:13.039 can be break as well okay so that's you
+00:22:16.240 can use we have this complete kind of
+00:22:19.039 text here that's sample text complete
+00:22:21.000 text we use the same text here and this
+00:22:23.279 is how it can be done the first chunk is
+00:22:25.679 like this until this the second chunk
+00:22:28.520 trunk is until this so that that's how
+00:22:30.200 you see that it can break the uh the
+00:22:33.120 meaning of this introduction section
+00:22:35.440 into the two parts okay so that's how
+00:22:37.799 the uh Max tokens Ching works it takes
+00:22:41.480 the 200 uh tokens as well okay now the
+00:22:45.679 next is called the topic based chunking
+00:22:47.799 the topic based chunking is very much
+00:22:50.159 similar to the content aware chunking
+00:22:52.640 that we just see above okay because it
+00:22:55.039 also try to uh uh split the kind of a
+00:22:58.960 text by using the latent dest allocation
+00:23:02.880 that is called LD or we use it it into
+00:23:05.080 the topic modeling techniques of the
+00:23:07.400 natural language processing as well it
+00:23:09.480 is used to chunk the news articles or
+00:23:12.200 the research papers as because it group
+00:23:14.320 The related information together help to
+00:23:17.039 focus on the retrieval based on specific
+00:23:19.080 topics but it requires additional
+00:23:21.440 processes because it do the topic
+00:23:23.200 modeling here by using the LDA technique
+00:23:25.960 as well okay and it is not also precise
+00:23:28.600 for the short uh documents or the very
+00:23:30.960 small uh texts as well okay so first we
+00:23:34.360 build a complete kind of a code for the
+00:23:36.200 topic modeling here that you can easily
+00:23:38.480 get from the online resources as well
+00:23:41.200 okay first you do the account vectorizer
+00:23:43.279 then load the LDA model here and when LD
+00:23:45.880 model it get the components and for the
+00:23:47.880 each of the components it gives the
+00:23:50.360 topics its meanings and we can ass
+00:23:52.679 assign that with the help of the chunks
+00:23:54.279 as okay so we get it the first uh topic
+00:23:58.440 two is the this introduction section and
+00:24:01.120 the
+00:24:01.919 next topic is this okay and there are
+00:24:05.200 like other topics as well here like this
+00:24:08.400 so it just Tred to divide it into the
+00:24:10.640 based on the topics that it can get from
+00:24:12.960 the text as well okay there like some
+00:24:15.640 topics make some kind of a meaning and
+00:24:17.559 some topics does not make any kind of
+00:24:19.760 meaning as well but it is helpful if you
+00:24:22.559 have a larger documents as okay that's
+00:24:25.640 how the uh topic based chunking works
+00:24:28.640 and the next is called the keyword based
+00:24:30.640 chunking it is also same as the content
+00:24:33.440 aware chunking as well we pass our kind
+00:24:35.720 of keywords here of all the words and F
+00:24:38.640 on the base of that it just try to Chunk
+00:24:40.559 on the base of that intruction section
+00:24:42.159 is a complete a chunk then this is uh
+00:24:46.000 another chunk this is another chunk this
+00:24:47.960 is another chunk for all the like kind
+00:24:49.919 of sections that that we have okay and
+00:24:53.320 uh that's how you can try to do the
+00:24:55.600 different kind of chunking techniques
+00:24:57.720 into the Rag and try to split your
+00:25:00.480 documents into the more meaningful as
+00:25:02.760 well so let me know in the comment
+00:25:05.080 section that what kind of a chuning
+00:25:06.880 technique do you think is the best for
+00:25:09.799 our all kind of data or all kind of uh
+00:25:14.200 text as well for the best response to
+00:25:17.080 get from the rag Vector DB for our
+00:25:20.000 promps as okay because there is always a
+00:25:23.279 tradeoff trade-off between the larger
+00:25:25.559 chunks and the smaller chunks as well
+00:25:28.159 okay okay the larger chunks make more
+00:25:30.600 context and the better accuracy but the
+00:25:32.840 smaller chunks is faster drial as well
+00:25:35.600 and the lower memory usage in our next
+00:25:38.200 video we'll learn about the vector
+00:25:40.279 embeddings that how to create Vector
+00:25:43.120 embeddings for the chunks because that
+00:25:44.919 is the second part in the uh rag uh
+00:25:47.640 complete process and then how to do the
+00:25:50.600 vector search in the vector ddb as well
+00:25:53.200 and how to store that embeddings into
+00:25:55.679 the vector DB as well all guys so meet
+00:25:58.640 our next video if you want to learn
+00:26:00.640 about generative VI prompt engineering
+00:26:02.840 and machine learning and data science
+00:26:04.440 you can watch my videos on YouTube and
+00:26:06.080 also read bow on medium we'll meet in
+00:26:08.120 our next video thank guys thank you so
+00:26:09.960 much

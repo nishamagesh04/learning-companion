@@ -1,0 +1,1065 @@
+# tactiq.io free youtube transcript
+# Conversational Memory in LangChain for 2025
+# https://www.youtube.com/watch/EtldFS3JbGs
+
+00:00:00.080 In this chapter, we're going to be
+00:00:01.680 taking a look at conversational memory
+00:00:04.640 in Langchain. We're going to be taking a
+00:00:06.960 look at the core like chat memory
+00:00:10.480 components that have already been in
+00:00:12.880 line chain since the start, but are
+00:00:16.640 essentially no longer in the library.
+00:00:18.640 And we'll be seeing how we actually
+00:00:20.640 implement those historic conversational
+00:00:24.480 memory utilities in the new versions of
+00:00:28.880 line chain. So 0.3. Now, as a
+00:00:31.679 pre-warning, this chapter is fairly
+00:00:33.440 long, but that is because conversational
+00:00:36.079 memory is just such a critical part of
+00:00:40.160 chat bots and agents. Conversational
+00:00:42.559 memory is what allows them to remember
+00:00:45.040 previous interactions. And without it,
+00:00:47.600 our chat bots and agents would just be
+00:00:50.320 responding to the most recent message
+00:00:53.039 without any understanding of previous
+00:00:55.440 interactions within a conversations. So
+00:00:57.680 they would just not be conversational.
+00:01:00.079 And depending on the type of
+00:01:03.120 conversation, we might want to go with
+00:01:05.840 various approaches to how we remember
+00:01:08.880 those interactions within a
+00:01:11.920 conversation. Now, throughout this
+00:01:13.360 chapter, we're going to be focusing on
+00:01:15.040 these four memory types. We'll be
+00:01:18.240 referring to these, and I'll be showing
+00:01:19.680 you actually how each one of these
+00:01:21.600 works. But what we're really focusing on
+00:01:24.400 is rewriting these for the latest
+00:01:26.720 version of lang chain using the what's
+00:01:29.680 called the runnable
+00:01:31.840 with
+00:01:33.600 message
+00:01:36.880 history. So we're going to be
+00:01:39.119 essentially taking a look at the
+00:01:40.479 original implementations for each of
+00:01:42.400 these four original memory types and
+00:01:45.119 then we'll be rewriting them with the
+00:01:46.880 the runnable memory history class. So
+00:01:49.840 just taking a look at each of these four
+00:01:52.479 very quickly. Consential buffer memory
+00:01:55.439 is I think the simplest and most
+00:01:57.759 intuitive of these memory types. It is
+00:02:01.840 literally just you have your messages.
+00:02:04.960 They come into this object. They are
+00:02:08.000 stored in this object as essentially a
+00:02:10.239 list and when you need them again it
+00:02:13.040 will return them to you. There's nothing
+00:02:15.760 nothing else to it. It's super simple.
+00:02:17.440 the conversation buffet window memory.
+00:02:19.840 Okay, so new word in the middle there,
+00:02:22.319 window. This works in pretty much the
+00:02:25.440 same way, but those messages that it has
+00:02:28.160 stored, it's not going to return all of
+00:02:30.239 them for you. Instead, it's just going
+00:02:31.760 to return the most recent, let's say,
+00:02:34.640 the most recent three, for example.
+00:02:37.040 Okay? And that is defined by a parameter
+00:02:39.440 K. conversational summary memory. Rather
+00:02:42.160 than keeping track of the entire uh
+00:02:45.680 interaction memory directly, what it's
+00:02:48.080 doing is as those interactions come in,
+00:02:51.040 it's actually going to take them and
+00:02:52.720 it's going to compress them into a
+00:02:54.879 smaller little summary of what has been
+00:02:57.360 within that conversation. And as every a
+00:03:00.640 new interaction is coming in, it's going
+00:03:02.239 to do that and keep iterating on that
+00:03:04.720 summary. And then that is going to be
+00:03:06.800 returned to us when we need it. And
+00:03:08.560 finally we have the conversational
+00:03:09.840 summary buffer memory. So this is it's
+00:03:14.239 taking so the buffer part of this is
+00:03:16.640 actually referring to very similar thing
+00:03:19.440 to the buffer window memory but rather
+00:03:21.519 than it being a you know most K messages
+00:03:24.560 it's looking at the number of tokens
+00:03:26.000 within your memory and it's returning
+00:03:29.120 the most recent K tokens. That's what
+00:03:33.519 the buffer part is there. And then it's
+00:03:36.239 also merging that with the summary
+00:03:39.040 memory here. So essentially what you're
+00:03:41.680 getting is almost like a list of the
+00:03:43.920 most recent messages based on the token
+00:03:46.080 length rather than the number of
+00:03:47.599 interactions plus a summary which would
+00:03:51.120 you know come at the the top here. So
+00:03:53.040 you get kind of both. The idea is that
+00:03:56.080 obviously this summary here would
+00:03:58.720 maintain all of your interactions in a
+00:04:01.920 very compressed form. So you're you're
+00:04:04.879 losing less information and you're still
+00:04:06.640 maintaining you know maybe the very
+00:04:08.720 first interaction the user might have
+00:04:10.400 introduced themselves given you their
+00:04:12.480 name hopefully that would be maintained
+00:04:15.200 within the summary and it would not be
+00:04:17.279 lost and then you have almost like a
+00:04:19.440 higher resolution on the most recent um
+00:04:22.240 K or K tokens from your memory. Okay, so
+00:04:26.800 let's jump over to the code. We're going
+00:04:28.639 into the 04 chat memory notebook. Open
+00:04:31.280 that in Collab. Okay, now here we are.
+00:04:33.440 Let's go ahead and install the
+00:04:35.120 prerequisites.
+00:04:37.120 Run all.
+00:04:39.040 We again can or cannot use alignmith. It
+00:04:42.479 is up to you. Enter that. And let's come
+00:04:46.160 down and start. So firstly just
+00:04:48.720 initialize our LM using 40 mini in this
+00:04:53.199 example again low temperature and we're
+00:04:56.479 going to start with conversation buffer
+00:04:58.320 memory. Okay. So this is the original
+00:05:02.720 version of this uh memory type. So let
+00:05:07.840 me uh where are we? We're here. So
+00:05:10.479 memory conversation buffer memory and
+00:05:12.240 we're returning messages that needs to
+00:05:14.000 be set to true. So the reason that we
+00:05:17.120 set return messages to true it mentions
+00:05:19.680 up here is if you do not do this, it's
+00:05:22.960 going to be returning your chat history
+00:05:25.680 as a string to an LLM. whereas
+00:05:29.919 well chat lens nowadays would expect
+00:05:33.120 message objects. So yeah, you just want
+00:05:36.639 to be returning these as messages rather
+00:05:38.800 than as strings. Okay, otherwise yeah,
+00:05:41.520 you're going to get some kind of strange
+00:05:43.440 behavior out from your LLMs if you
+00:05:45.199 return them strings. So you do want to
+00:05:47.039 make sure that it's true. I think by
+00:05:48.880 default it might not be true, but this
+00:05:51.120 is coming this is deprecated, right? It
+00:05:53.199 does tell you here as deprecation
+00:05:55.199 warning. This is coming from older blank
+00:05:58.639 chain but it's a good place to start
+00:05:59.919 just to understand this and then we're
+00:06:01.199 going to rewrite this with the runnables
+00:06:03.440 which is the recommended way of doing so
+00:06:05.600 nowadays. Okay. So adding messages to
+00:06:09.280 our memory. We're going to write this.
+00:06:12.080 Okay. So it's just a it's just a
+00:06:13.600 conversation user AI user AI so on
+00:06:16.560 random chat. Main things to note here is
+00:06:19.360 I do provide my name. We have the the
+00:06:21.360 model's name right towards the start of
+00:06:23.919 those interactions. Okay. Okay. So, I'm
+00:06:25.600 just going to add all of those. We'll do
+00:06:29.199 it like this. Okay. Then we can just see
+00:06:33.840 we can load our history like so. So,
+00:06:37.680 let's just see what we have there. Okay.
+00:06:39.840 So, we have a human message, AI message,
+00:06:42.080 human message. Right? This is it exactly
+00:06:44.319 what we I showed you just here. It's
+00:06:46.560 just in that message format from
+00:06:48.319 Langchain. Okay. So, we can do that.
+00:06:51.680 Alternatively, we can actually do this.
+00:06:54.000 So we can get our memory. We initialize
+00:06:56.080 the constational buffer memory as we did
+00:06:58.160 before and we can actually add it
+00:07:00.319 directly the message into our memory
+00:07:03.280 like that. So we can use this add user
+00:07:05.120 message add AI message so on and so on.
+00:07:07.440 Load again and it's going to give us the
+00:07:09.360 exact same thing again. There's multiple
+00:07:11.360 ways to do uh the same thing. Cool. So
+00:07:14.160 we have that to pass all of this into
+00:07:16.880 our LLM. Again this is all deprecated
+00:07:18.960 stuff. We're going to learn how to use
+00:07:20.240 properly in a moment. But this is how
+00:07:23.120 long chain was doing it in the past. So
+00:07:25.199 to pass all of this into our lm, we'd be
+00:07:28.479 using this conversation chain, right?
+00:07:30.400 Again, this is deprecated. Nowadays, we
+00:07:33.919 would be using ll for this. So I I just
+00:07:37.759 want to show you, okay, how this would
+00:07:39.280 all go together. And then we would
+00:07:40.479 invoke, okay, what is my name again?
+00:07:43.199 Let's run that and we'll see what we
+00:07:45.680 get. It's remembering everything,
+00:07:47.520 remember? So this conversation buffer
+00:07:49.680 memory, it doesn't drop messages. It
+00:07:52.240 just remembers everything, right? And
+00:07:54.560 honestly with the sort of high context
+00:07:57.599 windows of many LMs, that might be what
+00:07:59.520 you do. It depends on how long you
+00:08:01.440 expect a conversation to go on for, but
+00:08:03.120 you could you probably in most cases
+00:08:05.199 would get away with this. Okay, so what
+00:08:09.280 let's see what we get. Um I say, &quot;What
+00:08:11.039 is my name again?&quot; Okay, let's see what
+00:08:13.680 it gives me. Says, &quot;Your name is James.&quot;
+00:08:15.680 Great. Thank you.
+00:08:17.759 That works. Now, as I mentioned, all of
+00:08:20.400 this that I just showed you is actually
+00:08:21.680 deprecated. That's the old way of doing
+00:08:23.280 things. Let's see how we actually do
+00:08:25.039 this in modern or up to-ate blank chain.
+00:08:28.319 So, we're going to be using this
+00:08:29.759 runnable with message history. To
+00:08:32.399 implement that, we will need to use LSL.
+00:08:35.039 And for that, we will need to just
+00:08:37.200 define prompt templates, our LM as we
+00:08:39.919 usually would. Okay. So, we're going to
+00:08:41.919 set up our system prompt, which is just
+00:08:44.399 your helpful assistant called Zeta.
+00:08:46.800 Okay, we're going to put in this
+00:08:48.800 messages placeholder.
+00:08:51.200 Okay, so that's important. Essentially,
+00:08:53.120 that is where our messages that are
+00:08:56.160 coming from our conversational buffer
+00:08:58.959 memory is going to be inserted. Right,
+00:09:01.279 so it's going to be that chat history is
+00:09:03.279 going to be inserted after our system
+00:09:05.519 prompt but before our most recent query
+00:09:08.320 which is going to be inserted last here.
+00:09:11.519 Okay, so messages placeholder item
+00:09:13.920 that's important and we use that
+00:09:15.839 throughout the course as well. So we use
+00:09:17.279 it both for chat history and we'll see
+00:09:19.600 later on. We also use it for the
+00:09:21.279 intermediate thoughts that a agent would
+00:09:24.320 go through as well. So important to
+00:09:26.720 remember that little thing. We'll link
+00:09:29.360 our prompt template to our LM again if
+00:09:32.800 we would like. We could also add in the
+00:09:36.080 I think we only have the query here. Oh,
+00:09:39.600 we would probably also want our history
+00:09:41.760 as well. Uh, but I'm not going to do
+00:09:44.080 that right now. Okay, so we have our
+00:09:46.240 pipeline and we can go ahead and
+00:09:48.640 actually define our runnable with
+00:09:50.880 message history. Now, this class or
+00:09:53.440 object when we are initializing it does
+00:09:55.519 require a few items. We can see them
+00:09:57.279 here. Okay, so we see that we have our
+00:10:00.160 pipeline with history. So, it's
+00:10:01.920 basically going to be uh you can you can
+00:10:03.920 see here, right? We have that history
+00:10:05.440 messages key, right? This here has to
+00:10:08.560 align with what we provided as the
+00:10:10.959 messages placeholder in our pipeline.
+00:10:14.399 Right? So we have our pipeline prompt
+00:10:17.279 template here and here. Right? So that's
+00:10:20.240 where it's coming from. It's coming from
+00:10:21.440 messages placeholder. The variable name
+00:10:23.040 is history. Right? That's important.
+00:10:25.680 That links to this. Then for the input
+00:10:29.360 messages key here we have query that
+00:10:33.040 again links to this. Okay. are both
+00:10:37.120 important to have there.
+00:10:39.680 The other thing that is important is
+00:10:41.440 obviously we're passing in that pipeline
+00:10:43.200 from before. But then we also have this
+00:10:45.040 get session history. Basically what this
+00:10:47.600 is doing is it's saying okay I need to
+00:10:49.279 get uh the list of messages that make up
+00:10:51.839 my chat history that are going to be
+00:10:53.519 inserted into this variable. So that is
+00:10:55.920 a function that we define. Okay. And
+00:10:58.480 within within this function, what we're
+00:11:00.480 trying to do here is actually replicate
+00:11:03.360 what we have with the previous
+00:11:06.959 conversation buffer memory. Okay, so
+00:11:09.279 that's what we're doing here. So it's
+00:11:11.920 very simple, right? So we have uh this
+00:11:15.519 inmemory chat message history. Okay, so
+00:11:18.880 that's just the object that we're going
+00:11:20.000 to be returning. What this will do is it
+00:11:22.560 will set up a session ID. The session I
+00:11:24.480 is essentially like a unique identifier
+00:11:26.720 so that each conversation or interaction
+00:11:30.079 within a single conversation is being
+00:11:31.760 mapped to a specific conversation. So
+00:11:33.839 you don't have overlapping let's say of
+00:11:35.519 multiple users using the same system you
+00:11:37.519 want to have a unique session ID for
+00:11:38.959 each one of those. Okay. And what it's
+00:11:41.440 doing is saying okay if session ID is
+00:11:43.279 not in the chat map which is this empty
+00:11:45.760 dictionary we defined here. We are going
+00:11:48.720 to initialize that session with an
+00:11:51.519 inmemory
+00:11:53.040 chat message history. Okay, that's it.
+00:11:57.360 And we return. Okay, and all that's
+00:11:59.360 going to do is it's going to basically
+00:12:01.360 append our messages. They will be
+00:12:03.440 appended within this chat map session ID
+00:12:07.120 and they're going to get returned.
+00:12:08.720 There's nothing really there's nothing
+00:12:10.480 else to it to be honest. So, we invoke
+00:12:14.560 our runnable. Let's see what we get. Oh,
+00:12:17.279 I need to run this.
+00:12:20.959 Okay, note that we do have this config.
+00:12:23.519 So, we have the session ID. That's to
+00:12:25.200 again, as I mentioned, keep different
+00:12:27.040 conversations separate. Okay, so we've
+00:12:29.279 run that. Now, let's run a few more. So,
+00:12:32.399 what is my name again? Let's see if it
+00:12:34.399 remembers. Your name is James. How can I
+00:12:36.880 help you today, James? Okay, so it's
+00:12:41.120 what we've just done there is literally
+00:12:44.320 conversation buffer memory but for up
+00:12:47.839 to-ate lang chain with L cell with
+00:12:50.880 runnables.
+00:12:52.399 So you know the recommended way of doing
+00:12:54.399 it nowadays. So that's a very simple
+00:12:57.600 example. Okay, there's really not that
+00:13:00.800 much to it. It gets a little more
+00:13:03.279 complicated as we start thinking about
+00:13:04.720 the different types of memory. Although
+00:13:06.480 with that being said, it's not massively
+00:13:08.639 complicated. We're only rarely going to
+00:13:10.240 be changing the way that we're getting
+00:13:12.720 our interactions. So let's uh let's dive
+00:13:16.560 into that and see how we would do
+00:13:18.959 something similar with the conversation
+00:13:20.560 buffer window memory. But first, let's
+00:13:22.639 actually just understand okay what is
+00:13:24.880 the conversation buffer window memory.
+00:13:26.560 So as I mentioned near the start, it's
+00:13:28.160 going to keep track of the last k
+00:13:30.000 messages. So there's a few things to
+00:13:32.880 keep in mind here. More messages does
+00:13:35.440 mean more tokens sent with each request.
+00:13:38.240 And if we have more tokens in each
+00:13:40.000 request, it means that we're increasing
+00:13:41.279 the latency of our responses and also
+00:13:43.200 the cost. So with the previous memory
+00:13:46.720 type, we're just sending everything. And
+00:13:48.959 because we're sending everything, that
+00:13:50.560 is going to be increasing our cost. It's
+00:13:52.079 going to be increasing our latency for
+00:13:53.600 every message, especially as a
+00:13:55.120 conversation gets longer and longer. And
+00:13:56.720 we don't we might not necessarily want
+00:13:58.399 to do that. So with this conversation
+00:14:01.519 buffer window memory, we're going to
+00:14:03.839 just say, okay, just return me the most
+00:14:05.920 recent messages. Okay, so let's or let's
+00:14:10.959 see how that would work. Here we're
+00:14:12.480 going to return the most recent four
+00:14:14.480 messages. Okay, we are again make sure
+00:14:17.199 we've turned messages is set to true.
+00:14:19.360 Again, this is deprecated. This is just
+00:14:21.600 the old way of doing it. In a moment,
+00:14:23.680 we'll see the updated way of doing this.
+00:14:27.600 We'll add all of our messages.
+00:14:30.399 Okay, so we have this and just see here,
+00:14:34.399 right? So we've added in all these
+00:14:36.639 messages. There's more than four
+00:14:37.839 messages here and we can actually see
+00:14:39.680 that here. So we have human message AI
+00:14:42.959 human AI human AI human AI. Right? So
+00:14:47.680 we've got four pairs of human AI
+00:14:49.920 interactions there. But here we don't
+00:14:52.079 have as more than four pairs. So four
+00:14:54.399 pairs would take us back all the way to
+00:14:57.600 here. I'm researching different types of
+00:15:00.639 conversational uh memory. Okay. And if
+00:15:03.600 we take a look here, the most the first
+00:15:05.519 message we have is I'm researching
+00:15:07.199 different types of conversational
+00:15:08.240 memory. So it's cut off these two here
+00:15:11.600 which will be a bit problematic when we
+00:15:13.199 ask you what our name is. Okay. So let's
+00:15:15.360 just see going to be using conversation
+00:15:17.360 chain object again. Again just remember
+00:15:19.680 that is deprecated.
+00:15:21.760 And I want to say what is my name again?
+00:15:23.600 Let's see. Let's see what it says.
+00:15:27.040 Uh I'm sorry, but I don't have access to
+00:15:29.279 your name or any personal information.
+00:15:30.480 If you like, you can tell me your name,
+00:15:32.240 right? So it doesn't actually remember.
+00:15:33.920 Uh so that's kind of like a negative of
+00:15:38.160 the conversation buffer window memory.
+00:15:41.120 Of course, the uh to fix that in this
+00:15:43.600 scenario, we might just want to increase
+00:15:45.519 K. Maybe we say remember previous eight
+00:15:48.320 interaction pairs and it will actually
+00:15:50.959 remember. So where's my name again? Your
+00:15:53.839 name is James. So now it remembers.
+00:15:55.360 We've just modified how much it is
+00:15:57.199 remembering. But of course, you know,
+00:15:58.720 there's pros and cons to this. It really
+00:16:00.800 depends on what you're trying to build.
+00:16:02.320 So let's take a look at how we would
+00:16:05.440 actually implement this with the
+00:16:07.600 runnable with message history.
+00:16:10.880 Okay. So you getting a little more
+00:16:13.839 complicated here. Although it it's it's
+00:16:16.639 not it's not complicated but well we'll
+00:16:19.600 see. Okay, so we have a buffer window
+00:16:21.759 message history. We're creating a class
+00:16:23.360 here. This class is going to inherit
+00:16:26.639 from the base chat message history
+00:16:28.800 object from lang chain. Okay. And and
+00:16:31.920 all of our other message history objects
+00:16:34.480 are going to do the same thing before
+00:16:36.639 with the in-memory message object that
+00:16:39.279 was basically replicating the buffer
+00:16:41.920 memory. So we didn't actually need to do
+00:16:44.880 anything. We didn't need to define our
+00:16:47.279 own class here. So in this case we do.
+00:16:50.240 So we follow the same pattern that lang
+00:16:53.519 chain follows with this base chat
+00:16:56.320 message history. And you can see a few
+00:16:57.680 of the functions here that are
+00:16:58.959 important. So add messages and clear are
+00:17:01.680 the ones that we're going to be focusing
+00:17:02.959 on. We also need to have messages which
+00:17:05.359 this object attribute here. Okay. So
+00:17:07.760 we're just implementing the synchronous
+00:17:11.439 methods here. If we want this to be
+00:17:14.079 async, if we want to support async, we
+00:17:15.839 would have to add a add messages, um, a
+00:17:19.359 get messages and a clear as well. So,
+00:17:22.480 let's go ahead and do that. We have
+00:17:24.480 messages. We have K. Again, we're
+00:17:26.400 looking at remembering the top K
+00:17:27.839 messages or most recent K messages only.
+00:17:30.640 So, it's important that we have that
+00:17:32.240 variable. We are adding messages through
+00:17:35.120 this class. This is going to be used by
+00:17:37.679 line chain within our runnable. So, we
+00:17:39.679 need to make sure that we do have this
+00:17:41.039 method. And all we're going to be doing
+00:17:42.799 is extending the self messages uh list
+00:17:46.000 here. And then we're actually just going
+00:17:47.600 to be trimming that down so that we're
+00:17:49.280 not remembering anything beyond
+00:17:52.559 those, you know, most recent K messages
+00:17:55.520 that we have set from here.
+00:17:58.480 And then we also have the clear method
+00:18:00.640 as well. So we need to include that.
+00:18:02.400 That's just going to clear the history.
+00:18:04.160 Okay. So it's not this isn't
+00:18:05.919 complicated, right? it just gives us
+00:18:07.760 this nice default sandal interface for
+00:18:11.760 message history and we just need to make
+00:18:13.840 sure we're following that pattern. Okay,
+00:18:16.080 I've included the uh this print here
+00:18:17.760 just so we can see what's happening.
+00:18:19.200 Okay, so we have that and now for that
+00:18:23.600 get chat history function that we
+00:18:25.919 defined earlier rather than using the
+00:18:28.559 built-in method we're going to be using
+00:18:30.240 our own object which is a buffer window
+00:18:32.960 message history which we defined just
+00:18:35.039 here. Okay, so if session ID is not in
+00:18:39.520 the chat map as we did before, we're
+00:18:41.280 going to be initializing our buffer
+00:18:42.960 window message history. We're setting K
+00:18:45.120 up here with a default value of four.
+00:18:47.440 And then we just return it. Okay. And
+00:18:49.280 and and that is it. So uh let's run
+00:18:51.280 this. We have our runnable with message
+00:18:54.000 history. We have all of these variables
+00:18:56.640 which are exactly the same as before.
+00:18:58.799 But then we also have these variables
+00:19:00.880 here with this history factory config.
+00:19:03.919 And this is where if we have um new
+00:19:08.880 variables that we've added to our
+00:19:11.200 message history, in this case K that we
+00:19:14.160 have down here, we need to provide that
+00:19:17.120 to line chain and tell it this is a new
+00:19:18.799 configurable field. Okay. And we've also
+00:19:21.520 added it for the session ID here as
+00:19:23.440 well. So we're just being explicit and
+00:19:25.520 have everything in there. So we have
+00:19:27.840 that and we run. Okay. Now let's go
+00:19:32.640 ahead and invoke and see what we get.
+00:19:34.720 Okay, so important here this history
+00:19:38.240 factory config that is kind of being fed
+00:19:41.039 through into our invoke so that we can
+00:19:42.720 actually modify those variables from
+00:19:45.360 here. Okay, so we have config
+00:19:46.720 configurable session ID. Okay, we just
+00:19:49.760 put whatever we want in here and then we
+00:19:51.520 also have the number K. Okay, so
+00:19:54.799 remember the previous four interactions.
+00:19:58.240 I think in this one we're doing
+00:19:59.840 something slightly different. I think
+00:20:01.039 we're remembering the four interactions
+00:20:03.600 rather than the previous four
+00:20:04.960 interaction pairs. Okay, so my name is
+00:20:07.600 James. Uh we're going to go through I'm
+00:20:09.600 just going to actually clear this and
+00:20:11.360 then I'm going to start again and we're
+00:20:13.120 going to use the exact same add user
+00:20:15.840 message add AI message that we used
+00:20:17.520 before. We're just manually inserting
+00:20:19.200 all that into our history so that we can
+00:20:21.760 then just see okay what is the result
+00:20:24.160 and you can see that k equals 4 is
+00:20:26.640 actually unlike before where we were
+00:20:28.880 having the uh saving the top four
+00:20:31.840 interaction pairs we're now saving the
+00:20:35.919 most recent four interactions not pairs
+00:20:39.039 just interactions. And honestly I just
+00:20:41.440 think that's clearer. I think it's weird
+00:20:43.120 that the number four for K would
+00:20:46.400 actually save the most recent eight
+00:20:48.480 messages, right? I I think that's odd.
+00:20:51.039 So, I'm just not replicating that
+00:20:53.120 weirdness. We could if we wanted to. I
+00:20:56.320 just don't like it. So, I'm not doing
+00:20:59.280 that. And anyway, we can see from
+00:21:01.600 messages that we're returning just the
+00:21:04.320 most four recent messages. Okay, which
+00:21:06.720 would be these four. Okay, cool. So
+00:21:09.200 we've just using the runnable we've
+00:21:11.840 replicated the old way of having a
+00:21:15.679 window memory and okay I'm going to say
+00:21:18.080 what is my name again as before it's not
+00:21:20.159 going to remember so we can come to here
+00:21:22.640 I'm sorry but I don't say personal
+00:21:24.159 information no so on and so on if you
+00:21:26.159 like tell me your name it doesn't know
+00:21:28.559 now let's try a new one where we
+00:21:31.039 initialize
+00:21:32.559 a new session okay so we're going with
+00:21:35.120 ID K14 so that's going to create a new
+00:21:37.760 conversation in there and we're going to
+00:21:39.440 say we're going to set K to 14.
+00:21:43.520 Okay, great. I'm going to manually
+00:21:45.679 insert the other uh messages as we did
+00:21:48.240 before. Okay, and we can see all of
+00:21:50.559 those. You can see at the top here, we
+00:21:51.919 are still maintaining that hi, my name
+00:21:53.679 is James message. Now, let's see if it
+00:21:57.280 remembers my name. Your name is James.
+00:21:59.840 Okay, there we go. Cool. So, that is
+00:22:03.039 working. We can also see. So, we just
+00:22:05.840 added this. What is my name again? Let's
+00:22:07.679 just see if did that get added to our
+00:22:10.400 list of messages, right? What is my name
+00:22:13.039 again? Nice. And then we also have the
+00:22:15.120 response your name is James. So just by
+00:22:17.039 invoking this because we're using the
+00:22:20.000 the runnable with message history, it's
+00:22:22.960 just automatically adding all of that
+00:22:24.640 into our message history which is nice.
+00:22:28.799 Cool.
+00:22:30.640 All right. So that is the buffer window
+00:22:32.400 memory. Now we are going to take a look
+00:22:34.960 at how we might do something a little
+00:22:37.600 more complicated which is uh the the
+00:22:39.440 summaries. Okay. So when you think about
+00:22:41.200 the summary you know what are we doing?
+00:22:43.200 We're actually taking the messages we're
+00:22:46.240 using that lm call to summarize them to
+00:22:49.679 compress them and then we're storing
+00:22:52.000 them within messages. So let's see how
+00:22:54.080 we would actually uh do that. So to
+00:22:57.600 start with let's just see how uh it was
+00:23:00.799 done in old line chain. So we have
+00:23:02.400 conversation summary memory go through
+00:23:06.240 that
+00:23:07.919 and let's just see what we get. So again
+00:23:10.799 same interactions
+00:23:13.280 right I'm just invoking invoking
+00:23:15.840 invoking I'm not adding these directly
+00:23:17.440 to the messages because it actually
+00:23:18.640 needs to go through a um like that
+00:23:22.240 summarization process and if we have a
+00:23:25.280 look we can see it happening. Okay,
+00:23:27.600 current conversation. So, sorry, current
+00:23:30.320 conversation. Hello there, my name is
+00:23:32.159 James. AI is generating current
+00:23:34.799 conversation. The human introduces
+00:23:36.640 himself as James. AI greets James warmly
+00:23:38.880 and expresses its readiness to chat and
+00:23:41.120 assists inquiring about how his day is
+00:23:43.679 going, right? So, it's summarizing the
+00:23:46.320 the previous interactions. And then we
+00:23:49.120 have, you know, after that summary, we
+00:23:51.200 have the most recent human message and
+00:23:53.200 then the AI is going to generate its
+00:23:55.280 response. Okay? And that continues going
+00:23:57.679 continues going and you can see that the
+00:23:59.440 the final summary here is going to be a
+00:24:01.200 lot longer. Okay. And it's different
+00:24:03.200 that first summary of course as day he
+00:24:06.000 mentions stage of researching different
+00:24:07.280 types of conversational memory. The AI
+00:24:09.440 responds enthusiastically explaining
+00:24:11.360 that conversational memory includes
+00:24:12.880 short-term memory, long-term memory,
+00:24:14.400 contextual memory, personalized memory
+00:24:16.080 and then inquires if James is focused on
+00:24:17.840 the specific type of memory. Okay, cool.
+00:24:21.600 So we get essentially the summary is
+00:24:23.919 just getting uh longer and longer as we
+00:24:26.080 go. But at some point the idea is that
+00:24:28.000 it's not going to keep just growing and
+00:24:30.320 it should actually be shorter than if
+00:24:31.600 you were saving every single interaction
+00:24:33.760 whilst maintaining as much of the
+00:24:36.640 information as possible. But of course
+00:24:39.360 you are going to maintain all of the
+00:24:41.679 information that you would with for
+00:24:43.840 example the the buffer memory. Right?
+00:24:46.799 With the summary, you are going to lose
+00:24:48.880 information, but hopefully less
+00:24:51.200 information than if you're just cutting
+00:24:54.159 interactions. So, you're trying to
+00:24:56.320 reduce your token count whilst
+00:24:58.080 maintaining as much information as
+00:25:00.080 possible.
+00:25:01.760 Now, let's go and ask uh what is my name
+00:25:04.320 again? It should be able to answer
+00:25:06.000 because we can see in the summary here
+00:25:08.880 that I introduce myself as James.
+00:25:12.080 Okay, response. Your name is James. How
+00:25:14.320 is your research going? Okay. So, has
+00:25:16.799 that cool? Let's see how we'd implement
+00:25:19.440 that. So, again, as before, we're going
+00:25:22.080 to go with that conversation summary
+00:25:25.039 message history. We're going to be
+00:25:27.279 importing a system message. Uh we're
+00:25:28.960 going to be using that not for the LM
+00:25:30.720 that we're chatting with, but for the LM
+00:25:32.400 that will be generating our summary. So,
+00:25:37.200 actually that is not quite correct.
+00:25:39.279 There's create a summary. Not that it
+00:25:41.279 matters. It's just the dock string. So,
+00:25:43.120 we have our messages and we also have
+00:25:44.559 the llm. So different different
+00:25:46.720 attribute here to what we had before.
+00:25:48.640 When we initialize a conversation
+00:25:50.480 summary message history, we need to
+00:25:52.559 passing in our LM. We have the same
+00:25:55.520 methods as before. We have add messages
+00:25:57.679 and clear. And what we're doing is as
+00:26:00.080 messages coming, we extend with our
+00:26:02.799 current messages, but then we're
+00:26:05.039 modifying those. Okay. So we construct
+00:26:08.960 our like instructions to make a summary.
+00:26:12.080 Okay. So that is here we have the system
+00:26:14.960 prompt uh given the existing
+00:26:16.400 conversation summary and the new
+00:26:18.000 messages generate a new summary of the
+00:26:19.520 conversation ensuring to maintain as
+00:26:21.279 much relevant information as possible.
+00:26:23.360 Okay. Then we have a human message here
+00:26:26.159 through that we're passing the existing
+00:26:28.320 summary. Okay. And then we're passing in
+00:26:31.440 the new messages.
+00:26:33.600 Okay. Cool. So we format those
+00:26:37.679 and invoke the lm
+00:26:41.120 here. And then what we're doing is in
+00:26:44.080 the messages we're actually replacing
+00:26:46.080 the existing history that we had before
+00:26:48.400 with a new history which is just a
+00:26:50.720 single system summary message. Okay,
+00:26:55.039 let's see what we get. As before, we
+00:26:56.960 have that get chat history exactly the
+00:26:59.120 same as before. The only real difference
+00:27:01.360 is that we're passing in the LM
+00:27:03.200 parameter here. And of course, as we're
+00:27:04.880 passing in the lm parameter in here, it
+00:27:07.919 does also mean that we're going to have
+00:27:09.200 to include that in the configurable
+00:27:10.960 field spec and that we're going to need
+00:27:14.159 to include that when we're invoking our
+00:27:17.200 pipeline. Okay, so we run that pass in
+00:27:21.039 the lm.
+00:27:24.080 Now, of course, one side effect of uh
+00:27:26.400 generating summaries for everything is
+00:27:27.679 that we're actually, you know, we're
+00:27:29.520 generating more. So you are actually
+00:27:32.320 using quite a lot of tokens. Whether or
+00:27:34.559 not you are saving tokens or not
+00:27:36.960 actually depends on the length of a
+00:27:38.400 conversation. As a conversation gets
+00:27:40.480 longer. If you're storing everything
+00:27:42.799 after a little while that the token
+00:27:45.120 usage is actually going to increase. So
+00:27:47.919 if in your use case you expect to have
+00:27:50.960 shorter conversations, you would be
+00:27:53.120 saving money and tokens by just using
+00:27:55.840 this standard buffer memory. Whereas if
+00:27:59.039 you're expecting very long
+00:28:00.399 conversations, you would be saving
+00:28:02.480 tokens and money by using the summary
+00:28:05.679 history. Okay, so let's see what we got
+00:28:08.399 from there. We have a summary of the
+00:28:09.919 conversation. James introduced himself
+00:28:11.360 by saying, &quot;Hi, my name responded
+00:28:13.440 warmly, asking me, &quot;Hi, James.&quot;
+00:28:15.120 Introduction included details about
+00:28:16.480 token usage. Okay, so we actually uh
+00:28:20.399 included everything here, which we
+00:28:22.559 probably should not have done. Why did
+00:28:25.039 we do that?
+00:28:27.120 Uh so in here we're including all of the
+00:28:35.679 oh in here so using we're including all
+00:28:37.760 of the content from the messages. So I
+00:28:39.840 think maybe if we just do
+00:28:42.559 hcontent
+00:28:44.880 for x in messages that should resolve
+00:28:49.120 that.
+00:28:53.120 Okay there we go. So we quickly fix
+00:28:55.120 that. So yeah, before we're passing in
+00:28:56.960 the entire message object, which
+00:28:58.399 obviously includes all of this
+00:29:00.000 information, whereas actually we just
+00:29:01.679 want to be passing in the content. So we
+00:29:05.120 modified that and now we're getting what
+00:29:08.000 we'd expect.
+00:29:10.000 Okay, cool. And then we can keep going,
+00:29:11.840 right? So as we as we keep going, the
+00:29:13.840 summary should get more like abstract
+00:29:17.039 like as we just saw here, it's literally
+00:29:19.120 just giving us the messages directly
+00:29:21.679 almost. Okay, so we're getting bit
+00:29:23.919 summary there and we can keep going.
+00:29:25.919 We're going to add just more messages to
+00:29:27.840 that. We'll see the, you know, as we'll
+00:29:31.039 get send those, we'll get a response,
+00:29:33.440 send it again, get response. We're just
+00:29:35.679 adding all of that, invoking all of
+00:29:38.080 that, and that will be, of course,
+00:29:39.120 adding everything into our message
+00:29:41.600 history. Okay, cool. So, we've run that.
+00:29:44.159 Let's see what the uh latest summary is.
+00:29:49.360 Okay, and then we have this. So this is
+00:29:50.960 a summary that we have inside of our our
+00:29:53.200 chat history.
+00:29:55.200 Okay, cool. Now finally, let's see what
+00:29:59.440 is my name again. We can just double
+00:30:01.120 check, you know, has my name in there,
+00:30:02.960 so it should be able to tell us.
+00:30:09.279 Okay, cool. So your name is James.
+00:30:11.919 Pretty interesting. So let's have a
+00:30:14.399 quick look over at Langsmith. So the
+00:30:18.000 reason I want to do this is just to
+00:30:19.120 point out okay the different essentially
+00:30:22.080 token usage that we're getting with each
+00:30:23.679 one of these. Okay. So we can see that
+00:30:25.360 we have these runnable message history
+00:30:27.200 which probably improved in naming there.
+00:30:30.240 But we can see okay how long is each one
+00:30:33.760 of these taken? How many tokens are they
+00:30:35.840 also using? Come back to here we have
+00:30:39.120 this runnable message history. This is
+00:30:42.000 we'll go through a few of these maybe to
+00:30:45.039 here I think. And we can see here this
+00:30:46.880 is that first interaction where we're
+00:30:48.640 using the buffer memory and we can see
+00:30:52.080 how many tokens we used here. So 112
+00:30:54.880 tokens when we're asking what is my name
+00:30:56.799 again. Okay then we modified this to
+00:31:01.200 include I think it was like 14
+00:31:03.440 interactions or something along those
+00:31:04.799 lines and obviously increases the number
+00:31:06.320 of tokens that we're using. Right? So we
+00:31:08.320 can could see that actually happening
+00:31:10.159 all in Lang stuff which is quite nice
+00:31:11.760 and we can compare okay how many tokens
+00:31:13.760 is each one of these using. Now this is
+00:31:16.799 looking at the buffer window and then if
+00:31:19.360 we come down to here and look at this
+00:31:22.080 one. So this is using our summary. Okay
+00:31:24.799 so our summary with what is my name
+00:31:26.720 again actually use more tokens in this
+00:31:28.559 scenario right which is interesting
+00:31:30.480 because we're trying to compress
+00:31:31.679 information. The reason there's more is
+00:31:34.000 because there's not there hasn't been
+00:31:35.520 that many interactions. As the
+00:31:38.000 conversation length increases
+00:31:41.279 with the summary, this total number of
+00:31:43.679 tokens, especially if we prompt it
+00:31:45.120 correctly to keep that low, that should
+00:31:48.240 remain relatively small. Whereas with
+00:31:51.200 the buffer memory, that will just keep
+00:31:54.159 increasing and increasing as a as a
+00:31:56.320 conversation gets longer.
+00:31:58.480 So useful little way of using lang there
+00:32:02.320 to just kind of figure out okay in terms
+00:32:04.480 of tokens and costs what we looking at
+00:32:06.640 for each of these memory types. Okay so
+00:32:09.440 our final memory type acts as a mix of
+00:32:13.919 the summary memory and the buffer
+00:32:16.720 memory. So, what it's going to do is
+00:32:19.039 keep the buffer up until an N number of
+00:32:23.120 tokens and then once a message exceeds
+00:32:26.000 the number of token limit for the
+00:32:28.159 buffer, it is actually going to be added
+00:32:31.200 into our summary. So this memory has the
+00:32:34.960 benefit of remembering in detail the
+00:32:38.640 most recent interactions whilst also not
+00:32:42.240 having the limitation of using too many
+00:32:46.480 tokens as a conversation gets longer and
+00:32:49.360 even potentially exceeding context
+00:32:51.120 windows if you try super hard. So this
+00:32:53.600 is a very interesting approach. Now as
+00:32:56.320 before let's try the original way of
+00:32:59.440 implementing this then we will go ahead
+00:33:03.200 and use our update method for
+00:33:05.440 implementing this. So we come down to
+00:33:07.440 here and we're going to line chain
+00:33:09.919 memory import conversation summary
+00:33:12.399 buffer memory. Okay, a few things here.
+00:33:15.919 lm for summary. We have the n number of
+00:33:19.760 tokens that we can keep before they get
+00:33:22.320 added to the summary. and then return
+00:33:24.399 messages of course. Okay, you can see
+00:33:26.240 again this is deprecated. We use the
+00:33:28.399 conversation chain and then we just pass
+00:33:31.600 in our memory there and then we can
+00:33:33.200 chat. Okay, so super straightforward.
+00:33:36.960 First message, we'll add a few more
+00:33:39.120 here.
+00:33:40.640 Again, we have to invoke because our
+00:33:43.919 memory type here is using MLM to create
+00:33:46.720 those summaries as it goes. And let's
+00:33:49.519 see what they look like. Okay. So we can
+00:33:51.360 see for the first message here we have a
+00:33:53.200 human message and then an AI message.
+00:33:57.440 Then we come a little bit lower down
+00:33:58.880 again. Same thing human message is the
+00:34:00.960 first thing in our history here. Then
+00:34:04.320 it's a system message. So this is at the
+00:34:06.320 point where we've exceeded that 300
+00:34:08.480 token limit and the memory type here is
+00:34:11.918 generating those summaries. So that
+00:34:14.399 summary comes in as a message and we can
+00:34:16.879 see okay the human named James
+00:34:18.800 introduces himself and mentions he's
+00:34:20.399 researching different types of
+00:34:21.440 conversational memory and so on and so
+00:34:23.440 on right okay cool so we have that then
+00:34:27.520 let's come down a little bit further we
+00:34:29.918 can see okay so the summary there okay
+00:34:34.159 so that's what we that's what we have
+00:34:36.480 that is the implementation for the old
+00:34:40.800 version of this memory again we can see
+00:34:43.599 is deprecated. So, how do we implement
+00:34:45.520 this for our more recent versions of
+00:34:49.520 lang chain and specifically 0.3? Well,
+00:34:52.879 again, we're using that runnable with
+00:34:54.399 message history and it looks a little
+00:34:57.920 more complicated than we were getting
+00:34:59.839 before, but it's actually just, you
+00:35:01.280 know, it's nothing too complex. We're
+00:35:05.200 just creating a summary as we did with
+00:35:07.520 the previous memory type. But the
+00:35:10.560 decision for adding to that summary is
+00:35:12.800 based on in this case actually the
+00:35:15.119 number of messages. So I didn't go with
+00:35:16.880 the the lang chain version where it's a
+00:35:20.000 number of tokens. I don't like that. I
+00:35:22.400 prefer to go with messages. So what I'm
+00:35:24.800 doing is saying okay last k messages.
+00:35:27.520 Okay. Once we exceed k messages, the
+00:35:31.359 messages beyond that are going to be
+00:35:33.520 added to the memory. Okay, cool. So
+00:35:37.040 let's see. We first initialize our
+00:35:41.280 conversation summary buffer message
+00:35:43.680 history class with lm and k. Okay, so
+00:35:48.240 these two here. So lm of course to
+00:35:50.240 create summaries and k is just the the
+00:35:52.240 limit of the number of messages that we
+00:35:53.839 want to keep before adding them to the
+00:35:55.839 summary or dropping them from our
+00:35:57.760 messages and adding them to the summary.
+00:36:00.240 Okay. So we will begin with okay do we
+00:36:04.800 have an existing summary. So the reason
+00:36:07.920 we set this to none is we can't extract
+00:36:11.839 the summary the existing summary unless
+00:36:14.240 it already exists. And the only way we
+00:36:17.200 can do that is by checking okay do we
+00:36:19.280 have any messages. If yes we want to
+00:36:21.920 check if within those messages we have a
+00:36:24.160 system message because we're we're doing
+00:36:25.839 the same structure as what we have up
+00:36:28.320 here where the system message that first
+00:36:30.079 system message is actually our summary.
+00:36:32.560 So that's what we're doing here. We're
+00:36:34.000 checking if there is a summary message
+00:36:36.000 already stored within our messages.
+00:36:38.800 Okay.
+00:36:41.040 So we're checking for that. If we find
+00:36:43.680 it, we just do we have this little print
+00:36:45.680 statement so we can see that we found
+00:36:47.200 something and then we just make our
+00:36:50.560 existing summary. I should actually move
+00:36:53.200 this to the first instance here. Okay,
+00:36:58.000 so that existing summary will be set to
+00:37:02.800 the first message.
+00:37:06.079 Okay, and this would be a system message
+00:37:08.640 rather than a string.
+00:37:11.680 Cool. So we have that. Then we want to
+00:37:14.880 add any new messages to our history.
+00:37:18.800 Okay. So we're extending the history
+00:37:20.400 there. And then we're saying, okay, if
+00:37:22.400 the length of our history is exceeds the
+00:37:25.599 K value that we set, we're going to say,
+00:37:28.000 okay, we found that many messages. We're
+00:37:29.520 going to be dropping the latest. It's
+00:37:30.800 going to be the latest two messages.
+00:37:33.520 this I will say here one thing or one
+00:37:36.720 problem with this is that we're not
+00:37:39.359 going to be saving that many tokens if
+00:37:40.720 we're summarizing every two messages.
+00:37:43.680 So, what I would probably do is in in an
+00:37:47.200 actual like production setting, I would
+00:37:50.720 probably say let's go up to
+00:37:54.240 20 messages. And once we hit 20
+00:37:56.079 messages, let's take the previous 10,
+00:37:58.880 we're going to summarize them and put
+00:38:00.640 them into our summary alongside any, you
+00:38:02.880 know, previous summary that already
+00:38:04.160 existed. But in in, you know, this is
+00:38:06.480 also fine as well. Okay. So, we say we
+00:38:11.520 found those measures. We're going to
+00:38:13.200 drop the latest two messages. Okay. So,
+00:38:16.400 we pull the the oldest messages out. I
+00:38:20.800 should say not the latest. It's the
+00:38:22.560 oldest.
+00:38:24.800 Not the latest. Want to keep the latest
+00:38:26.880 and drop the oldest. So, we pull out the
+00:38:30.000 oldest messages and keep only the most
+00:38:32.320 recent messages. Okay.
+00:38:35.920 Then I'm saying, okay, if we if we don't
+00:38:38.079 have any old messages to summarize, we
+00:38:41.119 don't do anything. and we just return.
+00:38:42.640 Okay, so let's indicates that this has
+00:38:44.960 not been triggered, we would hit this.
+00:38:48.720 But in the case this has been triggered
+00:38:51.680 and we do have old messages, we're going
+00:38:54.640 to come to here. Okay, so this is we can
+00:38:59.599 see we have a system message prompt
+00:39:01.520 template saying given the existing
+00:39:03.200 conversation summary and the new
+00:39:04.320 messages generate a new summary of the
+00:39:06.560 conversation ensuring to maintain as
+00:39:08.720 much relevant information as possible.
+00:39:10.800 So if you want to be more conservative
+00:39:12.720 with tokens, we could modify this prompt
+00:39:14.880 here to say keep the summary to within
+00:39:17.760 the length of a single paragraph for
+00:39:20.720 example. And then we have our human
+00:39:23.040 message prompt template which can say
+00:39:24.640 okay here's the existing conversation
+00:39:26.480 summary and here are new messages. Now
+00:39:28.720 new messages here is actually the old
+00:39:30.640 messages but the way that we're framing
+00:39:33.359 it to the LM here is that we want to
+00:39:35.760 summarize the whole conversation, right?
+00:39:38.000 It doesn't need to have the most recent
+00:39:39.680 measures that we're storing within our
+00:39:42.079 buffer. It doesn't need to know about
+00:39:43.920 those. That's irrelevant to the summary.
+00:39:46.000 So, we just tell it that we have these
+00:39:47.760 new measures. And as far as this LM is
+00:39:49.599 concerned, this is like the full set of
+00:39:52.320 interactions. Okay. So, then we would
+00:39:54.480 format those and invoke our LM. And then
+00:39:58.960 we'll print out our new summary so we
+00:40:00.560 can see what's going on there. And we
+00:40:03.359 would prepend that new summary to our
+00:40:06.880 conversation history. Okay. And and this
+00:40:09.440 will work. So we can just prepend it
+00:40:13.119 like this because we've already popped
+00:40:18.320 where was it
+00:40:20.480 up here. If we have an existing summary,
+00:40:23.200 we already popped that from the list. So
+00:40:24.640 it's already been pulled out of that
+00:40:25.920 list. So it's okay for us to just we
+00:40:28.800 don't need to say like we don't need to
+00:40:31.359 do this because we've already dropped
+00:40:33.440 that initial system message if it
+00:40:35.599 existed. Okay. And then we have the
+00:40:37.520 clear method as before. So that's all of
+00:40:40.560 the logic for our conversational summary
+00:40:45.119 buffer memory. We redefine our get chat
+00:40:49.119 history function with the lm and k
+00:40:53.920 parameters there. And then we'll also
+00:40:55.920 want to set the configurable fields
+00:40:57.760 again. So that is just going to be of
+00:40:59.839 course session id lm and k.
+00:41:04.400 Okay. So now we can invoke the k value
+00:41:07.359 to begin with is going to be four.
+00:41:11.040 Okay. So we can see no old messages to
+00:41:13.839 update summary with. That's good. Let's
+00:41:17.200 invoke this a few times and let's see
+00:41:18.880 what we get.
+00:41:21.200 Okay. So no old messages to update
+00:41:22.800 summary with.
+00:41:26.720 found six matches dropping the oldest
+00:41:29.040 two. And then we have new summary in the
+00:41:31.200 conversation. James and Bruce himself is
+00:41:33.359 interested researching different types
+00:41:35.280 of conversational memory. Right? So you
+00:41:37.119 can see there's quite a lot in here at
+00:41:38.880 the moment. So we would definitely want
+00:41:40.800 to
+00:41:42.400 prompt the LLM, the summary LLM to keep
+00:41:45.359 that short. Otherwise, we're just
+00:41:47.440 getting a ton of stuff,
+00:41:50.240 right? But we can see that that is you
+00:41:52.800 know it's it's working it's functional.
+00:41:54.800 So let's go back and see if we can
+00:41:57.200 prompt it to be a little more concise.
+00:41:59.760 So we come to here ensuring to maintain
+00:42:01.760 as much relevant information as
+00:42:03.520 possible. However we need to keep
+00:42:09.920 our summary
+00:42:11.920 concise.
+00:42:13.440 The limit
+00:42:15.760 is a single short paragraph. Okay.
+00:42:20.319 something like this. Let's try and let's
+00:42:22.960 see what we get with that.
+00:42:26.240 Okay, so message one again, nothing to
+00:42:28.880 update.
+00:42:30.480 See this? So, new summary. You can see
+00:42:32.000 it's a bit shorter. It doesn't have all
+00:42:33.520 those bullet points.
+00:42:37.920 Okay, so that seems better. Let's see.
+00:42:41.119 So you can see the first summary is a
+00:42:44.560 bit shorter,
+00:42:46.240 but then as soon as we get to the second
+00:42:48.079 and third summaries, the second summary
+00:42:50.079 is actually slightly longer than the
+00:42:52.319 third one. Okay, so we're going to be
+00:42:54.480 we're going to be losing a bit of
+00:42:56.160 information in this case, more than we
+00:42:58.400 were before, but we're saving a ton of
+00:43:00.319 tokens. So that's of course a good
+00:43:03.040 thing. And of course, we could keep
+00:43:04.480 going and adding many interactions here.
+00:43:07.119 And we should see that this conversation
+00:43:09.280 summary will be it should maintain that
+00:43:12.000 sort of length of around one short
+00:43:14.800 paragraph. So that is it for this
+00:43:18.720 chapter on conversational memory. We've
+00:43:21.839 seen a few different memory types. We've
+00:43:24.240 implemented their old deprecated
+00:43:26.319 versions so we can see what they were
+00:43:28.560 like and then we've reimplemented them
+00:43:31.359 for the latest versions of lang chain.
+00:43:33.839 And to be honest, using logic where we
+00:43:36.640 are getting much more into the weeds and
+00:43:39.280 that is in some ways okay it complicates
+00:43:42.400 things that is true but in other ways it
+00:43:45.119 gives us a ton of control. So we can
+00:43:47.359 modify those memory types as we did with
+00:43:49.359 that final summary buffer memory type.
+00:43:52.079 We can modify those to our liking which
+00:43:55.520 is incredibly useful when you're
+00:43:58.240 actually building applications for the
+00:44:00.079 real world. So that is it for this
+00:44:01.920 chapter. We'll move on to the next one.

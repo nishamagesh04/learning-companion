@@ -1,0 +1,799 @@
+# tactiq.io free youtube transcript
+# How to Critically Evaluate AI-Written Code?
+# https://www.youtube.com/watch/8xTCQ7Ltz5Y
+
+00:00:01.680 Is AI really going to take your job as a
+00:00:04.000 developer? In the past couple of years,
+00:00:06.240 we've heard all kinds of bold claims.
+00:00:08.559 From viriven code magically writing
+00:00:11.200 entire apps to talk of mass layoffs
+00:00:13.599 thanks to coding agents. But more and
+00:00:16.239 more research is shown what we've known
+00:00:18.240 all along. AI is just another
+00:00:20.960 productivity tool that developers can
+00:00:22.960 add to their kits. And just like any
+00:00:25.199 tool, the LLMs underlying these coding
+00:00:27.840 agents have their limits. They tend to
+00:00:30.240 struggle with more complex tasks and
+00:00:32.000 mature code bases. They can really help
+00:00:34.239 with some tasks, but when things get
+00:00:36.000 complex, that's where you come in. Just
+00:00:38.800 like mentoring a junior developer, you
+00:00:41.040 need to check the code that AI produces.
+00:00:43.680 You need to look out for bugs, for
+00:00:45.360 security flaws, or that one horrifying
+00:00:47.440 pattern that borrowed from a 2013 Stack
+00:00:50.000 Overflow answer. The expertise of
+00:00:52.399 seasoned developers is needed to take
+00:00:54.079 the code from prototype to production
+00:00:56.160 ready. to take it from code to quality
+00:00:59.039 code. Hi, I'm Jody Burchil, a data
+00:01:01.680 scientist and [music] developer advocate
+00:01:02.960 at Jet Frames. I've been working with
+00:01:04.799 LLMs for a number of years and have a
+00:01:06.799 solid understanding of their strengths
+00:01:08.120 [music] and limitations.
+00:01:11.200 In this video, my colleagues and I are
+00:01:13.040 going to show you how to critically
+00:01:14.400 evaluate code created by AI coding
+00:01:17.040 agents. We're going to show you what
+00:01:18.640 these models are good at, where they
+00:01:20.400 fall short, and how to use them to get
+00:01:22.640 the best performance. And critically,
+00:01:24.720 we're going to show you that while these
+00:01:26.560 are important new productivity tools for
+00:01:28.799 developers, that they're definitely not
+00:01:30.720 at the level of replacing developers
+00:01:33.119 yet. Hey, Marco, how are you?
+00:01:35.439 >> Hey, Jody. What's up?
+00:01:36.560 >> I'm good. I actually have an [music]
+00:01:39.040 idea. Are you in?
+00:01:40.320 >> I'm in.
+00:01:41.119 >> Okay. So, Marco, I've grabbed you
+00:01:44.400 because I have a favor to ask. So what I
+00:01:47.200 want to be able to illustrate is the
+00:01:49.119 actual strengths and limitations of AI
+00:01:50.960 coding agents because we keep hearing
+00:01:53.040 all this stuff like vibe coding is going
+00:01:55.680 to let you make an app without any
+00:01:57.600 knowledge of of development or you know
+00:02:00.521 [music] AI is going to replace junior
+00:02:02.320 developers and I want to know how we can
+00:02:05.920 show this isn't true.
+00:02:07.520 >> Right? I got something for you. So what
+00:02:09.119 I essentially thought we could do is get
+00:02:11.440 three senior developers here from Jet
+00:02:13.120 Brains, our colleagues,
+00:02:14.640 >> have a look at three different projects
+00:02:16.640 from a web-based Java application to
+00:02:19.040 algorithms to even writing our own
+00:02:20.959 custom B-crypt hashing function.
+00:02:24.000 >> So real life tasks essentially. And our
+00:02:27.360 colleagues are going to ask Julie to do
+00:02:29.280 a couple of things uh with these
+00:02:30.879 projects and then review the code and
+00:02:32.480 then we'll see if we actually still need
+00:02:34.800 human help in the process. Yeah, I kind
+00:02:37.440 of suspect [music] we will, but uh
+00:02:39.440 >> so do I.
+00:02:40.239 >> Yes, I think it's going to be very nice
+00:02:41.840 to concretely see where human expertise
+00:02:44.879 come [music] into play and work with the
+00:02:46.959 AI agent.
+00:02:47.920 >> Yes, let's do it. Let's have a look.
+00:02:49.840 >> All right, let's go. [music]
+00:02:55.680 >> Uh so my goal as a security analyst is
+00:02:58.879 uh right now is to analyze all the
+00:03:01.360 dependencies that we use in our company.
+00:03:04.319 And I asked Juni like hey can you help
+00:03:07.040 me uh analyze my dependencies uh I know
+00:03:10.560 I'm using this like netty library which
+00:03:13.280 is uh a low-level networking library uh
+00:03:16.560 in Java. Uh and I want to understand
+00:03:19.920 what do we depend on. Uh so I asked Uni
+00:03:23.360 and it generated this project for me and
+00:03:25.840 I can run it and it kind of works like
+00:03:28.800 it generates some dependencies for me
+00:03:31.760 like bunch of things it's using but then
+00:03:35.519 I realized okay this is not probably all
+00:03:38.560 it's using cuz my dependencies can have
+00:03:42.400 their own dependencies. Uh so I need to
+00:03:45.440 basically take into account transitive
+00:03:47.440 dependencies. So I ask junive
+00:03:57.599 and now it will start working.
+00:04:00.959 >> A few moments later
+00:04:02.799 >> journey has finished. Let's look at the
+00:04:04.959 code. It added
+00:04:07.439 something here. So basically in the main
+00:04:11.760 part of the program where it starts
+00:04:14.319 looking for translate dependencies which
+00:04:16.160 seems good and well we can navigate to
+00:04:18.720 this print dependency tree to see what
+00:04:21.519 it actually does and it seems to print
+00:04:25.440 the dependencies and then recurse to all
+00:04:29.199 its children and basically do the same
+00:04:31.040 thing over and over again which is kind
+00:04:33.040 of expected what
+00:04:35.759 uh I think an application like this
+00:04:38.560 would do. Uh we can even try to run it
+00:04:42.720 and see if it actually works.
+00:04:47.120 And it seems to run for way longer.
+00:04:49.759 Well, which is kind of expected because
+00:04:52.000 now it needs to look at like all the
+00:04:53.600 transitive dependencies. Um Ignot, what
+00:04:58.000 do you think of this code?
+00:05:01.520 And at least it looks consistent with
+00:05:03.440 the rest of the code in this class in
+00:05:06.160 the same sense that it's not maybe not
+00:05:08.720 better, not worse. Um
+00:05:11.680 um so yeah, it's a it's a good first
+00:05:13.840 sign I think. Um have you noticed
+00:05:16.639 anything?
+00:05:17.520 >> Uh yes, it's a good thing to start with.
+00:05:22.000 Uh but the first thing which immediately
+00:05:24.960 strikes my eye is exception handling in
+00:05:30.080 fetch child dependencies
+00:05:32.720 function which actually
+00:05:35.440 uh does the network request to get
+00:05:38.080 dependencies from somewhere I guess from
+00:05:41.199 Maven Central.
+00:05:43.280 Uh
+00:05:44.960 yes probably from Maven Central. And if
+00:05:48.720 it fails for whatever reason, what will
+00:05:52.080 you do? You will just return an empty
+00:05:54.080 list, which is not how people usually
+00:05:58.400 handle exceptions.
+00:06:00.400 I mean, uh you should probably print
+00:06:02.960 that something got wrong because
+00:06:07.120 anything can can be wrong when you are
+00:06:09.280 working with network and in this case
+00:06:11.759 you will just return okay we have no
+00:06:13.600 dependencies, we have no
+00:06:15.039 vulnerabilities, everything is fine.
+00:06:18.400 I would not have accepted this.
+00:06:20.639 >> Yes,
+00:06:21.680 >> that was a really good point.
+00:06:23.919 >> I agree.
+00:06:25.120 >> Another thing which is maybe a bit
+00:06:28.160 strange we didn't really specify is that
+00:06:30.960 it will only include dependencies with
+00:06:33.360 compile and runtime scope. Uh and if sc
+00:06:37.919 and if scope is null and right now we
+00:06:40.000 don't really understand what scope is
+00:06:42.479 null means but it it seems definitely
+00:06:45.280 suspicious.
+00:06:47.280 And also the comment um like keep it
+00:06:49.919 simple, include compile and runtime
+00:06:52.080 dependencies and then skip optional
+00:06:53.600 dependencies. Um I don't know if I would
+00:06:57.360 I mean the comment doesn't explain much
+00:06:59.120 to me. To me like this comment is almost
+00:07:00.960 useless. I would like to other than keep
+00:07:04.240 it simple. It wasn't in the prompt,
+00:07:06.160 right? It just decided to keep it
+00:07:07.520 simple, but then it's like it doesn't
+00:07:09.120 tell me anything.
+00:07:10.319 >> AI is lazy. it always wants to make as
+00:07:14.000 simplest as possible which is actually
+00:07:16.960 not bad. Uh yeah, the comment basically
+00:07:20.000 repeats the code. So uh it's always
+00:07:24.000 against like uh if you read
+00:07:27.840 >> any
+00:07:29.440 online guide on how to write code
+00:07:31.440 comments. Uh you will always see like
+00:07:34.400 don't repeat your code in the comment.
+00:07:37.520 tell why it's done this way not how it's
+00:07:41.840 done because how it's done is already
+00:07:43.360 written in the code. So yes, comment is
+00:07:46.400 useful but uh I would not
+00:07:50.960 say much about this implementation. I
+00:07:54.000 mean we didn't specify which kind of
+00:07:57.599 dependencies should we include. So it
+00:08:00.479 decided to do some some good guess and
+00:08:05.919 this gas is not bad and if it's if you
+00:08:09.039 don't satisfy it with it you can easily
+00:08:10.960 fix it even without AI just add some
+00:08:14.400 more conditions or remove some
+00:08:15.919 conditions it's easy to fix it. So you
+00:08:18.240 have framework and you can adjust it in
+00:08:21.759 any way you want. So given this project,
+00:08:24.879 if if a human submitted that that patch,
+00:08:28.080 would you would you approve it?
+00:08:30.319 >> Uh well, as I said previously, I'm
+00:08:33.200 completely unsatisfied with exception
+00:08:34.799 handling.
+00:08:35.679 >> But uh aside from that,
+00:08:38.479 uh I don't see much things to nitpick. I
+00:08:42.320 must say that it was careful enough to
+00:08:46.080 care about uh cycling dependencies.
+00:08:51.440 So even if package A depends on B and
+00:08:54.800 package B depends on A, it will not go
+00:08:58.000 into stack overflow error, it will
+00:09:00.160 gracefully
+00:09:01.839 write already seen which is really good.
+00:09:05.760 Uh I may nitpick about uh
+00:09:11.040 recussion because this function is
+00:09:13.440 actually recursive.
+00:09:15.440 uh but
+00:09:18.000 I would say that it's highly unlikely
+00:09:20.399 that you will have such a deep tree of
+00:09:23.920 dependencies to step into STO car. So
+00:09:27.360 probably for beginning it's more than
+00:09:30.480 enough to implement this recursive
+00:09:33.120 function. So in general it's good except
+00:09:37.360 exception handling. Yes, for me I guess
+00:09:41.120 it would really depend on what we're
+00:09:43.200 going to do with this code. Like am I
+00:09:45.279 going to roll this out to production
+00:09:47.600 anywhere? Probably I would not agree
+00:09:51.440 with merging this. Uh but since I'm just
+00:09:54.640 like a security analyst and I I I want
+00:09:57.279 to, you know, just get the dependencies
+00:09:59.519 quickly, I think this solution was
+00:10:01.279 pretty good and Junior generated it in
+00:10:03.920 reasonable time. So it it definitely
+00:10:06.080 made me more productive. If this is what
+00:10:08.959 I wanted to do, I think if I was an
+00:10:11.519 inexperienced developer, I I would still
+00:10:13.440 have to go into the documentation and
+00:10:15.839 understand, okay, what kind of
+00:10:17.040 dependencies are there? What kind of
+00:10:20.000 type of dependencies and which one do I
+00:10:22.560 actually need to care about? Um, in this
+00:10:25.279 case probably it's also possible to use
+00:10:26.800 AI and ask AI like okay give it more
+00:10:30.079 context cuz now we just asked it to
+00:10:32.079 print the dep the dependencies but we
+00:10:33.760 didn't really specify why we want to
+00:10:36.160 print the dependencies and maybe if we
+00:10:38.240 did it would generate it uh something
+00:10:41.440 more useful for us or something more
+00:10:44.000 accurate. Yes, this very important point
+00:10:47.040 like uh junior can generate a code for
+00:10:50.480 you and it can generate
+00:10:53.200 quite decent code not so bad code but
+00:10:56.880 you should really understand what do you
+00:10:59.200 want and if you don't actually
+00:11:01.120 understand then the result could be
+00:11:04.399 anything.
+00:11:06.797 [music]
+00:11:10.160 The idea of this project is kind of
+00:11:12.480 strange mostly to evaluate the
+00:11:16.079 technology rather than doing something
+00:11:19.040 practical. Uh it's to create an
+00:11:22.399 implementation of brypt uh crypton hash
+00:11:26.880 algorithm from scratch. So you know
+00:11:30.720 brypt is uh like more advanced more
+00:11:34.800 modern
+00:11:36.480 way to get the hash of your string. uh
+00:11:40.240 like MD5 or SHA1
+00:11:44.880 or something but it's much more secure
+00:11:49.600 much more modern so and I of course
+00:11:52.959 there are many libraries which can do it
+00:11:55.839 for you but I just want to get it right
+00:11:59.600 in my project to minimize dependencies
+00:12:03.920 probably I want to
+00:12:06.399 like put it into some very restrict
+00:12:09.120 restricted environment where I cannot
+00:12:11.200 deploy a lot of code. I started with
+00:12:13.279 completely empty Java project and I
+00:12:17.440 asked Juny to implement the crypt
+00:12:20.959 hashion function from scratch in Java
+00:12:24.560 without using any external libraries. Uh
+00:12:28.639 sometimes it's quite important to add
+00:12:31.279 give me a full implementation not just a
+00:12:33.680 dummy class because you know AI can be
+00:12:37.519 lazy and it can just generate a stop for
+00:12:40.800 you and say like the rest you can
+00:12:43.600 implement by yourself. So we don't want
+00:12:46.160 this. We want a full implementation.
+00:12:48.880 And after that I've got a class
+00:12:52.880 which looks uh okay it's really long
+00:12:57.519 one. So we have almost 500 lines of code
+00:13:04.079 some tables with a lot of numbers.
+00:13:07.360 Yes. But uh if you take a look at
+00:13:12.480 uh public API there are not so many
+00:13:16.880 methods again sold hash PV check PV.
+00:13:23.200 So it looks like something was
+00:13:25.279 implemented.
+00:13:26.959 Uh Bartnat
+00:13:29.279 uh do you have any opinion on this code?
+00:13:31.440 Could you review it? I
+00:13:32.320 >> I think you summed it up perfectly.
+00:13:33.760 Something was implemented. Like how how
+00:13:36.320 sure are you that this actually conforms
+00:13:39.200 to the standards and that it works? Not
+00:13:41.600 in the sense even that you can run it,
+00:13:43.040 but like even if you can run it, even if
+00:13:45.200 you give it some string and it and it
+00:13:46.880 gives you something back, how sure can
+00:13:49.360 you be that you can trust it.
+00:13:51.440 >> Oh, I like that one.
+00:13:52.959 >> So do I.
+00:13:54.720 That's really good question because yes
+00:13:58.880 uh if this is a cryptographic function
+00:14:04.480 uh we can we should be really sure that
+00:14:07.839 it works and it's really the code which
+00:14:11.839 only a few experts in the world can
+00:14:14.320 follow can actually understand. Uh so
+00:14:18.160 basically you need to compare the
+00:14:20.880 algorithm described in some scientific
+00:14:23.040 paper with actual code. There is
+00:14:25.600 probably not like one to one uh
+00:14:29.920 correspondence. So it it will certainly
+00:14:33.519 take a lot of time to understand what's
+00:14:36.160 going on.
+00:14:36.720 >> I I think there's definitely a lot of
+00:14:39.440 suspicious parts about this
+00:14:41.199 implementation. Like if you look at the
+00:14:43.279 checkp PW method for example, you see
+00:14:46.000 that there are unused local variables
+00:14:48.320 which is already like a bit red flag of
+00:14:51.120 something going wrong or at least doing
+00:14:54.240 some work that maybe is not even needed.
+00:14:57.440 Um I would not trust this
+00:15:00.399 implementation. Uh I know that some
+00:15:04.240 people have tried like real experts have
+00:15:06.480 tried building like their own password
+00:15:08.560 hashing methods uh methods before and
+00:15:13.040 some of them have been
+00:15:15.440 uh able to be reversed and uh some
+00:15:18.880 passwords were compromised because of
+00:15:21.519 this. Uh so I would especially not trust
+00:15:25.360 any AI to do this for me. One
+00:15:28.560 interesting thing that that I also kind
+00:15:30.240 of jumps at you almost is the the code
+00:15:33.360 style. It feels like the LLM was trained
+00:15:35.839 on some probably on some implementation
+00:15:38.320 of Brypt from very a very long time ago
+00:15:41.360 where it tried to adapt like maybe you
+00:15:43.920 know a bunch of solutions into one and
+00:15:45.760 it feels like it's
+00:15:48.880 the code style is very opinionated but
+00:15:50.959 it's at least it's consistent and there
+00:15:52.880 are some weird things like it declares
+00:15:55.519 um static methods in in uppercase
+00:15:59.279 um and then it it sometimes declares
+00:16:01.519 multiple local variables on the same
+00:16:04.240 line. It adds final to local variables
+00:16:06.720 again everywhere almost everywhere. Um
+00:16:09.519 this is not necessarily how I would
+00:16:12.160 write code nowadays. You can uh remember
+00:16:16.079 code style of Doug Lee for example which
+00:16:18.480 is very special and if you go into Java
+00:16:21.600 util concurrent you can like smell that
+00:16:24.720 it it different from what you see
+00:16:27.040 outside and you would not say that oh
+00:16:29.680 dly you are writing Java the wrong way
+00:16:32.160 because for this task it's okay but uh
+00:16:36.320 here it looks like it just seen this
+00:16:41.040 code style but don't understand why why
+00:16:44.000 it exists. Uh one other thing which I
+00:16:46.079 noticed is that there is a char 64
+00:16:49.360 method and it checks for Java char
+00:16:53.920 variable
+00:16:55.600 to be
+00:16:57.360 uh whether it's less than zero or not.
+00:17:01.839 And this check is clearly redundant
+00:17:04.000 because char variable is never less than
+00:17:06.640 zero. It's unsigned
+00:17:08.959 and you know it in Java. there is a
+00:17:12.640 static analyzer warning but probably
+00:17:15.439 indeed uh it's seen some similar code on
+00:17:20.640 C++ or whatever where types have
+00:17:23.679 different bounds so I don't know
+00:17:25.599 >> like well next step is to you know pick
+00:17:28.240 it up throw it away and then import some
+00:17:30.000 library and use a library instead
+00:17:32.320 >> like is it really working uh can we
+00:17:36.400 >> can we check now do you think
+00:17:37.840 >> 12 seconds later
+00:17:40.320 >> hello port.
+00:17:43.120 Oops.
+00:17:44.720 Array index out of bounds exception.
+00:17:47.200 >> It's not good. That's not good.
+00:17:49.280 >> Index 996 out of bounds for lens.
+00:17:53.200 >> It's
+00:17:54.720 one of the exceptions you don't want to
+00:17:56.559 get.
+00:17:56.960 >> Okay. Good luck debugging. Says good
+00:17:59.520 luck debugging. [laughter]
+00:18:01.840 And yes, you you were probably right.
+00:18:04.240 It's better to throw this code away
+00:18:06.960 because uh
+00:18:09.360 my level of understanding is far below
+00:18:13.280 and I cannot I cannot fix anything here.
+00:18:16.240 Well, I can probably ask Junior to fix
+00:18:18.160 but I really doubt it will succeed.
+00:18:20.880 >> But also to be fair, I would come to
+00:18:22.320 that conclusion even if it was submitted
+00:18:23.840 by another developer. Like I would still
+00:18:25.360 pick it up and throw it away politely. I
+00:18:27.840 don't know who wrote them and whether
+00:18:29.520 they were like cryptographic experts,
+00:18:31.200 but at least they were professional
+00:18:33.520 software developers and I I would trust
+00:18:36.559 AI less than any developer probably.
+00:18:41.440 Okay, lesson learned. I will use
+00:18:44.799 libraries for cryptography instead of
+00:18:47.760 trusting AI.
+00:18:51.852 >> [music]
+00:18:54.240 >> our colleague SA, the the Java developer
+00:18:56.320 advocate, has actually developed a Fire
+00:18:58.400 app. It's the the hottest new thing in
+00:19:00.320 town. It's a bookmarking app. Um, so
+00:19:03.520 what this does is it allows you to add
+00:19:05.200 bookmarks and and add a description to
+00:19:08.080 them, add a URL, a title. It's still
+00:19:10.320 being tested, but it'll be it'll be
+00:19:12.000 shipped soon. Um, so now I want to ask
+00:19:15.679 Juny to add a feature to it, which is to
+00:19:18.400 add auditing. In other words, I want to
+00:19:21.440 know when a bookmark is added. I want to
+00:19:24.080 know who added it. If if the bookmark
+00:19:26.320 was changed, say the description was
+00:19:27.679 changed. I want to know who changed it
+00:19:29.039 and when. So that, you know, if if
+00:19:31.520 something suspicious happens, we can
+00:19:32.960 trace it back and see who did what and
+00:19:36.000 maybe revert um to a a previous state.
+00:19:40.480 So I've asked Juny to to add um to
+00:19:43.360 implement auditing support
+00:19:46.160 um without giving it anything else to to
+00:19:48.400 feed off of. So, you know, it it was
+00:19:52.480 free to choose the implementation that
+00:19:54.000 it wanted and it went with some um I
+00:19:57.840 want to say standard um implementation
+00:20:00.160 that comes out of the box the spring. Um
+00:20:04.000 so what it added is it added some code
+00:20:07.039 to the existing classes and it added
+00:20:09.360 some new classes namely the the two new
+00:20:11.919 classes being auditable entity which is
+00:20:14.320 an abstract entity that um of adds the
+00:20:18.640 uh the fields that will be used by all
+00:20:20.480 of the other entities. Uh so when the
+00:20:22.559 change was made and by whom and the
+00:20:25.120 other class is um auditing config which
+00:20:28.880 provides the the user ID um that is then
+00:20:32.640 stored in the auditable entity and the
+00:20:35.760 other existing entities are extending
+00:20:38.799 that abstract entity. Um so yeah what do
+00:20:42.000 you what do you think? Uh I I think for
+00:20:44.480 me first thing I would want to check for
+00:20:47.120 with such a change would be to see if
+00:20:49.760 there's a test so I can actually uh
+00:20:51.919 debug through uh through the code and
+00:20:55.360 see what it's actually doing and trying
+00:20:57.760 to understand the the flow uh of what's
+00:21:03.280 happening. Um there actually is no test
+00:21:07.120 uh not a single one even though we do
+00:21:09.120 have the abstract integration test class
+00:21:11.840 in our project. So, I think maybe Juny
+00:21:14.159 should have figured out how to add a
+00:21:16.480 test. Um, I guess we can ask it to
+00:21:20.240 >> I guess if we didn't ask it to do so,
+00:21:22.559 probably it won't do it. Uh,
+00:21:25.360 >> I've asked it explicitly now. So, Juny
+00:21:28.320 is hopefully it's going to add some
+00:21:30.000 tests.
+00:21:30.880 >> Juny Juny
+00:21:33.520 >> later.
+00:21:34.320 >> Juny added some um some annotations
+00:21:38.880 that come from Spring. How confident are
+00:21:41.600 you that it chose the correct
+00:21:42.720 annotations and that these annotations
+00:21:44.480 even exist?
+00:21:45.760 >> Annotations uh surely exist before
+00:21:49.840 because there is no red code in the
+00:21:52.480 editor which is really good. Uh thanks
+00:21:56.000 to intellig idea uh it can do sanity
+00:22:01.360 check of what was generated. If it's
+00:22:04.640 like red then something is definitely
+00:22:07.520 going wrong. But here here we have
+00:22:10.480 annotations they resolvable
+00:22:13.520 there is some documentation.
+00:22:15.760 So and they they look okay like the
+00:22:20.240 field named created at
+00:22:23.120 and the annotation is created date which
+00:22:26.960 makes sense
+00:22:28.799 looks believable. What do you think
+00:22:30.559 about the fields that we have in the
+00:22:32.559 entity? So would that be enough maybe
+00:22:35.120 for for auditing? The the thing that
+00:22:36.880 kind of um that I noticed is that it
+00:22:39.200 doesn't show what was changed as in if
+00:22:43.440 the description was changed from one to
+00:22:45.120 another then we don't see that change,
+00:22:46.960 right? And and just saying that
+00:22:48.799 something changed is not super helpful,
+00:22:50.559 right? So if somebody changes a good
+00:22:53.039 bookmark to something malicious, uh then
+00:22:55.919 we wouldn't even know, you know, we
+00:22:58.799 would know who made some changes, but we
+00:23:00.400 wouldn't know which person um did it.
+00:23:02.880 Yes, it's a problem. And another problem
+00:23:05.039 I see looking at this code is that we
+00:23:07.919 will see only who made the last change.
+00:23:11.760 But if you have several changes for the
+00:23:15.919 same entity,
+00:23:17.840 you have no idea like
+00:23:21.200 you have a malicious change in
+00:23:23.280 description then Lego change in the URL
+00:23:28.559 and uh you will only see the data about
+00:23:31.919 the Lego change. So I would say that's
+00:23:36.720 this is not what would I expect from
+00:23:39.360 audit. Yeah, for sure. Do you think that
+00:23:42.880 would be good as like the the first
+00:23:44.240 iteration? Let's say if we shipped it
+00:23:46.480 now, but then we improved it next time
+00:23:48.480 or would that not be enough? Would you
+00:23:50.159 ask would you ask the person submitting
+00:23:52.000 this to to add
+00:23:54.000 >> like a separate table for for dependon
+00:23:56.400 log?
+00:23:57.039 >> I would probably say like throw it away
+00:24:00.240 and do it again.
+00:24:01.919 >> But uh to be honest, you said at
+00:24:04.400 auditing support, you didn't clarify the
+00:24:06.720 task. Probably this is was a problem. If
+00:24:10.720 you say you like create separate table
+00:24:13.840 for auditing events or something like
+00:24:16.240 this, it may probably work better.
+00:24:19.039 >> See what this is what AI does not do and
+00:24:21.600 cannot do. It cannot blame me, right?
+00:24:24.596 [laughter]
+00:24:25.520 So you're saying it's my my mistake. I I
+00:24:27.760 I admit I didn't give it you know much
+00:24:29.840 much detail on how to implement it.
+00:24:31.760 >> Which brings us to
+00:24:33.520 >> which brings us to the question. Can
+00:24:36.240 somebody who
+00:24:38.720 uh who is not expert in this area really
+00:24:42.480 wipe the secure
+00:24:45.919 application
+00:24:47.440 because here
+00:24:49.520 probably if you don't know how to do
+00:24:51.919 auditing probably you might be satisfied
+00:24:54.400 with this solution but it's not what
+00:24:58.320 production quality solution should look
+00:25:00.159 like.
+00:25:00.720 >> Yes. Uh another thing to note is that it
+00:25:03.760 created the in the auditable entity it
+00:25:06.960 created various columns and some of them
+00:25:10.880 are not nullable but some of them are.
+00:25:14.559 So for example uh if you look at created
+00:25:17.600 by it it is nullable because by default
+00:25:21.360 screen columns are nullable. Uh, and in
+00:25:24.799 this case, you would be able to create
+00:25:26.880 some um some kind of bookmark that's
+00:25:30.559 created by a null. And this doesn't
+00:25:33.679 really make a lot of sense to me at
+00:25:35.679 least. So,
+00:25:36.480 >> but given that at the same time created
+00:25:38.720 at would not be null.
+00:25:40.799 >> Yes.
+00:25:41.039 >> So, it was created but and you know when
+00:25:43.919 you just don't know by whom.
+00:25:45.279 >> Yes.
+00:25:45.679 >> Which is weird. Yeah. In the meantime,
+00:25:47.200 Juny actually generated some tests. We
+00:25:49.200 can have a look at that. So, it added
+00:25:50.960 two tests. auditing integration tests
+00:25:53.600 and then user context utils tests.
+00:25:56.960 Um
+00:25:59.520 looking at the auditing test
+00:26:02.240 I mean it is it is using the the
+00:26:04.000 abstract test the abstract class that we
+00:26:06.159 have uh but the test setup which is
+00:26:08.240 good. So let's let's let's run it see if
+00:26:12.000 it actually works.
+00:26:13.919 Okay. So the test the test
+00:26:18.000 um ran successfully.
+00:26:20.799 Now the only question is if it did
+00:26:22.799 anything useful. If like the body of the
+00:26:25.279 test is fine but the test is green right
+00:26:29.120 but then does it is it useful
+00:26:32.000 >> in general I think it's useful like uh
+00:26:35.679 so here I would be happy with this. I
+00:26:38.720 mean again I've never wrote a single
+00:26:41.600 integration test for spring application
+00:26:44.159 and uh this test is very very basic. It
+00:26:49.360 tests only one scenario like something
+00:26:53.440 was created uh and uh no modification
+00:26:58.320 only one user uh created by and last
+00:27:01.360 modified by the same user. for only one
+00:27:04.000 scenario, but still uh it's a good start
+00:27:07.840 to write more tests. So, because if I
+00:27:11.440 were to figure out how to do it by
+00:27:13.840 myself, I would probably spend like half
+00:27:16.480 an hour reading on light docs or
+00:27:18.559 whatever, but now I have a good
+00:27:21.600 framework and I can start with this and
+00:27:24.000 add as many tests as I like to test
+00:27:26.880 other scenarios. So, I think Jun is
+00:27:29.360 really helpful here. I think I might
+00:27:31.279 also approve this. um even if you know
+00:27:34.880 some some some senior spring developer
+00:27:36.880 might look at look at this and say oh
+00:27:38.640 this could have been done in in another
+00:27:40.320 way in a better way but then when you
+00:27:42.400 look at the existing tests um Juny
+00:27:45.200 implemented its tests in the same way
+00:27:47.360 that the existing tests are implemented
+00:27:49.360 in right so from that perspective even
+00:27:51.679 if I don't like Juny's test it's not
+00:27:53.600 necessarily Jun's problem it's more so
+00:27:55.360 that the kind of the the style of or or
+00:27:58.399 how the tests are implemented in this
+00:28:00.000 project are done this way so
+00:28:01.760 >> that's actually a good point that Juny
+00:28:03.840 tries to mimic existing style of the
+00:28:06.080 project. So it conforms to your code
+00:28:08.720 style and if you are writing this
+00:28:12.080 project in some way uh it agrees to
+00:28:15.600 write it in the same way. It's very
+00:28:17.679 good.
+00:28:20.000 >> Okay. So when reviewing the the AI
+00:28:22.399 generated code for for three projects I
+00:28:24.320 I noticed myself that I I was kind of
+00:28:26.399 reviewing it in the same way that I
+00:28:28.480 treat random Stack Overflow snippets.
+00:28:31.120 And there I basically ask myself two
+00:28:33.520 questions. First question is do I need
+00:28:35.200 to understand this code? Because there
+00:28:36.880 are some some cases when you don't when
+00:28:38.399 it's a throwaway code or if if if it
+00:28:40.960 just works you know you're doing image
+00:28:42.880 recognition or something like I'm not
+00:28:44.159 going to understand it even if I read it
+00:28:45.520 but I also don't need to understand it
+00:28:47.039 as long as it works if it's let's say
+00:28:48.880 for a bad project. If I do need to
+00:28:50.880 understand it then I have the second
+00:28:52.720 question do I actually understand it? Um
+00:28:55.840 because the and not just the code not
+00:28:59.200 the you know syntax and whatever like
+00:29:01.200 that there are no errors but the highle
+00:29:02.880 idea of how something should be
+00:29:04.240 implemented as in if auditing was
+00:29:06.320 implemented is it implemented in the
+00:29:07.840 same way that I would expect it to be
+00:29:09.120 implemented or if it was brypt or
+00:29:11.120 whatever else do I actually understand
+00:29:12.480 the algorithm behind brypt um so those
+00:29:15.840 would be my my two primary questions if
+00:29:17.840 if I don't understand the code I'm not
+00:29:20.159 going to prove it and I'm not going to
+00:29:21.679 you know ship it to to view.
+00:29:24.799 >> Yes, I I fully agree. It it really
+00:29:27.120 depends on the requirements of the
+00:29:28.720 project you're working on. Like, are you
+00:29:30.399 going to throw away this code and never
+00:29:32.080 deploy it? Uh, okay, fine. You don't
+00:29:34.480 need to fully understand what's going
+00:29:36.559 on. If it works, it works, right? If
+00:29:38.640 you're working on a web server and, you
+00:29:40.640 know, processing some user input, you
+00:29:42.080 might want to check, okay, am I
+00:29:43.600 sanitizing the data? Am I handling
+00:29:45.760 everything securely?
+00:29:47.600 uh if you're working on some like C C++
+00:29:50.480 project, you might want to care about
+00:29:52.240 memory like am I freeing all my memory,
+00:29:55.039 you know, do I not have any memory leak?
+00:29:56.799 So it it really depends like what your
+00:29:58.559 requirements are, what your technology
+00:30:00.000 is, like what kind of projects you're
+00:30:02.000 working on, in what kind of areas you
+00:30:05.039 need to pay attention to.
+00:30:06.559 >> Uh I mostly agree with this. Uh it
+00:30:10.000 heavily depends on the project. Usually
+00:30:12.000 I work with uh huge project with long
+00:30:17.440 history of changes with a lot of
+00:30:19.440 contributors and uh if I review code in
+00:30:23.440 this way uh in such project
+00:30:27.039 I would uh ask first do we actually need
+00:30:30.399 this change? Uh does it make the project
+00:30:33.200 more complex? Uh does it make it easier
+00:30:36.320 to maintain or hard to maintain?
+00:30:39.200 uh you will have problems in the future
+00:30:42.640 after this change because sometimes you
+00:30:45.919 can write a code which
+00:30:49.120 works which produces expected result but
+00:30:51.840 it really complicates the stuff. So it's
+00:30:56.559 uh it's still nonacceptable in this
+00:30:58.640 case.
+00:30:59.200 >> So what's the saying the best code is
+00:31:00.640 the code that you don't write or
+00:31:02.000 something along those lines.
+00:31:03.039 >> Yes, exactly. And even better
+00:31:04.640 >> bug free best performance
+00:31:07.120 >> uh even better code is the code that you
+00:31:10.799 can remove.
+00:31:11.760 >> From my experience at least as of right
+00:31:13.600 now um AI agents such as Junior are
+00:31:16.960 really good at maybe implementing
+00:31:18.480 features in the places that you know are
+00:31:21.279 kind of maybe not obvious but there is
+00:31:23.520 some structure to the project. There are
+00:31:25.520 some examples that it can you know look
+00:31:27.279 at and implement the code in the same
+00:31:29.039 way but it tends to be very bad at like
+00:31:31.440 big architectural changes or
+00:31:32.960 refactorings especially anything
+00:31:34.320 involving modules anything that spans
+00:31:37.279 just or or if if there are no examples
+00:31:39.440 and you're asking it to implement some
+00:31:40.960 pattern like it's it's it it starts
+00:31:43.760 struggling and at that point I think it
+00:31:46.480 becomes much easier for me to just
+00:31:47.919 implement it myself or give it some
+00:31:49.760 example or I spent too much time
+00:31:51.840 revising the prompt. Um so yeah
+00:31:54.960 >> I think uh they really good at
+00:31:57.919 generating
+00:31:59.519 something which uh which is more or less
+00:32:03.120 simple but takes a lot of time like if I
+00:32:07.120 have a task and I understand that it's
+00:32:09.679 kind of repetitive task uh nothing
+00:32:12.480 particularly new probably somebody in
+00:32:15.039 the world already did this then I can
+00:32:18.399 easily ask jun and
+00:32:21.440 the result could be satisfactory or at
+00:32:23.600 least it could be a good first
+00:32:26.080 approximation to start with if it's part
+00:32:28.720 of uh your private project so Juny have
+00:32:34.799 never seen it's as open source have
+00:32:37.760 never learned on it uh it implements
+00:32:40.399 some non-trivial algorithm something
+00:32:42.720 really new uh then it may probably don't
+00:32:46.880 understand what I actually want uh and
+00:32:50.720 sometimes uh that problem itself is not
+00:32:55.440 well formulated in my head like I cannot
+00:32:59.120 simply express the problem with English
+00:33:01.440 words. So uh it's easier to me to
+00:33:05.039 express it in Java language than in
+00:33:08.559 English language and uh writing a good
+00:33:11.200 prompt also takes time and takes effort
+00:33:13.919 and sometimes it's easier for programmer
+00:33:16.720 with programming experience just to
+00:33:18.720 start with code. In my experience,
+00:33:20.799 they're really good if there's a lot of
+00:33:23.039 examples already out there on the
+00:33:24.960 internet where it can, you know, take
+00:33:27.840 take samples from and basically just
+00:33:30.320 paste them into your code and maybe
+00:33:32.720 slightly adjust them. But we saw today
+00:33:34.559 with the Bit example, it's not always
+00:33:36.640 the case that even if there are like
+00:33:38.799 real examples of just perfectly fine
+00:33:41.039 implementations that it will also follow
+00:33:43.120 these implementations. So, uh you have
+00:33:45.919 to be very careful. uh but when you
+00:33:50.080 don't have many examples it's it it will
+00:33:52.880 get worse and worse and the quality will
+00:33:54.640 get worse and in this case I would say
+00:33:58.480 probably it's easier to just cut it
+00:34:00.080 yourself
+00:34:00.960 >> as we saw in this review AI coding tools
+00:34:03.760 can be a fantastic productivity boost
+00:34:06.080 but they're not a substitute for the
+00:34:07.600 skills of an experienced developer can
+00:34:10.159 write code but it still takes you to
+00:34:12.399 turn it into quality code
+00:34:14.320 >> and knowing how to do that means you can
+00:34:16.000 use AI tools to the potential. Combine
+00:34:18.320 the AI boiler plate with your expertise
+00:34:20.480 to make the final product.
+00:34:22.480 >> We hope you enjoyed this video and
+00:34:23.918 picked up some tips for getting the best
+00:34:25.520 out of your AI coding agent. Next time
+00:34:28.239 you're coding with an agent such as
+00:34:29.839 Genie, make sure to give them a try and
+00:34:32.800 let us know in the comments what would
+00:34:34.800 you have done differently in our code
+00:34:36.879 example or share your best or weirdest
+00:34:39.599 AI generated code moments. We'd love to
+00:34:41.839 hear them. If you like the video, give
+00:34:44.000 it a like, maybe subscribe, and tell us
+00:34:46.320 what you'd like to explore next.

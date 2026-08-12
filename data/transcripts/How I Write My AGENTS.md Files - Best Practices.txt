@@ -1,0 +1,405 @@
+# tactiq.io free youtube transcript
+# How I Write My AGENTS.md Files  - Best Practices
+# https://www.youtube.com/watch/6w88NVf2_lY
+
+00:00:00.080 Today we're going to talk about agents
+00:00:01.680 MD which is an open format for guiding
+00:00:03.919 your agents your coding agents
+00:00:05.600 regardless of the tool that you're
+00:00:06.960 using. So it's vendor agnostic. You can
+00:00:08.720 use it with cursor with clot code with
+00:00:10.639 windsurf with client whatever you're
+00:00:12.400 using this will work in order to guide
+00:00:14.240 your agents. And in this video today
+00:00:15.839 we're going to see how it can help you
+00:00:17.279 and what are some best practices for
+00:00:19.520 using agents and def files to get the
+00:00:21.439 most out of them. If you like this video
+00:00:22.880 let me know by hitting a like button and
+00:00:24.400 subscribing. But now let us get right
+00:00:26.080 into it.
+00:00:35.440 All right. So, this is what we're
+00:00:36.640 talking about today. Agents MD, an open
+00:00:39.040 format for guiding your AI agents
+00:00:40.960 regardless of the tool that you're
+00:00:42.239 using. It's vendor agnostic. You can use
+00:00:43.920 cursor, you can use windsurf, you can
+00:00:45.520 use claw code, whatever you want to. And
+00:00:47.520 you can provide instructions for your
+00:00:49.200 coding agents to use this context. Now,
+00:00:51.840 a lot of you guys will probably already
+00:00:53.520 know about this. So, my goal with this
+00:00:55.120 video is twofold. On the one hand, I
+00:00:57.280 want to show those of you who don't know
+00:00:58.559 about Agents MD what it is about. And on
+00:01:01.120 the other hand, I want to show those of
+00:01:02.640 you who know about it, how to properly
+00:01:04.400 use it, or at least how I use it and how
+00:01:06.960 I benefit from using it. And one thing
+00:01:08.720 about agents MD, as I mentioned it
+00:01:10.320 already, is it's agnostic to the vendor.
+00:01:12.159 There's also other things that you can
+00:01:13.520 use like cursor rules for cursor. You
+00:01:15.280 can use claude MD for claude. You can
+00:01:16.880 use Gemini MD for the Google
+00:01:19.040 applications. But agents MD is agnostic.
+00:01:22.080 So we can use it with basically every
+00:01:23.920 tool. And for this today I have prepared
+00:01:26.320 a simple sample application. I called it
+00:01:28.799 sample project. We can take a look at
+00:01:30.400 it. It's a basic Django application. All
+00:01:32.960 we have to do is we have to say uvun
+00:01:35.840 manage pi and then run server that
+00:01:38.400 already has a bunch of code in it. This
+00:01:40.479 should open up now a browser. We
+00:01:42.799 navigate to some of the tabs here like
+00:01:45.520 mathematics for example. And I just have
+00:01:47.600 a bunch of mathematical functions. I can
+00:01:49.600 just calculate the nth Fibonacci number.
+00:01:52.079 I can export results that I have
+00:01:53.920 calculated as PDF. Very simple stuff,
+00:01:56.240 just a mock application to play around
+00:01:58.399 with here. And if I now use my AI agent
+00:02:01.840 to implement a feature, it's going to do
+00:02:04.320 that the way it's always doing that. In
+00:02:06.240 other words, it's not going to consider
+00:02:07.759 my specific style preferences or the
+00:02:10.239 context that I have in my application.
+00:02:12.239 In order to consider context, it would
+00:02:14.080 have to always look through the files
+00:02:15.840 and see what we have because I don't
+00:02:17.920 give it that information unless I always
+00:02:19.840 do that manually. For example, here I
+00:02:21.920 have mathematics and I have a util py.
+00:02:24.560 Here I have a bunch of mathematical
+00:02:26.080 functions. Very simple stuff. And you
+00:02:28.239 can see there's no typins in here. And
+00:02:30.800 usually you want your agents MD file to
+00:02:33.040 align with the code that already exists.
+00:02:35.120 This would make it even easier to use.
+00:02:37.040 But right now we're going to run an
+00:02:38.400 experiment. On the one hand, I'm going
+00:02:39.920 to try here now to implement a new
+00:02:42.000 function with AI. So I'm going to use
+00:02:43.680 sonnet 4.5. I'm going to instruct it to
+00:02:46.160 say uh or to implement a function
+00:02:48.959 implement a
+00:02:51.200 function for calculating
+00:02:54.720 the nth Lucas number in and I'm going to
+00:02:59.040 pass here as context the utils py file.
+00:03:01.760 So this is without any agents md file.
+00:03:03.840 I'm just telling it to do that. And what
+00:03:06.239 it's going to do is it's going to
+00:03:07.840 implement this function just like every
+00:03:09.760 other function. Now, to be fair, if all
+00:03:11.680 of these functions already had type
+00:03:13.200 hints, probably it would also use type
+00:03:14.959 hints. But there's some more complex
+00:03:16.480 stuff that is not as simple as just
+00:03:18.400 defining the functions to look like the
+00:03:20.000 other functions in the same file. Often
+00:03:22.080 times, for example, the program will
+00:03:23.840 struggle to do migrations when it comes
+00:03:26.000 to Django because it doesn't know that
+00:03:27.440 I'm using UV. Since I'm using UV, I need
+00:03:29.840 to do UV run and not just uh migrate.
+00:03:33.280 So, let me show you here. This is the
+00:03:34.879 function Lucas. There you go. Now, I'm
+00:03:37.280 going to undo this. So I'm going to open
+00:03:38.720 up a new chat and what I can do now very
+00:03:41.519 very simple and specific approach I can
+00:03:44.640 go to the top directory here I can say
+00:03:46.400 new file and I can say agents.m MD this
+00:03:50.640 is a simple markdown file and I can give
+00:03:52.640 a simple instruction like instructions
+00:03:58.080 always
+00:04:00.080 no matter what
+00:04:03.760 use type hints
+00:04:06.720 especially in utils
+00:04:10.720 py files. Now the interesting thing is
+00:04:13.840 we're not passing that as context. We're
+00:04:15.760 not going to say here at agents MD.
+00:04:18.160 We're just going to pass the same prompt
+00:04:20.079 as before. Uh at least roughly what was
+00:04:22.560 it? Please implement a function that
+00:04:26.479 calculates calculates the nth Lucas
+00:04:31.120 number in and then I'm going to pass
+00:04:33.440 this file here. So I don't have the
+00:04:35.040 agents MD file loaded as context here.
+00:04:37.199 However, since it's called agents MD,
+00:04:39.360 it's going to be considered context and
+00:04:41.440 it's going to take into account that we
+00:04:43.919 need to add type hinting. So, you can
+00:04:45.600 see already here just by instructing the
+00:04:48.800 model in agents to use type hinting, it
+00:04:51.199 used type hinting even though none of
+00:04:53.040 the other functions here do that and I
+00:04:54.720 didn't specify this in the prompt. So,
+00:04:56.880 often times we will tell a model be more
+00:04:59.120 concise. uh add some line breaks or add
+00:05:02.080 some blank lines in between major
+00:05:04.639 sections or use comments like this or
+00:05:07.120 name the functions like this. And by
+00:05:09.680 doing that it works to some degree
+00:05:11.919 because then over time it forgets the
+00:05:13.759 context the longer the conversation
+00:05:15.199 goes. But also I have to do it every
+00:05:16.960 single time I start a new conversation.
+00:05:18.800 With agents MD files I can just define
+00:05:21.440 in a central place that I want certain
+00:05:23.280 things to happen and I don't have to
+00:05:24.960 constantly pass the same context over
+00:05:26.800 and over again. But this of course is
+00:05:28.240 just one simple example here. We can
+00:05:30.160 make these files much more powerful. But
+00:05:32.080 before we go into details and best
+00:05:33.600 practices, I want to show you here how
+00:05:35.440 we can also work with agent MD files
+00:05:37.680 because we don't just have to rely on a
+00:05:39.919 single one. For example, here we have
+00:05:41.840 the rule we always want to use type
+00:05:43.440 hints especially in utils py files. Now
+00:05:46.080 what I can also do is I can say second
+00:05:48.560 rule always no matter what use camel
+00:05:52.080 case when defining functions and then we
+00:05:55.759 can say especially in utils
+00:05:59.199 py files just so that we have this very
+00:06:01.759 specific statement so it's not
+00:06:03.360 overlooked and now if I run this of
+00:06:05.759 course we're going to get the camel case
+00:06:07.120 function we can actually try to do this
+00:06:08.800 again from scratch here so continue and
+00:06:10.880 revert it's going to use this new
+00:06:12.479 context now and the cool thing is
+00:06:15.199 however We can combine multiple agents
+00:06:17.360 MD files and we can also exclude certain
+00:06:20.240 directories for example from rules. So
+00:06:22.560 what I can do after I show you that this
+00:06:24.560 actually works you can see camel case
+00:06:26.080 here is considered. Now it's going to
+00:06:27.919 write Lucas number in camel case as you
+00:06:30.400 saw and it's going to use type hinting.
+00:06:32.400 Perfect. This is exactly what I
+00:06:33.759 specified. But also what I can do now is
+00:06:36.080 I can say in certain directories I have
+00:06:38.240 more granular rules. So I can undo this
+00:06:40.560 and I can say now in mathematics here in
+00:06:42.960 this application I can create another
+00:06:45.520 agents.m MD file and here I can say
+00:06:49.600 instructions
+00:06:52.000 and I can say never ever use type hints
+00:06:56.800 in this application
+00:06:59.919 also not in utils py files.
+00:07:05.039 besides that
+00:07:08.479 um apply the rules of and then I can say
+00:07:12.479 dot dot dot dot agents MD. So what I'm
+00:07:16.319 doing here is I'm saying this is agents
+00:07:18.479 MD1 and then I have a more granular one
+00:07:21.199 in mathematics here telling it to not
+00:07:23.440 use typeins even though it's specified
+00:07:25.120 in this agents MD. I'm not saying
+00:07:26.880 anything about camel case here and I'm
+00:07:28.880 saying uh besides that always follow the
+00:07:31.199 rules in the original file. So I'm
+00:07:33.120 linking these two together again. Not
+00:07:35.120 passing anything as context here. I'm
+00:07:36.720 just going to rerun this and hopefully
+00:07:38.720 it's going to consider that camel case
+00:07:41.039 is needed but type hints are not needed.
+00:07:43.360 So it already reasoned about this. It
+00:07:45.280 actually also targets here the root MD
+00:07:47.680 file and the mathematics MD file. So now
+00:07:50.319 you can see Lucas number without typins.
+00:07:52.639 So this is camel case no typins and this
+00:07:55.599 is how you can work with that. But this
+00:07:57.039 is a very minimalistic example. There is
+00:07:59.280 a link I want to show you here that is
+00:08:01.919 not the only source that we're going to
+00:08:03.199 use today, but it is a link telling us
+00:08:06.160 about the best practices of using agents
+00:08:09.520 MD files. And I'm not going to just read
+00:08:11.039 it to you. This is just the source here.
+00:08:12.800 I have the points that I want to
+00:08:14.080 mention, but basically there are some
+00:08:15.680 rules that seem to work very well when
+00:08:17.680 using these agents MD files. So this is
+00:08:20.400 just the source, but I want to show you
+00:08:21.680 my own example. I'm going to go into
+00:08:23.280 agents MD and I'm going to paste here
+00:08:25.759 the one that I prepared for this video.
+00:08:27.440 This is not perfect. This is just a
+00:08:29.039 bunch of examples uh thrown into a
+00:08:31.520 single file and what we have here is the
+00:08:33.679 structure that can be quite useful. So
+00:08:36.000 we start here with agents MD as a
+00:08:37.839 heading and then we say project
+00:08:39.440 overview. Here we provide information
+00:08:42.080 about the layout of the project. First
+00:08:44.000 of all we specify that this is and also
+00:08:46.399 we do this down here with the
+00:08:47.519 environment. We specify the exact
+00:08:49.360 versions. We say we're using Python 3.12
+00:08:51.519 or above. We're using UV as a package
+00:08:53.920 manager and we say all Python commands
+00:08:56.240 must see U must use UV run. If we don't
+00:08:59.839 do that, it's always going to try to um
+00:09:03.120 to to do stuff like Django migrate or
+00:09:06.320 manage py migrate instead of UV run
+00:09:08.800 manage py migrate. So telling it we're
+00:09:10.800 using uv tells it now you have to
+00:09:13.200 actually do uv run before you run any
+00:09:15.360 commands. Uh database SQLite 3. We then
+00:09:18.640 also specify here and this is an
+00:09:20.000 important thing whenever you're using
+00:09:21.519 commands you want to specify them early
+00:09:23.680 in the agents MD file. So here we
+00:09:26.160 provide the instruction to use uv in
+00:09:28.959 order to run commands and also this is
+00:09:31.200 another best practice. So the first best
+00:09:32.880 practice is commands are early in the
+00:09:34.800 agents MD file. The second best practice
+00:09:37.120 here is to also provide examples. So we
+00:09:39.760 do that here by telling it correct is
+00:09:42.160 uvr run manage pi run server. UV run
+00:09:45.040 manage pi uh migrate not just python
+00:09:47.920 manage manage py run server. This is not
+00:09:50.560 how it works. Uh in addition to that I
+00:09:52.880 also have an example down here which is
+00:09:55.360 about coding style. It doesn't make a
+00:09:57.360 lot of sense to explain to the agent
+00:09:59.760 what exactly the coding style is
+00:10:01.600 composed of. So you don't tell it to
+00:10:03.680 leave empty lines and to uh use camel
+00:10:06.480 case and you don't explain to it what
+00:10:08.080 camel case is. It knows that to some
+00:10:09.839 degree. It can help to maybe have one
+00:10:11.760 sentence summarizing this, but it
+00:10:13.279 doesn't make sense to have like a wall
+00:10:15.600 of text explaining to the agent how to
+00:10:17.839 write code. It makes much more sense to
+00:10:20.000 show bad example and corrected example.
+00:10:22.480 Now, obviously, this style here is
+00:10:24.000 ridiculous. I'm just using it to show
+00:10:25.600 you that it's actually applied by the
+00:10:27.279 agents uh MD file existing. But our
+00:10:30.079 rules here are we're always using camel
+00:10:31.920 case. We're always using type hinting
+00:10:33.680 and we're always leaving a blank line
+00:10:35.839 between every single statement in a
+00:10:38.000 function. So that is a very odd style.
+00:10:40.480 The agent would never code like this.
+00:10:42.320 But because we provide an example here,
+00:10:43.920 it's going to adhere to this coding
+00:10:45.519 style. And another thing that can help
+00:10:47.120 the agent a lot is to provide a
+00:10:48.880 structure of the project. Now you can
+00:10:50.320 also be more detailed than that. You can
+00:10:51.920 provide some comments about what app is
+00:10:53.760 used for what. But just running a tree
+00:10:56.000 command and copy pasting it can help a
+00:10:58.000 lot. So if I open up a terminal, go to
+00:11:00.240 my tutorial directory here, go to sample
+00:11:02.320 project and then I run a tree command
+00:11:04.880 and then maybe I want to say uh just use
+00:11:07.279 two levels or something. Just copy
+00:11:10.079 pasting this can already give a lot of
+00:11:12.160 useful context to the agent because it
+00:11:14.000 knows okay these are the applications
+00:11:15.839 that exist. This is what I have to work
+00:11:17.600 with and here's how how I can navigate
+00:11:19.839 this environment. So that's another best
+00:11:21.440 practice. So the bulletoint list is we
+00:11:23.440 want to use commands early. We want to
+00:11:24.959 use examples over explanations for
+00:11:27.040 commands and also for code examples. So
+00:11:29.360 to specify styling of the code, you want
+00:11:31.279 to use examples of right and wrong
+00:11:33.519 instead of describing it. You want to be
+00:11:35.440 specific about your stack and the
+00:11:36.880 version numbers. And you want to also
+00:11:39.519 give a file tree or at least a project
+00:11:41.760 structure in some form. In addition to
+00:11:43.519 that, it makes sense to specify certain
+00:11:46.079 ground rules and also boundaries. So
+00:11:47.760 here I have coding conventions what you
+00:11:49.839 should always do. And another rule that
+00:11:52.480 I like to include in my projects is to
+00:11:54.399 avoid using helper functions because by
+00:11:56.800 default almost every agent when I have a
+00:11:59.040 function that I want to implement
+00:12:00.560 implements three functions that are kind
+00:12:02.320 of calling one another and I don't like
+00:12:04.560 this style. Sometimes it's useful. Often
+00:12:06.560 times it's just annoying. So I always
+00:12:08.320 like to include something like this. And
+00:12:10.639 besides that boundaries so these are
+00:12:13.360 some very uh yeah small boundaries here.
+00:12:16.079 But never ever delete files with rm or
+00:12:18.399 similar commands. never use any git
+00:12:20.399 commands at all. So these boundaries
+00:12:22.720 will keep it in check. However, you need
+00:12:25.519 to not rely on these. It can still
+00:12:27.440 overlook this and run git commands or
+00:12:29.519 delete commands, especially if you ask
+00:12:30.959 it to push something or to commit
+00:12:32.880 something. It's just going to ignore the
+00:12:34.560 boundaries and follow your instructions.
+00:12:36.399 But this is at least something that you
+00:12:37.760 can try to add to make it more secure.
+00:12:39.920 So let's give it a try again. Let's get
+00:12:41.600 rid of this granular agents MD file.
+00:12:44.399 Let's just go and say run all of this
+00:12:47.360 again and let's see if it aderes to the
+00:12:49.040 coding style. And it talks about the
+00:12:50.720 agents MD file which is good. So it's
+00:12:52.880 going to consider the styling options
+00:12:55.120 and it's going to use the ridiculous
+00:12:56.959 style we defined in the file. So if I go
+00:12:59.600 now to utils py we have Lucas and we
+00:13:02.399 have a blank line in between every
+00:13:04.800 single instruction here which is
+00:13:07.680 following our style. So whatever your
+00:13:09.200 style is, it's expected to follow it. So
+00:13:11.120 that's basically what an agent MD file
+00:13:12.959 is for. A couple of use cases that come
+00:13:14.639 to mind that I have used myself in the
+00:13:16.399 past uh is as I mentioned Docker setups,
+00:13:18.720 UV setups, but also when you're using
+00:13:20.480 certain uh things like Tailwind with Vit
+00:13:23.279 then almost always the agent fails to
+00:13:25.360 properly install it because it just uses
+00:13:27.200 some npm command and it fails. So
+00:13:29.519 integrating Tailwind into a VIT project
+00:13:32.000 that is React makes much more sense if
+00:13:34.240 you have an agent MD file to just
+00:13:36.000 specify what exactly you're using. I'm
+00:13:37.920 using Vit, I'm using React, I'm using
+00:13:39.760 this version of all that. And besides
+00:13:41.440 that, of course, all sorts of commands
+00:13:43.040 for testing or for contribution. I mean,
+00:13:45.760 there's also contribution MD if you want
+00:13:47.519 to define that. So, this is the central
+00:13:50.399 place where you want to put the most
+00:13:51.839 important instructions that are going to
+00:13:53.360 be considered by your coding agents to
+00:13:55.519 not make the same mistakes over and over
+00:13:57.680 and over again. So, that's it for this
+00:13:59.440 video today. I hope you enjoyed it and
+00:14:00.959 hope you learned something. If so, let
+00:14:02.399 me know by hitting a like button and
+00:14:03.760 leaving a comment in the comment section
+00:14:05.120 down below. Also, in case you're
+00:14:06.800 interested, on my website, you will find
+00:14:08.240 a tutoring and a services tab. there.
+00:14:10.480 You can contact me if you need help with
+00:14:12.000 a project, with a startup, if you need
+00:14:14.000 some guidance, if you need some
+00:14:14.959 one-on-one tutoring, you can contact me
+00:14:16.880 via email or LinkedIn. The links are at
+00:14:19.120 the bottom of the respective pages. And
+00:14:21.120 besides that, don't forget to subscribe
+00:14:22.639 to this channel and hit the notification
+00:14:24.160 bell to not miss a single future video
+00:14:25.839 for free. Other than that, thank you
+00:14:27.360 much for watching. See you in the next
+00:14:28.480 video. And bye.

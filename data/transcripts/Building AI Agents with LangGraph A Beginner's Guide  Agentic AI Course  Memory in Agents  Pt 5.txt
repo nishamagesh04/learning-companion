@@ -1,0 +1,1228 @@
+# tactiq.io free youtube transcript
+# Building AI Agents with LangGraph: A Beginner's Guide | Agentic AI Course | Memory in Agents | Pt 5
+# https://www.youtube.com/watch/r0_jLP9HDuI
+
+00:00:00.320 hello guys welcome back to another
+00:00:01.880 exciting video in this video we going to
+00:00:03.480 continue with our series on working with
+00:00:05.600 agentic AI systems so in the last video
+00:00:07.720 we have look at memory part one so this
+00:00:09.599 is going to be Memory part two so in
+00:00:11.360 this case you're going to take
+00:00:12.240 everything that we learned from the last
+00:00:13.519 video which was more of a theoretical
+00:00:14.960 thing and you're going to put it into a
+00:00:16.640 practical use we're going to go ahead
+00:00:18.119 and build a simple very simple customer
+00:00:19.960 support agent that can uh use a longterm
+00:00:23.080 memory to store user information like
+00:00:25.160 contact details what are their
+00:00:26.480 preferences and products that they're
+00:00:27.960 interested in basically a chat B for
+00:00:30.199 like an e-commerce or an online store
+00:00:32.279 right then you're going to use a long
+00:00:34.079 the shortterm memory to keep track of
+00:00:35.440 the whole conversation so you can ask
+00:00:37.399 the bo any question about the current
+00:00:39.800 session of conversation you're having
+00:00:41.160 but you you also have a long time memory
+00:00:42.480 to understand what your contact what's
+00:00:44.320 your preferences and stuff like that and
+00:00:46.399 basing on that it can give you product
+00:00:47.920 recommendations and stuff like that
+00:00:49.480 right so let's jump into it okay so this
+00:00:52.079 is just a course overview this what
+00:00:53.440 everything to be covering in this series
+00:00:55.079 again I I might divert to other areas
+00:00:57.559 because as as as like things is always
+00:01:00.480 changing right technology is always
+00:01:01.879 changing there are always new things
+00:01:03.079 coming into the field and I want to be I
+00:01:04.959 want to be able to provide you guys the
+00:01:06.640 best of the best right so I might change
+00:01:08.759 a bit of and turn left or right and then
+00:01:11.520 do some tws different from this outline
+00:01:13.640 right here but I will let you know
+00:01:14.640 whenever I do that right okay so let's
+00:01:16.920 jump into so this uh this video going to
+00:01:19.080 look at three main things right the
+00:01:20.960 recap from understanding basically a
+00:01:22.479 recap of the last video about memory
+00:01:24.159 that for those of you who haven't
+00:01:25.840 watched the last video I would encourage
+00:01:27.280 you to go ahead and really watch the
+00:01:28.799 video and and uh yeah even if you don't
+00:01:30.920 want to watch I'll just give you a very
+00:01:32.479 brief brief brief super brief so it
+00:01:34.520 won't be that helpful unless you have
+00:01:36.479 watched the last video but again if you
+00:01:38.439 want to just skip the last video it's
+00:01:40.040 still fine but I highly recommend you go
+00:01:42.600 back and watch that video so do a recap
+00:01:44.560 of that video which is a previous video
+00:01:46.320 we'll do a a long we play have a
+00:01:48.240 playground understand how longterm
+00:01:49.600 memory works and then finally we go
+00:01:51.479 ahead and create our customer support
+00:01:53.439 agent with both longterm memory and
+00:01:54.840 shortterm
+00:01:55.840 memory okay so in the last video we
+00:01:58.439 talked about memory right so the chat
+00:02:00.799 being able to understand and recall
+00:02:02.479 information previous information right
+00:02:04.479 through the conversation or through
+00:02:05.880 multiple conversations so we talk about
+00:02:09.038 a short a short ter memory or so called
+00:02:11.560 the trade uh trade scope memory right
+00:02:14.040 whereby the chatboard only remembers
+00:02:15.560 conversations with within a given
+00:02:17.400 threade of conversations so for example
+00:02:19.319 if you go on chart GPT and you click on
+00:02:21.080 new chart the chatboard only remembers
+00:02:23.360 conversation with a specific chart right
+00:02:25.400 if you create a new chart it doesn't
+00:02:26.640 remember anything from the previous
+00:02:27.840 chart that is can be an example of scope
+00:02:30.319 memory and you also talk about longterm
+00:02:32.319 or longterm memory or crosssection or
+00:02:34.519 cross trade memory basically the chatbot
+00:02:36.959 remembers information from multiple chat
+00:02:39.080 chat sessions so if you go on chat gbt
+00:02:41.159 you create a new chat session and you uh
+00:02:43.680 you have convers with the chatbot and
+00:02:45.760 maybe the chart B pick some information
+00:02:47.920 from there and store it in this longterm
+00:02:49.519 memory then if need to go to another
+00:02:51.680 chart or 10 different charts it will
+00:02:54.000 remember that that information they pick
+00:02:55.760 from the chat the first chat session
+00:02:57.640 right that's is longterm memory this is
+00:02:59.360 just a Rec of the last video okay so uh
+00:03:02.000 one thing I I just need we need to add
+00:03:03.680 on to the last videos is shter memories
+00:03:06.640 I implemented using something called
+00:03:08.440 something we call check pointers in um L
+00:03:11.120 langra and the long memories also
+00:03:13.400 implemented using something called uh
+00:03:15.680 memory stores or store and we'll look at
+00:03:18.519 all this just in a second okay so now
+00:03:20.879 let's go ahead and create a simple
+00:03:22.959 playground so we can experiment with
+00:03:24.480 longterm memory and then get our hand
+00:03:26.640 dir okay let's jump into it right here
+00:03:29.239 so I have my my code open up right here
+00:03:31.159 I'm going go I simply add another folder
+00:03:33.799 I'm going to call this one
+00:03:36.000 project right this our first project and
+00:03:38.080 you're going to call it uh cre file we
+00:03:39.959 going to call it customer support agent
+00:03:41.480 so customer uh customer _
+00:03:46.400 support agent
+00:03:49.519 long okay long and uh
+00:03:55.000 shortterm memory okay that's a bit of a
+00:03:57.519 long name so but it's going to be
+00:03:59.120 descriptive
+00:04:01.640 ipynb it's good to be descripted and be
+00:04:04.400 confused later on in the future so I'm
+00:04:06.040 just going to keep it very descriptive
+00:04:07.959 so make sure that you load in your
+00:04:09.200 virtual environment okay so I've load my
+00:04:10.879 virtual environment and we can get
+00:04:12.200 started I'm going to create something I
+00:04:13.920 say customer uh customer support
+00:04:19.160 agent with uh long and uh short term
+00:04:25.800 memory okay uh memory if I can get the
+00:04:28.840 spelling right good so once we have that
+00:04:30.880 done uh the first thing we going to go
+00:04:32.280 ahead and do is bringing the basic inut
+00:04:34.199 load in our environment variables so
+00:04:36.479 today I'm going to go ahead and say
+00:04:37.800 import let make sure this is a python
+00:04:39.320 cell so select python right here so say
+00:04:42.280 import OS the OS module from python I'm
+00:04:45.720 going say from dot uh dot EnV I'm going
+00:04:49.240 to go ahead and import load EnV I'm also
+00:04:52.320 going to go ahead and import yeah I
+00:04:53.840 think those things I need for now to
+00:04:55.039 load in my environment variables so to
+00:04:56.880 load in my environment variables I'm
+00:04:58.520 going to go ahead and use it this right
+00:04:59.919 here so I'm going to go ah simply say
+00:05:01.120 the following and uh I'm going to go
+00:05:03.400 ahead and say os.
+00:05:05.440 environment environment and I'm going to
+00:05:07.840 go ahead and simply say uh L chain undor
+00:05:12.440 project and give this a project name
+00:05:14.639 it's going to be equals to uh
+00:05:18.000 langra
+00:05:19.720 store C lra uh
+00:05:24.199 customer
+00:05:25.960 support
+00:05:28.120 agent toor
+00:05:30.960 okay and going to go ahead and simply
+00:05:32.680 say. environment I'm going to go create
+00:05:35.560 another environment variable right here
+00:05:36.800 we're going to call this one uh long
+00:05:39.800 chain and long chain underscore uh
+00:05:44.000 training tracing uncore version two and
+00:05:48.039 I'm going to explain to you what all
+00:05:49.360 this is so just bear with me so I'm
+00:05:50.759 going to say true say say this to be
+00:05:52.960 true so this is going to be long chain
+00:05:56.000 like long chain uh project and the name
+00:05:58.520 of the project also have another one let
+00:06:00.360 me just close the side panel so you guys
+00:06:01.919 can see this full also have another one
+00:06:03.759 called uh L chain uh tracing version two
+00:06:06.639 and you're going to use this L to tra to
+00:06:08.319 trace our project and this we're using
+00:06:10.400 something called lsmith okay so look at
+00:06:12.560 all this in a second for now I just keep
+00:06:14.840 this code if you Haven Tru understood it
+00:06:16.680 if it's fine just keep this code in case
+00:06:18.280 you're getting any errors you can just
+00:06:20.160 skip this code right but we'll look at
+00:06:22.319 LMI later on in other video so it's just
+00:06:24.240 a a tool to develop by Lang chain to
+00:06:26.479 help you track the performance of these
+00:06:28.479 AI models and the things they're doing
+00:06:30.039 in a more visual way okay so once we
+00:06:32.319 have done that let's go ahead and import
+00:06:34.880 some stuff okay so let's add in a
+00:06:36.400 comment here so this is going to be uh
+00:06:39.199 basic
+00:06:41.440 inputs so for basic inputs what we going
+00:06:43.720 to go ahe and we going to bring a couple
+00:06:45.199 of libraries right here I'm going to go
+00:06:47.080 ahead and import uu ID we're going to
+00:06:49.599 use this for identify different memories
+00:06:52.360 also going to save from uh L Lang
+00:06:56.560 langra L graph. store I'm going to go
+00:06:59.840 store. memory I'm going to go ahead and
+00:07:02.400 Import in memory store so I'm going to
+00:07:04.520 use this for storing the longterm memory
+00:07:06.639 okay so this I I mentioned that long
+00:07:08.680 time m is the stor using stores right is
+00:07:12.199 is handled using a class that is called
+00:07:14.400 stores in longchain so we're going to
+00:07:16.000 use an inmemory store you can use
+00:07:17.919 different uh stores like a postest
+00:07:21.360 MySQL uh SQL light you can use all that
+00:07:24.919 to store memory but for now you're going
+00:07:26.120 to use an inmemory store just something
+00:07:27.919 very simple okay in the other video
+00:07:29.520 videos will go ahead and do much more
+00:07:31.000 advanced stuff so going to say in memory
+00:07:34.400 store is going to be equals to an
+00:07:36.360 instance of this in memory store that we
+00:07:38.199 imported r that so this going to create
+00:07:39.919 for us our longterm memory object so
+00:07:42.199 once we have this memory object created
+00:07:43.639 now let's go ahead and store some
+00:07:45.159 information within our longterm memory
+00:07:47.000 so store
+00:07:49.840 information in
+00:07:51.759 longterm uh memory okay good so you have
+00:07:55.479 created a longterm memory object which
+00:07:56.800 is this right I'm going to copy it move
+00:07:58.240 it right here and you're going to go
+00:07:59.240 ahead and add something to it so to add
+00:08:02.120 to add um basically memory to our
+00:08:04.319 long-term memory we need a couple of
+00:08:06.199 things we need name space for our memory
+00:08:08.759 to to save the memory so I'm going to go
+00:08:10.440 ahead and say it's going to be our
+00:08:12.120 namespace uh for the
+00:08:14.759 memory okay memory to save and I want to
+00:08:18.360 go Ahad and S me doing customer uncore
+00:08:20.479 ID so each customer is going have a
+00:08:22.000 unique ID that you're going to use to
+00:08:23.199 track this customer and this will be
+00:08:25.240 typically coming from your backend
+00:08:26.560 applications if you're building a world
+00:08:28.199 application but for now it is going to
+00:08:29.319 be using some daming data so to say name
+00:08:31.520 name spacecore 4ore Memory uh name space
+00:08:35.559 for the memory that you're going to
+00:08:36.958 handle it's going to be equals to A tole
+00:08:39.399 or a tuple going to have a customer ID
+00:08:41.760 and you're going to have call this names
+00:08:43.279 space customer _ inter interactions
+00:08:47.640 that's it so once we have this right
+00:08:49.800 there we can go ahead and save the
+00:08:51.200 memory so to save the memory we need
+00:08:52.560 what we call keys so it uses kind of
+00:08:55.279 like key value pair ways to save
+00:08:57.320 information within a given uh name space
+00:08:59.600 so we have a name space within that name
+00:09:01.399 space we have key value pairs that we
+00:09:02.760 use to store the different information
+00:09:04.880 so each that's like a python dictionary
+00:09:06.480 each key needs to be unique so we're
+00:09:07.600 going to be using our uu ID for that so
+00:09:09.320 let's say uh save
+00:09:12.560 memory save a memory memory let me gu
+00:09:16.079 that spelling right okay save memory and
+00:09:19.800 uh to
+00:09:22.279 namespace I just have my mic in front of
+00:09:24.640 me sometimes it's difficult to type as
+00:09:27.120 key uh key Val pirs okay that's it going
+00:09:32.040 to create a key and key is going to be
+00:09:33.680 to a string of U ID we import U ID so
+00:09:36.519 uid do U ID 4 okay and just create a
+00:09:40.240 simple U ID so once you have the simple
+00:09:42.480 U ID going value it's going to be equals
+00:09:44.680 to a python dictionary you're going to
+00:09:46.600 have name and the name is going to be in
+00:09:49.200 this case you're trying to store some
+00:09:50.800 information uh within this memory right
+00:09:53.519 so I'm going I'm just going to have a
+00:09:55.040 dictionary I'm going to go ahead and
+00:09:56.160 simply say name and the name is going to
+00:09:58.040 be let's say uh
+00:09:59.920 John John do and I can go store let's
+00:10:03.560 say John Do's email in a long time
+00:10:05.560 memory because uh John do John do at
+00:10:13.120 example
+00:10:15.560 example just like that that's a simple
+00:10:17.640 email right so once we have that there
+00:10:20.120 we can go ahead and simply store this in
+00:10:21.800 memory so I'm going to say I just going
+00:10:23.440 to be now uh
+00:10:25.560 save save uh the
+00:10:28.320 memory to this right so in this using
+00:10:30.959 memory in in memory in memory memory
+00:10:33.880 kind of like I hope you get the point it
+00:10:35.720 is a memory that exists in our disc on
+00:10:38.000 memory something of that sort in memory
+00:10:41.480 uh sorry this is uh in in memory store
+00:10:44.720 dot you're going to say put that's what
+00:10:46.720 you that's where you add message to
+00:10:47.959 memory you're going to say start with
+00:10:49.320 the name space and you're going to say
+00:10:50.920 our name space going to be name space
+00:10:52.600 for memory and you're going to pass in
+00:10:54.519 the key the key is going to be the key
+00:10:56.279 that we created above the U ID string
+00:10:58.399 you're going to say the value and the
+00:10:59.920 value is going to be the values that we
+00:11:01.680 have right there okay awesome once we
+00:11:04.079 run this it's going to go ahead and
+00:11:05.399 store the memory inside of our disk okay
+00:11:09.000 so once we have the memory stored within
+00:11:11.360 disk uh we can go ahead and uh search
+00:11:14.079 this memory search the memory space and
+00:11:16.320 retrieve the memory that we need so
+00:11:18.240 let's go ahead and simply search memory
+00:11:20.720 so I'm going to create a simple uh just
+00:11:23.279 markdown I'm going to Simply say search
+00:11:25.200 memory search memory just like
+00:11:27.720 this and then press enter so to search
+00:11:30.160 the memory what you're going to go ahead
+00:11:31.519 and do is simply you're going to do the
+00:11:32.880 following so going to say memories just
+00:11:34.920 create a VAR variable to store all the
+00:11:36.720 memories that you're going to retrieve I
+00:11:38.680 going to say inst memory do search so to
+00:11:41.320 search we going to use the namespace to
+00:11:43.920 search that memory so going to say name
+00:11:45.519 space and then pass in that name space
+00:11:47.600 right there awesome so now we can
+00:11:49.480 actually go ahead and simply check the
+00:11:50.800 type of this memory what type what
+00:11:52.760 object type we getting back so me
+00:11:54.560 memories just like that let's land this
+00:11:57.160 it's a list type okay so let's try to
+00:11:59.440 print this and see what we get back so
+00:12:01.000 copy this paste over here and let's
+00:12:02.959 print it this how what we get back
+00:12:04.600 basically right so now this is doesn't
+00:12:07.279 make any sense to us so let's try to
+00:12:08.600 make sense of this by converting this
+00:12:10.320 into uh you're going to go ah and get
+00:12:12.000 the first element of this list because a
+00:12:13.600 list which has this long store uh
+00:12:16.279 objects you're going to get the first
+00:12:17.839 object Dot and say dict and then this
+00:12:20.040 will convert it to a python diction that
+00:12:21.639 you can see so good so this is how the
+00:12:23.519 memory looks like it has a value which
+00:12:25.959 is exactly what we stored within that
+00:12:27.760 memory it has a key which is the U ID
+00:12:30.440 you created so if I go ahead and uh make
+00:12:32.680 a code right and say print uh print key
+00:12:35.360 and if I run that you can see this the
+00:12:36.600 key that you created and this is this is
+00:12:38.279 right here right so let me delete that
+00:12:41.360 you also have the name space right the
+00:12:43.040 customer ID and we call it customer
+00:12:45.600 interaction so this ID will be different
+00:12:47.600 from different customer so each customer
+00:12:49.399 can have their own long-term memory
+00:12:51.279 start about them like what they like
+00:12:53.040 what are their preferences what are the
+00:12:54.639 email contacts and how do we what kind
+00:12:57.160 of products to recommend to them basing
+00:12:58.800 on kind of thing the memory right so we
+00:13:01.240 also have created ad when it was created
+00:13:03.680 we have the updated ad when it was last
+00:13:06.160 updated okay this case this time time
+00:13:08.279 stamps are more or less the same awesome
+00:13:11.120 so once we have this done um we can
+00:13:14.240 actually go ahead and do more uh we can
+00:13:17.160 actually just print things out in more
+00:13:19.199 depth and see what we can get so you can
+00:13:21.519 get the Val just we have a python
+00:13:23.160 dictionary you can actually interact
+00:13:24.519 with this more or less the same okay so
+00:13:27.519 uh you can actually do this let me just
+00:13:29.120 just copy this right here and uh just
+00:13:31.480 put it right here so we're going to go
+00:13:33.480 ahead and simply do this and they say do
+00:13:36.040 key and yeah let's try to run this this
+00:13:38.600 is the key that we have you can also go
+00:13:40.720 ahead and print the dot do value and
+00:13:44.639 just run that and can see this is the
+00:13:45.959 memor value right name SP name is Cho
+00:13:48.920 email is this one right so that's what
+00:13:51.040 we storing about the user in our
+00:13:52.440 longterm memory so now let's getting uh
+00:13:55.240 getting memory uh keys and value so you
+00:13:56.959 can also get the memory from the keys
+00:13:58.480 and the value using the keys and the
+00:13:59.920 value so to to do that let me just show
+00:14:01.759 you how we do that so this is basically
+00:14:03.920 uh
+00:14:05.040 getting memory
+00:14:07.839 using key and uh values key and value
+00:14:12.759 okay okay so let me just go ahead and
+00:14:14.800 show you how to do that basically key
+00:14:17.040 and not value this actually name
+00:14:20.079 space name
+00:14:22.079 space right you talk about the name
+00:14:23.920 space already so I'm going to go ahe and
+00:14:25.199 simply say memory is going to be equals
+00:14:28.560 to in memory store dot uh we going to
+00:14:32.480 say get let how use the get method you
+00:14:34.199 pass in the namespace it's going to be
+00:14:35.920 our namespace right here we also pass in
+00:14:38.160 the key and you pass in the key that we
+00:14:40.160 have so if I run this uh we can let me
+00:14:42.560 just copy this copy this paste it right
+00:14:45.079 here you going to convert this to a
+00:14:46.680 python dictionary straight so dict and
+00:14:48.720 then uh sorry my bad okay let me get
+00:14:51.360 that right so run this yeah so you can
+00:14:54.360 see how you can also get the memory from
+00:14:55.880 using the name space and the key Okay so
+00:14:59.040 we get back the same response so the
+00:15:00.360 name space this one and the key right
+00:15:04.360 awesome good so once we have that right
+00:15:07.399 there uh we can go ahead and uh yeah
+00:15:11.360 that's basically what I wanted to in the
+00:15:13.079 playground really so basically creating
+00:15:15.440 memory storing information within that
+00:15:17.000 memory we can also delete the
+00:15:18.959 information if you want to let me show
+00:15:20.360 you how to delete that so to delete
+00:15:21.720 memory to delete something from the
+00:15:23.519 memory just say uh let me just add in
+00:15:26.040 comment right here so when you you guys
+00:15:27.600 check out this reposter later you you
+00:15:29.720 can actually see what you're doing so
+00:15:31.839 delete uh
+00:15:34.040 delete
+00:15:36.880 memory okay so to delete memory is
+00:15:39.279 actually very very simple so uh okay
+00:15:42.160 delete as an e right here so my bad so
+00:15:44.839 delete memory and what it's very very
+00:15:46.720 simple delete memory so what all you
+00:15:48.720 have to do is call the memory object in
+00:15:50.440 me in memory store object so in memory
+00:15:52.680 store do delete and you pass in the
+00:15:55.519 namespace it's going to be our namespace
+00:15:57.639 and you pass in the key
+00:15:59.440 uh which is going to be our key that's
+00:16:00.920 it and if you run this it's going to
+00:16:02.160 delete the memory out of it so if I go
+00:16:03.880 back in here and try to get it we
+00:16:06.480 shouldn't get anything back so go in
+00:16:08.880 here and then run this okay you can see
+00:16:11.800 attribute has no because it's a non type
+00:16:14.040 this memory type doesn't exist so you
+00:16:15.800 have to keep in a check so say if memory
+00:16:19.079 and then uh run
+00:16:21.959 this good right so there's no because
+00:16:24.360 it's none that's how you can get the D
+00:16:25.959 object right so keeping that check there
+00:16:27.880 just to make sure that in case the
+00:16:29.399 doesn't exist like in our case we
+00:16:30.720 deleted it then your code doesn't have
+00:16:33.600 issues awesome so once we done with this
+00:16:36.399 yes all I wanted us cover in the
+00:16:38.079 playground implementation uh just
+00:16:40.360 getting to uh create a simple long-term
+00:16:42.639 memory uh in this case you're using a
+00:16:44.600 dis on disk memory you can use something
+00:16:46.600 like postgress or more permanent storage
+00:16:49.199 SQL light or something of that sort okay
+00:16:52.240 but this case just trying to keep it
+00:16:53.519 simple just give you an overview of
+00:16:55.759 long-term memory right so once we have
+00:16:57.959 this whole idea of the long-term memory
+00:17:00.279 now we can go ahead and create our agent
+00:17:03.440 awesome so to create our agent a couple
+00:17:05.359 of things we're going to go ahead and do
+00:17:07.199 so we're going to go ahead and first
+00:17:08.720 create a model right our language model
+00:17:11.439 or our chat model and you're going to
+00:17:13.319 use this model so let's go ahead and uh
+00:17:15.000 start doing that right here so I'm going
+00:17:16.199 to go in here and this is going to be uh
+00:17:19.720 creating
+00:17:21.880 customer uh
+00:17:25.160 support
+00:17:26.679 agent with long
+00:17:29.720 and
+00:17:31.280 shortterm memory just like that so once
+00:17:34.039 we have this the first we going to go
+00:17:35.200 ahead and do is the following so we're
+00:17:36.559 going to go ahead and create a creating
+00:17:39.360 model just like this and to create the
+00:17:41.440 model what you simp going to go ahead
+00:17:43.240 and do is the following so going to say
+00:17:45.120 from L uh L chain and Tropic I'm going
+00:17:48.760 to go ahead and import chart uh let me
+00:17:52.240 see chart uh yeah chart entropic right
+00:17:54.480 here and once we have that I'm going to
+00:17:56.159 gohe and simply say model or chart model
+00:17:58.240 is going to be equal go to the Chart
+00:18:00.120 model and you're going to give it uh a
+00:18:03.360 temperature and you're going to say 0.0
+00:18:05.960 or
+00:18:06.679 0.1 okay just to give a bit of
+00:18:08.919 Randomness I'm going to say model a
+00:18:10.720 model that you're going to be using is
+00:18:11.880 going to be the following going to use
+00:18:13.280 clo uh the clo model so CL hyphen uh 3
+00:18:18.480 opas hyen
+00:18:21.200 2024 and then 229 that's the model name
+00:18:25.320 okay so our Cloud uh three opas 2024 4
+00:18:29.880 229 2024
+00:18:33.320 0229 okay that's a bit of comp
+00:18:36.240 complicated model name anyway yeah so
+00:18:38.400 once you have that you're going to say
+00:18:39.280 API key and you're going to say os.
+00:18:43.000 environment. getet and I called it
+00:18:46.720 entropic
+00:18:48.360 anopore
+00:18:50.280 apore key just like that and let me run
+00:18:52.640 that right there good so once we have
+00:18:54.559 that done I need to go ahead and create
+00:18:56.520 the agent prompts so you're going to
+00:18:58.480 have the agent prompt and this prompt
+00:19:00.400 going be too long so just not to waste
+00:19:02.559 your time and you guys having to watch
+00:19:04.440 me type all this I'm just going to copy
+00:19:06.080 this and paste it and I'll be back
+00:19:07.240 recording right yeah so I've have copy
+00:19:10.000 pasted the the information right so you
+00:19:11.679 can see I have the company uh company
+00:19:13.360 name which is just like this fictional
+00:19:15.280 company right PR Cod PR PLC yeah maybe
+00:19:18.919 in the future this could actually be a
+00:19:20.360 real company anyway yeah so it says a
+00:19:22.840 model system message you helpful
+00:19:25.200 customer support assistant for this
+00:19:27.600 company uh called called prins PLC are
+00:19:30.200 using the customer history to provide
+00:19:31.960 relevant and personalized support right
+00:19:34.520 we're telling it to use a customers
+00:19:36.280 information which are storing in the
+00:19:37.559 longterm memory to do that so and also
+00:19:40.159 we providing in the chart history of
+00:19:42.039 that specific bot right that specific uh
+00:19:45.919 conversation this basically going to be
+00:19:47.679 the shortterm memory so update the
+00:19:50.520 customer profile with new support
+00:19:52.200 interaction detail so we telling the bo
+00:19:54.640 that you should capture information like
+00:19:56.280 the contact the products that they
+00:19:58.720 purchased uh their previous issues or
+00:20:01.600 resolutions their preferences their
+00:20:03.440 special circumstances focus on uh
+00:20:05.960 verified support interactions only
+00:20:07.720 summarize key details clearly Pro update
+00:20:10.640 profile based on this conversation so
+00:20:12.600 we're just saying the board to pick up
+00:20:14.480 this kind of information from the
+00:20:15.799 conversation so anytime there's any
+00:20:18.159 preference information such as products
+00:20:20.000 communication way uh special
+00:20:22.320 circumstances it picks that and updates
+00:20:24.320 the long-term memory so I just telling
+00:20:25.720 the board listen for this kind of
+00:20:27.400 information and once this kind of
+00:20:29.000 information is present kindly go ahead
+00:20:31.159 and update the long-term memory okay
+00:20:34.240 that's it okay now let's now that you
+00:20:36.400 have done that now let's go ahead and
+00:20:37.720 create some nodes that our agent is
+00:20:39.240 going to be using right okay so uh let
+00:20:42.919 go ahead and create the nodes right here
+00:20:44.360 so it's going to be called uh
+00:20:47.240 nodes just like that so to create the
+00:20:49.559 noes what you're going to go ahead and
+00:20:50.559 do you're going to go ahead and do the
+00:20:51.760 foll going to say from ipy uh
+00:20:55.640 ipy python do display I'm going going to
+00:20:58.919 go ahead and uh display okay import
+00:21:02.760 image also going to go ahead and import
+00:21:05.120 uh display right here okay so say from
+00:21:08.480 uh long graph do check pointer remember
+00:21:12.559 we talked about check pointers just for
+00:21:14.320 shorter memory yeah so check pointer I'm
+00:21:17.559 going do memory I'm going to go ahead
+00:21:19.840 and import memory saver okay that's for
+00:21:22.400 short memory going to say from uh long
+00:21:25.480 graph again other videos I'll make a
+00:21:27.559 video going in depth short shortterm
+00:21:29.440 memory in this case we looked at only uh
+00:21:31.960 longterm memory so I'll make a video
+00:21:34.400 there is a lot of things that we talk
+00:21:35.760 about in terms of shortterm memory
+00:21:37.039 because you have to talk about
+00:21:38.440 summarization filtration and all those
+00:21:40.320 other different techniques to maintain
+00:21:41.600 shortterm memory we don't want to keep
+00:21:43.480 all the the conversation in a given
+00:21:45.960 session into to make a request a large
+00:21:48.960 language model each time that be really
+00:21:50.679 expensive and you might overflow context
+00:21:53.080 window so we'll look at long short
+00:21:54.799 memory in depth later on in other videos
+00:21:57.640 right okay so once you have look at that
+00:21:59.799 you're going to say uh graph the graph
+00:22:02.080 you're going to go ahead and import the
+00:22:03.919 state
+00:22:04.880 graph State graph you're going to go
+00:22:07.120 ahead and import message uh message
+00:22:10.679 State also going to go and import start
+00:22:13.679 also going to go ahead and import end
+00:22:15.880 okay say from uh L graph do
+00:22:20.559 store base I'm going to go ahead and
+00:22:24.039 import the base store right there so let
+00:22:26.720 me just move this up so you can see this
+00:22:28.520 clearly I'm also going to say from uh
+00:22:30.640 long
+00:22:31.720 chain long uh long
+00:22:36.279 chain do
+00:22:38.440 store lore core do
+00:22:43.200 message messages I'm going to go ahead
+00:22:46.279 and import the human message so that's
+00:22:48.000 the boring part of it just bear with me
+00:22:50.400 I'm I'm really boring to doing all these
+00:22:52.120 Imports so want say from uh L chain. do
+00:22:56.480 runnable do config I'm going to go ahead
+00:22:59.400 and import runnable config okay enough
+00:23:02.440 of the boring inputs now let's get doing
+00:23:04.120 something interesting so we're going to
+00:23:05.600 go create a simple node and this node is
+00:23:07.799 going to handle uh updating the memory
+00:23:11.080 and stuff like that right getting memory
+00:23:13.279 uh this going to be calling our note
+00:23:14.840 basically our llm right called call the
+00:23:18.039 model so I'm going to go ahead and
+00:23:19.480 simply get the code I have all this code
+00:23:21.000 on kab already I'm going to share the
+00:23:22.400 link with you guys so just to save on
+00:23:24.279 time in fact they should have copied all
+00:23:25.520 the inputs as well but anyway yeah
+00:23:27.640 that's the um the m is already done so
+00:23:30.360 let's move ahead so this is just going
+00:23:31.600 to be generate a responses using the
+00:23:33.640 customer context and memory so it's
+00:23:35.679 going to be using the the short memory
+00:23:37.200 and the the long time memory uh to call
+00:23:39.799 the the AI agent and then get
+00:23:42.039 information that way right so we have
+00:23:44.039 memory right here and this is basically
+00:23:45.880 a store a longchain store do get
+00:23:48.279 remember how to get long time meory you
+00:23:49.679 can use a name space and key so you're
+00:23:51.640 getting the memory and then finally
+00:23:52.799 you're passing getting the values and
+00:23:54.960 then finally uh going to go ahead and
+00:23:57.360 update the information so we inste of
+00:23:59.760 inste of the message you're getting the
+00:24:02.039 customer data uh filled and you're going
+00:24:04.520 to go ahead and update it if if it
+00:24:07.000 doesn't exist you're going to say no
+00:24:08.720 existing memory found basically so we're
+00:24:10.760 using only the longterm memory to update
+00:24:12.799 this information right awesome so once
+00:24:15.720 we have this right there we can go ahead
+00:24:17.159 and simply run this code so we're going
+00:24:19.679 to go ahead and generate the response
+00:24:20.919 using this so we going get system
+00:24:22.400 message. format you're going to pass in
+00:24:23.720 history as a custom as a as a as a
+00:24:27.000 longterm memory in this case you you can
+00:24:28.480 also use a shortterm memory to pass
+00:24:30.399 information that's actually something
+00:24:31.520 you should do because right now you're
+00:24:32.840 only using the longterm memory to update
+00:24:34.840 this information because I every want us
+00:24:36.799 to focus on long time in this video
+00:24:38.720 right so the next video we'll look at
+00:24:40.440 short time in depth okay so for now we
+00:24:43.640 only going to be using long-term memory
+00:24:45.480 for agent to update the longterm memory
+00:24:47.120 and stuff like that right okay so once
+00:24:49.399 we have that now also going to go ahead
+00:24:51.200 and have another node and this node is
+00:24:53.320 going to be uh update the customer
+00:24:55.080 interactions in previous uh in a
+00:24:57.840 persistent more uh persistent storage so
+00:25:00.559 again this we going to going ahead and
+00:25:02.080 updating the memory so this is going to
+00:25:03.799 be retrieving the information uh from
+00:25:06.000 the long time memory and then using it
+00:25:07.600 to call the llm you're going to also
+00:25:09.679 going to have another node that's going
+00:25:11.320 to be dedicated to just updating the
+00:25:13.640 memory which is Cas in this case our our
+00:25:16.559 short longterm memory so I'm going to go
+00:25:18.120 ahead and simply copy this and then move
+00:25:20.399 it in here so make sure I have this I
+00:25:23.120 run this and I'm going to paste this
+00:25:25.240 right here and I run this as well so
+00:25:26.760 this what it simply does so basically
+00:25:28.919 picks a longterm memory using the key
+00:25:30.880 the name space and the key and basically
+00:25:33.000 gets the value right and after that
+00:25:35.600 we're going to go ahead and uh update um
+00:25:39.240 our prompt using the history then
+00:25:41.640 finally we're going to go ahead and
+00:25:42.960 generate ask the model to update the
+00:25:45.200 memory so this is basically creating
+00:25:47.120 history so he's going to he going to use
+00:25:48.600 this prompt right here which we have
+00:25:50.600 right here to pick things like the
+00:25:52.120 customers history their product uh uh
+00:25:55.279 product us say their previous purchase
+00:25:57.200 so that's basically trying to do in this
+00:25:59.600 case right here to write memory
+00:26:01.520 basically asking you to analyze a
+00:26:02.919 conversation and pick up the information
+00:26:04.799 that we want and then update it update
+00:26:07.360 our memory store that's basically used a
+00:26:09.880 put method name space key and then this
+00:26:13.679 right awesome so once we have this right
+00:26:16.320 there run this and we've already seen
+00:26:18.399 all this about running calling CH chat
+00:26:21.120 models and all this so I'm not going to
+00:26:22.360 go ahead about it you can check the
+00:26:24.000 First videos or the beginning videos in
+00:26:25.600 this series so now that we have that now
+00:26:27.520 let's go ahead and build our actual
+00:26:29.279 agent so to build the actual agent I'm
+00:26:31.760 just going to go ahead and copy the code
+00:26:33.200 here all the code is on GitHub the link
+00:26:34.919 in the description of the video just to
+00:26:36.919 save on time you don't have to watch me
+00:26:38.520 type all this you can always read the
+00:26:39.760 comments and stuff like that in case you
+00:26:41.080 are lost anywhere so basically you're
+00:26:43.320 creating the the shortterm
+00:26:45.919 memory also creting the longterm memory
+00:26:48.520 you're passing in the short memory and
+00:26:49.919 the longterm memory to uh graph right so
+00:26:53.080 once we have this we run this right here
+00:26:56.399 again this session you're going to focus
+00:26:57.799 mainly on on short longterm memory is to
+00:26:59.960 save effects in the next upcoming videos
+00:27:02.000 we'll focus more on shortterm memory so
+00:27:03.840 don't worry about the short the longterm
+00:27:05.320 memory for now so say within uhor trade
+00:27:09.279 memory is going to be equals
+00:27:11.559 to uh memory let me see right here so uh
+00:27:16.480 it's called memory sa we already have
+00:27:17.840 that already defined so what this simply
+00:27:19.880 does is uh this is basically we are
+00:27:22.919 creating the shortterm memory so this is
+00:27:25.200 a longterm already looked at this
+00:27:26.640 already now working with the shortterm
+00:27:28.520 memory as well which we'll look at in
+00:27:29.840 the next video so don't worry about it
+00:27:31.880 uh this what this is basically what we
+00:27:33.200 are creating in within trade memory
+00:27:35.399 which is shortterm memory so don't worry
+00:27:36.960 about that we'll cover that later on in
+00:27:38.880 other videos in this case I just want to
+00:27:40.559 focus on the longterm the cross trade
+00:27:43.840 memory okay so once we have that now
+00:27:46.000 let's try to display the graph so we
+00:27:47.399 going to say display uh I'm going to
+00:27:50.399 pass in image object I just going to
+00:27:52.720 take in our graph. getet uh underscore
+00:27:56.720 uh graph which is this right here and
+00:27:59.679 you're going to go ahead and simply say
+00:28:01.919 uh xray I'm going to say equals to one
+00:28:04.880 and you're going to go ahead and say dot
+00:28:08.880 draw this is draw uh man made PNG call
+00:28:12.440 this that's all we need to do so run
+00:28:14.440 this and you're going to go ahead and
+00:28:15.399 see that graph right here right so we
+00:28:17.559 have our start and then we call our
+00:28:19.559 model which answers the question pulling
+00:28:21.679 information from the memory also we can
+00:28:24.679 also update this so we can also update
+00:28:26.919 this and pull information not only from
+00:28:28.559 the memory but you can also pull
+00:28:30.440 information from the long-term memory as
+00:28:32.440 well right yeah you can also pull
+00:28:35.039 information from the longterm memory as
+00:28:36.600 well so we can have a shortterm memory
+00:28:38.039 and you can have longterm memory in this
+00:28:39.760 case you're only focusing on the
+00:28:41.399 shortterm the longterm memory you can
+00:28:43.080 also pull information from the longterm
+00:28:44.600 memory and you generate a summary or
+00:28:46.720 something like that and pass it into
+00:28:48.679 this system prompt and we'll look at
+00:28:50.279 that later on I don't want I just want
+00:28:51.720 to focus on the longterm memory for now
+00:28:53.760 I think I I know you might be thinking
+00:28:55.919 we went upside down we should have
+00:28:57.080 started with short memory and long
+00:28:58.440 timary but I just feel like uh let's
+00:29:00.320 start with long timary and then short
+00:29:01.960 timory anyway all the roads lead to the
+00:29:05.200 same destination right so now that you
+00:29:07.159 have this we can go ahead actually
+00:29:08.320 stream uh the content back so to stream
+00:29:11.159 uh content in L lra there are two main
+00:29:13.720 methods there's a stream method which
+00:29:15.960 streams content synchronously also we
+00:29:18.559 have async a stream method which is
+00:29:22.360 streams content asynchronously right and
+00:29:25.279 also have the values and update so uh
+00:29:27.679 when it comes to graph State streaming L
+00:29:30.039 graph supports a few methods there's a
+00:29:32.039 values uh this is used to stream the
+00:29:34.159 full state of the graph after each node
+00:29:36.840 is called that's that's what it does so
+00:29:39.039 it streams the full state of the graph
+00:29:41.039 after each individual node is called we
+00:29:43.080 also have Updates this is which is
+00:29:45.080 another way of streaming uh this is used
+00:29:47.480 to stream updates made to the state of
+00:29:49.600 the graph like the graph State itself so
+00:29:52.600 uh we can uh set the above using the
+00:29:55.039 stream uh stream streaming uh stream
+00:29:57.039 method stream mode my bad so let's do go
+00:29:59.440 ahead and do that right here so just to
+00:30:01.880 save on time I'm going to go ahead and
+00:30:03.279 copy this over as well and I'm just
+00:30:05.640 going to go ahead and copy this and
+00:30:07.559 bring it right here okay so we have we
+00:30:10.880 are saying our custom our trade current
+00:30:12.440 trade is one our customer ID is one
+00:30:14.480 you're going to go and add in a message
+00:30:15.880 hey my name is John I I I would love to
+00:30:18.399 know more about your pieces so we're
+00:30:19.960 going to pret that this is actually
+00:30:21.200 selling
+00:30:22.240 pieces right so uh we go in here and
+00:30:25.080 then pass in the message which is
+00:30:26.519 basically our user input we passing
+00:30:28.440 config and we pass in the Stream mode
+00:30:29.960 which is streaming values and it's going
+00:30:31.440 what streaming values does this option
+00:30:33.679 is used to stream the full state of the
+00:30:35.399 graph after each node is called okay so
+00:30:38.440 that's what we going to be using so the
+00:30:39.760 stream format and you're passing the
+00:30:41.080 config the message right here and you're
+00:30:42.960 calling the stream graph do stream so
+00:30:45.360 this is going to stream it synchronously
+00:30:46.840 we also have a stream which can stream
+00:30:49.080 asynchronously right so yeah so once I
+00:30:51.559 run that you can see we get back the
+00:30:53.000 respon so say my name is my name is Cho
+00:30:56.080 and I would like to know more about your
+00:30:57.600 graph so
+00:30:59.200 okay so I get authentication filled
+00:31:01.240 right here this is because of my API key
+00:31:03.679 so let me just go ahead and change I I
+00:31:05.440 got the email yesterday saying I I ran
+00:31:07.320 out of tokens so uh let me just go ahead
+00:31:09.600 and update my API key and I'll be back
+00:31:11.760 uh recording so make sure that you have
+00:31:13.519 this stopped so basically you can see
+00:31:15.480 this information right here goes H hi
+00:31:17.399 John it's great to hear you from you I
+00:31:19.960 would be happy to provide more
+00:31:21.039 information about our pces and goes
+00:31:23.360 ahead and some key features for pces
+00:31:25.279 include and then provides a bunch of
+00:31:26.799 information right here in this case you
+00:31:28.519 can connect this to your actual uh
+00:31:30.480 database uh which can pull information
+00:31:32.519 from your database so yeah so basically
+00:31:35.080 can it's just a conversation so I need
+00:31:36.799 go ahead and fix uh add in my correct
+00:31:39.559 API key and make more payment so I can
+00:31:42.159 use I can continue recording so let me
+00:31:43.639 just do that and I'll be back
+00:31:46.519 recording okay guys so I'm just back
+00:31:48.399 recording I've updated my uh I have have
+00:31:51.159 my EnV uh credits sorted so I you have
+00:31:54.120 to run ahead and run this again and also
+00:31:56.200 make sure that you run this method I
+00:31:57.480 forgot to run this so This loads the
+00:31:59.399 environment variables into memory so
+00:32:01.320 since I have changed my environment
+00:32:02.519 variable my API key basically I have to
+00:32:04.559 rerun this to reload it into memory okay
+00:32:06.880 once we have that let's go ahead and
+00:32:08.080 simply test this out one more time
+00:32:09.960 hopefully it picks it up run this and
+00:32:11.720 let's see if this goes true so hello my
+00:32:13.760 name is shown this a message from the
+00:32:15.600 user so in the longterm memory we
+00:32:17.440 expected to pick information like the
+00:32:19.000 username and uh what their preferences
+00:32:21.399 are right in this case just a username
+00:32:23.279 because that's what we one of the things
+00:32:24.519 is say contact so it says hello John I
+00:32:27.159 apologize for the having an issue with
+00:32:28.600 your customer profile on file uh profile
+00:32:31.639 on file as a new customer um I will be
+00:32:35.440 more General overview of your PC
+00:32:37.679 offering with code PLC and then blah
+00:32:40.240 blah blah blah blah and then that's all
+00:32:41.880 right awesome so we can promp this mod
+00:32:43.919 to write kind of like an email format
+00:32:45.840 right so again yeah this just prompting
+00:32:47.880 issue so once we have that done um we
+00:32:50.799 can go ahead and let's try to simulate a
+00:32:52.960 real conversation so this the first
+00:32:54.760 round the users input and then the a
+00:32:57.320 response now let's go ahead and do
+00:32:59.000 another second round and let's see what
+00:33:01.039 uh the agent dos this time around so
+00:33:03.760 like we just simulating a conversation
+00:33:05.480 basically which code and paste this
+00:33:07.720 right here run this so you can say hey
+00:33:09.480 my last passage my last patch is uh the
+00:33:12.559 latest generation Intel processor based
+00:33:14.960 on PC and it work really well uh what
+00:33:18.120 are your prices on these models so I
+00:33:20.840 just today I like PC which are Intel
+00:33:23.600 processors be okay so they saying simply
+00:33:27.120 saying I like
+00:33:28.559 Intel processor so I think you should
+00:33:30.000 pick that as a preference that uh this
+00:33:32.279 user actually likes uh Intel processors
+00:33:35.080 or Intel based kind of pieces okay we
+00:33:37.720 get an error right here it says uh name
+00:33:40.159 error overload error message overloaded
+00:33:43.559 okay let's try this one more time and
+00:33:46.159 let's see so yeah message you pass a
+00:33:48.399 message the users messages right here
+00:33:51.039 and then config and then the stream mode
+00:33:53.559 okay so that should run fine let's see
+00:33:56.840 where the error is
+00:33:59.080 here yeah so it looks like you're
+00:34:00.880 getting this eror right here so
+00:34:02.120 sometimes you get this eror and this is
+00:34:03.360 from anthropics API so sometimes maybe
+00:34:05.760 their servers are overloaded or
+00:34:07.080 something like that so you get this kind
+00:34:08.359 of error message but you just keep
+00:34:10.440 trying sometimes it goes through
+00:34:12.040 sometimes really just has an issue and
+00:34:13.918 then doesn't go true but this case let's
+00:34:16.000 just hope uh the API are not overloaded
+00:34:18.639 and uh we can handle this uh can handle
+00:34:21.000 this request and answer this question
+00:34:23.359 okay so that for now that's the current
+00:34:24.839 state of uh model providers it's just a
+00:34:27.320 lot of Demand on the this Services okay
+00:34:30.399 so uh while this uh done even if it
+00:34:32.239 doesn't go through we can proceed ahead
+00:34:34.359 and okay now it went through and it goes
+00:34:36.440 ahead and answer so sometimes you might
+00:34:38.079 get this so in this case you're luck
+00:34:40.359 you're not in a real production
+00:34:41.480 environment if you're in a real
+00:34:42.679 production environment then you have
+00:34:43.918 have to find a way to handle this kind
+00:34:46.079 of error when dealing with customer so
+00:34:48.679 okay but uh anyway let's put that aside
+00:34:50.359 and you can see it provides us
+00:34:51.399 information on the uh Intel PCS you can
+00:34:54.239 see right PR the information on Intel
+00:34:56.679 PCS because we say Intel so in in my uh
+00:35:00.440 custom longterm memory I need to see two
+00:35:03.280 things I expect in the first round of
+00:35:05.280 conversation I expected to pick up my
+00:35:06.640 name I expected to pick jundo as a name
+00:35:09.280 in the second round I expected to pick
+00:35:11.240 the Intel processors as a preference and
+00:35:13.839 the last pchas as also uh Intel pieces
+00:35:17.480 so let's see if that's that's the case
+00:35:18.880 so we can do that right here by checking
+00:35:20.680 the memory we can go ahead and simply
+00:35:21.960 say for key okay let me get that TR so
+00:35:24.560 for key for key comma value in exist
+00:35:29.280 uh let's say let me just say uh
+00:35:32.040 existing let me just see how I can get
+00:35:34.359 this memory right here so I'm going to
+00:35:35.680 go ahead and actually load in the
+00:35:36.880 existing memory so to do that you're
+00:35:38.880 going to go ahead and do the following
+00:35:40.160 right here so you need to actually load
+00:35:41.400 that in so say
+00:35:43.119 customer this one right we say this one
+00:35:46.720 and then you're going to name space is
+00:35:48.480 going to be a name
+00:35:50.480 space name uh space is going to be
+00:35:53.680 equals to the following tole of customer
+00:35:56.760 customer uh underscore interactions and
+00:35:59.960 then you're going to say customer ID so
+00:36:02.560 previously we said customer ID then
+00:36:04.119 customer interaction this we
+00:36:05.800 interchanged it doesn't really matter so
+00:36:08.079 we going to say existing underscore
+00:36:10.760 memory is going to be equals the phone
+00:36:13.040 going to say uh across traded memory.
+00:36:16.680 getet namespace going to be the names
+00:36:18.880 space that we have we also going to pass
+00:36:20.760 in the key as the the customer data the
+00:36:24.640 customer yeah we call it customer data
+00:36:26.839 memory and this can be found here in
+00:36:28.520 here so if you'll go up here in here uh
+00:36:31.440 we add it in here customer interactions
+00:36:33.480 no no no customer data that's the key
+00:36:35.040 that we used so copy that and then we
+00:36:37.200 can go down here and place it uh in here
+00:36:40.640 p in here and then we can go ahead and
+00:36:42.760 simply convert this to python dictionary
+00:36:44.560 and we can see that so close the side
+00:36:46.000 panel so this is bigger so we're going
+00:36:47.880 to say existing memory. dict and then
+00:36:50.720 let's run that so you can see the memory
+00:36:52.520 right here so you can see the customer
+00:36:54.200 interactions is picking all this the
+00:36:56.000 name is chondo the to try initially
+00:36:58.560 purchase PC offering and requested for
+00:37:01.280 more information okay collected some
+00:37:03.440 permanent information about this user
+00:37:05.319 you can print this out in a more
+00:37:06.560 detailed way so we can just do the fun
+00:37:08.160 we say for key comma value in existing
+00:37:11.960 memory do get. dict uh dictionary okay
+00:37:17.720 and then get you're going to get value
+00:37:21.560 and then do
+00:37:24.800 items so this is it you're getting the
+00:37:27.119 values this another dictionary you're
+00:37:28.800 getting the item which a key value pair
+00:37:30.599 and that's what you're going to be
+00:37:31.359 printing out okay so converting this
+00:37:34.440 into a python dictionary the diction
+00:37:35.839 looks like this you're getting the value
+00:37:37.319 fi which is this and you're getting the
+00:37:39.640 items of it which is also key value pair
+00:37:42.119 which is we storing k for the key and V
+00:37:43.800 for the value say print K and and V so
+00:37:47.720 let's run this and let's see what we get
+00:37:49.079 so the customer interaction the customer
+00:37:52.240 profile name is sh do contact history
+00:37:55.040 initially required about pieces
+00:37:56.560 following up expr ing in Intel process
+00:37:59.200 based models so you can see picked up
+00:38:01.079 all that information uh product usage so
+00:38:03.839 previously the custom purchased Intel
+00:38:06.200 perfect so you can see he picking up the
+00:38:07.680 preferences of this customer preferences
+00:38:09.839 prefers and has had good experience with
+00:38:12.560 Intel processors awesome likely value
+00:38:15.200 high value performance and reliable
+00:38:17.200 based on previous purchase and positive
+00:38:19.119 feedback you see So speaking of the
+00:38:21.000 customers interactions and uh special
+00:38:24.160 circumstances returning customers with
+00:38:25.760 established positive history with C prce
+00:38:28.280 PLC awesome because this customer is
+00:38:30.200 happy with our services so opport key
+00:38:32.480 notes opportunity to build an a previous
+00:38:34.520 positive experience and retain Customer
+00:38:38.040 Loyalty uh focus on uh build latest
+00:38:40.880 Intel PCS I5 i7 Bas PC recommendations
+00:38:44.599 we prefer uh to match preferences and
+00:38:47.119 exceed expectations highly uh
+00:38:49.920 highly uh highlight customized options
+00:38:52.839 currently Pro Promotions and financing
+00:38:56.160 provide maximum value and flex exibility
+00:38:58.200 so he storing all that information about
+00:38:59.839 the user so all this is stored in the
+00:39:01.520 customer uh in basically customers
+00:39:05.119 longterm memory so in this case basing
+00:39:06.800 on this longterm memory we can know this
+00:39:08.720 customer what he likes what are his
+00:39:11.280 contact details what are his preferences
+00:39:13.400 his uh product that he purchased or used
+00:39:15.920 previously in the past and then basing
+00:39:17.400 on that the chatboard can now recommend
+00:39:18.960 new products to his customer basing on
+00:39:21.079 this previous purchase history which are
+00:39:22.560 St in the long-term memory so in this
+00:39:24.520 case you haven't really work with the
+00:39:25.760 shortterm memory in uh uh passing it
+00:39:27.680 into the prompt but you can actually
+00:39:28.880 look it uh look at the short time in in
+00:39:31.560 in dep so you can go ah and simply say
+00:39:32.960 trade it's going to be equals the
+00:39:34.280 following so to Simply say dictionary
+00:39:35.920 right here going to say
+00:39:38.480 configurable
+00:39:40.880 configureable configurable and you're
+00:39:42.760 going to go ahead and pass in the
+00:39:43.760 following right you going say
+00:39:45.400 tradecore ID and the trade ID is going
+00:39:47.800 to be the following say ID is one right
+00:39:50.200 that's ID we use if you look at the code
+00:39:52.319 previously we going to go ahead and
+00:39:53.960 simply say State you're going to pass
+00:39:55.640 the state because the temporary memory
+00:39:57.440 the short memory is just the state of
+00:39:58.960 the graph so going say graph uh graph do
+00:40:03.280 uh
+00:40:04.599 get State and you're going to go ahead
+00:40:07.800 and see me passing the trade and you're
+00:40:09.839 going say dot values and you're going to
+00:40:12.240 say for message in
+00:40:16.520 state
+00:40:19.119 messages you're going to go ahead and
+00:40:21.079 print each of these out so go and simply
+00:40:23.119 say m do
+00:40:25.880 pretty pretty underscore print call that
+00:40:29.119 and let's see what to get back so
+00:40:30.240 function build method okay so I'm going
+00:40:32.599 to say uh for m in M in um messages
+00:40:38.359 messages and then M do print yeah that's
+00:40:40.960 fine so let's look at this from here so
+00:40:42.480 we going say
+00:40:43.960 configurable configurable and then this
+00:40:46.560 going to be equals to trade ID saying
+00:40:49.079 trade ID is one that's fine going to say
+00:40:53.119 State equals to graph do get State you
+00:40:55.760 pass in the trade and this actually
+00:40:58.800 values let's run that and see so uh
+00:41:01.920 there no option pretty print okay let me
+00:41:04.119 just pretty uh okay get the spelling
+00:41:07.560 right once I run that you can see we
+00:41:09.680 have the short memory of the bo right
+00:41:11.760 here so this is a information about the
+00:41:13.839 B and whatever it has stored and within
+00:41:16.920 the the short memory or the Trad scope
+00:41:18.960 memory so you can see all the previous
+00:41:20.520 information is all in here yeah so we
+00:41:22.599 would have to basically right now the
+00:41:24.520 way we have this set up is that we would
+00:41:26.000 have to set send this a shter memory
+00:41:28.319 each time to the to the model which is
+00:41:30.880 very going to be very expensive imagine
+00:41:32.160 passing this within the context window
+00:41:33.880 each time and at some point the context
+00:41:35.800 window will overflow and that will lead
+00:41:37.920 to issues that's why I didn't Implement
+00:41:40.200 uh passing the short memory to the model
+00:41:42.119 at this time to the llm mod at this time
+00:41:44.200 so in the next video we'll learn more
+00:41:45.359 about short memory how to handle it we
+00:41:47.800 need to kind of find a way to summarize
+00:41:49.240 this information orate the running
+00:41:51.560 summary or filtration maybe only pick
+00:41:53.520 the last five messages right there's
+00:41:56.119 different ways of doing it we don't want
+00:41:57.319 to pass all this information to the
+00:41:59.480 large language model it's going to be a
+00:42:00.800 very expensive thing to do so we'll
+00:42:02.760 handle all that and we'll see how we can
+00:42:05.040 uh summarize all this information before
+00:42:06.640 we pass it on to the large language
+00:42:08.599 model yeah so guys that's all I wanted
+00:42:10.920 us to cover in this video we have
+00:42:12.280 learned about building an agent with
+00:42:13.800 longterm and shortterm memory but you
+00:42:15.560 haven't taken the content of the
+00:42:17.119 longterm memory and inject it into our
+00:42:18.839 prompt yet which we do in the next video
+00:42:20.880 once we learn how to handle the short
+00:42:22.599 memory like uh
+00:42:24.800 summarization filtration and different
+00:42:26.839 Tech or creting R running summaries and
+00:42:29.960 all those different stuff right just to
+00:42:31.359 keep the short concise and not too long
+00:42:35.200 and save much on tokens and uh yeah and
+00:42:37.520 reduce the cost of running our business
+00:42:39.160 or whatever we trying to do yeah so guys
+00:42:41.359 that's all for this video in the next
+00:42:42.800 video going to look at the short memory
+00:42:44.760 like in depth again so so in this case
+00:42:48.040 you have work with understanding long we
+00:42:50.880 understood a short memory in terms of uh
+00:42:53.920 from the theoretical point of view and
+00:42:55.920 now we have gone ahead and did the
+00:42:57.319 practical example focusing more on
+00:42:59.640 shortterm memory so now we're going to
+00:43:00.920 focus sorry focusing more on long-term
+00:43:03.800 memory so in next video we going to
+00:43:05.000 focus more on short-term memory and how
+00:43:07.160 to handle shortterm memory and then
+00:43:09.000 we'll learn how to inject this
+00:43:10.480 information now into our actual LM
+00:43:13.359 application that's we're going to be
+00:43:14.480 doing in the next video so guys thank
+00:43:15.839 you guys for watching so much and if you
+00:43:17.680 enjoy this video one of the EAS way you
+00:43:18.880 can support the channel is just by
+00:43:20.119 liking this video sharing this video
+00:43:21.960 with your friends and family who might
+00:43:23.119 find this helpful you can also connect
+00:43:24.800 with me on medium at Prince crumper
+00:43:26.960 where I write articles about this video
+00:43:28.920 in fact an article I post articles
+00:43:30.960 almost every Tuesdays uh once a week I
+00:43:34.000 post articles about geni applications
+00:43:36.000 and stuff like that so I have a whole
+00:43:37.240 article for this whole series as well in
+00:43:39.440 case for those for those of us who like
+00:43:41.040 reading rather than watching videos you
+00:43:43.000 can watch you can read articles on
+00:43:44.559 medium article read Prince you can also
+00:43:46.280 follow me on Twitter on Twitter like X
+00:43:49.440 Prince cramper you can also follow me on
+00:43:51.920 LinkedIn at princea in case you have any
+00:43:54.000 projects uh you have any idea that you
+00:43:56.119 want us to work together on you can
+00:43:57.599 follow me on LinkedIn at princea and
+00:44:00.839 hopefully where you're watching this
+00:44:02.480 video is on YouTube at C Prince
+00:44:04.240 hopefully yeah you can just subscribe
+00:44:06.760 the YouTube channel to support the the
+00:44:08.440 content Creation with more subscribers
+00:44:10.960 with more uh with more likes and the
+00:44:14.000 more shares and the more the channel
+00:44:15.599 grows the better the quality of the
+00:44:17.559 videos will be I promise that right so
+00:44:19.960 one e to support the channel is like the
+00:44:22.240 videos share with your friends and
+00:44:23.640 family okay get the word out there and
+00:44:26.000 let people know of this so thank you
+00:44:27.640 guys for watching so much and see you in
+00:44:28.920 the next video uh keep safe

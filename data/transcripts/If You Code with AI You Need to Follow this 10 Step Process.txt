@@ -1,0 +1,485 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/aAppWoTlw74
+
+00:00:00.000 No text
+00:00:00.160 In this video, I'm going to be going through my 10-step process on how to review code like a senior developer by
+00:00:05.839 going through this full realworld poll request that I've never seen before. And if you're a solo developer and you're
+00:00:11.519 thinking, "This is entirely useless. I used to think the same thing." You couldn't be further from the truth, though, because learning how to review
+00:00:17.920 code is one of the best ways to write cleaner code. Trust me, my code used to be terrible before I actually learned
+00:00:23.760 how to review code. But that's not even the most important thing you're going to learn in this video because what I haven't told you so far is that this
+00:00:30.160 entire poll request was actually written entirely by AI. And there are four major tips that you need to keep in mind when
+00:00:36.640 writing with AI that I discovered while going through this code review.
+00:00:43.000 No text
+00:00:43.280 Most developers that review code jump directly to the code and start reviewing this as the very first step of their
+00:00:48.960 code review. But in actuality, this is one of the last steps that you should be doing. Instead, the first step is
+00:00:54.079 figuring out what the problem this code is trying to solve is. Generally, if you have a poll request, this is going to be
+00:00:59.280 found in the comments section. You can see right here, this fixes issue number one. And this issue number one describes
+00:01:04.400 exactly what we want to have happen. Now, I'm not going to read you through this word for word cuz you don't really know what this application does. So,
+00:01:10.479 instead, we're going to skip to step number two before coming back to that. And step number two is just run through
+00:01:12.000 No text
+00:01:15.920 the entire application code as it is before any of these changes were made. So pull down whatever the main branch is
+00:01:22.799 and run through the code for the things that are being changed. So in this application, the things we're changing are the question pages. So I want to go
+00:01:29.759 to our main application and I want to go to the question pages. So we're going to go ahead and navigate specifically to
+00:01:35.040 those question pages. And this is what the application currently works like on the main branch, most likely the
+00:01:40.560 production build. And we want to test all these different features. So we're going to generate, for example, an easy question, which is going to use some AI
+00:01:46.479 to give us an easy question. And then we can write out an answer for this. So, let's just write out some bogus stuff. It doesn't really matter. We'll click
+00:01:52.240 answer, and we'll get some AI feedback back to us. You can see here's some feedback as well as the correct answer that we should have been outputting.
+00:01:58.320 Everything's working fine. Everything's streaming in. And if we want, we can go ahead and ask another question, and it generates just fine. Now, if you
+00:02:04.399 actually want to see how to build this full project, I actually have a tutorial on this full project, which has tons of stuff such as AI, interviews, questions,
+00:02:10.878 resume analysis, and so on. I'll link it in the cards and description for you. But as you can see, the basic overview of this page is they come here, they ask
+00:02:17.520 it to generate a question, they give that question an answer, and then it's going to give them some AI feedback telling them how good they did on this
+00:02:23.520 question. So we kind of see how the application currently works. And if we had already read through what this is
+00:02:29.120 asking us to do, essentially all this issue is asking is saying, "Hey, instead of just having them come to this page
+00:02:34.640 and ask questions, instead when they click on this questions button, I wanted to bring them to a list of all the
+00:02:40.000 questions that they've already asked so that they can review their previous questions and also have the ability to
+00:02:45.440 answer and ask questions just like before. It works very similarly to this interviews page where when I go to the
+00:02:50.879 interviews page, you can see I get a list of all my existing interviews and I can create a new interview if I want.
+00:02:55.920 And if I click on an old interview, you can see all the data related to that old interview. You can see right here,
+00:03:01.040 there's all that information. So essentially, this issue is doing the exact same thing for this particular page. So we've gone through step number
+00:03:07.040 one, which is figure out what the issue and problem is. We've gone through step number two to see how does the application currently work. Step number
+00:03:12.000 No text
+00:03:13.760 three is going to be to pull down all of this code and now test what the new implementation looks like. And again,
+00:03:19.519 all of this is happening before we actually dive into what the individual lines of code do. So generally the best
+00:03:24.640 way to do that is we can just go back to wherever that pull request is. You can see here add question history is the name of that pull request. And then we
+00:03:31.040 can just go into our code and essentially check that file out. So right now I'm on my code. If you look over here we have all our different code
+00:03:37.200 related files. And all I want to do is I want to get pull is going to be the first thing you do to pull down all your different changes. And then you can do
+00:03:43.519 get checkout whatever that branch name is. And that should move us to that branch. Now oftent times if you have database related stuff we're going to
+00:03:49.920 need to make sure we get all of that. So we can say npm run db push. That's going to be how we get all of our different
+00:03:55.280 database changes. Everything's gone through for our database. And now we can just run our application. npm rundev. So
+00:04:00.799 you'll notice I've essentially done nothing at all looking at the code. I just want to test does this application
+00:04:05.840 work like I expect it to. And now we can go back into our application and see does this thing work like we expect. So
+00:04:11.599 if we come back to the just main homepage here real quick. It might take a second to load because of next.js. We're now on that homepage. We can click
+00:04:17.918 on the next.js job here. We can click answer technical questions and we should be brought to a list of questions instead. And as you can see, we are
+00:04:24.080 being brought to a list. Currently, there are no questions showing up because specifically in this issue that we had right here, it said don't
+00:04:30.639 actually show questions that don't have the answer data and stuff saved. And in the past, we weren't saving any of that data in our database. So, we're starting
+00:04:37.120 from a clean slate, which makes sense. We have your ask your first question, which brings us back hopefully to that page. As we can see, it does. And this
+00:04:43.680 should work exactly the same as before. So, what I would do is I would go ahead and test this. Okay, we click an easy one. I want to type in some stuff for
+00:04:49.919 this. We're going to click answer. And then it hopefully gives us our feedback, our rating, and our correct answer. So, it does look like it's giving us all the
+00:04:56.320 information just like it was before. If we try to generate another one, let's actually see if that goes through and generates. Give it a quick second. You
+00:05:02.479 can see it generated. And if I want to skip this one, I want to test to see how that works as well. Now, I want to go back to the page we were just on. And
+00:05:08.639 actually, that's kind of interesting. And when I'm on this page for new questions, you would think clicking the back arrow would take me back to the
+00:05:14.639 overall list of questions, but instead it brings me back to this main page here. So that's already one problem that
+00:05:20.080 I see with the code. And when I'm starting to do these code reviews and I start to find these general problems
+00:05:25.199 when I'm just running through the application before I've looked at any code, what I like to do is I like to go specifically to where that pull request
+00:05:31.280 is and I just like to go into the comments and this is where I would start writing out these comments. So I could say the back button is bad. You know, I
+00:05:38.800 would obviously give it more detail in a real code review, but I could say, "Hey, the back button on this particular page when I'm on new question should bring me
+00:05:45.199 back to the questions index page instead of bringing me back to this job listing index page." So, now let's go ahead and
+00:05:50.560 go back into this answer technical questions. And something I already noticed that is different than the starting page is when we have questions
+00:05:56.880 here, you can see that this new question button is this nice little outline section. It looks identical to what we have in the interview section. You can
+00:06:02.800 see they have the exact same style, which is great. But when we had actually no questions at all, that fallback state
+00:06:08.639 really looked kind of weird and very different than the rest of our code. Also, something you'll notice that's different in our UI is this question
+00:06:14.800 section has a description as well as these tags here. While on the interview section, it only has the title with no
+00:06:20.160 extra tags or descriptions. Now, it's entirely up to the UI designer or the application owner on if they want to
+00:06:26.720 have this extra information or not. But they should either have this extra information on both the interviews and
+00:06:32.560 the questions page or they should not have it. It should be consistent between the two. So, this would be another thing
+00:06:37.600 that I would note down. I would say, you know, make consistent obviously giving more detail than that, but I would want
+00:06:42.960 these two to be consistent. Either they both have the additional details or they both have just the title. Either one is
+00:06:48.240 going to be what we want. Now, to show you what I was talking about with that new question button looking a little bit different, let's go ahead and actually
+00:06:53.360 go into our code here and we can just get to the Drizzle Studio by saying npm run db studio. This will allow us to
+00:07:00.720 actually delete out any question information that we already have. So, let's just open this up and we can come over to our application where our
+00:07:06.560 questions are. We can find the one that we just created. That's this one right here. We can just delete that record.
+00:07:11.759 So, essentially we go back to having no questions. When I refresh this, we should see, of course, it's giving me a
+00:07:17.039 little bit of problems because of Nex.js JS caching. So, let's go ahead and make sure we just close this down. And we're
+00:07:22.479 going to delete this next.js folder. Anytime you have cache problems, that's pretty much the quickest way to solve that. And this application is heavily
+00:07:28.720 cached. So, now we that done, we should just be able to come over here and refresh our page. And after a few
+00:07:33.840 seconds, it'll load. And you'll see what I'm talking about where I had that big section right here with this card. No completed questions yet. Blah blah blah
+00:07:39.520 blah blah. Ask your first question. This is very different than the entire UI design of the rest of our application.
+00:07:44.960 So this is another thing that I would note down inside of here and say like new card is not same as rest of app
+00:07:53.199 whatever obviously be more detailed but I'm just making a list of these things and the nice thing is is you can make these as detailed or as not detailed as
+00:07:59.759 you want and then you can come back later and flesh it out with full detail. So oftent times I'm going to make these really small notes to myself. Obviously
+00:08:06.000 slightly more detailed than this but not detailed enough for the actual person to use. Then when I'm ready to actually sit
+00:08:11.120 down and write out what the code is, I go through and write down individually what each of these is with details and maybe even some screenshot examples. I
+00:08:17.520 would take a screenshot and show them, hey, this looks different than what we have on the interviews page and so on. So they can really see the differences
+00:08:23.120 between them. Now, the final thing we haven't tested yet is after we ask a new question, let's see what happens when we want to access that data in particular.
+00:08:29.039 So let's go ahead. We'll answer this easy question here real quick just to give us a question that we can look at inside of our application. There we go.
+00:08:35.599 All of that is done. Once that finishes, we'll go over to our question section. And now when I click on this, we should be able to be brought to the same page
+00:08:41.120 to view all my question information. But again, I notice a slight problem. You can see here there's a bunch of padding
+00:08:46.240 on the left and the right hand side. And if I make my screen larger by just like zooming out, for example, you can see
+00:08:51.440 this padding is really, really large. It's essentially set inside my container size. While when I ask a new question by
+00:08:57.360 clicking on this new question button, you can see it fills the full screen size all the way across, no matter how large my screen is. So this is something
+00:09:03.680 that again I want to make a note of in my thing. I can say, "Hey, you know what? this section right here should be
+00:09:09.120 wider than it is. So again, I would come into here and make a note on that particular section of my application.
+00:09:14.160 Another thing that I may make a note on is it's not 100% clear that this is the answer on the right and that the question is on the left. I would maybe
+00:09:20.160 make like a small little like title that says question and answer and maybe even feedback even though this one's already kind of labeled. So just like a small
+00:09:26.320 little title in the corner of both of these. Again, I would make that as a note here. And these are all small little things. These have nothing to do
+00:09:32.480 with the code. They have to do with the design, with the functionality, with how these different things work. So, I would mention all those different things. And
+00:09:38.560 this questions button that nice. That's nice. It does go back to where we expect. Here we can see it looks like everything is looking good. So, overall,
+00:09:44.560 my initial impressions of the application is it looks relatively good. There's only a few minor things such as
+00:09:49.760 like back button things, some consistent stylings, and so on, but the overall core functionality of this appears to
+00:09:55.360 work exactly as I expect it to. Now, if you were to get to this point and you're making all of these different notes on
+00:10:00.480 what's happening inside your application and you realize that there's large errors inside the code, I would
+00:10:06.160 immediately stop my code review after you mark down what all those errors are. I would send those as a comment to the
+00:10:11.519 person to look at and then I would not even look at the rest of the code because oftent times if there's major errors in how things are working, they
+00:10:18.000 may need to rewrite entire sections of the code. So, if I go through and I review every single line of this code
+00:10:23.839 inside of here, I'm going to be wasting a bunch of time because in the future, I'm going to have to come back and look at all of these same lines of code over
+00:10:30.160 again with them being slightly different than they were before to fix the large errors. When it's small problems though,
+00:10:35.519 like what we have here, which is just things with like consistency and back buttons going the right location, those I think are perfectly okay to leave and
+00:10:42.079 just send them a comment while also reviewing the code at the same time because these changes won't drastically
+00:10:47.200 impact what the overall code looks like in this files changed. Now, moving on from step three to step number four is I
+00:10:51.000 No text
+00:10:53.920 would just run the test. Most often than not, inside your project, you're going to have some type of continuous integration that's going to run the test
+00:11:00.000 for you. But there are sometimes where you have flaky test or tests that don't always pass when they should be. And
+00:11:05.200 maybe the developer wrote a brand new test that is flaky. So, what I like to do is I just like to come in if you have any of those types of tests, they should
+00:11:11.200 fail. So we come in here and you can just say like npm run test and just run that like two or three different times
+00:11:16.720 just to see if there are any flaky tests that the developer is trying to squeak past you. They will fail. And then you
+00:11:21.920 can let them know inside this comments right here. You can say you know what a flaky test or whatever if you had a test
+00:11:27.120 that failed occasionally but not other times. And step number five on this process is taking these comments that
+00:11:29.000 No text
+00:11:32.800 you've left, cleaning them up a little bit and then just commenting them so that the person has an overall view of what the application works like. Is
+00:11:39.120 there errors in it? Are the tests failing? and are there UI problems? That's what this entire section is for is just figuring out does this thing do
+00:11:45.519 what you expect it to actually do. Now, once we're done with that, we can move on to step number six, and that's when we finally get to start actually looking
+00:11:47.000 No text
+00:11:51.920 at the code. And inside of here, instead of just reading line by line from top to bottom, looking at the code, instead,
+00:11:57.120 what I like to do is I like to figure out what are the important files that are being changed inside this section.
+00:12:02.160 We know that this entire poll request is about modifying this questions page, essentially adding a brand new question
+00:12:08.079 page as well as like a question view page and then saving that stuff inside the database. So the most important
+00:12:13.600 files for me to look at are going to be these question pages as well as like maybe how it's being stored inside the database. So what I like to do is I like
+00:12:19.839 to look, okay, where is this question at? This is the one that's generating the feedback that seems slightly less
+00:12:24.959 important. Yes, it's important somewhat because that's like how it saves the information in the database, but maybe not as important as other things. As you
+00:12:30.720 can see, there's not as much being changed in here. So, if I have a file that's maybe not as important, I'll just like minimize it for now so I can kind
+00:12:36.320 of focus on the really large important files. This next file is the one that renders out the actual question page
+00:12:41.519 when I click on a question. So, when I click here, that's what renders on this particular page right here. Our application is not running, which is why
+00:12:47.279 we get an error. So, let me just make sure we run our application real quick. There we go. So, now that's essentially
+00:12:53.120 this page that's going to render here. Very, very important. That's like a big part of what our application is. So, I'm going to make sure that I leave this
+00:12:59.279 file as is to be able to look at in a little bit. This next one is the page for generating a brand new question.
+00:13:05.200 Again, this is an important page, but I actually find this one to be slightly less important because we already kind
+00:13:10.560 of had this page before. So, this is just a re-implementation of an existing page. So, I can kind of minimize this
+00:13:16.240 down. Yes, it's important, but it's not as important as other things on the page. This is that index page that shows
+00:13:21.760 the entire list of everything. This is very important. This is the brand new page we just added. So, I want to make sure I look at this very in-d depth. And
+00:13:27.760 as you can see, there's lots of changes inside this file. Now, if we scroll down all the way past that, we can get to the point where we have our drizzle
+00:13:33.600 migrations. These are not at all important to look at because they should be automatically generated. So, we can go ahead and we can minimize down all
+00:13:39.440 these migration related things cuz again, they're automatically generated for us. Next, we have our database changes. I would say that this is
+00:13:45.760 important to look at. So, we're going to leave this open. And the nice thing is more often than not, database changes are quite small and easy to look at. And
+00:13:51.440 then we have some other stuff related to how we actually get this information from the database. I would say that this is relatively important to look at as
+00:13:57.680 well. We have a few more things down here. This is the services for getting the information from our question. This
+00:14:02.880 is maybe less important. So, we'll minimize this one down because it's kind of like a helper function that does all the stuff behind the scenes for us. And
+00:14:08.800 it looked like the changes in here were pretty minor on what's going on. So, I'm going to minimize that down. And now we've kind of got a list of what we have
+00:14:15.519 as the important files. The main files inside this section that are important are database files. And then we
+00:14:20.560 essentially have our page files for the pages that we're adding. So then once I've narrowed down what these important files are, the very next step, step
+00:14:22.000 No text
+00:14:27.199 number seven, is to review these large important files and to figure out what the actual code inside of them is,
+00:14:32.639 what's good, what's bad, and what needs to be changed. And there's two different ways to do that. The first way is just
+00:14:37.680 looking through on GitHub, and that's a perfectly fine way, especially in files that have smaller changes. So for
+00:14:42.959 example, this database file down here, you can see there's not a lot of stuff that changes. For example, this import
+00:14:48.000 has a few things added to it. And this section down here, we're adding a comma and then we're adding a few fields to our database. This is something that I'm
+00:14:54.320 super comfortable just reviewing directly inside of GitHub and saying, "Okay, you know what? This actually looks really good. These are the correct
+00:15:00.880 types for all this. I think this is okay to leave exactly as is." So, I wouldn't even mess with this. I would say it's
+00:15:05.920 good. You know, you can mark it as viewed or whatever else you want to say that you've actually looked at that particular section of your code.
+00:15:11.199 However, your system works for making sure you know what you've actually looked at. We can just mark that for ourselves. Certain other sections in the
+00:15:17.839 application though I find much more important to actually look at in depth inside of my code editor. For example, I
+00:15:23.199 was looking at this one earlier. Here we go. This is the one that when we were scrolling by. This is the one for our job questions page right here. This is
+00:15:29.199 the page that used to show the list of question. Not the list of questions. It used to show the form for filling out
+00:15:34.480 questions and now it shows our list of questions. As you can see when we look at the actual code review for this, there's a lot of removed code and then
+00:15:40.720 added code and removed code and added code and removed code and added code. This is very hard to read when you're
+00:15:46.160 just looking at it inside of GitHub because essentially we've taken one page and we've completely repurposed it for a
+00:15:51.519 brand new purpose. So what I want to do instead is look at this code inside of my editor. I find it much easier to
+00:15:57.519 read. And since for the most part this entire page is rewritten from scratch. I can look at the code inside of there and
+00:16:02.880 just see what's going on. So an easy way for us to do that is we can just copy this file path just like this. We can open up Visual Studio Code, hit P, paste
+00:16:10.160 in that file path and it'll open up us directly to where that file is. And this is the file for that overall list of
+00:16:16.160 questions page. And what I like to do when I get to this particular section is just read through the code line by line.
+00:16:21.440 Just being super meticulous, seeing exactly what's going on at every point. Now, that's one approach of reading line by line. The other approach is try to
+00:16:27.440 figure out the overall workflow of what's happening on this. This is especially useful for really large files. This file is not super super
+00:16:33.680 large, so I think it's okay to just kind of like read it line by line. But for really large files, I like to read like what my functions are and to get just
+00:16:40.079 like an overall view of what the file looks like. But for this one, like I said, since it's so small, we can kind of just read from top to bottom,
+00:16:45.600 especially since this very top function is the one that's being exported as the main component. Now, we already know that this questions page is very similar
+00:16:52.480 to the interviews page. So, another thing that I like to do is I like to go to the pages that are similar, and I like to look to see if they have the
+00:16:58.320 patterns being maintained. So, we can see here, this is what the header of the interviews page looks like. And if I go to the questions page, you can see this
+00:17:03.920 header is pretty much identical. They're actually pretty much identical down to the code. So we can see that they're at least adhering to the same general
+00:17:10.240 structure and layout, which is really important. I then can then go ahead and look further into my code. And one place that I really like to look as for
+00:17:16.319 performance. You can see here we're using promise.all, which is a great way to do all three of these different database queries in one section in
+00:17:23.199 parallel, which is really great. Also, I like to look at these database queries to make sure they're not getting more or less information than they need. In our
+00:17:29.600 case, we're making sure we get exactly the columns that we need from here. We're getting them from here as well. And where's the third one at? I don't
+00:17:36.559 actually know where the third one is. Let's go back up. What was it called up here? The third one was can create question. Oh, that's just a permission
+00:17:41.679 check. That's perfectly okay. So, that one just checks to see can they create a question. That makes sense. And then finally, we have our get job info and so
+00:17:47.600 on. So, once I check to see if the database queries are getting the correct information, the next thing I like to check is to make sure that they are safe
+00:17:53.440 and secure and that they're only giving information that the user has permission for. So, here you can see that we're
+00:17:58.640 specifically checking if the job info contains the user ID. So, I'm only getting the job info if it's for that
+00:18:04.640 particular user, which is great. This is secure. Next, we can go down to get completed questions, and it's doing
+00:18:09.760 again the exact same thing. This is doing it inside of a filter map, which I'm not a huge fan of. Generally, when I
+00:18:16.000 write a database query, especially if I'm like getting this user ID information, and the only reason I'm using that is for a filter right here.
+00:18:22.799 Generally, what I would like to do instead is just use a join query inside of here to do a join to make sure that
+00:18:28.160 that job info ID with the user ID is hooked up properly. So I would leave a comment inside the code essentially
+00:18:33.679 saying, "Hey, I would recommend using a join inside of here instead to make this more performant. So we can not have to
+00:18:39.520 worry about mapping through all this code inside of JavaScript." So what we can do is we can find that exact section in our code which is towards the very
+00:18:45.919 bottom here after this empty state. Here we go. Can get completed questions. And then I would come in here and say like
+00:18:51.360 use join instead. Something along those lines. And we can just click start review. And that'll keep all of our
+00:18:56.720 different comments in place for us. So now we have that comment we can come back to and look at in a little bit. So now we have all of our different
+00:19:02.160 comments. We made a comment on this thing that's like, "Hey, I would recommend doing a join in this particular use case." And then hopefully
+00:19:08.480 the person that goes through, they can actually implement this with a join. And we can check that later. So now that we know that these different functions are
+00:19:13.919 kind of doing like what we expect them to do, we can go back up into the code where we were at originally. We have all of our information. We have this job
+00:19:19.919 info stuff. We have the ability to create a new job info. And it's kind of interesting how they're doing this. They're just making it redirect to the
+00:19:25.919 upgrade page, which is perfectly okay. Okay, so we're redirecting to the upgrade page. Yep, that makes sense. If we can create a job, we or can create a
+00:19:31.760 question, we create it. Otherwise, we redirect to the upgrade page, which is fine. Then we have a bunch of information. Again, like I said, some of
+00:19:37.280 this like this P tag at the top here and all this like card shape for things is different than what we had for the interviews. So, we can change it or not.
+00:19:43.919 For now, I'm going to leave it as is, though, because I already made a comment on this design choice in my general comments. I don't want to make double
+00:19:50.320 the comments when I go through and comment out what my specific code is. And while we're kind of on the point of this UI looking slightly different, this
+00:19:52.000 No text
+00:19:57.039 is actually my very first AI specific tip. If you're writing your code with AI and you want it to match a consistent
+00:20:02.799 style inside your application, I highly recommend making sure that you have some documentation in place explaining the
+00:20:08.400 overall flow of the code in your application and how different pieces fit together. You can even use AI to
+00:20:13.600 generate this for you into some markdown files. But also if for example when I'm creating this questions dashboard
+00:20:19.039 specifically mention in your prompt to the AI I want the style and design of this page to match closely this
+00:20:26.000 interviews page over here and if there specific things such as how you want the empty state to look and so on mention
+00:20:31.679 specifically I want the empty state to look exactly the same or I want this to look exactly the same between these two different things. Otherwise AI will just
+00:20:38.400 throw in whatever the most generic thing is that it can think of in place of whatever your UI is. So if you have
+00:20:43.679 specific UIs you want it to follow, reference them directly inside your prompt or inside your documentation so
+00:20:49.120 they know that. And that's why this came out the way it did. You can see it has this whole empty state thing that it magically created on its own. And that's
+00:20:56.240 entirely different. This interviews page doesn't have an empty state. It just shows the link for a brand new interview
+00:21:01.440 with nothing else after it. There's no empty state to worry about. So, this essentially created this entirely on its
+00:21:06.960 own because in the prompt I didn't mention specifically to match the design of this interviews page like it was
+00:21:12.640 supposed to. Now, another really important thing that I find that most developers don't look into is look at the actual CSS being applied. In this
+00:21:13.000 No text
+00:21:19.039 particular case, this div right here, we can see that we have text small and text muted foreground being applied. Even
+00:21:24.799 though these badges should take into account the sizing information for us, let's actually go ahead and look at our
+00:21:30.799 application to see if that's the case. This is on that all questions page and this should be formatting this
+00:21:35.840 information for easy as well as the job title. Actually, it's the experience level and the job title. That's this
+00:21:41.360 senior right here as well as this job title right here. If I remove text small and text muted foreground, let's see if
+00:21:46.559 that changes anything. And we give it a refresh. You'll notice nothing actually changed over here. So, I can make a comment inside the code at this exact
+00:21:53.120 location and say these classes are not needed. So, we can just find that particular section. I'll just copy the
+00:21:58.480 code and I'll search for it. There we go. This should be where that is at. Let me just expand it and search for it. You
+00:22:04.480 can see this is a feedback rating. That's a different section. This is the exact section I was looking at. I can just make a comment. These classes are
+00:22:12.240 not needed. There we go. And I can mention, you know, what the classes are. So, I'll copy those in.
+00:22:19.919 There we go. And I can add that as a review comment. And I actually noticed that this was in multiple places. You can see it's the exact same thing is
+00:22:25.760 happening here. This makes sense though because we actually have text inside of it. and it's happening here, which again is using badges. So I can make the exact
+00:22:32.640 same comment, not needed. And I can put in whatever those class names are and
+00:22:37.679 add that to my comment. So as I'm going through and reading my code inside of my editor, I like to reference back to
+00:22:42.960 GitHub and add the comments as I'm going. And I like to just test things like, hey, remove those classes. I noticed it didn't actually change
+00:22:48.400 anything, so they're no longer needed. One of the best things you can do when you're reviewing is actually tell people to remove code because the less code you
+00:22:54.720 have in your product, the easier it is to maintain and work with. And the more code you get, obviously, the more difficult it is to work with. Now,
+00:23:01.200 another thing that I noticed when I'm scrolling through here is this section with this grid is kind of complicated CSS. There's a lot of stuff going on
+00:23:06.720 that's linked between these different cards and this grid. And this is actually repeated between my interview section. So, you can see here I get the
+00:23:12.960 exact same stuff on my cards and it's actually repeated in multiple places in our application. This is an instance
+00:23:18.480 where I can make an optional comment. I can say, "Hey, I noticed that this code is starting to get repeated in three, four, five different places in our
+00:23:24.720 application. this is making it difficult to maintain. If we need to change it, we need to change it in five places. Maybe
+00:23:30.240 it's an idea that we should implement this into one shared component for all these different sections. And that can
+00:23:35.520 be something for this current poll request or a new poll request. So, what I would do is I would go back into my
+00:23:40.880 section. I would find wherever that is in the code. Let's just pretend that it was here. Actually, this Yeah, we'll
+00:23:46.640 just say it's here. It doesn't really matter where it's at. We can come into here and we can leave that comment that's saying like, "Hey, here's this thing that's optional. You don't
+00:23:52.960 actually need to do this. I'm just mentioning this. We can create a new poll request for it or a new issue for it if we want to in the future, but it's
+00:23:59.280 something to keep in mind. And boom, you can add that specifically to your review. Now, you're noticing that as I'm going through these files, I kind of
+00:24:05.120 have an order that I like to follow. You saw at the very beginning, I looked through this top section, which is like all the backend calls, the database, the
+00:24:10.960 really, really important stuff that you want to get right. Security, database calls, performance, those are super, super important. And the next thing that
+00:24:17.279 I'm looking at is, okay, what does the style look like? Is there extra CSS classes? Are there certain things that we can change? Go with the order of
+00:24:23.279 importance because as you review code, you're going to get really fatigued on reviewing code and you're going to kind of start to get sloppy and scroll past
+00:24:29.600 some things and skim things and read things quicker than you should be. So, make sure you focus on the important stuff first. So, that way when you do
+00:24:35.440 end up getting sloppy and skipping past some things, it's hopefully the much less important stuff that you're skipping over or spending less time on.
+00:24:41.520 And if you notice you're really getting sloppy, just take a break. Take a break for a half hour, come back, and you should hopefully be revorated with some
+00:24:47.760 more energy to be able to look through the code at a little bit more fine-tuned level. Now, I spent some time going through this file, and for the most
+00:24:53.279 part, I didn't see anything else major in this file that I would change. So, what I would do is I come back to wherever I'm doing my review. I would
+00:24:59.360 find that specific file that I was just on. I believe it's this file right here. Mark that as viewed so we can move on to
+00:25:04.559 the next file, which is that overall index page, which is actually the overall index page is the one that we just finished reviewing. So, let me go
+00:25:10.000 to the overall index page. Click viewed on that one. And now we don't have too much left that we need to look at. we
+00:25:15.440 have this features for our database related stuff as well as the actual index or the individual view page itself
+00:25:21.200 which is the next section that I want to look at. So we want to go to this file. I'll just copy this over go into my
+00:25:26.480 editor here and go specifically to this file. So we can go ahead and look at the code inside of here. Now obviously the
+00:25:31.520 first problem I see is a linting issue. We have this formatter being used inside of our code even though it's not
+00:25:36.559 actually being used anywhere. It's being imported. I would make a comment, hey remove this particular thing. Put that inside of GitHub so they know that that
+00:25:43.120 should be removed. And if we had like linting and CI setup, that would actually be caught by that CI linter for us. Next thing I want to do is again
+00:25:49.120 look at my database queries and security. So we can go to get question. That's our database query. We can see we have all of our caching set up properly.
+00:25:55.440 And this is looking like it's working pretty well. We have a wear clause that's checking to make sure we have access to that job info and the
+00:26:01.600 question. I'm not seeing where user ID is being used quite yet, but we're getting all this information limiting
+00:26:06.640 the columns we're getting back, which is great. If it's null, we return null. And then we're coming down here and we're doing our check on user ID. This is
+00:26:13.039 again an instance where maybe we would want to actually do this in a join query. Also something that I really
+00:26:18.960 don't like as you can see here question. Or question feedback if those are essentially empty it returns null. Well
+00:26:24.720 that should just be in my wear clause essentially where this answer and this feedback is not null. So I would make a
+00:26:30.320 comment on that. Hey move this if check from outside of my database query to inside my database query because the
+00:26:36.080 database is incredibly quick at finding information while these checks much much slower. So I would most likely just move
+00:26:42.320 that directly into my database query. But that's a much smaller thing because this is just getting one record. So it's
+00:26:47.520 not as important because checking one record in JavaScript is pretty quick. But if we were mapping through hundreds of records, that could get much slower.
+00:26:53.760 And that's probably why they didn't use a join query here for this user ID check again because it's just going to make
+00:26:58.799 this database query much more complicated than it maybe needs to be, especially when finding such a small simple thing. So actually, I may not
+00:27:05.120 even leave a comment on that. I may like make an optional comment like, "Hey, is there a reason you didn't do this with a join query? If so, you know, just let me
+00:27:12.000 know. I'm just curious." Because it may be more performant or less performant depending on how your database is set up and so on. So, that's something to
+00:27:17.919 consider. And always when you have a question about why someone did something in a code review, just leave that as a question. Say, "Hey, why did you do this
+00:27:24.480 particular thing?" That'll help you understand what's going on. And maybe they didn't actually think about why they did that, which means they'll think
+00:27:30.480 about why they did that particular thing as well. Now, I was going through some of the code again, and you'll notice this entire section for these resizable
+00:27:36.320 panels. This is what gives us that resizability of all of those different panels, but this is actually essentially
+00:27:41.440 copied directly from the original page for creating a brand new one. If I go into here and I look at the code, I
+00:27:47.279 believe this is the one. Let's scroll down a little ways till we get to the section. You can see here all of that exact same resizable panel code, it's
+00:27:54.240 all inside of here. So, this is another instance where I'd maybe leave a comment like, "Hey, is there a way that we can extract this out into like a shared
+00:28:00.799 component that they use instead?" So that way, if we want to change how these resizable panels work, it'll work the same across both of them. There may or
+00:28:07.520 may not be a way for you to do this, but I would just leave it as a comment that says, "Is there a way to do this?" Don't say, "Hey, you have to do this because
+00:28:13.520 sometimes that's not the best approach." But just let the person think about doing this particular thing for you. And that actually brings me to my AI tip
+00:28:18.000 No text
+00:28:20.480 number two. And that's because oftent times when you have these types of things where you tell the AI, hey, I
+00:28:25.840 want you to reference the exact same layout that you had before. That's what I told the AI. I said, hey, I want the exact same layout that the new question
+00:28:32.159 page has inside the view question page. And essentially what it did is it copied that layout and made very minor changes.
+00:28:38.480 For example, here we have, you know, we don't have to worry about the question being null. We don't have to worry about having a text area. It made very minor
+00:28:44.720 modifications, but otherwise it just copied the code and pasted it in instead of creating a shared component or even
+00:28:49.760 considering if a shared component was needed. It copy and pasted that code. And if you're just really hard vibe coding and just telling it do this, do
+00:28:55.760 this, do this, do this, all of a sudden your code is going to be full of copypasted stuff all over the place that should most likely be in a shared
+00:29:01.919 component or some other type of shared piece of logic. So when you're reviewing your code, look for these things where hey, maybe I accidentally copied this
+00:29:08.720 code from one place to another and it would be better to extract that into a component. And if you know, for example, that you need to essentially copy one
+00:29:15.440 piece of code and use it in another place and you're telling the AI to do that, maybe also tell the AI also
+00:29:20.720 extract this into a shared component that we can use across both of these different files. If you think that's
+00:29:25.760 something that makes sense, you can do that even after the fact or before the fact. It's entirely up to the way you want to do things. You may just say,
+00:29:31.760 hey, copy this code over. And when you're reviewing it, you notice, hey, it looks like a lot of this is exactly the same. And you can tell the AI, hey,
+00:29:38.320 extract this out into a shared component. And it'll go ahead and do that for you. or you can just do it yourself. But that's something really important to keep in mind is that AI
+00:29:44.559 when you tell it to do something the same as before, instead of extracting things and making good abstractions, it'll just go ahead and copy the code,
+00:29:50.960 paste it as many times as it needs to. So, I went looking through the rest of this code, I didn't really notice anything in particular. So, we can go
+00:29:55.000 No text
+00:29:56.159 back to our code review where we are at with that particular file and we can say, hey, we've done this file now as well. And if we scroll through, the only
+00:30:02.799 other important file that we have is this one right here. And this is just the database query itself. And this one's quite small, so hopefully this
+00:30:08.720 won't actually be too difficult to go through. So we can just get directly to that particular file. Inside of here, you can see we have insert question
+00:30:14.960 which was already done before. And this one's actually so small it may make sense just to review it directly inside
+00:30:20.080 of here. So we can see if we look at this, we've imported a brand new equal. That's perfectly normal from Drizzle. Then if we come in here, here's all that
+00:30:26.399 insert stuff. We just added a comma here. I don't know why that comma got added. I'm guessing it's something to do
+00:30:31.440 with linting or formatting. So I wouldn't worry too much about it. But if you saw this inside of a code review that was being changed, you may say,
+00:30:37.840 "Hey, make sure your llinter is in line with the one for our project." And if you had CI and CD doing all of your
+00:30:43.360 different linting for you, it would throw an error or do whatever else it needs if this was a problem with linting. Now, moving on to the actual
+00:30:49.200 code itself, you can see we have a function called update question. Takes in an ID, takes in our question, which is a partial from that question table.
+00:30:55.600 That makes perfect sense. We're calling update. We're setting our question data getting it from here where the question
+00:31:01.120 ID is equal to ID and we're returning the ID the job info ID which we're using to revalidate our cache and return that
+00:31:07.200 information. So when I'm looking at database queries one of the most important things I like to look at is okay am I limiting this query with a
+00:31:12.880 wear clause? I am. And am I returning only the information I need and again I'm returning only the information I
+00:31:18.159 need and I'm updating the correct information. So everything about this update question looks fine. Again it's a
+00:31:23.200 pretty simple self-explanatory function. So, the nice thing is I can just mark this one as viewed and we're done with all of essentially the more complex and
+00:31:29.919 more important files. Now, that doesn't necessarily mean some of the less important files aren't complex, but we've finished with the most important
+00:31:35.000 No text
+00:31:36.240 files, and now we can move on to what I consider the less important files, and this is where it's a little bit easier to go through because more often than
+00:31:42.159 not, these are smaller files and they don't have as many changes. Another thing to consider when you're looking through these less important files,
+00:31:47.919 which is actually step number eight, is to make sure that they actually even need to be changed. oftentimes when
+00:31:53.200 you're reviewing code or actually when you're writing code, you may change certain things and then later go ahead and change something else and that
+00:31:59.279 original first change is no longer needed because of the way you did things now. So making sure when you review that you check for any code that got changed
+00:32:06.159 that no longer needs to be changed is really important. So I'm just going to go through these essentially from top to bottom because they're really not super
+00:32:12.480 important files. First one here is generate feedback route. And if I take a look at this code, you can see we got
+00:32:17.679 that update question function being imported here. We're trimming our answer. While in the past, we weren't
+00:32:22.799 trimming the answer. If we take a look at our code, you can see we're getting the answer from that post request. And in the past, we were never actually
+00:32:29.039 trimming that answer. I think it's okay to trim it in this particular case though because that makes more sense.
+00:32:34.399 And we're storing this inside the database while in the past, we were not storing this in the database. So, we
+00:32:39.440 call update question right here. And then down here, we are passing along that answer just like before, but it's
+00:32:44.640 trimmed this time, which is fine. And we have an on finish being passed in which was not being passed in before for
+00:32:49.760 generating our feedback. And when we're done generating our feedback, we're getting the rating from that feedback.
+00:32:54.799 And then we're updating our question again. So I actually want to dive into this code a little bit inside the editor
+00:33:00.240 cuz I find it'll make it a little bit easier to know what's going on. So we can come into here. We have our section.
+00:33:05.519 So this is our post request. And this is where all the new code is. We update our question when we make the post request. And we're forcing the user to wait for
+00:33:12.159 that. So already a little bit of a red flag here. I see because we're forcing them to wait for this question to be updated before we even start the
+00:33:19.039 generating of our AI feedback and then we stream that data in. So this is something that I would recommend not
+00:33:24.159 forcing the user to wait for. I would put this inside of like an after statement inside an X.js or something else to make it so that this is not
+00:33:30.399 something blocking the user request. So already that's one red flag. Another red flag I see is we're updating our
+00:33:36.640 question here and then when we get our feedback we're also updating our question here. That may be something
+00:33:42.000 that you want to do because you want to make sure that if the feedback fails for some reason, you still save what the answer is. But in our particular use
+00:33:48.799 case, if the question doesn't have feedback or an answer, we completely ignore it. So a question with an answer
+00:33:54.720 and no feedback is just as useless as a question with no answer and no feedback. So I would say honestly just entirely
+00:34:01.679 remove this update right here and move the answer into this section right here. So essentially you would do one update
+00:34:07.679 instead of multiple which will make things slightly more performant and again solve that problem we had up here.
+00:34:12.719 Now depending on your actual needs for your database and your application that may or may not be what you want. But
+00:34:17.839 since we looked at step one which was reading what the issue was and if we go back to what that issue was it
+00:34:23.040 specifically said do not care about questions that have a empty answer or an
+00:34:28.480 empty feedback. Right here it says if a user asks a question but never answers it or get feedback for it, do not
+00:34:33.679 display that question as a potential question in the list. So essentially we're just telling them, hey, this is a question that didn't get answered or
+00:34:39.918 feedback. We don't care about it. So there's no point in saving the answer if we don't have the feedback also. Now the only other thing in this file that
+00:34:45.679 changed is this parse feedback rating. So let's go ahead and take a look at that function down here. You can see it takes in the feedback as a string. And
+00:34:52.000 that's because the way that this streaming of our feedback data works is it actually returns to us in markdown
+00:34:57.440 format. As you can see here, we have our markdown format. So, what this is doing is it's taking that markdown, parsing
+00:35:02.800 out that feedback function, and getting the rating from it. I would say that this is a big red flag. Technically,
+00:35:08.720 this works, but it's not at all ideal. Instead, we should have our AI return to us JSON. JSON that has a rating as a
+00:35:16.320 number, and then it has all of the different feedback as a markdown string. That makes it so that we don't have to
+00:35:21.599 worry about doing this matching information to get the feedback number. and we can get back that formatted data
+00:35:26.800 with the correct typing information cuz now here you can see we're doing a bunch of TypeScript hacks to make sure that this rating is actually a number being
+00:35:30.000 No text
+00:35:33.359 returned for us. And this brings me perfectly into AI tip number three and that is that AI when you tell it to do
+00:35:38.960 something will often just do it no matter what. It won't ask is this a good thing? Should I be doing this? Is this
+00:35:45.280 the best way to do this? It just says hey you told me to do this I will do it. So it didn't think hey parsing this from
+00:35:51.440 a string is probably not the best use case or best idea. Instead, it just said the only way I can get this information
+00:35:57.040 with the tools that I have is by parsing this string. Instead, the best thing for us to do is to actually change the
+00:36:02.720 format we get returned. So, when you're reviewing your code and you see something like this generated by AI where it's just doing something really
+00:36:08.960 wonky to try to get data or whatever in the correct format, think to yourself, why is the AI doing this? And then
+00:36:14.880 figure out, okay, what is a better way to do this? And like I said, it'd be much better if we return JSON data from
+00:36:20.079 here that has a rating as a number and the markdown as a string. So it's separated so we can easily get this
+00:36:25.599 rating information and save it inside of our database. So when you prompt your AI either tell it specifically, hey make
+00:36:31.839 this modification to you know get the number properly or often times you're not going to realize that until you review the code and when you review it
+00:36:38.720 make sure you notice these types of weird hacky things that are happening and then either fix it yourself or prompt the AI to fix it in specific ways
+00:36:45.200 and be very very specific when you're trying to implement these different fixes. So now that we kind of understand how that's going on, essentially what we
+00:36:50.000 No text
+00:36:51.680 would do inside this particular section of that file is we would leave whatever comments we would leave. So like you know remove this section, fix this
+00:36:57.839 section, but whatever it is, we're done with viewing that after we leave our different comments and we can move on to the very next section here, which is the
+00:37:03.599 questions new page. And this is a page that essentially should not have changed at all. This should be exactly the same
+00:37:08.880 as what the new page was before. So there's a few different ways that I can test this. I could just take all the different code inside of here and
+00:37:15.200 essentially copy this and then compare it directly to the original file because all that happened is that this file
+00:37:20.560 essentially moved and if they are essentially exactly the same then I know hey all of this code is perfectly fine.
+00:37:26.000 I'm going to keep it as is or if there's small changes between them I can compare those small little changes. Now I know
+00:37:31.920 that these file is exactly the same as the original file. So I don't need to actually go ahead and do that myself but that's what I would do in that
+00:37:38.000 particular scenario. But in my case I know this file is exactly the same. So, I can just leave it as is by clicking viewed. Now, the next files here we have
+00:37:44.320 are Drizzle migrations. Now, I would at least look at these migrations just to make sure that they look like they're
+00:37:49.760 correct and make sure that they're generated from the migrate command. But just by glancing at these, I can see that these look like they are correct.
+00:37:56.320 But you will notice something interesting. We actually have two different migration files. This first migration file adds an answer feedback
+00:38:02.320 feedback rating and answer that column. And the second one removes the answer that column. And when you're doing a
+00:38:08.000 pull request, your poll request should at most have one migration file inside of it. You shouldn't have two, three,
+00:38:14.079 four, five different migration files because when you're developing, it's okay to go through multiple iterations
+00:38:19.119 of what your database looks like. But when you're ready to deploy to production, you want to run just one
+00:38:24.240 migration for all of the different changes you have. It doesn't make sense to add and answer that column and then remove that in the very next migration.
+00:38:30.880 So instead, I would leave a comment that says reduce this to one migration.
+00:38:37.200 There we go. So that way they can go through, delete these, and regenerate a new migration. And that new migration is
+00:38:42.480 essentially going to not have this answer that column at all. And it'll just have feedback, rating, feedback, and answer. This is a super common
+00:38:48.720 problem that I see not only with junior developers, but also with AI. So I'm going to give this my AI tip number four. Check your database migrations. If
+00:38:50.000 No text
+00:38:56.000 you have more than one migration for a single pull request, that is a huge red flag because it's just going to make your database have to do more work to
+00:39:02.480 migrate multiple times. And oftentimes it's going to put your database in a really bad place cuz some of these migrations have bad code in them because
+00:39:09.119 hey, I added this field and now I no longer need this field. It just gets really messy and confusing inside your
+00:39:14.160 database. So I'd recommend when you're dealing with these migrations to make sure there's only one of them in your code. So we can mark those as viewed.
+00:39:20.560 These snapshot files are again just more drizzle migration files. They're perfectly fine. Same thing here. This is
+00:39:25.760 just another migration file. And now we've moved on to essentially the very last file. So now let's go ahead and look at this file. And this one's quite
+00:39:30.000 No text
+00:39:32.160 simple. So we can just look at it directly inside of here. You can see again another linting related thing. You know, whatever it is, it'll fix itself.
+00:39:38.000 We're adding in on finish as an optional property that we can take in. Makes perfect sense. We technically are not
+00:39:44.079 needing this to be optional because the only place we use this function. If I take a look at it real quick. So we can
+00:39:49.200 go to that particular file. Scroll all the way up. This generate AI question feedback. If we take a look at where
+00:39:54.640 we're using this, it's only being used in one place and on finish is being passed in. So, we don't need this thing to be optional technically, but I like
+00:40:01.280 that it is optional because in the future we may use this in other places and we don't need this on finish. So,
+00:40:06.560 having this optional even though it's technically required in the code we're using it for, I think is a great idea
+00:40:11.599 and something really good. If it was actually put in as required, I would probably make a comment saying, "Hey,
+00:40:16.720 make sure that this is an optional property because not every time that this is called do we need this code." Now, there is one style problem I have
+00:40:23.359 with this though. You'll notice all my stuff up here for all my code is fine. We have model prompt, max steps, some continue step stuff, and then our system
+00:40:30.079 prompt. And you'll notice the system prompt is very, very large. And then at the bottom of that, we have this on finish. And this is AI tip number five.
+00:40:34.000 No text
+00:40:37.599 When you have a lot of different properties being put into an object, the AI will almost always just append the
+00:40:43.520 new object properties to the very end. But in our particular case, it doesn't make sense to put this at the end.
+00:40:48.720 Instead, this onfinish should probably be up here somewhere cuz it's much easier to read. This system prompt is
+00:40:54.320 large, takes up a lot of space, and I essentially don't look at the bottom of this. So, I want all of my important
+00:40:59.599 code to go at the very top here inside of this section, while all of my much less important code can go all the way
+00:41:05.440 down here, which is just essentially this system prompt since it's so large. So, making sure that the really important stuff is at the top of your
+00:41:11.040 file is super important. And again, like I said, AI is going to essentially just append to the end of whatever list you
+00:41:16.160 have. So, make sure that you move things around or put them in the correct place after the AI is done with generating that code for you. Also, something that
+00:41:22.319 I would leave as a comment is this code can be drastically simplified. We can essentially just run the code on finish
+00:41:28.400 question mark and then call it like that with a period afterwards. And that is the optional chaining. Essentially, it
+00:41:33.760 does this null check for us. And we don't even need to worry about awaiting it or making this async at all because we can just return the promise as is.
+00:41:40.160 And we can even make it one line just like that if we really want. This is the exact same code. So, I would make a
+00:41:45.599 comment or something recommending to minimize this code to either do it as one line or if you want it as multiple lines to do something like this just to
+00:41:52.319 make it a little bit easier to read and see what's going on because now it's a much simpler piece of code that's happening. So, now that we've kind of
+00:41:55.000 No text
+00:41:57.520 gone through this file and let's say that we made a comment on here for that thing that I just talked about, we can mark this as viewed. And now you can see
+00:42:03.119 we've viewed all 12 different files. And you may think, finally, we're done with our code review. But we actually still
+00:42:08.240 have two steps left. The next step is step number nine. And this can really get slotted in anywhere when you're
+00:42:13.920 going through the code, even if you're just going through the very beginning steps of testing out the application. And that is when you run into an error,
+00:42:20.480 you can optionally dive into the code to figure out what the error is being caused by. And this is entirely up to
+00:42:26.480 you and how much time you have. If you have a lot of time or the error looks really simple, you can, you know, dive
+00:42:31.599 into the code and say, "Oh, you know what? Because you put this right here, it's actually causing an error with this
+00:42:36.720 particular piece of code that you have." So you can dive in, let the user know like, hey, here is your error,
+00:42:44.640 something like that. And you can put that inside your code review directly. Or if you don't have time to figure out what that error is being caused by, you
+00:42:50.400 have a lot of other stuff to worry about, you can just say, "Hey, the error is right here. I don't really know what's causing it." But if you have the
+00:42:55.680 extra time, just spending, you know, 2, three minutes trying to figure out where that error is coming from, can be really helpful because instead of just handing
+00:43:01.920 this person a bunch of problems, you're handing them problems and also potential solutions for those problems. So step
+00:43:07.359 number nine, you can really slot it in anywhere and that is essentially just when you've run into a problem or an error, spend a couple minutes trying to
+00:43:13.200 figure out why that error is happening because that can really make the life of the actual person writing the code much easier. Now my final step number 10 is
+00:43:17.000 No text
+00:43:19.920 to go through your code again afterwards. So now that we've reviewed all of the code, the next step is since you understand how everything works is
+00:43:26.240 to run through the application again. But now keep in mind what the code does that you've read. Think about different
+00:43:31.520 edge cases that you maybe would have hit in that code. And now test those different edge cases. test exactly what happens test maybe what happens when I
+00:43:38.079 generate a new question and let's say that I do an easy question and then you give the question an answer so we'll
+00:43:43.119 just give this quick second to generate a question for us we give it an answer and then let's say okay after we give an
+00:43:48.560 answer boom we just navigate to a brand new page does this break does this work what happens inside of our application
+00:43:53.760 testing those different edge cases now that we know how the code works can make it really easy for us to find new bugs
+00:43:59.280 inside the code that the original developer of the code may not have actually found themselves most developers skip this final step because
+00:44:05.920 they've already looked at the code. So why bother running through the application again? But the insight you get from running through the code and
+00:44:11.760 actually then testing in the application is really invaluable because now you can test things you never even saw before.
+00:44:17.119 Another thing that's really important is maybe inside the code you notice that they actually changed a file for like the homepage. So they changed what this
+00:44:24.000 file looks like. You can go through and now test this file because originally when you did your original run through in step two and three, you probably
+00:44:30.319 didn't check this page because you didn't think it was changed. But since this page was changed, you can now go through and test to make sure it works
+00:44:36.400 just like you expect between the new version and the old version. Now, really the final thing to do, you can call this
+00:44:41.599 step 11 if you really want, is since you've made all your comments, you can just finish your code review and you can
+00:44:47.040 essentially approve, deny, whatever you need to do, submit that different code review with any additional comments you want. And now it's going to show up
+00:44:53.040 inside of here with all those different comments for the user. So, they can look through and see exactly what needs to be changed in their application. And if
+00:44:59.359 you're interested in this exact project right here we used for this code review, I have a full video on how to build this. I'm going to link it on the screen
+00:45:05.520 right over here for you. So, I'd highly recommend you check that out. With that said, thank you very much for watching and have a good

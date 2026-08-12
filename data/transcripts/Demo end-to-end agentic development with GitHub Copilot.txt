@@ -1,0 +1,145 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/onVn-lnHZ9s
+
+00:00:00.000 No text
+00:00:00.080 As a developer, the first thing I need
+00:00:02.000 to do is get an environment in which to
+00:00:04.319 code. Normally, this would be a tedious
+00:00:06.240 process of installing frameworks,
+00:00:07.680 libraries, services, and packages. But
+00:00:10.000 with Codespaces, I'm literally a couple
+00:00:11.920 of clicks away from a fully configured
+00:00:14.080 environment. Everything I need is
+00:00:16.160 defined in the dev container JSON file
+00:00:18.160 and automatically loaded up. In fact, I
+00:00:20.960 can even use a version of VS Code right
+00:00:24.000 here in my browser. But if I prefer the
+00:00:26.480 desktop version, that's also just a
+00:00:28.640 couple of clicks away. With my
+00:00:30.400 environment set up, the next step is to
+00:00:32.000 No text
+00:00:32.960 figure out what to work on and what to
+00:00:35.280 delegate. Through the use of GitHub's
+00:00:38.000 MCP server, I can ask Copilot to
+00:00:40.879 prioritize the backlog on the
+00:00:42.559 repository. Looks like there's a couple
+00:00:44.399 of issues looking for new features,
+00:00:46.399 accessibility tests, and migrations.
+00:00:49.280 Copilot highlighted the new feature as
+00:00:51.760 having the biggest impact on customers.
+00:00:53.680 So, I want to turn my attention to that.
+00:00:55.680 Accessibility is important though, so I
+00:00:58.079 don't want that to sit in the backlog.
+00:01:00.000 Let me assign that to C-Pilot, then turn
+00:01:02.079 my attention to writing code. Let me get
+00:01:04.640 the full details of the issue so I can
+00:01:06.880 gather some additional context. Looks
+00:01:09.040 like we need to add filtering by
+00:01:11.200 category and publisher to our website.
+00:01:14.400 Seems straightforward enough. There's
+00:01:16.080 even an empty file for publishers, which
+00:01:18.159 I guess someone forgot to actually
+00:01:19.920 start. I can fix that. I ask Copilot to
+00:01:20.000 No text
+00:01:23.119 generate the code to return all
+00:01:25.119 publishers. I do this in line with
+00:01:27.680 Copilot by hitting command I, then
+00:01:30.320 making my request. I've got the initial
+00:01:32.560 code created by Copilot. I'll accept
+00:01:35.439 those changes, then add in the code to
+00:01:38.240 get publisher by ID. I barely get to the
+00:01:41.759 route function when Copilot detects what
+00:01:44.159 I was trying to write and generates a
+00:01:46.240 suggestion. Looking over the code, I can
+00:01:48.640 see everything is built out just fine.
+00:01:50.720 Let's accept it. And that's done. But
+00:01:53.439 there's lots more to do. I've got the
+00:01:55.360 categories route to create the app to
+00:01:58.000 update interface to modify test to
+00:02:01.360 generate. Okay, this is going to take a
+00:02:03.920 lot more work than I originally thought.
+00:02:06.000 No text
+00:02:06.320 Let's see what copilot agent mode can
+00:02:08.318 do. I explain everything to copilot and
+00:02:10.800 it gets to work. It reads through my
+00:02:13.200 project and creates the necessary files.
+00:02:15.920 It's got the back end, the front end,
+00:02:18.000 and all the tests covered. Most
+00:02:20.480 importantly though, it's actually going
+00:02:22.480 to run the tests for me and I can see
+00:02:25.520 just like me, it's made a couple of
+00:02:27.440 mistakes. Fortunately, Copilot agent
+00:02:30.160 mode is self-healing. It reads the error
+00:02:32.560 messages, makes the correction, and
+00:02:34.879 updates the code to fix the various
+00:02:38.000 bugs. Finally, all of the tests pass. It
+00:02:41.680 turns its attention to running the
+00:02:43.920 endto-end tests in Playright. And I'm
+00:02:45.920 going to skip ahead a little bit to
+00:02:47.599 another problem that Copilot discovered.
+00:02:49.000 No text
+00:02:49.840 Turns out that someone didn't list
+00:02:51.840 Playright in the requirements for my
+00:02:54.239 image. Normally, this would involve me
+00:02:56.800 having to track down what needs to be
+00:02:58.400 done. But fortunately, Copilot got me
+00:03:01.280 covered. It installs the libraries and
+00:03:03.920 the underlying dependencies before
+00:03:05.920 running the tests again, which all now
+00:03:08.400 pass. With the code generated and tests
+00:03:09.000 No text
+00:03:11.040 passing, let's take a look at one of the
+00:03:13.200 core components which ensured everything
+00:03:15.360 followed the guidelines I set forth,
+00:03:17.680 instructions files. Our team has one for
+00:03:20.800 the project all up describing global
+00:03:22.879 standards in the app we're building. And
+00:03:24.879 we've even got ones for more specific
+00:03:26.800 scenarios like creating endpoints and
+00:03:29.120 unit tests. Copilot chat used all of
+00:03:31.920 these when it did its work. Instruction
+00:03:34.799 files are so important in fact that
+00:03:36.879 copilot coding agent can even suggest
+00:03:39.519 the creation of one if you don't have
+00:03:41.760 any in your repository so you don't have
+00:03:44.159 to create it manually. Now to my least
+00:03:45.000 No text
+00:03:47.599 favorite part of being a developer
+00:03:49.680 describing what I just built.
+00:03:51.519 Fortunately, Copilot can help me there
+00:03:53.599 as well. I can use the sparkles to
+00:03:56.159 generate the commit message. Then after
+00:03:58.720 I create and publish a new branch right
+00:04:01.360 here from in VS Code, I can create the
+00:04:03.920 PR. Again, Copilot's there to generate
+00:04:07.040 the description for that PR. And if I
+00:04:09.599 return to my repo, I can see it right
+00:04:11.599 there, as well as another one. And
+00:04:13.920 that's the one from Copilot for the work
+00:04:16.079 that I assigned to it earlier. Let's
+00:04:18.880 check out what it's done. There's a new
+00:04:21.120 branch right here with the changes that
+00:04:23.360 Copilot generated. I'll copy that for
+00:04:25.440 use in a couple of minutes. I can see
+00:04:27.680 the PR contains a great description of
+00:04:30.400 what Copilot did and how it did it. I
+00:04:33.000 No text
+00:04:33.440 can even see screenshots of the
+00:04:35.360 interface. Digging a little deeper by
+00:04:37.919 opening the session, I can review
+00:04:40.400 everything that it did and how it did
+00:04:42.400 it. But at the end of the day, the
+00:04:44.560 biggest thing I want to know is do all
+00:04:47.199 these new Playright tests pass. Let's
+00:04:50.160 check out the branch on my local system
+00:04:52.560 and run those tests. And everything
+00:04:55.199 looks good. From here, I can continue my
+00:04:58.400 review, run the workflows required for
+00:05:00.880 the repository, and even make comments
+00:05:03.600 to request changes. We've seen how
+00:05:06.160 GitHub, Copilot, and VS Code were there
+00:05:09.600 from start to finish, allowing me to
+00:05:12.000 quickly generate the necessary changes
+00:05:14.400 and get on top of the backlog.
+00:05:17.370 [Music]

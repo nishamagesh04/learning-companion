@@ -1,0 +1,510 @@
+# tactiq.io free youtube transcript
+# Code Review Best Practices For Software Engineers
+# https://www.youtube.com/watch/1Ge__2Yx_XQ
+
+00:00:00.080 what's up everybody how's it going in
+00:00:01.839 this video i want to give you
+00:00:03.919 some tips on how you can better deal
+00:00:06.000 with code reviews
+00:00:07.359 as a software engineer both on the side
+00:00:10.000 of submitting code
+00:00:11.280 for code review and on the side of
+00:00:14.240 giving code reviews actually reviewing
+00:00:16.560 other people's code
+00:00:17.760 because code reviews are a central part
+00:00:20.240 of software engineering if you're a
+00:00:22.160 software engineer
+00:00:23.279 you have to take part in the whole code
+00:00:25.519 review process
+00:00:26.800 and believe it or not there is some sort
+00:00:29.199 of unspoken
+00:00:30.480 code review etiquette that you can
+00:00:32.640 follow that will improve the process
+00:00:35.120 as a whole so specifically in this video
+00:00:37.360 i'm going to give you three tips for
+00:00:38.960 when you're sending code for code review
+00:00:41.360 and three tips for when you're reviewing
+00:00:43.520 other people's code
+00:00:44.800 but before we jump into those tips i do
+00:00:47.039 want to preface them by just saying that
+00:00:49.039 these are merely my opinions
+00:00:50.800 do not take these as objective facts
+00:00:53.760 these are just things that i have
+00:00:55.360 accumulated throughout my experience as
+00:00:57.280 a software engineer at google at
+00:00:58.640 facebook
+00:00:59.280 on algo expert by the way if you're
+00:01:00.719 preparing for your coding interviews or
+00:01:02.000 your systems design interviews then do
+00:01:03.680 check out my company i'll go expert go
+00:01:05.119 to algo expert.io and use a promo code
+00:01:06.799 clem clem for a discount on the platform
+00:01:09.119 but so please keep in mind that these
+00:01:10.880 are a bit more subjective
+00:01:12.720 than objective now in order to really
+00:01:14.960 internalize these tips and why they're
+00:01:17.119 useful
+00:01:17.840 we have to make sure that we're on the
+00:01:19.360 same page about why
+00:01:21.200 code reviews exist in the first place
+00:01:24.080 and
+00:01:24.400 the reason they exist is very simple
+00:01:26.320 they exist to
+00:01:27.680 improve the software development life
+00:01:29.840 cycle they exist
+00:01:30.960 to improve the software and the code
+00:01:33.759 that you
+00:01:34.320 the software engineer are writing how by
+00:01:37.520 adding a layer to the software
+00:01:39.600 development life cycle
+00:01:41.040 during which one of your co-workers can
+00:01:44.159 catch bugs in your code that you might
+00:01:46.000 not have caught
+00:01:47.200 can catch improvements in your code that
+00:01:49.600 could be made
+00:01:50.399 to make the code more maintainable more
+00:01:52.240 scalable cats
+00:01:53.680 you know style guidelines that could
+00:01:55.280 have been better followed so the point
+00:01:57.200 is
+00:01:57.600 the code review process is really there
+00:02:00.079 just to serve
+00:02:00.960 you and your team to write better code
+00:02:03.360 and better software
+00:02:04.560 it is a win-win situation for everybody
+00:02:07.280 it should not be thought of
+00:02:08.800 as some sort of assignment or test that
+00:02:11.680 you're
+00:02:12.000 passing no if that's the mentality that
+00:02:14.640 you have
+00:02:15.360 then you're already starting on the
+00:02:17.040 wrong foot and the tips i'm about to
+00:02:19.200 give you
+00:02:19.680 might not really make sense so throw any
+00:02:22.080 mentality like that that you might have
+00:02:24.080 and realize that a code review serves
+00:02:26.720 you
+00:02:27.200 and your entire team and it's a win-win
+00:02:29.280 for everybody now that being said
+00:02:31.200 the code review process does add this
+00:02:33.760 extra layer
+00:02:34.640 to your work it basically gives you the
+00:02:36.720 software engineer
+00:02:37.920 more work to do and kind of slows you
+00:02:39.840 down so
+00:02:41.200 your goal as someone who's interacting
+00:02:43.920 with this code review process
+00:02:45.680 should be to make the process as
+00:02:48.319 frictionless
+00:02:49.360 and as seamless as possible and to make
+00:02:52.239 it as conducive
+00:02:53.840 to achieving its own goal in other words
+00:02:56.480 if the goal of a code review
+00:02:58.159 is for your code reviewers to cast
+00:03:00.400 potential bugs that you have
+00:03:01.920 or things like that then you want to
+00:03:03.360 make sure that the code review process
+00:03:05.519 actually accomplishes this goal okay so
+00:03:07.840 keeping all that in mind
+00:03:09.200 making the process frictionless making
+00:03:10.959 the process actually achieve its goal
+00:03:13.040 keeping that in mind let's dive into the
+00:03:15.200 three tips that you should follow
+00:03:17.120 when you are submitting code for code
+00:03:19.840 review
+00:03:20.319 tip number one i've said this one many
+00:03:22.560 times in the past and i'll say it again
+00:03:24.560 you want to keep the amount of code
+00:03:27.760 that you send up for code review in a
+00:03:30.000 single chunk
+00:03:30.959 right in one pull request or one change
+00:03:33.280 list
+00:03:34.000 you want to keep it as small as possible
+00:03:37.760 you do not want to send ideally if
+00:03:40.720 possible
+00:03:41.680 a thousand lines of code up for code
+00:03:44.159 review
+00:03:44.959 at once that is just a recipe for
+00:03:47.280 disaster
+00:03:48.239 it's terrible as a code reviewer to
+00:03:51.200 receive a pull request
+00:03:52.640 that has a thousand lines of code it's
+00:03:55.120 super hard to review
+00:03:56.640 it takes a lot of time it's much harder
+00:03:59.280 to caps bugs
+00:04:00.400 so the whole point of a pull request or
+00:04:02.239 of a code review suddenly is kind of
+00:04:04.480 inhibited so you really want to do your
+00:04:06.720 best
+00:04:07.599 possible to reduce the lines of code
+00:04:10.159 that you send in a single pull request
+00:04:12.400 for code review so that often means
+00:04:14.799 putting a little bit more work yourself
+00:04:17.199 as the software engineer
+00:04:18.560 to really divide up your pull requests
+00:04:20.720 or you know your code that you're
+00:04:22.240 sending for code review
+00:04:23.680 really limiting it to kind of isolated
+00:04:26.800 pieces of logic and that'll go a long
+00:04:29.360 way
+00:04:29.840 the rule of thumb is that the best type
+00:04:32.479 of pull request is a pull request that
+00:04:34.720 is anywhere between
+00:04:36.080 10 and 100 lines of code past 100 lines
+00:04:39.440 of code
+00:04:40.080 it starts to really become a burden to
+00:04:42.479 the code reviewer
+00:04:43.600 and it starts to be really much more
+00:04:45.120 difficult to actually cast
+00:04:46.960 bugs and to leave useful feedback the
+00:04:49.440 second tip when you're sending code up
+00:04:51.600 for code review
+00:04:52.720 is to leave a good description on it
+00:04:55.759 you want to give context to the person
+00:04:58.880 or to the people
+00:05:00.000 who are going to be reviewing your code
+00:05:01.919 because remember at best
+00:05:04.000 the people who are going to be reviewing
+00:05:05.440 your code are going to have some context
+00:05:08.080 about
+00:05:08.479 what it is that you're writing in your
+00:05:10.400 code and at worst
+00:05:11.919 they're going to have no context
+00:05:13.680 whatsoever for example if they're on a
+00:05:15.360 completely different team
+00:05:16.560 at a big company or if it's someone
+00:05:18.960 who's completely new to the team
+00:05:21.120 those people will just have no idea what
+00:05:22.960 you wrote it's going to be
+00:05:24.160 all new for them and so giving them some
+00:05:26.320 context and even people who are on your
+00:05:28.400 team and familiar with the code base
+00:05:30.320 giving them context to what it is that
+00:05:32.320 you're solving in this pull request
+00:05:34.080 or in this code is going to go a long
+00:05:35.919 way of course sometimes the description
+00:05:38.080 can be as simple as setting up the pages
+00:05:41.039 for this new feature
+00:05:42.320 but other times let's say you're fixing
+00:05:44.479 a pretty complicated or
+00:05:46.160 nuanced bug you might want to describe
+00:05:48.800 the bug that you're fixing
+00:05:50.320 maybe you point to a customer ticket
+00:05:52.720 that was sent
+00:05:53.680 or maybe you point to a link that tracks
+00:05:56.800 the bug internally
+00:05:58.160 with whatever project management
+00:05:59.919 software you use
+00:06:01.280 or if you're doing a front-end feature
+00:06:03.919 and your change is very
+00:06:05.360 visual then you might want to add a
+00:06:07.199 screenshot of the before
+00:06:08.800 and after or for example if your pull
+00:06:11.520 request your code
+00:06:12.880 was automatically generated by some sort
+00:06:15.199 of command or script
+00:06:16.800 it can be a really good best practice so
+00:06:19.440 to speak
+00:06:20.319 to actually copy paste the command that
+00:06:23.360 you ran
+00:06:24.400 that generated this code in the pull
+00:06:26.720 request description
+00:06:28.080 that way when someone is reviewing it
+00:06:30.319 they don't have to really wonder like
+00:06:32.319 how did this code just randomly appear
+00:06:34.400 okay they
+00:06:35.440 used this command and i can go look at
+00:06:37.840 the documentation for this command
+00:06:39.919 if i want to better understand how the
+00:06:41.600 code got generated so
+00:06:43.039 always leave good descriptions that give
+00:06:46.080 good context for the code that you just
+00:06:48.240 sent for review
+00:06:49.520 and finally tip number three this one
+00:06:51.919 has to do with
+00:06:52.800 when in your code that you're sending
+00:06:54.800 for code review
+00:06:56.240 you have part of the diff right part of
+00:06:58.800 the difference between the code that you
+00:07:00.400 wrote and the actual code
+00:07:01.919 that is in the main repository when part
+00:07:04.400 of the diff
+00:07:05.280 isn't really related to the main logic
+00:07:08.639 in your code in your pull request but
+00:07:11.039 was necessary
+00:07:12.319 in that pull request for whatever reason
+00:07:14.800 it can be good to
+00:07:16.000 leave a comment addressed to your code
+00:07:18.800 reviewer
+00:07:19.759 just to let them know why this is in
+00:07:21.840 this pull request in the first place
+00:07:23.840 just to clarify this is not something
+00:07:26.479 where you want to leave a comment in the
+00:07:28.000 actual code
+00:07:29.039 but it's a comment that you want to
+00:07:30.160 leave for your code reviewer like oh hey
+00:07:32.560 the reason i had to change this here it
+00:07:34.800 might not be obvious but it's because
+00:07:36.720 there was a typing issue and i'm just
+00:07:39.120 fixing it here just giving a random
+00:07:40.720 example
+00:07:41.440 so if there's something in your pull
+00:07:43.039 request that isn't
+00:07:44.560 super obvious it's not super clear to
+00:07:47.120 someone who isn't
+00:07:48.160 you why this piece of code was changed
+00:07:51.599 in this pull request
+00:07:53.039 leave a preemptive comment telling your
+00:07:55.759 code reviewer
+00:07:56.879 why it's there trust me that goes a long
+00:08:00.000 way okay so now let's shift gears and
+00:08:02.319 talk about some tips for when you are
+00:08:04.000 reviewing code
+00:08:05.520 the first tip this is also one that i've
+00:08:07.199 said many times before including in my
+00:08:08.960 recent video about
+00:08:10.080 how to communicate better as a software
+00:08:11.599 engineer i'll put the link to that one
+00:08:13.199 in the description below but you want to
+00:08:15.280 make sure that when you are leaving
+00:08:17.120 comments
+00:08:17.840 review comments and your code review
+00:08:20.080 that you are as
+00:08:21.280 clear and explicit and that you over
+00:08:24.000 communicate
+00:08:24.960 as possible because the worst thing that
+00:08:27.680 you can do in a code review
+00:08:29.120 is leave comments that are unclear to
+00:08:31.360 the receiver the person who wrote the
+00:08:33.279 code
+00:08:33.919 and that leaves them kind of in limbo
+00:08:35.679 where they don't know what to do
+00:08:37.120 so when i say here to be queer there are
+00:08:39.279 many ways that you can be clear right
+00:08:41.200 it might be that you're suggesting that
+00:08:43.039 they make a change
+00:08:44.240 and you want to just really make sure
+00:08:46.000 that they understand what the change
+00:08:47.839 that you're requesting
+00:08:49.120 is or perhaps it might mean that
+00:08:52.160 you don't really feel strongly about a
+00:08:54.320 comment that you left
+00:08:55.680 and you want to make sure that they know
+00:08:57.200 that so for example i often leave
+00:08:59.519 comments in my pr's
+00:09:00.959 or in my code reviews sorry that are
+00:09:02.640 just suggestions but it's not really
+00:09:04.560 like
+00:09:04.959 i don't really care if they address them
+00:09:06.640 i'm like hey i think it could be better
+00:09:08.399 like this
+00:09:09.200 but so then i'll add a comment where i
+00:09:11.120 say i don't really feel strongly about
+00:09:13.120 this though
+00:09:14.000 use your judgment and you decide that
+00:09:17.120 lets the person who wrote the code know
+00:09:19.839 that
+00:09:20.240 if they happen to disagree with this
+00:09:22.480 they won't really be in this limbo state
+00:09:24.240 where they're like
+00:09:25.200 is that person gonna be mad if i don't
+00:09:27.360 you know if i ignore their request
+00:09:29.600 no because now they see that i'm okay
+00:09:32.080 with it right
+00:09:32.959 or another type of clarity that you can
+00:09:34.959 put in a comment is you can say
+00:09:36.320 something like
+00:09:37.279 hey you know sanity check is this what
+00:09:39.440 you meant to do here or is this why
+00:09:41.120 you're doing this here
+00:09:42.160 and then you can add one more comment
+00:09:43.600 that says by the way this is
+00:09:45.120 non-actionable
+00:09:46.240 i'm just asking for clarity just to
+00:09:48.399 again be overwhelmingly clear
+00:09:50.240 to the person that you're doing a code
+00:09:52.240 review for so that they know
+00:09:54.480 what your intentions were and they don't
+00:09:56.240 feel blocked afterwards
+00:09:58.320 and this especially goes a long way when
+00:10:00.560 you're working with a remote team
+00:10:02.240 when you're working with people in
+00:10:03.440 different time zones or in people across
+00:10:05.920 teams that you might not know super well
+00:10:08.640 like and be able to you know
+00:10:09.839 ping them immediately or talk to them in
+00:10:11.760 person to clarify
+00:10:13.120 ambiguity it really goes a long way tip
+00:10:16.000 number two for this one you're really
+00:10:17.519 gonna have to talk to your team to your
+00:10:19.600 teammates and establish
+00:10:21.200 a process a set of rules for your code
+00:10:24.160 reviews
+00:10:24.880 but it has to do with when to approve or
+00:10:27.839 when to not
+00:10:28.720 approve a pull request so what i mean by
+00:10:31.440 this is
+00:10:32.240 when someone sends a pull request and
+00:10:34.079 you're reviewing it you can leave a
+00:10:35.760 bunch of comments but then at the end
+00:10:37.920 you can either approve the pull request
+00:10:40.000 which is going to allow the person to
+00:10:41.760 actually
+00:10:42.480 merge the code even after they've
+00:10:44.480 addressed the comments in the main
+00:10:46.399 repository
+00:10:47.519 or you cannot approve the pull request
+00:10:49.440 or you can even sometimes explicitly
+00:10:51.040 like reject it
+00:10:52.480 and here like i said you have to talk to
+00:10:54.880 your team to know
+00:10:56.480 what your rules or standards are for
+00:10:59.120 when to approve or disapprove a pull
+00:11:00.959 request
+00:11:01.760 because there's nothing more like i
+00:11:04.399 don't know if disrespectful is the right
+00:11:06.240 word but
+00:11:07.120 it's it's a bad feeling when you send
+00:11:09.600 code for review
+00:11:10.880 your code reviewer responds with a few
+00:11:13.120 comments and that might even
+00:11:14.640 seem like kind of small comments
+00:11:16.880 stylistic
+00:11:17.760 comments but they don't approve your
+00:11:19.839 code review
+00:11:20.880 and unless you had an explicit standard
+00:11:24.160 and a reason for which not to approve
+00:11:26.399 that code review
+00:11:27.760 it's a little bit like you know did this
+00:11:30.000 person just like
+00:11:31.279 try to block me like are they purposely
+00:11:33.680 trying to slow me down
+00:11:35.200 it's just a really not fun experience
+00:11:38.399 and so very important just talk to your
+00:11:40.720 team to share with you what we do on
+00:11:42.959 algo expert or what we did at google on
+00:11:45.040 my team
+00:11:46.079 when we had built a lot of trust you
+00:11:47.600 know amongst us the teammates is
+00:11:50.000 we were very explicit that most pull
+00:11:52.720 requests
+00:11:53.600 we would approve them even if we had a
+00:11:56.240 decent amount of comments
+00:11:57.680 because we trusted that our teammates
+00:11:59.920 would address the comments
+00:12:01.279 and we had good communication for what
+00:12:03.279 comments we thought were really
+00:12:04.720 important
+00:12:05.440 to address which ones would be just like
+00:12:08.000 oh use your judgment but i don't feel
+00:12:09.760 strongly about this
+00:12:11.120 and that's that but then the one rule
+00:12:13.360 that we had or that we currently have on
+00:12:15.040 algo expert
+00:12:15.839 is if there is a pull request that has
+00:12:18.399 like a really bad bug
+00:12:19.839 the kind of bug that like under no
+00:12:21.600 circumstance do you want it to be in
+00:12:23.040 production
+00:12:24.240 then you'll reject the pull request or
+00:12:26.160 you won't approve it at least
+00:12:27.680 and here like you know you just make it
+00:12:29.839 clear oh yeah the reason i didn't accept
+00:12:31.760 this was because like
+00:12:32.720 for safety we don't want this to be
+00:12:34.480 merged but otherwise
+00:12:35.839 i trust you enough to address my
+00:12:37.360 comments to respect
+00:12:38.959 my comments at least you know to ask me
+00:12:40.800 if you really disagree with them or
+00:12:42.079 whatever
+00:12:42.720 and i will preemptively approve your
+00:12:44.639 pull request so just make sure to
+00:12:46.720 establish these standards with your team
+00:12:49.360 and all will be good finally tip number
+00:12:52.560 three for when you're reviewing code
+00:12:54.320 this one has to do kind of with the
+00:12:55.760 first tip it's basically knowing
+00:12:58.000 when to take something offline rather
+00:13:01.279 than
+00:13:01.680 to keep it in a pull room in a pull
+00:13:03.440 request comment or code review comment
+00:13:05.920 sometimes
+00:13:06.800 you're reviewing code and there needs to
+00:13:09.120 be a bigger conversation
+00:13:10.639 maybe the code just you know for
+00:13:12.320 whatever reason needs to be completely
+00:13:13.839 rewritten
+00:13:14.560 it's going to take a bit more effort and
+00:13:16.399 instead of wasting time
+00:13:18.240 leaving some huge paragraph you know
+00:13:20.240 written paragraph
+00:13:21.600 or leaving a comment that the person
+00:13:23.360 will then respond to
+00:13:24.720 and that then you'll respond to you
+00:13:26.079 again or whatever it's better to just
+00:13:28.320 you know give a little nudge to your
+00:13:29.600 teammate in person or you know by
+00:13:32.320 instant messaging if you're remote and
+00:13:34.560 to just have the conversation offline
+00:13:36.800 you can even leave a comment on the pull
+00:13:38.399 request saying like hey i think we
+00:13:40.079 should discuss this further
+00:13:41.519 i'll ping you offline or something like
+00:13:43.279 that and
+00:13:44.560 you know take things in a more direct uh
+00:13:47.920 you know
+00:13:48.320 communications channel rather than a
+00:13:50.480 pull request it'll save you a ton of
+00:13:52.399 time
+00:13:52.959 and it's just better now as a final
+00:13:55.040 bonus tip that i want to give you for
+00:13:56.880 when you are
+00:13:57.519 responding to code review comments very
+00:14:00.839 important if
+00:14:02.320 for whatever reason there is a code
+00:14:04.079 review comment that you
+00:14:05.680 disregard you do not take action on it
+00:14:08.880 and the comment didn't clearly say
+00:14:11.120 something along the lines of
+00:14:12.639 use your judgment right it's really
+00:14:15.120 really
+00:14:16.320 nice and helpful and respectful to
+00:14:18.959 answer the comment and to explain
+00:14:21.360 why you disagree with it or why you
+00:14:23.680 decided
+00:14:24.560 not to listen to it because otherwise
+00:14:27.680 as the code reviewer there's nothing
+00:14:30.240 worse than when you see someone who's
+00:14:32.000 merged with their pull request
+00:14:33.760 and you just go look out of curiosity
+00:14:35.440 and you're like oh
+00:14:36.880 i left three comments and they ignored
+00:14:39.680 all three
+00:14:40.639 and they didn't say why they ignored it
+00:14:42.720 it is really like bm right bad manners
+00:14:45.600 and it just goes a long way again to
+00:14:48.399 communicate and to explain
+00:14:50.399 why you're doing what you're doing so
+00:14:52.399 that's gonna be it for all my code
+00:14:53.920 review tips this has been
+00:14:55.600 a code review etiquette session with
+00:14:58.320 clement
+00:14:59.120 i just butchered my name completely with
+00:15:02.240 clement hopefully you found these tips
+00:15:04.399 helpful let me know what you think about
+00:15:06.000 them
+00:15:06.399 in the comments below please smash the
+00:15:08.399 like button if you haven't already it
+00:15:09.920 helps with the video and the channel a
+00:15:11.519 lot subscribe to the channel if you
+00:15:12.959 haven't already
+00:15:13.839 follow me on twitter and linkedin i'm
+00:15:15.360 posting every single day on twitter or
+00:15:17.120 almost every single day
+00:15:18.480 linkedin i post like twice a week you
+00:15:20.240 don't want to miss all the exams that i
+00:15:21.680 post on there
+00:15:22.639 follow me on instagram if you like
+00:15:23.920 pixers and otherwise i will see you
+00:15:25.760 in the next video

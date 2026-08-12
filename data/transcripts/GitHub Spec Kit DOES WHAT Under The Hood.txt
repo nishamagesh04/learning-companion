@@ -1,0 +1,359 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/o6SYjY1Bkzo
+
+00:00:00.080 Hello friends. I am Dan Deamarski and today we're going to be doing what Vin Diesel does best and that is look under
+00:00:07.839 the hood. Hey, pop the hood. Pop the hood. Pop the hood
+00:00:12.880 of spec kit. Probably looking under the hood of specit is not as exciting as looking under the hood of a supercar.
+00:00:18.400 But nonetheless, we're going to be doing a deep dive into spec kit right now. So
+00:00:24.160 what is specit? And if it's the first time you're hearing about this word or words or a project name, spec kit is
+00:00:32.159 something that recently we launched with our friends at GitHub and it is essentially a toolkit to help you get
+00:00:38.000 started with spec driven development. That is where specs are at the forefront of your development process. You're not
+00:00:43.360 focusing just on code but are actually using specifications to tell AI agents
+00:00:48.960 or coding agents or engineering agents, whatever you want to call it, what to build and how to build it. So specit is
+00:00:55.280 this nice way here of managing that workflow, right? So specit basically
+00:01:00.399 comes in two different pieces. We have a CLI, a command line interface that you
+00:01:05.519 can use to bootstrap the scaffolding for your specdriven project and there are some templates. So templates are
+00:01:12.560 available here as releases. You can just download them and we'll get to that in a second. But um also if you go to
+00:01:18.880 github.com/github/spec-kit you'll get the readme that allows you to
+00:01:23.920 get started and you'll see everything right here in one place very convenient just for you our developers. So spective
+00:01:32.880 development you can read more about this as well. It's essentially a pattern by which as I mentioned you are abstracting
+00:01:38.560 out a lot of the implementation details from the design of how those details
+00:01:44.079 should actually be built by coding agents. That's an important distinction here because often times what we've
+00:01:49.920 noticed is folks focus so much on vibe coding where they just prompt the LLM to do certain things and they keep
+00:01:55.119 iterating it. But that's hard to reproduce, right? Like if you would share your work with your team, your organization, how would you do that? Are
+00:02:02.000 you just going to share your chat history? Probably not. So specs come to the rescue. But instead of me just
+00:02:07.280 talking about specific development theory here, let's take a look at what spec kit actually is. I mentioned that
+00:02:12.959 it's a CLI and templates. And let's take a look at first at the CLI. The CLI is a bootstrapper for templates. That's all
+00:02:19.200 it does. There's no super magic there. is just a tool to basically bring in the templates from the repository locally in
+00:02:26.800 your project. It's located in SRC specified CLI. Of course, it's free. It's open source. It doesn't require a
+00:02:33.040 subscription or paying anything. You can just download it. And most importantly, it works across agents. So, if you're
+00:02:38.720 using C-Pilot or Cloud Code or Gemini CLI or even cursor, yes, that is right. I said cursor, you get it to work. it
+00:02:47.040 things will just work because it's an experimental set of patterns and practices that is just bundled up in a
+00:02:52.319 nice consumable package. So if you're curious about the source code for the CLI, go to uh the SRC folder. There's a
+00:02:58.480 specified CLI and there's a NIT file and you can browse through it and see exactly what the CLI is about. And if
+00:03:04.400 you spot a bug or an issue or have a feature request, this is where all that lives. Now I also talked about
+00:03:09.680 templates. So for that, we're going to go here to the repo root and I'm going to look at the spec kit templates in my
+00:03:16.080 releases. We support different agents. As I said, we support copilot, cloud code, gemini, and cursor for now with
+00:03:23.280 more agents coming in the future. But for every single agent, we have a specific bundle that contains the
+00:03:28.480 templates and agent specific prompt files that are generated from the templates that exist in the repository.
+00:03:33.519 We'll see that in action in just a little bit. But to give you an idea of what every release or what every bundle
+00:03:39.440 contains, let's download here a specit template for claude using PowerShell. So
+00:03:44.879 important distinction here because as we support multi- agents, we also support multiple platforms. And on some
+00:03:51.920 platforms you have powershell on some platforms you have bash. And how do you know which to run? Well, you're going to
+00:03:56.959 have the right bundle for that. So let's take a look at what's inside the zip file here for my specit template for
+00:04:02.640 cloud nps. We have the cloud folder, right? that contains the commands which is plan specify and task. These are the
+00:04:08.959 standard commands that are made available through the specify CLI and it's embedded into
+00:04:15.599 whatever agent you're using. It's slash commands. Slash commands are not really new. Um and there's a specify folder
+00:04:21.918 that contains some metadata related specifically to specit and it's bootstrapped also by the specify CLI and
+00:04:29.040 we have some memory stuff where the constitution document and we'll get to the constitution in just a second. There's some helper scripts and because
+00:04:35.199 we're using PowerShell, we only have PowerShell here. So, I can just open here and there's some of these helper
+00:04:40.639 scripts and templates that are used to bootstrap my spec, my plan, and the tasks that you've seen in the video that
+00:04:47.840 I've hosted just the other day. So, uh this is the version for SpecKit template
+00:04:53.680 cla. But let's say that I'm downloading Copilot with shell scripts, right? So,
+00:04:58.880 maybe I'm running this on Linux or Mac OS or some other system. I'm going to save this. Let's open it. And you'll
+00:05:07.199 notice that now instead of the cloud folder, I have agitub because GitHub copilot does that's that's what it
+00:05:12.720 expects. It expects me to have agitub folder that contains prompts. And the prompts are named appropriately for
+00:05:18.800 copilot to recognize that these are slashcomands, right? They're slightly different than cloud. And I hope that in
+00:05:24.240 the future all this is going to be consistent, but it's not for now. So that's why we need this kind of uh special dance around the bundles to make
+00:05:30.400 it custom and specify is consistent across the board. So we have the memory scripts and templates that I just showed
+00:05:36.000 you, but the scripts in this case are bash scripts. They're shell scripts that I can use on my Linux or Mac OS system
+00:05:42.479 or maybe even on Windows with WSL 2. So when the CLI is acting, when I use the
+00:05:48.960 specify CLI, all it does is just downloads these zip files here. But
+00:05:54.080 let's see the CLI in action. So, I'm just going to go here to my repo root. I'm going to scroll to the readme file
+00:06:00.800 and I'm going to copy this command. Right. So, we have this command. It's a little bit ugly because I haven't published yet to pipi yet, but it's it's
+00:06:07.680 coming. I I I will get to it once we fix some of the initial exploration. So, I'm just going to copy this, go to my
+00:06:13.840 terminal, and paste. So, I can initialize a project. So, I'm going to substitute the project name with
+00:06:19.600 something that I want. Then in this case, we're going to build a podcast landing page because that's the easiest
+00:06:25.280 demo for me to show you and not take three hours. So I'm going to call it super pod.
+00:06:31.520 Right. So when I trigger this, the actual CLI is being downloaded from
+00:06:37.280 GitHub. It's a very ugly way to do this. I have this git https the repo. Once this becomes an actual package on pi,
+00:06:43.919 it's going to be much more uh smooth of an experience. But for now, it is what it is. So, we have the specify
+00:06:50.080 experience here. It's kind of nice. Uh, it's a console terminal app, but I can
+00:06:55.199 actually use my keyboard. As I mentioned in the previous video, you should be comfortable with the keyboard. You should be using the keyboard. So, I can
+00:07:00.479 use the up and down arrows to select my agent of choice. And more agents are
+00:07:05.599 coming right there. That that's what I said. So, you can hold me to my word. I'm going to use copilot. So, I'm going
+00:07:11.280 to press enter here. Uh, and now I'm being prompted to select the script type
+00:07:16.319 that I'm using, shell or powershell. the default to PowerShell because I'm running this in the context of a Windows operating system and that's what
+00:07:22.400 PowerShell is, but you can still use PowerShell core on Linux. You can still use shell scripts on Windows. So, we
+00:07:30.319 give you the option you you can choose what you want. The cool thing about the specify CLI is that you don't actually
+00:07:36.560 need to use the interactive approach. So, here I'm showing you like I'm clicking on the keyboard. I'm kind of
+00:07:41.680 tinkering with parameters and so on so forth, but it's not really needed. It's not necessary. And that is because I can
+00:07:48.720 use the arguments that are baked into the CLI that allow me to have that flexibility of not having to press any
+00:07:56.000 key buttons. So, I'm just going to go back to here to my uh repo. And by the way, the original video that I talked
+00:08:01.759 about is linked here. Click on it, watch it. It'll give you a pretty good idea of what specit does. But there's also a
+00:08:07.599 section for specify CLI reference. And you can use this as a reference point for how to use the CLI and including
+00:08:14.560 things like the non-interactive mode. So I can use the d- AI and D-script parameters to just tell it directly what
+00:08:22.000 AI tool and what script language I'm going to be using. And I'm going to do
+00:08:27.039 just that just to show you that it works. So I'm going to use AI and then I'm going to use copilot
+00:08:32.080 and then script. I'm going to use PS because I'm running this with PowerShell, right? So we're going to do this and let's see what happens. Boom.
+00:08:39.679 Project is bootstrapped. So now now I have the project here. It's all set up for me. I have my super pod. Uh I gives
+00:08:46.800 me because I use GitHub copilot. It gives me guidance to open in Visual Studio Code and I can use these slash commands, right? Like these are the
+00:08:53.040 slash commands that I've talked about in the previous video. These are the slash commands that you probably know about from other agents, but it simplifies the
+00:09:00.160 workflow because I can just use these to perform tasks for me. And we'll get to that in a second. And you'll also notice
+00:09:06.000 that there's some status reporting on the task that the uh CLI did. And like I said, there's no magic here. It
+00:09:12.560 literally what it does, it just pulls the repository content, the release, the la latest release, and just embeds it in
+00:09:20.480 the directory that you set it up. It can work for existing projects. It can work for a new project. In my case, I'm using
+00:09:25.600 a new project, but that's fine. You can use it for your own. And all it does, it just depending on the agent, depending
+00:09:32.240 on the shell, it downloads the latest release. Remember how I showed you that there's a bunch of different releases here in the repo, right? Like if I if I
+00:09:39.440 scroll here and I see claude, copilot, cursor, and gemini and shell and ps, it
+00:09:45.519 just depending on your choices, it's going to download the one that is the most relevant to the scenario. Extract
+00:09:51.519 it and that's it. That that's all it does. That's the complexity of that CLI.
+00:09:56.560 Uh but let's let's go to the actual folder. So, let's go to Super Pod
+00:10:01.839 and we're going to launch VS Code right from there. So, we can actually see this in action what this looks like. Oh, nice
+00:10:07.040 dark theme in VS Code. I'm a big fan of dark themes. We're going to look here and as we saw in the zip files before,
+00:10:13.839 there's the two folders, right? There's the GitHub with prompts and there's specify. So, with prompts because every
+00:10:19.680 slash command is represented by its own prompt file that we have plan, specify, and tasks, right? So if I open it, it
+00:10:25.680 has the details for what the command actually does. Specify just as well. We
+00:10:30.800 have task and then for memory we have the constitution which is a concept that
+00:10:35.839 shout out to John Lamb, my colleague that actually bootstrap this entire effort like he created specify. He's the
+00:10:41.920 one that actually built a lot of the the the principles behind spectrum development. But the constitution embeds
+00:10:48.079 the non-negotiable principles for your project. So if you're in an organization that says, "Oh, we're building all the
+00:10:54.160 web apps with Nex.js and the databases have to be Postgress hosted in AWS, you
+00:11:00.320 encode this here. This is an avenue for you to have this concept of opinionated
+00:11:06.480 stacks, right? So you can design different opinions about what your stack should be and that stuff gets baked into
+00:11:12.880 constitution. You can then share the constitution within your org, within your team, with your uh colleagues and
+00:11:18.399 other divisions, right? because it becomes this document that the core principles that you have to follow to
+00:11:25.360 build a project. Now, because for a lot of the stuff we're showing you how to build this with LLMs, with actually
+00:11:30.800 modern coding models, these constitutional principles that are embedded in this document becomes super
+00:11:36.320 important because it grounds the model into what pieces of your constraints it
+00:11:41.760 needs to respect at all times regardless of the project class. Right? So, this this is what the constitution is. And
+00:11:48.320 then we have some helper scripts here. We use PowerShell because it's on Windows and I chose PowerShell for it.
+00:11:54.399 And we have some templates that we'll get to in a second. Now, before we get started, let's actually establish the
+00:11:59.680 constitution for our pod site. So, I'm going to use AI. I'm going to use CloudSonet 4 to go in and write the
+00:12:05.839 constitution for me. I want to keep it short. I want to focus on just web apps and I want to keep it generic. So I'm
+00:12:11.600 going to say let's say update the constitution
+00:12:18.480 based on a template. Pick three principles
+00:12:26.399 or web apps. Actually is a static web apps
+00:12:32.000 with Nex.js because Nex.js is the latest framework that I've been tinkering with. So we're just going to use that. So we'll see
+00:12:38.160 what what it comes up with. Normally you would write this by hand too. You don't actually need to ask AI to write this
+00:12:43.200 because you can just embed this context directly. It's just just write the
+00:12:49.120 principles. Just outline it and you can you can do this based on just the assumptions that you have within your
+00:12:55.279 team or organization. So uh let's see what's going to happen here. It's looks
+00:13:00.399 like it analyzed my project. It did not find any package JSON but okay. Uh, it
+00:13:05.760 actually embedded some content here and we'll see what this content looks like
+00:13:11.279 once we actually complete the changes. We see some static first architecture. Yep, that makes sense. Component first.
+00:13:17.680 Yep. Yep. Build time optimization. I like this. Okay, seems reasonable
+00:13:24.160 enough. That that that seems okay. There's some development standards for testing strategy, Perf requirements,
+00:13:30.880 deployment workflow, static export process. All right, cool. That that sounds good. Let's let's keep this as
+00:13:36.959 is. So, this constitution essentially establishes the non-negotiable parts. We have static first, component first, and
+00:13:42.880 buildtime optimization. Let's assume that that is what we wanted. Now, I'm
+00:13:48.959 going to use the specify command, the specifi specify, right? So, I can do /
+00:13:54.320 specify to define my first step here, the PRD, the product requirements
+00:14:00.480 document. If you're a product manager, you know exactly what this is. If you're a product manager and you don't know what this is, you need to brush up on
+00:14:06.959 your product management skills. As simple as that. So, uh, but before we look at the specify command here in the
+00:14:12.320 actual chat box, let's look at what the command does behind the scenes. So,
+00:14:17.839 I'm going to open the specify.prompt because this is copilot, but the same would work for claw, gemini, or cursor.
+00:14:23.920 We have the metadata and there's some steps for the model to follow. First of all, it's going to run the script, the
+00:14:29.680 specify scripts PowerShell, right? The create new feature that's going to bootstrap a new feature branch based on
+00:14:35.920 the work that I'm doing and then output the metadata in the console as JSON. This is super important for context
+00:14:42.320 setting for us because as with any new feature, bug fix change that are driving to your codebase, it's very rarely that
+00:14:48.399 you want to do it on your main branch. So specify and by virtue of the
+00:14:53.920 templates that embeds in your project, it ensures that any new capability they're introducing with the help of the
+00:15:00.079 the /sp specify command is actually on its own branch, which is the logical thing to do. Then it also uses a
+00:15:06.800 built-in spec template, right? So we have the spec template here that outlines the execution flow for the
+00:15:12.240 template for the model to follow. some quick guidelines. And like I mentioned in my previous video, we focus on the
+00:15:19.040 what and the why of your product feature or bug fix. You're not really doing
+00:15:24.639 anything related to the technical stack. This is not the place where you go in and say, oh, you know, like I want to
+00:15:30.800 use Nex.js and I want to use this database and that database. any good product requirements document is
+00:15:36.720 optimized first of all for somebody that looks at the feature looks at the bug and says why is it the way that it is
+00:15:43.040 right and this the first step the slash specify the building this prd is
+00:15:48.800 responsible for that particular aspect of the development process you're defining the what and the why not the
+00:15:55.120 how so um there's also some additional information here right like for AI
+00:16:00.160 generation like some common practices and then there is the template things like user scenarios and testing. You
+00:16:06.320 kind of have to have those functional requirements also for any product and spec. You have to have those. So, it's
+00:16:11.600 there. And most importantly, there is a review and acceptance checklist. The
+00:16:16.800 spec itself is just one part of the puzzle, but you want to make sure that the LLM actually builds things according
+00:16:23.040 to the spec. So, the spec itself is not enough. You have to verify that it builds it according to a set of
+00:16:28.720 standards. And we've established these here. Important call out here that I think got missed in a lot of the
+00:16:34.320 conversations around spec kit is that these templates that you see here for the spec, for the plan, for tasks, these
+00:16:40.480 are markdown files. You can customize them. If you look at these files and say, "Hey, like the the the the project
+00:16:47.440 that I'm building does not require testing. My project is not requiring these like the the actual test framework
+00:16:54.560 and harnesses that the template outlines. Just strip them out. Just remove them. You don't need it. You can
+00:17:00.000 custom. These are marked on files. Add them, edit them, add them, remove them
+00:17:05.760 as you see fit. Just make sure that you correctly update all the configuration here that we have. So we have the
+00:17:11.760 specify command. So let's do that. So we building super pod. Just a reminder for folks listening to this. Super pod is
+00:17:18.319 our um podcast landing page, right? This is this is this is what we are building
+00:17:23.919 right now. So, I'm going to go ahead here and start tinkering with uh the
+00:17:29.120 specify command. So, we're going to do specify.
+00:17:35.600 And then I'm going to type in some requirements. And also keep in mind like the more concrete you get here with the
+00:17:40.960 requirements, the better. Like you're you're going to get better outputs if you're actually more specific. But in my
+00:17:46.000 context, I'm just going to say look uh specify I am building a podcast website.
+00:17:53.120 Let's make this an interactive landing page
+00:18:01.600 recent episodes. We should have
+00:18:07.360 an episodes page that lists all episodes.
+00:18:16.400 And I also want every episode to have its own page.
+00:18:24.880 All right, this is you know kind of specific. Let's say like the landing page
+00:18:30.799 actually the site should be dark theme have a good modern gradient background
+00:18:39.679 and current episode should have some kind of flashy
+00:18:46.160 animation on the landing page. highlight it.
+00:18:52.960 Right? So, I correct typos even when I type to AI, just so you know. So, uh we have this
+00:18:59.039 prompt. Again, it's not super detailed, but we're going to use this as a starting point. So, we're going to do this. And what's going to happen is this
+00:19:05.520 is going to execute the specify command, right? The based on the specify prompt.
+00:19:11.200 And it's also going to execute the script that we just saw that the script that is going to create a new feature. And the script itself is fairly basic,
+00:19:17.440 right? Right? Like if I open a create new feature PS1, it's just a script that takes some parameters and then does some
+00:19:22.799 git operations, right? Like if you see like get checkout branch name, it sets out the feature directory. It sets out
+00:19:28.000 the metadata and then just outputs that metadata as JSON. That's that's all it does, right? So that that's kind of it.
+00:19:34.400 But in the meantime, we take a look here what's happening in the chat box. So it read the spec template as we requested
+00:19:40.400 from the the prompt, right? Um then it created the spec file. Then it made sure that it has a branch name. It has a
+00:19:46.720 spec.md. So, we're going to keep the changes. I haven't checked it yet, but we have the primary user story, which is
+00:19:52.400 excellent. We have that. We have acceptance scenarios. We have edge cases. Okay. Yeah, perfect. We have
+00:19:58.400 feature like the the actual feature definitions through functional requirements. Great. They're numbered
+00:20:03.600 key entities. And it actually has no items that need clarification. It actually did a oneshot um assumption on
+00:20:11.440 a lot of the things that we can check here. And because you watching this, I hope are human, you can look through
+00:20:17.360 this and see if anything stands out, if anything needs to be modified or anything that needs to be tweaked, right? Like you don't have to take the
+00:20:23.919 AI's word on a very first step. If you see something here that you're like, uh, yeah, that should not work this way that
+00:20:30.640 it does. Go and change it. Go and modify. It's a markdown file. Edit it.
+00:20:36.640 You you can type you can I believe in you. You can type the words on the keyboard. So uh we can we can edit this
+00:20:43.679 and by the way I can show you that this actually if I type in get status here right like we can scroll up and you'll
+00:20:50.480 see that I'm on a new branch I'm on 001 interactive podcast landing and by the way when specify bootstraps a new
+00:20:57.039 project it ensures that it actually works in a git git repo not github git repo that is important because we want
+00:21:04.880 to make sure that you're always operating with this in a source controlled environment right so if you're building a new project, the git
+00:21:12.080 rep is going to be bootstrapped for you. If it's an existing project, it's just going to use the existing git configuration that you have there. So,
+00:21:17.840 it's still going to create a new branch. It's still going to work. It's just going to be working slightly different because you might have your own your own
+00:21:23.039 branch uh configuration. So, we've done the specified step. We have our spec that has all the components that we
+00:21:28.880 expected, right? We have the functional requirements and it actually went through the checklist by itself, right?
+00:21:34.400 Because it passed the content quality. There's nothing that needs to be clarified. Great. This is a oneshot
+00:21:40.559 miracle. Next step here is for us to define the technical requirements. The technical requirements are done with the
+00:21:46.000 help of the slash plan command. So you can again type in /pl.
+00:21:51.280 But before we do this, we have to look at what the plan actually does. So we have the plan prompt and I can look here
+00:21:58.640 and I can see that I have to run another helper script that basically just outputs some of the metadata that we
+00:22:04.320 previously had. We have to read analyze a feature spec. Okay, great. Read the
+00:22:09.360 constitution. Perfect. And this is what I mentioned earlier like we have the constitutional document. This ensures
+00:22:15.120 that it actually reads the constitution and embeds the principle of the constitution into the technical plan to
+00:22:20.720 ensure that the technical plan is meeting the criteria that your organization or maybe you established
+00:22:26.000 for the project. And then it's using the plan template to fill it out with different phases and then verify its
+00:22:32.159 execution. Right? And the plan template is very very basic. It outlines just like the spec template. It's exactly the
+00:22:38.640 same layout and structure just like the spec template. You load the feature set. You fill technical context, right? Like
+00:22:44.880 it it tells the AI what to do based on the context that you provide. The biggest value out of this entire SD
+00:22:51.120 process is context management. Lit literally that's that's what it is. Like people people overthink specri
+00:22:57.280 development as some kind of like magical thinking and everything else. All it is it is spec management. It is context
+00:23:03.600 management. It is ensuring that the LLM, the tooling that you have has the right context at the right time. That's what
+00:23:10.240 it is. That's the magic of it. Now we can look here. So we'll see that now we just have the spec document, right? Like
+00:23:16.640 this is just all we have. And as I mentioned, we were looking at the uh the plan for the implementation. This is
+00:23:21.760 what the plan command. And there's a very neat piece here that outlines how specific technical constraints should be
+00:23:28.400 highlighted here. Right? We have the language inversion, primary dependency, storage, so on so forth. And again,
+00:23:33.600 because it's a markdown file, you might be working in an organization that has maybe different pieces. Maybe you want
+00:23:38.720 to put some different constraints or technical requirements. Also, include them here. Markdown file easily changeable. This going to be the the
+00:23:45.200 repeated piece of this entire recording is these are all markdown files. You have the power to change them. Now, um
+00:23:52.720 for the constitution, we want to make sure that it fits the constitutional requirements. It's going to actually refer to the constitution document. It
+00:23:59.039 has the the structure for the source code and has some examples. Then phases in which the plan is going to be
+00:24:05.280 executed. It has to do some research. Has to design the the contracts, plan the task approach and then uh some of
+00:24:11.679 the future implementation pieces. Now I think we're ready to actually try to run the plan and see what happens. So plan
+00:24:19.279 I will build this with nex.js and shaden.
+00:24:26.159 I decided to make my plan very very basic. Now, can I make this a little bit more complex? Absolutely I can. Do I
+00:24:32.960 want to in this demo? No. Now, it also ran this setup plan script. Great. We
+00:24:38.159 have the metadata here for the feature spec, the path to the implementation plan specs directory branch. Great. So,
+00:24:45.679 this sets the context for the planning piece to actually have the information that it needs to go and run the uh uh
+00:24:53.279 the the actual execution of the plan. So, let's allow it to go and copy the plan template, I guess. And then it
+00:24:59.279 embedded it. Here we have our plan. It's going to start filling it out.
+00:25:08.640 And what I also noticed, by the way, is if you look at the work that I'm doing here, I'm using Cloud Sonnet 4, but you
+00:25:15.679 have to experiment with different models. You have to try what the output of different models is because it can
+00:25:21.200 vary significantly. What I've also noticed is that sometimes like if I use
+00:25:26.240 Sonnet 4, it can be very um iterative, right? Like you see it filling out pieces of the document. It starts kind
+00:25:32.320 of one by one, section by section. GBD5, for example, is going to be thinking a little bit and it's going to be spinning
+00:25:37.520 and spinning and spinning and then just spit out the entirety of the plan. So, you know, potato potato, you have to try
+00:25:42.960 it for yourself and see what works best. But, uh the output can also be vastly different. Like I've noticed that Cloud
+00:25:48.320 Sonnet 4 can be more creative with the things it decides and determines for the
+00:25:53.440 the project. It's going to fill out some of the gaps. GBD5 is much more uh literal. It's going to listen to what
+00:25:59.679 you say and it's going to use those constraints that and nothing else unless you actually tell it to. So um looks
+00:26:05.760 like it's embedding a bunch of information and structures which is great.
+00:26:11.039 All right, it still has a bunch of stuff that I need to fill out. So it might take some time but the plan itself
+00:26:17.840 critically is the piece where you define the technical requirements. This is where you're no longer focusing on the
+00:26:23.279 what and the why. You're focusing on the how. This is where you decide the databases, the dependencies, the
+00:26:29.039 storage, the cloud provider. Uh and this is also again ground because it's ground in the constitution. You can use this as
+00:26:36.960 the jump off point for opinionated stacks because you can essentially say your organization is using these
+00:26:42.159 constitutional constraints for the project. Apply them to this technical implementation as well because if you do
+00:26:49.200 that then any new project that you are building can be consistently built from the same um basically set of
+00:26:57.360 requirements. And this is also an important point point to call out here is because the superpower of the
+00:27:02.400 specification is in the fact that you will be able to live in a multiverse of
+00:27:07.919 features. And what that means is because the specification itself is detached from the implementation. You're not
+00:27:12.960 writing code. The spec itself is essentially the the artifact that you
+00:27:18.000 have. You can very easily use that to go and create multiple implementations
+00:27:23.360 depending on what you're trying to do. So if you're writing a CLI, you might think like, okay, well, like which one
+00:27:28.640 is more performant? If I write this in Rust or if I write this in Go. If you're writing a website, is it going to be the
+00:27:34.000 one working in X.js better or the one using Astro? Well, guess what? Because
+00:27:39.120 the spec itself does not encode the actual implementation, you can use the same spec and have different plans. And
+00:27:46.159 then when you tie those together, all of a sudden you have the exact same set of requirements just implemented using
+00:27:52.159 different frameworks and different text stacks which is extremely extremely helpful for experimentation and idea
+00:27:58.000 validation because you're no longer constrained by one implementation. That was the problem. You build the code once
+00:28:03.840 then somebody has to go in and then you realize 75% in building that entire application that ah if only we use this
+00:28:10.240 other framework we would not have this and this and this other constraint that exists now because we locked ourselves
+00:28:16.559 into this technical choice because we were separating the specs and the technical plans and then the detailed
+00:28:21.919 tasks that need to be done around that you retain the flexibility of actually
+00:28:27.120 pursuing the things that you want to pursue and that is I want to build seven variants that use different designs. I
+00:28:32.720 want to build 10 variants that use different O libraries. You can do this very very easily with this approach.
+00:28:39.120 Now, let's check in here on what the agent is doing. So, we have some work that's happening. It looks like it
+00:28:44.960 bootstrapped our plan. So, we have our plan document that we're going to browse through in a second. It also
+00:28:50.159 bootstrapped the data model, which is important because it's also encoded in the template. We we asked it to go and
+00:28:56.159 write the data model for us. So, nice. It has some very podcast related data model information. uh it has some
+00:29:02.000 research and because in this case copilot did not do re I mentioned in the previous video like copilot doesn't yet do research unless you do something like
+00:29:09.200 use beast mode from Burke colon shout out Burke um that is not going to happen
+00:29:14.480 here it's going to be researching things based on the training material here so we have some research and technology
+00:29:19.520 decisions alternatives considered rationale and so on so forth uh it's probably a reasonable set of choices
+00:29:25.039 here but I would double check if I were you but it it did it we we have the artifacts for the planning stages. So we
+00:29:31.279 have the the phases done. We're going to keep the files here. Uh and also we have the contracts like component APIs, page
+00:29:37.679 interfaces. Great. Like it it actually outlined pretty well what the architecture of the project should be.
+00:29:43.919 This is technical architecture that is done here. We have the data models so forth. So the last piece here now is we
+00:29:50.559 need to break all of this down into tasks for the AI, right? And task for
+00:29:55.600 the AI is essentially a way for us to direct you to say now you have the plan, now you have the spec. We want to break
+00:30:01.840 this down into consumable chunks that the AI itself can go and start executing one by one or in parallel where it's
+00:30:08.880 appropriate. So let's take a look here at the tasks view. So our task prompt,
+00:30:15.520 I'm going to go to GitHub prompts and we have task prompt. And by the way, notice that it dynamically as it was working on
+00:30:22.080 the plan created a co-pilot instructions.md. So it's going to do the same thing for Claude, for Gemini, for any other other agent, but it actually
+00:30:29.279 embedded some of the project knowledge into it that can be reused for this project down the line. So it's autogenerated, but using TypeScript,
+00:30:35.760 Nex.js, NextJS, Shad, CN UI, React tail and CSS, framework motion for animations. Perfect. This is exactly
+00:30:43.039 what we wanted and it tracks it all in copilot instructions because we can then reuse it across the project. And now
+00:30:49.760 let's take a look at the tasks. So for task, we're once again running a check task prerequisites. It's going to just drop some metadata in a terminal for the
+00:30:57.279 task job for the agent to have the information about the feature available docs and so on so forth. And then it's
+00:31:03.120 going to read some of the metadata, the the files that we just saw created at the planning stage, technical architecture here. Very very important.
+00:31:10.240 I keep clicking on these, but like you you'll see them here in the specs folder. We have the contracts, we have
+00:31:15.279 the data model, quick start, research. All of these are referenced here in our task plan because this is what's going
+00:31:21.679 to be used for task computation. Then we use a task template. We're going to have setup test, test task, core task
+00:31:28.240 integration, and polish. Right? So, uh important to note here is that you'll
+00:31:33.440 notice that there is certain things that are marked with a P. This means these are parallelizable tasks. It's important
+00:31:40.320 to notice to the agent that certain things can be done in parallel. Not everything needs to be done sequentially, one by one. And some
+00:31:46.240 agents are very good about that. Shout out cloud code. It just works. So we have all these pieces here. And we have
+00:31:54.480 even a definition, right? That include parallel execution examples and group them together. So we're going to use
+00:31:59.840 this and say tasks break down the work we have into tasks. Right? So
+00:32:08.799 like we have a lot of work here that we've we've looked at through the plan to the spec and we're just going to say
+00:32:13.919 break it down into tasks. give me a manageable set of chunks that the agent can go and tackle and address one by
+00:32:20.640 one. So it ran the script. It gets the metadata for the feature directory for available docs that we have here. We
+00:32:26.080 have the research, the data model, we have the contracts folder and the quick start. So it's going to go and ingest
+00:32:31.919 this context, right? I'm not going to say it actually like pars it. It just it ingests the context for his decision and
+00:32:38.960 it's going to use that context to then populate the task template into a dedicated tasks.md file. That file is
+00:32:46.880 going to be the sole source of truth for what the agent should be doing for this project. To me, I also noticed that if
+00:32:54.080 you make any changes to the spec or the plan, just use task to recreate the task. Don't do it manually. Just it's
+00:33:00.880 just so much more hassle. just just say slashtasks recreate the task based on the spec updates like it's just it's
+00:33:06.799 just easier and you're getting a much more robust reliable um task set. Now uh
+00:33:12.320 I mentioned about the plan and actually like while the tasks are computing here. So let's take a look at the plan one more time. And one of the important
+00:33:19.200 pieces here that we have not actually looked at is the set of constitutional requirements. And the constitutional
+00:33:25.200 requirements are extremely extremely important because we want to make sure that like I said there's
+00:33:30.720 non-negotiables, right? So my project I have static first architecture. It has a quality gate. It has a quality gate here
+00:33:37.600 embedded in the template that ensures that the constitution check must pass before you do anything else. before you
+00:33:44.000 start iterating on other things. These requirements must so it's the constitution that we've defined static first approach component first
+00:33:50.559 development and buildtime optimization great the constitution is there and looks like the tasks are created for us
+00:33:56.240 as well. So let's go to task.md file. We're going to keep it as is. And notice that there's these like checklisted
+00:34:01.600 tasks here. So I see the setup. I see critical these tests must be written must fail before any implementation.
+00:34:07.760 That makes sense to me. So we have a bunch of tests. We have core implementation.
+00:34:12.879 Right? So we have our page implementation. We have all these details here and static data and assets and all this
+00:34:19.440 stuff. So because these tasks are now broken down, I can use this as the jump off point to
+00:34:26.399 go and implement. Implementation here is very easy. You saw it in the previous video where I can just say implement and
+00:34:31.520 that's it. This is what kickstarts this entire process. So I can just say implement the tasks
+00:34:38.320 or the tasks if I could spell but it would actually go ahead and implement these and start building the project.
+00:34:44.079 Thankfully it understood the the typo that I had here. But this is this is at its core what specit specify and the
+00:34:52.879 templates are doing behind the scenes. I hope this was helpful for you to understand how this all works. Under the
+00:34:59.040 hood, you'll see that this is all just basically an experiment and us combining a bunch of helper things to assist you
+00:35:06.800 in bootstrapping spectrum and development projects, whether it's a brand new project, whether it's an existing project. And as always, we are
+00:35:13.599 looking for your feedback. If you have any thoughts on how this can be improved, any thoughts on maybe what's
+00:35:19.040 missing, what works, what doesn't, go to the GitHub repo. It's github.com/githubspec-kit.
+00:35:25.359 Add your issues, participate in discussions, open a poll request. Like, we're very very much open to these
+00:35:31.680 conversations with you. We are excited to see this. We are so so thankful to the community that's been engaging with
+00:35:37.040 us and helping craft this experience. We are at 18.5,000
+00:35:42.720 stars, I think, if I if I if I look correctly. If let's take a look. Let's take a look at the screen. Let's wrap this video up on some positive news and
+00:35:50.000 see what's what's the volume. 18.6,000. Crazy.
+00:35:56.560 Thank you. Thank you to all of you for watching this, for supporting SpecKit
+00:36:02.000 and providing your feedback. We have a bunch of issues to go triage, a bunch of poll requested triage as well. And of course, there's a bunch of discussions
+00:36:07.520 that also we're catching up on. There is a lot of work that we are still going to
+00:36:12.880 be doing. So, keep the feedback coming and I'll make sure to keep you posted on
+00:36:18.000 any new changes, updates, and I'll see you on the next one.

@@ -1,0 +1,729 @@
+# tactiq.io free youtube transcript
+# Make Your Offline AI Model Talk to Local SQL — Fully Private RAG with LLaMA + FAISS
+# https://www.youtube.com/watch/3jFpLNglWBc
+
+00:00:00.800 Hello YouTubers. This is a new session
+00:00:03.360 where we get to take our llama to talk
+00:00:05.600 to a database offline, right? So we
+00:00:08.240 talked a little bit about, you know, how
+00:00:10.080 to like really watch this series. You
+00:00:12.080 know, it's really important because in
+00:00:13.440 the beginning we talked about I want to
+00:00:15.360 run AI offline. I don't want to pay
+00:00:17.359 money for it. I want to run it whenever
+00:00:19.439 I want, however I want. I want to just
+00:00:21.600 be able to can interact with it without
+00:00:23.359 having to go over the network latency or
+00:00:25.760 over the wire or anything. We got that
+00:00:27.359 out of the way. And then we talked a
+00:00:28.880 little bit about how you fine-tune
+00:00:30.640 fine-tune your model. So you're
+00:00:32.159 basically picking up a again offline
+00:00:34.239 base model and you fine-tune it on new
+00:00:37.360 pieces of information that you can
+00:00:39.600 communicate with the model with later,
+00:00:41.600 you know, about these pieces of
+00:00:42.800 information. We talked about the
+00:00:44.000 standard and how we kind of fine-tune
+00:00:45.440 the the the model according to the
+00:00:47.200 standard. And then the third video where
+00:00:49.120 we're talking about how do we can
+00:00:50.399 generate the proper data for
+00:00:52.480 fine-tuning, right? So basically, you
+00:00:54.960 could substitute, you know, video number
+00:00:57.680 three with two and two with three
+00:00:59.760 because you need data to fine-tune, but
+00:01:02.399 you can't fine-tune without data. You
+00:01:04.400 could you could do that. That's fine.
+00:01:06.479 But the third video, we're basically
+00:01:08.000 talking about how to how to generate
+00:01:09.840 data. So I give it a PDF document and it
+00:01:12.400 turns it into, I don't know, text and
+00:01:14.000 then that text turns into a JSON L file
+00:01:16.880 that you can fine-tune. What I'm going
+00:01:18.560 to talk to you about today is even
+00:01:20.720 bigger than that. Okay? You want your
+00:01:23.119 model to be able to learn in real time.
+00:01:26.080 Sometime you can't wait eight hours to
+00:01:28.799 kind of fine-tune your model and offer a
+00:01:31.759 a a real time kind of engagement and
+00:01:34.799 interaction. Let's just say you're in a
+00:01:36.560 news channel, right? In the news, you
+00:01:39.600 know, news are changing all the time.
+00:01:41.280 You're getting new news all the time.
+00:01:43.119 That's why they're called news from the
+00:01:44.560 word new. They happen all the time, new
+00:01:46.399 stuff, right? and you want to kind of
+00:01:48.960 incorporate AI to be able to kind of
+00:01:51.680 search through the latest news and kind
+00:01:53.280 of give you the gist of it, like maybe
+00:01:54.720 on your way to to work or something,
+00:01:56.640 right? And uh you can't just collect
+00:01:59.840 news all day long and then fine-tune it
+00:02:02.799 for maybe 24 hours depending on how how
+00:02:05.439 strong your hardware is so you can
+00:02:07.680 listen to to the news from two days ago.
+00:02:09.840 That just doesn't make sense, right? So
+00:02:11.520 that's a real requirement. you have a
+00:02:13.360 real requirement of making sure your AI
+00:02:15.520 model can learn in real time super fast
+00:02:19.920 with the latest and greatest
+00:02:21.200 information. So let me just show you let
+00:02:23.920 me kind of introduce you to something
+00:02:25.599 cool called rag. Rag and AI and what rag
+00:02:29.120 stands for stands for retrieval
+00:02:31.599 augmented generation. It's basically a
+00:02:33.599 framework or an idea that allows your
+00:02:36.080 model to communicate in real time. So
+00:02:38.080 let's just draw this a little bit. So
+00:02:39.840 remember we had this, you know, we had a
+00:02:42.640 llama llama model. It could be a base
+00:02:44.959 model, could be a fine-tuned model. It
+00:02:46.319 doesn't matter, right? And you want this
+00:02:48.239 llama model to be able to talk to a
+00:02:50.160 database, right? So you can fine-tune
+00:02:52.480 it. It could be already fine-tuned or
+00:02:54.000 whatnot. It doesn't matter. You want it
+00:02:55.760 to talk to a database. And this database
+00:02:59.280 is updating all the time. So you know,
+00:03:01.519 people are pushing uh new data into this
+00:03:04.239 database all the time. So this is
+00:03:05.840 updates happening all the time. and your
+00:03:08.239 database is getting all that data, all
+00:03:09.840 that new data all the time, but your AI
+00:03:11.920 model is also able to answer and handle
+00:03:14.800 questions. So when you come in here and
+00:03:17.120 basically talk to the CLI or the API or
+00:03:19.360 whatever you choose to to do to
+00:03:21.280 interface with this AI model, that's
+00:03:22.800 your guff model talking to a maybe llama
+00:03:25.200 CLI like this, right? you can basically
+00:03:28.480 go and say hey tell me about you know I
+00:03:31.280 don't know the score of you know two two
+00:03:34.400 Barcelona playing against Real Madrid
+00:03:36.560 for instance or whatever right and it's
+00:03:38.720 getting that data in real time about
+00:03:40.720 that game that's happening and more
+00:03:43.200 importantly it's able to answer you with
+00:03:45.599 super accurate you know uh uh kind of
+00:03:48.480 kind of answers right that's giving you
+00:03:50.239 the most accurate answers how do we do
+00:03:53.040 this listen to me very well that's all
+00:03:55.200 of that that's what what rag is right?
+00:03:57.360 Retrieval aug a augmented kind of model
+00:03:59.920 where allows you to kind of learn in
+00:04:01.760 real time. Let's talk a little bit about
+00:04:04.159 this. In order for this llama model,
+00:04:06.159 this guy right here to be able to learn
+00:04:09.439 from a SQL database, right? We need to
+00:04:13.280 turn everything here into something
+00:04:15.439 called vector embeddings.
+00:04:18.160 A vector embedding. What is a vector
+00:04:20.320 embedding? A vector embedding is the
+00:04:22.079 ability to go and say, okay, our
+00:04:24.240 database has something called cat.
+00:04:26.240 Listen very well. Cat, we have something
+00:04:29.040 called kitten and we have something
+00:04:31.680 called car.
+00:04:34.160 Okay. And this vector embedding will
+00:04:36.479 tell you that cat and kitten are much
+00:04:39.199 closer to each other than a car.
+00:04:42.800 How does it know that? How does it know
+00:04:44.560 how to do that? I'll tell you how. It
+00:04:46.880 knows that because we're going to use a
+00:04:49.199 new model. You can also run this model
+00:04:50.880 offline that kind of tells you. Think of
+00:04:52.400 it as a database. And this database
+00:04:54.479 basically says, hey, there are Victor
+00:04:56.720 embedding values. Let's just kind of
+00:04:58.479 give you some examples. I'm going to try
+00:04:59.840 to simplify it for you. It's going to
+00:05:01.759 say, hey, the Victor embiddings the
+00:05:04.880 values for this guy is more like, let's
+00:05:07.280 say, 020,
+00:05:10.000 right? 07
+00:05:12.720 uh 01
+00:05:14.639 like that. And the kitten just so
+00:05:17.360 happens to be 08,
+00:05:21.199 right? 01
+00:05:23.600 and maybe um no maybe this is 06 or 08,
+00:05:28.479 right? And maybe this is a an O2. So you
+00:05:32.560 can see there is similarities between
+00:05:35.199 these even though they're not exact, but
+00:05:37.280 there's similarities, right? Versus a
+00:05:40.000 car which would be something completely
+00:05:42.000 off the charts. I'll tell you what this
+00:05:43.600 car is. This car is more like this is
+00:05:45.759 like 80 or 90 versus one versus I don't
+00:05:50.080 know 15. So the vector embedding
+00:05:53.039 basically tells you let me take that
+00:05:54.960 data in your database this text and let
+00:05:58.560 me convert it into numbers and let me
+00:06:02.240 find out the similarities between these
+00:06:04.400 numbers. Right? So if your database says
+00:06:07.199 we uh we offer services to um uh kind of
+00:06:12.240 brush cats. We offer services to clean
+00:06:14.800 up and brush cats. And someone comes and
+00:06:17.120 says do you offer services for kittens?
+00:06:20.639 So, it basically goes and says, &quot;Yeah,
+00:06:22.880 kittens is closer to cats. I have
+00:06:25.280 records for a cat, then I'm going to
+00:06:27.919 determine that the answer to the kitten
+00:06:30.080 is the same answer as it is for the
+00:06:31.840 cat.&quot; It's not always 100% accurate, but
+00:06:34.560 it's most likely, especially if you're
+00:06:36.400 not too deep, too technical, or too
+00:06:38.240 abstract, it's going to give you the
+00:06:39.919 right answer, right? But the
+00:06:41.440 relationship between a car and a kitten,
+00:06:44.000 it's very far. It's very far. Now, now
+00:06:46.400 you might ask yourself a question like,
+00:06:47.919 how does it know that? Like how does it
+00:06:49.840 know that a cat and a kitten are closer
+00:06:52.479 to each other than a car? This is like
+00:06:54.160 reasoning and context. I'll tell you
+00:06:56.319 how. They train it on ton of data,
+00:06:59.759 right? Something called the pile.
+00:07:01.919 Literally, go look it up. The pile,
+00:07:04.080 right? It's basically a massive data
+00:07:06.400 set, open source data set, right? And
+00:07:08.800 this data set kind of tries to build
+00:07:10.639 these vector embeddings and tries to
+00:07:12.479 understand, oh well, you know, cat and
+00:07:14.800 kitten seem to occur in the same context
+00:07:17.520 more often than a car and a kitten and a
+00:07:20.639 car and a cat. For instance, you say,
+00:07:22.319 &quot;Brush your cat.&quot; Okay. And brush your
+00:07:24.960 kitten. Yeah, that's that's that's
+00:07:26.560 similar. That's the same context. But
+00:07:28.800 nobody ever says, &quot;Brush your car.&quot;
+00:07:31.199 That's weird, right? Nobody ever says,
+00:07:33.840 &quot;Did you feed your car today?&quot; But
+00:07:36.080 people will say, &quot;Did you feed your
+00:07:37.360 cat?&quot; Did you feed your kitten? Did you
+00:07:39.199 go to the vet? Did you take your cat to
+00:07:40.800 the vet? Did you take your kitten to the
+00:07:42.319 vet? Versus basically saying, did you
+00:07:44.400 take your car to the vet? Doesn't make
+00:07:45.919 any sense. So that's what Victor
+00:07:47.280 embeddings are. Okay, so a little bit of
+00:07:50.400 a deep dive, but let's just put that
+00:07:51.840 back here and let's see. So this llama
+00:07:54.160 model, what basically happens is that we
+00:07:57.520 use another AI model that will basically
+00:08:00.240 go and say turn this into vector
+00:08:01.919 embeddings. So this becomes vector
+00:08:04.639 embeddings and then use a library that
+00:08:08.720 will basically convert these vector
+00:08:10.960 embeddings based on the question. So
+00:08:12.639 you're asking a question right? This is
+00:08:14.240 your question coming over here like
+00:08:16.479 this. This is the question here.
+00:08:19.840 It'll basically say here is your
+00:08:21.840 question and here is the conversion and
+00:08:24.960 based on the question it will try to
+00:08:27.280 convert certain elements of your
+00:08:29.919 question to the nearest and closest
+00:08:32.320 vector embeddings to the data that
+00:08:34.640 exists in your database. It's actually
+00:08:36.399 freaking brilliant if you think about
+00:08:37.919 it, right? Because it basically says I
+00:08:40.159 can find the reasoning behind the system
+00:08:42.958 and the questions and the context and
+00:08:45.600 let me find this is this is basically
+00:08:47.920 some victor embedding database. Victor
+00:08:50.000 embedding search database, right?
+00:08:51.839 Something called fia a Facebook open
+00:08:54.480 source library something or other you
+00:08:56.000 know and it basically runs offline open
+00:08:58.240 source super fast. It runs with millions
+00:08:59.760 of records. It's amazing. So that's
+00:09:01.760 basically what we're going to do today.
+00:09:03.120 We're going to create a database table.
+00:09:04.560 We're going to put some information in
+00:09:05.680 it. We are going to write some code that
+00:09:08.640 talks to our database model and then
+00:09:10.320 we're going to ping that model. We're
+00:09:11.519 going to CLI that model and basically
+00:09:13.600 see if it can answer questions that make
+00:09:15.519 sense to us. Does this sound like a
+00:09:17.040 plan? So, let's start from the top. I'm
+00:09:18.720 going to kind of blur everything out.
+00:09:21.120 I'm going to just go and say everything
+00:09:23.360 set everything color to nothing
+00:09:26.240 if I can do that. Here you go. Okay. And
+00:09:28.399 then let's start from the database. This
+00:09:30.880 is a database right here. Right. That's
+00:09:33.040 a terrible color. Maybe this one. Okay,
+00:09:35.600 here's a database. Let's go and create a
+00:09:37.120 database. I have a thing called SQL
+00:09:38.880 Management Studio, but you can connect
+00:09:41.040 it to SQL Light. I don't know, whatever
+00:09:42.959 you want to connect it to. This is a
+00:09:44.959 just a simple local database server
+00:09:46.959 that's running on my computer. And I'm
+00:09:48.959 going to go and create a new database.
+00:09:50.880 And I'm going to call my database LMA
+00:09:54.080 DB. Let's create Lamad. It's a simple
+00:09:56.880 database.
+00:09:58.640 And then inside that Llama DB, I'm going
+00:10:00.320 to create a new table. I'm going to call
+00:10:01.600 it knowledge, right? So this is just
+00:10:03.279 content and this is invar jar max. I
+00:10:06.720 know the nerds are going to freak out
+00:10:08.000 about me kind of making everything max
+00:10:09.680 like that but it's for the purposes of
+00:10:11.519 this video my dear fellow smart people I
+00:10:14.720 think it's fine. So knowledge so a
+00:10:16.880 database called a database table called
+00:10:19.120 knowledge right and inside that database
+00:10:21.760 table there is one column that's called
+00:10:23.839 content. Okay so far so good. If I go
+00:10:26.640 and basically edit the top content in
+00:10:28.640 here you know I can add a bunch of
+00:10:30.800 content. And what I'm going to do today
+00:10:32.399 is just add really, you know, a bunch of
+00:10:34.480 content, you know. Let's see if we can
+00:10:36.240 add some stuff in here. Brokers, let's
+00:10:38.079 see here. Brokers.
+00:10:40.640 Brokers are um uh the last point of
+00:10:45.600 contact between uh a system and an
+00:10:50.240 external resource,
+00:10:53.360 right? Uh brokers cannot have business
+00:10:57.120 logic in them, something like that. Uh
+00:11:00.880 brokers are um let's see are a thin
+00:11:05.440 layer that abstracts
+00:11:08.720 away configuration
+00:11:11.680 details to external uh sources
+00:11:16.880 communication something like that right
+00:11:19.040 and I'm going to you know just a very
+00:11:20.880 simple bits and pieces of data that I'm
+00:11:23.279 adding in here and basically I'm going
+00:11:25.760 to teach AI in real time and we're going
+00:11:28.000 to add data to it and we're going to ask
+00:11:30.000 about new questions as we kind of learn
+00:11:31.760 about this. Okay, so that's the easy
+00:11:33.120 part actually. Okay, we've created a
+00:11:34.560 database that has these details in it.
+00:11:36.959 Great. Now, let's get to the fun part.
+00:11:39.040 The fun part here is to basically go and
+00:11:40.800 say I want to start a a new kind of uh
+00:11:44.480 Python project. I want to start that
+00:11:46.399 from scratch for for you because I want
+00:11:48.160 you to actually see the whole the whole
+00:11:50.000 thing because there's a a a virtual
+00:11:52.720 environment thing going on and all of
+00:11:54.720 that. So let's just do llama loaves rag.
+00:11:59.360 Let's create that this window. Great.
+00:12:03.040 Okay. First of all, we need to install
+00:12:05.040 some dependencies, right? In order for
+00:12:07.040 us to install these dependencies, we
+00:12:08.639 need to be able to go and say, well, you
+00:12:10.560 know, these dependencies are important
+00:12:12.880 and we need to understand what these
+00:12:14.320 dependencies are just to kind of be able
+00:12:16.160 to kind of work with them. So, I'm going
+00:12:18.079 to create a new Python file. Raget, rag
+00:12:22.160 it, rag it out. I I promise you this is
+00:12:24.639 one of the most fun things I've done so
+00:12:26.959 far. I mean AI is very exciting, but
+00:12:28.880 this one is really really fun.
+00:12:31.360 Okay, we need a bunch of libraries,
+00:12:32.720 right? The fact that that fis that's a
+00:12:35.200 Facebook open source library, the llama
+00:12:37.760 CPP, so we can ping the the model and we
+00:12:40.399 can ping the the model any anywhere we
+00:12:42.560 like. But then also the sentence
+00:12:44.079 transformer, super important. And then
+00:12:46.079 there is pi odbc. This is how we're
+00:12:48.720 going to talk to the database, right?
+00:12:50.720 This is talk to database, right? This
+00:12:53.680 guy here is I want to be able to prompt
+00:12:58.320 prompt my DV uh my AI model, right? Uh
+00:13:02.720 this is open source Facebook uh indexer
+00:13:07.600 for vector embeddings, right? And that's
+00:13:11.040 actually the Victor embedding vector
+00:13:13.040 embedding model kind of thing. Okay,
+00:13:15.760 Numpy, I don't remember what Numpy does.
+00:13:17.600 We'll find out. Okay. Okay. And then OS
+00:13:19.279 to kind of find files and stuff like
+00:13:20.639 that. All that good stuff. Okay. We need
+00:13:22.560 to install these things, right? Let's
+00:13:24.800 let me find the uh the libraries here.
+00:13:27.519 Pip install transformers. It's going to
+00:13:29.839 take a second, I promise. Super fast
+00:13:32.079 internet, super fast machine. Should
+00:13:33.519 take care of it super quick.
+00:13:38.000 Here we go.
+00:13:45.760 Numpy is a I just looked it up. as a
+00:13:47.839 fundamental Python library for numerical
+00:13:51.040 computing. Okay. Provides supports for
+00:13:53.600 large multi-dimensional arrays and
+00:13:55.680 matrix. Fantastic. Okay. We know now
+00:13:58.000 what it does. Okay. Is this guy done?
+00:14:00.320 It's indexing. It's building things.
+00:14:06.160 Okay. While it's doing that, I'll let it
+00:14:07.839 kind of work on that. These these will
+00:14:09.199 disappear. I don't want to just sit
+00:14:10.320 there and wait for that. The first thing
+00:14:11.920 I want to do is just kind of get that
+00:14:13.440 vector embeder, right? The the embedder.
+00:14:15.920 it basically an AI model specifically
+00:14:18.480 converts text into vector embeddings
+00:14:21.199 right this uh this model it's its main
+00:14:24.800 responsibility is to basically get you
+00:14:27.040 that database that pre-existing
+00:14:29.040 knowledge the fact that a cat and a
+00:14:31.600 kitten live in the same context kind of
+00:14:33.600 thing okay so what I'm going to do here
+00:14:35.279 is I'm going to say embed
+00:14:37.920 embed equals right and this is the
+00:14:40.000 sentence transformer say this guy is
+00:14:42.480 very smart and I don't want bird I want
+00:14:44.480 actually the all mini LM L6. Let me find
+00:14:48.399 the exact. There you go. This guy right
+00:14:50.959 here.
+00:14:53.519 Okay. So, this is a sentence
+00:14:54.800 transformer. It's coming from this guy.
+00:14:56.399 And I created an embed, right? The next
+00:14:58.560 step is that I want to connect to the
+00:15:00.160 database. Remember in our in our model
+00:15:02.959 here, this guy is already done right
+00:15:05.279 here. Now, I want to build this guy,
+00:15:07.760 right? I want to connect to the database
+00:15:09.519 through the Victor embedding, right? But
+00:15:11.519 you need to connect to the database
+00:15:12.880 first. So let's kind of create this code
+00:15:16.399 in here where it basically connects to
+00:15:18.800 my database. We already created a llama
+00:15:20.639 DB. Big B is basically my computer name.
+00:15:23.680 That's the server that I'm running on.
+00:15:25.440 You could probably use local host, but
+00:15:27.680 that's what worked for me. Big B, right?
+00:15:30.000 This is this is my actual server machine
+00:15:31.920 name. For instance, I kind of left a
+00:15:33.279 comment for you here. Just so you know,
+00:15:34.800 you need to have the OBC driver 17. The
+00:15:37.760 code the error will tell you if that's
+00:15:39.360 not installed. But if I install it
+00:15:40.800 again, it says you already have this. I
+00:15:42.480 want to make sure the database name is
+00:15:43.920 correct though. So, Llam DB. Llama DB.
+00:15:47.600 That's exactly what I did here.
+00:15:49.120 Llamabad. Perfect.
+00:15:51.759 Okay. And the rest is basically history.
+00:15:54.160 We're basically saying connect to the
+00:15:55.519 database through that connection string.
+00:15:57.759 If you are communicating with like a
+00:15:59.759 remote database, you're going to have to
+00:16:01.199 provide something like a username and
+00:16:02.639 password, right? Right. So, you're going
+00:16:04.160 to have to go and say the username is
+00:16:05.360 this, the password is this, unless you
+00:16:07.279 have like um an Azure Active Directory
+00:16:09.519 or some kind of model that allows you to
+00:16:12.079 do that. So, so far so good. So, we
+00:16:13.759 created the embedder, right? And then we
+00:16:16.000 have the database. What's the next step
+00:16:17.440 here? The next step that I want to do
+00:16:19.279 here is actually do uh basically the
+00:16:22.079 actual work for um you know the
+00:16:24.720 indexing, right? So, I want to go and
+00:16:26.399 say give me all the all the knowledge in
+00:16:28.880 this database. Give me all the records
+00:16:30.480 in this database, right? and turn it
+00:16:32.800 into documents like just raw raw text
+00:16:35.680 line by line by line by line. Okay, so
+00:16:38.399 it's going to read all the entries in
+00:16:40.800 your database in this content knowledge
+00:16:43.040 and load that knowledge base. So let's
+00:16:44.800 go and do that. It's very simple. You're
+00:16:46.240 basically going and saying give me the
+00:16:49.040 uh go and query from knowledge, select
+00:16:51.759 all content from knowledge and basically
+00:16:54.480 put all of that into documents. This is
+00:16:56.399 just raw text. That's all that it is
+00:16:58.639 just raw text just like that.
+00:17:01.279 Okay, now with that let's go ahead and
+00:17:05.119 move on to the next step. The next step
+00:17:06.720 here is to basically go and say now that
+00:17:09.039 I loaded all this these documents I want
+00:17:11.919 to turn them into document embedding.
+00:17:14.559 Now no now this is where the magic
+00:17:16.240 happens right every document every line
+00:17:18.559 that I had about the brokers gets
+00:17:20.319 converted into vector representations.
+00:17:22.319 These are the numbers that I was just
+00:17:23.760 talking to you about when we talked
+00:17:25.359 about Kath and Ken and whatnot. These
+00:17:28.240 vectors will be used to kind of find the
+00:17:30.080 similarity between between what the
+00:17:31.919 prompt is and what you're actually
+00:17:34.799 working with. So we need a a doc
+00:17:37.600 embedding that basically will load will
+00:17:41.760 load these kind of documents as document
+00:17:45.600 embeddings. Right now when that's done
+00:17:48.320 we need that create. Now we're going to
+00:17:49.679 use that Facebook AI similarity search
+00:17:51.840 which is basically to find the nearest
+00:17:54.240 neighbor. cat, kitten, there's cat,
+00:17:56.799 kitten, lion, tiger, right? They're kind
+00:17:59.919 of in the same context, but a kitten is
+00:18:02.480 much more closer to a cat than a lion
+00:18:05.360 and a tiger based on all that training
+00:18:07.280 and all that stuff. So, I'm going to go
+00:18:08.960 ahead and basically
+00:18:12.000 use that finding the closest neighbor,
+00:18:14.880 that's that dimension guy, and creating
+00:18:16.960 that index. And then we're going to need
+00:18:19.360 to build the dictionary. So every single
+00:18:21.600 document in your database, every single
+00:18:24.640 row that we pulled in that database,
+00:18:27.039 we're basically going to give it an ID
+00:18:28.640 and basically it links it to a result
+00:18:31.440 based on the indices back to the
+00:18:33.440 original document text. So that's that
+00:18:35.360 part right here.
+00:18:37.679 Okay. And then you know we need to load
+00:18:40.400 the local model. So this is the part
+00:18:42.480 where we basically go and say this is my
+00:18:44.720 local database. So this is done right
+00:18:46.720 here. This part is done. And then
+00:18:49.280 there's this local database model. We
+00:18:51.280 already done this before many many
+00:18:52.640 times. Even this guy is done. We already
+00:18:54.240 did that Facebook um FiAS kind of thing.
+00:18:58.240 Uh we need to kind of just build that
+00:19:00.480 part in here which is the llama model
+00:19:02.640 with the CLI. So what I'm going to do
+00:19:05.360 here is that I'm going to go and say
+00:19:06.720 give me give me my local model. I
+00:19:09.440 already have that local model downloaded
+00:19:11.360 and installed like on my machine. It's
+00:19:13.280 not installed just downloaded, right? So
+00:19:14.720 I'm just going to reference it in here.
+00:19:16.480 So you have this. This is the model
+00:19:18.240 path. Make sure the model path exists.
+00:19:20.160 You don't have to use this. This is like
+00:19:21.520 more like a validation kind of thing.
+00:19:23.440 And then I'm basically loading it in
+00:19:25.520 this llama kind of class so I can ping
+00:19:28.400 it. Now here comes the fun part. This
+00:19:30.640 one is that is the one that we're going
+00:19:32.080 to have to stop at. And I kind of have
+00:19:34.640 like a a very very deep explanation for
+00:19:38.000 each and every step in here. There's
+00:19:40.400 this function called query rag. Now pay
+00:19:43.120 attention because this is what I was
+00:19:44.480 really trying to get to from the
+00:19:46.240 beginning of this video.
+00:19:48.640 What this query rack function do,
+00:19:51.919 it will convert your input. See the the
+00:19:53.840 explanation is right here. The input
+00:19:55.280 into a vector. Okay, we already have
+00:19:56.960 this. And then search for the index to
+00:19:59.360 find the most similar document vectors,
+00:20:02.559 right? Top K meaning top token, like the
+00:20:05.039 the the closest one. and then find the
+00:20:08.480 documents that meet these indices and
+00:20:12.559 then combine that document in the
+00:20:14.799 context of the question like the
+00:20:16.559 question that's coming and then add that
+00:20:18.799 the see the prompt will have this
+00:20:20.799 context and then the question and then
+00:20:23.600 let AI kind of spit out the answer. You
+00:20:26.720 see what it's doing? So basically saying
+00:20:29.360 go and find the nearest thing that's
+00:20:32.640 relevant to that question that came
+00:20:34.320 through and then add it as a context.
+00:20:37.679 This becomes part of the prompt that
+00:20:39.360 we're hitting the a the the AI model
+00:20:41.679 with. And then add the the the the user
+00:20:44.799 question, the question that came
+00:20:46.159 through. If you look here, this question
+00:20:48.799 was part of the encoding and searching
+00:20:52.159 right there. Right? So we're just adding
+00:20:54.559 it as part of the prompt. like we worked
+00:20:56.559 with the question before we even hit the
+00:20:58.559 AI model. So, we know that we're looking
+00:21:01.039 for these particular uh pieces of
+00:21:03.600 information. It's just like Soundix.
+00:21:05.280 It's it's much smarter, but it's just
+00:21:07.360 like Soundix if you're familiar with
+00:21:09.280 what Soundix is. Laas part is the
+00:21:11.679 easiest part. The easiest part is to
+00:21:13.120 basically just go and say, &quot;Hey, I want
+00:21:15.039 to ask this guy a question.&quot; So, I'm
+00:21:16.960 going to drop that in here. Instead of
+00:21:18.799 what our company hours, we can say
+00:21:20.720 something like um uh uh what what is a
+00:21:25.200 broker maybe.
+00:21:27.520 Now notice we didn't feed the database
+00:21:30.320 anything about what a broker is. We just
+00:21:32.480 said broker are the last point of
+00:21:33.919 contact cannot have business logic. We
+00:21:35.600 just said bunch of things about brokers,
+00:21:37.919 right? But we didn't we never t taught
+00:21:40.320 it to kind of say what a broker is like
+00:21:44.159 that particular question was not part of
+00:21:46.960 that question. And then we got to add
+00:21:48.400 new things in real time. Now the only
+00:21:50.159 thing left is just for us to kind of run
+00:21:51.760 and see what happens.
+00:21:54.640 There we go. It's going to spit out a
+00:21:56.159 whole lot of garbage and then eventually
+00:21:57.919 it's just kind going to give you the
+00:21:59.039 answer.
+00:22:06.480 Look at this. A broker is a software
+00:22:08.080 that sits between the system and an
+00:22:09.440 external resource. It provides Let me
+00:22:11.840 kind of take my face out so you can see
+00:22:13.440 this. Watch this. It provides a thin
+00:22:16.240 layer of abstraction that allows the
+00:22:19.360 system and the external resource to
+00:22:21.760 communicate in a standardized manner.
+00:22:24.240 Brokers can have no business logic, but
+00:22:26.480 they do need the configuration details
+00:22:28.559 to communicate with external resources.
+00:22:31.120 How beautiful is that? That's freaking
+00:22:32.640 beautiful, right? I'm going to add a new
+00:22:34.400 piece of information just to show you
+00:22:35.760 the point of rag, right? I'm gonna add
+00:22:38.080 one tiny piece of information here that
+00:22:39.919 basically says brokers
+00:22:42.799 cannot talk to other brokers just as a
+00:22:47.520 rule according to the standard. Right?
+00:22:49.039 So that's I just added a new bit of data
+00:22:52.080 into my system. Right? Let's see if this
+00:22:54.799 guy actually can pick that up. Here we
+00:22:56.799 go.
+00:22:58.799 This is the fun part.
+00:23:02.880 A lot of garbage.
+00:23:05.280 It's not really garbage. It's a lot of
+00:23:06.799 smart stuff that I just don't understand
+00:23:08.799 with my limited knowledge. But uh it's
+00:23:11.039 definitely it's definitely something
+00:23:12.720 exciting. Uh yeah, a broker is a
+00:23:15.360 software whatever. And then uh external
+00:23:18.480 resources cannot have business logic
+00:23:20.480 standardized manner. And then there's a
+00:23:22.640 bunch of stuff down here. I don't this
+00:23:25.600 is just like more like hallucinations.
+00:23:27.280 But if you look at the answer, did it
+00:23:29.679 actually
+00:23:32.000 let me ask it the question specifically
+00:23:34.080 about that part, right? Uh, can a broker
+00:23:38.320 look communicate or integrate
+00:23:41.919 with another broker? See, it's not the
+00:23:44.799 exact same thing that I put in the
+00:23:47.440 database. Let's just run this thing and
+00:23:48.880 see what it does.
+00:23:55.679 Here we go.
+00:24:00.640 Can it? Where is that? Brokers cannot
+00:24:03.840 communicate or integrate with other
+00:24:05.520 brokers. How beautiful is that? How be
+00:24:08.240 this is just freaking awesome, right?
+00:24:10.240 That's just real time data being
+00:24:12.240 updated, right? It's it's just
+00:24:15.039 beautiful. We need to figure out the the
+00:24:18.240 hallucination based on the uh number of
+00:24:21.120 like um uh tokens that we're allowing
+00:24:24.159 the thing to have. But let's let's try
+00:24:26.720 to ask it even smarter questions just
+00:24:28.720 for the road. one for the road and then
+00:24:30.400 we wrap up this amazing session. Um you
+00:24:34.080 know let's just go and say
+00:24:37.440 um
+00:24:38.960 let's just say uh that our last point of
+00:24:41.279 contact between the system and an
+00:24:43.120 external resource. Okay, let's just go
+00:24:45.120 here and ask a really smart question.
+00:24:46.880 Can a broker uh use something else to
+00:24:51.679 communicate
+00:24:53.279 with an a database?
+00:24:56.559 Let's just see how smart this thing is.
+00:24:58.640 So let's go here. This is a hard one,
+00:25:00.480 right? Because the answer is yes and no,
+00:25:03.840 right? It depends on what yes, what
+00:25:06.080 something else may be, right? Something
+00:25:08.320 else could be literally another broker
+00:25:12.159 or it can be a a a just a configuration
+00:25:15.600 or a library. It can be many things.
+00:25:17.760 Look at this. It says yes, brokers can
+00:25:20.799 use other mechanisms such as risk.
+00:25:22.480 That's a good answer. That's a very very
+00:25:24.720 good answer. That's completely correct
+00:25:26.960 according to the standard. Right? So
+00:25:30.720 this is exciting. This is beyond
+00:25:32.480 exciting because
+00:25:34.640 now your llama your llama model is so
+00:25:38.159 much smarter than ever it can be. It's
+00:25:40.320 not just able to learn about your world
+00:25:43.520 offline. By the way, all of this running
+00:25:45.120 offline obviously, but I mean except for
+00:25:47.760 the part where you're downloading uh the
+00:25:49.760 model like actually I need to point that
+00:25:51.679 out. It's it it can be offline. I just
+00:25:54.720 need to make sure that you understand
+00:25:55.760 that this part in the code the old mini
+00:25:57.919 LM L6V2 you can just download that like
+00:26:01.600 just download it on your local machine
+00:26:03.039 and just call it the exact same way
+00:26:04.640 you're calling this model path and now
+00:26:06.559 everything is running running offline.
+00:26:09.440 Why that's important if you're building
+00:26:11.360 something serious and you really want to
+00:26:14.559 engage AI in real time learning like
+00:26:17.760 let's say and I'm going to make a video
+00:26:19.360 about this. Let's say we have this
+00:26:20.559 little Victor guy like this is this is a
+00:26:22.400 robot. He's asleep right now, but we're
+00:26:24.880 going to wake him up by holding him like
+00:26:26.799 this. And this guy needs to be able to
+00:26:30.320 learn about the world around it in real
+00:26:32.880 time, right? So, you want to you want it
+00:26:34.880 to learn about, oh, there's a a screen
+00:26:36.960 here. There's a a Coke in here. There's
+00:26:39.440 a a bottle of water in here. You can't
+00:26:41.840 just go and say collect the data and
+00:26:44.159 then fine-tune it later and then make
+00:26:46.799 Victor make decisions as it's navigating
+00:26:49.039 a surface as a robot. You can't do that,
+00:26:51.200 right? You have to teach it in real
+00:26:52.799 time. This is it. This is it. I really
+00:26:55.440 hope you you had fun, you know, dealing
+00:26:57.679 with this uh watching this session. Uh I
+00:27:00.240 I don't claim to be indepth about the
+00:27:03.279 little embeddings and victor details,
+00:27:05.120 but I just know enough to be dangerous
+00:27:06.720 and be able to share that with you. Of
+00:27:08.640 course, the code you're going to find it
+00:27:10.559 in GitHub. Let me kind of get the GitHub
+00:27:13.279 uh piece for you. So in in GitHub you
+00:27:17.039 will see
+00:27:18.799 if you go to the um uh llama
+00:27:22.960 offline
+00:27:25.120 if you go to this particular repository.
+00:27:31.600 Just give me a second there.
+00:27:33.039 Repositories
+00:27:34.960 training llama offline there you know
+00:27:38.000 and I can see some people already kind
+00:27:39.679 of hit the like on the model and
+00:27:42.320 whatnot. Uh there it is. It's beautiful.
+00:27:45.120 You get to kind of, you know, you have
+00:27:47.039 it right here as a step five. Raget.
+00:27:49.520 It's called Raget. And it has all the
+00:27:51.520 details you need. You just need to kind
+00:27:53.440 of run it, you know, against your
+00:27:55.360 system. Uh I hope you use this for
+00:27:57.840 something useful that help people kind
+00:27:59.919 of use AI for something useful. Uh if
+00:28:02.720 you found this video nice and useful,
+00:28:06.159 please share it with other people so
+00:28:08.159 they can get up to speed on AI and how
+00:28:10.080 AI works offline and all that. And as
+00:28:12.399 usual, if you have any questions,
+00:28:13.679 comments, concerns, please feel free to
+00:28:15.039 drop a comment in the comment section.
+00:28:16.799 And don't forget to like and subscribe.
+00:28:18.480 I'll see you in another video.

@@ -1,0 +1,134 @@
+# tactiq.io free youtube transcript
+# What is LangChain?
+# https://www.youtube.com/watch/1bUy-1hGZpI
+
+00:00:00.000 Now stop me if you've heard this one before,
+00:00:01.868 but there are a lot of large language models available today,
+00:00:05.372 and they have their own capabilities and specialties.
+00:00:08.775 What if I prefer to use one LLM to interpret some user queries in my business application,
+00:00:14.447 but a whole other LLM to author a response to those queries?
+00:00:18.952 Well, that scenario is exactly what the LangChain caters to.
+00:00:24.057 Langchain as an open source orchestration framework
+00:00:27.193 for the development of applications that use large language models.
+00:00:31.231 And it comes in both Python and JavaScript libraries.
+00:00:34.667 It's it's essentially a generic interface for nearly any LLM.
+00:00:38.972 So you have a centralized development environment 
+00:00:41.074 to build your large language model applications
+00:00:43.827 and then integrate them with stuff
+00:00:45.532 like data sources and software workflows.
+00:00:49.082 Now, when it was launched by Harrison Chase in October 2022,
+00:00:52.652 LangChain enjoyed a meteoric rise,
+00:00:55.043 and by June of the following year,
+00:00:56.687 it was the single fastest growing open source project on GitHub.
+00:01:00.393 And while the LangChain hype train
+00:01:04.227 has slightly cooled a little bit, there's plenty of utility here.
+00:01:08.806 So let's take a look at its components.
+00:01:12.739 So what makes up long chain?
+00:01:19.045 Well, LangChain streamlines the programing of LLM applications
+00:01:23.100 through something called abstractions.
+00:01:25.051 Now, what do I mean by that?
+00:01:26.186 Well, your thermostat that allows you to control the temperature in your home
+00:01:29.789 without needing to understand all the complex circuitry that this entails.
+00:01:34.194 We just set the temperature. That's an abstraction.
+00:01:36.496 So LangChain's abstractions represent common steps
+00:01:40.329 and concepts necessary to work with language models,
+00:01:43.838 and they can be chained together to create applications,
+00:01:48.000 minimizing the amount of code required to execute complex NLP tasks.
+00:01:52.412 So let's start with the LLM module.
+00:01:58.518 Now, nearly any LLM can be used in LangChain.
+00:02:02.188 You just need an API key.
+00:02:04.424 The LLM class is designed to provide a standard interface for all models,
+00:02:08.428 so pick an LLM of your choice.
+00:02:10.763 Be that a closed source one like GPT-4 or an open source one like Llama 2,
+00:02:16.870 or, this being LangChain, pick both.
+00:02:20.540 Okay, what else we got?
+00:02:22.442 We have prompts.
+00:02:25.945 Now prompts are the instructions given to a large language model
+00:02:29.415 and the prompt template class in LangChain
+00:02:32.269 formalizes the composition of prompts
+00:02:34.163 without the need to manually hard code context and queries.
+00:02:38.560 A prompt template can contain instructions like,
+00:02:41.747 "Do not use technical terms in your response".
+00:02:43.913 That would be a good one.
+00:02:45.176 Or it could be a set of examples to guide its responses.
+00:02:48.135 That's called few-shot prompting.
+00:02:49.877 Or it could specify an output format.
+00:02:52.939 Now, chains, as the name implies,
+00:02:58.077 are the core of the LangChain's workflows.
+00:03:00.613 They combine LLMs with other components,
+00:03:03.298 creating applications by executing a sequence of functions.
+00:03:06.386 So let's say a application that needs to, first of all, retrieve data from a website,
+00:03:11.457 then it needs to summarize the text it gets back,
+00:03:14.546 and then finally it needs to use that summary to answer user submitted questions.
+00:03:19.199 That's a sequential chain where the output of one function
+00:03:23.279 acts as the input to the next, and
+00:03:25.278 each function in the chain could use different prompts,
+00:03:28.274 different parameters, and even different models.
+00:03:32.378 Now, to achieve certain tasks,
+00:03:34.017 LLMs might need to access specific external data sources
+00:03:38.137 that are not included in the training data set of the LLM itself.
+00:03:43.223 So things like internal documents or emails that sort of thing.
+00:03:47.160 Now, LangChain collectively refers to this sort of documentation as indexes,
+00:03:53.568 and there are a number of them.
+00:03:56.102 So let's take a look at a few.
+00:03:58.504 Now, one of them is called a document loader,
+00:04:05.878 and the document loaders, they work with third party applications
+00:04:08.700 for importing data sources from sources like file storage services.
+00:04:12.690 So think Dropbox or Google Drive,
+00:04:16.221 or web content, from like YouTube transcripts,
+00:04:19.791 or collaboration tools like Airtable, or databases like Pandas and MongoDB.
+00:04:25.665 There's also support for vector databases as well.
+00:04:32.205 Now, unlike traditional structured databases,
+00:04:35.622 vector databases represent data points by converting them into something called vector embeddings,
+00:04:40.424  which are numerical representations in the form of vectors with a fixed number of dimensions.
+00:04:44.817 And you can store a lot of information in this format
+00:04:47.986 as it's a very efficient means of retrieval.
+00:04:51.691 There are also something called text splitters,
+00:04:56.396 which can be very useful as well
+00:04:58.916 because they can split text up into small, semantically meaningful chunks
+00:05:03.000 that can then be combined using the methods and parameters of your choosing.
+00:05:07.206 Now, LLMs, by default, don't really have any long term memory of prior conversations,
+00:05:12.512 and unless you happen to pass the chat history in as an input to your query.
+00:05:17.216 But LangChain solves this problem
+00:05:19.519 with simple utilities for adding in memory into your application,
+00:05:26.459 and you have options for retaining like the entire conversations,
+00:05:30.617 through to options to just retain a summarization that the conversation that we've had so far.
+00:05:36.736 And then finally the last one will look at are agents.
+00:05:41.641 Now, agents can use a given language model as a reasoning engine
+00:05:45.762 to determine which actions to take.
+00:05:48.481 And when building a chain for an agent,
+00:05:50.267 you'll want to include inputs like a list of the available tools that you should use,
+00:05:54.887 the user input like the prompts and the queries,
+00:05:57.341 and then any other relevant previously executed steps.
+00:06:00.860 So how can we put all of this to work for our applications?
+00:06:06.699 Well, let's talk about a few LangChain use cases.
+00:06:09.854 Now, obviously we have chatbots.
+00:06:13.439 LangChain can be used to provide proper context for the specific use of a chatbot
+00:06:19.572 and to integrate chat bots into existing communication channels and workflows with their own APIs.
+00:06:26.452 We also have summarization.
+00:06:28.788 Language models can be tasked with summarizing many types of text
+00:06:32.742 from breaking down complex academic papers and transcripts,
+00:06:36.505 to providing just a digest of incoming emails.
+00:06:40.867 Processing lots of examples where this is used for question answering.
+00:06:44.696 So using specific documents or specialized knowledge bases,
+00:06:48.374 LLMs can retrieve the relevant information from the storage and then articulate
+00:06:52.111 helpful answers using the information that would otherwise not have been in their training dataset.
+00:06:58.151 And, yeah, this is a good one, data augmentation.
+00:07:01.753 LLMs can be used to generate synthetic data for use in machine learning.
+00:07:06.146 So, for example, a LLM can be trained to generate additional samples
+00:07:10.222 that closely resemble the real data points in a training dataset.
+00:07:14.901 And there are, of course, virtual agents, as we already started to discuss.
+00:07:20.055 Integrating with the right workflows,
+00:07:22.535 LangChain's agent modules can use an LLM to autonomously determine the next steps,
+00:07:27.046 and then take the action that it needs to complete that step
+00:07:30.140 using something called RPA, or robotic process automation.
+00:07:34.954 LangChain is open source and free to use.
+00:07:37.523 There are also related frameworks like LangServe for creating chains as REST APIs
+00:07:42.128 and then LangSmith, which provides tools to monitor, evaluate and debug applications.
+00:07:46.931 Essentially LangChain's tools and APIs
+00:07:50.493 simplify the process of building applications
+00:07:53.579 that make use of large language models.
+00:07:57.410 If you have any questions, please drop us a line below
+00:08:00.016 and if you want to see more videos like this in the future,
+00:08:03.032 please like and subscribe.
+00:08:05.314 Thanks for watching.

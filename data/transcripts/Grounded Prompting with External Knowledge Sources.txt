@@ -1,0 +1,257 @@
+# tactiq.io free youtube transcript
+# Grounded Prompting with External Knowledge Sources | 360DigiTMG
+# https://www.youtube.com/watch/7mu0Gv695H8
+
+00:00:28.400 Good afternoon everyone. Welcome back to
+00:00:30.560 our Genai
+00:00:32.880 webinar sessions. So today we're going
+00:00:35.040 to talk about grounded prompting with
+00:00:37.840 external knowledge sources. So there are
+00:00:40.239 a lot of different types of grounded
+00:00:41.840 prompting. Uh we'll try to understand
+00:00:44.079 them and then we will get into rag which
+00:00:47.280 is one of the grounded prompting
+00:00:48.719 techniques. So grounded mounting is a
+00:00:51.120 technique where you explicitly instruct
+00:00:53.520 the model to use external reliable
+00:00:56.000 knowledge sources like documents,
+00:00:58.320 databases, APIs instead of
+00:01:00.320 hallucinating. The end goal of grounded
+00:01:02.719 prompting is to ensure the model's
+00:01:04.319 output is fact-based and grounded in the
+00:01:07.200 external information. For example, using
+00:01:09.680 the company policy document provided
+00:01:12.479 summarize the leave policy in simple
+00:01:14.960 terms.
+00:01:16.720 Rag on the other hand retrieval
+00:01:18.400 augmented generation is an architectural
+00:01:20.960 approach where a retrieval system like a
+00:01:23.280 vector database or search index
+00:01:25.439 automatically fetches most of the
+00:01:27.680 relevant external documents and the LLM
+00:01:30.479 uses them to generate the answer. The
+00:01:33.200 goal here is dynamically bring in
+00:01:35.360 knowledge at inference time especially
+00:01:38.000 for a large or constantly changing
+00:01:40.880 corpora.
+00:01:42.400 Workflow would be retrieve that is get
+00:01:44.320 the relevant docs or passages augment
+00:01:46.880 insert those into the prompt and
+00:01:48.399 generate llm produces grounded output.
+00:01:52.240 Okay, let's talk about the grounded
+00:01:54.479 prompting. So rag is one of the air
+00:01:56.880 technique which will enhance language
+00:01:59.520 model responses by incorporating
+00:02:01.200 relevant information from external
+00:02:02.719 knowledgeable sources. Why exactly is
+00:02:05.439 this rag important? Rag will address key
+00:02:08.000 limitations of the standalone language
+00:02:09.758 models by providing access to current
+00:02:12.160 domain specific information while
+00:02:14.239 maintaining the natural language
+00:02:15.599 capabilities of LLMs. What are the key
+00:02:18.480 problems that raping can solve?
+00:02:20.720 Hallucinations, reducing false
+00:02:22.400 information generation, outdated
+00:02:23.920 knowledge, provides access to current
+00:02:26.080 information, domain limitations,
+00:02:29.040 incorporate specialized knowledge, and
+00:02:31.120 source attribution where it enables
+00:02:32.959 citation and transparency. Let's now see
+00:02:35.519 an overview of what a rack system looks
+00:02:37.920 like. Grounded prompting with external
+00:02:40.319 knowledgeable sources. So there is an
+00:02:42.879 embedding model and then a vector
+00:02:45.360 database. user query will go into the
+00:02:47.519 vector database gets stored there and
+00:02:49.200 the knowledge retrieval will come out
+00:02:51.360 and ultimately you'll see a response.
+00:02:55.120 This is the overview of what a rag model
+00:02:57.280 would look like. Let's also get into uh
+00:03:00.480 this is the architecture right. So your
+00:03:02.480 user query is nothing but um I mean how
+00:03:05.360 a rag would work. You'll have a data
+00:03:07.280 injection embeddings vector database
+00:03:09.680 within the vector database there is
+00:03:11.120 semantic search and then comes your LLM
+00:03:13.120 response generation. User query is
+00:03:15.360 basically the initial input uh user uh
+00:03:18.400 initial input or question from the user
+00:03:20.159 itself. Embedding model. It converts
+00:03:22.480 text into numerical vector
+00:03:23.840 representations. Vector database is
+00:03:26.080 going to store and search through the
+00:03:27.440 vector embeddings. Knowledge retrieval.
+00:03:29.680 It finds relevant information based on
+00:03:31.440 similarity. Then we also have context
+00:03:33.920 augmentation which combines query with
+00:03:36.560 retrieved information. And then finally
+00:03:38.959 comes your LLM generation which
+00:03:40.480 generates response using augmented
+00:03:42.879 context. Right. Then I have the workflow
+00:03:47.440 um implementation workflow. Step-by-step
+00:03:49.920 process for implementing a rag retrieval
+00:03:52.000 augmented system augmented generation
+00:03:54.000 system. First is data preparation.
+00:03:55.920 Collect the collect and pre-process the
+00:03:57.519 external knowledge sources. Document
+00:03:59.519 chunking. You split your large documents
+00:04:01.280 into smaller manageable pieces.
+00:04:03.360 Embedding generation. You convert text
+00:04:05.439 chunks into vector embeddings. And then
+00:04:07.840 you have vector storage. Store the
+00:04:10.080 embeddings in a vector database with
+00:04:12.239 metadata. Then we have the query
+00:04:14.560 processing converting the user's query
+00:04:16.238 into a vector embedding. And then
+00:04:18.079 finally a semantic search where you find
+00:04:20.399 relevant documents using vector
+00:04:22.560 similarity. And then comes your context
+00:04:25.040 augmentation where you combine query
+00:04:26.720 with retrieve context. And then we have
+00:04:29.120 response generation. LLM generates final
+00:04:32.240 response using augmented context.
+00:04:35.919 So let us actually get into
+00:04:40.639 what the benefits of rag would be.
+00:04:42.400 Right. So the key benefits of rag once
+00:04:44.720 you start discovering reduced
+00:04:46.080 hallucinations
+00:04:47.680 current um information domain expertise
+00:04:51.199 source attribution cost effectiveness
+00:04:53.280 and scalability when we say reduce
+00:04:56.320 reduce hallucinations you're basically
+00:04:57.919 grounding the responses in actual data
+00:05:00.240 rag will significantly reduce the
+00:05:02.080 likelihood of generating false or
+00:05:04.000 misleading information. You have your
+00:05:06.160 current information which is access to
+00:05:09.039 up-to-date information without
+00:05:10.720 retraining the model enabling real-time
+00:05:13.199 knowledge updates. Then we also have
+00:05:15.600 domain expertise incorporated
+00:05:17.759 specialized knowledge from specific
+00:05:19.600 industries or organizations that wasn't
+00:05:21.840 in the original training data. And then
+00:05:24.479 source attribution ability to site
+00:05:26.400 sources and provide transparency about
+00:05:28.880 where information actually comes from.
+00:05:31.360 Cost effectiveness more economical than
+00:05:33.600 fine-tuning the large models while
+00:05:35.600 achieving similar or better performance.
+00:05:37.759 Scalability easily add new knowledgeable
+00:05:40.880 sources without modifying the underlying
+00:05:42.800 language model. What are some real world
+00:05:45.199 use cases where you can use rack in a
+00:05:47.520 customer support? For example, chatbots
+00:05:50.160 can access all these company
+00:05:51.600 documentation, frequently asked
+00:05:53.440 questions, FAQ database and support the
+00:05:55.120 tickets to provide accurate customer
+00:05:57.280 assistance. For example, a telecom
+00:05:59.199 company's chatbot accessing product
+00:06:01.680 manuals and troubleshooting the guides
+00:06:03.199 to help the customers resolve technical
+00:06:05.039 issues. Then we also have an enterprise
+00:06:07.120 knowledge management where you have
+00:06:08.400 internal AI assistants that can search
+00:06:10.240 through company's documents, policies
+00:06:11.759 and procedures to help the employees
+00:06:13.919 find some information. You can actually
+00:06:15.759 end up building a HR assistant that can
+00:06:17.919 answer questions about company's
+00:06:19.520 policies, benefits and all the
+00:06:21.360 procedures. legal research, AI systems
+00:06:24.000 which can research through legal
+00:06:25.600 databases, case law, uh regulations in
+00:06:29.280 order to assist with the legal research
+00:06:30.880 and document analysis. You also have
+00:06:32.800 medical information where you can use
+00:06:34.560 rag healthcare AI that can access
+00:06:36.800 medical literature drug databases and
+00:06:40.080 clinical guidelines in order to support
+00:06:41.840 medical decisionm then you also have
+00:06:44.160 educational assistants AI tutors that
+00:06:46.800 can access textbooks research papers and
+00:06:49.440 educational resources in order to
+00:06:51.360 provide comprehensive learning support.
+00:06:53.520 These are the real world use cases.
+00:06:56.000 Okay. Then what are the technical
+00:06:57.440 considerations when you are implementing
+00:06:59.840 rack systems right? So you have vector
+00:07:02.000 database selection which database you're
+00:07:03.759 going to select um there are scalability
+00:07:06.000 requirements that you need to look at
+00:07:07.360 query performance um what would be the
+00:07:09.520 capability of integration
+00:07:11.759 cost considerations of course then
+00:07:13.680 maintenance overhead and embedding
+00:07:16.160 models which kind of embedding models
+00:07:17.759 you would go for domain specificity
+00:07:20.319 language support um model size versus
+00:07:23.360 performance so lightweight models may
+00:07:26.160 not be really accurate but they give a
+00:07:29.199 immediate output whereas as say heavy
+00:07:31.440 models require GPU there lot of
+00:07:33.680 dependencies and would take longer to
+00:07:36.080 give you an output but they're more
+00:07:37.440 accurate right then you have
+00:07:39.440 computational requirements obviously if
+00:07:41.280 you have heavy data you need your GPUs
+00:07:44.000 etc updating the frequency how
+00:07:46.400 frequently you update your data and how
+00:07:48.400 frequently does this model actually
+00:07:50.560 start doing embedding on the new data
+00:07:52.319 that's been received then you also have
+00:07:54.639 chunking strategies where you chunk size
+00:07:57.680 uh where you basically split your
+00:07:59.440 original document into different
+00:08:01.520 manageable chunks, document chunks or
+00:08:03.759 manageable pieces of chunks. Again here
+00:08:06.720 uh check chunk size optimization is
+00:08:09.039 required uh parameters for this. You
+00:08:11.520 also have to consider the overlap okay
+00:08:14.160 of chunks maybe certain documents being
+00:08:16.319 split at um ambiguously at a different
+00:08:20.400 point. Then you also have document
+00:08:23.280 structure preservation.
+00:08:25.599 Obviously when I'm splitting the
+00:08:26.960 documents it should actually make sense,
+00:08:28.720 right? I cannot have the same do same
+00:08:31.199 topic being split into different chunks
+00:08:34.000 and that would actually create a
+00:08:36.320 discontinuation in the model. So that is
+00:08:39.120 something that I need to avoid from the
+00:08:41.039 user end. Apart from that there's also
+00:08:43.760 contextual boundaries, semantic
+00:08:45.680 coherence, right? uh the kind of
+00:08:48.480 vocabulary being used repetitively using
+00:08:51.760 the same word, same terminology for the
+00:08:54.560 same word would actually make sense
+00:08:57.200 rather than um being a lot more verbose.
+00:09:01.040 That helps. Then performance
+00:09:03.120 optimization, we need to do indexing
+00:09:04.880 strategies. If we are looking for for
+00:09:07.600 the user query, whenever the user query
+00:09:10.000 comes in, we need to look for the
+00:09:11.360 particular index and fetch the data.
+00:09:13.440 That makes more sense. Then you have
+00:09:15.120 caching mechanisms. Apart from that
+00:09:18.000 query optimization, load balancing,
+00:09:20.240 monitoring and analytics. A lot of
+00:09:22.560 things you need to consider technically.
+00:09:24.720 So discovering how rag systems actually
+00:09:27.279 combine the power of large language
+00:09:28.880 models along with external external
+00:09:32.080 knowledgeable sources is basically what
+00:09:35.279 rag uh encompasses of. And in order to
+00:09:39.200 deliver accurate contextual and
+00:09:41.040 up-to-date responses while also reducing
+00:09:43.600 the hallucinations and improving
+00:09:45.040 reliability that's where we will start
+00:09:47.760 using rack as a use case when compared
+00:09:50.800 to fine tuning. This is all about
+00:09:52.880 grounded prompting with externable
+00:09:54.959 external knowledgeable sources. Thank
+00:09:57.680 you so much for joining in today. We
+00:09:59.920 will keep you updated on more geni
+00:10:01.600 content. Thank you.

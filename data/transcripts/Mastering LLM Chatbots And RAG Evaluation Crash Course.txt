@@ -1,0 +1,1947 @@
+# tactiq.io free youtube transcript
+# Mastering LLM Chatbots And RAG Evaluation Crash Course
+# https://www.youtube.com/watch/NebOSOTp-zA
+
+00:00:00.400 Hello all, my name is Krish Naik and
+00:00:02.000 welcome to my YouTube channel. So guys,
+00:00:03.720 another amazing crash course for every
+00:00:05.840 one of you out here.
+00:00:07.680 In this video, we are going to discuss
+00:00:09.800 about LLM chatbot and rag evaluation
+00:00:12.640 techniques.
+00:00:13.960 Now, this is one of the most important
+00:00:16.680 videos that was requested by everyone
+00:00:18.560 and the reason is very simple. Nowadays,
+00:00:20.920 people are focusing on how to probably
+00:00:23.680 use different evaluation metrics for any
+00:00:26.120 kind of applications that you
+00:00:27.320 specifically develop. Let it be a
+00:00:29.280 chatbot or a rag application or an
+00:00:32.080 agentic workflow, anything as such, LLM
+00:00:35.120 evaluation technique is must.
+00:00:37.280 So, what we're going to do in this
+00:00:38.960 particular crash course, I think it will
+00:00:40.280 be for a 1-hour, you know, completely
+00:00:43.360 we'll discuss about different different
+00:00:44.680 evaluation techniques. Now, for this, we
+00:00:46.920 are definitely going to use LangChain.
+00:00:48.480 We're going to use LangSmith. Already,
+00:00:50.520 if you know, in my previous videos, I
+00:00:52.600 have covered many things with respect to
+00:00:54.080 LangChain, LangGraph, and LangSmith.
+00:00:55.640 LangSmith is a kind of cloud where
+00:00:56.960 you'll be able to, you know, do all
+00:00:59.200 these evaluation stuff. So, you can
+00:01:00.600 probably go ahead and see the reports of
+00:01:02.920 various evaluation techniques over
+00:01:04.559 there. If you're developing agentic
+00:01:06.120 workflows, you'll be able to see the
+00:01:07.440 entire flow, how the data, how how each
+00:01:09.800 and every node is basically getting
+00:01:11.080 executed. So, we will be referring this.
+00:01:14.240 Here, our focus will be on four
+00:01:16.240 different things: AI judge evaluation,
+00:01:18.480 gold gold standard evaluation,
+00:01:20.000 functional test, human evaluations. And
+00:01:22.880 here, we'll be doing something like data
+00:01:24.560 construction, regression testing. We'll
+00:01:26.760 also try to do human annotations. Um I
+00:01:29.800 know this will be like a series of
+00:01:31.800 videos. Right now, we are just getting
+00:01:33.680 started and this will be something
+00:01:35.480 amazing to get started with, right? So,
+00:01:37.560 please make sure that you watch this
+00:01:38.920 video till the end. Uh
+00:01:41.080 please make sure that you implement
+00:01:42.880 everything is given with respect to
+00:01:44.360 code, with respect to written materials.
+00:01:46.480 Uh I'll be sharing in the description of
+00:01:48.040 this particular video. So, let's go
+00:01:49.280 ahead and enjoy this particular video.
+00:01:51.040 Hello guys, welcome to this new amazing
+00:01:53.280 module on understanding about evaluation
+00:01:55.520 of chatbots and rag application.
+00:01:58.880 So, this is one of the most important
+00:02:01.080 module in this entire
+00:02:03.880 uh course that we are specifically
+00:02:05.320 studying.
+00:02:06.440 And our main aim over here is basically
+00:02:08.880 to understand like how do we go ahead
+00:02:10.800 and evaluate a chatbot application or a
+00:02:13.000 rag application itself.
+00:02:15.000 Inside this module, again, there will be
+00:02:16.440 a series of videos wherein we will be
+00:02:19.560 seeing examples for both chatbot and
+00:02:22.200 different kind of rag applications
+00:02:23.560 itself. Okay?
+00:02:25.320 So, let's let's consider this simple
+00:02:27.440 chatbot that you are able to see in
+00:02:29.400 front of you, right? Inside this
+00:02:31.160 chatbot, I'm just giving an input and
+00:02:33.000 this chatbot is generating a kind of
+00:02:34.640 output.
+00:02:36.040 Now, when we see this kind of chatbots,
+00:02:38.000 right? There are many questions that may
+00:02:39.600 come in your mind. Okay? The first thing
+00:02:41.720 is that which LLM models to use? Okay?
+00:02:45.480 Which
+00:02:46.760 LLM models to use?
+00:02:49.320 Because they are
+00:02:51.000 different different models, right? You
+00:02:52.760 may use OpenAI models, you can use
+00:02:54.560 Google Gemini or Google Gemini models.
+00:02:57.320 You can go ahead and probably even use
+00:02:59.640 Grok open source LLM models.
+00:03:02.120 So, yes, cost is one of the factor which
+00:03:04.320 will actually help you to decide. But
+00:03:07.000 more important than cost is how accurate
+00:03:09.760 your output is basically getting
+00:03:11.400 generated for a specific use case,
+00:03:13.640 right? So, this is one of the most
+00:03:14.880 important question.
+00:03:16.519 Now, the second thing is that the input
+00:03:18.320 and output that is basically getting
+00:03:19.840 generated, how do we decide this LLM is
+00:03:22.320 absolutely fine for this particular use
+00:03:24.440 case?
+00:03:25.320 So, here also, we need to have some
+00:03:29.680 ground truth.
+00:03:32.040 Ground truth
+00:03:34.160 for the output, right?
+00:03:36.640 So, here, whatever response is basically
+00:03:38.600 getting generated, we should be able to
+00:03:41.000 compare both of the specific response
+00:03:43.519 along with the ground put ground truth
+00:03:46.280 from this specific input, right? And
+00:03:48.640 then we should probably go ahead and
+00:03:49.920 decide that we how we are going to
+00:03:52.720 probably compare the LLM models, right?
+00:03:55.200 So, this comparison of the output that
+00:03:57.120 is getting generated is also really
+00:03:59.160 really important. Okay?
+00:04:01.320 So, for this data generation, you need
+00:04:03.960 to really know how to
+00:04:06.320 create the data, right?
+00:04:09.360 Now, when I say data,
+00:04:11.680 it should be something like this. For
+00:04:12.959 this particular input, this should be my
+00:04:15.120 output. Right? This should be the sample
+00:04:17.798 of data that should be present with you.
+00:04:20.000 Right? And based on this, whatever
+00:04:22.440 output is there and whatever the LLM
+00:04:24.560 model is basically getting generated or
+00:04:27.200 whatever LLM model is generating the
+00:04:28.960 output, you should be able to compare
+00:04:30.919 it. And then, you should decide on some
+00:04:33.480 important evaluation metrics. Okay? So,
+00:04:37.240 third is you should basically go ahead
+00:04:39.320 and decide on the evaluation metrics.
+00:04:44.960 Now, the question rises in the
+00:04:46.480 evaluation metrics, who is basically
+00:04:48.080 going to do this comparison and all,
+00:04:49.800 right?
+00:04:50.720 So, here in this particular video, I
+00:04:52.919 will be showing you a specific approach
+00:04:55.200 which is called as LLM as a judge.
+00:04:58.960 The LLM will be specifically deciding
+00:05:02.240 because if we use LLM with a specific
+00:05:04.720 prompt
+00:05:05.880 and then we try to compare the output,
+00:05:08.840 then definitely you should be able to
+00:05:10.840 see some of the performance metrics. And
+00:05:12.760 this is for a chatbot, for RAG
+00:05:14.160 application, I will be showing you some
+00:05:15.560 other way. Okay?
+00:05:17.720 So, here clearly you can see that what
+00:05:20.120 are the steps we are basically going to
+00:05:21.720 follow. Okay?
+00:05:24.200 The first step is that we definitely
+00:05:26.280 need to gather data points. So, if I say
+00:05:29.200 step-by-step implementation, the first
+00:05:30.919 step is that we will be gathering some
+00:05:32.720 data points.
+00:05:34.480 Gathering some data points.
+00:05:38.919 When I say data points, it should be
+00:05:40.640 based on a specific input, it should be
+00:05:42.200 there should be some kind of output,
+00:05:43.919 right?
+00:05:44.880 Now, Now question arises how this data
+00:05:46.800 point should be, you know?
+00:05:49.120 And again, for this we will design one
+00:05:51.000 kind of schema where I have some kind of
+00:05:53.040 input and output. Okay, output data
+00:05:55.400 points.
+00:05:57.360 Then
+00:05:58.360 after having the specific data points,
+00:06:00.360 what we are going to do is that
+00:06:02.680 second step,
+00:06:04.680 right? To understand the correctness, we
+00:06:07.640 will use LLM as a judge.
+00:06:10.600 Okay, LLM as a judge.
+00:06:13.840 So, this step also I will be showing you
+00:06:15.480 how we can go ahead and implement it.
+00:06:18.040 Coming to the third most important step
+00:06:21.440 is based on the evaluation metrics.
+00:06:24.400 Then we'll see that how can we go ahead
+00:06:26.120 and apply evaluation metrics.
+00:06:28.320 Then fourth, we will be doing the
+00:06:29.880 comparison with multiple multiple LLM
+00:06:33.960 models.
+00:06:35.200 So, we will do the comparison with
+00:06:37.800 multiple LLM models.
+00:06:40.320 And whichever gives the best evaluation
+00:06:42.640 metrics result,
+00:06:44.120 we may select that LLM model. Okay?
+00:06:47.760 So, these are the steps that we're going
+00:06:49.160 to do.
+00:06:50.040 And for this, we are going to use
+00:06:52.760 LangSmith.
+00:06:55.560 Now, why I'm using LangSmith? Because we
+00:06:57.440 will be able to do the entire tracking
+00:07:00.440 in the LangGraph Cloud on the LangSmith
+00:07:02.520 Cloud itself. Okay?
+00:07:04.520 So, let's go ahead and do this
+00:07:05.760 step-by-step and see that how these
+00:07:08.120 things can be implemented. Okay? So,
+00:07:10.680 here you can see chatbot and rag
+00:07:12.200 evaluation. I've just put some
+00:07:13.560 definition for rag, you know? You can
+00:07:16.480 just go ahead and read it. So, first of
+00:07:18.080 all, what I will do,
+00:07:19.360 I will go ahead and write chatbot
+00:07:22.400 evaluation. Okay?
+00:07:24.800 Chatbot evaluation.
+00:07:26.840 Now, inside this chatbot evaluation, the
+00:07:28.360 first thing that you actually required,
+00:07:31.040 I'll open my command prompt.
+00:07:32.960 Okay?
+00:07:34.040 And quickly I will
+00:07:36.200 go ahead and
+00:07:37.919 add my library, which is called as
+00:07:39.760 LangSmith, because I require LangSmith
+00:07:41.840 and one more library which is called as
+00:07:43.360 open AI. Okay? So, I'll be using both
+00:07:46.600 these specific libraries
+00:07:48.360 to do the installation. Okay? Because I
+00:07:51.120 will be requiring it. Okay? So, here you
+00:07:52.760 can see that because Okay, my spelling
+00:07:55.640 is wrong. LangSmith.
+00:07:57.880 Okay.
+00:07:58.840 UV add LangSmith and open AI. You can
+00:08:01.560 see that I've installed both of them.
+00:08:04.000 So, again, please remember this name, UV
+00:08:06.640 add LangSmith and open AI.
+00:08:08.960 Now, the first thing is that if I'm
+00:08:10.600 using LangSmith, okay?
+00:08:13.080 I need to go ahead and create an API key
+00:08:16.640 for LangSmith. Okay?
+00:08:18.480 So, go to
+00:08:19.720 or just go ahead and search for
+00:08:21.400 LangSmith.
+00:08:22.919 Okay? So, here you'll be getting the
+00:08:24.360 first page.
+00:08:26.160 And from this LangSmith, I will just go
+00:08:27.840 ahead and click on sign up. And if you
+00:08:29.400 know about LangSmith,
+00:08:31.040 uh it is a unified observability and
+00:08:32.760 eval platform that team can debug, test,
+00:08:34.799 and monitor AI app performance whether
+00:08:37.000 building with LangChain or not. Okay?
+00:08:39.280 So, that is the reason we are
+00:08:40.320 specifically using this.
+00:08:42.200 Now, once I go ahead and sign up, this
+00:08:43.840 is how it looks like. Okay?
+00:08:46.400 Um
+00:08:47.560 and I hope from this entire course you
+00:08:49.760 may have seen about LangSmith or you
+00:08:51.320 should know about LangSmith itself.
+00:08:53.160 Okay? So, inside this you have so many
+00:08:54.960 different tracing projects. You can go
+00:08:56.440 ahead and trace, do each and everything
+00:08:58.400 whatever you want. Okay?
+00:09:00.160 Now, to get the API key, I will go to
+00:09:01.720 settings.
+00:09:03.360 Inside this settings, I will go ahead
+00:09:04.480 and create an API key. So, let's say I
+00:09:06.800 will go ahead and write
+00:09:08.400 evaluation.
+00:09:10.520 Okay? Then, I'll create the API key.
+00:09:13.240 So, I'll copy this API key.
+00:09:15.040 Then,
+00:09:15.960 I'll go back over here, open my .env
+00:09:18.720 file,
+00:09:19.800 and I'll paste it over here. See? I'm
+00:09:21.600 pasting it over here in front of you.
+00:09:24.000 I have to create a key called as
+00:09:25.320 LangSmith_API_key.
+00:09:27.320 Okay?
+00:09:28.200 So, I can go ahead and just use this.
+00:09:30.040 So, for my purpose, I will be using
+00:09:32.240 this.
+00:09:33.080 Okay? LangSmith_API_key.
+00:09:35.920 Perfect. Uh now, the next thing is that
+00:09:38.800 once I have this key, now it's time that
+00:09:42.040 we go ahead and import all the specific
+00:09:44.320 libraries. So first of all, I will go
+00:09:45.520 ahead and write import OS.
+00:09:47.320 And then from
+00:09:49.640 .env import
+00:09:52.000 load _ .env and I'll go ahead and
+00:09:54.240 initialize this.
+00:09:55.720 Two two keys that I want to really
+00:09:58.960 really import, right? So here I will
+00:10:02.040 write
+00:10:03.400 os.environ
+00:10:05.480 One is the
+00:10:07.880 LangSmith API key.
+00:10:10.960 So I will just go ahead and set up the
+00:10:12.400 environment for
+00:10:14.160 LangSmith API key and I'll write os.get
+00:10:17.840 get env.
+00:10:21.120 And then I will go ahead and use
+00:10:23.960 LangSmith API key.
+00:10:27.040 Okay?
+00:10:28.200 Now once I've done this, the next thing
+00:10:30.240 is that I will just go ahead and write
+00:10:31.520 os.environ for the same OpenAI API key.
+00:10:36.040 Because I will be requiring an OpenAI
+00:10:37.880 API key. So I'll just go ahead and write
+00:10:39.480 os.
+00:10:40.600 get env
+00:10:43.480 OpenAI
+00:10:45.680 _API_key.
+00:10:48.160 So once I initialize both of them,
+00:10:50.600 uh
+00:10:51.600 then I can also go ahead and use
+00:10:53.880 LangSmith tracing so that I will be able
+00:10:55.839 to trace each and everything. So I'll
+00:10:57.680 write on.environ
+00:10:59.839 And here we will go ahead and set this
+00:11:02.680 LangSmith _tracing is equal to and I'll
+00:11:06.160 make it as true.
+00:11:08.080 Okay?
+00:11:09.200 So these are the basic environment
+00:11:11.320 variables that I have
+00:11:13.200 uh loaded it, right? I means I have to
+00:11:15.839 load it.
+00:11:17.520 Now the next step is that I will first
+00:11:19.760 of all create the data points.
+00:11:23.000 Now create the data points. Now see, for
+00:11:25.760 creating the data points basically means
+00:11:27.440 for a specific input, what will be the
+00:11:29.120 output?
+00:11:30.320 And for this, what we will do, I will go
+00:11:32.480 ahead and import from
+00:11:34.280 LangSmith
+00:11:35.640 import
+00:11:37.160 client. Now, see, if I go back to
+00:11:40.520 LangSmith, okay?
+00:11:42.520 If I go back over here,
+00:11:44.600 okay? Here, you'll be able to see that
+00:11:46.600 in LangSmith, you will be able to do the
+00:11:48.480 observability,
+00:11:50.240 where you can trace the project, monitor
+00:11:51.920 it. Here, you can also evaluate.
+00:11:54.720 So, inside the evaluation, you'll be
+00:11:56.520 able to see that there is something
+00:11:57.600 called as datasets and experiments.
+00:11:59.880 There is something called as annotation
+00:12:01.080 and queue. And you can also do prompt
+00:12:03.040 engineering. And finally, if you want to
+00:12:04.600 do deployment, you can go ahead with
+00:12:05.960 LangGraph deploy platform deployment
+00:12:08.000 platforms, right?
+00:12:09.720 Where we have already seen LangGraph
+00:12:11.280 Studio.
+00:12:12.600 Now, here, I'm planning to use this
+00:12:14.600 evaluation. Now, inside evaluation, you
+00:12:16.960 will be having something called as
+00:12:18.080 datasets and experiment.
+00:12:20.160 So,
+00:12:21.240 the main aim of this particular section
+00:12:23.960 in the LangSmith is that you can go
+00:12:26.000 ahead and create your new data over
+00:12:27.440 here, and you can also evaluate it
+00:12:29.160 directly over here by performing some
+00:12:30.640 experiments. Okay?
+00:12:32.880 So, we are going to go ahead and use
+00:12:34.880 this specific module itself, okay?
+00:12:37.880 Now, the first step is that I want to go
+00:12:39.680 ahead and create some data and store it
+00:12:42.160 over here, okay? So, let's go ahead and
+00:12:44.160 do that.
+00:12:45.280 I will go ahead and store it directly
+00:12:47.040 over here.
+00:12:48.280 So,
+00:12:49.520 I'll go over here, and I'll import from
+00:12:50.920 LangSmith import client. I will quickly
+00:12:53.600 go ahead and initialize my client.
+00:12:55.839 So, it'll be like client of client.
+00:12:57.880 Okay?
+00:12:59.240 Um this will basically be my variable.
+00:13:01.520 So, I'm initializing a client. This
+00:13:03.040 client will be responsible in uploading
+00:13:06.280 the dataset. So, I will say define the
+00:13:07.880 dataset, and these are like
+00:13:11.480 these are your test data.
+00:13:15.200 Test data, okay?
+00:13:17.480 Now, I will go ahead and write
+00:13:18.680 dataset_name
+00:13:20.240 is equal to
+00:13:21.480 let's say uh
+00:13:23.200 it's a simple chatbot
+00:13:26.520 evaluation. I'm just going to go ahead
+00:13:28.280 and write like this.
+00:13:29.640 Okay?
+00:13:31.000 Now, the question arises,
+00:13:32.880 how do we go ahead and create a data
+00:13:34.760 set? So, data set is equal to
+00:13:37.120 client. create
+00:13:40.640 There's a There's a method which is
+00:13:42.600 called as client.create_dataset,
+00:13:44.520 and I will give the my data set name.
+00:13:47.000 Okay?
+00:13:48.400 Now,
+00:13:50.080 this will be an empty data set, but
+00:13:51.680 inside this, what
+00:13:53.800 See, this is the function. If you see
+00:13:55.320 this button, you create a data set in
+00:13:57.000 LangSmith API.
+00:13:58.760 But inside this, I need to insert some
+00:14:00.360 examples, right?
+00:14:02.040 So, here I can go ahead and write
+00:14:03.680 client.
+00:14:06.160 create examples. See, there are so many
+00:14:08.800 different different examples.
+00:14:10.720 Uh
+00:14:11.640 there are so many different different
+00:14:12.800 inbuilt functions like this. Create
+00:14:14.840 comment, create chat example, create
+00:14:16.560 annotation queue, create data set,
+00:14:18.680 right? Create data set we have used.
+00:14:20.080 I'll just go ahead and write create
+00:14:21.320 examples, okay? Now, create examples.
+00:14:23.760 Here, you can see you can give the input
+00:14:25.360 data set ID, data set name. All these
+00:14:27.600 are parameters.
+00:14:29.120 Create a data set example in the
+00:14:30.560 LangSmith API. Examples are row in a
+00:14:32.560 data set containing the input and the
+00:14:34.000 expected output. Only it requires an
+00:14:35.800 input or expected output. So, here, I
+00:14:38.320 will just go ahead and write
+00:14:39.960 something like data set
+00:14:42.360 _id. First of all, I need to go ahead
+00:14:44.440 and give the ID. So, for this, I will
+00:14:46.120 say dataset.id,
+00:14:48.240 okay? So, if I'm directly giving this
+00:14:50.360 .id, right? Whatever variable this is,
+00:14:53.560 this will by default initialize some
+00:14:55.440 kind of ID as the data is getting
+00:14:57.240 inserted.
+00:14:58.600 Now, the next thing is that we will go
+00:14:59.880 ahead and set up our examples. Now, this
+00:15:02.760 is where we will be putting our data
+00:15:04.560 set.
+00:15:05.640 Now,
+00:15:06.760 with the help of chat GPT,
+00:15:08.760 and when I was seeing the documentation,
+00:15:10.480 I've created some data set over here.
+00:15:12.560 You can see over here.
+00:15:14.640 So, inside this data set, you have like
+00:15:16.320 input and output. So, if you see,
+00:15:19.000 it is like
+00:15:20.440 This is the this is output. It should be
+00:15:22.080 in the form of key value pairs.
+00:15:24.240 Like question is what is LangChain?
+00:15:26.040 Answer is a framework for building LLM
+00:15:27.720 application.
+00:15:29.600 Then question what is LangSmith? Then
+00:15:31.960 output
+00:15:33.200 a platform for observing this. Then
+00:15:35.080 similarly like this we have done this.
+00:15:37.160 And it should be like a in inside a list
+00:15:39.880 of examples. So guys, now once we have
+00:15:41.880 created this as an examples, all I will
+00:15:44.480 do is that I will just go ahead and
+00:15:46.000 execute this code, okay?
+00:15:48.160 Now after this code is executed, right?
+00:15:50.280 So what will happen is that directly
+00:15:52.720 this all records will directly get
+00:15:54.280 created inside LangSmith. So let's see
+00:15:56.320 that. So I'm just going to execute this.
+00:15:59.520 So it is giving me an error, let's see.
+00:16:01.880 Conflict for data set
+00:16:04.160 uh
+00:16:04.840 Okay, data set name. I'll just go ahead
+00:16:06.560 and give some other data set name, just
+00:16:08.360 a second. I think I have
+00:16:10.720 created something like this, okay? So
+00:16:12.800 I'll say chatbot evaluation.
+00:16:15.600 I think I earlier I created this, so let
+00:16:17.640 me just go ahead and execute this now.
+00:16:19.720 Now here you can clearly see that my
+00:16:22.000 five records has got inserted. Now it's
+00:16:24.360 time that we go ahead and see this
+00:16:26.160 specific data set over here.
+00:16:28.320 So here you can see simple chatbot uh or
+00:16:30.839 see, simple chatbot evaluation I earlier
+00:16:32.800 I had created it, so that was an error.
+00:16:34.880 So I got this chatbot evaluation.
+00:16:38.160 See? All the five records are there. So
+00:16:40.760 whatever name you are specifically
+00:16:42.280 giving, you will be able to see that
+00:16:44.120 specific record and you can see just now
+00:16:46.200 it has got updated. All right, now it's
+00:16:47.960 3:31 p.m., right?
+00:16:50.040 So all these specific records has got
+00:16:52.000 updated. So if you see over here, this
+00:16:53.640 is my input, this is my reference
+00:16:55.000 output. So this is my ground truth,
+00:16:57.880 okay? I'm just considering this as my
+00:16:59.839 ground truth.
+00:17:01.320 So this is how you go ahead and insert
+00:17:04.640 the data, okay? And here you can clearly
+00:17:07.400 see what I've actually done. I've
+00:17:08.720 created a client. I've given a data set
+00:17:10.920 name. We have created empty data set and
+00:17:13.040 then we are adding any number of
+00:17:14.640 examples as we want, okay?
+00:17:16.880 So you can also automate this particular
+00:17:18.560 process. Let's say if there are specific
+00:17:20.760 data set some team are actually working,
+00:17:22.839 they are doing the annotation putting
+00:17:24.439 inputs and outputs. We can also directly
+00:17:26.599 read that particular data set from a CSV
+00:17:28.600 file, from an Excel file, and directly
+00:17:30.680 go ahead and insert it over here. Right?
+00:17:32.880 So, this is the first step wherein we
+00:17:35.600 specifically discussed that we need to
+00:17:37.400 go ahead and gather some data points and
+00:17:39.760 create it for us. Okay?
+00:17:41.720 Now, in the next step, what we are going
+00:17:43.920 to do is that as I told you, right? We
+00:17:46.120 are going to use LLM as a judge, right?
+00:17:49.080 So, if you're using LLM as a judge, LLM
+00:17:51.560 will probably whatever the LLM model is
+00:17:54.720 generating the output, we will go ahead
+00:17:56.440 and see the correctness for that
+00:17:58.560 specific output and we'll build up a
+00:18:00.800 second step. And that is what we are
+00:18:02.200 going to discuss in the next video. So,
+00:18:04.640 yes, this was it from my side. I'll see
+00:18:06.040 you all in the next video. Thank you.
+00:18:08.840 Hello, guys. So, we are going to
+00:18:10.000 continue the discussion with respect to
+00:18:11.720 evaluation of chatbot. Already in our
+00:18:13.680 previous video, we have seen that how we
+00:18:16.120 can go ahead and directly create data
+00:18:17.720 points
+00:18:18.760 and insert even in the LangSmith Cloud,
+00:18:21.280 right? So, we have done that both step.
+00:18:23.520 And you could see that inside my
+00:18:25.040 LangSmith Cloud, we are also able to see
+00:18:27.360 this particular data set.
+00:18:29.120 Now, we can apply different different
+00:18:30.920 evaluation metrics.
+00:18:32.840 Now, already I have said that the kind
+00:18:34.440 of evaluation metrics that I'm actually
+00:18:35.960 going to apply is that I will create LLM
+00:18:38.320 as a judge who will be responsible in
+00:18:41.440 evaluating
+00:18:42.920 the output that is generated by any LLM
+00:18:45.400 itself, right? So, for this, what I will
+00:18:47.160 do, I will quickly go
+00:18:49.360 back to my coding file. And here, I will
+00:18:52.240 go ahead and write
+00:18:53.680 um
+00:18:54.880 we are going to go ahead and define the
+00:18:56.520 metrics.
+00:18:58.040 And as I said, for this, we will be
+00:19:00.880 using
+00:19:01.960 LLM
+00:19:03.680 LLM as a judge.
+00:19:07.120 Okay?
+00:19:08.560 Now, for this quickly, what I am
+00:19:10.240 actually going to do
+00:19:11.760 I will
+00:19:13.320 just go ahead and import.
+00:19:15.640 So, I'll write import open AI. Now, see
+00:19:17.920 when I say
+00:19:19.640 I'm using LLM as a judge
+00:19:22.160 I will create a function wherein I will
+00:19:24.120 say that hey, this is the prompt what
+00:19:26.160 LLM should basically follow.
+00:19:28.720 Based on the output that is generated by
+00:19:30.400 any LLM that we are using, we need to go
+00:19:32.680 ahead and judge whether those response
+00:19:35.120 based on the input is correct or not.
+00:19:37.040 Okay?
+00:19:38.320 Now, along with this I will go ahead and
+00:19:39.800 import from LangSmith import wrappers.
+00:19:43.800 Okay.
+00:19:44.880 Then, I will go ahead and define my open
+00:19:47.440 AI underscore client.
+00:19:49.560 This client will be my open AI model.
+00:19:52.840 So, here I will say open AI client is
+00:19:55.440 equal to wrappers
+00:19:57.600 dot
+00:19:58.800 wrap underscore open AI.
+00:20:01.280 Now, if you see this wrappers, this
+00:20:03.000 module provides a convenient tracing
+00:20:05.360 wrappers for popular libraries. See, in
+00:20:07.080 LangSmith
+00:20:08.520 uh since we also want to make sure to
+00:20:11.280 trace each and every call that is
+00:20:13.120 specifically happening in the LLM, we
+00:20:15.240 can directly use this particular
+00:20:16.720 wrappers and with the help of this wrap
+00:20:19.680 open AI, it will patch the open AI
+00:20:21.680 client to make it traceable. That's it.
+00:20:23.760 Okay?
+00:20:24.680 We are just using the specific inbuilt
+00:20:26.360 function over here. It supports chat and
+00:20:28.680 responses API sync and a sync open open
+00:20:31.480 AI clients and all. So, you will all
+00:20:32.720 just understand why I am actually making
+00:20:34.960 it as wrap underscore open AI. Okay? And
+00:20:37.320 here we will go ahead and call our open
+00:20:39.080 AI dot open AI
+00:20:40.840 for using any specific models. Okay?
+00:20:43.680 Now, the next thing is that we will go
+00:20:45.120 ahead and use some kind of instructions.
+00:20:47.560 Okay?
+00:20:48.520 So, instructions over here will be eval
+00:20:50.840 underscore instruction. I'm saying that
+00:20:52.680 you are a expert professor specializing
+00:20:55.240 in grading student answer to the
+00:20:57.120 question. Okay?
+00:20:59.080 So, this is the evaluation instruction.
+00:21:01.800 So, now I'm just going to go ahead and
+00:21:04.520 use one evaluation metrics that is
+00:21:06.440 correctness. I'll be defining this as my
+00:21:08.480 own custom one.
+00:21:10.000 Here, we will be giving our inputs. The
+00:21:12.480 inputs will be in the form of
+00:21:14.120 dictionary.
+00:21:15.280 Comma, the output will also be in the
+00:21:18.080 form of dictionary.
+00:21:20.200 Then, there will also be a reference
+00:21:22.560 output. Okay, reference outputs. And
+00:21:26.080 this output reference output is the
+00:21:28.400 ground truth output. Okay, so this will
+00:21:30.560 also be in the dictionary.
+00:21:32.280 And this function should return a
+00:21:33.880 boolean value. Okay?
+00:21:35.760 Saying that how accurate or how whether
+00:21:38.120 it is correct or not. That's it. Okay?
+00:21:40.920 Now, what we are going to do over here
+00:21:42.480 is that I will go ahead and define a
+00:21:44.600 variable.
+00:21:46.000 Inside this variable, I'm just saying
+00:21:47.840 that hey
+00:21:49.120 uh let me see this output spelling is
+00:21:51.640 wrong. Okay. So, inside this, I'm
+00:21:54.120 defining a prompt which is saying you
+00:21:56.400 are a grading the following question.
+00:21:58.640 So, this is my input. So, here I will go
+00:22:01.280 ahead and define this as outputs. Okay.
+00:22:03.080 You're grading the following question.
+00:22:04.600 Here is the input of question. Here is
+00:22:06.480 the real answer. You're grading the
+00:22:08.840 following predicted answer. Okay, and
+00:22:10.920 this answer will be generated by the
+00:22:12.440 chatbot. Respond with correct or
+00:22:14.520 incorrect grade colon. Okay. So, here
+00:22:18.400 it will either respond correct or
+00:22:20.280 incorrect and it should be a boolean
+00:22:22.160 value as a return, right? And that grade
+00:22:24.320 is equal to that specific value will
+00:22:25.880 come automatically.
+00:22:27.560 Now, inside this particular function,
+00:22:29.240 what we are going to quickly do is that
+00:22:31.680 we are going to go ahead and define our
+00:22:33.080 response variable. And here, I'm going
+00:22:35.120 to use my open AI underscore client dot
+00:22:37.640 chat completion chat dot
+00:22:40.600 completions dot create. Okay.
+00:22:44.600 Create.
+00:22:45.760 And here, we're going to use model is
+00:22:48.000 equal to GPT
+00:22:50.360 4 o mini.
+00:22:52.560 Okay.
+00:22:53.520 Comma
+00:22:55.160 temperature
+00:22:56.960 is equal to zero.
+00:22:58.640 Comma
+00:22:59.720 messages
+00:23:01.240 is equal to
+00:23:03.520 Here I will be defining
+00:23:05.800 two important keys.
+00:23:07.640 So here, one comma and the other comma
+00:23:11.200 In the first, we are going to define the
+00:23:13.040 role.
+00:23:14.120 So role will be nothing but system.
+00:23:17.160 The role colon system.
+00:23:20.600 And then my content should be whatever
+00:23:24.240 content we have specifically given in
+00:23:26.440 the eval instruction. So this is a
+00:23:28.040 system prompt. You can just consider
+00:23:29.600 that. I'm providing a system prompt to
+00:23:32.440 my
+00:23:33.520 uh
+00:23:34.160 LLM model saying that, &quot;Hey, you are an
+00:23:36.320 expert professor specializing in grading
+00:23:38.200 students and all, right?&quot; Then the role
+00:23:41.120 next role will be for the user because
+00:23:43.160 user will be supplying the message. So
+00:23:45.480 here uh I will just go ahead and give my
+00:23:48.760 user
+00:23:50.080 and content
+00:23:52.440 will be nothing but it will be user
+00:23:54.720 {underscore} content.
+00:23:56.200 Okay?
+00:23:57.200 Whatever user {underscore} content is
+00:23:58.600 basically given over here. So this is
+00:24:01.120 what is the user giving as a message
+00:24:03.680 over here itself. Okay?
+00:24:05.800 So once this is done, uh
+00:24:07.840 then after this you can just go ahead
+00:24:10.440 and write dot choices of zeroth and you
+00:24:14.560 just read the last messages.
+00:24:16.840 message.content,
+00:24:18.400 okay? So this is how you specifically
+00:24:20.360 return it.
+00:24:21.560 And uh
+00:24:22.960 it will just return See,
+00:24:25.320 here it is responding either correct or
+00:24:27.120 incorrect, right?
+00:24:28.920 So what I will do if
+00:24:31.520 it should definitely return a boolean
+00:24:33.880 value. So here what I will do, I will
+00:24:35.400 write
+00:24:37.120 something like this. Okay? Correct. If
+00:24:39.920 the response is correct, it is just
+00:24:41.360 going to give as true, okay?
+00:24:43.960 If the response is correct, it is going
+00:24:45.280 to give true, otherwise it will give
+00:24:46.720 false, okay?
+00:24:48.200 So this is what we are basically done
+00:24:50.320 with respect to defining metrics, okay?
+00:24:53.040 Now along with this, I can also define
+00:24:54.800 one more metric. See, this is just one
+00:24:56.960 of the metric wherein this is the system
+00:24:59.880 prompt, this is the user question. We
+00:25:01.680 are just comparing it and
+00:25:04.080 this particular OpenAI client is
+00:25:05.800 basically making the decisions out
+00:25:07.400 there, right? Now, what we'll do, we
+00:25:09.480 will go ahead and create one more
+00:25:10.800 metric. And this metric is something
+00:25:12.520 called as concision, okay?
+00:25:14.600 I'll talk about this, but this metric is
+00:25:16.480 very simple. It is just checking
+00:25:18.840 over here.
+00:25:20.120 I'll just go ahead and give. It checks
+00:25:22.480 whether
+00:25:24.200 This is just like one kind of metrics I
+00:25:26.200 have applied it from my end.
+00:25:28.320 So, here what we are doing is that
+00:25:30.520 here we are checking whether the actual
+00:25:32.000 output is less than two times the length
+00:25:33.880 of the expected results. That's it,
+00:25:35.720 okay? So, here you can see I have the
+00:25:37.400 output, I have the res- reference
+00:25:38.880 output. I'm just comparing. Okay? If the
+00:25:41.440 length of output response is less than
+00:25:43.480 two into length of this.
+00:25:45.560 So, if both this satisfaction uh if both
+00:25:48.560 this criteria has been satisfied, that
+00:25:50.200 basically means it has passed both this
+00:25:52.480 particular metrics, okay? So, this is my
+00:25:55.160 first metric and this is my second
+00:25:56.680 metric.
+00:25:58.080 Now,
+00:25:59.200 uh
+00:26:00.280 the third important step will be like
+00:26:03.080 how to go ahead and run the evaluation,
+00:26:05.920 okay? And understand this specific
+00:26:08.280 evaluation should directly run in the
+00:26:11.200 LangSmith also and it should should you
+00:26:13.360 should be able to see the answer, okay?
+00:26:16.200 Now, that specific thing we will try to
+00:26:18.280 see in the next video. So, finally guys,
+00:26:20.640 we are into the run evaluation step
+00:26:23.600 wherein we are going to specifically run
+00:26:25.360 the evaluations for this particular
+00:26:26.920 chatbot.
+00:26:28.200 And uh if you remember, we have created
+00:26:30.200 two different metrics. One is this
+00:26:32.720 correctness function and the other one
+00:26:34.360 was the concision function, okay?
+00:26:36.840 So, based on both this functions, we are
+00:26:38.480 going to define the evaluations now,
+00:26:40.240 okay? We have We have to run uh I can
+00:26:42.400 basically say that these are my
+00:26:43.920 evaluation metrics and based on this we
+00:26:45.720 need to run every evaluations.
+00:26:48.040 So, first of all uh before I go ahead
+00:26:50.240 and start running any evaluation,
+00:26:53.160 first of all, what I will do is that I
+00:26:55.000 will just go ahead and create a default
+00:26:56.920 instruction. So, this is my default
+00:26:58.680 instruction. It responds to the user
+00:27:00.880 question in a short concise manner, one
+00:27:03.000 short sentences. This is what you need
+00:27:05.120 to generate with respect to the LLM.
+00:27:07.400 And then, I will define one function
+00:27:09.440 which is called as my_app.
+00:27:12.320 Now, inside this my_app, I give my model
+00:27:14.960 like GPT-4 Mini. There will be a
+00:27:16.840 question and there will be an
+00:27:18.000 instruction
+00:27:19.520 based on this. Because my LLM needs to
+00:27:21.280 generate an output and then for that
+00:27:23.040 particular output, we will go ahead and
+00:27:25.160 run both this particular metrics, right?
+00:27:27.960 So, here you can see I'm returning
+00:27:29.200 openai client.chat_completion.create.
+00:27:31.360 I have model, I have this message,
+00:27:32.840 instruction, question and we are
+00:27:34.040 basically giving this, okay?
+00:27:35.960 So, once I execute this here, you can
+00:27:37.680 actually see this particular function
+00:27:39.280 will be called, okay?
+00:27:41.760 Now, uh
+00:27:43.240 Now, this function needs to be called
+00:27:45.440 for every question inside my data set.
+00:27:48.240 So, what I will do
+00:27:49.920 since
+00:27:50.880 this
+00:27:52.960 And this function is nothing but it is
+00:27:54.520 basically my chatbot function, you can
+00:27:56.160 just say, right? My app chatbot, what it
+00:27:59.040 is doing, it is basically taking the
+00:28:00.400 question, model, instruction and it is
+00:28:02.360 generating some kind of output.
+00:28:04.760 So, I will
+00:28:06.040 go ahead and call this
+00:28:08.680 for every input question, right? So, I
+00:28:11.320 will call
+00:28:12.680 my_app
+00:28:14.800 for every data points and then we will
+00:28:17.640 compare, okay?
+00:28:19.920 So, for this, what I will do, I will go
+00:28:21.720 ahead and write, I'll create a function
+00:28:23.240 called as LS_target, input is equal to
+00:28:25.680 STR.
+00:28:27.360 Whenever I give an input, so that input
+00:28:29.200 question needs to be mapped over here,
+00:28:31.200 okay? And this function needs to be
+00:28:32.400 called for every input, okay?
+00:28:35.000 Uh input of question is basically every
+00:28:37.160 question is over there and this my app
+00:28:38.760 will be called and for that every
+00:28:40.600 response will be generated. So, once you
+00:28:42.400 have both these functions, now we can go
+00:28:44.800 ahead and run our evaluation. So, run
+00:28:47.160 our evaluation.
+00:28:49.640 Okay?
+00:28:50.520 So, for this, I will go ahead and write
+00:28:51.920 experimental or experiment {underscore}
+00:28:54.800 results is equal to
+00:28:57.400 client.
+00:28:58.800 evaluate
+00:29:00.480 And here, I'm going to specifically use
+00:29:02.480 LS {underscore} target. So, this is the
+00:29:04.600 function that is basically going to take
+00:29:07.480 every inputs.
+00:29:08.840 Uh so, I'm giving this. This is my uh
+00:29:11.960 I'll say your AI system, which will be
+00:29:14.800 generating the response.
+00:29:16.480 Then, I have my data. I need to provide
+00:29:18.480 my data set. So, data set {underscore}
+00:29:20.480 name.
+00:29:21.440 Um
+00:29:23.000 This data is the same data that we had
+00:29:24.960 actually worked on, right?
+00:29:26.960 The third important parameter is
+00:29:28.200 something called as evaluators. Now,
+00:29:29.640 inside this, we have created two
+00:29:31.040 function. One is correctness, {comma}
+00:29:33.440 concision. Okay?
+00:29:35.920 And then,
+00:29:37.240 fourth is I will just go ahead and write
+00:29:39.240 experiment is equal to
+00:29:41.480 uh experiment {underscore} prefix. Like,
+00:29:44.120 what should be the name of the
+00:29:45.200 experiment? If See, for this particular
+00:29:47.360 data, we need to run an experiment,
+00:29:48.720 right? So, I will just go ahead and
+00:29:50.080 write this as my name. So, this will be
+00:29:52.600 nothing but OpenAI
+00:29:54.720 >> [snorts]
+00:29:54.840 >> 4o mini. Okay?
+00:29:58.200 Prefix name for my experiment. So, once
+00:30:00.240 I go ahead and execute this, now see the
+00:30:01.800 magic.
+00:30:03.000 Or I'll say, &quot;Hey, uh OpenAI 4o mini.&quot;
+00:30:06.720 I'll say, &quot;This is for my chatbot.&quot;
+00:30:09.760 And let's see whether this will run or
+00:30:11.280 not. Okay? So, as soon as I run this,
+00:30:14.120 you see this. Okay? It'll take some time
+00:30:16.800 based on all the input question. And
+00:30:18.640 here, you can see you can view the uh
+00:30:21.120 evaluation results for the experiment in
+00:30:22.800 this specific uh
+00:30:24.600 uh URL. Okay?
+00:30:26.120 Now, what I will do, please remember
+00:30:27.840 this name, OpenAI 4o mini chatbot. Okay?
+00:30:30.680 I will go back to my LangSmith
+00:30:33.320 quickly, and I will go to data sets and
+00:30:35.480 experiments. So, here, you can see
+00:30:38.280 chatbot evaluation name is there.
+00:30:40.840 Okay. Uh and here, you can see this
+00:30:42.880 concussion and correctness.
+00:30:45.200 And this is my experiment name. Right?
+00:30:47.680 So, for correctness, it is somewhere
+00:30:49.760 around 0.60. For concussion, it is
+00:30:52.320 somewhere around 0.40. Okay? And if you
+00:30:55.440 see for the examples over here,
+00:30:58.080 uh it is there. Evaluators pairwise
+00:31:00.640 experiments also there are multiple
+00:31:02.000 options over here. But, I think I will
+00:31:04.120 just go ahead and click this. Now,
+00:31:06.000 you'll be able to see your input, your
+00:31:07.960 reference output, and your output. So,
+00:31:09.920 this is the output that is Here you can
+00:31:12.360 see reference output is over here. Okay?
+00:31:15.840 This is the output that has got
+00:31:17.360 generated. Okay? And we are basically
+00:31:20.160 comparing it and based on this
+00:31:21.520 concussion and correctness, some
+00:31:23.480 information you're able to get.
+00:31:25.840 Isn't it just amazing? Now, there may be
+00:31:28.400 scenarios that you also want to use
+00:31:30.000 different different models, right?
+00:31:32.280 So, for this also you can go ahead and
+00:31:33.640 try different different models. So, here
+00:31:35.080 what I will do, I will go back to my
+00:31:36.720 code.
+00:31:37.960 And I will rebuild this specific
+00:31:39.640 function. You see, this function over
+00:31:41.800 here takes input, right?
+00:31:45.080 And here I will go ahead and call this
+00:31:46.800 function for every data points.
+00:31:48.920 I'm giving my response my input. So, in
+00:31:51.000 my my input, right? You can also go
+00:31:52.760 ahead and give your model name. So, here
+00:31:55.600 by default it was GPT-4 Mini. Let's try
+00:31:57.720 some other model. So, here I will go
+00:31:59.640 ahead and say after question, model is
+00:32:01.680 equal to
+00:32:02.840 and let's try GPT-4 Turbo.
+00:32:06.400 4
+00:32:07.920 Turbo, okay?
+00:32:09.520 And let's call this.
+00:32:11.960 Uh now my list target is done. Now, I'll
+00:32:14.000 call the same experiment.
+00:32:16.040 And this time I'll write 4
+00:32:18.800 Turbo.
+00:32:20.000 Turbo chatbot.
+00:32:21.760 Okay? And let's execute this.
+00:32:24.400 Now, this will be my second experiment
+00:32:25.720 that will get created.
+00:32:28.480 So, once I go ahead and see
+00:32:30.760 here in my chatbot evaluation, this will
+00:32:33.560 take some time. So, this is my second
+00:32:35.200 experiment. And here the accuracy is
+00:32:37.360 very good. Correctness is one.
+00:32:39.760 Okay?
+00:32:41.160 I think it is one only.
+00:32:42.920 So, it's still things are getting
+00:32:44.440 generated. It is taking some time. Yeah,
+00:32:46.760 now it is there.
+00:32:48.320 And here you can see that correctness is
+00:32:50.120 one. And based on this, the conciseness
+00:32:52.560 is less.
+00:32:53.560 Okay? Correctness, okay, it is 0.6. I
+00:32:56.320 thought it was one.
+00:32:57.600 I think it just got reduced. It got 0.6
+00:32:59.560 and 0.2. So, if you get an option
+00:33:01.560 whether I should go ahead with OpenAI 4o
+00:33:03.680 mini or OpenAI 4 turbo, right? So, guys,
+00:33:06.200 I hope you like this particular video.
+00:33:08.280 Now, what you can do is that you can
+00:33:09.800 even try with different different
+00:33:13.560 models, different GPT versions,
+00:33:15.280 specifically with respect to OpenAI.
+00:33:17.720 And you can just go ahead and see with
+00:33:18.920 respect to that particular accuracy. And
+00:33:20.240 you can also observe them in the
+00:33:21.840 LangSmith.
+00:33:23.040 But I hope you were able to understand
+00:33:24.480 this particular video. This was about
+00:33:26.080 RAG evaluation for a chatbot. Okay?
+00:33:28.720 And here all the steps that we
+00:33:30.200 specifically followed, we created data
+00:33:31.800 points.
+00:33:33.200 Uh we made LLM as a judge. We created
+00:33:35.720 multiple metrics evaluation metrics. And
+00:33:37.560 we compared multiple LLM models. Now,
+00:33:39.480 based on this, you can go ahead and
+00:33:40.640 select any of the model that you like.
+00:33:43.120 Now, what we are going to do in the next
+00:33:44.840 video, in the upcoming videos, we are
+00:33:46.440 going to see for a RAG application. Now,
+00:33:48.240 see, for RAG application, what should be
+00:33:50.440 the usual metrics?
+00:33:52.200 And how we can use LLM as a judge to
+00:33:54.360 probably go ahead and create this.
+00:33:56.400 Because see, at the end of the day, RAG,
+00:33:58.320 you have third-party data. You have
+00:34:01.160 company data. You may have internal
+00:34:02.880 data. So, for this, how we can go ahead
+00:34:05.360 and apply the evaluation metrics, that
+00:34:06.840 is what we are going to discuss in the
+00:34:08.360 next video.
+00:34:09.520 So, I hope you like this particular
+00:34:10.520 video. I will see you in the next video.
+00:34:12.080 Thank you. Take care. Hello, guys. So,
+00:34:14.159 we are going to continue our discussion
+00:34:15.600 with respect to evaluation metrics in
+00:34:17.120 this particular video. And in the
+00:34:18.399 upcoming series of videos, we are going
+00:34:19.918 to discuss about RAG evaluation.
+00:34:23.280 Now, in RAG evaluation, we are going to
+00:34:24.800 specifically talk about topics like how
+00:34:26.800 to create test data sets.
+00:34:29.080 How to run RAG app with those specific
+00:34:31.679 test data sets.
+00:34:33.320 How to measure rag performance?
+00:34:36.918 Again, by using different different
+00:34:38.520 evaluation metrics. So, all these things
+00:34:41.080 we will discuss it step by step, okay?
+00:34:43.960 And again, here we are going to use
+00:34:45.679 LangSmith. Since uh in the back end you
+00:34:48.399 will be able to see that particular
+00:34:49.560 data, you'll be able to run experiments,
+00:34:52.399 right? So, we will be specifically doing
+00:34:55.560 all these things, okay?
+00:34:57.960 So, in order to make you understand like
+00:35:01.200 how we are going to go ahead with the
+00:35:03.200 rag evaluation,
+00:35:04.920 uh there are some things and I'll I'll
+00:35:07.280 just show you a workflow to understand
+00:35:09.520 which all evaluation metrics also we
+00:35:11.280 will be discussing about, okay? So,
+00:35:13.280 let's consider this particular diagram.
+00:35:14.840 This diagram was actually given in the
+00:35:16.480 documentation of LangSmith itself, okay?
+00:35:19.840 And with respect to this particular
+00:35:20.960 documentation, here you can see that
+00:35:23.400 here is my search retriever, okay? It
+00:35:25.680 can be a document search, it can be a
+00:35:27.200 web search, or anything as such.
+00:35:29.360 So, here when we give the question
+00:35:31.560 and with respect to this particular
+00:35:32.840 search, when we get this relevant
+00:35:34.400 documents, the first important
+00:35:36.320 performance metric is that
+00:35:38.320 should we not check whether these
+00:35:40.120 documents are really relevant or not?
+00:35:42.680 Okay? Based on this particular input
+00:35:44.440 question. So, this can be one of the
+00:35:46.600 metrics.
+00:35:47.880 The other metric is that
+00:35:49.880 once we generate the output by taking
+00:35:52.480 this particular relevant documents to
+00:35:54.600 and integrating it with LLM or giving it
+00:35:57.200 to the LLM in the form of context, once
+00:35:59.280 we generate the answer, the second
+00:36:01.360 important metric is that is the answer
+00:36:03.360 grounded in the documents?
+00:36:05.240 Okay? So, we basically go ahead and find
+00:36:06.800 out groundness. We go ahead and find out
+00:36:08.960 retrieval relevance.
+00:36:11.040 The third important thing is that once
+00:36:12.480 we get the output, we try to find out
+00:36:14.920 the correctness.
+00:36:16.440 Correctness basically means does the
+00:36:17.960 answer match the ground truth answer?
+00:36:21.000 Okay?
+00:36:22.000 So, because we should also have some
+00:36:23.440 kind of ground truth, right? And with
+00:36:24.840 respect to correctness, the answer that
+00:36:26.720 is generated, is it similar to the
+00:36:28.360 ground truth answer or not? Okay.
+00:36:31.000 One more very important thing is that
+00:36:32.600 with respect to the answer relevance,
+00:36:34.440 does the answer addresses the question?
+00:36:37.360 So, here are some few
+00:36:39.480 metrics that you should be able to see
+00:36:41.640 based on which you can actually go ahead
+00:36:44.040 and run a evaluation metrics on top of a
+00:36:46.320 rag to check the performance of the rag
+00:36:48.440 itself. Because accuracy is the main key
+00:36:50.840 thing.
+00:36:52.040 But, if I just consider by seeing this
+00:36:54.640 particular flow, there can be four
+00:36:56.800 amazing metrics that we can go ahead and
+00:36:58.520 implement it. And we'll do it step by
+00:37:00.120 step as we go ahead.
+00:37:01.800 But, this we'll still discuss and we'll
+00:37:03.800 we'll we'll implement each and
+00:37:05.360 everything step by step, okay?
+00:37:07.800 Now, how we are going to go ahead and do
+00:37:09.800 the rag evaluation? So, first of all,
+00:37:11.240 what we will do, the first step, the
+00:37:13.120 first and the most important step is
+00:37:14.760 that. So, here what all steps we are
+00:37:16.520 going to follow?
+00:37:18.320 The first step is that we will go ahead
+00:37:20.960 and create a rag.
+00:37:22.360 Okay, retrieval augmented generation,
+00:37:24.080 where there should be a retrieval, there
+00:37:25.520 should be some data set. So, when I say
+00:37:27.520 rag, there
+00:37:29.040 we will follow this entire cycle. We
+00:37:30.680 will go from data ingestion
+00:37:33.200 to
+00:37:34.800 creating retrieval
+00:37:37.200 and then we will also be creating this
+00:37:39.360 generation.
+00:37:40.840 Now, after doing this
+00:37:43.200 inside this retrieval, you know that we
+00:37:45.080 will be putting some kind of document.
+00:37:46.400 Now, based on that document, we will the
+00:37:48.680 second step will be that we will go
+00:37:49.960 ahead and create our
+00:37:51.440 test data.
+00:37:53.280 And here also the test data will be
+00:37:54.760 created in such a way that
+00:37:56.560 we will be able to see that based on a
+00:37:58.200 specific answer, what is the Oh, sorry.
+00:38:00.520 Based on a specific question
+00:38:03.000 based on a specific question, what is
+00:38:05.560 the answer?
+00:38:07.040 Okay, what is the answer? So, this
+00:38:09.000 answer will be our ground truth, okay?
+00:38:12.640 And then third
+00:38:14.400 the most important thing
+00:38:16.120 we will go ahead and create different
+00:38:18.080 evaluation metrics.
+00:38:20.360 This evaluation metrics will be based on
+00:38:23.000 this.
+00:38:24.000 Will be based on all these things that
+00:38:25.680 we discussed. 1 2 3 4.
+00:38:28.200 And here, if you really want to
+00:38:30.200 implement all these things, we will
+00:38:31.560 again consider LLM
+00:38:33.640 as a judge. Because LLM are really good.
+00:38:37.640 They are improving day by day. You have
+00:38:39.840 such a powerful models, then why not use
+00:38:41.880 LLM as a judge in order to find all this
+00:38:45.120 or in our order to implement all these
+00:38:46.680 evaluation metrics.
+00:38:48.720 So, we'll go step by step. So, first of
+00:38:50.400 all, in this particular video, let's go
+00:38:52.560 ahead and finish this step, okay? Where
+00:38:55.080 we'll create a DAG, where we have data
+00:38:57.000 ingestion, retrieval, and generation.
+00:38:59.560 This step must be easy now for you all,
+00:39:02.480 because we have implemented it many
+00:39:03.960 number of times, okay? Many, many number
+00:39:06.200 of times. So, quickly, uh
+00:39:09.000 let's see this, okay?
+00:39:10.680 Here, what we are going to basically do
+00:39:12.360 is that I'll be taking three important
+00:39:15.480 blogs article, okay?
+00:39:17.560 And I will try to create this particular
+00:39:19.520 rags. So, first of all, we will go ahead
+00:39:21.200 and create a rag.
+00:39:22.600 So, for rag, you'll be able to see that
+00:39:25.040 I'm using web based loader. We have in
+00:39:27.040 memory vector store, OpenAI embeddings,
+00:39:28.960 recursive character text splitter. I've
+00:39:31.000 used LangChain
+00:39:32.160 OpenAI.
+00:39:33.440 And this time we have used in memory
+00:39:34.600 vector store, okay? So, these are my
+00:39:36.160 list of URLs. So, blogs URL, you can see
+00:39:40.280 related to agent, prompt engineering,
+00:39:42.440 adversarial attack LLM. This was
+00:39:44.440 available even in the documentation. So,
+00:39:46.600 I thought of giving this particular
+00:39:48.040 example. You can go ahead and apply with
+00:39:50.240 any number of examples that you like.
+00:39:52.320 Then, we load all the documents from the
+00:39:55.240 URL, okay? We get all the documents. We
+00:39:57.760 initialize the text splitter.
+00:39:59.680 Then, we have recursive character text
+00:40:01.120 splitter.
+00:40:02.080 Then, once we do this, we split the
+00:40:03.760 specific documents. We get the vector
+00:40:05.840 store, and we finally get the retriever.
+00:40:07.640 So, this is my retriever.
+00:40:09.600 So, the rag part that you will be able
+00:40:12.720 to see, we are able to implement this,
+00:40:15.040 okay?
+00:40:15.840 So, this will take some time to execute,
+00:40:17.440 because there are so many content over
+00:40:18.760 here, but I think it should be. Now,
+00:40:20.680 with respect to retriever, I can just go
+00:40:22.200 ahead and use this and write dot invoke.
+00:40:24.520 If I ask a question, what is agents? I
+00:40:27.560 should be able to see the answer. Okay.
+00:40:29.760 So, I'm getting all this particular
+00:40:31.040 context. Okay.
+00:40:33.080 Now,
+00:40:34.440 this is done. So, here you can see I've
+00:40:36.640 also got this LangSmith rate limit
+00:40:39.400 exceeded because we have limited number
+00:40:42.400 of requests that we can do for
+00:40:44.040 LangSmith, but it's okay.
+00:40:45.600 Uh we'll try to do this. Okay.
+00:40:48.120 Now, the next thing is that what we are
+00:40:49.880 going to do is we are going to define
+00:40:52.720 the
+00:40:54.080 generative pipeline. Okay. Because we
+00:40:56.080 need to go ahead and generate it. So,
+00:40:57.840 for this, what I will do, already you
+00:40:59.840 know I have my LLM. So, this is uh my
+00:41:02.920 LLM was not defined. Let's see. On the
+00:41:05.360 top somewhere I should have defined LLM.
+00:41:08.280 Okay.
+00:41:09.560 Uh here it is.
+00:41:13.320 Oh, wee.
+00:41:15.480 Uh let's see where is the Okay, LLM is
+00:41:17.360 not defined. No worries. I will go ahead
+00:41:18.920 and define it again. Okay. So, first of
+00:41:21.000 all, I will go ahead and write import
+00:41:22.440 OS.
+00:41:23.880 And with respect to OS, I will
+00:41:27.000 Okay. I already have loaded the
+00:41:29.800 environment variable, right? So, I will
+00:41:31.600 say init.
+00:41:33.320 So, let me go ahead and write from
+00:41:35.320 LangChain
+00:41:36.720 under LangChain
+00:41:40.520 dot chat_models, we are going to
+00:41:42.920 specifically use chat_models import
+00:41:45.960 init model, init chat model. And here we
+00:41:48.280 are going to
+00:41:49.320 go ahead and use
+00:41:51.720 init chat model.
+00:41:53.440 And specifically, we are going to use
+00:41:54.960 the model like OpenAI
+00:41:57.840 GPT
+00:41:59.280 4o mini. Okay, let's use the specific
+00:42:02.840 And this is what is my LLM looks like.
+00:42:04.760 Okay.
+00:42:05.720 Now, once I have this LLM model over
+00:42:07.560 here, okay, it looks good. Now, what I'm
+00:42:10.200 actually going to do is that I will go
+00:42:12.160 ahead and create that rag part. See, rag
+00:42:16.080 part I have the retriever, right? But I
+00:42:18.560 also need to have
+00:42:20.840 the
+00:42:22.000 the generation part, right? So, I will
+00:42:23.880 first of all import from LangSmith
+00:42:27.360 LangSmith import retrieve import
+00:42:30.840 for LangSmith import
+00:42:33.800 traceable, okay? Once we are using this
+00:42:36.240 traceable, that basically means I also
+00:42:38.160 want to trace everything of this in the
+00:42:40.200 LangSmith itself, okay?
+00:42:42.160 So, for this I will go ahead and add
+00:42:44.760 this decorator. So, on any function that
+00:42:47.120 you add this decorator, the tracing will
+00:42:48.880 automatically start. So, here I can go
+00:42:50.920 ahead and write traceable.
+00:42:52.640 And here I will go ahead and write
+00:42:53.920 definition rag underscore bot. So, this
+00:42:56.320 will basically be my bot. And here I
+00:42:58.920 will go ahead and write my question
+00:43:01.240 as str, okay?
+00:43:03.120 So, here we specifically give a question
+00:43:05.080 and in return we get a dictionary.
+00:43:07.880 Okay? Now, rag underscore bot should be
+00:43:09.880 very very simple. What it should happen
+00:43:12.240 I should be using this retriever dot
+00:43:15.480 invoke.
+00:43:16.680 I should be giving the question over
+00:43:18.040 here. So, the once I give this question
+00:43:20.880 based on this I will be getting the
+00:43:22.800 relevant context. So, here you can see
+00:43:25.080 that I will be getting the
+00:43:26.800 relevant context. So, first of all I
+00:43:28.920 really want to go ahead and define my
+00:43:30.200 entire rag itself.
+00:43:31.800 So, this rag underscore bot will be my
+00:43:33.280 generation part, right?
+00:43:35.480 Then what we'll do
+00:43:37.280 we will go ahead and use a docstring and
+00:43:39.240 we'll combine all the documents that we
+00:43:41.160 have, right? So, here you can see I have
+00:43:43.600 already done like
+00:43:45.600 this empty space dot join
+00:43:48.120 with respect to all the page content
+00:43:49.760 from all the documents that I'm getting.
+00:43:51.840 Now, the next thing is that we will go
+00:43:53.720 ahead and create a prompt.
+00:43:56.280 Because at the end of the day inside
+00:43:57.640 this prompt only we'll give this
+00:43:58.720 documents, right? So, you are a helpful
+00:44:00.560 assistant who's good at analyzing source
+00:44:02.200 information and answering the question.
+00:44:03.480 Use the following so and so. Use three
+00:44:05.560 sentences maximum. Keep the answer
+00:44:07.080 concise. And this is what is my document
+00:44:09.200 string.
+00:44:10.120 Okay? Document string means what is the
+00:44:12.000 relevant context that we are getting,
+00:44:13.840 right? And then finally, we will go
+00:44:16.400 ahead and use LLM.
+00:44:18.840 LLM invoke over here. Okay? So, let me
+00:44:21.760 quickly go ahead and write LLM.invoke.
+00:44:24.800 And here, we are going to specifically
+00:44:26.760 give based on our roles that we have
+00:44:28.960 decided, right? So, roles, instruction,
+00:44:31.880 and all the information is over here.
+00:44:34.200 Okay? So, here you can see that. I've
+00:44:36.000 given role, system user, instructions,
+00:44:38.680 question content is equal to question.
+00:44:40.160 Okay? So, here you can basically see
+00:44:42.120 based on this whatever instruction is
+00:44:43.640 there, whatever question is basically
+00:44:45.080 coming in, we are getting the invoke
+00:44:46.600 statement. We are doing it. And this
+00:44:48.440 becomes my AI {underscore} message or
+00:44:50.040 response. Okay?
+00:44:51.560 And we are going to go ahead and return
+00:44:54.000 this.
+00:44:55.640 Return this
+00:44:57.280 as answer.
+00:45:00.040 Answer colon AI
+00:45:02.880 {underscore} message. dot
+00:45:05.480 content.
+00:45:07.320 Content. Okay?
+00:45:08.920 And then we also going to go ahead and
+00:45:10.360 give out documents. Whatever documents
+00:45:12.160 were there.
+00:45:13.080 Right? Which is our relevant documents
+00:45:15.000 itself. I mean, retrieve documents. So,
+00:45:17.280 this becomes my generation function.
+00:45:19.600 Very simple. Right? So, I have created
+00:45:21.920 this as
+00:45:24.200 Very important, we had created this
+00:45:25.800 entire rag. Now, what we can actually
+00:45:28.480 do, this rag bot can basically go ahead
+00:45:30.760 and answer with respect to any question
+00:45:32.360 that we specifically ask. And
+00:45:34.160 automatically, we should be able to get
+00:45:36.000 the AI message.content and answer. So,
+00:45:38.120 let's say if I go ahead and ask
+00:45:40.360 over here.
+00:45:41.720 Uh AI, sorry. I'll go ahead and just
+00:45:44.040 call this particular function.
+00:45:45.840 Rag bot with the question.
+00:45:47.800 So, here if I go ahead and ask, what is
+00:45:50.360 agents?
+00:45:52.840 Okay? Then I should be able to get the
+00:45:54.600 answer over here with the message
+00:45:56.400 content and documents with respect to
+00:45:58.240 the other. So, agent refers to
+00:45:59.360 autonomous entity particular in this and
+00:46:01.160 this answer is there. And this is my
+00:46:02.880 entire context with respect to the
+00:46:04.240 documents. Okay?
+00:46:06.200 Now,
+00:46:07.440 you know that we have used this three
+00:46:10.400 important article as our retrieval.
+00:46:12.120 Okay? So, here if you go ahead and see,
+00:46:14.400 we have created this entire rag from
+00:46:16.120 data injection to retrieval to
+00:46:17.280 generation. Now, it's time that we go
+00:46:19.080 ahead and create a test data for
+00:46:20.800 question answering. Okay? So, in order
+00:46:23.360 to create the test data, so let's go
+00:46:24.920 ahead and create our data set.
+00:46:27.120 And we'll make sure that this data set
+00:46:29.200 will be available in the
+00:46:31.520 um you know, we we go ahead and import
+00:46:33.520 this directly in the LangSmith. Okay?
+00:46:35.520 So, for creating this particular data
+00:46:36.840 set again, we will go ahead and write
+00:46:38.560 from LangSmith import client.
+00:46:42.400 Okay? Client We will go ahead and
+00:46:44.760 initialize our client is equal to c l i
+00:46:46.840 e n t client. Okay? And then first of
+00:46:49.440 all, we will go ahead and create our
+00:46:52.080 examples of the data set, where I'll be
+00:46:54.200 having the inputs and outputs. See? So,
+00:46:56.840 input question is all How does the agent
+00:46:59.000 react using this self-reflection? This
+00:47:00.880 is the answer. So, this is my ground
+00:47:02.760 truth. Okay? Ground truth. Okay? With
+00:47:05.360 respect to the inputs and outputs. So,
+00:47:06.600 this is how you should basically go
+00:47:07.880 ahead and uh uh
+00:47:09.400 keep it, right? So, here inside you have
+00:47:11.040 your questions and answers also. Okay?
+00:47:13.680 Now, I will go ahead and create
+00:47:17.000 the data set
+00:47:19.960 data set
+00:47:22.000 and examples in
+00:47:23.640 LangSmith. Okay?
+00:47:25.560 LangSmith. Now, how do you do that? If
+00:47:27.240 you remember previously, I will just go
+00:47:29.920 ahead and write something like this.
+00:47:33.320 Okay? So, here you can see, data set
+00:47:35.680 client.create_dataset.
+00:47:37.280 I will just go ahead and use the data
+00:47:38.600 set name. So, let me go ahead and write
+00:47:40.920 a rag test evaluation. Okay? So, this is
+00:47:45.360 my data set. And this is based on the
+00:47:48.040 data that I have, right? My ex- my
+00:47:50.400 external data from that blog. So, based
+00:47:52.320 on this I created this three input data
+00:47:54.080 itself. And we'll try to test on basis
+00:47:56.200 of this. This output is my ground truth,
+00:47:59.760 right? When the LLM generates an output,
+00:48:01.320 we'll compare with this output. Okay?
+00:48:03.600 So, once we do this and once we execute
+00:48:05.640 it,
+00:48:06.840 so here you'll be able to see that this
+00:48:08.160 data has got created. So, let's see in
+00:48:10.360 our LangChain whether that data will be
+00:48:12.560 available or not. So, if I go back to
+00:48:14.120 data and experiments,
+00:48:15.640 so
+00:48:17.040 where is it? Uh Uh RAG test evaluation,
+00:48:20.480 see? Three records may be there over
+00:48:22.280 here. Okay? So, how does react is there?
+00:48:25.600 How does react uh this question is
+00:48:27.440 there? Agent uses self-reflection and
+00:48:29.000 this is the answer. So, I have all my
+00:48:31.000 data sets, right?
+00:48:32.720 Now, it's time
+00:48:34.600 that we start working on our evaluators.
+00:48:38.840 See, this step is very simple. Whatever
+00:48:41.000 we have done the couple of steps.
+00:48:43.400 Now, we have to go ahead and start
+00:48:45.760 creating our evaluators.
+00:48:47.680 Now, evaluators are something really
+00:48:49.720 important. We are going to go ahead and
+00:48:52.200 use four different evaluators. Okay?
+00:48:55.080 So, for this I will just go ahead and
+00:48:56.760 write some
+00:48:58.000 comments also for you. Okay?
+00:49:00.480 So, it's okay. In the next video I will
+00:49:02.840 show you. Before that, I will just go
+00:49:04.320 ahead and write it down. So, here I will
+00:49:06.400 say that from the next video, we're
+00:49:08.920 going to go ahead and work with the
+00:49:10.560 evaluators.
+00:49:12.440 Okay? Evaluators or metrics. Like what
+00:49:15.280 all metrics we have to specifically work
+00:49:16.920 on.
+00:49:18.120 So, here quickly you could see that from
+00:49:20.280 this particular diagram, we implemented
+00:49:23.080 the first step, second step. Now, the
+00:49:25.480 third step is that we will go ahead and
+00:49:27.400 create all these evaluation metrics,
+00:49:28.880 four evaluation metrics, 1 2 3 4, one by
+00:49:32.560 one. Okay? And then we will start
+00:49:34.560 working on it. So, I hope you like this
+00:49:36.640 particular video. This was it from my
+00:49:38.360 side. I'll see you all in the next video
+00:49:39.760 where we talk more about evaluation
+00:49:41.240 metrics and I'll show you how we can use
+00:49:43.120 LLM as a judge. Okay? So, yeah. I'll see
+00:49:45.480 you all in the next video. Thank you.
+00:49:47.160 Hello guys. So, we are going to continue
+00:49:48.640 the discussion with respect to
+00:49:49.920 evaluation metrics. The first evaluation
+00:49:52.360 metrics that we are going to discuss
+00:49:53.920 about is correctness.
+00:49:55.920 That is nothing but response versus res-
+00:49:58.280 reference answer.
+00:50:00.400 Now, already in our previous video, we
+00:50:02.120 have done these two steps, right?
+00:50:04.000 Creation of rag and also creation of the
+00:50:06.440 test data.
+00:50:07.760 And we inserted even in the LangSmith.
+00:50:10.400 Now, we have to go ahead and design
+00:50:11.960 evaluation metrics. Which all evaluation
+00:50:14.200 evaluation common metrics we can discuss
+00:50:17.080 with respect to rag are four, okay?
+00:50:19.480 So, here is the entire diagram.
+00:50:21.600 The first evaluation metrics we will go
+00:50:23.120 ahead and discuss about correctness.
+00:50:24.840 Now, what does correctness basically
+00:50:26.200 mean?
+00:50:27.280 Since you know that we already have the
+00:50:29.040 ground truth answer available in the
+00:50:31.400 LangSmith, right? For every question
+00:50:33.680 that we specifically ask or with respect
+00:50:36.160 to the question that we have designed.
+00:50:38.200 Right?
+00:50:39.360 So, that actually becomes our ground
+00:50:41.480 truth answer. And correctness basically
+00:50:43.560 means that
+00:50:44.880 whatever LLM is generating, we are going
+00:50:46.760 to compare that with our ground truth
+00:50:49.040 answer.
+00:50:50.040 That is the reason we have written
+00:50:51.480 something called as response versus
+00:50:53.560 reference answer. Response basically
+00:50:55.440 means
+00:50:56.240 it has been generated by the LLM. And
+00:50:58.360 reference answer is actually your ground
+00:51:00.640 truth value.
+00:51:02.040 So, here the goal is measure how similar
+00:51:04.640 or correct is the rag chain answer
+00:51:07.520 relative to a ground truth answer. Mode,
+00:51:10.000 it requires a ground truth reference
+00:51:11.800 answer supplied through a data set.
+00:51:13.920 Evaluator, here we are going to use LLM
+00:51:16.040 as a judge to assess answer correctness.
+00:51:18.920 That basically means LLM will make sure
+00:51:20.640 to compare the ground truth answer and
+00:51:23.360 the reference answer. Sorry, and the
+00:51:24.720 response answer.
+00:51:26.400 So, we'll go ahead and implement this.
+00:51:27.880 Already in our previous video, we have
+00:51:29.680 done all these things. So, let's go
+00:51:31.160 ahead and do this. So, for this, I will
+00:51:33.240 go ahead and write for typing
+00:51:34.560 {underscore} extension.
+00:51:36.680 First of all, I'm going to go ahead and
+00:51:37.920 import annotated
+00:51:39.840 {comma} type dict, okay? So, why we are
+00:51:42.040 doing this? Because we actually require
+00:51:43.960 this.
+00:51:44.960 Now, the first thing what we are going
+00:51:46.680 to do is that
+00:51:48.760 uh
+00:51:50.120 See, when LLM is basically comparing the
+00:51:52.240 ground truth answer and the response, it
+00:51:53.960 needs to provide you the output in some
+00:51:56.400 specific format, right? So, for that,
+00:51:59.480 what we will do, we will go ahead and
+00:52:01.120 write, okay, this will be my correctness
+00:52:04.080 output schema. Okay, so this is how my
+00:52:06.600 output is going to come. Okay?
+00:52:09.120 Now, how the output will going to come?
+00:52:10.640 I will go ahead and define class, and
+00:52:12.920 I'll write
+00:52:14.000 class correct correctness grade. Okay,
+00:52:17.520 so this will basically be my class. It
+00:52:19.720 will be of type date. So, my LLM should
+00:52:22.720 provide a response based on the specific
+00:52:25.040 class. Okay?
+00:52:26.440 Now, in this, we will define two
+00:52:27.920 different variables. One is explanation.
+00:52:30.800 This explanation is nothing but it will
+00:52:32.480 be an annotated type.
+00:52:34.360 Here, I'm going to go ahead and write
+00:52:35.880 string.
+00:52:37.000 Along with that, I will also go ahead
+00:52:38.480 and provide some description. I'll say
+00:52:40.160 explain
+00:52:41.520 your reasoning
+00:52:44.200 for the score that you generate by
+00:52:47.320 comparing. Okay? So, this basically
+00:52:49.440 becomes my description. Second, I'll say
+00:52:52.160 I'll also define a variable called as
+00:52:53.600 correct, which will also be a type of
+00:52:55.760 annotated. It will be a Boolean
+00:52:57.760 variable, and here, we'll say true
+00:53:01.400 if the answer is correct
+00:53:05.640 or false otherwise. Okay?
+00:53:08.720 False otherwise. So, this two, we are
+00:53:11.680 going and defining it, right?
+00:53:13.480 Now,
+00:53:15.000 the next thing is that we will go ahead
+00:53:16.520 and write the correctness prompt.
+00:53:18.760 So, what specific prompt we will be
+00:53:20.360 using? We will basically go ahead and
+00:53:22.080 write correctness prompt. So, for this,
+00:53:24.600 we will go ahead and create a prompt.
+00:53:26.240 The prompt looks something like this.
+00:53:28.360 Okay? Because this prompt will be used
+00:53:30.080 by the LLM. See, I'm saying that you're
+00:53:32.320 a teacher grading a quiz. You will be
+00:53:34.240 given an answer, you'll be given a
+00:53:36.120 question, the ground truth, and the
+00:53:37.920 answer. So, these three things will be
+00:53:39.760 given, and the student answer will be
+00:53:41.520 given. When we say student answer, that
+00:53:43.040 basically means we are considering it as
+00:53:44.440 a LLM answer.
+00:53:45.920 Here is the great criteria to follow.
+00:53:47.680 Grade the student answer based on only
+00:53:49.840 the factual accuracy relative to the
+00:53:51.680 ground truth answer.
+00:53:53.280 Ensure that student does not contain any
+00:53:55.520 conflicting statements. It's okay if the
+00:53:58.160 student answer contains more information
+00:53:59.920 than the ground truth as long as
+00:54:02.760 as long as it is accurate, okay?
+00:54:04.960 Correctness, so this will be the score.
+00:54:06.720 A correctness value of true means
+00:54:08.120 student answer meet all the criteria.
+00:54:10.200 False means it does not meet all the
+00:54:11.720 criteria. Explain your reasoning in
+00:54:13.600 step-by-step manner. All this
+00:54:14.760 information I've given it over here,
+00:54:16.400 okay?
+00:54:17.320 Now it's time that we go ahead and
+00:54:19.160 create our LLM, right? So now my LLM I
+00:54:22.640 will use a init chat model. So let's say
+00:54:25.120 over here my model name will be nothing
+00:54:27.080 but
+00:54:27.920 OpenAI
+00:54:29.600 or instead of using this, what I'll do
+00:54:31.880 since I'm going to also go ahead and use
+00:54:34.200 this.
+00:54:35.080 So I will go ahead and import from
+00:54:37.760 LangChain
+00:54:39.600 under score
+00:54:40.840 OpenAI
+00:54:42.280 im or LangChain under score
+00:54:45.680 uh OpenAI
+00:54:47.480 import
+00:54:48.880 chat OpenAI. Let's go ahead and use chat
+00:54:51.960 OpenAI instead of init OpenAI because
+00:54:54.560 here I will try to give my structured
+00:54:56.240 output, okay? So here I will be using
+00:54:58.640 OpenAI model.
+00:55:00.320 So my model name will be nothing but
+00:55:02.320 here I will go ahead and say model is
+00:55:04.320 equal to
+00:55:05.520 GPT-4o-mini
+00:55:08.640 okay? And then you'll be able to see
+00:55:11.040 that I will also give my temperature
+00:55:12.480 value. Let's say okay, let's go ahead
+00:55:14.160 and set up some temperature value.
+00:55:16.840 Temperature value is equal to zero,
+00:55:18.360 okay? And then this I will go ahead and
+00:55:21.080 write with structured output. Which
+00:55:23.720 structured output? Because LLM needs to
+00:55:25.440 provide the based on the output based on
+00:55:27.320 this particular class.
+00:55:28.720 That is correctness grade, okay?
+00:55:31.400 And then uh we will also make sure to
+00:55:33.640 provide the response in the form of
+00:55:35.760 schema. So here I will go ahead and
+00:55:37.760 write comma
+00:55:39.200 method is equal to
+00:55:41.560 and let's go ahead and select this as
+00:55:43.800 JSON {underscore} schema. Okay?
+00:55:47.240 And here we are going to make it strict
+00:55:49.400 is equal to true.
+00:55:50.560 So, I'm just saying that follow this
+00:55:52.840 specific structured output only. Okay?
+00:55:55.480 So, these are the parameters that we are
+00:55:56.840 specifically using in order to create
+00:55:58.400 the LLM.
+00:55:59.640 Now, the next step is that we will go
+00:56:01.640 ahead and define our correctness
+00:56:04.200 response, right? The how the evaluator
+00:56:06.120 will be.
+00:56:07.160 So, here I will go ahead and define a
+00:56:08.520 function.
+00:56:09.720 So, here you can see that let me change
+00:56:12.360 it to greater {underscore} LLM.
+00:56:14.680 So, here you can see in the correctness
+00:56:16.360 function, it is a independent function
+00:56:18.640 because this function is nothing but my
+00:56:20.240 evaluator. It takes the input, output,
+00:56:22.760 reference output in the form of
+00:56:24.000 dictionary and gives you a boolean
+00:56:25.240 value. So, here you can see I have given
+00:56:28.040 this particular answer.
+00:56:29.840 Question First of all, see this is how
+00:56:31.720 we are going to give the entire context
+00:56:33.400 to my LLM. So, question will be here,
+00:56:35.600 input of question, ground truth will be
+00:56:37.280 here, reference output of answer,
+00:56:38.920 student answer will be the output of
+00:56:40.400 answer, right? And then we are using
+00:56:41.960 this greater {underscore} LLM to invoke
+00:56:43.760 all the specific things based on
+00:56:45.280 correctness instruction. Correctness
+00:56:46.920 instruction is nothing but the prompt
+00:56:49.000 that we are giving to the LLM. And this
+00:56:50.880 is my user
+00:56:52.360 answer. User answer basically means this
+00:56:54.120 will be my LLM answer, right? And then
+00:56:56.480 finally we return grade of correct
+00:56:58.160 whether it is true or false.
+00:56:59.960 So, this becomes my correctness
+00:57:02.840 grade. Okay?
+00:57:04.200 So, this is what we have defined for
+00:57:06.200 this. Okay? So, this You can see
+00:57:08.400 correctness, right?
+00:57:09.920 Now, the second thing is that we can
+00:57:11.400 also go ahead and see the relevance
+00:57:13.080 part. Answer relevance. Does the answer
+00:57:14.960 address the question? Okay? It can be
+00:57:17.120 input versus output. So, if we are able
+00:57:20.080 to create this, the next step will be
+00:57:21.920 that
+00:57:23.080 after this evaluator we'll just go ahead
+00:57:24.560 and execute it.
+00:57:25.920 The next evaluator that we are going to
+00:57:27.560 go ahead and create is
+00:57:29.240 relevance versus response input. Okay?
+00:57:32.360 So, here I will just go ahead and give a
+00:57:34.040 marker for you.
+00:57:35.680 Now it's very easy for you because you
+00:57:37.760 know how to basically go ahead and do
+00:57:39.680 correctness. If you know this, it's all
+00:57:41.680 about playing with LLM and prompt, okay?
+00:57:44.720 So here you got relevance response
+00:57:46.680 versus input. This time we are going to
+00:57:48.800 check response versus input. The flow is
+00:57:50.720 similar to above, but we look at the
+00:57:52.400 input and output without needing the
+00:57:54.200 reference output.
+00:57:55.800 Without a reference answer, we can't
+00:57:57.280 grade accuracy, but still grade
+00:57:59.680 relevance. So here we are trying to find
+00:58:01.680 out the relevance. So for relevance,
+00:58:03.520 again I will create a separate class,
+00:58:05.400 separate function, and separate
+00:58:06.760 evaluator. See something like this. So
+00:58:08.800 this will be my relevance grade,
+00:58:10.440 explanation and relevant. These are my
+00:58:12.640 information. This is my prompt, okay?
+00:58:15.760 Then this is my relevance LLM, okay,
+00:58:18.720 with structured output method, JSON
+00:58:20.240 schema, everything. And here inside this
+00:58:22.360 you'll be able to see that we are going
+00:58:23.600 to go ahead and do this. Here we are
+00:58:25.440 just comparing input and the output.
+00:58:27.840 This output is basically generated by
+00:58:29.400 the LLM. This input is given by us. And
+00:58:31.800 here you can see a prompt. You are a
+00:58:33.040 teacher grading a quiz. You'll be given
+00:58:34.880 a question and a student answer. Ensure
+00:58:36.920 the student answer concise and relevant
+00:58:38.400 to the question. Ensure the student
+00:58:39.960 answer helps to answer the question. And
+00:58:41.760 relevance value of true means the
+00:58:42.960 student answer met all the criteria.
+00:58:45.400 Here it does not meet all the criteria
+00:58:46.920 if it is false. Explain your reasoning
+00:58:48.920 step by step, all this information.
+00:58:50.400 Finally we get the grade of relevant
+00:58:52.520 values, okay? So this becomes my second
+00:58:55.480 important metric.
+00:58:57.200 That is nothing but relevance. This is
+00:58:58.920 my first evaluation metric that is
+00:59:00.760 nothing but correctness. So this is also
+00:59:02.840 a evaluator.
+00:59:04.880 Okay?
+00:59:05.880 Evaluator metric.
+00:59:08.400 Evalu a evalu of
+00:59:12.720 evalu wait. Okay. Perfect.
+00:59:16.760 Now once this is done uh with respect to
+00:59:18.680 relevance, now again let's go back to
+00:59:20.480 the diagram. Relevance is done. Now we
+00:59:23.280 will also focus on groundness, right? So
+00:59:25.680 groundness is that is the answer
+00:59:27.440 grounded in the document. Okay? Is the
+00:59:30.000 answer grounded in the document? That
+00:59:31.480 basically means this we are going to
+00:59:33.760 compare between response versus retrieve
+00:59:36.880 documents. Okay? Whatever answer is
+00:59:39.120 there, we are going to compare with the
+00:59:40.240 retrieve documents. Okay? So, for this I
+00:59:42.800 will again go ahead and write one
+00:59:44.680 statement for you. You can just go ahead
+00:59:46.320 and observe this now. Since we have
+00:59:48.120 discussed so many things of this, I
+00:59:50.320 think it'll be easy for you to just go
+00:59:52.240 ahead and
+00:59:53.040 So, here we are generate seeing the
+00:59:54.560 response versus the retrieve documents.
+00:59:56.360 We're comparing it with the retriever
+00:59:57.840 output. Okay? So, here again I have
+01:00:00.800 created a class of grounded data.
+01:00:02.760 Grounded instruction is like this. This
+01:00:04.440 is the prompt. Okay? Here is a grade
+01:00:06.600 criteria to follow. Ensure the student
+01:00:08.280 answer is in the facts.
+01:00:10.120 Ensure the student does not contain
+01:00:11.520 hallucinated information outside the
+01:00:13.080 scope of facts. All these things. Then
+01:00:15.280 grounded LLM is there.
+01:00:17.760 Which structured output everything is
+01:00:19.360 over here. And then you can see this is
+01:00:21.400 my another evaluator which is called as
+01:00:23.000 groundness. The same thing. We're taking
+01:00:25.000 in the retriever content and we are
+01:00:27.280 comparing it with the
+01:00:29.560 with the generated response. Okay? So,
+01:00:32.160 this becomes my third evaluator.
+01:00:34.360 Finally, the fourth evaluator if you see
+01:00:35.960 in the diagram,
+01:00:37.520 that is nothing but retrieval relevance.
+01:00:39.960 That is retrieve documents versus the
+01:00:42.080 input. Okay? Whatever input is there
+01:00:44.480 versus the
+01:00:45.920 retrieve documents from this. So, for
+01:00:48.040 that I will just go ahead and mark
+01:00:49.920 another one.
+01:00:51.120 I'll write
+01:00:52.440 retrieval
+01:00:54.080 relevance.
+01:00:56.640 Uh retrieve
+01:00:58.600 docs versus input.
+01:01:01.520 And now I think you can do this, guys.
+01:01:04.080 Just go and see the code. Just see the
+01:01:06.320 prompt. Right? This is my greater LLM.
+01:01:08.600 Again, I've created another LLMs with
+01:01:10.880 respect to this retrieval relevance. And
+01:01:13.080 then we have created this. Okay?
+01:01:15.760 So, here I'm getting this. So, here also
+01:01:18.040 you can see the prompt. You are a
+01:01:19.120 teaching grading. You'll be given a
+01:01:20.760 question and set of facts provided by
+01:01:22.320 student. Your goal is to identify facts
+01:01:24.480 that are completely unrelated to the
+01:01:25.960 question and this is what is the prompt.
+01:01:29.120 It's all about since you're using LLM as
+01:01:31.560 a judge.
+01:01:32.640 So you can actually do this. Now finally
+01:01:35.160 you
+01:01:36.320 run the
+01:01:37.680 evaluation. Okay?
+01:01:41.920 Uh run the evaluation over here.
+01:01:47.200 Okay. Now for running the evaluation
+01:01:50.400 it's very simple. I'll create a function
+01:01:53.560 called as target rag bots of input of
+01:01:56.160 questions and here is my experimental
+01:01:57.920 results. I give my target data set name
+01:02:01.120 target if you see what is target.
+01:02:04.880 What is target? Let's see.
+01:02:07.880 Target is the specific function, right?
+01:02:10.240 Here we are giving the inputs over here
+01:02:12.560 and here is my data set name and this is
+01:02:15.280 the most important thing. What all
+01:02:16.400 evaluators we are using. So I have
+01:02:17.960 created all custom correctness,
+01:02:19.280 groundness, relevance and retrieval
+01:02:21.840 I created rag doctor relevance over
+01:02:23.680 here. Version I've given some LCL
+01:02:26.520 context. Let's say GPT-4 0
+01:02:29.920 0.125
+01:02:31.440 preview we have done it. And now if you
+01:02:33.920 also want to display it here also you
+01:02:35.320 can go ahead and display it. Okay, two
+01:02:37.000 pandas.
+01:02:38.080 So now let's go ahead and execute this.
+01:02:39.600 I think we should be Now this will get
+01:02:41.840 executed. If pandas is not there then I
+01:02:44.320 have to install pandas. I think pandas
+01:02:46.320 is not there.
+01:02:47.800 Um invalid schema.
+01:02:50.480 Incorrectness grade. Let's see what is
+01:02:52.480 that.
+01:02:54.880 Correctness correctness.
+01:02:57.080 Uh correctness correctness.
+01:03:05.760 Invalid schema. Okay.
+01:03:08.320 Okay okay okay I made one mistake
+01:03:10.240 because this we need to
+01:03:12.080 provide a parameter with descriptions.
+01:03:14.240 Okay? So true if that this this we have
+01:03:17.000 to keep it as empty because this comes
+01:03:18.400 at the last, okay?
+01:03:20.040 And once we go ahead and execute, now I
+01:03:22.680 think it should work.
+01:03:24.400 Now, let's execute this evaluation
+01:03:25.960 again. So, guys, finally, let's go ahead
+01:03:28.600 and run the evaluation now.
+01:03:31.280 You can see over here I've kept up all
+01:03:33.080 the evaluator metrics, which we have
+01:03:34.880 actually created in a custom way.
+01:03:37.240 And here we are also going to display
+01:03:39.160 this in the form of pandas, okay? So,
+01:03:41.200 let me quickly go ahead and execute
+01:03:42.720 this.
+01:03:44.640 So, here you can see that the evaluation
+01:03:46.520 metrics has been sent to LangSmith. It
+01:03:48.760 is going to take some time based on the
+01:03:51.680 number of input and output questions
+01:03:53.520 that we have.
+01:03:55.040 Uh
+01:03:56.400 and it is going to do one thing that it
+01:03:58.120 is also going to check with respect to
+01:03:59.640 all these evaluators. So, there will be
+01:04:01.600 a graph that will be created in the
+01:04:03.040 LangSmith with respect to all these
+01:04:05.000 evaluator metrics, okay?
+01:04:07.200 So, here you can see it took 15 seconds,
+01:04:09.160 15.42 seconds. It is almost completed.
+01:04:11.640 So, let's see whether it is getting
+01:04:13.320 updated or not over here. So, here you
+01:04:15.040 can see beautifully it has got
+01:04:17.800 updated. Now, you have this correctness,
+01:04:20.120 groundness, relevance, all the specific
+01:04:22.640 values.
+01:04:23.960 Okay? So, here you can see with respect
+01:04:26.280 to relevance, you are able to find out
+01:04:28.720 the accuracy of one. Correctness is also
+01:04:30.800 one. Groundness is somewhere around 0.5.
+01:04:34.040 If you see inside this, you'll also be
+01:04:35.840 able to see more information, okay?
+01:04:38.360 And with respect to this, you can see
+01:04:40.440 that this is my input. This is my
+01:04:42.440 reference output, the ground truth. And
+01:04:44.640 this is the output that is generated by
+01:04:46.480 the
+01:04:47.600 LLM, right? And then here you can see
+01:04:49.880 correctness, groundness, relevance,
+01:04:51.680 retrieval, all the specific information
+01:04:54.000 is basically over here, which is really
+01:04:56.000 really good. And you can also see the
+01:04:58.200 accuracy, uh how much latency it is with
+01:05:01.120 respect to this, what is the token cost,
+01:05:02.800 and many more things, right?
+01:05:05.160 And this is how you go ahead and decide
+01:05:06.880 it, you know? And at the end of the day,
+01:05:08.840 we are playing up with amazing
+01:05:12.720 techniques metrics over here considering
+01:05:14.960 LLM as a judge.
+01:05:16.640 Over here we again based on our diagram
+01:05:19.400 that we have specifically used we found
+01:05:21.240 out all these important metrics that is
+01:05:24.080 correctness, groundness, retrieval
+01:05:25.640 relevance and answer relevance.
+01:05:27.920 Now there may be scenarios that you may
+01:05:30.080 try to add some more different
+01:05:32.280 techniques in your entire rag pipeline.
+01:05:34.760 So you can also make those kind of
+01:05:36.800 necessary changes and implement more
+01:05:38.800 additional metrics.
+01:05:40.360 But here in this particular video my
+01:05:42.440 main aim is aim was to show you that how
+01:05:44.800 you can go ahead and
+01:05:46.640 perform some kind of evaluation for rag
+01:05:50.120 you know by applying or by creating your
+01:05:51.880 own custom metrics.
+01:05:53.480 So I hope you like this particular
+01:05:54.560 video. This was it from my side.
+01:05:57.720 This was about evaluation with the help
+01:06:00.200 of
+01:06:01.360 LangChain. And I hope you got an idea
+01:06:03.880 like how to go ahead and do the
+01:06:05.440 evaluation with respect to chatbot and
+01:06:07.640 even rag.
+01:06:09.000 So yes this was it. I will see you in
+01:06:10.200 the next video. Thank you. Take care.

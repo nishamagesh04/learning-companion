@@ -1,0 +1,397 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/nWWPlEO0he8
+
+00:00:01.520 Welcome to this fast API miniourse. In this miniourse, you're going to learn
+00:00:06.720 everything you need to know to get started with fast API. Today you're going to learn all about models as well
+00:00:13.920 as creating endpoints for our API. From getting and posting information to
+00:00:19.600 updating and deleting information. Welcome back to the channel.
+00:00:25.279 Welcome back guys for another episode of Code with Josh. For obvious reasons, I'm
+00:00:31.199 Josh and I'm stoked to have you guys here for this fast API miniourse. Before
+00:00:36.399 we jump right into it, okay, help me out. Hit that like button and subscribe.
+00:00:42.000 That really does help out my channel. So, if you enjoy my content, if you enjoy this type of video, hit the like
+00:00:48.559 button, okay? And drop a comment. Let me know your thoughts, questions you might have, and anything you want to see in
+00:00:54.879 the future. Now, today's video is to get you started with Fast API. This has been
+00:01:01.520 heavily requested on my channel, so if you've requested it, this is for you. But for anyone just getting started,
+00:01:07.840 okay, I'm going to guide you guys through the initial setup of Fast API as well as building out endpoints and using
+00:01:15.360 the Swagger UI docs to actually test out our API. You're going to learn how to
+00:01:20.960 build models using paidantic and run data through that. That's what's happening here in this miniourse. Okay,
+00:01:27.200 before I jump right into it, okay, the first link in the description, that is my Python master class. You can head on
+00:01:34.880 down there, check it out. This is built with 8 years of teaching experience to help anyone looking to get started with
+00:01:42.079 Python. All the other links in the description, that's our community Discord. Come join in on the fun. We
+00:01:49.040 have my Python newsletter where I create content tailored to helping you grow as
+00:01:55.119 well as all my ebooks. All right, so those are down in the description. Head on down, check them out. Wherever you
+00:02:01.040 are in your Python journey, I have stuff down there dedicated to helping you grow in Python in your careers. Now, enough
+00:02:09.038 said. Let's jump into why you're all here and let's give you your introduction to Fast API.
+00:02:15.680 Welcome to this fast API miniourse. In this miniourse, you guys are going to
+00:02:21.120 get a solid introduction to fast API and how you can get started using it today.
+00:02:28.080 This is really exciting. I'm excited for this. This has been heavily requested.
+00:02:33.760 So, we're going to jump right into it. Right. So, fast API is another way for
+00:02:39.680 us to build out uh APIs. Right. There are tools like Flask or Django could
+00:02:46.640 handle this, but a very popular one that is easier when we only want to focus on
+00:02:51.680 the API side of things is fast API. Now to get started, okay, I am in a folder.
+00:02:58.080 I've named it API course and I have a single Python file, my API. We're going
+00:03:04.000 to open up your terminal. I want you to cd into the folder. You could create a
+00:03:09.200 virtual environment for this. I am not doing that right now. Okay. But we need to install a few things here. One is
+00:03:16.239 going to be fast API. The other is going to be paid.
+00:03:23.440 Okay. And then lastly is Uvicorn. And I'm going to run all of those. Now
+00:03:30.560 you guys may have to install these. As you can see, it says requirement already satisfied because I already have these
+00:03:37.840 on my system. Okay. I'm going to clear this out now. Um, I'm going to start off
+00:03:43.040 here. I'm going to break down what each of those imports does. But let's just get things up and going and I will show
+00:03:50.239 you why we have these as we need them. The first thing we can do is I want to
+00:03:56.000 talk about a few things. We have a term called CRUD. And really this is just we
+00:04:02.400 can create items, we can read items, update items, and delete items. So a
+00:04:10.159 CRUD application could handle all of this. Now, because we're working with
+00:04:15.439 APIs, we have what we call our HTTP requests. These requests are things like
+00:04:23.600 we can get information, we can post information, we can put
+00:04:30.160 information and we can delete information. Right? Now each of these
+00:04:36.080 kind of corresponds to a CRUD operation. Right? When I read information, we
+00:04:41.840 simply get information back from an API to be able to read it. When we create
+00:04:48.880 information, right, we are posting information. It's like you post something in the mail. You send
+00:04:55.440 information off. When we update information, we are putting new
+00:05:01.520 information into our JSON, our dictionary, our database. And then delete is simply just
+00:05:09.199 delete. All right? So you can call this CRUD operations, but really these are our HTTP requests that we can use here
+00:05:17.680 when working with APIs. We can use all of these actually here in this mini course today. Right? So I'll delete the
+00:05:25.039 CRUD operations part. Uh we can keep these requests now just for you guys to
+00:05:30.800 be able to see. And to really start at the top of our code, I'm going to import
+00:05:36.800 uh from fast API. I'm going to import the class fast API, right? And if you've
+00:05:44.479 ever worked with Flask, this is going to look actually similar, but we run this
+00:05:50.560 differently because Fast API is actually lighter than Flask would be. So, I'm
+00:05:56.560 going to create an object here. This is really an instance of our Flask API
+00:06:02.080 class that we import. Okay. So, I create an object. We have an instance now. And
+00:06:08.080 really this builds out our entire API. Okay, I can give this arguments. We'll
+00:06:14.319 do it later, but we don't need to right now. The first thing we want to do is we're going to create an endpoint. Now,
+00:06:21.680 this is going to be a term that we're going to talk about a lot in our APIs.
+00:06:28.000 And simply put, an endpoint is like a URL. All right? So for example here if
+00:06:36.479 we go to a website like ww.zero2nowing.com
+00:06:41.919 this is my website feel free to check it out. Okay. Um the homepage the landing
+00:06:47.520 page just ends with a slash. If you go anywhere this is the landing page the
+00:06:54.000 index the root of this page. And this is really an end point. Okay. We might have
+00:07:01.919 another layer of this endpoint, right? But you might have an extension of
+00:07:07.280 login. You might have one of account, right? And all of these are different
+00:07:12.800 endpoints. They're an extension of the existing URL. Right? So our job here is
+00:07:19.120 to build out these endpoints that allow us to do different tasks with our fast
+00:07:24.639 API. The first thing we're going to do is I'm going to take my decorator app. I can
+00:07:30.240 call it app because I created my instance called app. And what I'm just going to do is I'm going to create the
+00:07:36.800 landing page, the homepage. So I can get everything starts from our slash, right?
+00:07:43.759 It's it's just like I had here before. We had a website and then it ends in a
+00:07:49.280 slash. This is really what we're building out here. Okay. Now, typically I'm going to build out a function and
+00:07:56.080 this is generally going to be called root. This is the root of everything. And really, just for now, I'm going to
+00:08:02.639 return a dictionary. It's just going to have a message here. And let's just say
+00:08:09.039 like welcome to your introduction to fast API. All right. Now, our data is
+00:08:18.080 passed through the API. Typically it would be done through JSON job JavaScript object notation right but
+00:08:26.319 JSON is very similar to a Python dictionary. So I'm returning a
+00:08:31.919 dictionary here. All right so I have a very simple root. That's all that's
+00:08:37.360 happening. Now we can start to test this as I go through and I build out these
+00:08:42.640 different endpoints. We want to be able to test this. I'm going to open up my terminal. Now very standardly right with
+00:08:50.080 other frameworks like Flask or Django, you could just run the Python file. You
+00:08:55.760 could run it here. But fast API is even lighter than Flask or Django. So we
+00:09:04.000 installed something called Uvicorn to actually run this. In order to run it,
+00:09:09.680 I'm going to say Uvacicorn. We're going to type the name of the Python file, my
+00:09:15.120 API. Make sure that you're in the correct directory. So I'm going to say
+00:09:20.240 my API instead of saying.py, I'm going to say colon app because app
+00:09:28.000 is what we named this fast API. Then we're just going to say reload.
+00:09:33.920 Reload ensures that every time you make a change, it automatically reloads for
+00:09:38.959 you. It's like in Flask, you might say debug equals true. This is just reload.
+00:09:44.399 We're going to run this and it's saying uvaicorn is not found. Okay, that's kind
+00:09:49.600 of strange. I should have it here. So, I'm going to say pip install u corn. Run
+00:09:56.000 that again to make sure I have it. Okay, something's going on here. Could not
+00:10:01.360 install. Okay, that's fine. Let's try a different mechanism here.
+00:10:09.360 Bitcoin.
+00:10:16.880 There we go. So, it should already be
+00:10:22.079 satisfied. Uicorn. We're going to say my API app
+00:10:30.480 reload. Run it. There we go. Okay. So, that was weird. Okay. I had it. I just
+00:10:36.720 double check the installation. Okay. Make sure you have this. And you're going to see here that Uicorn is running on this port. We are going to access
+00:10:43.600 this port. And boom. You can see this is my API message. Let me make this window a little smaller. Put it in the center
+00:10:50.160 for us. And I mean, if I want to make it easier to read, I can do that. But this is essentially like the landing page.
+00:10:57.279 This is the root. When anyone comes to the landing page, the root, this is what they're going to see. I'm just returning
+00:11:03.600 this message. Right now, it's just a dictionary, right? It could be a JSON format. And this is what we see. Now,
+00:11:11.440 the great thing about fast API is actually the dashboard that we get
+00:11:17.680 access to when building out these types of APIs. And this is one of the reasons it's becoming so popular. If I have my
+00:11:25.120 URL here, I'm going to say docs on the end of it. And this is built off in a
+00:11:31.360 swagger UI. And you can see here the default, this is just my root. We made
+00:11:36.880 this default route and this really has nothing inside of it. Okay. But as we
+00:11:41.920 build out the other roots, they're going to appear here. And this is how we can actually test out these and make sure
+00:11:48.720 they're working correctly for our API. Okay. So, Docs makes it super easy to
+00:11:54.800 test, visualize, and make sure things are working. Okay. Um, awesome. So, I'm
+00:12:01.519 going to leave that running. I'm just going to pretty much slide my terminal down. It's unneeded for now. We have the
+00:12:08.720 initial route. Now, going up here, I'm going to start to import a few more things that I'm going to need throughout
+00:12:15.440 this. Okay. Um, for some best practices here, I'm going to import HTTP
+00:12:21.120 exception. We're going to import status. And then I'm going to import something
+00:12:26.959 called path. path is going to make sure that uh we give it mandatory uh
+00:12:32.880 arguments that we specify it actually needs. All right. Um let's do a few
+00:12:38.800 other things here. Let's do some typeings. Let's say uh from piping we
+00:12:43.839 are going to import optional. We will get that at a later stage. Okay. And
+00:12:50.240 then from paidantic I'm going to import something called
+00:12:55.519 base model. Right? These will come into play very very soon. Now, the first kind of API uh
+00:13:05.120 let's call it endpoint that I'm going to build out here is really we want to get
+00:13:12.399 users. I'm going to build this around users. Okay. So, root is sort of needed,
+00:13:17.760 right? This is like the landing page. Then everything is built off from root.
+00:13:22.800 So, for example, if we come down here, I might have one called get users, right? And that's that's what I'm building out
+00:13:29.360 here. So, down here, all I'm going to do for this, okay, if you guys are getting
+00:13:34.880 value in today's video, help me out. Hit that like button, drop a comment, and
+00:13:40.240 subscribe. That really helps out the channel. Is let's create a new kind of request here. I'm going to say app.
+00:13:47.200 We're going to say get. This time I'm building on the original endpoint just
+00:13:52.320 like I have here. Right? So I might call this let's do it like uh users slash I'm
+00:13:59.519 going to say here user ID. All right. So uh it would look something like this.
+00:14:05.519 Users ID of one. And every user is going to have their own ID here. Right? We
+00:14:11.120 don't have user ID yet. We will get it. All right. But uh let's build out now.
+00:14:16.240 And let's just call this get user. This is going to take some type of user ID.
+00:14:22.800 This will be an integer. Okay. Now we've given it this but this integer right I'm
+00:14:30.959 also going to make sure it has these kind of uh arguments that I want to ensure it has. These are required. Right
+00:14:38.880 now I could put anything here. Not anything but certain things here. So
+00:14:43.920 initially there is nothing required but I'm going to give it like a unique description and this description is just
+00:14:50.959 kind of telling you in the back end what do you want to do? So like the ID you
+00:14:57.120 want to get simple as that and I could even put things here. So I don't
+00:15:02.800 actually have anything yet. Let's before I continue this let's make a dictionary
+00:15:08.320 of users. Now in the real world this would not be just a dictionary. Okay. Uh
+00:15:15.279 you would probably store this in a database. You could use Postgress, MongoDB. For simplicity I'm just using a
+00:15:22.720 dictionary here. Now let's say we have the first user and let's do a few
+00:15:28.639 things. Let's give it a name. I will say Josh. Let's do something like website.
+00:15:34.240 Let's give my website here. Let's do something like age and age will
+00:15:42.800 be an integer and then let's do uh ro I
+00:15:48.399 guess and let's just say here developer okay so this is my users right and I've
+00:15:56.639 just built it out very just a standard python dictionary so then this begins at
+00:16:03.040 one all the other users kind of increment from there as an integer path
+00:16:08.959 here, right? I could say, hey, this needs to be greater than zero.
+00:16:15.759 If it's zero, I don't have that here in my dictionary, right? It's going to throw me an error. So, it needs to be
+00:16:22.560 greater than zero. I could just leave that because we might have multiple entries. You could say greater than zero
+00:16:28.959 and less than uh 100 if you wanted to say that. Okay? You don't need less than
+00:16:34.720 there. as I'm building this out. Okay, I have a description. It has to be greater than
+00:16:40.639 zero and less than 100 and it's going to take an integer, right? That's what's happening here. We want to first check
+00:16:47.360 if the user is already in my dictionary in our database, right? So, if user ID
+00:16:55.600 is not or excuse me is not in uh users
+00:17:00.959 which is what we have given it, I'm going to raise just an exception. So
+00:17:06.640 I've imported HTTP exception specifically for this. And uh I think we
+00:17:12.480 can give it here a status code. We want to raise an error. So I'm going to say 404 is fine. And we can give it some
+00:17:18.319 details. So detail like user uh not found.
+00:17:25.119 Okay. The first check we always do is to see if there is going to be an error. If it is, let's just raise that error.
+00:17:32.960 Otherwise, we just want to return take our dictionary users and give back the
+00:17:39.440 user ID. That's kind of it. Okay, we check if they're not there, we're going
+00:17:45.840 to raise an error. Otherwise, we're just going to give back the user I'm looking for. So, if I say users one, right,
+00:17:52.400 really, it's going to return all this information here for us. Pretty cool. If
+00:17:58.000 we go back, I can refresh this. You can now see that it's actually created here.
+00:18:04.400 I built out this other endpoint. We can open it, right? And it's empty. What I
+00:18:10.320 can do now is I can try it out. I'm going to put a one here. When I run
+00:18:15.840 that, you can see boom, it's successful. It is working correctly. All right. This
+00:18:22.080 is the information that I had stored in my dictionary, in the database, wherever it is stored. Right. If we go back up
+00:18:28.400 here and I try and say two, we execute it. You can see that user not found. I
+00:18:33.760 raised the error that I set as that HTTP exception. Okay, so I know that this
+00:18:40.480 endpoint is now working, right? Very cool. Okay, what else do we have now? So
+00:18:45.600 we have the ability to get a user. Let me go down and let's kind of write out
+00:18:50.640 what else we're going to do here. We can create a user. We are going to update a
+00:18:56.799 user, delete a user, and then we are going to search for a user. Okay, these are all
+00:19:05.039 the endpoints we're going to build out. So, I'm going to continue to use this reference here. Right, let's just focus
+00:19:11.840 on now creating an actual user. Before I jump into creating it, where or how are
+00:19:18.720 we storing this? We need to create some models to actually handle this. So I'm
+00:19:24.640 going to go up here and we are going to create our base uh paidantic models
+00:19:32.160 right and these are class-based okay so I'm going to create a class called user this is going to inherit base model that
+00:19:39.360 I imported from paidantic and this looks just like a Python data class actually
+00:19:45.280 it's going to take a name right it's going to take a website
+00:19:51.200 it's going to take an H and it's going to take a role. Okay. Now, this looks
+00:19:58.240 just like a data class, but because I'm inheriting uh base model, this is going
+00:20:03.440 to ensure that each of these has a value. This is required. So, if you
+00:20:09.039 enter the wrong data type, for example, for name, if I enter an integer, this is
+00:20:14.240 automatically going to return an error to you. Okay? And this is how we're
+00:20:19.280 going to be storing and passing in all of our data to roughly the dictionary in
+00:20:24.480 this case. Um, since we're here, I don't want to have to come back up. Let's just
+00:20:30.159 create a model for update user
+00:20:35.440 again. This will be our base model that we're inheriting. And what can we
+00:20:40.640 update? Well, we have name, right? But maybe we don't want to update all of
+00:20:46.960 them. We only want to update one item that refers to this user. This is why I
+00:20:54.080 imported optional. I'm basically saying this name is optional. If I give it,
+00:21:00.159 it's going to be a string. If I don't give it, the value is just going to be
+00:21:06.000 none, right? It's it's going to be set to none. And so for each of these, I'm going to go through and I'm going to say
+00:21:11.679 website is also optional. It's going to be a string if I give it anything. Otherwise, don't worry about it. None.
+00:21:19.280 Age, again, optional. This time, we're at an integer. If I don't give it, none.
+00:21:26.000 And our last one is just going to be a role. We're going to say optional. This is also a string. And this is none.
+00:21:33.840 Okay, if you guys need to pause, pause it. But really, this is the model which is going to allow us to create a user,
+00:21:40.240 to delete a user, anything like that. And this ensures that we give it the correct data type. It's it's basically a
+00:21:47.120 data class. Our update user model is going to be used to if we want to make
+00:21:52.400 changes to any of these users. I said optional because I'm saying I don't need
+00:21:57.600 to change the name. That might not be the problem. Right? So name is optional.
+00:22:03.039 If I don't change the name, we're just going to keep it as none. Okay? Don't change that. Um and this just allows for
+00:22:08.480 a more dynamic process, a bit more Pythonic if you want to call it that. Right? So with our models done, we now
+00:22:16.480 have the ability to jump in and create a user. Instead of get this time, we are
+00:22:22.080 actually going to make a post request because we are sending information off,
+00:22:29.039 right? So I'm going to say post. We need to give it the endpoint that we want. So once again, let's say something like
+00:22:35.360 users, right? This time I again I'm going to say user ID. Great. Now along
+00:22:43.760 with just giving it user ID uh we could say here let's say two for
+00:22:49.520 example this is a new user that we're adding. All right. Uh I could give it things like a status code. So when this
+00:22:57.679 is complete okay I'm going to say here like I think we imported status. I'm
+00:23:04.240 going to say here http uh I think 2011 it was created. Yes. I
+00:23:10.400 wish that would load faster to give me the hint from typing. So when we create something, it's it's known as a 2011
+00:23:16.720 status. It means we created it. And we are just going to create a function here
+00:23:21.760 called create user. This will take our user ID which is an integer. And then
+00:23:27.440 it's going to take a single user which is really an object of the base model
+00:23:32.559 class that I just made for pyantic above. Right? I created a class called user. And what we're going to say is if
+00:23:40.080 user ID is already in users, well, that's a problem. If that user ID is
+00:23:46.880 already there, we are going to raise our error. We're going to raise an exception
+00:23:53.280 here. So, I'm going to raise an exception. We're going to say status code is equal to 400. And we're going to
+00:23:59.440 say detail. Whoops. We're going to say detail. And we should say something here
+00:24:04.720 like user already exists. Right? So once again we're just running
+00:24:10.400 a quick check. Otherwise we want to convert the pyantic model that base
+00:24:16.080 model into a dictionary to store that data in our dictionary. Remember in the
+00:24:21.760 real world it would probably be a database. Okay. All we're going to do here is we're going to take our users.
+00:24:27.679 We're going to give it the user ID which is a new user. And we can take our user object and we're going to say dict to
+00:24:34.559 convert that to a dictionary and we can return the user. Okay, wonderful. Let's uh I saved the
+00:24:42.000 code. Let's go back here. Let's refresh our code. Okay, there we go. We have a
+00:24:48.240 new post right here. So, I'm going to open this. Okay. Uh and we are going to
+00:24:54.159 try it out. So I'm going to say two name let's say Tommy
+00:25:01.840 website. This is my other website actually the nerdnook.io.
+00:25:08.240 This is my Python newsletter. Python newsletter is about 2 years old, three
+00:25:13.440 years old. In rural I'm going to say Python newsletter. It's not called Tommy. So I'm just going to call it
+00:25:20.080 nerd. Let's execute. Go down. Boom. Look at that response body. It is working.
+00:25:27.919 How do I know it actually submitted that information? Well, I can see it worked here. But because we said two, I'm going
+00:25:35.360 to be able to now go up here and let's get a user back. Let's try to get number
+00:25:41.200 two back. Execute. And there we go. Name nerd. The website is the nerdnook.io. It
+00:25:47.919 is a Python newsletter. It's two years old. I can see that this response is working. How cool is that? With that
+00:25:55.279 working, we're going to head back here. Now, we now are going to carry on to another endpoint. Okay, so let's take my
+00:26:03.679 URL. Okay, this is just for reference here. And the goal of this is to update a
+00:26:10.400 user. All right, so this time we're going to take app. What HTTP request are
+00:26:17.360 we using? Right, I'm not using yet. I'm not going to use post. We're going to
+00:26:24.000 use put. Put is your putting new information. So I'm going to say here put. We're going to say users
+00:26:31.520 slash again user ID. Which user ID do I want to update? In this case, we are
+00:26:38.400 going to call our function update user. All right. And inside here we are just
+00:26:43.600 going to say user ID is an integer. And this time the user let's use the model
+00:26:49.279 we made called update user instead of user. We're making changes to this user.
+00:26:56.080 The first thing we're going to check is if user ID just like we have is not in
+00:27:01.679 users. We need to raise that HTTP exception.
+00:27:08.320 And really I'm just going to let's just copy this. Let's post that user already
+00:27:15.120 exists or uh in this case user
+00:27:20.320 is not here. Okay. And to be fair, now that I'm typing this, this should not be
+00:27:28.559 a string. Boom. Right. That was that was an issue. Uh detail. Okay. That kind of
+00:27:35.520 fixes that. Uh this one should also not be a string. And this I think is a 404
+00:27:42.240 error. user is not here. Okay. Now remember in that paidantic model, okay,
+00:27:49.039 very quickly I set these as optional. If I don't update this, then it's it's
+00:27:55.360 none. All right. So I need to check each of these. Uh am I trying to update the
+00:28:00.640 name? If no, I want to skip it. Okay. So down here as we're going through our
+00:28:06.320 updates, that's kind of what we have to check for. The first thing is we are going to get the current user that we're
+00:28:13.679 trying to update. So users user ID. Okay. If user name is not none, this
+00:28:25.360 means I'm trying to update it. So I'm going to say current user,
+00:28:31.279 we're going to give it the name is equal to user.name.
+00:28:37.840 Okay. If user dot uh what did we have there? Website website is not none then
+00:28:48.240 again current user we're going to say here website
+00:28:54.960 is equal to user. website if user
+00:29:00.640 age is not none and we just go through right each of these is just being
+00:29:05.919 checked. I could theoretically copy this. We're going to change this to age.
+00:29:11.200 We're going to change this to age. And our last one is going to be the role of
+00:29:17.600 the user. So, we're going to say roll. Cool. That's really it. Come down here.
+00:29:24.480 We are going to return the current user. Right. So, this one took a bit more,
+00:29:30.080 right? But that's because I maybe I don't want to update all of these, right? I'm preventing that. Let's go and
+00:29:36.080 check now to see if our endpoint works correctly. Let's refresh this. You can see my put was right there. Boom. Put.
+00:29:43.679 Right. So, let's go down here. Let's try it out. Let's update number two. So, you
+00:29:50.880 can see it starts off as blank. So, first off, let me cancel this. Let us get a user again. Let's try it out.
+00:29:59.279 Let's get to let's execute. And it says user not found. Why? Why is that
+00:30:04.720 happening? Okay. Well, because we're not using a database or anything, every time
+00:30:09.760 I click this refresh page, it it pretty much resets that Python dictionary.
+00:30:15.760 Okay. If we go back and we execute it, there I am. Okay. So, I can't I can't update number two because we don't
+00:30:21.919 actually have it anymore. So, let's come back here. Let's try it out. Let's say one. This time we will say Josh. Let's
+00:30:30.640 change the website to my other website. Instead of zero to knowing, we will say the nerdnook.io.
+00:30:37.760 The age of me I'll still keep as 28. And for this we'll just call it a writer.
+00:30:44.000 Let's execute. You can see that it's changed. Awesome.
+00:30:49.520 This time when I go back to get number one, we're gonna try it out. We're going
+00:30:56.000 to execute number one. It changes from zero to knowing to the nerdnook in my role as a writer. So our update is
+00:31:03.600 working. I'm not updating everything, just a few key components. Right.
+00:31:09.440 Awesome guys. This brings us into well the last real one. We're going to search for a user still. Okay. But uh we are
+00:31:17.120 going to focus on this one first. So
+00:31:22.159 let's come down here. All right. Let's create our app. We are going to say
+00:31:27.840 delete users. Whoops. As a string here. Users
+00:31:33.760 slash I should have started with that. This is our endpoint. We are going to take a user ID into this. All we're
+00:31:40.960 going to do here is we will say delete user. This is going to take our user ID
+00:31:46.399 and this will become an integer. Again, I'm just going to go up here because it
+00:31:51.840 seems that each time we want to follow some good practices. If the user is not
+00:31:57.519 there, we are going to raise the exception 404 user is not here. Okay?
+00:32:03.120 Otherwise, we are going to pretty much delete this. So, I'm going to say deleted user is equal to our dictionary.
+00:32:10.880 We are going to pop off what whoever has that user ID. going to pop them off and
+00:32:17.200 we are going to return let's just return a JSON message a dictionary message really. So I'm going to say message we
+00:32:23.919 can say user has been deleted and then we're going to say like deleted
+00:32:30.480 user is equal to our deleted user.
+00:32:37.360 That's it. Right? This is allowing me now to delete a single user. If we go
+00:32:43.600 and re refresh, we're going to try this now. Let's do it like this. Actually, let's uh create a
+00:32:50.640 user. So, I'm going to say to let's say uh
+00:32:57.360 code with Josh website subscribe.
+00:33:02.880 We are going to say age 2 years old and roll Python channel.
+00:33:10.960 Execute. Awesome. So, we have that, right? If we go up, you can try it out.
+00:33:19.200 We're going to try it out. We are going to make sure that that API call worked. We do have it, right? Let's cancel this.
+00:33:27.840 And let's go down now to delete. We are going to try it out to execute.
+00:33:35.360 And you can see right there, user has been deleted. This is the deleted user.
+00:33:40.880 Awesome. I deleted it. It's It's not there anymore, right? We go back up to try and get the user if we want to try
+00:33:47.679 it out to execute. User is not found. We're not there anymore. Okay. You can't
+00:33:53.120 delete it. Awesome. Well done. I hope you guys are getting
+00:33:59.360 value from this video. I hope you're understanding. All right. This pretty much brings it to the last point. We
+00:34:05.760 have everything kind of here. You can create a user, update a user. Let's now
+00:34:11.280 just search for a user. So all right, if I have this URL and we have this
+00:34:19.839 endpoint, right? Really a URL might have something like users question mark Josh,
+00:34:26.960 right? And so anything after this question mark is kind of the query that we are making to the database or to the
+00:34:36.560 API to see if we have it. Okay. So it's followed by a question mark. This is a query that we're making. So I'll
+00:34:43.599 actually just leave Josh there. Right. I'm going to say at app. We want to get
+00:34:50.480 let's say users. We are making that endpoint here. We are going to say
+00:34:55.520 search. Okay. Now, who am I searching for? So, let's just say search by name.
+00:35:04.880 Okay. Inside here, name. Uh, if I'm searching, you know, it's it's optional,
+00:35:10.560 but we need the name. So, I'm going to say optional name. Otherwise, it's none.
+00:35:15.839 And if not name, we are going to raise our HTTP exception.
+00:35:23.680 Where is it? Uh actually let's
+00:35:29.119 let's return something. Let's say return message.
+00:35:35.040 Let's say name parameter is required.
+00:35:40.640 Right? So if I do give it none, which you shouldn't, I'm just putting this here as a safety net. Then I'm going to
+00:35:47.200 raise, hey, you have to actually give it a name in order for this to work. Okay.
+00:35:52.640 Um, otherwise we want to loop through all the matches. Now in the real world we might loop through a database. Here
+00:36:00.079 we're just looping through our dictionary. So for every user in users
+00:36:06.240 values. Okay. Um, this is going to create a list
+00:36:12.079 of all the values in our Python dictionary. The keys are like one, two, three, four, right? But the values are
+00:36:19.520 like an inner dictionary. So, I'm going to loop through all of those and we're going to say if user
+00:36:26.720 name is equal to the name I'm looking for, let's return the user.
+00:36:33.760 Uh, if no one was found, I guess now would be the point where I can raise my
+00:36:39.359 exception. And we are going to go here. Status code is equal to 404. And we can give it some
+00:36:46.800 detail. We can just say user not found.
+00:36:51.839 That's it. That is done. This is our basic setup for a fast API. Guys, let me
+00:36:58.800 go back. Uh, in this portion of the video, I'm going to go through each of these, okay? And I'm going to test them
+00:37:04.640 and run them. You can see all of these endpoints that I built out here. Root is just the initial route that we have.
+00:37:11.040 This is like the landing page on a website. Let's uh start off by creating a user.
+00:37:17.680 Okay. So, I'm going to try it out. We're going to say two. Um again, let's just go through here. Let's say the nerdnook.
+00:37:26.880 We are going to say the nerdnook.io.
+00:37:31.920 This is 2 years old. This is a Python newsletter.
+00:37:37.760 Okay. I'm going to execute that. I can see that it executed accordingly.
+00:37:43.200 All right. If I want to go back, I want to create three. We are going to say code with Josh for YouTube.
+00:37:50.720 Uh the website, I don't know the exact URL. So, we're just going to say subscribe
+00:37:56.560 to and we are going to say Python channel execute. Again, I have executed it.
+00:38:04.079 Okay. Awesome. So, I know that our endpoint works for this. When we want to get a user, we can try it out. This time
+00:38:11.920 we have three. We're going to execute that. Boom. I am working on that endpoint. Okay. Uh let's update a user.
+00:38:20.000 So let's try it out. Let's update number two. Now it doesn't give us the starting
+00:38:25.119 values. This was the nerdnook, right? So if I say the
+00:38:30.800 nerd nook, the website,
+00:38:36.720 let's say uh blank
+00:38:42.400 age, let's say 10. Enroll, we're just going to say newsletter.
+00:38:50.079 Execute. We're going to go up here. I'm going to get the user number two. And
+00:38:56.640 we're going to make sure that that update went through. And you can see, boom, the update did go through. Right
+00:39:03.680 at this point, I kind of messed up number two. So maybe I want to delete
+00:39:08.800 them. Execute. We are able to delete them. That's great. And the newest one
+00:39:14.880 that we just did was to search by name. So let's try it out. What name are we
+00:39:20.320 looking for here? Uh Josh. Execute. It says user not found. Why
+00:39:28.320 does it say that? Well, everything is uppercase or lowercase. I didn't really implement anything for that, which I
+00:39:34.320 guess we could have, right? If I say Josh, there we go. It's now returning
+00:39:39.440 the correct information for that endpoint. Guys, you can see how easy it
+00:39:45.599 is to get fast API up and going, especially here in this miniourse. I'm hoping I broke that down. All in what
+00:39:51.920 under 45 minutes we covered kind of a toz on how you can get started with this
+00:39:57.680 right there are other you know implementations you could do like security precautions things like that
+00:40:05.119 okay this was just a basic introduction if you wanted to take this up a level you could add more fields to the user
+00:40:12.400 model create relationships between users add in a real database right
+00:40:17.920 implementing um some security features If that's something you guys want to
+00:40:23.040 see, let me know in the comments, okay? I'm happy to build out more content
+00:40:28.480 around this to really help us grow and understand this more. But all in all,
+00:40:33.760 this was your introduction to fast API. And there you guys have it, your
+00:40:39.920 introduction to fast API. Together, you got an overview on how everything works,
+00:40:46.480 how to get it set up on your system. You learned about endpoints and how to build
+00:40:51.760 out your own endpoints which allow us to send and get information, update
+00:40:56.800 information dynamically. Now, we didn't use a database, but you got an introduction using a dictionary which
+00:41:02.800 can act like JSON. Okay? If you got value in today's video, help me out.
+00:41:08.240 Help out the channel. Hit the like button and subscribe. That really does help out my channel. Drop any comments
+00:41:15.280 you have, any questions. I read all of those, okay? And if you guys enjoyed this kind of content, let me know what
+00:41:21.280 you want to see surrounding Fast API in the future or questions you have that I can help answer, okay? Drop those in the
+00:41:27.920 comments. Remember guys, the first link in the description, that is my Python master class. Head on down there, check
+00:41:34.880 it out. That's designed for you or someone you know who's looking to break
+00:41:39.920 into Python and actually have a structured learning roadap. Okay. all
+00:41:45.599 the other links down there from our Discord community, my weekly Python newsletter, and all my ebooks. They're
+00:41:52.640 designed, I create those to help you grow. Come on down, join on the fun, drop some questions, and I will see you
+00:41:59.760 guys there. That's all for this week's episode of Code with Josh. Until next time, Python crew. I will see you then.

@@ -1,0 +1,1572 @@
+# tactiq.io free youtube transcript
+# MCP Crash Course for Python Developers
+# https://www.youtube.com/watch/5xqFjh56AwM
+
+00:00:00.080 If you're a Python developer and you're
+00:00:01.600 building with LLMs and you want to learn
+00:00:03.200 how to integrate MCP, the model context
+00:00:05.520 protocol, then this video is for you.
+00:00:07.759 I'm going to walk you through my entire
+00:00:09.360 crash course that I put together to
+00:00:11.519 really learn what we can do with MCP as
+00:00:14.559 Genai developers. And now in this video,
+00:00:16.640 I'm not just going to show you how you
+00:00:17.920 can build a simple server and integrate
+00:00:19.359 it into Claw Desktop, for example. I've
+00:00:21.119 seen a lot of tutorials covering just
+00:00:22.640 that. This is really developer first
+00:00:24.560 tutorial. So, you're going to learn how
+00:00:26.240 you can set up your own MCP servers
+00:00:28.240 using the Python SDK, but then also
+00:00:30.320 integrate those servers into your own
+00:00:32.238 Python application and back end so you
+00:00:33.920 can start to build AI systems and agents
+00:00:35.840 around it. And now, if you're new to the
+00:00:37.440 channel, my name is Dave Ablar. I'm the
+00:00:39.120 founder of Data Luminina. We've been
+00:00:40.559 building custom data and AI solutions
+00:00:42.320 for our clients for the past six years
+00:00:43.920 already. So, even before Chat GBT, I
+00:00:45.840 have a bachelor's and a master's degree
+00:00:47.440 in artificial intelligence. And my goal
+00:00:49.200 with these videos is always to really
+00:00:50.960 help you to cut through the noise and
+00:00:52.559 focus on what you can actually use to
+00:00:54.960 build production ready AI systems and
+00:00:57.120 agents. So let's dive in. All right. So
+00:00:59.680 throughout this tutorial, I will be
+00:01:01.039 walking you through this GitHub
+00:01:02.239 repository. Link will be in the
+00:01:03.680 description. It's the MCP crash course
+00:01:05.600 which is part of my AI cookbook where I
+00:01:07.680 dump all of the tutorials for all of the
+00:01:10.240 videos that I create here on this
+00:01:11.680 channel. So let's quickly cover what we
+00:01:14.320 will go through in this video. And we're
+00:01:16.159 going to start with some theory first.
+00:01:18.080 So I will outline uh timestamps below
+00:01:20.320 this video. So if you want to dive
+00:01:21.520 straight into the code, you feel free to
+00:01:23.600 jump to that, but I don't recommend
+00:01:25.439 doing that if you're new to MC MCP
+00:01:27.520 because you really need to first
+00:01:29.119 understand what it is because otherwise
+00:01:31.360 a lot of things won't make any sense. So
+00:01:33.520 I will walk you through seven chap
+00:01:35.040 chapters. Chapter one, chapter two is
+00:01:37.200 really about understanding what MCP is
+00:01:39.600 and then we're going to set up the
+00:01:40.880 servers. We do an open AAI integration.
+00:01:42.960 We'll look at MCP versus function
+00:01:44.720 calling. Uh we'll show you how you can
+00:01:46.240 set up your server and run it in Docker
+00:01:48.000 so you can actually start to put this
+00:01:49.280 into applications and then finally we'll
+00:01:51.119 talk about life cycle management to
+00:01:52.479 properly handle all the connections of
+00:01:54.079 your applications. Now if you want to
+00:01:56.000 follow along feel free to clone this
+00:01:57.680 repository, set up your dev environment,
+00:01:59.920 install the requirements should be
+00:02:01.759 straightforward and then all of the
+00:02:03.360 underlying code examples that I will
+00:02:04.960 walk you through are in the folders over
+00:02:06.719 here. All right, and with that out of
+00:02:08.080 the way let's dive straight into part
+00:02:09.919 one introduction and context. So, for
+00:02:13.120 those of you that are completely new to
+00:02:14.720 MCP, it stands for model context
+00:02:16.720 protocol. And over the past weeks and
+00:02:18.879 months, it has been gaining a lot of
+00:02:20.959 popularity, but it's already been out
+00:02:23.360 since November 25th, 2024. It was
+00:02:26.640 developed by Entropic. And in this blog
+00:02:28.480 post, they introduced MCP as a new
+00:02:30.800 standard for connecting AI assistance to
+00:02:33.040 systems where data lives, including
+00:02:35.120 content repository, business tools, and
+00:02:36.800 development environments. And I remember
+00:02:38.319 back in November when I first read this
+00:02:39.920 blog post that I found it pretty hard to
+00:02:41.519 wrap my head around what it exactly was.
+00:02:43.519 Is this a new model? Is it are these
+00:02:45.200 some new capabilities? Is this part of
+00:02:46.879 cloud? Can we integrate with OpenAI? All
+00:02:49.120 of these questions that I had as a
+00:02:50.640 developer to see how can we literally
+00:02:52.319 translate this to the client project
+00:02:54.000 that we're currently working on. And
+00:02:55.280 since there are major new things and
+00:02:56.720 updates in the world of AI about every
+00:02:58.400 other week, I'm always very hesitant to
+00:03:00.480 dive into new things like this. So I
+00:03:02.480 really want to avoid chasing all the
+00:03:03.760 shiny objects and change our project
+00:03:05.519 structure and architecture about every
+00:03:07.200 month and MCP was one of those shiny
+00:03:09.200 objects for me. So I ignored it for a
+00:03:11.040 while. But then this happened. This is
+00:03:12.720 Google Trends where you can see the
+00:03:14.080 interest over time for the keyword MCP
+00:03:16.239 on Google. And you can see that from
+00:03:18.400 beginning of March 2025, this popped off
+00:03:21.200 exponentially and I started to see MCP
+00:03:23.760 everywhere. I saw it on YouTube. I saw
+00:03:25.519 it on X on blog posts and in my
+00:03:27.360 community data freelancer. It started to
+00:03:29.120 appear everywhere and I could no longer
+00:03:30.879 ignore this. So what happened in
+00:03:32.319 February that suddenly caused this major
+00:03:34.400 increase in interest for MCP and to
+00:03:36.560 explain that we first need to understand
+00:03:38.159 high level what MCP is. So if you do a
+00:03:40.400 quick Google search you'll find many
+00:03:41.840 diagrams trying to explain really what
+00:03:43.760 this is about. So I found this one on
+00:03:45.599 dcope.com and I think this is a very
+00:03:47.760 good starting point for us to all get on
+00:03:49.760 the same page and remember the
+00:03:51.200 definition from entropic. So MCP is a
+00:03:53.440 new standard for connecting AI
+00:03:55.040 assistance to systems where data lives
+00:03:57.760 and this image over here illustrates
+00:03:59.920 that perfectly. So on the left over here
+00:04:02.480 we have the situation before MCP. So
+00:04:04.799 this is what we as developers have been
+00:04:06.560 doing for two and a half years, three
+00:04:08.480 years already. So we built applications
+00:04:11.120 around LLMs and then when we want to
+00:04:13.040 connect our app to an external surface
+00:04:15.040 like Slack, Google Drive or GitHub, we
+00:04:17.358 create our own API layer where for Slack
+00:04:20.000 for example, we have a function that is
+00:04:22.479 send message and with that we can
+00:04:24.560 communicate with Slack. And now when we
+00:04:27.040 want to integrate that with our LLM, we
+00:04:28.960 either create custom logic and at some
+00:04:31.040 point in our application when we have
+00:04:32.720 all the data, we send it or when we want
+00:04:35.199 the LLM to dynamically use that tool, we
+00:04:38.800 can do that through fun function calling
+00:04:40.639 and for example using a tool definition
+00:04:42.560 and then providing that to the LLM. So
+00:04:45.040 this is what we've been doing for quite
+00:04:47.199 some time already. And this is exactly
+00:04:50.000 the key point why I was first very
+00:04:52.080 hesitant about diving into MCP because
+00:04:55.040 fundamentally as we will discover MCP
+00:04:57.919 doesn't introduce any new functionality
+00:05:00.320 to a large language model or to building
+00:05:02.320 AI systems that we couldn't do in the
+00:05:04.960 past years already. It's rather just a
+00:05:08.000 new way of doing things. And that's
+00:05:09.600 exactly what you see over here on the
+00:05:11.199 right where now in the middle we have
+00:05:13.680 this layer over here, this protocol
+00:05:15.919 that's going to unify an API that we
+00:05:19.520 make available to an LLM. And now the
+00:05:22.800 benefits of this is that now rather than
+00:05:26.080 each and every developer on the world
+00:05:27.840 creating their own kind of definitions
+00:05:29.840 for how to integrate with Slack with
+00:05:31.680 Google Drive and all kinds of systems,
+00:05:34.240 we now have a standard protocol that
+00:05:36.960 exactly defines how you should specify
+00:05:39.680 your schemas and your functions and even
+00:05:41.919 your your documentation and arguments.
+00:05:43.919 So when you give it to the MCP layer,
+00:05:46.320 your AI applications can now seamlessly
+00:05:49.039 integrate with that via a unified API.
+00:05:51.759 So now that we understand that MCP
+00:05:53.680 fundamentally doesn't add any new
+00:05:55.639 capabilities to working with LLMs, but
+00:05:58.400 rather is just a standardized way of
+00:06:00.800 making tools and resources available to
+00:06:02.720 LLMs. We can start to see what happened
+00:06:05.039 in February. So MCP is technically a
+00:06:07.440 very solid and lightweight protocol and
+00:06:09.680 more and more companies and developers
+00:06:11.520 started to realize this where over time
+00:06:14.080 if more and more people would use MCP we
+00:06:16.800 could standardize and make our life as
+00:06:18.880 developers a lot easier by not every
+00:06:21.520 time reinventing the wheel when we for
+00:06:23.440 example wanted to connect our AI
+00:06:25.039 services to Slack or GitHub or Google
+00:06:27.039 Drive etc. And this trend started to
+00:06:28.800 pick up where now there are already
+00:06:30.319 hundreds of officially supported surfers
+00:06:32.560 by major tech companies and all kinds of
+00:06:35.440 tools and apps that expose their API via
+00:06:38.400 an MCP server which now makes it very
+00:06:41.199 easy for you as a developer to come in
+00:06:43.039 and start integrating your AI systems
+00:06:45.120 and agents with these tools that you see
+00:06:47.039 over here for example. And this hype
+00:06:48.800 continued to now even open AAI
+00:06:50.639 entropic's biggest competitor supporting
+00:06:52.960 MCP in their agent SDK which resulted in
+00:06:55.759 MCP essentially winning which is
+00:06:57.919 outlined in his excellent blog post here
+00:06:59.520 by Leighton Space and despite all the
+00:07:01.520 critique around the hype on social media
+00:07:03.280 right now. So here's an example just saw
+00:07:05.199 someone use MCP to drive a car to the
+00:07:07.280 grocery store remotely to buy a sausage
+00:07:09.199 bread. LLM drove it with MCP on airplane
+00:07:12.080 Wi-Fi. pretty much explaining that
+00:07:13.680 everyone is just using MCP for MCP to
+00:07:15.919 solve all kinds of problems around LLMs
+00:07:17.919 where you really don't need MCP. But
+00:07:20.160 despite all that, the number one thing
+00:07:21.599 that MCP has going on right now is the
+00:07:23.520 adaptation rate where the power of any
+00:07:25.360 new protocol derives from its adaptation
+00:07:28.000 aka the ecosystem. And if we look at the
+00:07:30.000 GitHub star history from some of the
+00:07:31.599 other popular AI frameworks and
+00:07:33.280 libraries that simplify building apps
+00:07:35.120 with LLMs, we can clearly see the
+00:07:37.199 exponential trend that MCP is on right
+00:07:39.599 now, which is nothing compared to
+00:07:41.039 anything we've seen so far. And it will
+00:07:42.800 most likely overtake all of them in the
+00:07:44.560 next few months. All right, so now we
+00:07:45.919 understand from a high level what MCP
+00:07:47.520 does, and we even covered a little bit
+00:07:48.800 of history that future engineers might
+00:07:50.560 even learn similar to how they learned
+00:07:52.400 about HTTP. But anyway, now you might be
+00:07:54.960 wondering, "Okay, Dave, I kind of like
+00:07:56.800 get it, but what as developers can we do
+00:07:58.800 with it?" So, let's cover that right
+00:08:00.240 now. All right, so let's get into part
+00:08:01.759 two, understanding MCP at a technical
+00:08:03.759 level. And if you're like, "Dude, stop
+00:08:05.199 talking. Just show me the goat." Again,
+00:08:06.800 feel free to skip to the next section.
+00:08:08.560 This is the last theoretical part. I'll
+00:08:10.479 cover this briefly, but again, there are
+00:08:12.319 some fundamental things that you need to
+00:08:14.080 understand about MCP in order to work
+00:08:16.560 with it effectively. So you need to
+00:08:18.240 understand some common terminology that
+00:08:20.160 we will cover and that I will explain
+00:08:21.680 using this image over here which I
+00:08:23.120 copied from the official MCP
+00:08:24.879 documentation. You will find these terms
+00:08:26.879 throughout the uh documentation as well
+00:08:28.800 throughout as well as throughout the
+00:08:29.919 video tutorials here that I have. So
+00:08:32.240 let's start with hosts. So hosts are
+00:08:35.440 programs like claw desktop idees any
+00:08:38.080 other application or more interesting
+00:08:40.159 for developers your Python application
+00:08:42.479 uh but that wants to access data through
+00:08:44.640 the MCP protocol and then you have your
+00:08:46.720 MCP clients which are your protocol
+00:08:48.800 clients that maintain a one-on-one
+00:08:50.240 connections with your servers which
+00:08:52.240 brings us to the next part MCP servers.
+00:08:54.560 So MCP servers are lightweight programs
+00:08:57.040 that each expose specific capabilities
+00:08:59.120 through the standardized model context
+00:09:01.120 protocols. And what they can expose are
+00:09:02.800 tools, resources, and prompts. More on
+00:09:05.040 that later. So these three components
+00:09:06.800 really make up the core architecture of
+00:09:08.560 MCP. But through MCP, you can also
+00:09:11.279 connect with local data sources as well
+00:09:13.920 as remote services via the internet, for
+00:09:16.640 example, via APIs. And hey, if you're
+00:09:18.640 liking this video so far, please leave a
+00:09:20.399 like and also consider subscribing and
+00:09:22.160 make sure to share it with your team so
+00:09:23.680 they can also learn about how to
+00:09:25.040 integrate MCP effectively in the
+00:09:26.800 projects you're working on. And now
+00:09:28.160 let's look at the following diagram to
+00:09:30.160 better understand that. So all the way
+00:09:32.080 on the left over here, we have the hosts
+00:09:34.080 with the MCP client. So again, this can
+00:09:36.080 be anything like claw desktop IDE tools
+00:09:38.800 or your custom Python back end or
+00:09:40.560 application. Then in the middle layer
+00:09:42.320 over here, we have servers. So here you
+00:09:44.320 can see we have server A, B and C which
+00:09:46.480 can all have a different purpose. They
+00:09:49.040 have different tools and definitions,
+00:09:51.040 different utilities that we can use them
+00:09:52.720 for. Now your host through the MCP
+00:09:55.680 client over the MCP protocol can connect
+00:09:58.399 to that server and then interact with
+00:10:00.560 that. So that is how the communication
+00:10:02.480 is set up and within your host
+00:10:04.880 application you can essentially pull
+00:10:06.640 data from the MCP server. And now there
+00:10:09.279 are a lot of tutorials online that show
+00:10:10.880 you how you can set up a server and then
+00:10:12.320 integrate it with cloud desktop. All the
+00:10:14.160 initial tutorials that I found online
+00:10:16.160 were always about cloud desktop. And I
+00:10:18.880 couldn't really fully understand this
+00:10:20.800 from a developer perspective where right
+00:10:23.519 now what you should really consider is
+00:10:25.360 that there is a really clear distinction
+00:10:27.279 between using MCP for local tools that
+00:10:31.440 you use as personal AI assistance so
+00:10:33.760 that you as a user use in your
+00:10:35.519 application in cloud desktop or cursor
+00:10:37.839 or windsurf or you as a developer
+00:10:40.480 creating a surfer and then creating a
+00:10:42.240 client application on your own that
+00:10:44.160 connects with that server. That's really
+00:10:45.920 a key distinction that we will cover
+00:10:47.839 further in this video. And now then on
+00:10:49.360 your MPC server, you can define your
+00:10:51.200 application specific logic. And this can
+00:10:53.279 be anything. But for this context and to
+00:10:55.680 better understand it as a developer, you
+00:10:57.360 can literally just think about this as
+00:10:58.880 any Python function. You can put any
+00:11:01.040 kind of function. Whatever the outcome,
+00:11:03.040 whether it's a simple calculation,
+00:11:05.120 putting a string in uppercase or
+00:11:07.040 connecting to your database, it doesn't
+00:11:08.959 matter. you can create a function and
+00:11:10.640 that is the utility that is the logic
+00:11:12.399 that you put on that server that you can
+00:11:14.240 then make available to your host
+00:11:16.480 application. So when it comes to working
+00:11:18.079 with MCP as a developer you need to
+00:11:19.920 understand three things. The first one
+00:11:21.680 is understanding how you can set up a
+00:11:23.600 server. Now this can be a server you
+00:11:25.440 build on your own with custom logic
+00:11:27.040 which is what we're going to do in this
+00:11:28.320 video or you can simply copy and paste
+00:11:30.560 some of the example servers that are
+00:11:32.800 already available for some of the
+00:11:34.560 companies and apps listed here or that
+00:11:36.399 you'll find online. So that's part one,
+00:11:38.720 setting up a server. Then the second
+00:11:40.880 thing that you need to understand is how
+00:11:42.480 you can set up a host application and
+00:11:44.480 then connect with your server through
+00:11:46.320 the client. So this is also new and this
+00:11:48.720 is something that we're also going to
+00:11:49.839 cover of course within this video. And
+00:11:51.600 our client in this case is going to be
+00:11:53.120 our own custom Python back end. And then
+00:11:54.959 the final part that we need to
+00:11:56.079 understand is this right layer over here
+00:11:57.680 and that's simply how to connect local
+00:11:59.279 data sources or remote services to a
+00:12:01.440 server via Python. And this is nothing
+00:12:03.040 new. This is just writing simple Python
+00:12:04.880 functions to implement the logic that
+00:12:06.560 you need. All right. And there's one
+00:12:07.839 more thing that you need to understand
+00:12:09.279 about MCP and it's probably the most
+00:12:11.360 important thing to understand about this
+00:12:13.120 whole protocol as a developer. And until
+00:12:15.200 I fully understand what this was, I
+00:12:17.360 still had a hard time to wrap my head
+00:12:19.279 around the utility of MCP. And that
+00:12:21.440 concept is about the two transport
+00:12:23.279 mechanisms that you can use with MCP,
+00:12:26.240 namely standard IO and server send
+00:12:29.040 events. So to understand that let's
+00:12:31.440 first get back to this image over here
+00:12:33.920 where we can see everything happening on
+00:12:36.959 the same machine except for the remote
+00:12:38.959 services but the MCP server and the MCP
+00:12:41.760 host with the CL MCP client all lives on
+00:12:44.560 the same computer. So this could be your
+00:12:46.480 laptop but this could also be the server
+00:12:48.240 that you deploy it to. And when I first
+00:12:50.639 started to explore MCP, I really had
+00:12:53.360 this question with like what's the point
+00:12:56.160 of setting up a dedicated server and
+00:12:58.560 then connecting that to your application
+00:13:00.720 if everything lives on the same machine.
+00:13:03.279 To me, this just felt like a very
+00:13:05.839 cumbersome way of defining your tools
+00:13:09.200 for your LLM and defining your AI
+00:13:11.040 application and then having to spin up a
+00:13:12.959 server and then make the connection
+00:13:15.040 rather than just having a simple Python
+00:13:16.880 file, call it tools.py, Pi and import
+00:13:19.120 that. So I really couldn't wrap my head
+00:13:21.839 around like why would you make things so
+00:13:24.480 complex if you just run it on your own
+00:13:26.720 computer and yeah okay I could
+00:13:28.079 understand how you have all of these
+00:13:29.680 predefined servers available that you
+00:13:31.440 could quickly copy paste into your
+00:13:33.200 project so they could help you to save a
+00:13:35.440 little bit of time on development right
+00:13:37.040 but at least for the projects we were
+00:13:38.720 working on most of the tools that we
+00:13:40.560 were using were limited to either one
+00:13:42.480 two three and these were just simple
+00:13:43.920 Python function that you could probably
+00:13:45.440 spin up with uh with cloth or cursor in
+00:13:47.920 like one prompt So, I still couldn't
+00:13:50.639 really see the full utility of this
+00:13:53.279 until I learned about the different ways
+00:13:56.240 that you can really set this up because
+00:13:58.480 if you follow the quick starts and if
+00:14:00.480 you follow most of the tutorials that
+00:14:02.560 you'll find online, everyone is using
+00:14:05.040 the standard IO method where everything
+00:14:07.680 just lives on your local machine. You
+00:14:10.639 spin it up and from one single Python
+00:14:12.880 file, you essentially connect to the
+00:14:15.279 server and you run it. And there's just
+00:14:17.120 this added layer of complexity that you
+00:14:19.600 need to implement. But you can also take
+00:14:23.120 your server and put it really somewhere
+00:14:25.920 else. So this could be on a remote
+00:14:27.519 server on a completely different
+00:14:28.880 machine. And then you can connect to it
+00:14:31.440 via server events using HTTP. And now
+00:14:36.000 your MCP server is accessible via an
+00:14:40.079 API. And the different mechanisms are
+00:14:43.120 visualized over here where if we focus
+00:14:46.000 on remote development, I highlighted
+00:14:48.160 with the different colors that this is a
+00:14:50.000 different machine, different server that
+00:14:51.360 you're interacting from. So you as a
+00:14:53.279 developer could have one server where
+00:14:55.199 you maintain all your tools and then you
+00:14:57.920 have could have various client
+00:14:59.800 applications that connect to that same
+00:15:02.880 server. So now you can share multiple
+00:15:05.600 resources, multiple tools throughout the
+00:15:08.240 different projects and applications that
+00:15:10.480 you're building. And you could also then
+00:15:12.480 in parallel spin up multiple servers. So
+00:15:14.639 you can have multiple servers, multiple
+00:15:16.760 clients. And this is really a
+00:15:19.160 fundamental component to understand as a
+00:15:22.160 developer because if you're using the
+00:15:25.040 standard IO transport, it's all uh
+00:15:28.240 restricted to local development. And I I
+00:15:30.959 still believe right now that is just a
+00:15:32.959 very like cumbersome way of making tools
+00:15:35.680 available for an LLM. And quick note on
+00:15:37.760 that one, I'm referring to using MCP in
+00:15:39.920 your own custom Python back ends. So not
+00:15:42.160 in using for example cloud desktop or
+00:15:44.480 other application because for that using
+00:15:46.639 the standard IO on your local machine is
+00:15:48.480 still very effective because you can
+00:15:50.000 simply create the servers and these
+00:15:51.519 tools on your local machine can use them
+00:15:53.120 very effectively without having to do
+00:15:54.959 complex integrations. But this is really
+00:15:57.199 where I see most of the utility in. So
+00:16:00.079 that's also really what we're going to
+00:16:01.759 cover. And I haven't seen a lot of
+00:16:03.440 tutorials really get into this and
+00:16:05.360 showing you examples of about how to
+00:16:07.360 actually put this into an application,
+00:16:09.279 set up the server via Docker, connect to
+00:16:11.279 it, and build real applications. So
+00:16:13.759 that's a very critical distinction to
+00:16:15.839 understand. So now that you know all the
+00:16:18.320 theory, let's dive into some practical
+00:16:20.639 examples where I'm also going to clearly
+00:16:22.639 show you the differences between
+00:16:24.079 standard IO and using HTTP. And now the
+00:16:26.880 nice thing for us as Python developers
+00:16:28.639 is that there is an official Python SDK
+00:16:30.880 for MCP. And this is going to make our
+00:16:32.880 lives a lot easier because as you'll
+00:16:35.040 find out with this SDK, we can simply
+00:16:37.920 create surfers and connect to them in
+00:16:40.639 really just a few lines of Python. All
+00:16:43.120 you really need is to add the following
+00:16:45.199 pip package MCP CLI to your environment
+00:16:48.399 and literally you're good to go. So if
+00:16:51.519 you want to learn more about the
+00:16:53.120 underlying SDK, for example, some of the
+00:16:54.959 parameters that you can tweak and really
+00:16:56.560 want to go deep, this is the resource to
+00:16:58.800 go through. All right, so let's set up
+00:17:00.959 our first server. All right, so I am in
+00:17:02.959 the repository over here and we're going
+00:17:04.720 to be working from part three right now.
+00:17:06.880 Simple server setup. At the top level of
+00:17:10.240 this crash course, there is a
+00:17:12.199 requirements.txt. So, make sure you have
+00:17:14.400 a virtual environment set up. Install
+00:17:16.799 this. I uh nowadays do this via UV. If
+00:17:19.439 you don't know what UV is, you should
+00:17:20.799 really look into that. It's awesome.
+00:17:22.079 It's much better than just using pip.
+00:17:23.919 So, with that out of the way, make sure
+00:17:25.439 that you can run this code. And let's
+00:17:27.280 get into this very simple server. As you
+00:17:30.080 can see, it's about like 31 lines of
+00:17:32.559 Python code. It's very simple. And let's
+00:17:34.720 cover these one by one to understand
+00:17:37.039 what's going on. Now the purpose of this
+00:17:39.679 repository is not only to teach you how
+00:17:42.080 you can set up your servers but also to
+00:17:44.320 act as really a boilerplate or a
+00:17:46.480 starting point when you want to build
+00:17:48.240 new servers. So that's what I've been
+00:17:50.080 doing. So I have these templates laying
+00:17:51.600 around. So I don't have to remember the
+00:17:53.200 syntax. I can simply come in here and
+00:17:54.880 copy paste it. So to set this up all we
+00:17:58.320 really need to do to create an MCP
+00:18:00.000 server is do this. It's literally as
+00:18:01.919 simple as this. And this is possible
+00:18:03.520 because of the Python SDK that we have
+00:18:06.320 installed. And what you can immediately
+00:18:08.880 see is that it's very similar to what
+00:18:12.240 you would see if you work with for
+00:18:13.679 example fast API. And this is also how I
+00:18:17.120 want you to really start thinking about
+00:18:18.919 MCP. So with fast API to create a Python
+00:18:22.640 back end to create an API also what you
+00:18:24.880 have to do is you import fast API then
+00:18:26.720 you create your app. This is literally
+00:18:28.880 the same. they probably looked at fast
+00:18:30.400 API and copied some of these uh the
+00:18:33.280 design principles from there because I
+00:18:35.200 don't think this is a coincidence. So
+00:18:37.600 all we really need to do is right now is
+00:18:40.400 we can give it a name but this is all
+00:18:41.919 optional. We can leave it empty and for
+00:18:45.200 demonstration I've already put in a host
+00:18:48.000 and a port here. Now, without diving
+00:18:50.400 into the details just yet, if you want
+00:18:54.240 to use uh your server via HTTP, so you
+00:18:57.360 want to have it on a separate machine,
+00:18:59.039 you need to uh specify uh the host and
+00:19:01.919 the port. But if you do the standard IO,
+00:19:03.919 which you'll see in most tutorials that
+00:19:05.679 you'll find online, this is not even
+00:19:07.440 needed because we simply connect with it
+00:19:09.600 via our our local file system and just
+00:19:11.760 point to the path. But that's the first
+00:19:14.000 step in setting up our server. We call
+00:19:16.160 fast MPC and we have this instant over
+00:19:18.080 here. Now the second thing that you most
+00:19:20.400 likely want to do is you want to add
+00:19:22.559 tools to your server and they made this
+00:19:25.520 really simple as well. You can simply
+00:19:28.000 add tools using this decorator. So we
+00:19:30.480 can call the at MCP where MCP is
+00:19:32.880 referring to this name. So if this has
+00:19:35.440 another name let's call let's call this
+00:19:37.360 as then this should also be ass. So
+00:19:39.200 that's just a reference that's in there.
+00:19:40.960 And then we call tool and we can use
+00:19:43.440 this decorator to essentially take a
+00:19:45.559 function and say this is now a tool for
+00:19:48.320 our MCP server and we can simply copy
+00:19:52.400 paste this and now uh we have at three
+00:19:55.679 and we can have another function in here
+00:19:57.600 and you get the idea. Now this is about
+00:20:00.080 as simple as as it gets for defining a
+00:20:02.559 function but this can be anything. This
+00:20:04.320 can be connecting to your database. This
+00:20:06.000 can be connecting to Slack and sending a
+00:20:08.480 message. You can do anything in here as
+00:20:11.200 long as it's a Python function. It has
+00:20:13.280 arguments to uh put in here and you add
+00:20:15.760 the decorator. If you do that, if you
+00:20:18.480 follow that syntax, your MCP server will
+00:20:21.600 now make that available and list it
+00:20:24.000 really as as a resource that can be
+00:20:26.480 used. Now then coming to the bottom of
+00:20:28.640 this script over here. Here is the part
+00:20:31.440 to run this server. And there's a little
+00:20:33.679 bit of if else logic in here, but this
+00:20:35.600 is simply to make a distinction between
+00:20:38.320 running your server in the two different
+00:20:41.600 transport mechanisms that we discussed.
+00:20:44.240 So SSC or standard IO and most likely in
+00:20:48.400 a production environment or a serious
+00:20:50.000 application, you want to load this from
+00:20:51.679 an environment variable. But simply for
+00:20:53.760 the sake of demonstration, I just
+00:20:55.280 hardcoded it in here and so I can easily
+00:20:58.159 switch within this tutorial when I show
+00:21:00.000 the different client implementations in
+00:21:01.919 a bit. So I'm actually going to start
+00:21:03.360 with the standard IO mechanism where
+00:21:05.440 this if statements is going to hit
+00:21:07.039 because transport is standard IO. And
+00:21:08.880 then here you can see how this is going
+00:21:10.480 to be run. So it's
+00:21:11.799 MCP.run and we have transport and we put
+00:21:14.640 in standard IO. So again MCP refers to
+00:21:18.559 the MCP server that we created. So this
+00:21:21.520 is about as minimal as it gets when
+00:21:24.720 setting up an MCP server. And then here
+00:21:26.640 in the docs you can see an even simpler
+00:21:28.480 example if you use the standard IO
+00:21:30.240 method. So remember if it's all on your
+00:21:32.080 machine, one computer, you can simply do
+00:21:34.159 this. You just give to give it a name
+00:21:36.159 and then you can simply run it. So now
+00:21:38.720 that we have the server over here,
+00:21:40.240 server.py, what we can do is we can run
+00:21:42.720 this in a development mode. And this is
+00:21:45.280 a really cool way to inspect your MCP
+00:21:48.640 server and to test it. So you can do
+00:21:50.640 this with the MCP inspector. So what you
+00:21:52.880 can do if you come to your project, I'm
+00:21:54.240 here inside cursor. I've opened up a
+00:21:55.679 terminal. Make sure you're in the
+00:21:57.039 correct folder. So I need to cd into
+00:22:00.720 simple server setup. So here is the
+00:22:02.960 server that we want to run. And what you
+00:22:05.120 can then do is you can do
+00:22:06.840 mcp devaf and then server.py and then
+00:22:10.400 when we run that it's going to spin up
+00:22:12.880 that uh server. And first it's going to
+00:22:15.200 ask if you do this for the first time
+00:22:16.559 it's going to ask you to download the
+00:22:18.240 inspector. So I just hit y for that to
+00:22:21.039 download. And once that download is
+00:22:22.559 complete it spins up a server that we
+00:22:24.159 can now follow. And here you can see we
+00:22:26.000 are now inside the MCP inspector. So
+00:22:29.840 what we can do is we can hit connect and
+00:22:32.000 we can connect to our server. And here
+00:22:33.919 we can see everything that we can
+00:22:36.480 access. And most of it is empty right
+00:22:39.440 now. But there's one thing and that's
+00:22:41.360 going to be the tools because we have a
+00:22:43.360 very simple uh server with only one
+00:22:46.400 tool. So we can come in here and we can
+00:22:48.400 say list tools. And you can see we have
+00:22:50.480 one tool which is called add. Add add
+00:22:52.559 two numbers together. And you can see it
+00:22:55.039 simply copies all of the information
+00:22:56.960 from from in here. So the function is or
+00:22:59.200 the tool is called add based on the
+00:23:00.720 function name. And then we have the
+00:23:02.240 description which is simply the dock
+00:23:04.000 string over here that is added in here.
+00:23:06.240 And then we have the parameters A and B.
+00:23:08.240 So we can plug this in, we can test it
+00:23:10.559 and we get the result back six. Now, I
+00:23:13.200 think this is a very nice and neat way
+00:23:15.200 to test the various components that make
+00:23:18.320 up your server without actually having
+00:23:20.640 to uh write code for every component in
+00:23:23.280 order to test it. So, this inspector is
+00:23:25.120 also really great for debugging and to
+00:23:27.039 potentially explore some of the other
+00:23:28.559 things that you can implement on your
+00:23:30.080 server like prompts and resources where
+00:23:33.200 I don't see much use cases for those
+00:23:36.159 right now because you could for example
+00:23:38.240 also just make data or local data
+00:23:39.919 available via a tool. But if you go to
+00:23:42.080 the documentation for for example the
+00:23:43.919 resources here we can see the Python uh
+00:23:45.840 implementation on your server similar to
+00:23:48.400 how you can add a tool you can also list
+00:23:51.039 resources and read resources and you
+00:23:54.480 could specify local file pots in here.
+00:23:56.640 So let's say you have a server uh you
+00:23:58.480 dump some data on there and you want to
+00:24:00.400 make that available to your AI
+00:24:02.320 application. This is the way you do it.
+00:24:04.720 But typically what we see nowadays is
+00:24:07.039 you would either do this through some
+00:24:08.480 kind of like ragp pipeline in a factor
+00:24:10.559 database. So again I don't see much use
+00:24:13.360 cases for this right now but it's good
+00:24:15.120 that it's already implemented so that
+00:24:17.039 you can access local files through the
+00:24:18.960 server as well. And essentially the same
+00:24:21.440 thing for prompts. So you can register
+00:24:24.159 prompts. So here you can see define
+00:24:26.080 available prompts and then we can come
+00:24:27.760 to our server and you can create a list
+00:24:30.320 to store those prompts here. Again,
+00:24:32.799 right now, I could see how long-term if
+00:24:35.840 you really like fully integrate within
+00:24:37.679 the MCP ecosystem, having prompts in
+00:24:40.400 here that you can reuse throughout
+00:24:42.159 different projects can be nice as well.
+00:24:44.159 But right now, there are so many other
+00:24:45.919 ways to do this as well, like just doing
+00:24:47.919 it doing it in your project or using
+00:24:49.679 tools like Langfuse. Uh again, this is
+00:24:52.080 more of of the same what what we already
+00:24:54.320 could. And I see really the most added
+00:24:56.960 value right now is is really in the
+00:24:59.360 tools. But I want this to be a complete
+00:25:01.440 crash course. So you can reference to
+00:25:03.760 the docs here as well. So this is in
+00:25:05.360 part two, the readme file. Uh those are
+00:25:07.919 all the links to the official
+00:25:09.200 documentation where if you have a use
+00:25:10.880 case where you want to store prompts in
+00:25:12.320 there or local files, that is the way to
+00:25:14.559 go. And then real quick, if you're
+00:25:16.159 serious about learning Genai and you
+00:25:17.760 want to learn how to build production
+00:25:19.039 ready AI systems and agents, but you
+00:25:21.520 might be coming from a different role or
+00:25:23.200 background or you're new to AI at all,
+00:25:25.200 you might want to check out the first
+00:25:26.400 link in the description. It's a video of
+00:25:28.240 me going over how my company can help
+00:25:30.080 you with this. We're releasing our Gen
+00:25:32.080 AI accelerator program, which is our
+00:25:34.000 training program that we use to train
+00:25:35.679 our internal developers to work on the
+00:25:37.600 client projects that we're currently
+00:25:39.200 working on at data luminina. And we're
+00:25:41.039 making it available to the public as
+00:25:42.640 well. So, if you really want to do this
+00:25:44.159 professionally and want to learn AI
+00:25:45.919 engineering from first principles, you
+00:25:47.840 might want to check it out. All right,
+00:25:48.880 so we just saw how we could create a
+00:25:50.559 simple server, then spin it up and
+00:25:52.720 connect to it via the MCP inspector. But
+00:25:55.520 now let's go one step further and use
+00:25:57.840 this client standard io.py file to see
+00:26:00.720 how we can connect to this server from
+00:26:03.279 within our Python application. And we're
+00:26:06.000 going to use the Python SDK for this as
+00:26:08.480 well. So that this is really simple for
+00:26:11.039 us. So here you can see again just a few
+00:26:13.440 lines of code. And let's see what this
+00:26:16.000 looks like. So I'm going to run this in
+00:26:18.480 an interactive Python session. This is
+00:26:20.240 how I always like to uh run my code. it
+00:26:22.799 really helps me with debugging and
+00:26:24.159 checking all of the data variables. So
+00:26:26.159 you essentially use uh a Jupyter session
+00:26:28.400 behind the scene and that's why I use
+00:26:30.559 this
+00:26:32.200 nest_ynio.apply. If you just run this in
+00:26:34.320 the in the terminal uh like regular
+00:26:36.400 people, you don't need this and that's
+00:26:38.080 because out of the box this interactive
+00:26:39.600 session via Jupiter can't handle async
+00:26:41.600 processes and we have async functions in
+00:26:44.000 here. So that's why we have that in
+00:26:45.679 here. But let me show you what that
+00:26:47.120 looks like. And by the way, if you want
+00:26:48.720 to learn more about how I run this code,
+00:26:50.400 you can check out the link in the
+00:26:51.440 description where I have a full video
+00:26:53.360 covering how I set up my development
+00:26:55.120 environment. That's where I cover this.
+00:26:57.279 So let's cover what we're doing over
+00:26:59.600 here. We start with a simple main
+00:27:01.760 function and first we define our uh
+00:27:04.640 server parameters. So this is very
+00:27:06.880 simple. We're going to run this server
+00:27:09.360 with Python and the argument that we
+00:27:11.679 provide to it is a ser is our server.py
+00:27:14.880 file. So a context is always important
+00:27:17.600 here. So we're running everything from
+00:27:19.840 within this folder over here. So both
+00:27:22.799 the server and the client are in here.
+00:27:25.120 That's why we can simply refer to
+00:27:27.240 server.py which is going to refer to
+00:27:29.679 this file and we simply use the command
+00:27:31.919 python. So we run python server.py. So
+00:27:34.960 it's going to boot up this server behind
+00:27:37.039 the scenes. And since we have it to
+00:27:38.480 standard IO, this is going to call
+00:27:41.000 mcp.run and this will spin up our
+00:27:43.200 server. Now for context again we're all
+00:27:46.240 doing this on the same computer. So
+00:27:48.240 essentially through our host application
+00:27:50.080 we're going to call our server uh but we
+00:27:52.559 can do it in such a way where we don't
+00:27:54.799 have to spin it up first and then call
+00:27:57.360 our application. We just put the
+00:27:59.120 commands in here and the Python SDK
+00:28:01.520 takes care of that. So that's a really
+00:28:04.159 convenient way to uh to work with this.
+00:28:06.320 So here we can now look at how we
+00:28:08.399 connect to that server and this is just
+00:28:10.799 syntax from the SDK again where we set
+00:28:13.679 up the connection and we essentially
+00:28:15.919 create a session and we initialize it
+00:28:18.080 and this is going to run the or use the
+00:28:20.559 server parameters in order to make the
+00:28:22.720 connection. So let's see what that looks
+00:28:24.480 like if I store this in memory. So we
+00:28:27.200 have our server params in here and then
+00:28:30.880 we can set up a session and when I run
+00:28:33.120 that nothing will happen just a check
+00:28:34.799 that we now have initialized a session.
+00:28:37.679 So now let's see what we can do in here.
+00:28:40.320 So one of the things that we can do is
+00:28:41.760 we can list the available tools and with
+00:28:44.240 that we can essentially use our session
+00:28:46.240 and we can call the method list tools.
+00:28:48.720 Now again this is the same we can do the
+00:28:50.880 same thing for resources and prompts but
+00:28:53.279 we're going to solely focus on tools
+00:28:55.200 right now. So since this is uh really a
+00:28:57.840 session and we use the width, we really
+00:29:00.559 need to run everything together in order
+00:29:03.440 for the context to remain open. So I
+00:29:06.080 need to select all of this and I can run
+00:29:07.679 this and I can see right now if I go
+00:29:10.240 through this I list the tools and I
+00:29:11.600 print it. I can see available tools add
+00:29:14.159 and here we can see our simple
+00:29:16.720 calculator tool that we have that we
+00:29:18.399 also saw in the inspector. Right? So
+00:29:19.840 this is the only tool that's available.
+00:29:21.520 And now in the next step I could see uh
+00:29:24.000 our calculator tool. So we can use that
+00:29:26.640 and in order to do that we do again
+00:29:28.960 we're all using the session throughout
+00:29:30.799 this whole process and we do the call
+00:29:32.960 tool and we use the at and we put in the
+00:29:36.559 following arguments. So that's how we
+00:29:39.039 use our calculator tool. So let's now
+00:29:41.200 look at what we can do over here. And
+00:29:43.679 here you can see we have the tools we
+00:29:45.279 print it and now we call our tools as
+00:29:47.200 well. So now if I close this out again
+00:29:49.679 and I can use this whole process and run
+00:29:52.480 it at once again you will see the same
+00:29:55.640 operation. So what we have now
+00:29:57.919 essentially done we have effectively
+00:30:00.080 created the server. We have defined
+00:30:02.880 those server parameters on our client
+00:30:05.960 application using standard IO. We create
+00:30:09.600 a connection to that server. We use that
+00:30:12.720 and we call it our session. And then
+00:30:14.399 using that session object over here, we
+00:30:16.640 can interact with our server using the
+00:30:18.880 various methods that are available on
+00:30:20.480 here. For example, list tools and call
+00:30:22.640 tools. And now you're probably like,
+00:30:24.000 "Okay, Dave, I get it. But this again,
+00:30:25.760 this feels still like a very cumbersome
+00:30:27.600 way to make a function available in
+00:30:30.480 another file within the same project.
+00:30:33.120 Why not just import it?" And you're
+00:30:34.799 totally right. There's also no AI or any
+00:30:36.960 LLM integration in this example. And
+00:30:39.520 that's fundamentally really what MCP
+00:30:42.240 comes down to. It's just a standardized
+00:30:44.240 way of transferring information in the
+00:30:47.120 forms of tools, prompts, and and data
+00:30:49.919 from one way to really another place,
+00:30:53.039 but then in a way that is easily
+00:30:54.960 accessible for large language models.
+00:30:56.799 So, in the next section, we'll
+00:30:57.919 definitely go a lot deeper and I will
+00:30:59.200 show you how you can integrate LLMs with
+00:31:00.720 MCP. But for now, we still have to cover
+00:31:02.480 the SSE transport mechanism via HTTP.
+00:31:05.120 And in order to set that up, I'm going
+00:31:06.720 to come back to my server and now set
+00:31:08.399 the transport mode to SSE. Set that up.
+00:31:11.760 And now I can open up the client over
+00:31:14.240 here. So now what we can do is we have
+00:31:17.919 another client. It's very similar to
+00:31:20.640 what we saw in the standard IO
+00:31:22.880 mechanism, but now there is a different
+00:31:25.200 way that we connect to our server. And
+00:31:28.320 here you can see since we're running on
+00:31:30.000 the same local machine, we connect to
+00:31:32.399 local host and we use the port that we
+00:31:35.000 specified in our setup over here. So
+00:31:37.360 this refers to local host and then
+00:31:38.960 here's the port. So if I come over here
+00:31:42.000 right now within the client standard IO,
+00:31:45.519 I could just run this and I didn't need
+00:31:47.679 to spin up the server because the Python
+00:31:51.120 SDK takes care of that by creating the
+00:31:53.200 session using the server per apps. But
+00:31:55.519 if I now let's say if I come in here and
+00:31:58.159 I try to run this, I will get all kinds
+00:32:00.720 of errors because this session over here
+00:32:03.440 that we try to create, it cannot connect
+00:32:05.760 to the server. And that's because
+00:32:07.600 currently there's nothing going on at
+00:32:09.840 this address. So that's why it also says
+00:32:12.320 here make sure the server is running.
+00:32:14.960 And in order to do that, we need to
+00:32:17.200 again open up a terminal. We need to be
+00:32:19.200 in this folder. And we can call u
+00:32:21.799 runser.py or you can also just do python
+00:32:24.720 server.py. So depending on how you want
+00:32:26.720 to run it. So let's open up a new
+00:32:29.399 terminal. So let's see. Let's go into
+00:32:32.720 our
+00:32:33.799 MCP/crash course and we should be in
+00:32:36.880 still in chapter number three. So in
+00:32:40.320 here we have our server. So now I can
+00:32:42.159 call uv
+00:32:43.880 run
+00:32:46.919 server.py and this is going to spin up
+00:32:49.360 our server. So you can see this is now
+00:32:51.039 running on localhost port 8050. And now
+00:32:54.320 once this running, if I close this
+00:32:56.159 window over here, I can run this whole
+00:32:57.840 file and I will have the exact same
+00:32:59.760 output over here because it's literally
+00:33:01.679 doing the same thing. So it's opening up
+00:33:03.919 the session although right now via a
+00:33:06.480 different transport mechanism via SSE
+00:33:09.600 and it's creating the session and after
+00:33:11.279 that it's exactly the same. It's just a
+00:33:13.760 different way of establishing the
+00:33:15.440 session. And again I want to highlight
+00:33:17.840 this over here. So this really comes
+00:33:19.519 back to are you working with local
+00:33:21.760 development where the standard IO is
+00:33:24.320 possible but you can also do it via this
+00:33:27.200 method that I just explained over here
+00:33:29.120 where you're essentially using an API
+00:33:31.360 and using an HTTP request. But if you
+00:33:34.240 were to put this on a different server
+00:33:35.679 or a different machine, this is the only
+00:33:37.840 way that you can do it. All right, so by
+00:33:39.919 now you already understand the most
+00:33:41.440 fundamental aspects that you need to
+00:33:43.120 know about working with MCP. And this
+00:33:45.039 knowledge alone will probably already
+00:33:46.399 put you in the top 5% of developers and
+00:33:48.880 people working with MCP. But now let's
+00:33:51.039 go one step deeper and see how you can
+00:33:53.039 actually start to build applications
+00:33:54.880 around LLMs using MCP. And for that
+00:33:57.760 we're going to spin up a new server. Now
+00:34:00.240 we're inside part number four over here.
+00:34:02.480 So this is the OpenAI integration. I'll
+00:34:05.200 scroll down uh through the server file.
+00:34:07.279 And you can see it's very simple. Again,
+00:34:08.960 we set up the server. We use all the
+00:34:11.119 same settings and we have one tool. And
+00:34:13.280 now this is a very simplified tool and
+00:34:15.679 this is just as a demonstration to
+00:34:17.760 emulate rack. So retrieval augmented
+00:34:20.000 generation. So what we're doing is I
+00:34:22.079 created a data folder in here and in
+00:34:23.918 there is a JSON file. So there are five
+00:34:27.040 question answer pairs from a
+00:34:29.520 hypothetical company knowledge base. So
+00:34:31.599 for example, what's our company uh
+00:34:33.359 vacation policy? Now typically you
+00:34:36.239 within an AI application you would put
+00:34:38.159 this into a factor database and then
+00:34:39.918 through rack you can retrieve the most
+00:34:41.520 relevant chunks or results and then
+00:34:43.760 provide that to the LLM in order to give
+00:34:46.320 your application domain specific
+00:34:47.918 knowledge. Now we're going to emulate
+00:34:50.079 that in in this very simple example
+00:34:52.239 here. So this is a tool that is called
+00:34:54.960 get knowledge base. So the goal of this
+00:34:56.800 tool is to retrieve the entire knowledge
+00:34:58.400 base as a formatted string. So we're not
+00:35:00.640 going to do filtering or selection.
+00:35:02.400 We're just going to take the whole thing
+00:35:03.920 and provide it to the LLM. But you could
+00:35:06.920 simply copy this example and instead of
+00:35:09.839 what I do right here, implement your
+00:35:12.800 logic to perform similarity search or
+00:35:15.599 hybrid search and retrieve the top top K
+00:35:18.880 top five results, for example. It's all
+00:35:21.440 the same. It's just about a different
+00:35:23.040 way of implementing it. And that's
+00:35:24.640 really what you should keep in mind when
+00:35:26.160 working with these tools. I'm showing
+00:35:27.760 you simple examples, but this can be any
+00:35:30.320 function you like. And then we at the
+00:35:33.520 end we simply have the run statement
+00:35:35.839 where we run the server and we use the
+00:35:38.079 standard IO example in this case because
+00:35:41.119 it's all on my local machine and it's
+00:35:42.880 just a little bit simpler to set that
+00:35:44.560 up. All right. So nothing new on the
+00:35:46.480 server side. But now let's look at the
+00:35:48.480 client. And there's a little bit more
+00:35:50.640 code to this because right now the
+00:35:53.440 client is not only about creating the
+00:35:57.680 connection and then listing the tools
+00:35:59.520 and just like doing a simple
+00:36:00.720 calculation. Even though this is really
+00:36:02.160 about, okay, how would we build a client
+00:36:04.880 that can integrate with or connect to an
+00:36:07.520 MCP server, get tools from it, and then
+00:36:10.240 also actually use those and integrate
+00:36:12.640 them with AI. So, I created this MCP
+00:36:15.680 OpenAI client, and it's a class, and I
+00:36:18.800 will be walking you through the various
+00:36:20.800 functions that we have in here in order
+00:36:23.200 to show you what this can do. So, first,
+00:36:24.960 let me scroll down to give you a a full
+00:36:27.119 look of everything that's going on here.
+00:36:29.200 And then let's come all the way down to
+00:36:31.520 the bottom. So what we can do with this
+00:36:34.960 file is we can essentially establish the
+00:36:38.400 client by creating uh a new instance
+00:36:41.520 really of this class that we created and
+00:36:43.599 then we can connect to the server
+00:36:45.680 through the function that we have
+00:36:47.839 implemented over here. So you can see
+00:36:49.680 right now the connection part on the
+00:36:52.400 client. I've simply put that into a
+00:36:54.320 server. You can see again this is all
+00:36:56.640 similar stuff. You have the server
+00:36:58.079 parameters. We run it via Python. We
+00:37:00.320 just link the server script because
+00:37:02.320 again we're working locally, same
+00:37:04.560 machine, standard IO. You now know how
+00:37:06.720 the stuff works. The server is in the
+00:37:08.800 same folder. That's why why we call it
+00:37:10.839 server.py. And now here's how we can
+00:37:13.119 connect to it and we can create that
+00:37:15.599 session and list the tools. So that's
+00:37:18.560 the first step in let's see starting to
+00:37:22.320 work with it. So now we can create this
+00:37:24.560 client. We can connect to this server.
+00:37:26.960 So when we have that we can now start to
+00:37:29.440 ask questions and that is because this
+00:37:31.599 client that we created also has a
+00:37:33.440 process query function in here and here
+00:37:36.079 you can see where we can start to
+00:37:37.599 integrate the AI components. So when we
+00:37:41.440 call this process query we can put in a
+00:37:44.560 query which is a string. So which is the
+00:37:46.880 question. So now you can start to
+00:37:48.640 imagine okay as a developer you're
+00:37:50.880 building an AI system and some
+00:37:52.560 information is coming in from a user.
+00:37:54.320 Let's say you're building a chatbot and
+00:37:56.079 now you want to take that answer and you
+00:37:58.560 want it through run a run it through
+00:38:00.400 like the rack pipeline get the
+00:38:02.000 information and then synthesize the
+00:38:03.599 results. That's what's going on over
+00:38:05.599 here. But rather than hard- coding
+00:38:07.800 everything, we're going to make this
+00:38:10.400 tool that we created on our server,
+00:38:12.640 which is the get knowledge base. We're
+00:38:14.240 going to make that tool available to our
+00:38:16.960 large language model. And we're going to
+00:38:19.040 do that through MCP. And if you're
+00:38:21.680 already familiar with working with tools
+00:38:24.160 here, you can already start to compare
+00:38:26.720 the different options, right? Again,
+00:38:28.560 this is nothing new. This is also
+00:38:30.240 something that we could just do in this
+00:38:32.560 file. So in this client.py, I could have
+00:38:35.359 simply created that tool, then make it
+00:38:37.920 available in here, but we load it from
+00:38:40.720 our server because of all of the
+00:38:43.040 benefits around MCP that we described.
+00:38:45.520 But again, it's always important to
+00:38:47.200 compare what would this look like if I
+00:38:50.000 weren't using MCP and what does it look
+00:38:52.720 like right now. You fully need to
+00:38:54.240 understand that as a developer in order
+00:38:55.920 to make the right design choices and
+00:38:58.000 architecture choices in your
+00:38:59.520 applications because you don't need it
+00:39:01.599 every time. So the first step in this
+00:39:05.119 process query is getting the MCP tools
+00:39:08.400 and that's another function that we
+00:39:09.920 implemented in here which is something
+00:39:11.920 we already saw right we have our session
+00:39:14.800 and we can list the tools. So this is
+00:39:17.440 something we did in the previous
+00:39:18.560 example. And now all I'm doing in this
+00:39:21.040 example since we're working with OpenAI,
+00:39:24.079 I am going to take that tool and I'm
+00:39:25.920 going to look at the data schema and I'm
+00:39:27.680 going to put it in the exact syntax that
+00:39:30.240 the OpenAI API requires. So this is the
+00:39:34.320 the function definition really of what a
+00:39:36.880 tool looks like and this is something
+00:39:39.920 specified by OpenAI. So we adhere to
+00:39:42.480 this so that that we know when we put
+00:39:44.560 our tools in this structure, we can send
+00:39:47.520 it to OpenAI and OpenAI will know how to
+00:39:50.320 work with it. So that's important to
+00:39:52.720 keep in mind here. That's simply what
+00:39:54.079 we're doing. So let me make this a
+00:39:56.320 little bit more practical by showing you
+00:39:57.839 what we can do here. So again I'm
+00:39:59.359 spinning up a session and here you can
+00:40:02.000 can again see what's convenient about
+00:40:04.960 this way of running the code. So we can
+00:40:06.560 here essentially let's see we can create
+00:40:09.119 the server and it will run this and it
+00:40:11.839 says connected to the server and then it
+00:40:13.760 lists the tools. So we have the get
+00:40:15.280 knowledge base. So we now know that our
+00:40:17.599 MCP server has access to this tool. Now
+00:40:21.119 we can then come here and we have this
+00:40:22.880 query. So let's ask what is our company
+00:40:25.839 uh vacation policy. So this is an an a
+00:40:28.720 question that can be answered using this
+00:40:31.359 element here in the knowledge base. And
+00:40:34.079 now what's going to happen in the next
+00:40:36.400 step if we come back to our client you
+00:40:38.800 can see that we're going to um create
+00:40:41.040 this response and then print it. So this
+00:40:42.640 is the final answer that we would be
+00:40:44.320 getting back from our system. So let's
+00:40:46.800 quickly see what's going on over here.
+00:40:49.040 So we get the tools then we put it into
+00:40:52.480 we get it into the right format that
+00:40:54.320 OpenAI expects and then we make an LLM
+00:40:58.560 uh or we make an API call to OpenAI. So
+00:41:01.359 if you've worked with OpenAI, this is
+00:41:03.359 nothing new for you. We use the chat
+00:41:05.440 completions uh API. We put we plug in a
+00:41:08.400 model which we specified earlier on in
+00:41:10.960 the initialization of this class. So we
+00:41:13.359 use GPT40 in this case. Scrolling down.
+00:41:16.480 Then we create a message object where we
+00:41:18.720 simply we have no system prompt. We just
+00:41:20.640 say user content and we put in the
+00:41:22.240 question. So what's the company's
+00:41:23.839 vacation policy? And now here's where
+00:41:26.079 it's get interesting. So now what we do
+00:41:29.040 is since we now have the tools which are
+00:41:31.359 available on our MCP server and we have
+00:41:34.319 converted them into the right format
+00:41:36.240 that OpenAI expects using get MCP tools
+00:41:39.760 we can now add that to our call and for
+00:41:44.319 to understand this and what's going on
+00:41:46.400 behind the scenes you not you don't
+00:41:48.640 necessarily need to understand anything
+00:41:50.160 about MCP but you need to understand how
+00:41:52.160 tools and function calling works with
+00:41:54.319 large language models. Now, if you're
+00:41:56.000 completely new to this, I have other
+00:41:57.440 videos covering this as well, but
+00:41:59.359 essentially all it does is the LLM
+00:42:02.319 considers your whole request. So, your
+00:42:04.160 your question, what you what you send
+00:42:06.000 your prompt, what you send to the API,
+00:42:07.839 and also the available tools. And
+00:42:10.240 because of the description that you have
+00:42:12.560 within your tools, it can decide to call
+00:42:15.760 that tool yes or no. And calling a tool
+00:42:19.280 simply means looking at the the the
+00:42:21.280 schema or the function and the
+00:42:22.640 parameters that you need within that
+00:42:25.119 function and then looking at the context
+00:42:27.040 of the user question and then providing
+00:42:29.520 you with the parameters that you need to
+00:42:32.480 plug into the function that you can run
+00:42:35.440 in your application. And now I fully
+00:42:37.280 understand that is pretty hard and
+00:42:38.720 abstract to wrap your head around the
+00:42:40.640 first time if you're new to this. So let
+00:42:42.480 me show you the example end to end and
+00:42:44.720 then I'm going to break this down step
+00:42:46.640 by step to really see all of the
+00:42:48.240 different building blocks that come
+00:42:49.920 together in here. So this is within the
+00:42:53.119 uh MCP OpenAI client again. And since
+00:42:55.760 this is all in a class, we can just run
+00:42:58.079 this in a nice and neat way all at once.
+00:43:00.640 So what's our company's uh vacation
+00:43:02.720 policy? I'm going to run this. It's
+00:43:05.359 going to list the tools. It's going to
+00:43:06.960 run the query and then in the background
+00:43:09.839 the LLM is going to use the tool
+00:43:12.400 retrieve the right information via the
+00:43:14.400 MCP layer and then provide that back to
+00:43:16.960 OpenAI in order to give us the final
+00:43:19.440 reply. Our company's vacation policy is
+00:43:21.680 as follows which it got from our
+00:43:23.760 knowledge base which is essentially uh
+00:43:26.240 accessed through our server even though
+00:43:28.240 the files are right next to each other
+00:43:30.079 but this is accessed through the server.
+00:43:32.960 So now like I've said let's come back to
+00:43:35.599 this simple implementation over here.
+00:43:37.440 And what I did is that I essentially
+00:43:39.119 took this nice and neat client that is
+00:43:41.839 all wrapped up into a nice class that
+00:43:44.079 you would use in a production
+00:43:45.280 environment for example I have now
+00:43:47.200 broken it down into separate functions.
+00:43:50.400 And the nice thing about this is if
+00:43:52.000 we're using the interactive uh Python
+00:43:54.000 window that I'm using on the right all
+00:43:55.440 the time we can walk through this one by
+00:43:57.920 one one step at a time. So let me show
+00:44:00.160 you what that looks like and we can
+00:44:02.160 completely follow the order of
+00:44:04.480 operations in here. So again we have our
+00:44:07.359 server. So this is already we know how
+00:44:09.839 to do this. We connect with our server
+00:44:11.440 again same machine standard IO. We have
+00:44:14.240 our question what's our company vacation
+00:44:16.520 policy. Now here if I were to uh run
+00:44:19.920 this function over here it will go
+00:44:21.440 through the whole thing. But what I can
+00:44:23.040 now also do is if I come over here and I
+00:44:25.520 come into this process query over here,
+00:44:28.640 I know the query is stored in memory. So
+00:44:31.359 I can now take the global session OpenAI
+00:44:34.000 client and model and I can get the
+00:44:36.400 available tools. So I can now look in
+00:44:39.040 here and I can now see in action what
+00:44:41.520 this function is doing. So before I just
+00:44:44.079 showed you the code, right? But now we
+00:44:45.680 can also look at the output. So here you
+00:44:47.760 can see the schema or the tools really
+00:44:50.319 that are defined that we can now send to
+00:44:53.200 open AAI. So now we're here at the chat
+00:44:55.839 completions part again and we're going
+00:44:58.079 to run this the first time where we say
+00:45:00.560 we we provide it with our tools and we
+00:45:02.560 leave the tool choice to auto. So what
+00:45:05.040 we can now do is we run this we send it
+00:45:07.359 to OpenAI and let's have a look at the
+00:45:10.480 message. And now if I come in here and
+00:45:12.240 if I scroll to the right, I can see in
+00:45:14.319 here that there is a tool call. So
+00:45:17.680 OpenAI decided to use the tool rather
+00:45:21.359 than provide us directly with an answer
+00:45:23.760 to the question. And now what you need
+00:45:26.720 to do in order to build applications
+00:45:28.560 around this and again this is not MC MCP
+00:45:31.280 specific. This is specific to how you
+00:45:33.280 integrate tools within your
+00:45:34.880 applications. You essentially construct
+00:45:37.680 the message again but now also adding
+00:45:40.160 the intermediate assistant message to
+00:45:42.240 this which specifies that hey first we
+00:45:45.280 have the question from the user but now
+00:45:46.960 we did a tool call and we have the
+00:45:49.280 following information available. So we
+00:45:51.280 have a name which is get knowledge base
+00:45:53.280 and then we also have the arguments
+00:45:55.359 which in this case are non-existent
+00:45:57.680 because there are no arguments in this
+00:46:00.640 uh in this uh function over here. But
+00:46:03.040 typically it would also give for example
+00:46:04.960 a key or a question that you would use
+00:46:06.640 for rack. But now coming back what we
+00:46:09.680 can then do is we do another loop. We do
+00:46:13.839 another iteration where we essentially
+00:46:16.800 loop over the message from the
+00:46:18.800 assistant. We check if there's a tool
+00:46:20.480 call in it. And if that is the case we
+00:46:22.720 call our tool. So here we can see this
+00:46:26.079 will be true if I if I run this because
+00:46:29.359 this exists because we have a tool call
+00:46:32.400 and now we can say for the tool call in
+00:46:34.480 the assistant uh message we can get the
+00:46:37.440 we can get the result. So let's see what
+00:46:39.760 it looks like. And we can get the result
+00:46:42.319 in here. And now we can see that we have
+00:46:46.480 some actual data in here. And that is
+00:46:49.040 because we have our session. Remember
+00:46:51.839 this is our MCP session that we can use
+00:46:54.160 to call our tools. And we get the right
+00:46:57.440 tool by getting the tool called
+00:47:00.359 function.name. And this is what we got
+00:47:02.480 back from uh OpenAI. And then we can
+00:47:04.800 also load the arguments in there which
+00:47:06.560 are currently empty. But that is the
+00:47:09.280 this is really a fundamental thing that
+00:47:11.599 you need to understand and I know it can
+00:47:13.200 seem very abstract right now if you're
+00:47:14.800 going through this for the first time.
+00:47:16.160 But this example will really teach you
+00:47:18.480 the order of operations and flow of
+00:47:21.359 data. So OpenAI decides to use the tool
+00:47:25.200 then provides the parameters. We need to
+00:47:27.280 parse that in our application then call
+00:47:30.000 the actual function which lives on the
+00:47:32.160 server. then retrieve those results,
+00:47:35.839 append it to our message objects again.
+00:47:38.400 So that now you can see we have the
+00:47:40.480 complete context for our AI model. So
+00:47:42.640 you can see what's our company
+00:47:44.599 policyification policy. This is the
+00:47:46.480 original question. Now we have the
+00:47:49.520 assistant that decided to uh call the
+00:47:52.000 tool which is over here and also the
+00:47:54.079 result of that tool which is the content
+00:47:56.079 is the retrieved knowledge base. So here
+00:47:58.079 you can see this is the whole JSON file
+00:48:00.319 that is now within context and if you've
+00:48:02.720 been building with LLMs you now know
+00:48:05.280 that if you have this message object and
+00:48:08.319 you send this to OpenAI it will figure
+00:48:11.119 out how to solve that because it has all
+00:48:12.960 the components and you can now also in
+00:48:15.280 this second operation you uh you could
+00:48:18.000 even even leave those out or you could
+00:48:19.920 have tool uh choice none. So to really
+00:48:23.119 be be clear about that that right now it
+00:48:25.359 has all of the information and we can
+00:48:28.000 run that and we do a second API call to
+00:48:32.000 OpenAI to get the final result which is
+00:48:35.359 if I get that over here you can see that
+00:48:37.839 it now has the final answer that it
+00:48:40.559 would send back. So now coming back to
+00:48:42.559 our proper implementation of the client
+00:48:44.960 that is everything that's going on
+00:48:46.559 behind the scenes over here. So when I
+00:48:48.800 run this code, it's going to connect to
+00:48:50.960 the server, have the query, send it to
+00:48:53.559 OpenAI. This is everything that's going
+00:48:55.599 on behind the scenes. And now if you
+00:48:57.280 want to have more tools available for
+00:48:58.800 your AI system, you simply need to
+00:49:00.640 implement them in your server and then
+00:49:02.480 also check the logic over here to make
+00:49:05.200 sure you that you can catch those tool
+00:49:06.960 calls. So what happens if the LLM
+00:49:09.440 decides to call that tool and what and
+00:49:11.920 how do you need to append that to the
+00:49:14.319 context or what do you need to do with
+00:49:16.000 it and how do you need to call it? All
+00:49:17.520 right, so I hope you're still with me.
+00:49:19.119 That was definitely the hardest part
+00:49:20.640 about this whole crash course and to
+00:49:22.640 fully understand this. You likely need
+00:49:24.319 to experiment with the examples, adjust
+00:49:26.960 it, create your own examples and run
+00:49:28.640 those to really get the hang of it. But
+00:49:30.400 now finally, I want to cover some
+00:49:32.160 practical tips and examples that you
+00:49:33.760 also need to understand that will help
+00:49:35.200 you to build with MCP. All right, let's
+00:49:37.040 get into part five. MCP versus function
+00:49:39.280 calling. And this is a very short one.
+00:49:40.960 Throughout this video, you've heard me
+00:49:42.559 mention this already a couple of times.
+00:49:44.559 MCP adds nothing new. This is stuff that
+00:49:47.040 we have been able to do for 2 years
+00:49:49.040 already. And this short file over here
+00:49:50.880 just highlights that where I just
+00:49:52.480 outline a simple tool call where we
+00:49:55.440 specify a function within the same file.
+00:49:58.960 So here you can see we have an OpenAI
+00:50:01.200 chat completion. We handle the tool
+00:50:02.880 calls and we send it one more time to
+00:50:04.960 OpenAI. And when we run all of this, we
+00:50:08.000 have the exact same setup where really
+00:50:10.240 the only distinction is instead of
+00:50:11.920 getting our tools from the MCP server,
+00:50:13.839 we have it directly in our file. And now
+00:50:15.599 this example should also help you to
+00:50:17.359 answer the question, should I migrate
+00:50:19.200 all of my existing AI projects to MCP?
+00:50:22.480 And the answer is most likely no. So if
+00:50:25.520 you're already using function calling or
+00:50:27.760 or using tools and it's working
+00:50:29.359 perfectly right now, adding MCP to that
+00:50:32.640 is not going to change anything. It's
+00:50:34.319 just going to make things a little bit
+00:50:35.599 more complex in the beginning. But as
+00:50:38.160 you by now should understand going
+00:50:40.240 forward long-term, it might make sense
+00:50:42.960 to for new projects that rely heavily on
+00:50:46.400 using tools, it might make sense to look
+00:50:49.359 at some MCP standard surface or create
+00:50:52.319 your own tools and integrate it that
+00:50:54.240 way. But there's no immediate need or
+00:50:57.280 necessity to really migrate your current
+00:50:59.440 projects. All right. Now, I hope you're
+00:51:01.200 still with me. I know this is a long
+00:51:02.720 one, but we need to cover two more
+00:51:04.400 concepts in order to make this a true
+00:51:06.240 complete crash course for developers.
+00:51:08.640 And next, I want to cover running MCP
+00:51:11.760 servers with Docker because in my
+00:51:14.240 opinion, in in the real world, this is
+00:51:17.200 probably going to be the most practical
+00:51:19.040 way that you're going to use MCP servers
+00:51:22.880 that don't live on your local machine,
+00:51:24.880 but that you actually deploy somewhere
+00:51:26.559 and that you can reuse for other
+00:51:28.160 applications. That's really where you
+00:51:30.240 start to get the benefits of M MCP
+00:51:32.960 rather than just having extra complexity
+00:51:34.880 within your projects. So I created a
+00:51:37.280 simple setup to show you how to do this.
+00:51:39.520 So coming back to the code over here,
+00:51:41.760 there's going to be nothing new. We have
+00:51:43.680 a simple server. So this is the exact
+00:51:46.240 same server that we already covered. We
+00:51:48.640 also have a very simple client that we
+00:51:51.280 can run. And again, this is all the
+00:51:53.359 same. The only thing that's new over
+00:51:55.440 here is we have a Docker file. And that
+00:51:58.720 docker file essentially wraps this
+00:52:00.880 server.py file into a nice docker
+00:52:04.000 container which we can then run and then
+00:52:06.559 within that environment it's going to
+00:52:08.319 install the requirements and it's going
+00:52:10.079 to run the server so that it then
+00:52:12.720 becomes available. So the instructions
+00:52:15.280 to do that are outlined over here. So
+00:52:17.760 you can follow the instructions and the
+00:52:19.760 first thing that we need to do is we
+00:52:21.280 need to build this. So we can do this by
+00:52:24.319 coming into this folder and opening up a
+00:52:26.640 terminal in here. Now what I can then do
+00:52:28.400 is I can come in here and I can paste
+00:52:30.000 the docker build tmcp server command. So
+00:52:33.359 what this is going to do it's going to
+00:52:35.040 build the docker container using docker.
+00:52:37.440 So make sure you have uh the docker
+00:52:39.119 demon running on your system. And when
+00:52:41.200 you run that it's going to build the
+00:52:42.640 docker images which is then going to be
+00:52:44.400 available via docker on your local
+00:52:46.800 machine. And what you can then do is let
+00:52:48.960 me clear this up for you. You can run
+00:52:50.559 the following command and that is docker
+00:52:52.400 run. And then we just refer to the image
+00:52:54.880 that we created the MCP server and make
+00:52:57.119 sure we run it on the correct port. So
+00:52:59.520 let's start this up. And now we can see
+00:53:01.839 that this is running over here. So
+00:53:04.480 remember this is very similar to what we
+00:53:07.040 were doing previously when we were
+00:53:09.359 setting up our server and running it via
+00:53:12.480 either via uvun server.py or python
+00:53:15.240 server.py and running it and then
+00:53:17.680 connecting to it via SSE. So this is
+00:53:20.960 exactly the same thing but now it's just
+00:53:23.119 in a docker container and we can now use
+00:53:25.599 our client in exactly the same way
+00:53:28.000 because it's exposed on localhost under
+00:53:30.079 this port and we can run this again and
+00:53:33.520 perfectly it connects to our server and
+00:53:35.440 it runs the calculations and now once
+00:53:37.359 this is packaged in a docker container
+00:53:39.040 what you can do with this is you can
+00:53:40.319 create a virtual machine or you could
+00:53:42.160 use a manage resource on HNER AWS or
+00:53:45.599 Azure doesn't really matter and you
+00:53:47.440 could clone the repository on the system
+00:53:49.839 there. Run the startup commands to boot
+00:53:52.240 the Docker image and then connect to
+00:53:54.400 your server remotely and now not via
+00:53:56.880 local host but you will do it for the
+00:53:58.319 domain or IP address that your server is
+00:54:01.280 on or the managed server is on and then
+00:54:04.559 you now have all of your server and your
+00:54:07.040 tools living somewhere else and now from
+00:54:09.200 any other application within the world
+00:54:11.119 or machine you can connect to it. All
+00:54:13.920 right. And now you made it to the end of
+00:54:16.160 this crash course, the final part, part
+00:54:18.160 seven, life cycle management. And I
+00:54:20.880 briefly want to cover this and more so
+00:54:23.839 just point you to this resource that you
+00:54:26.800 can later reference. And when you're
+00:54:29.839 building real applications with this and
+00:54:32.240 you're putting them into production and
+00:54:33.839 you are for example connecting with
+00:54:35.440 various data sources or other external
+00:54:39.079 surfaces, it's important to properly
+00:54:42.240 manage your your life cycles and all the
+00:54:44.240 connections that you have especially
+00:54:45.599 with things like databases. And in this
+00:54:47.920 file, I've first of all outlined the
+00:54:50.800 life cycle management upon
+00:54:52.680 initialization, operations, and then the
+00:54:54.960 termination. So this is all already
+00:54:57.520 handled in the way I've set up the code
+00:54:59.839 examples because we're using the width
+00:55:02.160 operator really in Python. So that
+00:55:04.079 automatically handles some of the
+00:55:05.920 sessions. But for a more advanced life
+00:55:09.359 cycle management approach, you can
+00:55:11.440 create a lifespan object. And here's an
+00:55:14.400 example from the official MCP
+00:55:16.640 documentation. And let me scroll down
+00:55:18.640 over here. So yeah, so when you create
+00:55:20.880 an MCP server, you can also add a live
+00:55:23.440 spawn to this. And this can be useful
+00:55:26.319 when you are for example connecting to
+00:55:29.000 databases. So you really make sure that
+00:55:32.079 when we close the connection the
+00:55:34.240 connection to that database is also like
+00:55:37.359 gracefully shut down and handled
+00:55:39.200 properly by properly in implementing
+00:55:41.680 something to disconnect from your
+00:55:43.680 database rather than just shutting it
+00:55:45.839 down. And I wanted to put this out here
+00:55:48.640 just again to really be a complete
+00:55:50.799 guide, a complete crash course to
+00:55:53.200 working with MCP because when you're
+00:55:55.440 working with surfers and clients and
+00:55:57.839 you're going to work with many different
+00:55:59.760 components going on, having a proper
+00:56:02.559 life cycle of everything that's going on
+00:56:04.559 is really important long term as your
+00:56:06.559 servers grow and as maybe also the
+00:56:08.720 clients working with those surfers grow.
+00:56:11.440 So in the beginning you don't really
+00:56:13.280 have to worry much about this but this
+00:56:15.200 is really for example when you're
+00:56:16.640 working in a company an enterprise and
+00:56:19.200 your teams are building multiple servers
+00:56:22.079 multiple clients you're connecting with
+00:56:23.839 databases this is definitely something
+00:56:26.079 you want to look into. All right and
+00:56:28.319 that brings us to the end of this crash
+00:56:30.319 course. So I hope that by now you have a
+00:56:32.240 very solid understanding of what MCP is
+00:56:35.040 and how you can use it as a Python
+00:56:36.799 developer to not only integrate it into
+00:56:39.200 claw desktop or cursor but really use it
+00:56:41.920 in your own backends to build AI systems
+00:56:44.720 and agents. And now don't forget to
+00:56:46.640 check out the Genai Accelerator first
+00:56:48.400 link in the description if you really
+00:56:49.760 want to learn AI engineering from first
+00:56:51.839 principles. And now, if you're already a
+00:56:53.440 skilled AI engineer and you've been
+00:56:54.799 building with LLMs for some time, but
+00:56:56.799 you just need a better way to get your
+00:56:58.799 apps to production, you might want to
+00:57:00.640 check out our Genai launchpad, which is
+00:57:03.040 our production framework that we use for
+00:57:04.880 all of our projects inside data
+00:57:06.559 luminina. So, as part of this, you'll
+00:57:08.640 get access to this repository. And we
+00:57:11.040 use this as our boilerplate to start
+00:57:13.359 every client project that we do. And
+00:57:15.280 this literally saves us about two to
+00:57:16.880 three weeks of setup time on every
+00:57:18.880 project. It's a complete AI backend and
+00:57:21.119 infrastructure that you can use to
+00:57:22.799 quickly spin up your projects. All
+00:57:24.720 right, and then that's it for this
+00:57:26.160 video. So, thank you for your time and
+00:57:27.599 attention going through this entire
+00:57:29.040 crash course. If you found it helpful,
+00:57:30.799 please leave a like and also consider
+00:57:32.559 subscribing if you aren't already. And
+00:57:34.799 then next up, I recommend checking out
+00:57:36.720 this video where I go over some patterns
+00:57:39.520 that you can use to build effective AI
+00:57:41.520 agents, but doing it in pure Python
+00:57:43.680 without needing any frameworks.

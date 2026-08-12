@@ -1,0 +1,227 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/vuBvf7ZRKTA
+
+00:00:00.000 No text
+00:00:01.610 [Music]
+00:00:07.120 Hello everyone, welcome back. In the
+00:00:09.760 last episode of agent evaluation, we
+00:00:12.800 talk about why normal software testing
+00:00:15.599 is not working for AI agents and what
+00:00:18.800 part of an agent system you should
+00:00:21.039 measure. And in today's video, we will
+00:00:23.840 turn that theory into practice. We will
+00:00:26.560 walk through three tier testing pyramid.
+00:00:29.599 so that you have a framework to tackle
+00:00:31.840 agent evaluation challenge and then we
+00:00:35.200 will use Google agent development kit to
+00:00:38.480 actually run test follow this three tier
+00:00:41.120 testing pyramid and we will also explain
+00:00:44.160 what a trajectory is and how the
+00:00:46.800 evaluation matrix work and by the end of
+00:00:50.399 today's video you will know how to test
+00:00:53.199 your agents step by step by using a
+00:00:56.160 clear testing py pyramid and Use ADK to
+00:01:00.399 build reliable automated checks. All
+00:01:03.600 right, let's get started. So part one,
+00:01:05.000 No text
+00:01:06.799 the three tier testing pyramid. You can
+00:01:09.920 see from this diagram on the screen that
+00:01:12.960 we have the three tiered pyramid. So for
+00:01:15.000 No text
+00:01:15.840 the first tier, tier one encompasses
+00:01:19.280 component level unit tests which is also
+00:01:22.400 the foundation of agent testing and at
+00:01:25.680 this level we test the smallest building
+00:01:28.240 blocks in isolation. Often time it can
+00:01:31.680 be tool use like did this agent pick the
+00:01:34.640 right tool from the simple prompt? Did
+00:01:37.520 it produce a valid correctly structured
+00:01:40.960 respon request like correct JSON field
+00:01:44.479 and tests at this tier usually are fast,
+00:01:47.840 cheap and automated. So it's also
+00:01:50.640 perfect for continuous integration to
+00:01:53.040 catch regressions earlier.
+00:01:55.000 No text
+00:01:56.240 Now let's take a look at this tier two.
+00:01:59.520 So this level is about trajectory level
+00:02:02.320 integration test. It is also about
+00:02:05.040 testing a full multi-step task end to
+00:02:08.160 end. And we will cover did the agent
+00:02:11.599 plan logically? Did you use tools in the
+00:02:14.319 right order and adapt if anything
+00:02:16.879 failed? Did the agent remember earlier
+00:02:19.599 information and reach the goal?
+00:02:22.000 No text
+00:02:23.120 And for the tier three level, it is
+00:02:25.520 about end to end human review. We need
+00:02:28.800 to involve human in the loop to check
+00:02:30.959 this whole experience like the
+00:02:33.200 helpfulness, safety, common sense. So
+00:02:37.120 this tier is usually slow and more
+00:02:40.080 expensive.
+00:02:41.680 But it is also your final quality gate.
+00:02:45.200 So in summary, here is a big picture. We
+00:02:48.400 have tier one component level unit test.
+00:02:51.760 It checks correctness like tools and
+00:02:54.640 parameters.
+00:02:56.239 We have tier two trajectory level hero
+00:02:59.360 integration test. It checks capability
+00:03:02.800 and reasoning. And lastly tier three end
+00:03:06.480 to end human review. This enhance user
+00:03:09.840 experience and trust. So now you know
+00:03:12.959 the three tier testing pyramid. Let's
+00:03:14.000 No text
+00:03:15.440 take a look at example of how to use
+00:03:18.239 agent development kit ADK to write tests
+00:03:21.519 following this three- tier pyramid
+00:03:24.239 framework.
+00:03:25.680 and let's take a look at it. So the
+00:03:28.080 second part of this video is ADK in
+00:03:30.640 action. We will cover what to measure
+00:03:33.519 and how to evaluate with ADK. And let's
+00:03:36.879 use bookfinder agent. As you can see on
+00:03:39.680 the screen in this agent, it's using
+00:03:42.560 Gemini 2.5 Pro this model as brain and
+00:03:46.400 has three different tools. Search local
+00:03:49.200 library tool, find local bookstore tool
+00:03:52.560 and order online tool to make decision
+00:03:55.280 and answer user's question. So if a user
+00:03:58.959 has input query, order this book Harry
+00:04:01.920 Potter for me, you will first check the
+00:04:05.120 local library and then check the
+00:04:07.760 bookstore. If we cannot find this book
+00:04:10.560 in the library or bookstore, it will
+00:04:12.879 then order online for users. And when we
+00:04:16.000 evaluate this agent, we need to evaluate
+00:04:18.959 this whole book finding journey. Which
+00:04:21.600 means we need to set expected trajectory
+00:04:24.160 and compare it with the actual process.
+00:04:27.600 And a trajectory is the entire journey
+00:04:31.120 your agent takes to solve a task. And
+00:04:34.240 this includes first of all the sequence
+00:04:37.680 of two costs with their arguments
+00:04:41.120 and and secondly the intermediate steps
+00:04:43.680 and reasoning.
+00:04:45.360 and also the final response. So for this
+00:04:48.000 No text
+00:04:49.360 example, bookfinder, our desired
+00:04:52.000 trajectory is search local library to
+00:04:55.520 find local bookstore and also order
+00:04:58.479 online.
+00:05:00.080 Other than trajectory, we need to also
+00:05:02.720 compare the final answer. We need to see
+00:05:05.840 whether that recommends an online
+00:05:07.840 retailer or if local options fail. So
+00:05:11.840 now we need to measure the trajectory
+00:05:14.240 and the final answer. But how to set the
+00:05:17.520 criteria? And here we introduce two key
+00:05:21.120 ADK built-in matrix. We will use those
+00:05:23.919 matrix to define the passing criteria.
+00:05:27.440 And the first matrix is to trajectory
+00:05:31.280 average score. And this means how
+00:05:34.240 closely the actual two costs match your
+00:05:37.120 expected sequence.
+00:05:39.440 And here is how it scored. We will
+00:05:42.080 compare each expected cause to what
+00:05:44.880 actual happened. If you set the score to
+00:05:48.080 be one, that means they have to match
+00:05:50.960 100% to pass the test. Similarly, if you
+00:05:55.039 set the score to be zero, they can pass
+00:05:57.360 the test even they're completely
+00:05:59.360 different.
+00:06:00.960 So when we use it, uh we need to set the
+00:06:04.160 threshold between zero and one.
+00:06:07.199 And the second matrix is response match
+00:06:09.919 score. And this means how similar the
+00:06:12.720 final answer to your expected answer.
+00:06:16.080 Under hood, we use ro one to check the
+00:06:19.199 word overlap which combines the
+00:06:22.319 precision and recall into a zero to one
+00:06:25.840 score. So when we use it, we need to
+00:06:28.880 pick a threshold between zero and one
+00:06:31.520 that allows natural language variation.
+00:06:34.400 For example, 0.5 means close enough and
+00:06:38.080 0.8 means you need to be very strict
+00:06:41.120 with the response. Note that agents are
+00:06:43.919 nondeterministic. So we should avoid
+00:06:46.400 demanding one unless you use temperature
+00:06:48.880 approximate to zero. So now we know we
+00:06:52.080 need to test trajectory and final
+00:06:54.240 response. Let's design a test following
+00:06:56.800 the pyramid framework. So for tier one
+00:07:00.240 component tests to test simple prompts
+00:07:03.360 and expected to cost by testing
+00:07:06.240 components like to selection accuracy
+00:07:09.280 parameter and we can check the
+00:07:11.360 correctness.
+00:07:13.360 And next tier 2 trajectory test we can
+00:07:16.639 use ADK eval with multi-step tests and
+00:07:20.800 expected two sequence by using matrix
+00:07:24.000 like two trajectory average score and
+00:07:27.039 response match score. So we can evaluate
+00:07:30.720 capability and reasoning. And lastly
+00:07:34.160 tier three human review because ADK can
+00:07:37.840 give you traces. So we can have human in
+00:07:40.880 the loop to judge the whole quality. Now
+00:07:44.160 let's get into the last part of this
+00:07:46.080 video which is a demo about how to use
+00:07:48.720 ADK to test your agent. So for tier one
+00:07:52.720 component test we will see this example
+00:07:55.840 of two correctness.
+00:07:58.000 The goal is does a single tool call get
+00:08:01.599 selected and filled correctly. So here
+00:08:05.120 is an example code with unit test and
+00:08:08.560 when we're reading this tier one result
+00:08:11.440 we need to check the two selection
+00:08:13.440 accuracy like did it pick the search
+00:08:16.479 local library tool and also for the
+00:08:19.840 parameter did it pass title equal to
+00:08:22.160 harboarder correctly
+00:08:24.479 since tier one maps to the foundation
+00:08:28.160 the correctness of tools and parameter.
+00:08:31.199 So if they fails we need to fix them
+00:08:34.000 before moving on. And for tier two
+00:08:37.760 trajectory test that including
+00:08:40.399 multi-step plan and final answer. The
+00:08:43.599 goal is does the agent follow the
+00:08:45.920 expected journey and produce a good
+00:08:48.399 final response. Here is example code to
+00:08:51.760 test and let's set past criterial.
+00:08:56.160 We can set this two trajectory average
+00:08:58.560 score and response match score to define
+00:09:02.160 how strict are the tests.
+00:09:04.720 As you can see, 0.8 as trajectory
+00:09:07.760 demands a very close match to your plan
+00:09:10.800 steps and 0.5 allows a natural language
+00:09:15.040 variation in the final response.
+00:09:18.399 All right, let's run it and you can see
+00:09:20.560 the result from the screen.
+00:09:23.000 No text
+00:09:24.160 In summary, you've just learned how to
+00:09:26.640 evaluate AI agents in practice. We start
+00:09:30.080 with a tier one test for fast cheap
+00:09:33.839 component checks
+00:09:36.000 and then we move to tier two ADK eval
+00:09:40.399 for full trajectory and final answer
+00:09:43.279 quality.
+00:09:44.800 You can also finish with tier three
+00:09:47.360 human review to guarantee a great user
+00:09:50.399 experience. So with this three tier
+00:09:53.120 approach and ADK built-in tools, you can
+00:09:55.760 go from I think this agent works to I
+00:09:59.360 know this agent is very reliable. And
+00:10:02.640 this allow us to wrap up our two-part
+00:10:05.600 series on agent evaluation.
+00:10:08.480 In the last episode, we explored what
+00:10:11.600 traditional way of testing doesn't work
+00:10:13.519 for AI agent and what to measure in
+00:10:16.560 agents. So in today's episode, we make
+00:10:19.680 it very practical with a clear testing
+00:10:22.880 pyramid and hands-on ADK demos. And from
+00:10:27.279 here, you're ready to start writing your
+00:10:29.519 own evaluation sets and test files with
+00:10:32.160 ADK.
+00:10:33.680 Thank you so much for watching, and I
+00:10:35.440 will see you in future videos. Bye.
+00:10:42.770 [Music]

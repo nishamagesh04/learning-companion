@@ -1,0 +1,1614 @@
+# tactiq.io free youtube transcript
+# Staff engineer shows AI spec-driven development workflow
+# https://www.youtube.com/watch/Ednpn1mjKiY
+
+00:00:01.120 All right. Hello everyone. I'm AJ,
+00:00:03.439 technical content lead here at Augment,
+00:00:06.080 and we're starting a series where we're
+00:00:08.480 bringing on real senior engineers and
+00:00:10.559 staff engineers and show how they're
+00:00:12.480 actually coding with AI. It's a chance
+00:00:14.880 to see how they work and ask some
+00:00:16.800 questions directly. So, if you have any
+00:00:18.640 questions, please pop them in the chat
+00:00:20.640 and we'll try to read them out. Today,
+00:00:22.640 I'm very excited to be joined by Sam
+00:00:24.720 Breed. Sam was previously a senior staff
+00:00:27.439 engineer at Credit Karma and now a
+00:00:29.599 partner at Sutter Hill Ventures. He's
+00:00:32.399 one of the lead engineers building the
+00:00:34.320 intent app and he was actually part of
+00:00:37.120 augment when it was just Eigor, one of
+00:00:39.200 our founders. So yeah, very excited to
+00:00:42.320 bring on Sam today. I'm really
+00:00:44.000 interested to see how he's using intent.
+00:00:46.000 I'm I'm you I'm trying to get the most
+00:00:48.000 out of it myself and I'm sure a lot of
+00:00:50.000 you in the audience are as well. And
+00:00:52.719 yeah, I encourage you if you have any
+00:00:54.320 questions to please drop them in the
+00:00:55.760 chat and me and Sam will answer them as
+00:00:58.399 we as as they come through. Sam, thank
+00:01:00.640 you so much for joining us today. How
+00:01:02.160 was that intro? Is there anything I
+00:01:03.680 missed that you'd like to add?
+00:01:05.280 >> Oh, no, that was perfect, AJ. Thanks.
+00:01:06.880 Uh, yeah, really happy to be here and uh
+00:01:09.200 yeah, we're going to have some fun.
+00:01:10.720 We're going to build some websites.
+00:01:12.320 >> Awesome. So, yeah, let's let's jump
+00:01:14.880 straight into it. Should I bring your
+00:01:16.400 screen on stage here?
+00:01:17.840 >> Yeah. Yeah. So, uh I'll set a little bit
+00:01:19.520 of context while uh we're getting set
+00:01:21.520 here. So, um, this is actually like a
+00:01:24.159 real world task that I did in the last
+00:01:26.320 week or so. And we're going to be taking
+00:01:28.799 a design that a designer made fully
+00:01:31.200 comped out in Figma. It's got maybe 10
+00:01:33.600 pages, some design system stuff, and
+00:01:36.159 using the Figma MCP integration and
+00:01:38.479 intent. We're going to be able to pull a
+00:01:40.720 bunch of content directly into the
+00:01:42.720 context for intent to go. And uh, oh no,
+00:01:45.680 did my camera just die?
+00:01:48.640 >> Of course. Yeah, you've went black, but
+00:01:50.640 we still see the share screen.
+00:01:52.399 >> Okay, cool. Cool. One one second, my
+00:01:54.720 >> no problem. I'll just shout out to
+00:01:57.759 MVA
+00:01:59.360 Robert from Minneapolis. Also have
+00:02:01.680 someone from Muldova, Nico
+00:02:05.439 Grum asking when the Windows version of
+00:02:07.680 Intent is coming. A lot of a lot of
+00:02:10.080 demand for that. Hopefully Sam maybe can
+00:02:12.319 give more insight on that. [laughter] I
+00:02:14.239 know it's coming eventually.
+00:02:15.760 >> Yeah, it's it's in it's in progress.
+00:02:17.920 Absolutely. Okay. So, uh I'll fuss with
+00:02:20.480 the camera in just a moment. Okay. Here,
+00:02:22.560 here we go. Okay. Back up. There we go.
+00:02:24.480 >> Always have a backup. Uh hot spare. Um
+00:02:28.239 cool. So, uh so yeah. So, we've got a
+00:02:29.920 Figma MCP. We've got uh that running.
+00:02:32.319 It's already connected. Um so, if you're
+00:02:34.560 curious about, you know, how that works.
+00:02:36.800 Uh if you go into workspace setup, you
+00:02:39.440 have you can turn on the custom MCP
+00:02:41.360 servers. Um I've got two configured, one
+00:02:44.239 for Versell and another for Figma. Um,
+00:02:46.959 the Figma setup is, uh, you still have
+00:02:49.040 to set it up as a custom MCP and Figma
+00:02:51.200 makes this URL really, really hard to
+00:02:53.040 find. Um, so you have to like search
+00:02:55.120 their docs for it. It's, uh, localhost
+00:02:57.599 3845MP
+00:02:59.120 MCP. Okay. So, um,
+00:03:02.239 >> I think I have some alpha on the Figma
+00:03:04.159 MCP. The remote one is coming for
+00:03:07.200 augment compatibility very soon, like
+00:03:09.360 this month.
+00:03:09.840 >> Oh, awesome.
+00:03:10.800 >> Um, but yeah, continue.
+00:03:13.840 >> Okay, cool. Okay, my bad. Um, let's see.
+00:03:16.959 Let me get a prompt up here so we don't
+00:03:18.720 have to watch me type. Okay, so we're
+00:03:20.319 going to do some visual design. We're
+00:03:21.680 going to take a look at the Figma MCP
+00:03:23.360 and start by adding some custom colors
+00:03:25.519 to the Tailwind config. And so now what
+00:03:27.280 I'm going to do, I'm going to go over
+00:03:28.480 into Figma and I'm going to uh
+00:03:30.640 rightclick on some frames and copy links
+00:03:33.280 to their selections. And um that way
+00:03:37.280 this is kind of like right now it's the
+00:03:39.200 way that you can kind of put contacts
+00:03:41.680 directly from like artboards or layers
+00:03:43.599 or whatever from Figma into their MCP
+00:03:46.799 integration. Hopefully in the future you
+00:03:48.480 can just like say what you want. Uh but
+00:03:50.799 right now there's a little bit of manual
+00:03:52.799 shoveling back and forth and uh so I'll
+00:03:56.000 show this project as we kind of get
+00:03:57.439 started. So we're kicking off a
+00:03:58.720 workspace and uh you know I've seated
+00:04:01.840 this project with a little bit of of
+00:04:05.519 stuff. Um so okay PMPI
+00:04:10.239 and uh so for things like this like one
+00:04:13.519 of the techniques that I really like to
+00:04:14.799 do is right like I have an idea in mind
+00:04:16.798 of like how I want to build this
+00:04:18.000 project. I want to use Astro. I want to
+00:04:19.918 use Tailwind. There are a couple other
+00:04:22.079 things that I like might want to have. I
+00:04:24.160 tend to like do those first opening
+00:04:26.080 moves myself. One, because they're like
+00:04:28.720 good generators for these things. And
+00:04:31.280 two, it kind of like by seating that
+00:04:33.680 context into the project with, you know,
+00:04:36.000 what you want as a developer, um, you
+00:04:38.639 get an opportunity to, uh, have, you
+00:04:42.240 know, have your opinions in there, um,
+00:04:44.639 and not just rely on like whatever
+00:04:47.040 default is going to get spit out from
+00:04:48.800 weights. So, uh, so, right, like
+00:04:51.040 there's, uh, you know, a little bit of
+00:04:52.560 content here. Astro server is capable of
+00:04:54.720 running. And so while we've been doing
+00:04:57.280 that um intent has been off pulling
+00:05:00.639 these this context directly from Figma.
+00:05:03.040 It found that hey there's this you know
+00:05:05.360 design system layer. Um there are a
+00:05:08.320 bunch of custom colors in it. Um
+00:05:11.919 and it sees that it's tail 1v4. It's not
+00:05:14.240 going to try to write a tail 1v3 file.
+00:05:16.240 And so it wrote a little bit of uh a
+00:05:20.080 little spec here to kind of like do
+00:05:22.320 this. So, we'll approve the plan, start
+00:05:24.639 the implementation, and yeah, we're off
+00:05:27.360 to the races. This is going to start um
+00:05:30.160 firing off agents. Yeah.
+00:05:32.240 >> Can I double click? Yeah, double click
+00:05:34.560 on the part you just said about manually
+00:05:36.960 setting up. Is that just mentioning the
+00:05:38.800 frameworks inside your prompt or do you
+00:05:41.199 actually run like init commands to
+00:05:43.280 initialize?
+00:05:43.840 >> So, in this ca for this case, I just ran
+00:05:45.600 the init commands. um you know that
+00:05:48.720 seems to be like you know a lot of the
+00:05:51.280 times right with models you know even
+00:05:53.360 with the ability to pull context from
+00:05:55.520 the internet right like the training
+00:05:58.960 data is potentially you know months old
+00:06:01.680 um so especially for like frameworks
+00:06:03.360 where you want to be getting the latest
+00:06:04.560 versions of things you want to be
+00:06:05.840 patched all the way to the top you don't
+00:06:07.520 want to be getting you know choices that
+00:06:09.120 are maybe kind of uh just buried like
+00:06:12.400 deeply you know kind of in the weights
+00:06:14.080 from six months ago um So, I like doing
+00:06:17.440 that. Um, you know, especially for new
+00:06:19.360 projects, too. It kind of like gives me
+00:06:20.880 a little bit of, you know, those kind of
+00:06:22.639 initial first opening moves. They're
+00:06:24.880 almost always the same. So, yeah, like
+00:06:27.919 you know, the the project in
+00:06:29.440 initializers are pretty good.
+00:06:31.759 >> We have uh one question from the chat
+00:06:33.680 here says, can we touch on agent access
+00:06:36.319 security/sandboxing?
+00:06:38.400 How do you prevent an agent from
+00:06:40.160 silently editing files outside the
+00:06:42.319 workspace?
+00:06:44.400 Um
+00:06:44.960 >> uh I've never seen it do that. So
+00:06:47.440 context background on so I've been using
+00:06:49.360 AI for code uh since about 2021. Um so I
+00:06:53.840 joined Sutter in 2020 to help work on
+00:06:56.560 prototypes around GPT3 and what you know
+00:07:00.000 was kind of the pending wave of AI that
+00:07:02.880 you know we've we've seen happen over
+00:07:04.560 the past four or five years. So one I
+00:07:07.520 guess starting about jealous just like
+00:07:08.880 sensible defaults default I use Auggie
+00:07:10.800 for everything. Um, Auggie is running in
+00:07:14.240 the scope in the directory. It's
+00:07:16.160 exceptionally well prompted and I'm
+00:07:18.479 using, you know, the kind of top of the
+00:07:21.360 frontier models. I'm not using, you
+00:07:23.680 know, haiku to do this. I'm not using,
+00:07:26.000 you know, so like like an old fast model
+00:07:28.160 or I'm not using, you know, uh, what's
+00:07:30.240 possible in uh, intent is to use
+00:07:32.319 something like open code that gives you
+00:07:33.759 even like the ability to do local
+00:07:36.000 inference. Um, so perhaps with some of
+00:07:38.960 those I would be more concerned about
+00:07:41.039 sandboxing, but as a practical matter,
+00:07:43.360 I've never had any problems with
+00:07:46.080 sandboxing in now several years of
+00:07:48.720 writing code with AI in basically every
+00:07:51.840 conceivable way. Um, and so yeah, so I'm
+00:07:55.440 I'm team YOLO. Um, I I think the
+00:07:58.000 dangerously skipped permissions thing
+00:07:59.840 should just be on by default.
+00:08:01.919 >> Nice. And they are in Auggie, right?
+00:08:04.879 >> Yeah. Yeah, there's there's no there
+00:08:07.599 there's no safety. You're you're playing
+00:08:09.039 with live rounds here. Um, cool. So, uh,
+00:08:12.720 so yeah, so now we can move on to the
+00:08:15.039 next step. Um, so this is this is done.
+00:08:17.599 Um, there's not going to be really any
+00:08:19.440 side effects to look at on the website,
+00:08:21.360 but we can take a look at the commit
+00:08:23.120 that it wrote. Um, which, you know,
+00:08:25.280 pretty simple. Again, this isn't, you
+00:08:27.199 know, rocket science to do, but
+00:08:28.479 certainly saves a little bit of copying
+00:08:30.000 and pasting, you know, from the Figma
+00:08:32.080 file. Um, and so, but now the the fun
+00:08:35.440 start the the fun's really going to
+00:08:36.799 start because this Figma file doesn't
+00:08:38.880 just have um a bunch of, you know,
+00:08:41.519 design guidelines in it. It actually has
+00:08:43.039 like full content for, you know, uh, you
+00:08:45.519 know, seven, eight pages on on a
+00:08:47.040 website.
+00:08:48.640 So, um, you know, and these are this is
+00:08:51.760 real prompts. Like I did this session,
+00:08:53.760 you know, a couple days ago and like
+00:08:55.200 this was kind of like exactly how I
+00:08:56.959 arrived at like a working website. So,
+00:08:59.360 we're doing it live. We're going to see
+00:09:01.200 uh see how this goes. Hope hopefully
+00:09:03.200 it's going to it's going to work pretty
+00:09:04.640 well. Um so again, I'm going back over
+00:09:07.279 into Figma now and I'm hitting uh
+00:09:10.480 command L to grab um you know the direct
+00:09:14.399 links to artboards. Uh so let's see, the
+00:09:17.839 designer has a bunch of typography stuff
+00:09:23.279 and like suggested grid dimensions. We
+00:09:26.880 got some asks to see the current Figma
+00:09:29.200 design if that's possible to
+00:09:31.040 >> Yeah.
+00:09:31.600 >> Yeah. Yeah. Yeah. Yeah. Let me uh let me
+00:09:34.080 stop sharing and switch screens.
+00:09:38.240 Your screen window.
+00:09:41.120 >> Also, while you're doing that, I had a
+00:09:42.640 message here from Nikita says, &quot;It'd be
+00:09:44.560 great if the isolated workspaces feature
+00:09:46.800 was optional.&quot; I think that is true. You
+00:09:49.120 can check mark like to use not a work
+00:09:52.160 tree. Is that right? Yeah.
+00:09:53.440 >> Yeah, that's absolutely right. Uh so
+00:09:55.680 this is a little bit hard to find. It's
+00:09:57.680 uh you know it's it's in the submen when
+00:10:00.560 you're selecting which branch to do.
+00:10:02.320 There's a checkbox at the bottom of that
+00:10:03.760 menu that says work directly in this
+00:10:05.680 branch. Um I was going to talk about
+00:10:07.440 that later in the stream. Um it's
+00:10:09.120 actually quite useful when you like tee
+00:10:11.040 something up, get it good, and then just
+00:10:12.480 want to make little minor edits using a
+00:10:14.480 workspace. But uh yeah, so onto the
+00:10:16.720 comp. This is the the thing that I'm
+00:10:18.480 pulling out uh pulling things out of.
+00:10:21.200 Um,
+00:10:22.880 we've got uh we've got it in developer
+00:10:24.800 mode. So, uh, you know, shift D in Figma
+00:10:27.839 if to flip back and forth between
+00:10:30.640 developer mode, which is actually really
+00:10:32.240 really cool. They kind of like muted a
+00:10:33.920 bunch of the features and made it hard
+00:10:35.440 to like accidentally change stuff or,
+00:10:37.200 you know, change the rotation on a thing
+00:10:39.200 when you're trying to grab its corner,
+00:10:40.720 you know, the classic foibless that
+00:10:42.959 developers run into. So, this was like
+00:10:45.760 the first frame that I grabbed and uh,
+00:10:47.760 yeah, let me zoom in here. It's got like
+00:10:49.920 some spacing conventions. It's got some
+00:10:52.560 custom colors. It's got some custom
+00:10:54.800 gradients. Um
+00:10:57.760 there's a bunch of really specific type
+00:11:00.560 annotations with like a licensed font.
+00:11:03.920 Um we'll be showing these uh a little
+00:11:06.640 bit later um with like actually pulling
+00:11:09.360 in and integrating like the font assets
+00:11:11.120 here. Um, we've got uh some kind of
+00:11:14.640 reusable components that are going to be
+00:11:16.079 common across pages and a grid system
+00:11:19.680 and then yeah, a a bunch of content.
+00:11:22.000 I'll I'll zoom out here and see. So,
+00:11:24.240 like when I was looking at doing this,
+00:11:26.480 this is like a a landing page. Um, you
+00:11:29.120 know, this is maybe
+00:11:31.680 I'm pretty fast. I could probably do
+00:11:32.959 this in like a day, maybe two of like
+00:11:35.920 coding all the markup, getting it
+00:11:38.240 responsive, making it like pulling all
+00:11:41.279 the assets out. You know, there's a
+00:11:43.279 bunch of little stuff in here like these
+00:11:46.240 guys are actually videos that like want
+00:11:48.160 to loop and like the go carousel and
+00:11:50.480 like mobile web. So, it's like, you
+00:11:52.640 know, it's a a couple days of work if
+00:11:55.040 this is all you're doing and you're like
+00:11:56.800 real fast and you know, have have done
+00:11:59.200 this before. It's a lot of work if
+00:12:00.880 you've like are you know trying to learn
+00:12:03.120 a framework while you're doing this. Um
+00:12:05.600 and yeah so uh so yeah I had uh I was
+00:12:08.560 able to get you know in a few sessions
+00:12:10.079 with intent ripped through this like a
+00:12:11.760 chainsaw. It was like 45 minutes and it
+00:12:13.839 was [laughter]
+00:12:14.639 >> pretty pretty functionally close. It was
+00:12:16.160 like 95%. And now the designer has
+00:12:19.279 intent and is iterating on the last 5%
+00:12:22.560 of all the little knobs and screws. And
+00:12:24.399 this is a person who's never used Git
+00:12:25.839 before. Um, and was like, you know, uh,
+00:12:30.320 super super enabled by this. Okay, cool.
+00:12:32.480 So, I'll uh I'll flip back to intent.
+00:12:38.480 >> Awesome. Yeah,
+00:12:39.680 >> your screen
+00:12:40.880 >> and if you can quickly show that
+00:12:42.639 checkbox like we got another comment.
+00:12:44.800 >> Yeah. Yeah, I'll I'll show where it is
+00:12:46.320 >> to um
+00:12:48.560 word. So, uh, sorry about the up the
+00:12:50.480 workspace option. So yeah, on the home
+00:12:52.079 screen, if you're here, you click on
+00:12:55.200 your main branch and there's this dude
+00:12:58.320 right down here. Work directly on the
+00:13:00.399 main branch. You can, this also works
+00:13:02.959 like if you select other branches in the
+00:13:05.839 in the repository, you can work directly
+00:13:07.760 on those as well. Um
+00:13:09.200 >> Oh, great.
+00:13:10.399 >> Yeah. So, so work directly on the branch
+00:13:12.639 and it says no work tree when you're
+00:13:14.720 doing this. Um, arguably there should be
+00:13:17.839 maybe a bigger setting more prominently
+00:13:19.680 so you can just like turn work tree mode
+00:13:21.519 off entirely, but uh but yeah,
+00:13:24.880 >> for sure.
+00:13:26.800 >> Cool.
+00:13:27.920 >> We have a comment uh asking, can intent
+00:13:30.480 store the spec to git?
+00:13:33.680 >> Can intent store the spec to git? Uh
+00:13:36.720 yes, it can. Um so the spec files do end
+00:13:42.320 up on disk. So if you click this open in
+00:13:46.800 menu, you can open them in Finder or the
+00:13:49.120 editor of your choice. They are files in
+00:13:51.600 the home/intent directory. Um and if so
+00:13:55.360 you would need to move the spec files
+00:13:56.880 over into your repo, but if you wanted
+00:13:58.480 to have the spec be a long-term durable
+00:14:00.720 object and uh yeah, the the sub items
+00:14:04.160 are are separate are separate files with
+00:14:06.480 the um with like the the subspecs.
+00:14:10.560 >> Interesting.
+00:14:12.639 Maybe potentially could you sim link to
+00:14:15.519 have it live as well? I don't know.
+00:14:17.920 Maybe [laughter]
+00:14:20.320 >> I'd want to test that first. Maybe I'd
+00:14:24.000 try it and see. We can type that in the
+00:14:25.839 box and see and see if it goes. Um,
+00:14:28.320 cool. So, I
+00:14:29.519 >> I had fat fingered a click on a
+00:14:31.199 suggested prompt earlier. Um, the the
+00:14:33.839 fun of doing this live. So, I need to
+00:14:35.600 tee this up a little bit more uh before
+00:14:37.680 we press go again. Um, so we've got the
+00:14:40.880 first page, we've got the grid,
+00:14:44.160 we've got the typography.
+00:14:49.040 >> It's all good
+00:14:49.839 >> word.
+00:14:50.320 >> While you do that, I think I can answer
+00:14:52.160 this question here. Can enterprises
+00:14:54.240 customize augment code with their
+00:14:55.920 internal frameworks, coding standards or
+00:14:58.399 domain specific knowledge? I think the
+00:15:00.720 general st the standard for doing this
+00:15:02.720 is like an agents MD kind of file which
+00:15:05.440 or like the rules files. So in that uh
+00:15:08.320 in those files we have it in our
+00:15:10.240 documentation as well where to put them
+00:15:12.639 um they'll always be included into
+00:15:14.480 context. So you can have all your coding
+00:15:16.959 standards domain specific knowledge and
+00:15:19.440 the agent will have that in context um
+00:15:21.920 at all times. And by the way guys I
+00:15:23.839 forgot to mention um intent
+00:15:26.399 >> with augment code is completely free
+00:15:28.320 right now with GPT 5.4. We're offering
+00:15:31.440 that for free for a limited time. So you
+00:15:33.440 don't need to use any credits or spend
+00:15:35.680 any money if you want to try Intent or
+00:15:38.000 any augment code product for free with
+00:15:39.920 GBT 5.4. Sorry for cutting you off, Sam.
+00:15:42.320 Go ahead.
+00:15:42.639 >> Oh, yeah. No, all good. I was going to
+00:15:44.000 say in answer to the enterprise
+00:15:45.440 question, uh, mono repos perform great
+00:15:47.600 with augment. Um, so if you have a monor
+00:15:49.680 repo that has a bunch of different
+00:15:50.720 projects in it, has a bunch of
+00:15:52.000 documentation, has your internal coding
+00:15:53.680 standards as well as on top of the kind
+00:15:56.240 of support of agents. MD and other
+00:15:58.320 metaphors.
+00:16:02.000 >> Yeah. Yeah, the context engine and
+00:16:03.920 augment really great for um large monor
+00:16:07.519 repos.
+00:16:09.120 Um yeah, for people that just joined,
+00:16:11.120 Sam, do you want to give a refresh on
+00:16:13.040 kind of what what we're working on here?
+00:16:14.720 >> Yeah. Yeah. So we are uh we're
+00:16:17.759 essentially building a website out from
+00:16:19.680 a Figma comp that we've got uh teed up
+00:16:22.880 in Figma with Figma MCP turned on and
+00:16:25.759 we've seated a project with some
+00:16:27.680 initializers for a couple of frameworks
+00:16:29.519 for Astro Tailwind CSS and uh we've got
+00:16:33.279 the first round done of some initial
+00:16:35.600 mison plots of setting things up and now
+00:16:37.680 we've got the uh agent starting to cook
+00:16:40.399 on the first uh you know kind of page in
+00:16:43.040 the website and the goal here is, you
+00:16:45.279 know, in the next 20 30 minutes to get a
+00:16:47.839 fully imagined thing out that is like
+00:16:50.240 pretty faithful to the comps that we had
+00:16:51.759 in Figma. And I'll flip back and forth
+00:16:53.440 to the Figma comp again as we kind of uh
+00:16:55.440 go through this.
+00:16:58.079 >> Nice.
+00:17:00.000 Someone here has asked for the URL for
+00:17:01.920 intent app. It's just augment.comintent
+00:17:05.839 to get there.
+00:17:09.679 >> Okay, cool. I heard the ding. Uh so that
+00:17:12.480 means that it's time for me as the human
+00:17:14.400 in the loop to uh to pay attention. Um
+00:17:18.720 cool. So uh let's see. We've got full
+00:17:21.439 picture. We started this. Okay. So it's
+00:17:23.919 added four tasks to the spec. Um you
+00:17:26.640 know it looked at the URLs to the design
+00:17:30.000 system that I sent. Um I'd also given it
+00:17:33.520 a note that like hey we're going to be
+00:17:35.760 adding the fonts later. So, like just
+00:17:37.440 use placeholders um for now so that you
+00:17:39.919 know if the designer looks over my
+00:17:41.280 shoulder, he's not going to be like, &quot;My
+00:17:42.640 fonts aren't being used.&quot; Um you'd have
+00:17:44.640 to look a little bit more closely to
+00:17:46.320 that. Um I won't try to pull a fast one
+00:17:47.919 on them and just use system fonts,
+00:17:49.520 although that is a good trick. Um cool.
+00:17:52.799 So, uh yeah, let's go. Um you fall into
+00:17:58.240 one of two camps. You either like to
+00:17:59.760 read the plans or you like to see what
+00:18:01.360 they do. Um I'm more of a like let's go.
+00:18:05.679 Uh sometimes I'll I'll see something
+00:18:08.320 like glaringly wrong in the plan and
+00:18:09.840 I'll either ask the coordinator to
+00:18:11.440 change it or go in and you know make
+00:18:14.400 make edits myself. But um like I said
+00:18:17.760 kind of at the at the start of this,
+00:18:19.200 this is a you know I'm recreating kind
+00:18:21.440 of a speedrun of a task that I did uh
+00:18:23.679 you know earlier you know last week or
+00:18:25.600 so. Um so I'm pretty high confidence
+00:18:27.840 that like these prompts are going to
+00:18:29.679 lead to uh to some decent or at least
+00:18:32.880 exciting results.
+00:18:34.640 Yeah, that kind of touches on a question
+00:18:36.960 from the chat that's like how do you
+00:18:38.799 iterate on the on the spec and the
+00:18:40.720 artifacts. Um, personally like I I found
+00:18:44.320 intent produces like this assumptions
+00:18:47.039 section and that's like what kind of
+00:18:48.880 always needs the most attention. I'm not
+00:18:50.960 sure if you have one here, but yeah,
+00:18:52.640 there you go. So, like sometimes
+00:18:54.559 there'll be some assumptions made that
+00:18:56.799 might not be aligned with what I
+00:18:59.679 intended. So yeah, that's kind of where
+00:19:02.559 I iterate the most on, but yeah,
+00:19:04.320 generally like I
+00:19:05.919 >> I find the plans to be pretty good by
+00:19:07.919 themselves.
+00:19:09.840 >> Yeah, same. And I think that there's,
+00:19:11.600 you know, two ways of doing this. You
+00:19:12.880 can either re-engage with a coordinator,
+00:19:15.039 say, &quot;Hey, there's some things wrong
+00:19:16.160 with the plan. Maybe you should change
+00:19:17.760 X, Y, and Z.&quot; Um, or you can make that
+00:19:20.320 it's yourself directly. Um, I tend to
+00:19:22.400 favor the latter because the coordinator
+00:19:24.960 tends to write prompts that are a little
+00:19:27.440 bit more fully specified uh than, you
+00:19:30.240 know, I would be willing to to write.
+00:19:32.320 Um, it also touches a little bit on, you
+00:19:34.799 know, the kind of like working mental
+00:19:37.360 model for, you know, where intent works
+00:19:39.760 best. And I think that it's actually
+00:19:42.320 really shines on tasks that are, you
+00:19:45.440 know, of the size right now of like a
+00:19:47.520 PR. So of a single pull request to like
+00:19:50.400 a repository. Um, you know, you can do
+00:19:53.840 you can have really ambitious PRs that,
+00:19:55.600 you know, change hundreds of files and,
+00:19:57.360 you know, maybe have tens of thousands
+00:19:58.559 of changes, but those are a lot harder
+00:20:00.400 to evaluate and they maybe need a lot
+00:20:02.160 more planning. And so even in this like
+00:20:04.320 we're going to get uh probably two or
+00:20:06.240 three more steps here and then we're
+00:20:08.080 going to jump out and make a new
+00:20:09.919 workspace. We're going to like merge
+00:20:11.280 this stuff and make a new workspace. Um
+00:20:14.240 because one is a reflection of the
+00:20:16.000 workflow that I would actually use where
+00:20:17.919 I get to like a decent stopping point
+00:20:20.080 where adding to the plan is going to
+00:20:22.080 just result in like 40% of the plan
+00:20:24.880 being like rewritten or invalidated. And
+00:20:28.960 like if you've been working with large
+00:20:31.360 language models for a long time, you
+00:20:33.679 kind of get these instincts, these
+00:20:36.320 second, you know, kind of hunches of
+00:20:38.159 about like where uh context is going to
+00:20:41.200 be the most useful. And you know the the
+00:20:44.799 less context you know that is accurate
+00:20:47.120 the better because if you have even with
+00:20:50.320 a million length you know million token
+00:20:52.480 length context window um one a million
+00:20:55.200 tokens is a lot of text like it's kind
+00:20:58.320 of it's easy to to throw it around like
+00:21:00.559 ah ah ah ah ah ah ah ah ah ah a million
+00:21:01.440 stuff you know it's an easy number to
+00:21:02.960 imagine maybe but if you actually like
+00:21:04.880 printed out those tokens on paper it's a
+00:21:07.280 stack of phone books that is like 2
+00:21:08.880 meters tall [laughter] and and like Do
+00:21:12.559 you need all that? Um,
+00:21:15.280 and like the models are obviously
+00:21:16.720 getting better and better and better
+00:21:17.840 with each generation, but you know,
+00:21:20.159 keeping things on track and especially
+00:21:23.120 being like fast, right? Like, you know,
+00:21:25.200 these models attend to everything in
+00:21:26.799 their context. So, if you have a
+00:21:29.679 smaller, you know, kind of set of
+00:21:31.280 contexts that you're bringing into the
+00:21:32.799 model and it's the right stuff, you're
+00:21:35.840 going to just get faster response times.
+00:21:38.000 you know, it's going to have less
+00:21:40.000 opportunity or will be less inclined to
+00:21:42.159 kind of wander off the the path that
+00:21:44.480 you're trying to get it to go down.
+00:21:46.400 >> Yeah. Speaking of models, we have a few
+00:21:48.400 questions here. Um, do you always use
+00:21:50.960 Opus? I want to know if you always use
+00:21:53.600 Opus. You have any opinions on different
+00:21:56.080 models?
+00:21:56.880 >> Yeah.
+00:21:57.840 >> So, you know, in in technology, you
+00:22:00.400 often get these uh these dichotoies.
+00:22:02.640 There's Vim versus Emacs. There's uh
+00:22:05.679 tabs versus spaces and [snorts] there's
+00:22:08.080 opus versus codecs or cloud code versus
+00:22:10.960 open AAI models. Um
+00:22:14.400 I think they are kind of tools that are
+00:22:17.440 very equally capable and you know the
+00:22:20.400 subtleties come in with how you prompt
+00:22:22.640 them and how you use them. Um I've been
+00:22:26.720 personally I've been using claude models
+00:22:29.120 uh you know as my kind of go-to for
+00:22:31.840 maybe the last like two years or so. Um,
+00:22:34.080 I really think that the work that Claude
+00:22:35.760 did with like the 3.5 sonnet release to
+00:22:38.640 get tool calling like good enough to the
+00:22:40.960 point where uh you can have an agent
+00:22:43.919 that goes off semi-autonomously and
+00:22:46.640 drives towards a task through a series
+00:22:48.559 of dozens of tool calls. Like that was
+00:22:51.200 the first time I saw that like happen in
+00:22:52.559 a model and it felt like oh this is the
+00:22:55.200 sign that like coding is now going from
+00:22:58.000 you know what it used to be to something
+00:22:59.520 new and it took you know two years for
+00:23:01.679 that to kind of bear out and I think
+00:23:03.039 that tool calling is the way to go. So
+00:23:05.039 like yeah I Claude's my OG um I use
+00:23:07.840 cloud every day for everything. Um
+00:23:09.919 although I try everything right like
+00:23:11.600 when the new models come out like it's
+00:23:13.360 really useful to go and try them because
+00:23:15.360 look faster and is better and if you're
+00:23:18.320 fast and accurate right like it's good
+00:23:21.360 enough it's good enough for me. So I've
+00:23:22.960 been playing around with 54 this week um
+00:23:24.960 as we were kind of like pre-flighting it
+00:23:26.960 testing it to go into intent and it's
+00:23:28.960 real good. Um, so if you've been using
+00:23:31.520 OpenAI models and are like pleased with
+00:23:33.600 them, like you got more good stuff
+00:23:35.919 coming along the way. And I think that
+00:23:37.520 like competition is only going to drive
+00:23:39.360 this forward faster. Uh, so yeah, and
+00:23:42.240 it's try it for free and intent or other
+00:23:45.200 augment products.
+00:23:47.919 >> Yeah.
+00:23:49.600 Got a question here. Can you change the
+00:23:51.039 ding sound in augment?
+00:23:54.080 >> You you can turn it off. [laughter]
+00:23:56.480 and the built-in notifications also are
+00:23:58.799 capable of making a sound. Um, but uh,
+00:24:03.120 yes, we'll we'll put that under
+00:24:05.280 consideration.
+00:24:06.159 >> Yeah, there's definitely internally I
+00:24:07.840 know some people don't like that sound
+00:24:09.200 too. So,
+00:24:09.760 >> yeah,
+00:24:10.240 >> hopefully we can we can bring in some
+00:24:11.760 more op options. I know someone that has
+00:24:13.760 like a plugin for the Warcraft like
+00:24:15.760 Zugzug any more work available plugin
+00:24:19.120 for um for his agents.
+00:24:21.600 >> Yeah, we could we could make it
+00:24:23.039 something fun. We could put a soundboard
+00:24:24.320 in there. I mean, that's uh that's a
+00:24:26.880 thing. It's we could probably just type
+00:24:28.320 that in the box and put a whole little
+00:24:29.760 synthesizer on that settings page.
+00:24:31.919 >> Mhm.
+00:24:34.960 Um got a request to see the specialized
+00:24:38.640 agent setup. Do you have specialized
+00:24:41.360 agent setup or do you just run with kind
+00:24:43.440 of what intent brings out of the box?
+00:24:46.080 >> Yeah, so um again this kind of goes back
+00:24:48.720 to this other, you know, there's a
+00:24:50.880 endless debate about this stuff. Um, I'm
+00:24:53.760 team. Don't mess with it. Um, [laughter]
+00:24:56.240 so, but that's also why I use intent is
+00:25:00.799 because we have a lot of these things
+00:25:03.440 that are that are built in that are
+00:25:04.960 already exceptionally well prompted.
+00:25:07.120 And, you know, there are definitely ones
+00:25:09.760 in here that I use that uh that I invoke
+00:25:13.200 directly. A really cool one um that uh
+00:25:16.799 I've been using a lot over the past
+00:25:18.799 couple weeks is this PR Shepard. Um so
+00:25:23.279 currently this only works with with
+00:25:24.640 augment uh and with augment code review
+00:25:27.679 but essentially you can when you have an
+00:25:30.159 open poll request and let's say it has
+00:25:32.080 some you know CI things are failing and
+00:25:34.799 you've get some review comments either
+00:25:36.480 from humans or through automation um you
+00:25:39.279 can launch this specialist in an intent
+00:25:41.760 workspace and it will basically long
+00:25:44.080 pull against the comment thread and will
+00:25:47.440 chase down a green pull request like the
+00:25:50.240 terminator hunting for on Connor. Um,
+00:25:53.022 [laughter]
+00:25:53.840 so you can run this thing and it'll just
+00:25:56.080 like chirp away. Uh, you know, the
+00:25:58.400 augment code review bot is really really
+00:26:00.799 good and it makes oftentimes, you know,
+00:26:04.159 very actionable suggestions and so
+00:26:06.400 having that loop be really tight where
+00:26:08.720 it's those are getting addressed and it
+00:26:10.960 leaves feedback on the comments too. So
+00:26:12.880 it's not just like, oh, I'm going to
+00:26:14.400 push a commit and mark resolved. It's
+00:26:16.080 like it goes in, it makes a detailed
+00:26:18.720 comment. Um, and this is a kind of an
+00:26:21.760 outgrowth of a skill that intent can
+00:26:23.440 just do. Like when you have the GitHub
+00:26:26.159 uh stuff wired up, like you can just ask
+00:26:28.240 the coordinator be like, &quot;Hey, are there
+00:26:29.520 any comments on this PR? Can you address
+00:26:31.039 them?&quot; And like it'll write to the spec,
+00:26:33.120 it'll fire stuff fire away. But that
+00:26:35.520 also involves you like typing the box
+00:26:37.440 kind of knowing the context like are
+00:26:38.799 there pull requests right now? Um, so
+00:26:41.279 this is like part of the like SDLC that
+00:26:43.520 we're really excited about like helping
+00:26:45.520 you know smooth down and chamfer off
+00:26:47.200 like the rough edges. uh because stuff
+00:26:49.120 like this just really like nails it. Um
+00:26:52.559 the UI designer prompt, this is another
+00:26:54.799 one that like Amelia wrote. So like the
+00:26:56.960 fun thing about prompts and I think that
+00:26:58.559 like the skills.sh like you know
+00:27:00.799 explosion of that ecosystem like really
+00:27:02.720 shows this is like the best prompt is
+00:27:04.720 the one you didn't have to write
+00:27:05.760 yourself uh that somebody else you know
+00:27:08.240 just uh just goes out and nails for you.
+00:27:10.640 Um, and so right like part of this is
+00:27:13.360 being a discerning user of this is like
+00:27:15.279 spend enough time to think about these
+00:27:16.720 things but you know you can overindex on
+00:27:18.960 them and the difference between like a
+00:27:20.320 pretty good prompt and a perfect prompt
+00:27:22.080 is like I don't know it's uh it's it's a
+00:27:25.200 limiting factor like you like you could
+00:27:26.799 spend a lot of time and not get you know
+00:27:28.960 better results and you know more
+00:27:30.400 inference is probably the best way to
+00:27:32.480 get to uh to better code rather than
+00:27:34.960 spending lots and lots of time um
+00:27:36.960 specifying the perfect prompt.
+00:27:40.960 Nice.
+00:27:43.360 We have a question on like when to use
+00:27:45.440 different models if you do you ever like
+00:27:47.200 switch between Haiku Sonnet or Opus GBT.
+00:27:51.760 >> Yeah. So like this is a question that I
+00:27:55.440 think is you know in the past it used to
+00:27:58.559 be much more relevant. Um, so in
+00:28:01.440 previous AI tools that I've worked on
+00:28:03.520 and in like earlier runs at like this
+00:28:06.320 app before the before Opus 4 6 like
+00:28:08.720 December 2025 is a pretty memorable
+00:28:11.360 moment for like a step change and when
+00:28:13.120 everything got better and uh full
+00:28:15.360 context we've been working on intent
+00:28:16.960 since you know before that there there
+00:28:18.640 was a couple months leadup um when it
+00:28:21.039 was kind of going through a prototyping
+00:28:22.240 phase and we were seeing uh because we
+00:28:24.159 were all using Auggie CLI in you know
+00:28:27.120 T-Mox with six split panes and you know
+00:28:30.399 writing down specs. So like this
+00:28:32.159 workflow grew out organically and in
+00:28:34.399 those cases it was absolutely like hey
+00:28:36.720 use a smart model to write the spec use
+00:28:39.360 a fast model to verify it use a decent
+00:28:43.440 like middle of the road like like sonnet
+00:28:45.840 you know or um you know codeex 5.1 use
+00:28:48.720 one of those mo models with like medium
+00:28:50.720 thinking to you know do the
+00:28:52.559 implementation and then you put put it
+00:28:54.640 in this you know gracious feedback loop
+00:28:56.960 where you know the verifier looks at it
+00:28:59.279 the smart model writes the And you know,
+00:29:01.600 it's kind of like a gas town thing or
+00:29:03.120 you know what people are doing with with
+00:29:04.399 cloud code. And you can get a lot of,
+00:29:07.360 you know, juice out of that, but it's
+00:29:09.520 kind of like tuning a carburetor or
+00:29:11.120 something in a car. like there is an a
+00:29:12.799 sweet spot to get into and you kind of
+00:29:15.200 got to listen to it and like try a bunch
+00:29:16.880 of stuff and like it's uh it's a lot of
+00:29:20.240 time that when a good model comes along
+00:29:22.640 and or a better better model generation
+00:29:24.480 comes along a lot of those concerns just
+00:29:26.880 evaporate because like you know a model
+00:29:30.000 like 54 or model like Opus 46 they're
+00:29:32.559 just good at doing this stuff they can
+00:29:34.159 go so fast they can go so far they can
+00:29:36.640 drive the specs really really well and I
+00:29:38.880 find that just staying in those models
+00:29:40.960 is the sweet spot. But, uh, that's also
+00:29:43.039 like different strokes for different
+00:29:44.080 folks. You can get get this stuff done
+00:29:45.440 in a lot of different ways.
+00:29:48.080 >> Nice.
+00:29:50.559 >> Do you did you want to show the
+00:29:52.720 progress?
+00:29:53.679 >> Yeah. Yeah. Yeah. Sorry, I've been
+00:29:54.880 yapping away here. Let's
+00:29:56.080 >> No, no, it's good. We We have questions
+00:29:57.760 coming and it's good to answer them, but
+00:29:59.760 >> Yeah. Yeah. I guess we should also Yeah.
+00:30:01.440 Go ahead.
+00:30:02.000 >> Cool. Uh, hidden features. You can't see
+00:30:03.919 the key keystrokes that I'm doing, but
+00:30:06.240 uh yeah, it's um all the all of your
+00:30:09.600 favorite VS code. Command J to dismiss
+00:30:13.120 the terminal. Command B to dismiss the
+00:30:14.960 sidebar. Um especially when you're
+00:30:17.279 trying to like look at a browser. So,
+00:30:19.840 okay, this like looks like a website.
+00:30:22.230 [laughter] Um we've got So, what this
+00:30:24.399 has done, if you're just joining the
+00:30:25.520 stream, um we have this comped out in
+00:30:28.080 Figma where uh worked with a designer on
+00:30:31.200 this. they have, you know, seven or
+00:30:32.640 eight pages that has a bunch of, you
+00:30:36.080 know, content that's written out that's
+00:30:38.159 kind of done in this, you know, pretty
+00:30:39.760 specific way. Right now, there are a few
+00:30:41.919 things that like you can't see this with
+00:30:43.760 Figma comp, I'm sorry, but like there
+00:30:45.279 are a few things that are like visually
+00:30:46.559 off, but we're going to address those.
+00:30:48.399 Um, but it's been able to pull things
+00:30:50.399 like, you know, colors for gradients.
+00:30:52.799 It's obviously not making like an all
+00:30:55.200 purple and you know shad CN,
+00:30:59.120 you know, kind of the the tells. It used
+00:31:01.200 to be Bootstrap, now it's Chad and uh
+00:31:03.120 and purple gradients that you know, you
+00:31:05.279 you copied your homework from the from
+00:31:07.840 the open source repo. Um,
+00:31:10.880 cool. So, like I think we're we're doing
+00:31:13.919 we're doing pretty good on this. Um,
+00:31:16.960 so we haven't started one task and we
+00:31:19.679 have hotkeys up here in the corner.
+00:31:21.919 Another fun thing that like we have
+00:31:24.559 these views where you can see uh
+00:31:28.720 is that a bug? Come on.
+00:31:31.520 Okay, so we we have views that you can
+00:31:33.919 see like you know a tile view of like
+00:31:36.000 all the agents that have launched in the
+00:31:38.480 >> in your chat and you know these are like
+00:31:40.720 kind of the standard pane interactions
+00:31:42.320 that you would normally expect. Um, but
+00:31:45.200 my favorite one is to just take me back
+00:31:47.600 take me back to the planning spec when
+00:31:49.279 I've been like messing around and
+00:31:51.120 dragging tabs back and forth. It gives
+00:31:52.640 this two-up view of like here's
+00:31:54.399 everything that you've done. Here's the
+00:31:55.600 plan we've written so far. Here's the
+00:31:57.039 coordinator agent. Um, coordinator's a
+00:31:59.279 boss. He's the best person to talk to.
+00:32:01.200 Um,
+00:32:02.880 cool. So, we looked at this and it's
+00:32:05.840 pretty good. Um,
+00:32:08.640 next up we're gonna have it break out
+00:32:10.880 the header and footer. Um, because we're
+00:32:14.080 gonna go make some more pages. Like this
+00:32:15.840 page is okay and we're going to address
+00:32:17.760 like the problems on that page. But the
+00:32:19.760 magic of working in uh an agent
+00:32:22.799 orchestration workspace like intent is
+00:32:24.799 that you can do a bunch of stuff in
+00:32:26.080 parallel, especially when they're not
+00:32:27.840 uh, you know, going to be writing, you
+00:32:29.600 know, over top of the same lines in one
+00:32:32.080 file. Uh, so once again, I'm going to go
+00:32:34.480 back over to Figma where I'm going to
+00:32:36.159 grab a link from a comp and then full
+00:32:39.039 send. Let's go. And then what I'm also
+00:32:41.600 going to do is tee up the next prompt,
+00:32:44.880 which is a fun thing that we have. Um,
+00:32:48.399 where we can add tasks for and then cue
+00:32:51.679 and then cue them up. Um, so I'm going
+00:32:53.840 to quick speedun through getting all the
+00:32:57.760 rest of these of these little dudes
+00:33:00.000 lined up.
+00:33:03.519 Nice.
+00:33:09.840 Uh, we have a question about reviewing
+00:33:12.399 code output.
+00:33:14.240 Um, checking that it follows your
+00:33:16.320 standards and guidelines or how how do
+00:33:19.200 you or if do you review any code these
+00:33:24.240 days?
+00:33:25.039 >> Yeah. Uh, yes, I review a lot of code
+00:33:27.600 these days. Um it is the the thing
+00:33:31.120 that's exploding right now with our
+00:33:32.720 ability to write more is that uh we're
+00:33:35.760 writing a lot more code and so you know
+00:33:39.200 I do a mix of reviewing things in the
+00:33:42.320 application in intent um occasionally I
+00:33:45.440 still will open an IDE um but uh a lot
+00:33:49.279 of my work now is capable to happen
+00:33:52.720 directly in intent um so yeah so this is
+00:33:55.360 what we've got so far um So like I said,
+00:33:58.960 I preceded this project with a little
+00:34:01.039 bit of starting HTML. So I kind of had
+00:34:04.240 some stuff in like in distribution like
+00:34:06.720 the way that I liked it, you know, with
+00:34:08.000 some showing some Tailwind classes here
+00:34:09.599 and there. Um, you know, stuff like
+00:34:11.599 this. And so right like this is uh an
+00:34:15.040 area of the app where we're like
+00:34:16.239 continuing to iterate and we want to
+00:34:18.399 make this like the place where it's like
+00:34:20.960 nice to come and review code. Um, and if
+00:34:24.879 you spend a lot of time in like GitHub
+00:34:26.639 pull requests, uh, you'll know that
+00:34:28.800 there's uh there's room there's room to
+00:34:30.399 grow. Uh, there's uh definitely nicer
+00:34:33.359 interfaces to be able to to to do
+00:34:35.760 things. So, a lot of times, you know,
+00:34:37.760 code review comes in in a couple
+00:34:39.359 different flavors. One, there's just
+00:34:40.639 like looking at it and doing trying to
+00:34:42.480 do like a literate reading or an
+00:34:44.079 informed reading of the code. Um that's
+00:34:46.800 pretty good if you know you're pro you
+00:34:49.199 can keep the project in your head if you
+00:34:50.879 have the theory of the program pretty
+00:34:52.560 crisp in your mind that's good uh then
+00:34:55.839 the other side of code review u is
+00:34:58.000 really more like validation and QA which
+00:35:01.200 is like do the things that need to run
+00:35:04.320 you know do smoke tests run can you run
+00:35:06.640 the app and so for an app like intent
+00:35:08.240 that like we use every day and we're dog
+00:35:10.079 fooding really aggressively like every
+00:35:12.320 time I get a pull request for intent I
+00:35:14.079 pull it down onto my local put it in a
+00:35:15.839 work tree open it up uh run the server
+00:35:19.440 drive the app around uh we have
+00:35:20.960 automation for this but I also you know
+00:35:24.000 that's part of I think you know having
+00:35:26.560 uh a good grasp of like whether the
+00:35:28.320 thing you know can you exercise this
+00:35:30.079 feature do you know what's changed do
+00:35:31.760 you know what to look for you know um
+00:35:34.240 things like that so for stuff like this
+00:35:35.920 for like lighter weight like webdev
+00:35:37.280 tasks this is more like a vibe vibes
+00:35:39.440 based thing like okay there's a bunch of
+00:35:40.960 content coming in here it all looks good
+00:35:44.320 um you know the dev server is already
+00:35:46.320 running so I kind of know that I'll do
+00:35:48.079 things like run you know lint and
+00:35:50.000 formatting
+00:35:51.520 um and one of the features that we're
+00:35:54.720 going to be integrating soon is like
+00:35:56.880 direct integration with like npm or node
+00:35:59.839 scripts or like scripts make files
+00:36:01.280 things that we can automatically detect
+00:36:03.040 so that you can get affordance in the
+00:36:04.400 app for like running those things with
+00:36:05.760 with one click instead of having to uh
+00:36:08.560 come into the the terminal like a
+00:36:10.320 caveman and uh and type you know MPM.
+00:36:14.560 Uh, probably have one of these things.
+00:36:18.240 >> Sam, I'd love to double click on um
+00:36:22.240 verification testing and specifically
+00:36:24.960 with work trees. So, personally, I think
+00:36:28.000 a lot of people are new to work trees.
+00:36:30.480 And you know, when you first spin up a
+00:36:32.320 work tree, it doesn't have a lot of the
+00:36:34.480 things like maybe node modules or
+00:36:36.640 binaries installed. So, I know there's
+00:36:39.520 like setup scripts. Is that what you use
+00:36:41.760 to get, you know, intent ready to review
+00:36:45.200 once you spin up a work tree? And can
+00:36:47.040 you show us that flow?
+00:36:49.760 >> Yeah, so the so the setup script flow,
+00:36:52.400 um, you know, the one thing that I can't
+00:36:55.520 show easily on stream because I'm I'm
+00:36:57.520 only sharing one window at a time is
+00:36:59.040 that I usually roll with like four or
+00:37:01.119 five intent windows open um with
+00:37:04.079 different workspaces or different work
+00:37:05.599 trees. So like the command shiftn open a
+00:37:08.480 new window to show something is just
+00:37:10.000 absolutely tattooed into my brain. Um
+00:37:12.720 but you can you can get to it from here
+00:37:14.960 too. Uh just commandn of the the hotkey
+00:37:18.320 for creating new workspace. So we have a
+00:37:21.359 bunch of um of pre-anned templates for
+00:37:25.440 these types of scripts. Um so it's a
+00:37:28.240 little bit hidden or like on the on the
+00:37:29.920 homepage. You might miss it the first
+00:37:31.119 time that you look at the application,
+00:37:32.400 but on when you go to launch a project,
+00:37:34.880 there's uh a button to, you know, choose
+00:37:37.359 the script. The default that we have is
+00:37:39.119 to copy config files. Um, so you know,
+00:37:42.560 if you have, uh, you know, MV file or
+00:37:45.839 or, you know, the the other, you know,
+00:37:47.760 kind of uh, you know, common culprits,
+00:37:50.640 um, for monor repos, really helpful to
+00:37:52.240 do that recursively. Um, so you're not
+00:37:54.800 having to to do this yourself. Um, but
+00:37:57.359 there's also things like, you know, a
+00:37:58.800 script that will do the config file
+00:38:00.960 dance and then run pnpm install or or
+00:38:03.359 npm with yarn or pip with python, etc.
+00:38:07.599 Um, you can also write your own. You can
+00:38:09.440 also generate them from the repo. Uh,
+00:38:12.560 >> yeah, so it's um, you know, this is
+00:38:14.960 definitely a place where like the
+00:38:16.320 iteration loop might feel a little bit
+00:38:18.160 clunky right now. um you know th those
+00:38:21.040 types of setup scripts arguably you know
+00:38:23.280 might be well suited it checked into
+00:38:25.599 your repo is something else that we can
+00:38:27.040 run but uh there's absolutely a a good
+00:38:30.240 way to like write durable automation for
+00:38:32.400 this that you can use every time and you
+00:38:34.320 can you know kind of get access to like
+00:38:36.240 the path directories of that you know
+00:38:38.480 you're working with and stuff like that
+00:38:41.920 >> and I see a comment here and this is
+00:38:43.839 something that I had to learn as well is
+00:38:46.560 the kind of the locking or not being
+00:38:49.119 able to check out the same branch when
+00:38:51.280 you have it open in a work tree. Is
+00:38:52.960 there like some kind of mindset that
+00:38:54.480 someone has to adopt um to be using this
+00:38:57.680 new way of work trees?
+00:39:00.400 >> Yeah, I think so. Yeah. And and that
+00:39:03.440 that's tough because right like you know
+00:39:05.680 if you've been using git for any length
+00:39:07.599 of time like git is a huge universe of
+00:39:10.320 stuff like we didn't I personally I've
+00:39:12.320 been using git since like 2008. I didn't
+00:39:14.160 know work trees were a thing until like
+00:39:15.680 last June. Um, right. So, like they've
+00:39:18.560 been in there for a while, too. Uh,
+00:39:20.480 >> 2015, I think.
+00:39:21.839 >> Yeah. So, so only 11 years to get used
+00:39:24.240 to one of the hundreds of subcomands
+00:39:26.160 that you'll never ever run. So, right,
+00:39:28.160 like Git is already, you know, kind of a
+00:39:31.440 little bit to keep in your head. You
+00:39:32.560 know, version control is a thing that
+00:39:33.920 you develop a close personal
+00:39:35.200 relationship with because you run these
+00:39:36.880 commands day in and day out if you're
+00:39:38.880 doing software development, you know,
+00:39:40.320 full-time. And so yeah, so work trees
+00:39:42.880 are kind of weird and they take some
+00:39:45.040 getting used to for sure. Um I found
+00:39:47.599 that there's a learning curve that kind
+00:39:49.119 of once you get the comfort level of
+00:39:50.560 like hey I'm in a work this is in a work
+00:39:53.200 tree I can't check it out to main. If I
+00:39:54.960 want to get it into main or I want to
+00:39:56.400 see it in another branch my options are
+00:39:59.520 to merge it or you know use there is a
+00:40:02.880 force way to force the branches but I've
+00:40:04.960 never ever used that. Okay. Um because
+00:40:07.760 you can get disconnected heads basically
+00:40:10.560 where you have like the you know the
+00:40:13.599 branches like won't sync easily like so
+00:40:16.000 don't do it but like yeah so so one um
+00:40:20.800 so that's what kind of like why we put
+00:40:22.320 the terminal you know as a first class
+00:40:24.480 entity in here um and one because like
+00:40:28.240 and we put these the work trees in a
+00:40:30.320 place that's you know uh not cryptic not
+00:40:33.760 you know easy to discover you can
+00:40:35.599 control this the location of this
+00:40:37.599 directory um too. And then also we give
+00:40:41.680 you know some affordances like here at
+00:40:43.839 the top to be able to like quickly open
+00:40:46.400 this in any of your kind of like common
+00:40:49.040 apps or just copy the absolute path. Um,
+00:40:52.640 and a fun thing you can move the sidebar
+00:40:54.320 over
+00:40:56.400 the uh, so so yeah. So like the mental
+00:40:58.960 model for work trees is kind of like,
+00:41:00.560 yeah, they're an isolated thing. Spend
+00:41:02.800 time working in them, but in my mind
+00:41:05.440 they're not meant to be like super super
+00:41:07.520 longived. And if they are living for,
+00:41:11.119 you know, let's say multiple days or
+00:41:12.800 weeks or months, um, you'll commonly
+00:41:15.920 probably need to come into the terminal
+00:41:17.920 and like merge main back into them or
+00:41:20.480 merge your t your tracking branch. Um,
+00:41:23.119 and so that works really well, you know,
+00:41:24.800 in I'm also of the, you know, persuasion
+00:41:27.520 to do squash commits for most
+00:41:29.599 everything, especially into like main
+00:41:31.119 branches. So like for me having you know
+00:41:33.920 potentially a bunch of like ugly looking
+00:41:35.920 merge commits in a longunning feature
+00:41:38.400 branch is kind of a sin that gets washed
+00:41:40.880 away when you ultimately merge back into
+00:41:43.760 main like nobody's going to see that you
+00:41:45.200 had to you know merge main 65 times back
+00:41:47.599 into this branch. Um
+00:41:50.720 >> and for that cleanup and maintenance if
+00:41:52.480 you just you know uh delete a workspace
+00:41:55.200 in intent will that clean up the work
+00:41:57.040 tree on your local file system too?
+00:41:59.520 >> Yeah. So we have we have two modes for
+00:42:01.200 it. We have an archive which is like a
+00:42:03.599 softer deletion where it just doesn't
+00:42:05.119 show up in intent but the work tree
+00:42:06.880 physically stays on disk. And then we
+00:42:08.160 have a delete which you know eats the
+00:42:11.040 files gets gets rid of them but it's a
+00:42:13.359 branch in Git. So it's just like
+00:42:14.560 everything once you've deleted the work
+00:42:15.920 tree you're free to check it out
+00:42:17.359 wherever you want. Um, and what's funny
+00:42:20.480 is that like in the previous, you know,
+00:42:23.280 kind of, uh, prior to knowing what work
+00:42:25.280 trees were, I was working on a really,
+00:42:27.119 really busy project that had, you know,
+00:42:28.560 a bunch of PRs that I was doing active
+00:42:30.240 Devon, you know, maybe 20, 30 PRs to a
+00:42:32.560 day that I was reviewing some portion of
+00:42:34.720 and working on multiple features at a
+00:42:36.720 time. I had three checkouts of this
+00:42:38.400 project that I would manually move
+00:42:40.720 between and use like different VS Code
+00:42:42.640 themes to like know which one I'm
+00:42:44.720 working in to know if I'm like in main
+00:42:46.480 I'm checking out PRs or reviewing stuff
+00:42:48.400 or if I'm like in my feature branch and
+00:42:50.319 it was a lot to keep in my head. I had
+00:42:51.680 to like use different themes and that
+00:42:53.200 mode of working I feel like intent just
+00:42:55.359 makes you know 10 times easier.
+00:42:57.599 >> 100%.
+00:42:59.599 >> Cool. So yeah, let's let's see. So we've
+00:43:03.440 got a plan. And I should have clicked
+00:43:04.560 approve on this a few minutes ago. Um,
+00:43:07.680 so yeah, we're we're going to go full
+00:43:10.160 send on this thing. Um, it's going to
+00:43:11.839 extract header and footer into reusable
+00:43:14.079 components and then it's going to um
+00:43:16.800 build out the rest of these pages and
+00:43:18.560 then it's going to do a verification
+00:43:20.160 pass against Figma. So, that was kind of
+00:43:22.400 at the end of the last uh the last
+00:43:24.160 prompt that I dropped in here to be
+00:43:26.000 like, &quot;Hey, now that you've like gotten
+00:43:28.079 this stood up, it's kind of like what
+00:43:30.240 you have to do with a with a person of
+00:43:32.079 being like, &quot;Okay, did you really do it?
+00:43:33.920 Did you go and play what's different and
+00:43:35.520 look at each one of these pages and see
+00:43:37.119 if you actually got all of it?&quot; Um,
+00:43:39.119 because the agents aren't perfect. You
+00:43:40.720 know, the uh they're they're they're
+00:43:43.520 bound to, you know, want to be helpful
+00:43:45.359 assistants and finish the problem. um
+00:43:47.520 sometimes even if they didn't really do
+00:43:49.839 their jobs.
+00:43:53.359 >> Sure. Got a question about code quality.
+00:43:56.000 Uh do you do anything in your workflow
+00:43:58.160 to detect stuff like code duplication,
+00:44:00.720 circular dependencies, any violations,
+00:44:04.079 stuff like that,
+00:44:06.000 >> you know, not beyond the normal kind of
+00:44:08.240 quality metrics that you get through
+00:44:10.160 linting, formatting, enforcement, and
+00:44:12.400 you know, use unit tests. Um I haven't
+00:44:15.520 really felt like I've been burned by
+00:44:17.359 like a circular dependency or type of
+00:44:19.200 thing. The duplication thing is real
+00:44:20.960 though. Um and that's a thing that you
+00:44:23.119 need to catch in code review. Um I feel
+00:44:26.000 like the verification the verifier at in
+00:44:28.560 intent and kind of part of the reason
+00:44:30.240 why it runs in this you know kind of you
+00:44:33.200 know multi-phase process where it goes
+00:44:35.280 from I'm going to plan I'm going to you
+00:44:37.760 know build out a build out a spec. I'm
+00:44:39.920 going to then kind of delegate and go
+00:44:41.599 through and then at the end I'm going to
+00:44:43.040 go through and do a verification pass.
+00:44:44.880 Um hopefully that verification pass is
+00:44:46.800 good enough to catch those types of
+00:44:48.000 things. But um I feel like this is a
+00:44:50.160 problem that I've seen humans do uh in
+00:44:52.640 equal measure of just being you know
+00:44:55.359 maybe a little lazy and not looking if
+00:44:57.119 the util for formatting the date the way
+00:44:59.359 that they want is actually checked into
+00:45:00.880 the project or if they're adding you
+00:45:02.560 know a third or fourth copy of it. Um
+00:45:05.760 and that said having I we have had good
+00:45:08.880 success with having a workspace where
+00:45:11.520 you just say hey go find duplicate code
+00:45:13.599 in this repo find code that has similar
+00:45:15.520 signatures you know keep like look at
+00:45:18.240 utils make sure that things are
+00:45:19.599 abstracted make sure that like things
+00:45:21.119 are you know reasonably dry and like you
+00:45:24.079 can usually go on a fishing trip and
+00:45:26.319 come back with something because most
+00:45:27.920 big code bases will will have an amount
+00:45:30.000 of duplication in them.
+00:45:32.480 >> Nice. We've got another question about
+00:45:34.240 timelines for Windows and Linux for
+00:45:36.240 intent. Sam, do you know more than me?
+00:45:38.880 From from what I know, it's like we
+00:45:40.800 don't have a
+00:45:41.520 >> um solid timeline.
+00:45:43.599 >> Yeah, we don't have a solid timeline for
+00:45:45.200 when we're we're going to be releasing
+00:45:46.640 them. But I can say that uh we have in
+00:45:49.839 we have internal testing that we've been
+00:45:51.760 that we've been working on with this and
+00:45:54.640 have have people hard at work to make
+00:45:57.119 sure that they are, you know, really
+00:45:59.280 high quality and, you know, meet the
+00:46:01.200 same expectations. Uh so yeah, soon is
+00:46:03.920 is what I can say. It's definitely a
+00:46:05.359 priority. It's like, you know, we have
+00:46:08.160 active work going on about these
+00:46:10.000 >> for sure. And I'll plug that if you
+00:46:11.760 haven't already, you can go into
+00:46:13.839 augment.com/intent
+00:46:15.760 and the drop down here will have a
+00:46:18.400 button for Windows and Linux to sign up
+00:46:20.079 to the wait list. So as soon as we do go
+00:46:22.640 live with Windows and Linux, you'll be
+00:46:24.560 notified. And again, a plug for Intent,
+00:46:27.520 a fully free app you can download. And
+00:46:29.440 also we um are giving GPT 5.4 for free
+00:46:34.079 inside intent and other augment products
+00:46:36.800 too. So you can try it completely for
+00:46:38.720 free right now on Mac. Um but if you're
+00:46:41.040 on Windows and Linux, you can try ogi
+00:46:42.800 with 5.4 for free as well if you'd like.
+00:46:47.200 Thanks.
+00:46:51.359 >> Cool. So uh so so it's it's cooking, but
+00:46:53.920 we can take a look at the uh at the at
+00:46:55.760 the dev server. Okay. In interest for
+00:46:57.760 time, I have Ros um ask me if you can
+00:47:00.160 touch on your sentry to PR use case. I
+00:47:02.480 think that's a really cool thing to show
+00:47:03.920 as well if you have time.
+00:47:05.040 >> Yeah. Yeah, for sure. Um so
+00:47:09.040 yeah
+00:47:14.720 we will
+00:47:17.599 so if you click on this on this ad add
+00:47:20.560 context um you get a
+00:47:24.319 you know uh oh here's a fun one um you
+00:47:28.560 so one you need to go in and in
+00:47:34.400 word no in accounts Sorry. Um, we've
+00:47:36.960 moved this. Um, you need to come into
+00:47:39.920 the connections tab and connect to
+00:47:42.240 GitHub. This is just standard OOTH
+00:47:44.400 connection that lets us, you know,
+00:47:46.160 interact with your GitHub on on your
+00:47:47.760 behalf. Um, through their API and oh,
+00:47:50.400 I'm sorry, on on Sentry. So, the Sentry
+00:47:52.560 one, you you do need to mint in an an
+00:47:54.560 API key to do this right now. It's
+00:47:56.079 definitely on target for us to be able
+00:47:57.680 to, you know, have a really smooth rail
+00:47:59.680 here. Um, I also kind of have two modes
+00:48:02.000 of using this. I also use the Sentry
+00:48:03.440 CLI, which is quite good. I have that
+00:48:05.200 installed and set up on my computer and
+00:48:07.200 is uh a kind of a quick way that I can
+00:48:09.359 be like, hey, I there's a link to the
+00:48:11.680 sentry issue. Take a look at it. But we
+00:48:13.599 do have a way here where if you click on
+00:48:15.839 the add context, we will pull the
+00:48:18.240 context for you know a uh you know for
+00:48:22.319 your specific sentry projects. Um
+00:48:24.800 >> can [snorts] you also briefly um touch
+00:48:26.400 on what sentry is as well just in case.
+00:48:28.800 >> Oh yeah, so Sentry is super cool. Um, so
+00:48:31.760 basically every time that you have a,
+00:48:34.319 you know, any type of, you know,
+00:48:36.559 website, application, mobile app, game,
+00:48:39.359 anything, that thing is going to be
+00:48:40.960 throwing more errors than you ever see
+00:48:42.960 in dev mode. Um, no matter how
+00:48:45.680 rigorously you test or or no matter how
+00:48:48.800 uh, you know, hard you go on the
+00:48:50.720 application, things will happen that you
+00:48:52.720 that you don't expect. Um, and so right
+00:48:56.400 like um,
+00:48:58.720 yeah, so so Century is really cool. I've
+00:49:00.480 actually uh you know got a lot of
+00:49:02.160 history with Sentry. I'd been an early
+00:49:04.319 customer of theirs in like 2014 and then
+00:49:07.280 um did a bunch of uh open source work
+00:49:10.079 with them in 2014 and 2015 uh when I was
+00:49:13.440 still running my consultancy. Um and
+00:49:15.200 when Sentry was like four or five people
+00:49:16.800 and they're a huge company right now. Um
+00:49:19.040 yeah, they're super cool. Um yeah, we
+00:49:22.000 use them basically for everything. I
+00:49:23.440 think it's like the best-in-class
+00:49:24.640 solution for for error tracing in in
+00:49:27.520 products and it gets really really
+00:49:29.599 detailed stuff. Um, so this is one of my
+00:49:32.160 favorite uh ones where if you run intent
+00:49:34.400 out of the downloads directory um this
+00:49:37.280 error just spews like radioactive like
+00:49:40.939 [laughter] a like a piece of uranium or
+00:49:43.440 something where uh it's it's not
+00:49:45.280 actually anything but uh it's not
+00:49:47.760 nothing and Sentry gets a lot of it. So
+00:49:49.920 for for something like this, I'd say
+00:49:51.680 like, &quot;Hey, big dog, fix this error.&quot;
+00:49:55.520 >> Big dog.
+00:49:57.599 >> Yeah. If you talk to the models with the
+00:49:59.839 big dog lingo, it'll occasionally throw
+00:50:02.000 you the big shaka emoji when it's done.
+00:50:04.400 Um, [laughter] and so this is also one
+00:50:06.160 where I use the rapid fire mode for
+00:50:08.000 stuff like this, which all it is is it's
+00:50:10.079 going to create a workspace in the
+00:50:11.280 background and like I can walk away and
+00:50:12.960 like hit check as many times as I need
+00:50:15.760 to. Yeah. So, um, yeah, I I think we've
+00:50:20.400 got, uh, we've got some stuff cooking
+00:50:21.760 now. So, it's so it's doing the verifier
+00:50:23.520 stuff. I realized I had by queuing
+00:50:26.319 things up to like make them fire rapidly
+00:50:28.400 in the stream, it hadn't delegated this
+00:50:30.160 extract footer. Um, so we can just run
+00:50:33.839 that now. So, we'll we'll just say run
+00:50:35.839 it. Um, and that's actually like a cool
+00:50:37.839 like
+00:50:38.640 >> like a button.
+00:50:40.720 >> Yeah. Yeah. So in like the like the OJ
+00:50:44.720 versions of intent like you know when we
+00:50:47.280 were still prototyping on it like the
+00:50:49.119 first take was actually that it just
+00:50:50.400 wrote the task list and then you needed
+00:50:52.640 to like review it and click through and
+00:50:55.760 decide what was capable of running
+00:50:58.960 parallel and it always felt like a oh
+00:51:01.440 man I've really got to think about this
+00:51:03.040 stuff and then we did an experiment that
+00:51:05.359 was like well you know the coordinator
+00:51:07.280 wrote this plan it can see everything it
+00:51:09.680 can read every document ment it can kind
+00:51:12.079 of anticipate because one of the things
+00:51:13.520 for complex changes that you'll find in
+00:51:15.119 these plans is that the agents will
+00:51:16.480 usually have like oh I'm going to work
+00:51:18.079 on this file I'm going to work on like
+00:51:19.599 this method I'm going to do these things
+00:51:20.960 to it um and we found that like with
+00:51:24.079 just only a smidge of prompting we could
+00:51:26.160 get the delegator to or the coordinator
+00:51:28.400 to delegate agents in waves uh very
+00:51:31.440 effectively uh to the point where like
+00:51:34.079 it can get into uh you know some some
+00:51:38.240 bad cases occasionally where it
+00:51:41.040 have agents kind of fighting over o over
+00:51:43.680 files. But um in my experience and again
+00:51:45.760 somebody who's like using this thing
+00:51:47.119 like 10 hours a day um when multiple
+00:51:50.160 workspaces all day long, I rarely bump
+00:51:52.480 into that. Um but yeah, you can just you
+00:51:55.520 can just click play on the on the tasks
+00:51:57.599 and and they'll go off and uh and and
+00:52:00.400 run themselves just like they would if
+00:52:02.000 the coordinator team.
+00:52:03.440 >> Do you mind giving a high level of kind
+00:52:05.599 of like the default team? I know we have
+00:52:07.359 a coordinator implementer and then if
+00:52:10.000 you can touch on the verifier as well
+00:52:11.440 which I believe is currently going I
+00:52:12.880 think that'd be great to just give
+00:52:14.480 people a sense of like why a team works
+00:52:17.520 and and what what it comprises of.
+00:52:20.079 >> Yeah. Yeah. Exactly. The uh so the
+00:52:22.640 coordinator is the the main like kind of
+00:52:26.800 default mode. I think it's the best way
+00:52:28.319 to use intent is to always start with a
+00:52:30.400 workspace where you create a coordinator
+00:52:32.160 and you give it your highle plan. Um,
+00:52:34.480 and this can be really high level. Now,
+00:52:36.880 you can spend a lot of time typing out
+00:52:38.800 prompts, but like I we found that like
+00:52:40.720 you can actually just say like, &quot;Hey,
+00:52:42.000 take a look at this thing. Hey, fix this
+00:52:43.280 thing.&quot; And it'll go out and write a
+00:52:44.880 write a spec. And then you iterate that.
+00:52:46.640 So, the coordinator is kind of like, you
+00:52:48.319 know, the the boss. And then it will
+00:52:51.200 farm out to implementers. And so
+00:52:53.200 implementers are, you know, pretty
+00:52:55.359 generic. And here's the thing, right?
+00:52:57.920 Like this stuff is not emote. It's not
+00:53:00.400 secret. Like here are the prompts.
+00:53:02.400 they're in the application. You can edit
+00:53:04.800 these. You can change this behavior. Uh
+00:53:06.800 it we tell you when when you do when you
+00:53:08.640 have and like you can reset back to base
+00:53:11.200 if you want. But um you know this is how
+00:53:13.680 we're prompting this thing. Um and so
+00:53:16.079 and the coordinator similarly has these
+00:53:18.800 these rules and like how we developed
+00:53:20.880 these prompts over a few months of of
+00:53:23.520 doing this and you know accumulated you
+00:53:25.920 know mult many years of having you know
+00:53:28.319 separately you know worked with with
+00:53:30.319 agents. Um and so essentially the the
+00:53:33.760 main members of the team are the
+00:53:35.280 coordinator, the verifier and the
+00:53:37.040 implement. Um the imple does stuff, the
+00:53:40.640 coordinator plans it the verify the
+00:53:42.720 verifier checks it. So you know this is
+00:53:45.680 that kind of you know it creates enough
+00:53:47.760 play where right like agents are they're
+00:53:52.400 you know jokingly they're stochastic
+00:53:54.400 parrots right like they're going to do
+00:53:56.640 things a little bit differently each
+00:53:58.160 time. They're going to have some play.
+00:54:00.079 there's some smear shmear in their
+00:54:01.760 distribution of like you know what
+00:54:03.839 they're capable of doing but you can
+00:54:05.920 steer them through in context learning
+00:54:07.760 and prompting that's effectively the
+00:54:09.440 prompting that we're doing and the and
+00:54:11.119 the context that like augment injects
+00:54:13.119 into this and so there's no like big
+00:54:15.119 hidden system prompt other than like hey
+00:54:17.359 this is your intent you're an agent this
+00:54:19.200 is what time it is this is what model
+00:54:20.800 you're using you know here's the kind of
+00:54:22.720 here's like the working directory that
+00:54:24.000 you're in um and then it's just kind of
+00:54:26.400 you know these uh these specialist
+00:54:28.400 prompts for the coordinator and
+00:54:29.760 implement, right? So those things go,
+00:54:32.319 you know, pretty uh it's like enough
+00:54:34.720 that they can do really really
+00:54:36.720 specialized work. Now, a cool kind of
+00:54:39.839 extension of this is that like if you
+00:54:41.599 have a thing that you want to do that's
+00:54:44.000 very specific, you can also write that.
+00:54:45.920 You can add your own custom specialists.
+00:54:48.480 Um you know, that's how the the UI
+00:54:50.880 designer started. Like this was a this
+00:54:53.119 is one that will do a bunch of of you
+00:54:56.559 know, design token extraction, right?
+00:54:58.880 like um [snorts] agents are are are just
+00:55:01.680 like people where they are really lazy
+00:55:03.680 and they'll do like the inline tailwind,
+00:55:06.480 you know, pixel values and stuff instead
+00:55:08.559 of using the design tokens, especially
+00:55:10.160 if you have like if you have that
+00:55:12.000 pattern elsewhere in your codebase
+00:55:13.359 because some pesky human put it in
+00:55:15.520 there, right? Like um you know they'll
+00:55:18.960 they'll repeat what they see.
+00:55:20.559 >> I got a question. What's the difference
+00:55:21.920 between the implementer and the
+00:55:23.359 developer agent?
+00:55:25.200 Ah yeah. So the developer is essentially
+00:55:28.720 the a combination of the sorry clicking
+00:55:32.640 around like crazy here. Um
+00:55:35.920 the developer is like a combination of
+00:55:39.920 the coordinator and the implement. Like
+00:55:43.040 the developer will write plans but the
+00:55:45.040 developer will also just go and do them.
+00:55:47.599 Um, so like the um,
+00:55:52.079 you know, it's it's got a lot of these
+00:55:53.440 same things where it's going to write us
+00:55:54.799 back. It's going to look at stuff, but
+00:55:56.640 it's going to just, you know, kind of
+00:55:58.880 grind away at a problem without firing
+00:56:01.839 off a a bunch of a bunch of agents. And,
+00:56:05.040 you know, I think that this is more of
+00:56:06.720 like trying to meet people where they're
+00:56:08.640 at with like this is more like how, you
+00:56:11.359 know, a single threaded agent pain chat
+00:56:13.520 works. And there are some tasks that
+00:56:15.359 this is probably faster for. Um, but
+00:56:18.480 also it's like it's just like the
+00:56:20.079 standalone option if you don't want to
+00:56:21.520 have a bunch of subprocesses like
+00:56:24.240 running or you have something that's
+00:56:25.680 like maybe uh pretty cut and dry and
+00:56:28.559 creating a custom agent with a developer
+00:56:30.799 will will go and run that stuff down for
+00:56:32.720 you and still write a plan and make like
+00:56:34.480 good documents and and do best practices
+00:56:36.400 for that stuff.
+00:56:37.599 >> Another question here. Are the
+00:56:38.960 specialist agents detected and
+00:56:40.640 dispatched automatically and can you
+00:56:42.799 prompt to trigger and force uh one of
+00:56:45.280 them? So the the coordinator is prompted
+00:56:48.640 to dispatch implementers and verifiers
+00:56:51.200 automatically. Um but you can manually
+00:56:54.400 through prompting just say like okay so
+00:56:57.599 let's do this live. Hey bro, let's use
+00:57:01.359 the um UI designer
+00:57:05.520 specialist
+00:57:09.599 to do a separate pass at this. Thanks
+00:57:16.400 dog.
+00:57:19.839 Really hope that this works. [snorts] It
+00:57:22.000 will. Um so it's going to it's going to
+00:57:24.559 read this back. Um,
+00:57:27.280 >> I've also seen you've been I think
+00:57:28.799 you're able to like at mention the um
+00:57:31.920 persona as well
+00:57:35.520 >> plausible.
+00:57:37.129 [laughter]
+00:57:38.960 You can cool
+00:57:42.400 use this app every day. Didn't know
+00:57:44.000 that.
+00:57:44.640 >> Experimental feature.
+00:57:46.720 >> Uh yeah. Well, a bunch of the, you know,
+00:57:49.040 the the folks working on this are are
+00:57:51.520 pretty pretty awesome and like we have a
+00:57:53.680 lot of little joyful things that have
+00:57:55.760 been put into the application. There's a
+00:57:57.359 lot of a lot of care went that went into
+00:57:59.359 some of the the UI choices. Um,
+00:58:02.319 >> okay, let me add a task and spin up a UI
+00:58:04.000 designer to polish off all the pages,
+00:58:05.920 fixing all the issues that the verifier
+00:58:07.599 found.
+00:58:08.480 >> Great. Um, in the interest of time, I
+00:58:11.200 think we only have two minutes left, so
+00:58:12.559 I'll let you show off whatever else you
+00:58:15.280 want to show off. any cool pro tips or
+00:58:17.520 tricks that we haven't covered? Um
+00:58:20.240 >> ah yeah yeah yeah I I made some notes
+00:58:22.480 before. So um so yeah so using multiple
+00:58:25.760 windows uh that's the one thing that I
+00:58:27.440 haven't shown um because I'm just like
+00:58:29.440 showing one one window at a time but
+00:58:31.440 like I will often have multiple windows
+00:58:33.200 open so that I can see if I have
+00:58:34.960 multiple work trees going. That's like
+00:58:37.200 definitely a thing that works pretty
+00:58:39.119 well. Um, the uh the MCP integrations,
+00:58:42.559 like I said, like the Figman MCP
+00:58:44.480 integrations, I was honestly shocked at
+00:58:47.200 how well it worked the first time that I
+00:58:48.799 used it because it's always been the
+00:58:50.559 classic thing of like, oh man, you've
+00:58:51.920 got to shovel all of this stuff from one
+00:58:53.520 app into another. You've got to click to
+00:58:55.200 copy. You've got to, you know, look at
+00:58:56.799 all the colors. And it's kind of, you
+00:58:58.799 know, it could be hard if the Figma
+00:59:00.160 file, you know, depending on how it's
+00:59:01.440 made. Um, so setting up the custom MCP
+00:59:03.920 servers, uh, with Auggie is like super
+00:59:07.280 super good. Um, on that note, you do
+00:59:10.319 have to be a little bit cautious. Like
+00:59:12.480 just going and lightening it up like a
+00:59:14.160 Christmas tree and having 11 MCP servers
+00:59:16.880 on at once is probably uh not a a great
+00:59:21.440 thing because right like ultimately
+00:59:23.280 there's context management that needs to
+00:59:24.799 go on and MCP servers what they're doing
+00:59:27.359 is they're adding tool definitions into
+00:59:29.119 the system prompt. Um, so and that's
+00:59:31.680 kind of like I think why the skills
+00:59:33.359 ecosystem has developed like it is where
+00:59:35.040 it's a little bit more
+00:59:35.839 autodiscocoverable and and stuff like
+00:59:37.520 that. Um, but like the MCP stuff when
+00:59:39.920 used appropriately and like in a
+00:59:42.079 targeted way makes this uh, you know,
+00:59:44.960 multiplicatively better. Um,
+00:59:48.640 and yeah, I think that the other things
+00:59:50.160 are just like, you know, this is a, you
+00:59:53.040 know, I see this as like a yes and
+00:59:55.200 product. Like, yes, it does, you know,
+00:59:57.440 make it so that you don't have to spend
+00:59:58.640 a lot of time in an IDE, but it doesn't
+01:00:00.799 obviate the need to use an IDE. So, like
+01:00:03.119 I have an IDE open. Usually, I like take
+01:00:05.760 a look at stuff in an in an IDE. You
+01:00:08.000 know, it is where I'm f familiar. If I'm
+01:00:10.240 going to be writing a lot of code and
+01:00:12.000 not using AI, like I'm still opening an
+01:00:14.240 ID, I still use the the CLI quite a bit
+01:00:17.280 too. Um, so like Auggie CLI really good.
+01:00:20.160 It's goated at doing stuff like when
+01:00:22.160 you're especially if you you know have
+01:00:24.480 if I have a quick question about a
+01:00:25.839 codebase if I have a thing that I want
+01:00:27.280 to see if I want to have you know like a
+01:00:29.599 direct control like the one thing that
+01:00:31.839 intent adds is like you know this kind
+01:00:34.400 of additional stuff all these things you
+01:00:36.319 need to do to you know make it you know
+01:00:38.319 go really far really fast in a short
+01:00:40.559 amount of time. Um, the Auggie CLI has a
+01:00:44.319 lot of those same features, but it's
+01:00:45.920 also like does it in a like super super
+01:00:48.160 targeted way and it's super fast and
+01:00:50.079 like works anywhere. So, I run it on
+01:00:51.760 servers, I run it uh, you know, on my
+01:00:54.000 openclaw setup. Like I've got it I've
+01:00:55.680 got it everywhere.
+01:01:01.440 Oh, AJ, you're muted.
+01:01:04.559 Sorry. Okay. Thank you so much, Sam. I
+01:01:06.720 think that's all we have time for today.
+01:01:08.960 I really enjoyed that. There's so much I
+01:01:11.280 learned from you. So yeah, thank you
+01:01:14.000 again. And um to the audience, if you
+01:01:16.640 want to try Intent, you can go to
+01:01:19.119 augmentode.com/intent
+01:01:21.520 right now and download it for free and
+01:01:23.680 use it for free with our GPT 5.4 Pro
+01:01:27.760 Freomo uh promo free promo. [laughter]
+01:01:32.160 Um yeah. Okay, I think we'll end end the
+01:01:35.680 stream here. Thank you so much.
+01:01:37.119 >> Yeah, thanks a lot.

@@ -1,0 +1,715 @@
+# tactiq.io free youtube transcript
+# LLMs + Instructor: Generate Structured Output in Python Easily
+# https://www.youtube.com/watch/VllkW63LWbY
+
+00:00:00.080 what is going on guys welcome back in
+00:00:02.080 this video today we're going to learn
+00:00:03.280 how to generate structured output using
+00:00:05.040 large language models in Python now what
+00:00:07.520 this basically means is that we can
+00:00:08.960 define a so-called response model or we
+00:00:11.280 could also say a schema that specifies
+00:00:13.840 exactly what kind of output we're
+00:00:15.519 expecting from the large language model
+00:00:17.279 so instead of just accepting any
+00:00:18.800 response any text any JSON object we
+00:00:21.520 define exactly what we want the model to
+00:00:23.680 return for example a person object that
+00:00:25.840 has a name which is a string an age
+00:00:28.000 which is an integer a birthday which is
+00:00:29.920 a date something like this and then the
+00:00:32.079 model has to stick with it and we're
+00:00:34.239 going to learn how to do that in Python
+00:00:35.760 because this is something that is
+00:00:37.120 extremely useful and sometimes even
+00:00:39.280 necessary because if you can trust the
+00:00:41.760 output of the model to match a certain
+00:00:43.840 schema or to match a certain uh data
+00:00:46.480 model you can just go ahead and use it
+00:00:48.719 right away without doing any fancy
+00:00:50.480 post-processing so this is what we're
+00:00:52.239 going to learn how to do in this video
+00:00:53.520 today so let us get right into it
+00:01:01.210 [Music]
+00:01:04.400 all right so we're going to learn how to
+00:01:05.760 generate structured output from large
+00:01:07.520 language models in this video today and
+00:01:09.680 for this we're not just going to use a
+00:01:11.200 feature of one of these APIs of one
+00:01:13.200 provider we're not just going to use the
+00:01:14.799 OpenAI API that allows us to do that
+00:01:16.799 we're not just going to use some Gemini
+00:01:18.400 feature that allows us to do that we're
+00:01:20.240 going to use a Python package and we're
+00:01:22.080 going to apply the same approach to all
+00:01:23.920 the different model types so we're going
+00:01:25.280 to do that with OpenAI models we're
+00:01:27.040 going to do that with Enthropic models
+00:01:29.040 we're going to do that with Gemini
+00:01:30.560 models or Google models and we're also
+00:01:32.799 going to do this with a local Olama
+00:01:35.040 installation so when I run Olama list
+00:01:37.119 here for this video today I'm going to
+00:01:39.200 use Quen 2.5 1.5 billion parameters so a
+00:01:43.360 very small model it's not going to be
+00:01:44.880 very capable but we can apply the same
+00:01:46.960 approach to our local model here as well
+00:01:49.600 so we're going to use a unified approach
+00:01:52.240 you could say and there's also other
+00:01:53.920 model types that are supported by this
+00:01:56.159 approach or by the strategy so there are
+00:01:58.320 also other models that we can use the
+00:02:00.640 strategy with and this strategy or this
+00:02:03.600 approach is installing a Python package
+00:02:05.680 called instructor so we're going to say
+00:02:08.318 pip or pip 3 install instructor and this
+00:02:11.840 package allows us or this package wraps
+00:02:14.400 itself around the various clients and
+00:02:17.599 forces so to say a structured output so
+00:02:20.080 we can define a response model or a
+00:02:22.480 schema using paidantic uh for those of
+00:02:25.120 you who don't know what pyantic is it's
+00:02:26.720 basically one of the most used libraries
+00:02:28.959 for validation for schema validation and
+00:02:32.319 it ensures essentially that we get what
+00:02:34.720 we expect now sometimes this will fail
+00:02:37.120 and even after retries it will fail then
+00:02:39.280 it's going to raise an exception but it
+00:02:41.200 will either raise an exception or give
+00:02:42.959 us what we're expecting now before we
+00:02:44.640 get right into the implementation one or
+00:02:46.239 two words about the setup i'm going to
+00:02:47.760 show you how to do everything here from
+00:02:49.280 scratch except for two things i'm not
+00:02:51.280 going to show you how to install Oola
+00:02:52.640 Lama this is quite straightforward you
+00:02:54.319 go to the website you run the curl
+00:02:55.920 command and you basically have Olama on
+00:02:58.080 your system then all you need to do is
+00:02:59.920 you need to say Olama pull and a model
+00:03:01.840 that supports uh tool calling so it's
+00:03:04.640 actually quite uh simple to do that i
+00:03:06.480 also have a video on this channel on
+00:03:08.560 Olama so if you want to do the
+00:03:09.920 self-hosted uh approach here if you want
+00:03:12.080 to try structured output using your own
+00:03:14.159 models on your own system just install O
+00:03:16.720 Lama i'm not going to cover that part
+00:03:18.720 and what I'm also not going to cover is
+00:03:20.480 getting the API keys from the various
+00:03:22.239 providers so you can use that as I said
+00:03:23.840 with Enthropic OpenAI Google or Gemini
+00:03:27.200 and also other providers i trust you to
+00:03:29.519 be able to get those API keys yourself
+00:03:31.360 the only thing that's relevant here is
+00:03:33.440 where you store these API keys so my
+00:03:36.000 setup is the following i have a N file
+00:03:38.560 here so um a file where I have key value
+00:03:41.599 pairs essentially or environment keys uh
+00:03:44.080 and values uh stored basically the file
+00:03:46.560 looks like this i'm going to create now
+00:03:48.319 just an ordinary end file it's basically
+00:03:51.000 open
+00:03:52.599 AI
+00:03:54.440 API_key is equal to and then I have the
+00:03:57.519 open AI key whatever that is in my case
+00:04:01.040 then I have the same thing here for
+00:04:03.720 anthropic
+00:04:06.040 API_key same idea just some key and then
+00:04:09.840 I have the same for Gemini
+00:04:13.799 API_key and whatever the key is so this
+00:04:17.040 is what my N file looks like and we're
+00:04:19.279 going to load that into our script so
+00:04:21.199 that we can easily use the various
+00:04:23.199 clients without having to constantly
+00:04:24.800 pass around keys so that is my setup in
+00:04:27.840 my case as I said it's not n but and I
+00:04:31.040 recommend you do the same or you can
+00:04:32.800 also just uh specify them clear text in
+00:04:35.919 your application which I would not
+00:04:37.600 recommend but for experimentation
+00:04:40.160 purposes you can do that so that is my
+00:04:42.880 setup and of course you don't need all
+00:04:44.240 these API keys you only need the API
+00:04:46.400 keys that you actually want to use i'm
+00:04:48.080 going to show you how to use it for all
+00:04:49.440 the different models here but you just
+00:04:51.759 need to include the models that you want
+00:04:53.280 to use so let us get started by opening
+00:04:55.919 up a file and let's call it main.py by
+00:04:59.120 the way other dependencies that we're
+00:05:00.720 going to need for this video today since
+00:05:02.479 I did not mention those we're going to
+00:05:04.080 install here paidantic
+00:05:06.120 obviously so pip or pip 3 install
+00:05:08.800 paidantic and we're also going to
+00:05:10.560 install OpenAI we're going to install
+00:05:13.080 Enthropic um and later on we're going to
+00:05:16.479 also install something for the Google
+00:05:18.400 part but for now let's just or actually
+00:05:20.320 we're going to install it right away
+00:05:21.680 we're going to say pideantic openai
+00:05:23.680 anthropic and we're also going to
+00:05:25.520 install instructor but in the square
+00:05:29.120 brackets here we're going to pass a
+00:05:31.440 certain uh dependency or specification
+00:05:34.880 which is
+00:05:37.479 Google
+00:05:39.320 generative AI this is important because
+00:05:42.000 this allows us to also use Gemini with
+00:05:44.400 instructor so this will install uh the
+00:05:47.120 package that is needed just run this
+00:05:49.039 also install as I said paidantic openai
+00:05:54.000 anthropic and I'm also going to use
+00:05:57.639 python-.inf so let me maybe just run
+00:06:00.720 this and then scroll up again so you can
+00:06:02.320 see that this is the command pip 3
+00:06:05.120 install pyantic openiropic python.enf
+00:06:07.600 enth and also as I said instructor with
+00:06:10.319 the dependency of Google- generative AAI
+00:06:13.759 i think this should cover everything the
+00:06:15.280 rest is core python and we're going to
+00:06:17.680 start with a very basic open AI approach
+00:06:19.840 so we're going to use uh the open AI API
+00:06:22.880 and to be precise I'm going to use
+00:06:25.479 GPT40 and we're going to generate
+00:06:27.520 structured output now let us start with
+00:06:29.759 a very simple example so I'm going to
+00:06:31.360 say here uh import or actually from
+00:06:34.560 paidantic I want to import the base
+00:06:37.039 model class this is going to allow me to
+00:06:39.440 define my schema or my data model then
+00:06:42.319 I'm also going to say from open AAI
+00:06:44.800 import open AI like this and then I'm
+00:06:48.400 also going to say from instructor
+00:06:51.759 um or actually do I need no I don't need
+00:06:53.680 from I just need to say import
+00:06:57.240 instructor and basically the idea now is
+00:07:00.000 I create an open AAI client and I wrap
+00:07:02.639 instructor around it so what I do is I
+00:07:04.720 say client is equal to instructor do
+00:07:08.000 from open
+00:07:10.199 AAI and then what I do is I pass an
+00:07:13.039 instance of open AI in here so I just
+00:07:15.280 create an instance of OpenAI this is
+00:07:17.039 automatically going to load the API key
+00:07:20.000 from the environment now in order to be
+00:07:22.720 uh in order for this to work at all we
+00:07:24.479 need to load the environment variable so
+00:07:26.560 we need to load the N file how do we do
+00:07:29.039 that we do that by saying from
+00:07:32.080 uh from import load.inf so this is the
+00:07:36.319 python.n package that we just installed
+00:07:38.880 this is going to allow us to just call
+00:07:40.919 load.f this is going to take these key
+00:07:43.440 value pairs from the.n file and one of
+00:07:46.639 them is going to be the openi API key
+00:07:48.720 which is going to be recognized by this
+00:07:50.479 already and I'm authenticated i can use
+00:07:53.120 my credits in the API and then I wrap
+00:07:56.240 the instructor around that so let us
+00:07:58.879 define a very simple data model let's
+00:08:00.960 just say I want to have data model here
+00:08:03.919 which is going to inherit from base
+00:08:05.520 model and I just want to have a simple
+00:08:07.840 person object so let's say my model
+00:08:10.479 includes a name which is a string it
+00:08:12.800 includes an age which is an integer then
+00:08:15.599 also a birthday
+00:08:18.000 um which is dt.ate for this of course we
+00:08:21.280 need to say up here import date time as
+00:08:26.360 dt and let's also say
+00:08:30.520 uh let's say want to have a gender and
+00:08:33.360 the gender is going to be a string now I
+00:08:36.000 can do it like this or I can also use
+00:08:37.839 some more advanced features of paidantic
+00:08:39.919 for example I can go up here i can say
+00:08:42.080 import field and then I can say the
+00:08:43.919 gender is equal to field and then I can
+00:08:47.279 provide three dots here and I can say
+00:08:49.600 description is equal to and I can pass a
+00:08:52.640 string describing what kind of uh field
+00:08:55.760 this is so of course gender is gender
+00:08:58.080 but maybe I want to have specific
+00:09:00.240 formatting here so I can say uh either M
+00:09:03.519 for male or F for female now you need to
+00:09:06.800 keep in mind uh this is of course not
+00:09:09.200 how you write female um you need to keep
+00:09:11.680 in mind this is just a hint this is just
+00:09:14.000 text describing what this feature is
+00:09:16.000 this is not a constraint so the only
+00:09:18.000 constraint that the model has is that
+00:09:20.240 this has to be a string in no way am I
+00:09:22.640 constraining the model to either be M or
+00:09:24.880 F if I want to do that I would have to
+00:09:26.880 use an enum which we're going to take a
+00:09:28.560 look at later on but for now this is
+00:09:30.959 just describing it and we're trusting
+00:09:32.640 the model to use either M or F but of
+00:09:35.600 course the model could also provide K or
+00:09:38.160 female or male or something else and it
+00:09:41.200 would still be accepted by pyantic
+00:09:43.040 because it's not violating the schema
+00:09:44.720 this is just a hint but I cannot pass
+00:09:47.760 for example um a number as the birthday
+00:09:51.120 or a string that is not valid as a
+00:09:54.320 birthday it has to be a date object so
+00:09:57.120 how do we now get an output i can just
+00:09:59.600 say now response is equal to client dot
+00:10:04.160 chat.comp
+00:10:06.120 Completions come on
+00:10:11.560 completions.create and here now I have
+00:10:13.519 to pass a couple of things first of all
+00:10:15.120 the model I want to use in my case
+00:10:17.570 [Music]
+00:10:19.399 GPT-40 then I want to have a uh message
+00:10:23.279 history so I'm going to say messages is
+00:10:25.120 equal to a list and then I want to have
+00:10:28.000 one starting message here which is going
+00:10:30.240 to have the following key value pairs
+00:10:33.040 the first one is going to be the role
+00:10:35.959 and this role is going to be user and
+00:10:38.959 the second one is going to be uh the
+00:10:42.480 content so whatever this user wrote and
+00:10:45.360 our prompt is going to be something like
+00:10:47.680 uh Mike is or Mike was born on April
+00:10:55.320 4th 1990 for example now as a context
+00:11:00.240 since this model is not connected to the
+00:11:02.480 internet we're going to just provide the
+00:11:04.000 current day so I'm going to say today is
+00:11:06.560 so we need to make this a formatted
+00:11:08.079 string just to be fair because I'm
+00:11:09.680 expecting this model to calculate the
+00:11:11.920 age and because of that I'm going to
+00:11:13.440 provide uh the current date otherwise it
+00:11:15.600 may hallucinate a date so I'm going to
+00:11:17.440 say here today is and I'm going to pass
+00:11:20.079 DT date
+00:11:23.720 today um and then I'm going to say what
+00:11:27.120 am I going to say uh fill the data model
+00:11:31.440 based on this
+00:11:34.279 information now of course what the model
+00:11:37.279 could do if I don't specify any model or
+00:11:40.000 any schema it could just hallucinate
+00:11:42.560 anything also of course I could specify
+00:11:44.880 the schema here as text i could say I'm
+00:11:47.120 expecting a name that is a string i'm
+00:11:48.880 expecting an age that's an integer and
+00:11:50.560 so on but I cannot force it to do that i
+00:11:53.040 can always request to do that but the
+00:11:55.279 model can just do whatever it wants and
+00:11:57.360 violate my expectations uh and not do
+00:12:00.320 what I asked it to do with paidantic I'm
+00:12:02.839 enforcing that I'm going to get whatever
+00:12:05.839 I'm looking for so either I'm going to
+00:12:07.519 get what I'm expecting or it's going to
+00:12:10.320 raise an exception so for example we are
+00:12:12.240 going to see that this is possible uh to
+00:12:14.800 simulate if I for example um
+00:12:17.880 deliberately guide it to provide the
+00:12:21.519 birthday as a malformed string we're
+00:12:23.519 going to take a look at that in a second
+00:12:24.720 here uh the most important part here is
+00:12:26.959 to specify response model so to say
+00:12:29.600 response model is equal to data model
+00:12:33.760 that is going to force the structure so
+00:12:36.560 now I can print here response and when I
+00:12:39.120 run this we're going to see hopefully
+00:12:41.360 that this is going to return to me a uh
+00:12:44.240 paidantic model instance so you can see
+00:12:46.560 this is now a data model instance name
+00:12:49.279 equal to Mike age equal to 34 which is
+00:12:52.079 correct birthday equal to a datetime
+00:12:54.959 date instance
+00:12:56.839 199044 and gender was not filled now I
+00:13:00.720 would expect it to recognize that Mike
+00:13:03.279 is male um even though of course it
+00:13:05.839 doesn't have to be but I would expect it
+00:13:07.959 to yeah this time it got it right so
+00:13:11.200 this time it recognized that Mike is a
+00:13:13.200 male and it filled it with M so you can
+00:13:16.959 see that this uh works but you also see
+00:13:19.360 that it can provide just an empty string
+00:13:21.839 for gender because we didn't specify any
+00:13:24.320 specific constraint here we just know it
+00:13:26.399 has to be a string so let's go ahead and
+00:13:30.240 try to make this fail deliberately what
+00:13:32.320 I can do here is I can say for example
+00:13:34.639 the birthday is a field and the
+00:13:36.639 description will ask the model to
+00:13:39.120 deliberately provide a malformed uh date
+00:13:43.200 string so it's going to say uh
+00:13:46.360 provide this in the format and then I'm
+00:13:50.560 going to I don't know use day day year
+00:13:54.000 year year and then mm month including
+00:13:58.720 the parentheses
+00:14:01.040 this is
+00:14:03.160 crucial now when I run this I'm going to
+00:14:05.920 probably get an exception because it's
+00:14:07.440 going to try to fit this into that
+00:14:09.040 format and the pyantic model is going to
+00:14:10.880 reject it resulting in an exception
+00:14:13.519 because now the input value was 0404
+00:14:16.800 it's not even the model that I requested
+00:14:18.320 but yeah still uh 1990 and it didn't
+00:14:21.519 work and what I can do in this case to
+00:14:23.920 try to make this work because maybe it
+00:14:26.720 can work over time is I can pass a
+00:14:29.199 parameter here max retries for example
+00:14:32.480 10 it's going to retry 10 times to get a
+00:14:35.199 proper response if it fails it's going
+00:14:37.279 to raise an exception otherwise it's
+00:14:38.880 going to give me uh the data model but
+00:14:42.720 in this case probably it's going to fail
+00:14:44.079 10 times it's going to take some while
+00:14:45.519 and it's going to raise an exception
+00:14:46.880 again this is how you can do that um as
+00:14:50.040 well so there is the possibility that
+00:14:53.040 you're going to get no response because
+00:14:56.000 there is some mismatch in the
+00:14:58.000 description and the data model or there
+00:15:00.399 is just some other problem that is of
+00:15:02.639 course possible usually it doesn't
+00:15:04.079 happen and as an alternative to that at
+00:15:06.800 least when it comes to open AAI models
+00:15:08.639 you can of course also use their
+00:15:10.079 structured output API then you have a
+00:15:12.560 guaranteed uh correct output
+00:15:16.360 so now what we're going to do is we're
+00:15:18.480 going to get rid of that and we're going
+00:15:19.600 to do the same thing for enthropic so
+00:15:21.519 let's go and copy all of this let's go
+00:15:24.480 down here leave some space and now we're
+00:15:27.440 going to say client instructor or client
+00:15:29.760 is equal to instructor from in this case
+00:15:33.600 underscore is it called enthropic and
+00:15:36.560 then we're going to make an instance
+00:15:38.480 here of enthropic now for this of course
+00:15:40.720 we need to do the respective import so
+00:15:42.639 we need to say from
+00:15:44.360 enthropic import
+00:15:47.639 anthropic and the rest is pretty much
+00:15:50.240 the same we still need to define the
+00:15:52.079 model of course the model is going to be
+00:15:54.320 something else like claude
+00:15:58.040 3-7- sonnet-l latest you need to get the
+00:16:02.880 correct names from the documentation
+00:16:05.680 uh the only difference here is that we
+00:16:07.920 need to also specify this is a mandatory
+00:16:09.920 keyword keyword for some reason we need
+00:16:12.399 to specify the max what was it called
+00:16:15.800 tokens max tokens
+00:16:19.360 um and let's set this
+00:16:22.040 to,024 because if you don't specify that
+00:16:24.560 keyword with enthropic it's going to
+00:16:26.240 tell you that it needs that keyword for
+00:16:28.079 whatever reason so let's comment all of
+00:16:30.320 this out to not waste tokens on the
+00:16:32.959 OpenAI API and let's run the same thing
+00:16:35.279 here using the clot model let's see if
+00:16:37.600 it can fill the model correctly there
+00:16:40.720 you go mike 34 birthday and gender is
+00:16:44.560 equal to M so you can see quite simple
+00:16:47.680 we create an instance it reads the API
+00:16:49.600 key from the environment anthropic
+00:16:52.600 API_key it creates the client and then
+00:16:55.040 we just have to specify the model the
+00:16:56.959 response model and then we get the
+00:16:59.279 response uh correctly structured so
+00:17:01.519 let's copy and paste that again now for
+00:17:04.400 the Google approach we need to do it a
+00:17:06.400 little bit differently i don't know
+00:17:07.760 exactly why but the approach is just a
+00:17:10.480 little bit different so in this case
+00:17:11.679 what we need to do is we need to import
+00:17:15.640 from
+00:17:17.799 google.genai or google.generative we
+00:17:20.720 need to import genai at least I think
+00:17:23.599 that was the correct import no sorry we
+00:17:26.480 need to say import Google.generative AI
+00:17:30.360 as
+00:17:32.600 genai and then we also cannot just load
+00:17:36.080 the API key automatically from the uh
+00:17:39.520 environment what we need to do is we
+00:17:41.039 need to say
+00:17:42.840 genai.configure so we need to say
+00:17:47.559 jai.configure and then api_key is equal
+00:17:51.039 to os get environment or of course here
+00:17:54.160 you can just specify the key right away
+00:17:56.320 as clear text but in my case I'm going
+00:17:58.559 to load it from the environment which is
+00:18:03.960 gemini_appi_key and then we need to say
+00:18:06.919 instructor
+00:18:09.960 from_geemini here now we need to say
+00:18:13.000 genai
+00:18:14.600 dot generative model it's a little bit
+00:18:17.280 confusing why we have to do it that
+00:18:18.880 differently for Gemini but it is what it
+00:18:22.039 is so generative model and then we're
+00:18:25.520 going to say model name is equal to I'm
+00:18:28.320 going to use
+00:18:32.200 Gemini-2.0- flash i'm not sure do we
+00:18:34.880 need to I think we need to specify
+00:18:37.400 models slash otherwise it's not going to
+00:18:40.320 work so that is the model that we want
+00:18:42.559 to use and we also need to specify let
+00:18:45.120 me maybe format this a little bit better
+00:18:47.120 so let's indent this let's also indent
+00:18:50.240 this uh what we also want to specify
+00:18:52.640 here is we want to say that the mode is
+00:18:55.919 equal to
+00:18:57.640 instructor dot mode dot gemini JSON so
+00:19:03.919 this is going to put it into JSON mode
+00:19:06.000 but we still need to specify the
+00:19:08.160 response model we do that by saying
+00:19:09.919 response is equal to client and here now
+00:19:12.799 we say
+00:19:15.320 messages docreate we don't specify the
+00:19:18.320 model anymore we don't specify max
+00:19:20.240 tokens we still specify the same message
+00:19:22.720 history and we still specify the
+00:19:24.880 response model so this is how you do it
+00:19:26.640 for Gemini i hope I didn't mess up
+00:19:28.320 anything if I run this now I should be
+00:19:30.640 able to get the same kind of output no
+00:19:33.280 because I'm not loading OS of
+00:19:36.280 course let's run this again
+00:19:41.840 and now I get Mike 34 the birthday and M
+00:19:45.400 perfect so that seems to work for all of
+00:19:48.799 those three it's also going to work for
+00:19:51.280 O Lama but I think the quality is going
+00:19:53.440 to suffer so it's not probably not going
+00:19:55.679 to calculate even the age correctly
+00:19:57.600 because the model I have on my system is
+00:19:59.360 so weak and so small it's not really
+00:20:01.600 going to get anything done but I want to
+00:20:03.520 show you how to use uh instructor for
+00:20:06.640 local models using Olama so what we're
+00:20:09.200 going to do here is we're going to say
+00:20:11.039 interestingly we need to use the open AI
+00:20:13.200 function and also the open AAI
+00:20:15.120 constructor to connect to Olama so we
+00:20:18.080 need to say here client is equal to
+00:20:21.640 instructor do from open AI even though
+00:20:25.360 we're not going to use open AAI we need
+00:20:27.679 to say that and we need to also create
+00:20:29.360 an OpenAI instance here but what we're
+00:20:32.080 going to do is we're going to say base
+00:20:35.480 URL is equal to http
+00:20:39.400 col/ localhost port what was it
+00:20:44.039 11434 /
+00:20:46.520 v1 and here now we're going to say api
+00:20:50.240 key is equal to whatever let's call it
+00:20:53.760 uh lama uh it doesn't really matter
+00:20:56.720 because this is not going to be used but
+00:20:58.240 it's a required field so we cannot not
+00:21:00.320 specify Right we need to specify it it's
+00:21:02.320 just going to be ignored and now what we
+00:21:04.960 do is we also specify again that the
+00:21:07.440 mode of that is going to be equal to
+00:21:10.679 instructor
+00:21:14.360 domode.json let's use no white spaces
+00:21:17.720 here and the rest is pretty much the
+00:21:21.200 same so we just need to copy that we
+00:21:23.280 need to paste it down here we still have
+00:21:25.520 the message history we still have the
+00:21:27.440 response model but we also need to
+00:21:29.280 specify the model here now and the model
+00:21:31.679 in my case is going to be Quen
+00:21:35.000 2.5 1.5
+00:21:37.799 billion and if you want to use a model
+00:21:40.640 in Olama you basically just say Olama
+00:21:43.840 pull and then the model name for example
+00:21:46.480 Quen 2.5 and then colon whatever
+00:21:49.760 parameter size i think there's also 0.5
+00:21:52.159 i'm not sure about this there's also
+00:21:53.760 larger models the larger the model the
+00:21:55.600 more capable it usually is you're going
+00:21:57.600 to see that 1.5 billion is not going to
+00:21:59.600 perform very well but it's going to be
+00:22:01.919 enough to show you that it does do
+00:22:04.240 something now if we are lucky enough at
+00:22:06.159 least to get uh a correctly structured
+00:22:08.799 output maybe it's not even going to be
+00:22:10.480 able to do that but that is not a
+00:22:12.799 problem with instructor this is if it
+00:22:14.799 happens a problem with the model and the
+00:22:16.880 weakness of the model but I think it
+00:22:18.720 should be able to derive at least some
+00:22:20.880 number for DH even if the number is
+00:22:23.880 wrong okay uh I didn't get anything
+00:22:26.320 because I didn't print the response but
+00:22:28.080 it seems that it
+00:22:30.520 works because it didn't raise an
+00:22:32.640 exception so let's run this
+00:22:35.080 again and see what we get mike 36 which
+00:22:38.720 is wrong but we get a number uh and
+00:22:41.840 gender is correct at least in my
+00:22:44.000 assumption here uh so you can see this
+00:22:46.880 works with any kind of setup i can
+00:22:49.280 uncomment all of this again and run all
+00:22:51.120 of this at once we're going to see that
+00:22:53.200 all these different models produce the
+00:22:55.120 same structure whether the values match
+00:22:56.880 or not is a different uh issue but we
+00:22:59.520 get the same structure here you can see
+00:23:01.520 our local model is a little bit confused
+00:23:03.600 but it's not too much off it could also
+00:23:05.360 say 70 or something so yeah you can see
+00:23:09.120 this is pretty cool that we can force
+00:23:11.840 the output to be a certain way now what
+00:23:14.240 I also want to do here is I want to show
+00:23:15.760 you a second example which I prepared i
+00:23:17.760 think I'm just going to copy paste it
+00:23:19.120 because I don't want to type it from
+00:23:20.320 scratch again but I'm going to explain
+00:23:22.320 it to you so let me just copy this let
+00:23:25.280 me remove all of that it's pretty much
+00:23:27.679 the same logic just with a couple of uh
+00:23:30.840 additions and what we have here is we
+00:23:33.760 have an enum for this of course we need
+00:23:35.840 to import from enum import enum with a
+00:23:40.159 capital E uh we also have type hinting
+00:23:43.520 used so we need to say from typing
+00:23:46.280 import list and optional i'm not sure if
+00:23:49.440 we use optional but we're going to
+00:23:51.200 import it um and I think that's
+00:23:54.559 basically it so what we do here is we
+00:23:56.480 ask for movie recommendations so we have
+00:23:59.600 here the same structure as before we
+00:24:01.679 have the OpenAI API we have Enthropic we
+00:24:04.640 have Gemini and we have uh actually we
+00:24:07.760 don't have Olama because it probably
+00:24:09.600 won't work or it didn't work when I
+00:24:11.120 tested it so I excluded it but
+00:24:14.559 essentially what we have is we have the
+00:24:16.159 idea that the model can respond with a
+00:24:19.279 certain uh movie recommendation based on
+00:24:22.240 a prompt so what I say here is I love
+00:24:24.080 Shutter Island it's one of my favorite
+00:24:25.919 movies of all time recommend five more
+00:24:28.320 that are similar and then I expect it to
+00:24:31.279 give me this is now my response model i
+00:24:33.360 expect it to give me a list of movies
+00:24:36.080 where movies is another pyantic model
+00:24:38.480 here so I have title string release year
+00:24:41.919 int and then genres is a list of movie
+00:24:46.159 genre enum where I can choose between
+00:24:49.279 thriller action mystery drama romance
+00:24:51.840 animation and other just so I can always
+00:24:54.640 have other and what this is going to do
+00:24:57.360 now it's going to give me a list of
+00:24:59.039 movies where movie also is a list of
+00:25:01.279 genres together with release here and
+00:25:03.600 title and here I have a selection which
+00:25:05.919 means that for a genre I can never get
+00:25:08.400 anything other than one of these i
+00:25:10.640 cannot just all of a sudden get fantasy
+00:25:12.480 or something i will get one of these or
+00:25:14.640 maybe an empty list this is also
+00:25:16.320 possible but I'm not going to get um any
+00:25:19.520 hallucination here this is not a string
+00:25:21.279 this is an enim it's a drop-own menu so
+00:25:23.520 to say and here also to make this model
+00:25:26.480 more capable I provide a field reasoning
+00:25:29.520 text this is optional you don't have to
+00:25:31.360 do that but it's going to sometimes make
+00:25:34.000 the model perform better because it has
+00:25:35.919 a space to provide some reasoning and to
+00:25:40.159 then make the decision to fill the rest
+00:25:42.480 of the model so we can comment that out
+00:25:44.480 for now to see what happens uh what I do
+00:25:47.840 basically here is I just make the
+00:25:50.320 request and I print the reasoning text
+00:25:52.159 and the recommendations let's remove the
+00:25:54.080 reasoning text here and see what the
+00:25:57.039 output looks like and what I do in the
+00:25:59.520 output is I get the movie actually
+00:26:02.799 what's the problem here oh I think this
+00:26:06.320 needs to be in quotation
+00:26:10.039 marks let's see if that resolves the
+00:26:15.000 issue and now you can see I get the
+00:26:17.320 recommendations i get these movies
+00:26:19.440 recommended by OpenAI these movies
+00:26:21.840 recommended by Anthropic and these
+00:26:24.480 movies recommended by Gemini you can see
+00:26:27.840 there's quite some overlap here so Seven
+00:26:30.159 seems to be a very popular movie for
+00:26:32.480 Shutter Island fans we have Inception we
+00:26:34.880 have Momento uh we have Fight Club i can
+00:26:37.760 agree with a lot of these
+00:26:38.960 recommendations i think they're good and
+00:26:41.120 we can also now try to see what happens
+00:26:43.440 when I enable the
+00:26:45.400 reasoning now I already think that these
+00:26:47.919 recommendations were quite
+00:26:50.279 good but maybe we're going to get
+00:26:52.480 different ones here
+00:26:54.880 by the way this could include some
+00:26:56.640 spoilers if you don't want to get
+00:26:58.240 spoiled on any of these movies probably
+00:27:00.320 there's going to be some reference to
+00:27:02.640 certain plot twists so if you don't want
+00:27:04.880 to see that click away but essentially
+00:27:07.360 now I'm forcing the model to give a long
+00:27:09.279 explanation of why it chose that list
+00:27:11.760 you can see it takes some more time
+00:27:13.440 already and here now it says "Okay I
+00:27:15.520 recommend this because of whatever maybe
+00:27:18.159 for something that I can judge I can get
+00:27:21.039 maybe if it goes with Inception or Fight
+00:27:24.440 Club uh because I didn't see the movie
+00:27:27.120 Seven so I cannot really say if that
+00:27:28.720 makes sense but here now it says
+00:27:31.320 Inception it stars Leonardo DiCaprio uh
+00:27:34.559 it deals with psychological themes
+00:27:36.400 reality versus illusion and so on plot
+00:27:38.480 elements so I can understand this
+00:27:40.640 recommendation and I can also understand
+00:27:42.640 why the model chooses this
+00:27:44.000 recommendation so you can see you can do
+00:27:46.480 quite a lot with that these are quite
+00:27:48.320 simple models you can have nested models
+00:27:50.480 you can have models inside of models
+00:27:52.880 enums you can have dates and lists and
+00:27:55.120 optional fields you can also say for
+00:27:56.640 example here optional for that and the
+00:27:59.279 cool thing about getting an instance of
+00:28:01.520 your response model is that you can take
+00:28:03.760 it trust that it's exactly the model
+00:28:06.159 that you're expecting and you can feed
+00:28:07.840 it into the next function or into the
+00:28:09.600 next step of the process which is often
+00:28:11.600 times as I said in the beginning very
+00:28:13.039 useful sometimes it's necessary but this
+00:28:15.600 is how you can do that in Python maybe
+00:28:17.360 just a brief explanation here because I
+00:28:19.039 noticed I didn't explain what we're
+00:28:20.559 printing here what we get as a response
+00:28:22.799 here is an instance of our data model so
+00:28:25.520 this is an object that we can access
+00:28:27.760 attributes of so I can go to
+00:28:30.200 response.reasoning text to print the
+00:28:32.080 reasoning text i can also say for movie
+00:28:34.640 in response.recommended movies because
+00:28:37.520 this is a list of movies and then I can
+00:28:39.919 take an individual movie and access the
+00:28:42.000 title release here and also in this case
+00:28:44.480 I can then one more time iterate over
+00:28:46.159 the genres of the movie and I can get
+00:28:48.320 from the genres the name uh which is in
+00:28:50.480 this case an enim attribute i can get
+00:28:52.559 the name i could also get the value in
+00:28:54.559 this case because it's the same but just
+00:28:56.799 so you understand what we're printing
+00:28:58.159 here so that's it for today's video i
+00:29:00.399 hope you enjoyed it and hope you learned
+00:29:01.760 something if so let me know by hitting a
+00:29:03.440 like button and leaving a comment in the
+00:29:04.880 comment section down below and of course
+00:29:06.320 don't forget to subscribe to this
+00:29:07.520 channel and hit the notification bell to
+00:29:09.120 not miss a single future video for free
+00:29:11.200 other than that thank you much for
+00:29:12.399 watching see you in the next video and
+00:29:14.159 bye

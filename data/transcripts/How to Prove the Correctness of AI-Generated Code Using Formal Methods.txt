@@ -1,0 +1,389 @@
+# tactiq.io free youtube transcript
+# How to Prove the Correctness of AI-Generated Code Using Formal Methods
+# https://www.youtube.com/watch/PkInULSymD4
+
+00:00:00.320 Hello, I have a very exciting
+00:00:02.000 demonstration for you here today. I'm
+00:00:04.160 going to use VS Code GitHub Copilot with
+00:00:07.040 Clotssonet model to generate an
+00:00:09.760 implementation of binary search of a
+00:00:12.160 sorted array uh in the programming
+00:00:14.320 language Spark. So, Spark is a subset of
+00:00:16.880 ADA that allows me to formally prove
+00:00:19.279 statically the absence of runtime
+00:00:21.439 errors. No more buffer overruns,
+00:00:23.760 underruns, uh index overruns, type
+00:00:26.880 mistakes and all those type of things.
+00:00:28.880 So it's really really exciting. Um so
+00:00:31.279 I'm going to generate code from AI and I
+00:00:34.160 don't know if that code is correct. Well
+00:00:36.480 with Spark I have a specification of my
+00:00:39.360 function. So I have a specification of
+00:00:41.040 what binary search is. It's not that
+00:00:43.040 complicated. And um I'm going to verify
+00:00:46.320 my implementation based on that
+00:00:48.079 specification. And what we often find is
+00:00:50.879 that it forces you to really think hard
+00:00:53.280 about your implementation and it will
+00:00:55.120 flush out a whole bunch of uh corner
+00:00:57.920 case issues that you may not have just
+00:01:00.239 thought about. So let's get started. I
+00:01:02.879 may have to fast forward a little bit
+00:01:04.319 here and there uh to make the demo um
+00:01:07.200 move quickly. So here's my prompt. It's
+00:01:09.760 not a particularly complicated prompt.
+00:01:11.600 So I asked AI to generate me um an
+00:01:15.680 implementation of binary search. And
+00:01:17.119 every time I do this, by the way,
+00:01:18.400 something else comes out. So we'll see
+00:01:20.400 what comes out this time. Uh and we'll
+00:01:22.880 review the the specification and then
+00:01:24.640 we'll review the implementation and then
+00:01:26.560 we'll prove that the implementation
+00:01:29.200 uh matches uh the specification and if
+00:01:31.600 not we'll we'll fix it as we go.
+00:01:36.560 So here we can see um the AI is done. It
+00:01:40.159 had a bit of a challenge here and there
+00:01:42.799 um with generating some of the code, but
+00:01:44.400 it fixed itself. Uh thanks for the
+00:01:46.880 agentic workflows. Um so let's have a
+00:01:49.439 look at our specification first. So this
+00:01:51.360 is our binary search specification. Um
+00:01:54.079 so we have an index type here one to
+00:01:56.159 a,000 and an array type. Uh index type
+00:01:59.280 is the range and then of type integer.
+00:02:02.000 Now as I mentioned before ADA and spark
+00:02:03.759 are type safe and memory safe. So if I
+00:02:06.079 try to uh create an a variable of type
+00:02:09.038 array type and try to get that index a
+00:02:11.360 101 it will create an error for me.
+00:02:13.520 Right? So it's it it protects the
+00:02:15.440 programmer from those type of things. So
+00:02:17.520 we have a search result
+00:02:19.920 uh which is found as a boolean and index
+00:02:21.760 is index type. So in other words um this
+00:02:24.640 is probably used by the u binary search
+00:02:27.520 function. Then we have a sorted function
+00:02:29.120 that indicates uh whether um the array
+00:02:32.160 is sorted. Now this is interesting
+00:02:33.680 because it's a ghost expression
+00:02:36.000 function. So this is only here to help
+00:02:37.760 the specification to help the proof.
+00:02:39.920 It's not actually there during runtime.
+00:02:42.000 And you'll see that a lot with Spark
+00:02:43.760 because it it proves things statically.
+00:02:45.840 You don't have to write a lot of
+00:02:47.680 defensive code. So if it can prove you
+00:02:49.760 that um the index is always in range,
+00:02:52.160 you don't have to write the code to
+00:02:53.280 check whether the index is in range.
+00:02:56.239 So that that helps with the performance.
+00:02:57.840 And here is a ghost function to specify
+00:03:00.000 contains right. So array type low and
+00:03:03.200 then low high value integer return
+00:03:06.159 boolean is that for some high and low
+00:03:08.480 high uh there is an in the
+00:03:12.000 the index the array at that index is
+00:03:14.080 value.
+00:03:16.000 Uh there we go. And then here is my
+00:03:18.400 binary search. Uh and then basically it
+00:03:22.480 says if the uh the if if I have an array
+00:03:25.519 of length larger than zero that is
+00:03:28.000 sorted then you can look in the return
+00:03:31.040 result uh if found equals true then the
+00:03:34.640 result index is in range larger than
+00:03:36.640 first less than last and the result
+00:03:38.879 index equals target. else it's not
+00:03:42.080 there. Okay, I like it. I'm going to
+00:03:44.879 make a couple of changes here because I
+00:03:46.879 want to deal with arrays size zero uh
+00:03:50.159 length as well just [snorts] to make it
+00:03:51.599 a little bit more interesting. Uh and
+00:03:53.519 then I I I see all this and this is one
+00:03:56.720 way to specify that an array is sorted.
+00:03:59.760 But the way that it specifies this
+00:04:01.360 construct here at the end with I I I ai
+00:04:05.200 less or equal than index type succession
+00:04:07.280 here is complicated for proof um
+00:04:09.760 engines. So, I'm going to write this a
+00:04:11.599 little bit different and I'm going to
+00:04:13.120 say for all I in range and a range
+00:04:19.680 um we're going to say um
+00:04:25.680 for all J in I do
+00:04:32.320 a last
+00:04:36.000 and that's fine. So this is a slightly
+00:04:39.680 different version of that um sorted
+00:04:43.040 expression and I know that's just a
+00:04:45.199 little bit easier for um proof engines
+00:04:48.000 to use. Okay, so this is our
+00:04:49.600 specification. We're happy with this.
+00:04:51.360 Now formal proof will allow me to prove
+00:04:54.960 that my implementation holds here
+00:04:56.560 whatever the implementation is. So let's
+00:04:58.160 have a look at the implementation.
+00:05:00.800 And then we see here there's a bunch of
+00:05:02.880 search. This is my head my my signature,
+00:05:05.440 right? uh we set the result uh then we
+00:05:08.560 have a binary search with loop
+00:05:10.000 invariance or we'll look at these
+00:05:11.520 invariance in a second and then here is
+00:05:14.000 where the binary search algorithm uh
+00:05:16.160 starts right so in binary search you
+00:05:18.080 have an array you look at roughly the
+00:05:20.320 middle and if the middle is less or than
+00:05:23.360 the target or greater than the target
+00:05:24.800 you either switch the higher boundary to
+00:05:27.120 look at the lower side or you switch the
+00:05:28.479 lower boundary to look at the higher
+00:05:29.680 side and you want to make sure that you
+00:05:31.199 don't kind of overrun any of those
+00:05:33.360 boundaries and that the algorithm ends
+00:05:34.880 and all those type of
+00:05:36.479 Um, so here we got a A equals target,
+00:05:39.360 then we found it. If A is less than
+00:05:42.000 target and you see this this this uh
+00:05:46.000 kind of defensive programming here, we
+00:05:48.080 don't need that. So I'm going to show
+00:05:50.080 you that we don't need this defensive
+00:05:51.680 programming here. And it may take us a
+00:05:53.680 couple of iterations of going through
+00:05:55.039 the proof to to to make that hold, but
+00:05:57.520 we're going to get rid of those
+00:05:59.039 defensive programming. And here we say
+00:06:01.039 if a mid um is more than target then we
+00:06:06.479 do that. Okay. So let's go through this.
+00:06:10.080 And this is probably going to give us a
+00:06:11.680 bunch of different errors and that's
+00:06:13.680 fine. And then we'll just fix those
+00:06:15.120 errors. And we'll oh first first of all
+00:06:17.840 I have to learn how to type. This needs
+00:06:20.080 to be an L if
+00:06:22.960 apologies for that.
+00:06:26.800 Um, so we'll we'll we'll fix things as
+00:06:28.880 we go on.
+00:06:35.280 Here we go. So, let's see what type of
+00:06:37.919 errors we have. Uh, the precondition
+00:06:39.919 might fail. Um, cannot prove low equals
+00:06:43.199 high. That's an important one. And then
+00:06:44.720 here is a bunch of different uh problems
+00:06:47.199 in our implementation as well. Um, but
+00:06:50.160 this is something that we should fix
+00:06:52.160 first.
+00:06:53.759 um because um
+00:06:57.520 it doesn't like this is probably this is
+00:06:59.759 because I switched that to that length
+00:07:02.000 part, right? So, I'm going to get rid of
+00:07:03.919 this this whole contains part and I'm
+00:07:06.800 going to write this differently because
+00:07:08.080 I don't need contains here. It's too
+00:07:09.520 complicated. Um else if
+00:07:17.120 let's do that. Oh, for all. There we go.
+00:07:21.520 So instead of a contains, we just say
+00:07:23.440 for all I in that array, um I can just
+00:07:28.639 make this range. That makes it even
+00:07:30.080 easier. For all I in range, AI not equal
+00:07:33.599 to target.
+00:07:35.280 Okay, let's see if that's happier.
+00:07:43.680 Okay. Okay. So my my spec is right. Um
+00:07:47.599 let's now look at my binary search.
+00:07:51.440 So we don't need our AI agent anymore.
+00:07:53.840 We could try and feed this to AI case by
+00:07:55.840 case but instead we'll do this the old
+00:07:58.080 manual way. Um so here we say range
+00:08:01.520 index might range check might fail.
+00:08:03.759 Cannot prove lower bound for a first. So
+00:08:06.720 remember I was talking about this index
+00:08:08.319 type and it has this range from one to a
+00:08:11.280 thousand I think it was. Well if the
+00:08:14.479 array is length zero then a first is not
+00:08:17.840 necessarily within that range. Right? So
+00:08:19.599 this is one of the places where ADA and
+00:08:22.319 Spark protect the programmer. So so we
+00:08:25.360 have to deal with a bunch of different
+00:08:27.599 uh corner cases here. So let's the first
+00:08:29.599 corner case is if the uh uh if the array
+00:08:32.479 is empty. Uh so let's deal with that
+00:08:34.640 first.
+00:08:36.640 And um so result found equals false.
+00:08:40.000 That's fine. Um we'll just call this one
+00:08:43.279 for now. Technically I should make a
+00:08:45.200 different type here. maybe a note type
+00:08:47.120 that would be more in spirit with the
+00:08:49.279 the programming language but I want to
+00:08:50.720 make it a little bit quicker here. So
+00:08:52.399 let's do if a length equals zero then we
+00:08:55.839 just return and we return a false and
+00:08:58.080 this index doesn't matter anymore. So
+00:09:00.240 that's that's that's an uh one of the
+00:09:02.640 particular error cases that we have
+00:09:04.800 handled and then if a uh not equals null
+00:09:07.760 then we can set low to first and high to
+00:09:09.680 last. So that makes us get rid of that
+00:09:12.160 that first uh problem.
+00:09:18.480 Okay. So, fantastic. So, initialization
+00:09:21.519 proven, range check proven. So, lots of
+00:09:23.920 things have been proven. That's that's
+00:09:25.360 really really good. But we still have a
+00:09:26.560 couple of problems. So, so that problem
+00:09:28.640 that we just solved is is is a runtime
+00:09:30.640 problem. It's a type sizing problem. So,
+00:09:33.200 so that's something that can just not
+00:09:35.600 happen uh with Spark. CC C++ would have
+00:09:38.800 just plowed through right through right
+00:09:40.640 through that. Right? So now what we have
+00:09:42.640 to do is we have to help the uh formal
+00:09:47.200 methods algorithm to to prove things and
+00:09:50.959 and you can see here that AI has
+00:09:53.200 generated a bunch of uh loop invariance
+00:09:55.839 and loop variance um which which some of
+00:10:00.000 it got right some of it looks very very
+00:10:02.720 complicated so I'm going to simplify
+00:10:04.640 them. So this loop variant for example
+00:10:06.720 this looks looks certainly right but I'm
+00:10:08.800 going to make it a little bit simpler.
+00:10:10.320 So, so here what we have to do is we
+00:10:12.160 have to um achieve a couple of things. I
+00:10:15.120 always start with a pragma
+00:10:17.839 variant
+00:10:19.920 variant. So this is um to help the
+00:10:23.360 algorithm makes understand that this
+00:10:25.600 loop will end. So, we're going to say
+00:10:28.160 every
+00:10:30.000 run through the loop, this either
+00:10:33.440 decreases high or increases
+00:10:39.120 increases
+00:10:40.800 low. You could also say like decreases
+00:10:42.720 high minus low, but but that seems
+00:10:44.320 overly complicated. That's that's number
+00:10:45.920 one.
+00:10:47.440 Then I'll I often like to add and say uh
+00:10:51.279 loop invariant.
+00:10:53.279 uh we'll say that uh low
+00:10:57.279 in a range and high in a range. That's
+00:11:02.079 always convenient to have. And now we
+00:11:04.560 have to help the me the the algorithm
+00:11:09.120 understand what it is we're doing. And
+00:11:10.560 what we're really doing is we're we're
+00:11:12.480 shifting where we're searching based on
+00:11:15.360 what we know. So we basically say um we
+00:11:20.240 have high and low within the entire
+00:11:23.120 range and we know that the target is
+00:11:25.440 within high and low. So we know that low
+00:11:28.160 is less than a target and high is higher
+00:11:30.160 than the target. So let's let's write
+00:11:32.399 that up as a as two separate loop
+00:11:35.200 invariants.
+00:11:37.040 um loop invariant
+00:11:40.399 for
+00:11:42.240 for all i in r a range
+00:11:46.880 and I'm trying to make these things as
+00:11:48.320 simple as possible. So I typically say
+00:11:51.920 if
+00:11:53.920 if I is less than low
+00:11:58.399 then
+00:12:00.800 ai
+00:12:02.480 is less than target
+00:12:05.440 and that's a simple uh I don't want to
+00:12:08.320 convolute this and and start making
+00:12:10.880 including multiple different um
+00:12:14.480 statements in here. No no we don't want
+00:12:16.320 any of that. So we'll do that in a
+00:12:18.240 separate pragma loop invariant
+00:12:23.120 and we'll treat the other site here.
+00:12:26.399 Uh then fantastic. Okay, so we've got
+00:12:29.760 that and that should be enough I think.
+00:12:33.200 Um so let's see um what this does.
+00:12:38.160 And my [snorts] feeling is that we still
+00:12:39.760 haven't covered everything enough.
+00:12:44.079 Um so pragma Yep. First of all, that's a
+00:12:48.240 typo.
+00:12:57.920 Here we go. I see a lot of blue, but
+00:13:00.959 there's a couple of yellows in here. We
+00:13:02.880 still have a range check might fail.
+00:13:05.760 Cannot prove upper bound for mid + one.
+00:13:09.600 And range check might fail. Cannot prove
+00:13:11.600 lower bound for mid minus one. So, this
+00:13:13.839 is again an instance of that type error.
+00:13:15.600 Remember, we removed that um defensive
+00:13:19.760 code. So, I could put defensive code
+00:13:21.600 around this, but the defensive code
+00:13:23.279 really is just hiding an issue. I'm I'm
+00:13:24.880 I'm running outside of my boundaries.
+00:13:27.839 So, um in other words, based on the
+00:13:31.519 algorithm that I have right now, low may
+00:13:33.680 become too high
+00:13:36.320 or high may become too low. So, there is
+00:13:39.680 something in here. There's a corner case
+00:13:41.760 that I'm not covering.
+00:13:44.079 And let's see what we have from a corner
+00:13:46.320 case perspective. Um, this is fine. Um,
+00:13:50.079 so we have the corner case with the
+00:13:51.920 array equals zero.
+00:13:54.320 That's fine. Um, but there could be a
+00:13:57.279 corner case where the target is actually
+00:13:59.120 not in the array. That's another corner
+00:14:01.440 case. And then maybe we have an array of
+00:14:04.320 lengths one, right? That those can all
+00:14:06.320 be very valid corner cases. Um, so I
+00:14:10.720 would expect that if low equals high,
+00:14:14.240 then you still go through here and then
+00:14:16.720 you start doing this mathematics here,
+00:14:18.399 which you really don't have to do
+00:14:19.760 anymore. Um,
+00:14:22.560 though even if you did it, it would just
+00:14:24.000 come out to the same. And then you go
+00:14:26.160 through here. So let's start with just
+00:14:28.880 covering um the case where if uh low
+00:14:35.839 um no, we got that one. What we're going
+00:14:37.519 to do is if a
+00:14:42.959 a
+00:14:44.880 first
+00:14:47.199 so if the target is not in our array so
+00:14:49.839 if a first is more than the target right
+00:14:54.480 so the target is to our left so we we
+00:14:56.320 can't find it or else the last is to the
+00:15:00.000 left of the target the target's on the
+00:15:01.440 other side um so that is another corner
+00:15:04.160 case let's see if that's sufficient
+00:15:16.720 Um, success. All checks proved. Here we
+00:15:20.399 go. Um, so everything is good. So there
+00:15:24.880 is a corner case as well where first
+00:15:27.199 equals uh uh sorry low. Yeah, first
+00:15:30.320 equals last. Um, but I guess that's
+00:15:33.199 simply properly handled with this uh
+00:15:35.519 with this algorithm. It'll just fall
+00:15:37.360 through and then here it'll go uh found
+00:15:39.920 true. So let's let's kind of think
+00:15:42.880 again. What have we done here? We've had
+00:15:45.279 AI generate an implementation and a
+00:15:48.480 specification. We've fixed up this the
+00:15:51.519 the specification the way we like it. So
+00:15:54.399 I made the sorted a little bit simpler
+00:15:55.839 to understand. And I made some changes
+00:15:57.920 here into my uh my precondition because
+00:15:59.839 I wanted to have zero length array. And
+00:16:02.480 then we changed the the post condition
+00:16:04.160 here as well because that contains which
+00:16:05.759 just didn't align with the zero length
+00:16:07.440 array anymore. So we have a a a spec
+00:16:10.079 here that we understand that is the
+00:16:12.959 right thing and then the implementation
+00:16:15.279 that AI generated. We helped the
+00:16:17.680 formalism prove that this is the correct
+00:16:20.000 implementation. No defensive code and uh
+00:16:23.680 here is a correct implementation
+00:16:26.480 no runtime errors uh post condition
+00:16:28.959 proved of binary search and adas spark.
+00:16:32.399 So uh really nice to do via I've used VS
+00:16:35.519 code in here. You saw GitHub copilot. Uh
+00:16:38.399 you saw clots on it. Uh in this case
+00:16:41.199 I've used the spark pro tools from
+00:16:43.279 adacore. Uh you can do this with uh
+00:16:46.079 spark from uh open source as well. You
+00:16:48.480 can install it with something called
+00:16:49.759 aier which is the uh the ADA package
+00:16:51.759 manager. And you can actually use this
+00:16:54.720 to generate safe and secure code and and
+00:16:58.160 validate it uh to make sure that you can
+00:17:00.240 use it in your project correctly. Hope
+00:17:02.320 this is useful to you and have a great

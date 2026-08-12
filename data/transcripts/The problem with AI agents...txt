@@ -1,0 +1,259 @@
+# tactiq.io free youtube transcript
+# The problem with AI agents..
+# https://www.youtube.com/watch/74FjlxQgftg
+
+00:00:00.000 I've been having nightmares. The last
+00:00:01.760 few weeks, my nightmares have included
+00:00:03.200 the following things. AI agents and
+00:00:05.759 postinstall scripts. Now, what I'm
+00:00:08.000 experiencing today in real life is some
+00:00:10.160 combination of the two. Update to Gemini
+00:00:12.639 CLI and run Gemini CLI trust model
+00:00:15.200 because of a 10.0 CSS CVE in Gemini CLI.
+00:00:19.760 The combination of my two nightmares has
+00:00:21.600 manifested in real life and I'm not sure
+00:00:23.840 how to feel about it. Let me be very
+00:00:25.439 clear. I think that using AI to do PR
+00:00:28.240 code review is actually a very good
+00:00:29.920 thing. Using AI assisted tooling to look
+00:00:31.920 at PRs and give a summary of the change
+00:00:33.680 is actually a really good way to reduce
+00:00:35.440 the amount of debt that people have to
+00:00:36.719 deal with. However, if you use those
+00:00:38.879 tools in a wrong way or if those tools
+00:00:40.879 have a vulnerability, that's where the
+00:00:42.320 entire castle comes crashing down. For
+00:00:44.719 example, big organization Red Hat,
+00:00:46.640 they're actively right now using a
+00:00:48.559 workflow that does a PR review using
+00:00:51.360 Gemini to review the poll request that
+00:00:53.600 somebody submits. Again, a good thing.
+00:00:55.760 But what happens if there's a
+00:00:56.800 vulnerability inside of Gemini? To do a
+00:00:58.800 pull request in CI at the end of the
+00:01:00.399 day, you have to be using the Gemini CLI
+00:01:02.879 or the rungemini CLI workflow that
+00:01:05.360 already exists. The problem with these
+00:01:07.040 is to use them in a headless mode to use
+00:01:09.280 them in a way that you can use in a
+00:01:10.560 CI/CD deployment, they have to run in
+00:01:13.200 YOLO mode. YOLO mode is literally the
+00:01:15.280 mode that allows you to run arbitrary
+00:01:17.840 commands on the system, which again is
+00:01:19.840 by is by design when you're doing Gemini
+00:01:22.560 CLI in CI/CD. It has to run this way so
+00:01:25.280 that the CLI can run arbitrary tooling,
+00:01:27.280 which is fine if you explicitly
+00:01:29.040 enable-OLO.
+00:01:30.720 But what happens if your pull request
+00:01:32.880 includes a malicious Gemini
+00:01:34.960 settings.json? Settings.json is a very
+00:01:37.680 normal, very benign JSON file that
+00:01:40.240 configures your agent. You enter Vim
+00:01:42.240 mode. Maybe you want to use the GitHub
+00:01:44.159 theme because you hate yourself. Maybe
+00:01:46.000 you want to run a set of tools inside
+00:01:47.680 the Docker sandbox. Wow, that the tools
+00:01:49.680 option allows you to run in a sandbox.
+00:01:51.520 That's incredible. But in classic
+00:01:55.040 tooling fashion there is a hook and the
+00:01:58.159 hook comes in a variety of forms. One of
+00:02:00.560 them is before tool but the other is
+00:02:03.439 before agent which means after the user
+00:02:06.079 submits the prompt but before planning
+00:02:08.399 before any AI agent is run it will run a
+00:02:11.840 before agent hook. And that hook can be
+00:02:13.840 a command. And it could be a a command
+00:02:15.760 name security check that arbitrarily
+00:02:17.760 runs any command on the system, which
+00:02:19.920 again is fine if you as the author of
+00:02:22.720 the code are the one that's authoring
+00:02:24.560 the command. But here's the big issue.
+00:02:26.959 When you do a pull request, guess who
+00:02:29.360 controls the code? You potentially you.
+00:02:31.920 But more importantly, the hacker, right?
+00:02:33.280 The evil person is in charge of the
+00:02:35.120 code. So what could happen here again
+00:02:36.959 before they fix this vulnerability is a
+00:02:39.040 hacker could submit a malicious pull
+00:02:41.440 request and then a GitHub workflow would
+00:02:44.000 fire and again this is literally just
+00:02:45.360 Red Hat. I'm using them as an example.
+00:02:46.720 They didn't get hacked. I'm just showing
+00:02:47.920 you that workflows like this do exist.
+00:02:49.599 You can submit a poll request. The poll
+00:02:52.080 request workflow, the Gemini PR review
+00:02:54.319 will run and again this is a a pull
+00:02:56.319 request target if they get open. So
+00:02:58.000 it'll run on open and then you will fire
+00:03:00.800 the PR poll request review using Gemini.
+00:03:03.840 But the issue is up until this was
+00:03:05.519 patched, you were able to run any
+00:03:08.319 arbitrary commands within the context of
+00:03:10.640 Gemini settings.json, which would run
+00:03:13.280 inside of the CI/CD runner as the
+00:03:15.360 organization. Which means that by
+00:03:17.200 getting arbitrary code execution inside
+00:03:19.280 of the CI/CD runner, you could
+00:03:20.959 potentially extract their tokens, their
+00:03:23.200 API keys, anything that was living
+00:03:25.519 inside of the environment that your that
+00:03:26.959 your payload was running in. Now,
+00:03:28.400 continuing on the theme of nightmares,
+00:03:29.840 let's talk about team PCP. If you're not
+00:03:31.360 aware, team PCP is the threat actor that
+00:03:33.760 is behind a majority of the largecale
+00:03:36.640 supply chain attacks that have been
+00:03:38.159 happening for the last couple of months.
+00:03:39.599 These include light LLM. These include
+00:03:41.599 trivia tools. This includes the check
+00:03:43.040 marks tool, which is a software
+00:03:44.239 composition analysis tool, right? A
+00:03:45.680 software security tool. And apparently
+00:03:47.280 Telnix, another one that I haven't heard
+00:03:48.560 of. These all originally were derived
+00:03:51.599 from some compromise of CI/CD, right?
+00:03:54.959 Again, it's this weird pattern where
+00:03:56.959 companies are using good development
+00:03:58.799 tooling. they're using good security
+00:04:00.720 practices and because they're using
+00:04:02.480 them, a bad assumption about the way
+00:04:04.560 that we're using them is causing huge
+00:04:06.720 downstream effects. Now, I'm not saying
+00:04:08.799 that this tool is the reason why these
+00:04:11.120 these exploits happen. I'm not saying
+00:04:12.720 that team PCP exploited vulnerability in
+00:04:15.200 Gemini CLI. That's not what I'm saying
+00:04:16.320 at all. What I am saying though is this
+00:04:18.399 reliance on CI/CD which likely now
+00:04:21.440 includes AI tooling with settings files
+00:04:24.080 that are not properly sanitized is a
+00:04:26.479 largecale pattern that we're seeing
+00:04:28.560 which could be enabling actors to do
+00:04:31.199 this kind of compromise. Right? Again we
+00:04:32.720 we all of these hacks have something to
+00:04:35.120 do with a compromised CI/CD pipeline or
+00:04:38.000 the use of a compromised CI/CD action.
+00:04:40.400 Right? I think the the trivia action got
+00:04:42.720 compromised which caused the late LLM
+00:04:44.800 compro compromise for example or I think
+00:04:46.800 the Axios compromise right the the
+00:04:48.479 compromise of the Axios workflow was
+00:04:50.639 done because Axios used the checks marks
+00:04:52.960 tool under the hood in March of this
+00:04:54.400 year team PCP leveraged an attack that
+00:04:56.320 took advantage of an Aquabot service
+00:04:58.000 that allowed them to compromise the
+00:04:59.440 Trivy action repository following that
+00:05:01.759 also in March Aqua security trivia which
+00:05:04.000 was compromised by team PCP that was
+00:05:06.240 able to use some vulnerability in their
+00:05:08.000 GitHub action to compromise their GitHub
+00:05:09.680 action in kicks and a which eventually
+00:05:11.840 led to downstream effects. Now, it's
+00:05:14.000 very important to highlight that the way
+00:05:15.520 that CI/CD works under the hood is when
+00:05:17.440 a payload is getting ran by the CI/CD,
+00:05:19.759 there has to be a runner that runs it.
+00:05:21.440 Now, a lot of the runners are ran by
+00:05:23.039 GitHub, right? By default, when you run
+00:05:24.479 a workflow in GitHub, it is a GitHub
+00:05:26.639 hosted runner for you. But it's also
+00:05:28.080 very common for large companies or
+00:05:29.520 companies that want to have like a
+00:05:30.479 certain kind of thing run on the runner
+00:05:32.320 to run a self-hosted runner. payload
+00:05:34.400 will get picked up by a local binary on
+00:05:36.880 your infrastructure and it'll pull it
+00:05:38.560 down and run the workflow on your
+00:05:39.759 behalf, right? This is a very common
+00:05:40.880 thing to do. Now, the issue with this
+00:05:42.479 again is if you design your workstream
+00:05:45.360 around the fact that the code running in
+00:05:46.960 your runners is trusted and this kind of
+00:05:49.280 exploit the Gemini CLI bug gets
+00:05:51.199 exploited where now they have code
+00:05:52.240 execution in your runner. If you don't
+00:05:54.000 properly protect the data or expose
+00:05:56.400 trusted data inside of those runners,
+00:05:58.320 you're going to have a bad time. Your
+00:06:00.080 API keys could get picked up. Your
+00:06:01.680 environment variables for other
+00:06:02.880 processes that are at the same privilege
+00:06:04.160 level that contain things like database
+00:06:06.000 credentials or API credentials could
+00:06:07.919 also get compromised. For those of you
+00:06:09.360 watching this, you may be asking like
+00:06:10.479 what what do I do about this? Right?
+00:06:11.840 What do I do with this pattern of supply
+00:06:13.840 chain getting attacked in Gemini CLI and
+00:06:16.080 potentially other tools being used in
+00:06:18.000 this way that could be malicious by a
+00:06:19.759 threat actor when they're doing a pull
+00:06:21.199 request, right? Ultimately, I think the
+00:06:23.840 only correct response to this is you
+00:06:25.919 have to assume everything is
+00:06:27.680 compromised, right? assume that what
+00:06:29.680 you're doing is going to lead to a
+00:06:31.120 compromise in some capacity and as a
+00:06:33.120 result if someone were to land in a
+00:06:35.120 place like your local GitHub runner or
+00:06:37.120 if someone were to land in your pull
+00:06:38.880 request environment that is maybe cloud
+00:06:40.319 hosted what about that could lead to a
+00:06:43.360 further compromise right like if you're
+00:06:44.880 running a self-hosted runner uh do you
+00:06:47.360 expose any in like any interesting
+00:06:49.759 credentials and other processes that run
+00:06:51.680 at the same level as that runner if
+00:06:53.360 that's the case use the Linux user
+00:06:55.440 scheme use the Linux permission model
+00:06:57.199 and create new user for those processes
+00:06:58.960 so that maybe they can't run forever so
+00:07:00.639 that they can't run and steal your
+00:07:02.319 credentials. Also, use proper
+00:07:03.599 sandboxing. Like I'm hoping that if you
+00:07:04.960 are doing self-hosted runners, you're
+00:07:06.400 also using Docker or something similar
+00:07:08.880 that prevents a compromise from getting
+00:07:10.400 outside of that local, you know,
+00:07:11.680 basically chute jail that Docker sets
+00:07:13.360 up. Now, if you're running Docker
+00:07:14.720 containers as root, that's a whole other
+00:07:16.240 conversation that we should have about
+00:07:17.599 you not doing that in the future. But
+00:07:19.280 ultimately, that's where this goes,
+00:07:20.960 right? Pretend that everything is
+00:07:22.479 compromised. If something gets
+00:07:23.759 compromised, what are you going to do
+00:07:25.280 about it? Also worth noting that Google
+00:07:26.960 uh did submit mitigations for this. So I
+00:07:28.639 think what happened is they made a new
+00:07:30.000 flag where Gemini trust workspace is not
+00:07:32.720 enabled by default. So if your workspace
+00:07:34.960 genuinely does run only on PRs from
+00:07:37.840 trusted collaborators, you can turn on
+00:07:39.440 Gemini Trust Workspace, bada bing, bada
+00:07:40.960 boom, and it's all good. Um otherwise,
+00:07:42.560 you need to use the new version of the
+00:07:44.479 Google GitHub actions run Gemini CLI
+00:07:46.560 workflow that in versions 391 and 0 and
+00:07:50.160 40 preview 3 basically don't trust the
+00:07:53.199 workflow settings by default. And it's
+00:07:55.280 important to note that some people do
+00:07:56.800 pin specifically to a certain Gemini CLI
+00:07:59.360 version. Uh you need to up that pin to
+00:08:01.680 actually get the new version because
+00:08:02.960 every version before these versions was
+00:08:05.520 actually affected by this, which is uh
+00:08:07.120 worth noting. So definitely go update
+00:08:09.360 your CI/CD workflows if if you haven't
+00:08:11.039 already. Anyway guys, that's it for now.
+00:08:12.319 Thanks for watching. I appreciate it.
+00:08:13.520 Hello BD Morgan. If you're new here, hit
+00:08:15.440 that sub button. I really appreciate it.
+00:08:16.800 And then go check out this other video
+00:08:17.919 about a similar supply chain attack that
+00:08:19.280 I think you will also enjoy.
+00:08:21.680 We'll see you over there. Take care.
+00:08:22.800 Goodbye.

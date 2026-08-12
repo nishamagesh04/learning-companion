@@ -1,0 +1,245 @@
+# tactiq.io free youtube transcript
+# Getting Structured Output in JSON format
+# https://www.youtube.com/watch/CllLqPwCjD4
+
+00:00:00.160 So when you work with AI models, prompt
+00:00:02.800 engineering is very important is because
+00:00:04.400 you specify what you want and AI knows
+00:00:07.200 what you want. It will do some work and
+00:00:08.880 it will give you the required
+00:00:10.719 information. But see now we have to look
+00:00:13.440 at from a developer perspective. See
+00:00:15.679 when you build application you want data
+00:00:18.320 from AI right now in general when you
+00:00:21.119 want data where you look for we look for
+00:00:23.279 data in the database right. So we have
+00:00:25.279 the application we try to get this data
+00:00:27.439 from database and or maybe let's say
+00:00:30.240 front end if front end wants data it
+00:00:32.079 will get it from the back end. Now how
+00:00:33.600 do you send data from the back end to
+00:00:35.360 the front end you use a format now this
+00:00:37.440 format can be XML format or this can be
+00:00:39.600 a JSON format and nor nowadays we use
+00:00:41.840 JSON format on the other hand if you
+00:00:44.559 have a back end which is asking for the
+00:00:47.600 data from some other server even there
+00:00:50.399 you transfer JSON data. So that means we
+00:00:53.440 are used to work with JSON formats
+00:00:56.079 right. So if you have an object let's
+00:00:58.079 say in Java or Python you basically try
+00:01:00.399 to fetch data and you want to convert
+00:01:03.039 that data from JSON to object format. In
+00:01:05.360 the same way if you want to fetch data
+00:01:07.439 from AI in what format you're looking
+00:01:10.240 for of course JSON. Now till this point
+00:01:12.960 when we worked with the prompt
+00:01:14.880 engineering we were basically working
+00:01:16.400 with the text and it's okay to get text
+00:01:19.200 but then how will you pass it? How will
+00:01:21.920 you make a use of th those text and
+00:01:24.640 specifically when you talk about AI you
+00:01:26.880 don't get the standard text from the AI
+00:01:29.840 sometime you get extra stuff sometime
+00:01:31.680 you get the main thing at the end so you
+00:01:34.240 can't predict that and that's where you
+00:01:36.479 have to work with the structured output
+00:01:38.640 now how do you get it and to do that
+00:01:40.560 let's take an example of an application
+00:01:42.479 which needs the data about a particular
+00:01:44.240 phone so let's say you're building an
+00:01:45.680 application where you want to show data
+00:01:47.759 about a phone so I will say I need
+00:01:51.600 details of iPhone air. Okay. Uh so when
+00:01:56.159 I do that now it's already launched
+00:01:58.479 right? iPhone is there in the market.
+00:02:00.240 You can buy it. I mean should you buy it
+00:02:02.320 or not? That's a different question. But
+00:02:03.600 you can buy it. And if you say enter, it
+00:02:07.040 should say this is the phone which was
+00:02:09.520 launched and these are the price. Uh
+00:02:11.920 let's see what it says. It says iPhone
+00:02:13.920 is a model of iPhone lineup announced
+00:02:15.680 and blah blah blah. Okay, good. So it's
+00:02:17.440 able to fetch the data which we need.
+00:02:19.040 Okay. So everything is there. Now before
+00:02:20.879 making a video I was doing some
+00:02:22.080 experiments and once it it said that it
+00:02:25.200 is rumored that iPhone air is going to
+00:02:27.680 launch. So maybe even Germany had don't
+00:02:30.800 have the updated data about iPhone.
+00:02:33.280 Maybe it's Google versus Apple. I'm not
+00:02:35.120 sure but this time it is giving you
+00:02:36.560 that's good thing. But you have to also
+00:02:39.360 assume that AI might not give you the
+00:02:41.760 correct information or the latest
+00:02:43.360 information. Right? So just by saying I
+00:02:46.560 need details of an iPhone air might not
+00:02:49.440 give you the exact information. So if
+00:02:51.599 you want exact information what you can
+00:02:53.280 do is you can say uh I need details
+00:02:56.160 about iPhone air and you can also add a
+00:02:58.959 source in case if LM is not able to find
+00:03:01.200 data about it. Uh we'll talk about this
+00:03:03.120 concept later what I'm doing now how I'm
+00:03:05.920 injecting the source in the prompt. we
+00:03:08.879 have some concept for it or maybe it's
+00:03:11.519 more about adding context to the prompts
+00:03:13.840 and when I do that it will specifically
+00:03:15.840 go to that website scan understand what
+00:03:18.560 is happening and then it will give you
+00:03:19.920 the answer so even maybe this is right
+00:03:23.120 and this should be right because we have
+00:03:25.200 pass a source now and if you go up here
+00:03:29.120 let's look at the price section so when
+00:03:30.959 I looked at the price okay now whether
+00:03:32.879 is a price is it or maybe I'm not able
+00:03:35.280 to find anywhere but then even if it
+00:03:37.680 gives you a price and maybe you can see
+00:03:39.599 on the screen it might give you in
+00:03:41.599 dollars. Now specifically I am recording
+00:03:44.319 this video from India. So it should give
+00:03:46.400 me Indian price and when I pass the
+00:03:48.400 source it is I in here and that's why
+00:03:51.280 you can see we got the price in rupees.
+00:03:53.760 Additionally it should give you some
+00:03:55.040 more information. It's not doing that.
+00:03:56.879 Now uh in my experiment it was giving
+00:03:59.040 option of colors and okay there's a
+00:04:01.200 section here. Okay. So everything is you
+00:04:03.519 you got it here. But again the problem
+00:04:06.000 is it is giving you data in the text
+00:04:08.000 format. How will you pass this in the
+00:04:10.000 application? Now that's where you can
+00:04:12.720 ask AI to give this information in the
+00:04:15.439 JSON format. So what I will do is I will
+00:04:17.918 just copy this part because I want to
+00:04:19.680 reuse it and paste it here. But
+00:04:22.479 additionally I will mention give me this
+00:04:25.600 information in JSON format. Okay, when I
+00:04:30.320 do that it will give you JSON format.
+00:04:31.919 That's what we requesting for right. So
+00:04:33.919 it is its job to give that data in JSON
+00:04:36.479 format. And yeah, you got it. So you can
+00:04:38.639 see uh it is giving this data iPhone ad
+00:04:42.160 announced released. Okay, that's good.
+00:04:44.240 So it is able to give the data pricing
+00:04:46.560 in Indian MRP. We got all these details
+00:04:49.040 and okay looks good. Looks good. This is
+00:04:51.199 how the JSON data should be right. But
+00:04:53.840 there are chances that it will give you
+00:04:55.840 some extra details. Okay. By the way,
+00:04:57.759 you can unlock the full functionality of
+00:04:59.199 all the apps. Enable. Oh, okay. This is
+00:05:01.680 a new feature. Not sure. But you can see
+00:05:03.280 with this data, it is also giving you
+00:05:04.800 some text. Okay. And this is what we
+00:05:06.720 don't want. So if you I mean not the
+00:05:09.520 same date text every time but it might
+00:05:11.680 give give you some additional text with
+00:05:13.360 the JSON. We don't want additional text.
+00:05:15.840 So what you can do is you can use the
+00:05:17.280 same prompt but you can add more details
+00:05:19.840 here. And let me show you that details
+00:05:22.160 and I I do have it here so that I don't
+00:05:24.479 have to do that and type that by myself.
+00:05:28.240 So this is the additional prompt. So
+00:05:29.680 instead of saying give me this
+00:05:31.120 information JSON format I can just write
+00:05:32.800 this respond only with valid JSON object
+00:05:36.000 because then it will also validate if
+00:05:37.440 the JSON which is sending is correct or
+00:05:39.039 not. Uh in this case I'm not sure if
+00:05:41.440 this is a valid JSON and I have the
+00:05:44.160 feeling now it's not a valid JSON. Okay.
+00:05:46.400 And you let me know why in the chat this
+00:05:49.360 is closing here. Where is the opening?
+00:05:51.600 Okay. This is not a valid JSON. Okay.
+00:05:53.199 That's good. Uh so now I'm mentioning
+00:05:55.680 respond only with JSON object and do not
+00:05:57.759 include any text or explanation. I'll
+00:06:00.080 just keep it copied so that we can reuse
+00:06:02.320 it later. And now it says in an occur
+00:06:04.319 previous search already provided this
+00:06:05.840 information. So another search is not
+00:06:07.280 required. Okay. So it is not doing the
+00:06:11.039 thing which I want. Very bad. I paid for
+00:06:13.039 it. Let me do that once again. Why it's
+00:06:15.120 not doing it? Let me go for a new chat.
+00:06:17.360 I don't know what went wrong there. Is
+00:06:18.800 it the scenario when it gives you one
+00:06:20.560 information it will not repeat? Saw this
+00:06:22.240 for the first time. Let me know if you
+00:06:23.520 have faced that before. Okay, now you
+00:06:25.840 got a JSON format and which looks a
+00:06:28.880 valid JSON format. If not, let me in the
+00:06:31.199 chat. Okay, looks like a valid JSON.
+00:06:32.960 Cool. And you can see there's no extra
+00:06:35.039 text anywhere. Not at the start, not at
+00:06:37.919 the end. And this is what you need,
+00:06:40.319 right? So this is how basically you can
+00:06:42.160 work with JSON format. But there's one
+00:06:44.639 more thing which is missing here which
+00:06:46.560 is or not a missing part but then if you
+00:06:49.120 think as as a developer when you build
+00:06:51.919 objects right so to represent a
+00:06:53.680 particular data you build objects right
+00:06:55.440 and this object will have certain
+00:06:56.800 properties so let's say I want a phone
+00:06:59.360 class and I phone class have these
+00:07:01.120 properties where you got the model name
+00:07:03.599 you got the price you got the RAM CPU so
+00:07:07.599 you have a limited set of properties
+00:07:10.000 which you want to assign to if you look
+00:07:12.160 at this JSON it has a lot of data which
+00:07:14.639 maybe I don't need uh example let's say
+00:07:18.080 maybe I don't need optical zooming of
+00:07:19.680 1x2x maybe I don't need uh the USB speed
+00:07:23.680 okay so it is giving you everything a
+00:07:26.240 good thing but we don't require those
+00:07:28.160 things so how do you specify what JSON
+00:07:31.280 format you need now in this case I have
+00:07:34.319 one more prompt here and I will show you
+00:07:36.080 that prompt step by step so this is a
+00:07:38.800 prompt and let me just go through this
+00:07:40.800 one by one
+00:07:42.880 So at this start I'm saying you are an
+00:07:44.960 expert data extraction system. So I'm
+00:07:47.039 also specifying a role there. And if you
+00:07:48.639 remember we have talked about role
+00:07:49.840 prompting. Your task is to extract. So
+00:07:51.840 we are specifying the instruction. The
+00:07:53.840 key specification for iPhone air input
+00:07:57.440 uh from providing text format into JSON
+00:07:59.360 format. So specifying the output format
+00:08:01.759 and this output format should be a JSON.
+00:08:04.639 Do not uh put any explanation on text.
+00:08:07.440 Then we are specifying the JSON object
+00:08:10.879 format. So this is JSON object must
+00:08:12.800 strictly add to the following schema
+00:08:14.960 extracting the information from the text
+00:08:16.639 below. So I need model name. We don't
+00:08:18.800 need to specify the model name. Maybe in
+00:08:20.720 future I'm going to work with Samsung or
+00:08:22.960 maybe OnePlus whatever the type is or
+00:08:25.599 phone is. Then uh you can specify the
+00:08:28.720 type or display then processor what else
+00:08:32.799 we have design and operating system. So
+00:08:35.519 these are the details I want and I'm
+00:08:36.799 also specifying the source from where
+00:08:38.080 you will get this. And when I do that,
+00:08:40.559 it will return the JSON format exactly
+00:08:43.519 in that format. Let's see. And yeah, you
+00:08:46.080 got it. So you can see we got model
+00:08:47.279 name, display, processor, camera,
+00:08:49.200 design, and operating system, right? So
+00:08:53.200 yeah, this is what uh you can do when
+00:08:56.160 you work with the AI to give you JSON
+00:08:59.120 data. So your prompt need to be good.
+00:09:01.120 You have to specify the role. You have
+00:09:02.320 to specify the JSON JSON format and
+00:09:05.440 we're going to work with it. Now, how do
+00:09:06.959 you use that in the code? We're going to
+00:09:08.959 see that later. Okay. So, I hope you'll
+00:09:11.279 enjoy that. I hope you enjoyed this
+00:09:12.880 part.

@@ -1,0 +1,245 @@
+# tactiq.io free youtube transcript
+# AI Agents for Curious Beginners
+# https://www.youtube.com/watch/FwOTs4UxQS4
+
+00:00:03.760 ai ai ai ai ai
+00:00:07.960 ai you know more agentic agentic
+00:00:10.639 capabilities an AI agent agents agentic
+00:00:13.440 workflows agents agents agent agent
+00:00:16.400 agent agent agentic
+00:00:19.039 all right most explanations of AI agents
+00:00:21.359 is either too technical or too basic
+00:00:24.640 this video is meant for people like
+00:00:26.320 myself you have zero technical
+00:00:28.400 background but you use AI tools
+00:00:30.920 regularly and you want to learn just
+00:00:33.600 enough about AI agents to see how it
+00:00:36.399 affects you in this video we'll follow a
+00:00:39.200 simple one two three learning path by
+00:00:41.920 building on concepts you already
+00:00:43.920 understand like chatbt and then moving
+00:00:46.800 on to AI workflows and then finally AI
+00:00:49.640 agents all the while using examples you
+00:00:52.879 will actually encounter in real life and
+00:00:55.600 believe me when I tell you those
+00:00:56.960 intimidating terms you see everywhere
+00:00:58.800 like rag rag or react they're a lot
+00:01:02.399 simpler than you think let's get started
+00:01:04.720 kicking things off at level one large
+00:01:06.640 language models popular AI chatbots like
+00:01:09.040 CHBT Google Gemini and Claude are
+00:01:11.960 applications built on top of large
+00:01:14.640 language models LLMs and they're
+00:01:17.040 fantastic at generating and editing text
+00:01:20.000 here's a simple visualization you the
+00:01:22.479 human provides an input and the LLM
+00:01:25.439 produces an output based on its training
+00:01:27.920 data for example if I were to ask Chachi
+00:01:30.000 BT to draft an email requesting a coffee
+00:01:32.400 chat my prompt is the input and the
+00:01:35.040 resulting email that's way more polite
+00:01:36.799 than I would ever be in real life is the
+00:01:39.200 output so far so good right simple stuff
+00:01:42.320 but what if I asked Chachi BT when my
+00:01:45.759 next coffee chat is even without seeing
+00:01:48.079 the response both you and I know Chachi
+00:01:51.040 PT is gonna fail because it doesn't know
+00:01:53.280 that information it doesn't have access
+00:01:55.840 to my calendar this highlights two key
+00:01:58.320 traits of large language models first
+00:02:00.880 despite being trained on vast amounts of
+00:02:02.799 data they have limited knowledge of
+00:02:04.880 proprietary information like our
+00:02:07.040 personal information or internal company
+00:02:09.280 data second LLMs are passive they wait
+00:02:12.959 for our prompt and then respond right
+00:02:15.440 keep these two traits in mind moving
+00:02:17.360 forward moving to level two AI workflows
+00:02:20.000 let's build on our example what if I a
+00:02:23.040 human told the LM "Every time I ask
+00:02:25.680 about a personal event perform a search
+00:02:27.760 query and fetch data from my Google
+00:02:30.000 calendar before providing a response."
+00:02:32.480 With this logic implemented the next
+00:02:34.560 time I ask "When is my coffee chat with
+00:02:36.720 Elon Husky?" I'll get the correct answer
+00:02:39.120 because the LLM will now first go into
+00:02:42.000 my Google calendar to find that
+00:02:44.400 information but here's where it gets
+00:02:46.640 tricky what if my next follow-up
+00:02:48.879 question is "What will the weather be
+00:02:51.040 like that day?" The LM will now fail at
+00:02:54.480 answering the query because the path we
+00:02:56.319 told the LM to follow is to always
+00:02:58.959 search my Google calendar which does not
+00:03:01.920 have information about the weather this
+00:03:04.400 is a fundamental trait of AI workflows
+00:03:07.200 they can only follow predefined paths
+00:03:10.319 set by humans and if you want to get
+00:03:12.640 technical this path is also called the
+00:03:15.440 control logic pushing my example further
+00:03:18.319 what if I added more steps into the
+00:03:20.239 workflow by allowing the LM to access
+00:03:22.400 the weather via an API and then just for
+00:03:24.800 fun use a text to audio model to speak
+00:03:27.519 the answer the weather forecast for
+00:03:29.760 seeing Elon Husky is sunny with a chance
+00:03:32.239 of being a good boy here's the thing no
+00:03:34.879 matter how many steps we add this is
+00:03:37.200 still just an AI workflow even if there
+00:03:40.720 were hundreds or thousands of steps if a
+00:03:43.519 human is the decision maker there is no
+00:03:47.040 AI agent involvement pro tip: retrieval
+00:03:49.920 augmented generation or rag is a fancy
+00:03:52.640 term that's thrown around a lot in
+00:03:54.560 simple terms rag is a process that helps
+00:03:56.720 AI models look things up before they
+00:03:59.120 answer like accessing my calendar or the
+00:04:00.959 weather service essentially Rag is just
+00:04:03.519 a type of AI workflow by the way I have
+00:04:06.400 a free AI toolkit that cuts through the
+00:04:08.000 noise and helps you master essential AI
+00:04:09.760 tools and workflows i'll leave a link to
+00:04:11.439 that down below here's a real world
+00:04:13.439 example following Helena Louu's amazing
+00:04:15.760 tutorial I created a simple AI workflow
+00:04:18.238 using make.com here you can see that
+00:04:20.560 first I'm using Google Sheets to do
+00:04:22.240 something specifically I'm compiling
+00:04:24.240 links to news articles in a Google sheet
+00:04:26.960 and this is that Google sheet second I'm
+00:04:29.680 using Perplexity to summarize those news
+00:04:33.080 articles then using Claude and using a
+00:04:36.160 prompt that I wrote I'm asking Claude to
+00:04:38.080 draft a LinkedIn and Instagram post
+00:04:41.199 finally I can schedule this to run
+00:04:43.840 automatically every day at 8 a.m as you
+00:04:46.160 can see this is an AI workflow because
+00:04:48.479 it follows a predefined path set by me
+00:04:52.000 step one you do this step two you do
+00:04:54.560 this step three you do this and finally
+00:04:57.680 remember to run daily at 8 am one last
+00:04:59.840 thing if I test this workflow and I
+00:05:02.400 don't like the final output of the
+00:05:05.520 LinkedIn post for example as you can see
+00:05:08.560 right here uh it's not funny enough and
+00:05:10.400 I'm naturally hilarious right i'd have
+00:05:12.479 to manually go back and
+00:05:16.120 rewrite the prompt for Claude okay and
+00:05:20.320 this trial and error iteration is
+00:05:23.120 currently being done by me a human so
+00:05:25.759 keep that in mind moving forward all
+00:05:27.360 right level three AI agents continuing
+00:05:29.759 the make.com example let's break down
+00:05:31.919 what I've been doing so far as the human
+00:05:34.479 decision maker with the goal of creating
+00:05:36.800 social media posts based off of news
+00:05:38.560 articles I need to do two things first
+00:05:41.440 reason or think about the best approach
+00:05:44.160 i need to first compile the news
+00:05:45.600 articles then summarize them then write
+00:05:47.840 the final posts second take action using
+00:05:50.639 tools i need to find and link to those
+00:05:53.280 news articles in Google Sheets use
+00:05:55.759 Perplexity for real-time summarization
+00:05:58.160 and then claw for copyrightiting so and
+00:06:00.479 this is the most important sentence in
+00:06:02.000 this entire video the one massive change
+00:06:04.880 that has to happen in order for this AI
+00:06:07.280 workflow to become an AI agent is for me
+00:06:10.960 the human decision maker to be replaced
+00:06:14.319 by an LLM in other words the AI agent
+00:06:17.440 must reason what's the most efficient
+00:06:19.600 way to compile these news articles
+00:06:21.199 should I copy and paste each article
+00:06:22.880 into a word document no it's probably
+00:06:25.039 easier to compile links to those
+00:06:26.560 articles and then use another tool to
+00:06:28.479 fetch the data yes that makes more sense
+00:06:31.520 the AI agent must act aka do things via
+00:06:35.199 tools should I use Microsoft Word to
+00:06:37.440 compile links no inserting links
+00:06:39.440 directly into rows is way more efficient
+00:06:41.680 what about Excel m so the user has
+00:06:44.479 already connected their Google account
+00:06:45.680 with make.com so Google Sheets is a
+00:06:47.759 better option pro tip because of this
+00:06:50.080 the most common configuration for AI
+00:06:52.160 agents is the react framework all AI
+00:06:55.280 agents must reason and act so
+00:06:59.400 react sounds simple once we break it
+00:07:01.759 down right a third key trait of AI
+00:07:03.919 agents is their ability to iterate
+00:07:06.160 remember when I had to manually rewrite
+00:07:08.400 the prompt to make the LinkedIn post
+00:07:10.080 funnier i the human probably need to
+00:07:13.280 repeat this iterative process a few
+00:07:15.280 times to get something I'm happy with
+00:07:17.120 right an AI agent will be able to do the
+00:07:19.840 same thing autonomously in our example
+00:07:22.960 the AI agent would autonomously add in
+00:07:25.599 another LM to critique its own output
+00:07:28.960 okay I've drafted V1 of a LinkedIn post
+00:07:31.280 how do I make sure it's good oh I know
+00:07:33.120 i'll add another step where an LM will
+00:07:35.599 critique the post based on LinkedIn best
+00:07:37.520 practices and let's repeat this until
+00:07:39.440 the best practices criteria are all met
+00:07:41.840 and after a few cycles of that we have
+00:07:44.080 the final output that was a hypothetical
+00:07:47.120 example so let's move on to a real world
+00:07:49.599 AI agent example andrew is a preeeminent
+00:07:53.280 figure in AI and he created this demo
+00:07:55.599 website that illustrates how an AI agent
+00:07:58.639 works i'll link the full video down
+00:08:00.319 below but when I search for a keyword
+00:08:02.560 like skier enter the AI vision agent in
+00:08:07.680 the background is first reasoning what a
+00:08:10.479 skier looks like a person on skis going
+00:08:12.720 really fast in snow for example right
+00:08:14.479 i'm not sure and then it's acting by
+00:08:18.479 looking at clips in video footage trying
+00:08:22.240 to identify what it thinks a skier is
+00:08:26.319 indexing that clip and then
+00:08:29.319 returning that clip to us although this
+00:08:32.399 might not feel impressive remember that
+00:08:34.399 an AI agent did all that instead of a
+00:08:36.679 human reviewing the footage beforehand
+00:08:39.760 manually identifying the skier and
+00:08:42.240 adding tags like skier mountain ski snow
+00:08:45.920 the programming is obviously a lot more
+00:08:48.000 technical and complicated than what we
+00:08:49.680 see in the front end but that's the
+00:08:51.680 point of this demo right the average
+00:08:53.839 user like myself wants a simple app that
+00:08:56.720 just works without me having to
+00:08:58.880 understand what's going on in the back
+00:09:00.480 end speaking of examples I'm also
+00:09:02.480 building my very own basic AI agent
+00:09:05.040 using Nan so let me know in the comments
+00:09:07.440 what type of AI agent you'd like me to
+00:09:09.279 make a tutorial on next to wrap up
+00:09:11.760 here's a simplified visualization of the
+00:09:13.839 three levels we covered today level one
+00:09:16.399 we provide an input and the LM responds
+00:09:18.959 with an output easy level two for AI
+00:09:22.160 workflows we provide an input and tell
+00:09:24.880 the LM to follow a predefined path that
+00:09:27.440 may involve in retrieving information
+00:09:29.279 from external tools the key trait here
+00:09:31.920 is that the human programs a path for LM
+00:09:34.640 to follow level three the AI agent
+00:09:37.680 receives a goal and the LM performs
+00:09:39.920 reasoning to determine how best to
+00:09:41.839 achieve the goal takes action using
+00:09:44.160 tools to produce an interim result
+00:09:46.640 observes that interim result and decides
+00:09:49.519 whether iterations are required and
+00:09:52.000 produces a final output that achieves
+00:09:54.240 the initial goal the key trait here is
+00:09:56.800 that the LLM is a decision maker in the
+00:09:59.279 workflow if you found this helpful you
+00:10:01.200 might want to learn how to build a
+00:10:02.320 prompts database in Notion see you on
+00:10:04.640 the next video in the
+00:10:05.959 meantime have a great one

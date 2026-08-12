@@ -1,0 +1,691 @@
+# tactiq.io free youtube transcript
+# Tool Calling Is Not Just Plumbing for AI Agents — Roy Derks
+# https://www.youtube.com/watch/zuMw0pkPXpU
+
+00:00:04.080 tool calling is not just Plumbing for AI
+00:00:06.080 agents this talk I'm going to show you
+00:00:07.879 why tool calling is more important than
+00:00:09.880 some people think and how you can use
+00:00:11.840 tool calling with your AG gentic
+00:00:13.480 Frameworks we'll be looking at some of
+00:00:15.280 the techniques for Tool calling as
+00:00:17.840 regular tool calling or meta tool
+00:00:19.880 calling how this works with agent
+00:00:21.920 Frameworks and also some other
+00:00:23.800 considerations like do you need a
+00:00:26.199 separate tool platform or can you look
+00:00:28.119 at different types of tools where than
+00:00:30.279 the tools we today your own if you think
+00:00:33.200 about Plumbing uh some people say you
+00:00:35.320 should do your own Plumbing some other
+00:00:36.800 people say you should always hire a
+00:00:38.360 professional I hope at the end of this
+00:00:40.120 talk you'll be feeling like I can build
+00:00:42.600 my own tools I know how to create tools
+00:00:45.160 separate from My AG gentic Frameworks
+00:00:46.680 and bring them in and thereby get a lot
+00:00:48.680 of flexibility like changing agentic
+00:00:50.640 Frameworks or whatsoever if you think
+00:00:53.120 about agents in general I feel we spend
+00:00:55.559 a lot of time on improving the agents
+00:00:58.160 but we don't seem to spend a lot of time
+00:00:59.719 on building the tools that are reusable
+00:01:02.000 robust and can be put into different
+00:01:04.080 Frameworks I feel it's changing slightly
+00:01:06.080 there are tons of tool platforms popping
+00:01:08.000 up there are more libraries to build
+00:01:09.799 tools and I also feel the the pressure
+00:01:12.840 is sort of off the agents people know
+00:01:14.520 agents can do certain things and now
+00:01:16.159 they're all trying to improve the tools
+00:01:18.240 these
+00:01:20.759 have so my name is Roy I always worked
+00:01:24.439 for startups or founded my own startups
+00:01:26.960 uh a few years ago I ended up at IBM
+00:01:29.280 after an acquis position I've been doing
+00:01:32.159 tons of talks on graphql and web
+00:01:34.119 development and uh also react so you can
+00:01:37.280 find some of my books or previous talks
+00:01:39.280 on the internet
+00:01:41.840 um also feel free to connect with me
+00:01:44.360 social media in case you you want to
+00:01:46.280 know
+00:01:48.000 more as I mentioned in the beginning
+00:01:50.040 everyone is talking about agents but not
+00:01:52.399 so many people are talking about the
+00:01:53.960 tools these agents need you look at a
+00:01:56.240 typical agent Loop there's always a user
+00:01:58.759 asking a question or are sending a
+00:02:00.399 prompt here's the agent itself which
+00:02:02.600 needs large language models which need
+00:02:05.360 bit of memory and then of course there
+00:02:07.280 are
+00:02:11.160 tools but way less people are talking
+00:02:13.520 about these tools so everyone is talking
+00:02:15.280 about the agents what agent framework
+00:02:17.040 should I use they're probably using the
+00:02:19.040 tools that are provided by the agent
+00:02:20.640 framework or they're writing the tools
+00:02:22.560 directly inside of the agent framework
+00:02:24.519 by extending some of the functions they
+00:02:27.400 have or interfaces they have to create
+00:02:29.200 tools
+00:02:31.040 why are people not really talking about
+00:02:32.640 the tool I always feel like every time
+00:02:35.040 I'm building an agent first thing that
+00:02:37.120 breaks is the tools either the large
+00:02:39.640 language model is not able to call the
+00:02:41.280 tool correctly the large language model
+00:02:43.800 uses the wrong Tool uh maybe something
+00:02:46.080 inside my tool breaks didn't set up
+00:02:48.360 something properly the agent feels like
+00:02:50.840 like a closed circuit where the tools
+00:02:52.920 are more
+00:02:54.400 Dynamic so at the end of this talk I
+00:02:56.599 hope you you feel like the agent is only
+00:02:59.480 as good as their tools Frameworks do so
+00:03:02.280 much for you but they don't do that much
+00:03:04.280 for you in terms of building the tool
+00:03:06.239 someone once said a man is only as good
+00:03:08.560 as your tools uh so let's make that the
+00:03:11.080 agent is only as good as your tool make
+00:03:13.120 sure you have tools that are reusable
+00:03:15.319 and robust and you can bring these into
+00:03:17.319 any other agent
+00:03:20.560 framework the LMS Advance a lot over the
+00:03:24.040 last few years and that's why I also
+00:03:25.959 feel the application layer especially
+00:03:27.840 the bar where you build your tools
+00:03:29.120 deserves more attention if you look at
+00:03:31.200 some of the things people are saying on
+00:03:32.760 the internet uh it's actually saying
+00:03:34.959 like the rappers around the gpts or
+00:03:37.159 rappers around models rappers around the
+00:03:39.519 chat interfaces they're way more um they
+00:03:44.159 provide way more options for improvement
+00:03:46.159 later on and I also feel that's where we
+00:03:48.319 can do a lot more by writing software by
+00:03:50.720 coming up with smart Solutions and doing
+00:03:53.040 things on top of the models some point
+00:03:54.920 the models are going to well they are
+00:03:57.239 going to coming increasingly better but
+00:03:59.439 at some point we need to have the
+00:04:01.360 application layer catch up as
+00:04:03.760 well so let's quickly recap tool
+00:04:06.040 callings to make sure we're all on the
+00:04:07.400 same level here
+00:04:10.239 um for example imagine you're asking a
+00:04:12.799 question to an agent like how far does
+00:04:15.040 the moon orbit Express as the number of
+00:04:17.320 trips between Amsterdam and San
+00:04:19.040 Francisco so half a year ago so I moved
+00:04:22.079 from Amsterdam to San Francisco so I was
+00:04:24.199 actually kind of interested in the
+00:04:25.479 answer to question if you look it up on
+00:04:28.560 your favorite chat application
+00:04:30.639 you will find the moon's orbit is about
+00:04:32.639 44 round trips between Amsterdam and San
+00:04:35.440 Francisco so sometimes the model might
+00:04:38.080 be able to come up if the answer itself
+00:04:40.000 because there is training data which
+00:04:41.479 includes a distance between uh the Moon
+00:04:44.360 and the Earth and then a distance
+00:04:45.759 between Amsterdam and San Francisco and
+00:04:48.199 it's able to find the answer for you
+00:04:50.400 more probably it's going to do a set of
+00:04:51.880 tool calls so going to search for the
+00:04:53.680 distance between the Earth moon going to
+00:04:56.160 search for the distance between those
+00:04:57.680 two airports and then it's going to do
+00:04:59.400 some calculations calculations maybe it
+00:05:01.680 needs a tool maybe it can do it on its
+00:05:03.800 own this question is fairly simple but
+00:05:06.759 maybe you can make more complex by
+00:05:08.360 asking how long does it take me in
+00:05:10.759 number of days or is it quicker to have
+00:05:13.479 a moon or orbit um or do those 44 round
+00:05:17.000 trips one trip is like 10 to 12 hours
+00:05:20.160 you need to wait at the airport you need
+00:05:22.720 uh fly back every time so you probably
+00:05:25.840 need a bit more than this simplified
+00:05:27.560 example
+00:05:30.280 of course you can come up with the the
+00:05:32.120 answers for these by doing tool calling
+00:05:33.880 or looking at training data if it's
+00:05:35.720 doing tool calling it's most probably
+00:05:37.479 looking at external apis so it's going
+00:05:39.360 to do a web search or it's going to go
+00:05:41.520 to some database with geographical data
+00:05:44.880 if you do the calculate maybe it's using
+00:05:47.120 JavaScript function or python or maybe
+00:05:50.039 it's going to an external API like wfr
+00:05:52.080 Alpha all of this needs to be
+00:05:54.520 implemented but how you define the tools
+00:05:56.759 matters a lot as well so before I'm
+00:05:58.400 going to show you implementation
+00:06:00.160 let me tell you why defining the tool
+00:06:02.160 matters a lot if you look at a typical
+00:06:04.720 tool definition you have your tool name
+00:06:06.880 I always advise to keep this simple you
+00:06:09.000 have your tool description and this to
+00:06:10.919 me almost feels like a system prompt for
+00:06:12.680 the large language model so your tool
+00:06:15.000 description typically it doesn't just
+00:06:17.039 say calculate something based on two
+00:06:19.400 incoming variables if you look at some
+00:06:21.400 of the bigger tools almost like agentic
+00:06:24.400 tools you can see that the tool
+00:06:26.240 descriptions are fairly long they're
+00:06:27.599 almost like system prompts some times
+00:06:29.800 you see people duplicating system
+00:06:32.440 prompts duplicating tool descriptions
+00:06:35.240 prompts so there's a lot of things you
+00:06:36.479 can do there but the tool description
+00:06:38.400 really is important then you have the
+00:06:40.440 input parameters of course model needs
+00:06:42.639 to know what is needed in order to call
+00:06:44.720 this tool and then something I really
+00:06:46.639 like and I see this more and more in
+00:06:48.479 agentic Frameworks is the output schema
+00:06:50.960 has become input variable as
+00:06:53.520 well this will make you help this will
+00:06:56.680 help you to make tools type safe as I
+00:06:59.240 mentioned I'm a big rql guy at least I
+00:07:01.879 was before I started to work a lot with
+00:07:04.879 agents if you don't have an output
+00:07:06.919 schema how's the model going to know
+00:07:08.479 what data is being returned um it's
+00:07:10.680 always a string though but if you're
+00:07:12.120 building sequence of tool callings if
+00:07:14.280 you're building more complex agents you
+00:07:16.720 probably want an output schema so you
+00:07:18.240 can for structured outputs or you can
+00:07:20.440 chain tool calls the output schema on my
+00:07:22.440 feeling is getting more and more
+00:07:24.160 important later
+00:07:25.840 on and then to will look something like
+00:07:28.560 this I believe believe this is length
+00:07:30.120 chain um could be crei as well so you
+00:07:33.479 would have your tool definition whenever
+00:07:35.680 the tool is being called it needs the
+00:07:37.039 name and that it needs the arguments say
+00:07:39.000 you want to get account of customers
+00:07:41.039 probably need to have filter like a
+00:07:42.680 country then the customer count will
+00:07:44.720 return a string which includes customer
+00:07:47.400 might also be um a string which is just
+00:07:50.080 Json that
+00:07:53.759 decode and this also works for other
+00:07:56.159 languages uh like SQL so I'm going to
+00:07:58.840 show you a bit about Dynamic tools later
+00:08:00.400 on so we've did some tests with graphql
+00:08:02.639 and SQL and using those to create
+00:08:04.639 Dynamic tools so instead of getting the
+00:08:06.560 count of a customer you could also give
+00:08:08.400 it access to a database give it access
+00:08:10.159 to an API then have the model create the
+00:08:12.440 query like query or
+00:08:16.280 graphql let's also look at where the
+00:08:18.240 tool is being called from because this
+00:08:20.080 is getting more important as well as I
+00:08:22.000 mentioned people are building their
+00:08:23.280 tools at the same place where they're
+00:08:24.520 building their agents usually so if you
+00:08:27.039 look at where the tools being called
+00:08:28.520 from you would have your agent Loop
+00:08:30.560 which has the model which has tools
+00:08:32.599 which has app some memory where do you
+00:08:34.719 implement the logic to Define which
+00:08:36.839 tools being call
+00:08:39.360 when I think it was in a blog from
+00:08:41.559 cloudfare where I saw them introducing
+00:08:44.039 their workers API and they mentioned we
+00:08:46.399 have traditional tool calling and then
+00:08:48.200 we have another form of tool kind of
+00:08:50.200 like they put traditional in there
+00:08:52.399 because I don't know we've been doing
+00:08:54.000 this for like two years maybe three so
+00:08:56.360 it all already feels like weird to call
+00:08:58.560 something traditional while time is
+00:09:00.560 moving so fast the traditional tool
+00:09:02.920 calling is I don't mind the chaos on
+00:09:05.440 this screen you would have your client
+00:09:07.720 application you would have your
+00:09:09.720 application which has the the agent
+00:09:12.200 where you have find find your tools
+00:09:13.800 where you're doing your server side
+00:09:15.560 logic so assum you have my question like
+00:09:18.079 how far does the moon orbit expresses
+00:09:20.240 trips between Amsterdam and San if you
+00:09:23.320 would type this from your client app
+00:09:24.800 which might be a chat interface goes to
+00:09:27.040 your agent or AI application
+00:09:29.959 it's going to put this in a prompt it's
+00:09:31.880 going to send it over to the model
+00:09:33.680 together with
+00:09:35.079 some model is going to tell call so
+00:09:39.160 somewhere between your client app and
+00:09:40.920 server app you're going to
+00:09:42.519 Define tool calls so you're going to
+00:09:44.680 look at the incoming recommendation from
+00:09:47.079 the large language model you're going to
+00:09:48.880 call those tools based on the have to
+00:09:51.279 find in your server app or your agent in
+00:09:54.279 here you would have some call back
+00:09:55.480 function call them and then you give
+00:09:57.880 back to Tool response model
+00:09:59.880 and at some point the model is going to
+00:10:01.240 do this a couple of times
+00:10:03.360 because calls finally you will have your
+00:10:06.200 answer which you can display Client app
+00:10:08.720 there's a lot of back and forth between
+00:10:10.600 the application where you implement
+00:10:12.040 logic and the large language model and
+00:10:14.640 then between your client up in the agent
+00:10:16.480 there's a lot of logic in there as well
+00:10:17.920 because it's not a closed system it's
+00:10:20.200 the agent and within the agent you need
+00:10:22.120 to Define tool calling logic this is
+00:10:25.480 what is called be being traditional tool
+00:10:27.800 calling um if you you implement this in
+00:10:30.480 something like lank chain like this you
+00:10:33.160 will Define your tools then you set the
+00:10:35.360 call back function for a tool you can
+00:10:37.600 see we have your models here from IBM's
+00:10:40.040 whaton next system and then you set you
+00:10:43.160 look at the answer so you look at the
+00:10:44.959 return from the large language model
+00:10:47.160 there you're going to filter the tool
+00:10:48.600 call messages so you need to explicitly
+00:10:50.360 look for a message that has the right
+00:10:52.600 role and you need to make sure that
+00:10:54.240 whatever is in there is being parsed and
+00:10:56.600 it's being executed based on the
+00:10:58.320 Callback function have then you need to
+00:11:01.200 handle all sorts of things like cuting
+00:11:04.040 the tool calls handle retries handling
+00:11:06.200 errors all these kind of things that you
+00:11:07.959 need when you're building
+00:11:09.440 any so this is how it all started this
+00:11:11.839 is what atic looked like two years ago
+00:11:14.680 maybe
+00:11:17.560 three if you look at what it looks like
+00:11:19.800 today for most most Frameworks it's
+00:11:22.480 something people like to call embedded
+00:11:24.200 tool calling so this is where the system
+00:11:25.800 is a closed closed system you pass your
+00:11:28.160 tools almost like a black box and comes
+00:11:31.160 out is the
+00:11:32.600 answer if you look at this example again
+00:11:34.839 you would have your agent this time your
+00:11:36.920 client app will only ask a question like
+00:11:40.320 how far does the moon orbit going to go
+00:11:42.600 to your agent your agent is a close
+00:11:44.600 system it has the tools it's connecting
+00:11:47.959 with the large language model it's
+00:11:49.200 connecting with the tools it's doing the
+00:11:50.720 tool calls finally you get the answer
+00:11:53.079 back like the moon or moon's orbit is
+00:11:55.079 about 44 GPS between Amsterdam and San
+00:11:58.160 Francisco
+00:12:00.079 it is what's being called embedded tool
+00:12:01.600 calling because it all is executing on
+00:12:03.800 the right side of this screen declin app
+00:12:06.760 or the application logic URI doesn't
+00:12:09.240 include any of the tool calling logic
+00:12:11.040 it's all being handled by the agent
+00:12:13.040 framework or wherever you have your
+00:12:15.720 component running and the tools in there
+00:12:17.800 they're all defined in the same agent as
+00:12:19.560 well and this is all doing the logic so
+00:12:21.560 it's really is a black box send in your
+00:12:24.199 question with a prompt and a tool and
+00:12:26.279 what comes out is the answer no control
+00:12:28.199 over whatever going on inside of
+00:12:31.160 it if you look at Leng chain again uh so
+00:12:34.320 stick to the Leng chain examples for now
+00:12:36.560 you import all the different L chain
+00:12:38.680 interfaces you import your model you
+00:12:41.079 connect to the model find your tools set
+00:12:44.120 a prompt and then you pass it into this
+00:12:46.320 create react agent function this will
+00:12:48.360 take your tools model on the prompt and
+00:12:51.000 then agent executor is going to make
+00:12:52.680 sure it's execut if you compare this to
+00:12:55.120 the previous screen it's the same
+00:12:56.800 functionality but this time it's all
+00:12:58.639 haded it's all hidden within that create
+00:13:00.880 agent function this is what people like
+00:13:02.880 to call a beta tool calling because it
+00:13:04.680 really is a black box where tools come
+00:13:06.839 in and the answer comes
+00:13:10.600 out let's say this is easy to implement
+00:13:13.480 if you're getting started building
+00:13:14.639 agents you don't need to worry about
+00:13:16.199 errors retries any of that stuff uh but
+00:13:19.320 you don't have any control over the tool
+00:13:20.959 calling process don't really know how
+00:13:23.480 the tools are being executed you don't
+00:13:25.079 know how any of the decisions are being
+00:13:26.760 made you don't really control any of the
+00:13:28.720 format
+00:13:29.680 other than that callback function you
+00:13:31.720 provide together with your tool
+00:13:33.079 definition which of course has the
+00:13:35.120 description with sort of system prompt
+00:13:37.480 for the agent to understand how to use
+00:13:39.680 the
+00:13:41.839 tool as a longtime developer I'm always
+00:13:44.720 looking for separation ofs uh I'm not
+00:13:47.560 saying you should build microservices or
+00:13:49.480 micro front ends but I do want to keep
+00:13:51.759 some systems a little bit more separated
+00:13:54.519 I I started developing at one point in
+00:13:56.639 PHP and then tools like like um all
+00:14:00.040 tools it's really a framework like larl
+00:14:02.320 and everything was sort of connected
+00:14:03.759 there you had your uh your sort of
+00:14:05.759 backend code you had your front end code
+00:14:07.440 the front end code had ways to to render
+00:14:10.199 view I believe it was few or maybe it
+00:14:12.440 was even jQuery in the beginning it was
+00:14:14.600 all a close system which I didn't really
+00:14:16.560 like so at some point I started to
+00:14:18.680 attach my back end for my front end I
+00:14:21.240 used LEL to build the apis and then I
+00:14:23.360 connected it to front end like angular
+00:14:26.240 or react maybe it was jQuery I don't
+00:14:28.839 really remember um so there's a lot of
+00:14:30.720 thing you can do to separate concerns
+00:14:32.680 without making things too big you don't
+00:14:34.279 need microservices micr France per se
+00:14:37.600 some separation between different parts
+00:14:39.399 of your system is something I always
+00:14:41.600 like to prefer and you can keep it all
+00:14:43.560 in the same
+00:14:44.639 repository put it in different different
+00:14:47.240 big
+00:14:48.600 repository the mCP is one good step in
+00:14:51.880 this direction so if you didn't hear
+00:14:53.880 about mCP yet it's a protocol introduced
+00:14:57.120 by anthropic and now being adopted by by
+00:14:59.360 uh many more people in the industry as a
+00:15:01.800 way to separate the client side and the
+00:15:05.079 server side of building atic
+00:15:07.600 applications mCP stands for model
+00:15:10.040 context protocal and this is where you
+00:15:12.040 have your host which also has a client
+00:15:14.440 in there so the host could be Cloud
+00:15:16.120 desktop it has a client in there that's
+00:15:18.199 able to connect to servers and the
+00:15:20.959 servers think of a server as a back end
+00:15:23.000 that has access tools or assets like
+00:15:26.160 data files so the server is the only
+00:15:29.360 thing the the host and the client see
+00:15:31.279 doesn't really see the tools per se
+00:15:33.199 because the tools are made available
+00:15:34.519 through the server so think of these
+00:15:36.319 server as a small back end that is able
+00:15:38.680 to give you any results from tools so I
+00:15:41.639 really like this separation of concern
+00:15:43.319 because now there's a clear distinction
+00:15:44.759 between the front side of the house and
+00:15:46.800 the back side and the mCP server is
+00:15:48.920 where you handle the logic you define
+00:15:50.839 your tools import your tools and then
+00:15:53.680 the mCP host and client they understand
+00:15:56.079 how to call these servers I wrote a
+00:15:58.240 small block post on how you can get
+00:15:59.959 started building these mCP servers using
+00:16:02.600 typescript so feel free to uh to check
+00:16:05.040 that out the link is probably a bit too
+00:16:06.839 long so if you go to my website you can
+00:16:09.000 find the uh blog section there mCP is
+00:16:12.199 really exciting I guess it's a good step
+00:16:14.160 in the direction of making uh tool
+00:16:16.560 calling really separate from the agentic
+00:16:18.639 framework there's much more you can do
+00:16:20.920 there are also other considerations and
+00:16:22.839 I hinted at this in the beginning uh you
+00:16:25.759 can for example look at a standalone
+00:16:27.759 tool platform
+00:16:30.600 and this is something that's getting
+00:16:31.639 more attention in the market I think
+00:16:33.240 there are a couple of Y combinator
+00:16:34.720 startups as well that are jumping into
+00:16:37.160 this space so a standalone tool platform
+00:16:39.519 means that instead of having a closed
+00:16:42.199 agent Loop where you define your tools
+00:16:44.279 inside of the agentic framework you
+00:16:46.040 define them separately and then inside
+00:16:48.279 of your agentic framework you can import
+00:16:50.079 those tools by writing an SDK or by
+00:16:52.519 doing an API call your tools are on
+00:16:54.880 remote servers the tool creation and the
+00:16:57.639 tool tool hosting execution is really
+00:17:00.279 being done separately the only thing the
+00:17:02.040 agent does it it takes in the tool
+00:17:04.319 definition it uses the LM to decide what
+00:17:07.400 tool to call and then it just passes
+00:17:09.400 this on to the tool platform where being
+00:17:11.720 executed tools might be chained there
+00:17:14.000 tools be abstracted away there's a lot
+00:17:16.640 of things you can do in such a platform
+00:17:18.959 as I mentioned as a developer I really
+00:17:20.480 like to separate concerns the tool
+00:17:23.640 platforms allow you to easily create
+00:17:26.119 tools out of apis or databases the
+00:17:28.880 typically these platforms of of two
+00:17:31.480 things can call them it framework as
+00:17:33.280 well I don't really mind they consist of
+00:17:35.720 two things they have a place to create
+00:17:37.600 the tool then they have a place to to
+00:17:40.400 execute the tool and the tool creation
+00:17:43.120 is usually done bya code or via clis and
+00:17:46.559 then the tool execution or the tool
+00:17:49.760 surfacing is being done via sdks that
+00:17:52.160 you connect to L chain or crew AI or
+00:17:54.799 whatever agentic framework you might be
+00:17:57.480 using in there you can also do things
+00:17:59.919 like chaining tools so sometimes you can
+00:18:02.080 see repetitive patterns in agents if you
+00:18:04.480 want to get the number of customers in a
+00:18:06.520 certain country maybe you need to do a
+00:18:08.600 tool call first to retrieve the country
+00:18:10.600 of the person asking the question based
+00:18:12.360 on their IP or whatever uh then you want
+00:18:14.640 to chain that to another tool call to
+00:18:16.520 get the actual customers out of your
+00:18:18.559 database or CRM system but this chaining
+00:18:21.120 of tool calls is something you can do in
+00:18:22.840 these platforms or Frameworks and this
+00:18:25.520 is also where you can handle
+00:18:26.679 authorization and errors and these kind
+00:18:28.400 of things
+00:18:29.480 if you think about tool calling and and
+00:18:31.280 authorization and authentication um you
+00:18:33.960 can easily imagine that you have
+00:18:35.840 different systems you're connecting
+00:18:37.640 let's say it's a CRM or let's say it's a
+00:18:39.360 database they require different sort of
+00:18:41.720 credentials uh where you set those
+00:18:43.679 credentials and how you pass them to
+00:18:45.400 these allying systems it's um well it
+00:18:48.679 could get messy quite fast and the
+00:18:50.600 question is do you want
+00:18:51.960 to do you want to put all of this in
+00:18:54.240 your agentic framework or do you want to
+00:18:55.840 separate it into a different systems
+00:18:58.240 this separ also allow you allows you to
+00:19:00.960 be flexible so imagine you have a tool
+00:19:02.960 platform where you build your tools so
+00:19:04.880 building the tools usually is the thing
+00:19:06.880 that takes me the longest for all the
+00:19:09.120 reasons I mentioned you want to take
+00:19:11.200 these tools and bring them into L chain
+00:19:13.120 or L graph if there is if it's as easy
+00:19:16.200 to bring those into crew AI or bring
+00:19:17.840 them into autogen then it really becomes
+00:19:20.120 easier for you to switch those different
+00:19:21.720 Frameworks build your tools once and
+00:19:23.960 bring them into different tic Frameworks
+00:19:25.679 so you get all of this flexibility
+00:19:29.559 as I mentioned there is a couple of tool
+00:19:31.039 Platforms in the market I'm a bit biased
+00:19:33.320 here because at IBM I'm actually
+00:19:35.000 building one but there are other great
+00:19:36.840 ones as well like compos tool house
+00:19:39.520 arcade AI which is run by a couple of
+00:19:42.320 people I met and then Wild Card which
+00:19:44.440 recently got into combinator if you look
+00:19:47.240 on the right you can see what the
+00:19:49.159 surfacing part of a tool platform might
+00:19:51.200 look like so I'm bringing in my model in
+00:19:53.280 this case uh what's the next models from
+00:19:55.640 IBM I'm then creating a l graph react
+00:19:58.080 agent I'm bringing in my tool platform
+00:20:00.080 which is called WX flow you can see
+00:20:02.360 there is a specific s thek integration
+00:20:04.200 for L chain I'm connecting to the tool
+00:20:06.440 platform so I build my tools in one
+00:20:08.440 place and then I'm connecting two these
+00:20:10.400 tools from my agent framework so I need
+00:20:12.640 an endpoint an API key but you can also
+00:20:14.960 run this locally and then just pull in
+00:20:17.360 the uh the functions or interfaces that
+00:20:19.200 way you retrieve the tools so you need
+00:20:21.360 to get the tools from one place and
+00:20:23.520 whatever you pass to that agent that
+00:20:25.520 black box is still the tools it's model
+00:20:28.080 but this time the tool execution is
+00:20:30.039 being done on that remote end so instead
+00:20:32.039 of passing in call back function you
+00:20:34.240 pass in a way for the model or in this
+00:20:36.640 case the agent actually call these tools
+00:20:39.240 so now you have separation of concerns
+00:20:40.960 you have your tools in one place and the
+00:20:42.919 agent in the other you're still doing a
+00:20:44.720 meta tool calling where the agent making
+00:20:47.000 sure the tools are being called and are
+00:20:49.720 working as expected it's calling
+00:20:51.400 subsequent tools the entire execution is
+00:20:54.039 now being put on the tool platform or
+00:20:56.000 framework so I really like this because
+00:20:58.159 now I've
+00:20:59.120 pull the two pieces apart and I can
+00:21:01.200 easily substitute Lang graph with
+00:21:03.320 something else or I can use different
+00:21:05.799 interfaces let's say langra is going to
+00:21:08.880 create different ways to create those
+00:21:10.559 blackbox agent just react maybe also
+00:21:13.039 other patterns or I can use their graph
+00:21:15.279 based approach it all works in the same
+00:21:17.400 way I still have tools in one place and
+00:21:19.840 agents in other
+00:21:22.559 place and then I hinted at this in the
+00:21:24.679 beginning what about Dynamic tools so I
+00:21:26.480 did some tests with burning graphql SQL
+00:21:29.240 with some of our clients and one thing
+00:21:31.480 we really saw is you can spend a lot of
+00:21:34.000 time creating all your tools but you
+00:21:35.880 also don't want to create a million
+00:21:37.120 tools let's say you have a CRM you don't
+00:21:40.039 want a different tool for each of the
+00:21:42.720 different components of this you can get
+00:21:44.880 your customers you don't have customers
+00:21:47.640 based per country you want to have
+00:21:49.320 customers based on I don't know whatever
+00:21:51.760 search filters you might have thanks to
+00:21:53.919 customers you also have orders maybe in
+00:21:56.159 the CRM have contracts have employee
+00:22:00.000 details whatever you can have in a CRM
+00:22:02.600 or in a database so let's say you have a
+00:22:04.200 database with have product data or order
+00:22:06.279 data or payment data you don't want to
+00:22:09.200 create all these different tools you if
+00:22:11.679 you run some tests if you put in like 10
+00:22:13.520 tools it's probably fine if you're going
+00:22:15.320 to paste in a 100 tools to the agent
+00:22:17.240 it's get really confused so you're going
+00:22:19.440 to need routers and all these things on
+00:22:21.279 top of your your tool definitions these
+00:22:23.919 tool platforms might be able to handle
+00:22:25.559 it maybe some agentic Frameworks are
+00:22:27.440 able to but another option is looking at
+00:22:29.840 Dynamic tools and I'm a big rql guy or I
+00:22:33.919 used to be mostly let's say you can also
+00:22:36.200 create a dynamic tool this is where you
+00:22:38.159 create a tool that's able to connect fql
+00:22:41.559 schema and then instead of passing in
+00:22:43.720 arguments that are sort of fixed like
+00:22:46.200 filter like get me the customers from
+00:22:48.480 from Europe and your filter would be
+00:22:49.840 Europe instead of doing this you pass in
+00:22:52.200 a graph kill
+00:22:53.880 query or you didn't really pass it in
+00:22:55.960 yourself you have the large language
+00:22:57.240 model create this for you so what you
+00:22:59.120 give to the model is you give the model
+00:23:01.400 tool and you say this is graphql you
+00:23:03.159 need to generate valid graphql to do
+00:23:05.760 so then you pass in schema so the
+00:23:08.039 graphic schema it's usually it's kind of
+00:23:10.320 small and it's easy to read for humans
+00:23:12.120 and thereby easy to understand for
+00:23:14.559 models which has your your type
+00:23:16.679 definition so it knows what's coming out
+00:23:19.400 and then it also has a list of all the
+00:23:20.919 available operations get customers or
+00:23:23.919 get orders or get customers buy
+00:23:26.880 whatever we found out by testing this
+00:23:29.480 with models like Llama Or open AI open
+00:23:33.159 AI models but also cloud is really good
+00:23:35.320 at this it's really good at generating
+00:23:37.640 graphql as long as you pass in the
+00:23:39.400 graphql schema and you don't do too
+00:23:42.000 complex things so if you want to have
+00:23:43.559 your custom scholars in graphql you want
+00:23:45.840 to get rid of those because it gets
+00:23:47.440 confused you don't want to Nest data too
+00:23:49.520 deeply so maybe nesting at one level
+00:23:51.440 deep is fine nesting like five levels
+00:23:53.679 deep is be really confusing and this is
+00:23:56.720 kind of cool because most models
+00:23:58.000 actually understand how to use graphql
+00:24:00.279 they understand things like fragments
+00:24:02.240 and I can probably spend like an hour
+00:24:03.840 talking about just building these kind
+00:24:05.760 of dynamic tools on graphql or SQL or
+00:24:08.919 query
+00:24:09.919 languages but it's a really easy way to
+00:24:12.760 bring in existing apis and databases
+00:24:15.400 your agent
+00:24:16.440 Frameworks you have less
+00:24:18.520 implementation uh in the downstream
+00:24:20.559 implementation so where you connect your
+00:24:22.240 tools where you bring your tools into
+00:24:23.799 the framework you don't need to Define
+00:24:25.600 20 different tools and duplicate your
+00:24:27.760 business logic
+00:24:29.120 that you can take the existing business
+00:24:31.120 logic and put it directly in here so
+00:24:33.960 this allows for more flexibility but it
+00:24:36.000 also comes at a cost because there are
+00:24:37.880 trade-offs LMS might hallucinate
+00:24:40.600 sometimes it could do graphql really
+00:24:42.600 well and any other time it does really
+00:24:44.360 poorly and messes up all the different
+00:24:46.559 syntaxes so there are some trade-offs
+00:24:48.559 here but I I see a real Fe future for
+00:24:50.960 building Dynamic tools rather than the
+00:24:53.120 static tools that we
+00:24:55.799 today so in short as we're all building
+00:24:58.159 a agents let's make sure we don't forget
+00:25:00.200 the tools are as important as the agents
+00:25:02.559 we're building um so thank you for
+00:25:04.720 listening to my talk if you're at the
+00:25:06.600 conference I hope to see you if you
+00:25:08.640 aren't and you're watching this live
+00:25:10.120 make sure to follow me on social media
+00:25:12.520 and connect there so thanks again and I
+00:25:15.159 hope to see you later at some

@@ -1,0 +1,534 @@
+# tactiq.io free youtube transcript
+# Idempotency in APIs: How to Handle Retries Safely (Python Example)
+# https://www.youtube.com/watch/yJUKwWl7klQ
+
+00:00:00.800 Hi everyone, welcome to my channel. I'm
+00:00:02.720 Jose Cruz. I'm an enterprise architect
+00:00:04.799 and today I'll be talking about its
+00:00:07.520 APIs. This is a presentation. Usually I
+00:00:10.240 provide a set of slides explain the
+00:00:12.320 theory point by point. That's because I
+00:00:14.320 was a trainer and I always feel that I
+00:00:16.560 have to explain everything but I usually
+00:00:19.199 have timestamps and if you want to go
+00:00:21.359 directly to the code because sometimes
+00:00:22.960 you just want to see code. So I provide
+00:00:25.279 a demo with a simple web server showing
+00:00:27.519 the identity working and I explain
+00:00:30.800 during the demo the code. So if you want
+00:00:32.640 jump directly and to see how to
+00:00:34.079 implement it and why you can jump
+00:00:36.079 directly to the time stamp of the demo
+00:00:38.399 otherwise if you are interesting
+00:00:40.320 interested into check the theory you can
+00:00:42.800 follow the slides. It's just probably
+00:00:44.960 around 10 minutes. So what is item
+00:00:47.440 potenty? Definition operation is added
+00:00:50.000 if executing multiple times produces the
+00:00:53.520 same effect as executing it once. In
+00:00:56.719 other words, try again same result. And
+00:00:59.520 this is a very important concept because
+00:01:02.320 it makes your system predictable. You
+00:01:05.119 want to make sure that your systems
+00:01:07.119 behave in a certain way. So you want to
+00:01:09.119 understand all the operations and some
+00:01:10.720 operations like for instance when you
+00:01:12.560 insert something you don't want that
+00:01:14.720 that something to be inserted twice and
+00:01:17.759 I can tell you but I cannot tell you who
+00:01:22.240 I've woring companies with sensible data
+00:01:25.439 that they didn't implement this identity
+00:01:27.520 and I saw a lot of let's say duplicated
+00:01:31.360 records not duplicated lines but usually
+00:01:34.320 imagine the customer six times in six
+00:01:37.520 different rows But it was the same
+00:01:39.119 customer. And it's a bug very difficult
+00:01:41.759 to find because there is no crash, there
+00:01:44.799 is no logging, there is nothing. It just
+00:01:47.200 you insert and then you have a key. When
+00:01:49.360 you search, if you search by the key,
+00:01:51.920 the key will appear and you don't know
+00:01:53.840 if it's the first, second or third time
+00:01:56.240 the customer was created. Only when the
+00:01:59.119 customer starts to complain to say,
+00:02:00.880 &quot;Hey, I I bought something in the past,
+00:02:03.840 but I don't see history.&quot; and then you
+00:02:05.840 go to the database you have a really
+00:02:07.759 really bad surprise that's one of the
+00:02:10.080 important things about hidden potency so
+00:02:13.200 in APIs there are some operations by
+00:02:15.840 definition that should be ident
+00:02:19.520 it's not that the API uh enforces that
+00:02:22.959 it will be you as a developer to enforce
+00:02:25.520 that but it's a kind of a standard
+00:02:30.319 not a let's say established one but it's
+00:02:33.280 a very informal one. But people expect
+00:02:36.720 some operations to be identical
+00:02:42.879 times doesn't change the state of the
+00:02:45.680 system. For instance, when you do a get,
+00:02:48.239 you expect the same result every time
+00:02:50.239 you get the same user. Of course, unless
+00:02:52.879 someone changed the the data meanwhile,
+00:02:56.239 but that's that's the usual behavior.
+00:02:59.599 But if there there are not changes if
+00:03:02.720 you call it 10 times 10 times you see
+00:03:04.879 the same result. Uh by the way you can
+00:03:07.599 see my e tech uh episode on this series
+00:03:11.760 to make sure that you don't go all the
+00:03:13.760 all all these times to database and you
+00:03:15.920 can spare some time the delete it's the
+00:03:18.080 same after you delete if you delete the
+00:03:20.480 same user you don't expect to change the
+00:03:22.959 state because it was deleted. So it
+00:03:25.040 should it just it's it should return to
+00:03:27.680 you something like okay there is nothing
+00:03:29.920 to delete so everything is okay on the
+00:03:32.159 system but the post usually when you
+00:03:34.560 provide a post you expect something to
+00:03:36.560 change on the symptom usually post is
+00:03:38.959 associated with insert sometimes people
+00:03:41.599 associate post with insert or update I
+00:03:44.959 don't know if it's a good idea it
+00:03:46.319 depends if it's well defined and every
+00:03:48.480 client understands that that's okay but
+00:03:51.120 it's not a good practice you are to
+00:03:52.720 putting two responsibilities is in one
+00:03:55.120 operation violating one of the most
+00:03:57.680 crucial principles when you're
+00:03:59.120 developing in system which is don't
+00:04:02.000 repeat your yourself or uh another one
+00:04:05.360 which is there should be only one reason
+00:04:07.840 to change an oper a method or a class or
+00:04:11.280 something. Okay. So it's about the solid
+00:04:13.920 principles the single responsibility
+00:04:15.680 principle. Now you have the put put it's
+00:04:17.680 an update or or the data. So it means
+00:04:21.120 that if you update with the same
+00:04:22.639 parameters you expect for the system
+00:04:25.199 only change once it is the first time
+00:04:27.680 it's like to delete every other boot
+00:04:30.240 will change to the same uh data. So it's
+00:04:33.919 an either important operation and now
+00:04:36.800 you have the patch. Sometimes people
+00:04:38.880 don't implement the patch they just
+00:04:40.320 implement the put. But usually the big
+00:04:42.320 difference between the put and the batch
+00:04:44.160 it's when you want to just change a few
+00:04:46.880 attributes. It's not it can be ident
+00:04:57.120 for instance the the address other time
+00:04:59.600 you can you can you can change the phone
+00:05:02.160 in different patch. So in those case
+00:05:06.240 they are not either important but if you
+00:05:09.280 do a patch on the same address with the
+00:05:11.360 same data it's an ether important
+00:05:14.160 operation.
+00:05:16.800 So what is the problem? The problem is
+00:05:18.560 it's not that you cannot control what
+00:05:21.120 happens. It's the the things that you
+00:05:22.880 cannot control uh that are other things.
+00:05:26.160 Imagine that you are receiving a request
+00:05:28.479 an API okay uh a request a post and then
+00:05:32.320 you are uh going to the database and you
+00:05:34.720 insert but meanwhile there is a timeout
+00:05:37.039 and there will be an error and the
+00:05:39.919 client thinks that the data was not
+00:05:42.080 inserted but it was because there was an
+00:05:44.000 error. So it it sends again the the the
+00:05:48.720 post because the the the the user just
+00:05:51.600 click again click it again on the insert
+00:05:54.479 or post or save or whatever was the the
+00:05:57.360 the name of the label of the button and
+00:05:59.840 in those case there will be two inserts
+00:06:01.600 on the database. Of course, if you are
+00:06:03.680 protecting with some
+00:06:06.319 uh primary key that it's not generated,
+00:06:09.199 maybe you can avoid that. But if it's
+00:06:11.680 not the case, it's a table just receives
+00:06:14.080 other kinds of other kind of
+00:06:15.759 information, then there will be a
+00:06:17.440 repetition. And from the client point of
+00:06:19.280 view, it seems everything is okay, but
+00:06:20.960 on the server point of view, it's not
+00:06:23.199 okay. And this can happens regarding
+00:06:24.960 timeouts, connection drops, 500 errors
+00:06:28.880 because you just received the error but
+00:06:30.720 you don't understand what happened
+00:06:33.520 behind the scenes and the the it is this
+00:06:37.199 in the in definition that creates
+00:06:38.960 duplicates on the C. It's not about what
+00:06:41.360 you can control. It's more about what
+00:06:44.479 you cannot control and that's the reason
+00:06:47.919 that exists things like e tags uh item
+00:06:51.520 potent keys and things like that.
+00:06:54.240 So this is just a sequence of if you
+00:06:56.800 want a more visual way to see what's
+00:06:58.479 happening. So there's a post with amount
+00:07:00.479 of 10. It doesn't matter if it's pay a
+00:07:02.960 payment or in this case it's a payment.
+00:07:05.440 Okay. And now there was a network time
+00:07:07.520 out but the data was received and
+00:07:10.000 inserted but there was a timeout for
+00:07:11.759 some reason. Maybe there's a you enter
+00:07:13.599 into a tunnel and something and the
+00:07:15.360 connection got lost and then you receive
+00:07:17.039 the timeout and there is a retry on the
+00:07:19.440 client. That's a big mistake because
+00:07:21.360 when you retry it will uh uh pay again
+00:07:24.479 the 10. And it's not so uncommon. I
+00:07:27.120 remember talking with a a friend of mine
+00:07:29.520 that was complaining with the bank
+00:07:31.120 because he saw twice the same payment in
+00:07:34.240 just a few seconds. Probably it was a
+00:07:36.000 system that send receive some kind of an
+00:07:38.240 error and try it again. Yeah. Nowadays,
+00:07:41.680 most of the banks they try to check if
+00:07:45.680 the if you have multiple transactions on
+00:07:47.759 the database within just a few seconds
+00:07:50.160 with the same value from the same
+00:07:51.840 source. They don't implement sometimes
+00:07:54.080 the item potency key but they implement
+00:07:56.160 a way to check that maybe something is
+00:07:58.400 wrong and then they send for instance an
+00:08:00.160 email to the customer say did you pay
+00:08:02.319 twice this or something and if if
+00:08:05.360 [clears throat] that's not the answer
+00:08:06.319 sometimes they they they don't say
+00:08:07.759 nothing but expect the customer to say
+00:08:09.759 something and they accept the the
+00:08:13.199 protest of the the customer and they
+00:08:15.039 remove because it's it's not usual for
+00:08:17.840 someone to pay twice the same value from
+00:08:20.960 the same thing unless it's betting with
+00:08:23.199 some kind of automated system that can
+00:08:25.680 happen but it's very very rare. Okay, if
+00:08:30.000 you have a hypothesis key, something
+00:08:31.680 that I will show in a moment how you can
+00:08:33.279 create it, but it's just another that
+00:08:34.799 you send on the request. Imagine that
+00:08:37.200 you send the amount and then you send
+00:08:38.559 the header say with a value that you
+00:08:40.640 generate in in that case you keep on the
+00:08:44.000 server you store this key and the
+00:08:46.320 response say okay it was a 200 I
+00:08:49.200 received the payment. Now if there is a
+00:08:50.880 retry the same key the server will check
+00:08:52.959 and say I already have the key. So it
+00:08:55.279 returned the cache result. Okay, it's
+00:08:57.279 okay. But it doesn't insert or provide
+00:09:00.880 any change on the state of the system
+00:09:03.440 because the key is there. You can always
+00:09:05.519 ask what happens if I have a lot of keys
+00:09:07.839 there, a lot of inserts. Of course, you
+00:09:09.920 can put a kind of working this as a
+00:09:11.920 cache and put some time expiration.
+00:09:14.720 Let's say 5 minutes or 10 minutes. It
+00:09:17.040 depends on the case. If it's something
+00:09:19.040 that the user is inserting data, maybe
+00:09:21.600 you can put 30 minutes because it can
+00:09:23.360 take a while or maybe the user gets a
+00:09:25.519 coffee or something and you have to put
+00:09:26.720 30 minutes. But for other kind of system
+00:09:28.640 just 30 seconds or 60 seconds it should
+00:09:31.279 be enough because imagine that it's a
+00:09:33.360 system that is quite fast and then you
+00:09:35.440 receive it and then after one minute you
+00:09:37.600 can just remove the hypotens key from
+00:09:39.680 the inserts because yeah there's no
+00:09:41.760 reason to exist anymore because there
+00:09:43.519 will be no duplication again because you
+00:09:46.000 don't expect a retry but maybe five
+00:09:49.120 minutes can be a good value for faster
+00:09:52.560 uh use cases where things are quite
+00:09:55.360 simple forces websites or things that
+00:09:58.800 where there is a human human interaction
+00:10:00.800 where you have to insert data maybe you
+00:10:02.399 want to put more time 30 minutes 1 hour
+00:10:04.399 or something like that and then the
+00:10:05.760 cache will start to remove the old
+00:10:08.080 identities keys of the server. So how do
+00:10:10.800 they work? So the client generates a new
+00:10:12.480 key per logical operation the server
+00:10:14.880 stores the key and this result avoid
+00:10:16.720 side effects. So at the end of the date
+00:10:18.640 will be something like that. You do the
+00:10:19.760 post and you have the other key like
+00:10:21.680 this and you just uh send it. Okay. And
+00:10:24.800 this this should be unique. Of course,
+00:10:26.320 ABC123 is just a very simple way for me
+00:10:28.959 to write. Of course, maybe you want to
+00:10:30.640 use a grid or something something that
+00:10:32.560 is really unique that you can generate
+00:10:34.560 locally in any machine. If the key is
+00:10:36.959 unseen, process have the result. If the
+00:10:39.200 king's already there, just return what
+00:10:41.040 you return previously. So you don't
+00:10:42.959 return an error. Say something. Okay, I
+00:10:45.120 already have it because there's no
+00:10:47.120 reason to return the error. Just return
+00:10:48.640 the send result because if the client is
+00:10:50.320 asking for it, you just receive it.
+00:10:53.600 Let's see. Uh this is the the demo that
+00:10:56.000 I'm providing. It is just this code. If
+00:10:57.760 you write this code, it should work. Uh
+00:11:00.160 I have of course this in GitHub and you
+00:11:02.399 and you'll see the moment in the demo in
+00:11:04.880 a moment. You can always pause and
+00:11:06.560 write. Usually I personally when it's
+00:11:09.360 just a small part of God. I write it
+00:11:11.200 because it's some it's it's a way for me
+00:11:12.800 to learn and my brain to get the the
+00:11:15.760 knowledge and information the learning
+00:11:17.440 process. But you can go to GitHub just
+00:11:19.519 download it and execute. It is just a
+00:11:22.320 very small server. You can see here just
+00:11:25.200 I'm using flask from Python. I usually
+00:11:27.360 you use Python for this. You can use
+00:11:28.959 Java uh or any other language. It's the
+00:11:31.519 concept it's the same. You just provide
+00:11:33.279 an API like this. This is just payments.
+00:11:35.839 It's a post. You can define it in spring
+00:11:38.160 boot in a very similar way with a
+00:11:40.399 different annotation. Now this is the
+00:11:42.079 method is create payment. And the first
+00:11:44.720 thing that uh we try to do is to get the
+00:11:46.640 key because this API requires an IO key.
+00:11:50.880 It can be a rule that you put on your
+00:11:52.800 website. You say I only accept posts
+00:11:55.040 with it importance key because it's a
+00:11:57.279 risky API. It's about payments about
+00:11:59.440 creating customers. It's something
+00:12:01.040 risky. You don't have to put all
+00:12:03.760 importance key in every post. Maybe
+00:12:05.680 there are some places just logging. If
+00:12:07.440 there is duplicating logs, it's not a
+00:12:09.120 problem.
+00:12:11.120 It's not necessary to build the internal
+00:12:13.519 cache with all the inserts or the posts
+00:12:15.680 that are being received. So we get the
+00:12:17.839 key here from the other and then uh we
+00:12:20.399 get the data. Now if the key doesn't
+00:12:22.480 exist uh this key the position key just
+00:12:25.600 throw an error for say okay it's a
+00:12:27.760 requirement for this API or if the kids
+00:12:30.240 already processor just return the value
+00:12:32.639 that exists in this ash table. This is
+00:12:35.200 an ash table it's a very simple in
+00:12:36.639 python just put the key value. Okay, if
+00:12:39.600 uh if the ityic was provided and it
+00:12:42.800 didn't exist, it means that it's a
+00:12:44.399 regular uh post with a regular business
+00:12:48.000 operation to do something with the
+00:12:50.000 value. In our case, we just sim simulate
+00:12:52.240 an insert on a database which is just
+00:12:55.440 generate an ID which is the size of this
+00:12:58.800 plus one. Don't use this in production.
+00:13:00.639 This is just for them. Of course, you
+00:13:02.480 want to generate a real ID on the
+00:13:05.760 database and you don't want to use the
+00:13:08.959 size of a structure because the items in
+00:13:12.320 the structure can be removed and it will
+00:13:14.959 uh create bad ids. So this is the ID and
+00:13:17.920 this is the response. The amount is just
+00:13:19.680 the amount. If you have an object with
+00:13:21.279 multiple attributes, of course, you just
+00:13:23.040 put here the serialization of that
+00:13:25.519 object. And now we put on the response
+00:13:30.000 the payment and the 200 say okay respond
+00:13:32.399 well it's just something that we are
+00:13:34.639 using here on the processor and now we
+00:13:37.040 return the payment this 200 it's because
+00:13:39.040 of the framework and that's it and this
+00:13:41.519 is just a way to run our server it's a
+00:13:44.720 flask one you just put this and do the
+00:13:47.440 part and that's it for small dems is
+00:13:49.839 great if you execute this and try uh
+00:13:53.120 different calls posts to these
+00:13:56.160 payments you will have an error. You'll
+00:13:57.920 see in a moment this working. Okay. So
+00:14:00.959 what is the flow? If you want a more
+00:14:02.800 structured approach you receive the post
+00:14:04.959 it contains item potent key no bad
+00:14:07.360 request. If you want to implement this
+00:14:08.959 way it contains it already exists just
+00:14:11.600 return the store response. If it doesn't
+00:14:13.360 exist of case of of course process your
+00:14:15.680 request store the result and return
+00:14:18.079 success. Okay. Why item potency matters?
+00:14:22.079 payments, order creations, booking
+00:14:24.000 systems, APIs behind unreliable
+00:14:27.040 networks, place where you think that it
+00:14:29.519 can fail, background jobs where meaning
+00:14:31.760 when we depend a lot of external systems
+00:14:34.160 that can fail, you want an undanty to
+00:14:37.040 make sure that uh um you don't duplicate
+00:14:41.040 the data that you are receiving uh
+00:14:43.199 because you as I said previously you can
+00:14:46.399 lead the customer to a wrong thinking
+00:14:49.040 about the result of the operation. you
+00:14:51.120 can receive a timeout but the operation
+00:14:53.120 was successful on the server side. So
+00:14:55.440 you want to prevent double charges,
+00:14:57.279 duplications, double reservations
+00:14:59.920 um and and similar. Uh at the end of the
+00:15:02.720 day, if you have bad connection or you
+00:15:04.560 are using critical APIs, just put the
+00:15:07.519 potency key. It's a good practice. Okay,
+00:15:10.079 so just a recap about HTTP methods that
+00:15:12.720 by default should be implemented uh with
+00:15:16.240 this context of either potency. The get,
+00:15:18.240 put, and delete. They are quite obvious.
+00:15:20.639 So the get wasn't changed. The put if
+00:15:22.800 it's on the same data, it's the same
+00:15:24.399 data. Delete after removed. You cannot
+00:15:26.800 delete something twice. The patch
+00:15:29.279 depends on the attributes and the post
+00:15:31.279 should never be uh ident. That's
+00:15:34.560 probably so what this mean it means that
+00:15:36.959 you want to use this property at least
+00:15:39.839 on post. Okay. And in in patch probably
+00:15:43.199 it's a good idea also. But yeah, maybe
+00:15:47.760 it's not. It depends how it is
+00:15:49.600 implementation. If you implement the
+00:15:51.600 update attribute by attribute, there is
+00:15:54.399 no reason because the patch is a kind of
+00:15:56.399 a put. It depends how you implement it.
+00:15:59.519 Key takeaways,
+00:16:01.279 same result no matter how many times use
+00:16:03.680 unique IDs usually it's a good idea but
+00:16:07.440 at the end of the day you don't have
+00:16:08.639 control on that it these ids are
+00:16:11.759 generated on the client side. So provide
+00:16:15.199 good information about how to generate
+00:16:17.199 them. Make sure that you explicitly say
+00:16:19.680 please be as unique as possible. Use
+00:16:22.079 oeds or guided or something like that.
+00:16:25.120 Ser must store and replay results for
+00:16:27.199 repeated this. Repl meaning not replay
+00:16:30.079 the operation. Just replay the result.
+00:16:32.160 You have a cache of the result and you
+00:16:33.839 return it uh as uh the previous or the
+00:16:39.120 same as you did for the previous
+00:16:40.720 execution. So critical for APIs with
+00:16:43.279 retries payments and distributed systems
+00:16:45.680 because you don't know what happened on
+00:16:48.000 the external systems. So if you want to
+00:16:50.880 run that you can with curl for instance
+00:16:53.040 you can use something like this. If you
+00:16:54.959 use my code I don't forget I put this
+00:16:58.000 key with a value of your choice and an
+00:17:00.800 amount and if you want to simulate a
+00:17:03.040 network failure rank the same thing just
+00:17:05.359 send the same one same result and you
+00:17:07.919 should re receive the result. We'll see
+00:17:09.919 in a moment is working. So this is a
+00:17:12.559 different way to show the behavior of
+00:17:15.280 this. You just post with a partic key
+00:17:17.359 check the key key not found process and
+00:17:20.720 save the key. So later if the key exists
+00:17:23.359 you return the same response.
+00:17:26.559 So this is what this is what is about
+00:17:30.400 key in practical terms. Of course, I
+00:17:32.320 could have built a presentation about
+00:17:34.240 all the theory behind it. Maybe in a
+00:17:36.320 later post, but for now, I just want to
+00:17:39.039 show you the practice. So, let's now see
+00:17:42.240 the demo.
+00:17:47.039 So, this is a server. This is the code
+00:17:48.880 that was on the slide that I presented
+00:17:50.799 you. You can see here, import flask.
+00:17:54.000 That's the framework you're using in
+00:17:55.360 Python. Okay. Uh make sure that you have
+00:17:57.919 this on your you do a pip on this to
+00:18:00.480 install it. uh here on on the Python uh
+00:18:04.559 this is the way to create the server
+00:18:07.200 using flask the the flask here it's the
+00:18:10.080 our database is just an ashmap okay
+00:18:13.120 where we'll store the key of the of the
+00:18:17.039 key of the the item potency key and the
+00:18:20.000 result and then if it exists we return
+00:18:22.320 what it's here if it doesn't exist we
+00:18:24.240 set it here so later it can be uh reused
+00:18:28.880 so here we get the key as I explained
+00:18:31.039 earlier here uh we expect to to be on
+00:18:33.679 the other the key here here now we get
+00:18:37.200 the data the JSON which uh oh I'll see
+00:18:40.080 in a moment I can even show you here it
+00:18:42.559 will be something like this this is the
+00:18:44.240 amount and this is the potency key of
+00:18:47.760 course content type and the post that
+00:18:49.840 will be sent okay this is the structure
+00:18:52.640 that will be sent so the this key will
+00:18:57.280 be this value this is the key and the
+00:19:00.400 data will be this JSON here. Okay. Now
+00:19:03.840 if not key meaning if it was not
+00:19:06.080 provider this header we just returned
+00:19:08.320 the forer said bad data you are missing
+00:19:11.280 the hypothesis key because it's required
+00:19:13.039 for this route here to this API. Okay
+00:19:16.880 but let's check if the key already
+00:19:18.880 exists in our database in this
+00:19:20.640 processor. If it exists just return the
+00:19:24.080 result meaning just return this because
+00:19:28.000 you'll be returning the value that and
+00:19:30.080 the ID will generate an ID was
+00:19:32.000 forgetting that uh and will generate an
+00:19:34.559 ID and the value that was inserted and
+00:19:37.440 if it is not the case meaning that the
+00:19:39.600 key was the key was provided the key did
+00:19:42.320 didn't exist on this um
+00:19:46.640 uh ashmap so we create a payment with
+00:19:50.160 the ID that generate we are generating
+00:19:52.400 by using the size of this processor and
+00:19:55.120 adding one. It works for this demo
+00:19:56.880 because we are not removing nothing from
+00:19:58.880 the processor in a production
+00:20:00.160 environment. It's not at all a good way
+00:20:02.960 to generate unique IDs and this is the
+00:20:05.200 amount that is being sent by the post.
+00:20:08.559 We set this on our hashmap with the for
+00:20:11.840 the 200 said it was okay and we just
+00:20:14.480 return the payment on the reply to the
+00:20:17.200 rest API and the 200 is something for
+00:20:19.200 the flask to say okay everything is okay
+00:20:21.600 and by the way we are I'm listening on
+00:20:23.440 the port 5000 so let's execute this is
+00:20:26.400 already executing you just do Python and
+00:20:28.720 the name of your uh script and you
+00:20:31.440 should see something like this and now
+00:20:33.200 let's execute a few tests so let's send
+00:20:36.799 uh our IDC ABC123 the amount of 100 to
+00:20:41.200 our payments and when we send a request
+00:20:43.520 you can see the ID one was generated for
+00:20:46.640 this amount okay now uh on the second
+00:20:50.159 let's repeat but with the same imagine
+00:20:52.480 it was a kind of a connection timeout
+00:20:54.240 there was a problem and I'm resending
+00:20:56.640 but I don't know that it already exists
+00:20:58.960 there so when I execute you can see the
+00:21:01.120 output it's the same the ID it's still
+00:21:03.600 the same because it just replied with
+00:21:06.000 something that already exists
+00:21:07.919 And to make sure that I'm not uh doing
+00:21:11.360 some funny business here, let's use a
+00:21:14.640 different key here. It's 1 2 3 4 with a
+00:21:17.200 different amount. When I send, you can
+00:21:19.120 see now ID2 was generated the 200. And
+00:21:22.240 now if I execute this first one with EBC
+00:21:25.520 1 2 3 because this this can be different
+00:21:28.720 customers.
+00:21:30.240 You can see still
+00:21:32.320 replies with one 100 because it's on the
+00:21:35.440 ash map. Now if we don't send the ID
+00:21:38.480 potenti key here you can see that I
+00:21:41.760 should receive an error. Okay it's a
+00:21:44.720 missing ad button key. So this is just a
+00:21:47.120 very small example but if you implement
+00:21:49.440 something like this you can uh create a
+00:21:51.919 very robust and solid system that avoids
+00:21:54.799 duplications and queries on your data.
+00:21:58.080 So this is what I wanted to show you
+00:21:59.840 about adoicy. I hope that it was useful
+00:22:03.039 and I hope you understand how to
+00:22:04.480 implement it on your project. So, thank
+00:22:06.640 you for watching. Subscribe my channel
+00:22:08.559 and I hope to see you on my next video.

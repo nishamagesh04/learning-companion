@@ -1,0 +1,336 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/nKSk_TiR8YA
+
+00:00:00.000 No text
+00:00:00.080 So many devs are working with LLMs these
+00:00:02.240 days and they don't really know about
+00:00:04.080 the fundamentals. I was teaching an AI
+00:00:06.240 workshop recently in Poland and I asked
+00:00:08.400 people to put up their hands if they
+00:00:09.840 knew what a token was. And I don't know
+00:00:12.080 whether it's my AI bubble on X or
+00:00:14.480 something, but I was pretty shocked
+00:00:15.759 because only about a third of the people
+00:00:17.680 in the workshop put up their hand. And
+00:00:19.279 so I wanted to put together a token deep
+00:00:21.279 dive for those of you who are using LMS
+00:00:23.359 but kind of need to catch up on what's
+00:00:25.680 going on under the hood. And of course,
+00:00:27.119 we're going to explain all of these
+00:00:28.320 concepts using TypeScript code. I
+00:00:30.320 promise I will never show a line of
+00:00:32.000 Python on this channel. That is for
+00:00:33.000 No text
+00:00:33.680 sure. Let's start with a diagram here.
+00:00:35.360 Tokens are the currency of LLMs. When
+00:00:38.800 you send an input of Hello World to an
+00:00:40.719 LLM, that gets broken down into its
+00:00:43.120 constituent tokens. If you send hello
+00:00:45.200 world to OpenAI, that is three tokens
+00:00:47.760 build at an infantessimally small amount
+00:00:50.000 per 1K tokens. This is for GPT5, I
+00:00:52.800 think. Then the LLM will do some
+00:00:54.160 thinking and produce some output tokens.
+00:00:56.640 In this case, it said high and that is
+00:00:58.559 build at a different rate to the input
+00:01:00.879 tokens. So to get the total amount you
+00:01:02.719 spent, you take that number, divide it
+00:01:04.720 by a,000 and times it by a scent. Do the
+00:01:07.760 same with the input tokens. You add them
+00:01:09.439 together and you've got your total cost
+00:01:11.000 No text
+00:01:11.200 for that API call. I'm going to
+00:01:12.880 demonstrate that using the ASDK. For
+00:01:15.119 those who are not familiar with the
+00:01:16.080 ASDK, I've got a great free tutorial on
+00:01:18.479 my site AI Hero, which I'll link uh up
+00:01:20.880 there. Now we're going to generate some
+00:01:22.240 text using claw 3.5 haik coup a nice
+00:01:25.360 cheap model from anthropic and we're
+00:01:27.200 going to send it hello world. We're then
+00:01:29.280 going to log out two things. We're going
+00:01:30.560 to log out the text that it produced and
+00:01:32.479 also the usage. This usage which we get
+00:01:35.200 from the ak is the amount of tokens that
+00:01:37.759 we used. We can see that it replied with
+00:01:39.600 hello how are you doing today? Is there
+00:01:40.960 anything I can help you with? Which used
+00:01:42.880 20 output tokens but bizarrely 11 input
+00:01:46.399 tokens. That's pretty weird considering
+00:01:48.000 we only prompted it with like two words.
+00:01:50.159 Hello world. Let's do the same thing
+00:01:51.680 again, but this time we're going to call
+00:01:53.200 Google. We'll use Gemini 2.0 flashlight,
+00:01:55.840 and we'll log out the usage and the text
+00:01:57.759 that it produced. We can see that
+00:01:59.200 Anthropic still at 11 and 20. But in the
+00:02:01.840 Google version, we only used four input
+00:02:03.759 tokens and 11 output tokens. So, this
+00:02:06.399 feels a bit like a mystery if you don't
+00:02:08.160 know how tokens work. What is the
+00:02:10.000 relationship between tokens and text?
+00:02:12.560 And why does the same prompt sent to two
+00:02:14.560 different models end up with a different
+00:02:16.000 No text
+00:02:16.640 number of tokens? Okay, let's reveal the
+00:02:18.640 mystery and talk about what tokens
+00:02:20.319 actually are. Every LLM has a different
+00:02:22.800 token vocabulary. And these tokens are
+00:02:25.440 all of the different words, subwords,
+00:02:27.520 and characters that it knows. Each of
+00:02:29.440 these words and subwords gets assigned a
+00:02:31.760 number. And the number is the token.
+00:02:34.239 When we call an LLM, it actually encodes
+00:02:36.560 the text that we send it into tokens.
+00:02:39.120 So, hello world gets split up into its
+00:02:41.280 largest individual tokens in the
+00:02:43.040 vocabulary. In this case, that might
+00:02:44.560 mean hello, space, world, and
+00:02:46.560 exclamation mark. And then it identifies
+00:02:48.400 the numbers in the vocabulary that match
+00:02:50.000 No text
+00:02:50.239 that word or subword. We can actually
+00:02:52.239 take a look at this in code in
+00:02:53.840 Typescript because OpenAI's tokenizer is
+00:02:56.400 called tick token. And there's a
+00:02:57.760 JavaScript implementation of it called
+00:02:59.440 JS tick token. We're using O200K base,
+00:03:02.640 which is the tokenizer for the model
+00:03:04.159 GPT40. I've also got here some text at
+00:03:06.800 input.md, the wise owl of moonlight
+00:03:09.519 forest, where ancient trees stretch
+00:03:11.519 their branches toward the starry sky.
+00:03:13.440 We're reading that big chunk of text
+00:03:14.879 into memory here, and we're using the
+00:03:16.640 GPT40 tokenizer to encode a bunch of
+00:03:19.760 tokens, which are just an array of
+00:03:22.480 numbers. Then we'll compare the input
+00:03:24.800 length in characters and the number of
+00:03:26.640 tokens that it produces. When we run
+00:03:28.319 this, we can see that the content length
+00:03:30.159 is nearly 2,300 characters, but the
+00:03:32.560 number of tokens is less than 500. and
+00:03:34.799 we end up with just a bunch of numbers
+00:03:37.200 here. If we go ahead and test this with
+00:03:38.720 something simpler like hello world, then
+00:03:40.879 here the content length is 12 and the
+00:03:42.959 number of tokens is only three. These
+00:03:44.879 tokens then are what gets fed into the
+00:03:46.959 LLM while it does its processing. Let's
+00:03:47.000 No text
+00:03:48.959 look at a diagram of the full LLM
+00:03:50.720 process end to end. We pass in hello
+00:03:52.879 world. It gets split into the largest
+00:03:55.120 chunks that it knows about in the
+00:03:56.560 vocabulary. Those then get encoded
+00:03:58.640 individually into tokens by just looking
+00:04:01.200 up the number assigned to them in the
+00:04:03.120 token vocabulary. Then the LLM does some
+00:04:05.439 thinking here and it outputs some more
+00:04:08.159 tokens. In other words, all the
+00:04:09.840 computation here is being done on
+00:04:11.840 numbers, not on text. And these output
+00:04:14.799 tokens then get decoded back into text
+00:04:18.000 join together and you get the final
+00:04:19.839 output. So that's the process. And while
+00:04:21.759 you think that the LLM is dealing with
+00:04:23.759 text, it's actually dealing with these
+00:04:25.520 numeric representations of chunks of
+00:04:28.240 text. And though we get the whole
+00:04:29.440 picture here, we can decode these tokens
+00:04:31.840 here using tokenizer.deode. decode.
+00:04:33.759 Decode is just a function that takes in
+00:04:35.520 an array of numbers, tokens, and returns
+00:04:38.000 a single concatenated string. And when
+00:04:39.919 we run this, that is exactly what we
+00:04:41.919 get. By the way, if you're digging this,
+00:04:43.759 then I have something cooking for you on
+00:04:45.520 aihero.dev. And I've got a newsletter
+00:04:47.520 where I post breakdowns like this, which
+00:04:49.000 No text
+00:04:49.759 will be in the description below. So, we
+00:04:52.000 know what tokens are now, but we don't
+00:04:54.160 really know why they differ between
+00:04:55.759 model providers. To understand this, we
+00:04:57.680 need to know how these vocabularies even
+00:04:59.680 get built and why different model
+00:05:01.440 providers do them differently. Here's
+00:05:03.120 the process for how tokenizers get
+00:05:04.800 trained. Let's imagine you've got a
+00:05:06.479 corpus of text here. We're going to use
+00:05:08.160 an extremely small corpus, just the
+00:05:10.000 single line, the cat sat on the mat. But
+00:05:12.240 in reality, this would be gigabytes,
+00:05:14.240 terabytes of data. The same data in fact
+00:05:16.720 usually that the model itself is trained
+00:05:18.720 on. Now, we can build an extremely
+00:05:20.639 simple tokenizer just from this one
+00:05:22.960 sentence. We can take this piece of text
+00:05:25.000 No text
+00:05:25.039 and extract out the unique characters in
+00:05:27.520 it. It's probably simpler to look at
+00:05:29.120 this in code. I've created a character
+00:05:31.440 level tokenizer that takes in a data set
+00:05:33.520 and returns a tokenizer. And yes, it's
+00:05:35.759 in a class. TypeScript classes are good,
+00:05:37.919 folks. I've been saying this for a
+00:05:39.199 while. We'll get to this implementation
+00:05:40.720 in a minute, but let's actually look at
+00:05:42.479 the usage. We have our data set of the
+00:05:44.560 cat sat on the mat. Again, in a real
+00:05:46.479 application, this might be gigabytes of
+00:05:48.400 text. Then we grab our tokenizer by
+00:05:50.639 instantiating a character level
+00:05:52.000 tokenizer. and I'm passing in an input
+00:05:53.840 of cats sat mat. We're then encoding the
+00:05:56.880 input, turning it into tokens and
+00:05:58.960 logging out some information about the
+00:06:00.400 tokens. When we run this, we can see
+00:06:02.000 that the input length, the number of
+00:06:03.600 characters in cats mat is 11. Then the
+00:06:06.319 number of tokens that we produce at the
+00:06:08.080 end is also 11. This is because we only
+00:06:11.039 have characters as tokens. If we remove
+00:06:13.840 all these logs and just log something
+00:06:15.600 called tokenizer.mapping,
+00:06:17.600 we can see our entire vocabulary of
+00:06:19.919 tokens. And we can see there are only 10
+00:06:21.840 tokens in the entire vocabulary. Space
+00:06:24.160 is three, n is 8, o is seven. So that
+00:06:27.520 means no matter what we do, the number
+00:06:29.199 of tokens is always going to be the same
+00:06:31.039 as the number of characters. And this is
+00:06:33.280 not good because the more tokens we have
+00:06:35.759 in the input, the more work it's going
+00:06:37.000 No text
+00:06:37.680 to be for our LLM to process them. The
+00:06:39.840 vocabulary size is really, really
+00:06:42.479 important. Let's say we only have about
+00:06:44.240 a thousand tokens in our vocabulary. If
+00:06:46.319 we take in the word understanding, it
+00:06:48.240 might produce five tokens under st and
+00:06:51.759 ing. If we bump that up to 50,000, then
+00:06:54.000 we might get larger subword chunks. So
+00:06:56.479 50k might produce under standing, three
+00:06:59.199 tokens. But to 200k, we might split it
+00:07:01.680 into just two tokens. And two tokens is
+00:07:04.479 a lot more efficient for the LM to
+00:07:06.400 process than five tokens. So these are
+00:07:08.639 the trade-offs that different models and
+00:07:10.400 different model providers make. By the
+00:07:12.479 way, you can't just scale this to
+00:07:14.319 infinity too because the larger your
+00:07:16.479 vocabulary, the bigger the model needs
+00:07:18.639 to be in order to house that vocabulary
+00:07:20.000 No text
+00:07:20.800 and of course the more memory it takes
+00:07:22.720 to execute. So then we know that our
+00:07:24.720 implementation of character level
+00:07:26.319 tokenizing is not going to be very good
+00:07:28.240 because we're maximizing the number of
+00:07:30.160 tokens. So how do we get from character
+00:07:32.080 level to adding some more subwords?
+00:07:34.479 Well, we identify different groups that
+00:07:37.520 commonly occur together. For instance,
+00:07:39.360 th occurs in 'the' and 'the' he occurs
+00:07:42.639 in 'the' and 'the' as well. And then a
+00:07:45.280 occurs in cat, sat, and matt. I've got
+00:07:47.759 an example of this called the subword
+00:07:49.759 level tokenizer. Now, I've basically
+00:07:51.360 vibe coded this, so don't look too
+00:07:52.880 closely at the implementation, but let's
+00:07:54.479 take a peek at the usage down below. We
+00:07:57.919 have our same data set and our same
+00:07:59.759 input. And let's take a look at how many
+00:08:01.520 tokens we get back from the input of
+00:08:03.280 cats, sat, and matt. We see here that
+00:08:05.120 the input catsmat is 11 and we get eight
+00:08:08.720 tokens back. We have achieved this by
+00:08:10.879 calculating some subwords in the data
+00:08:13.199 set. Let's look at this by logging out
+00:08:14.960 tokenizer mapping. And we can see here
+00:08:16.800 that we now have 15 tokens at the and h
+00:08:20.879 are all in as our espace and tspace have
+00:08:23.759 each been assigned their tokens. This
+00:08:25.280 means our encode function is a little
+00:08:26.960 more complicated because it now needs to
+00:08:28.720 match the longest possible subword so
+00:08:31.199 that it can tokenize the input text
+00:08:32.958 efficiently. The implementation is below
+00:08:33.000 No text
+00:08:35.039 if you want to take a closer look. In
+00:08:36.719 our implementation, we only go one level
+00:08:39.039 deep and so we end up with groupings
+00:08:40.799 that are only two characters long, but
+00:08:42.799 real tokenizers identify larger and
+00:08:45.440 larger groups by identifying groups of
+00:08:48.080 groups. So for instance, in this
+00:08:49.600 example, TH and H often appear together.
+00:08:52.160 And so a group of three tokens, the
+00:08:54.399 makes sense. Finally, then we end up
+00:08:56.320 with a set of numbers that are each
+00:08:58.000 No text
+00:08:58.720 assigned to the individual token as we
+00:09:00.800 saw in our implementation. Finally,
+00:09:02.399 let's look at how a tokenizer behaves
+00:09:04.000 when it encounters an unusual word. This
+00:09:06.480 is o fragous day from the Louiswis Carol
+00:09:08.800 poem. Frajus is just a word that Lewis
+00:09:10.800 Carol made up. So, it's not going to be
+00:09:12.399 very frequent in the data set. When we
+00:09:14.560 run this through 0200K, Fragus is
+00:09:17.120 actually split up into four separate
+00:09:19.120 tokens here. And so, unusual words are
+00:09:21.360 split up into more tokens than words
+00:09:23.440 that occur more frequently in the data
+00:09:25.200 set. This also means that if you're
+00:09:26.480 querying the LLM in a language that's
+00:09:28.399 not present in the data set much, it's
+00:09:30.320 likely to break it up into more tokens
+00:09:32.640 because it's not used to those
+00:09:34.000 combinations of letters. This is true
+00:09:35.519 for spoken languages, but also for
+00:09:37.440 coding languages. And this is yet
+00:09:39.120 another advantage that more commonly
+00:09:41.040 used coding languages have in the AI
+00:09:42.800 era. It's fewer tokens to send 20 lines
+00:09:45.000 No text
+00:09:45.440 of JavaScript than it is to send 20
+00:09:47.200 lines of Haskell or something. So, let's
+00:09:49.200 sum up here. Tokens are the currency of
+00:09:51.279 LLMs and you are charged by the token,
+00:09:53.440 but different model providers will treat
+00:09:55.440 these inputs differently and produce
+00:09:57.279 different numbers of tokens. Encoding
+00:09:59.040 tokens means you turn text into tokens.
+00:10:01.440 You take a piece of text, you split it
+00:10:03.040 into the largest tokens you can find,
+00:10:04.720 and then you turn them into the numbers
+00:10:06.080 that you have them stored in the
+00:10:07.360 vocabulary. Decoding is much simpler
+00:10:09.440 even. You just take the numbers, you
+00:10:11.040 find the relevant chunks in your
+00:10:12.240 vocabulary, and you join them together.
+00:10:13.839 And the whole LLM process involves an
+00:10:15.839 encoding step. than the LLM thinks,
+00:10:18.160 produces some output tokens which then
+00:10:20.240 get decoded into text. So tokens are
+00:10:22.720 really what the LLM does its thinking
+00:10:24.800 in. If you dug this video, then I have
+00:10:26.560 plenty more content like this coming.
+00:10:28.320 I've been full-time thinking about AI
+00:10:30.560 plus Typescript for a year now. And if
+00:10:32.640 you're interested in learning more about
+00:10:34.240 AI or building with AI especially, then
+00:10:36.720 this channel is for you. I personally
+00:10:38.399 think that TypeScript is the language
+00:10:40.480 for building AI powered applications,
+00:10:42.640 whereas Python is probably the thing you
+00:10:44.240 want to use if you're building models.
+00:10:46.079 So head to aihero.dev if you want to
+00:10:48.480 follow along. I have something dropping
+00:10:50.079 there very very soon. If you like this
+00:10:52.160 explanation then what should I cover
+00:10:53.680 next? Please comment below. Thanks for
+00:10:55.120 following along and I will see you very

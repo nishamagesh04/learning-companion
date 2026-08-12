@@ -1,0 +1,1358 @@
+# tactiq.io free youtube transcript
+# Building Better AI Agents: Observability and Evaluation
+# https://www.youtube.com/watch/reISMhbZ2XE
+
+00:00:00.080 Welcome everyone to this webinar on
+00:00:04.400 observing
+00:00:05.920 uh agents and how agent observability
+00:00:07.759 powers agent webinar on observing
+00:00:11.280 uh agents and how agent observability
+00:00:13.120 powers agent evaluation. Uh my name is
+00:00:16.079 Harrison. I'm the co-founder CEO. Joined
+00:00:18.800 with me is VC. Do you want vec? Do you
+00:00:20.960 want to do a quick intro?
+00:00:22.480 >> Yeah, sounds good. Yeah, super excited
+00:00:23.920 to be talking about this. I'm Vivec. I
+00:00:25.920 work on a bunch of our deep agents work
+00:00:27.599 here at LinkedIn. Awesome. So, it's
+00:00:30.480 right at the top of the hour and I see a
+00:00:32.079 bunch of people still joining. So, we
+00:00:34.239 will probably preamble for a little bit
+00:00:37.520 and then and then jump right into it. Um
+00:00:40.719 but uh the reason VC is here is because
+00:00:44.320 today uh both Anthropic and OpenAI
+00:00:46.800 launched things and you know uh testing
+00:00:49.920 out these models and and seeing how
+00:00:51.600 these models are doing is a is a very um
+00:00:54.719 topical topic for for this webinar which
+00:00:57.840 is all about observability and powering
+00:00:59.680 agent evaluation. So uh the the run a
+00:01:02.719 show will basically be be uh I I I I'll
+00:01:05.920 talk for a little bit in in um more kind
+00:01:08.560 of like a a conceptual way around how we
+00:01:11.439 think about agent observability here and
+00:01:13.840 how we think about that powering agent
+00:01:15.520 evals and and I'll probably do that for
+00:01:18.320 like 15 or 20 minutes and then I'll hand
+00:01:20.000 it off to VC who will talk for 10 or so
+00:01:23.200 minutes uh in a more hands-on like
+00:01:25.680 practical example of how to apply this
+00:01:27.840 to evaluating uh codecs uh or I guess
+00:01:31.040 the new codeex model isn't available via
+00:01:33.200 the API, but the old codec model and the
+00:01:35.280 new Opus model. Um and we'll we'll we'll
+00:01:39.119 show off some very practical and
+00:01:40.400 hands-on examples of that and then we'll
+00:01:41.840 leave about 10 or so minutes at the end
+00:01:43.360 for any questions that folks have. Um so
+00:01:46.320 if you have questions uh throughout what
+00:01:49.200 we'll be doing is using the Q&amp;A feature
+00:01:52.640 um which uh if on my window at least in
+00:01:56.640 the Zoom box if I click more I then see
+00:01:58.640 Q&amp;A and if you put things there I think
+00:02:00.320 you can upvote and downvote questions
+00:02:02.640 and uh we'll we'll take a look at uh
+00:02:05.280 some of the most popular ones and answer
+00:02:07.360 those at the end. Um I think those are
+00:02:12.560 most of the logistics. So uh before
+00:02:16.400 jumping into a few slides that I have to
+00:02:18.800 talk about observability and eval maybe
+00:02:20.640 just some level setting. Um we we see
+00:02:24.000 these being two of the biggest pain
+00:02:25.200 points for kind of like uh uh developers
+00:02:28.000 building apps. Um we generally see that
+00:02:34.080 observability
+00:02:35.599 is probably the place you start and then
+00:02:38.160 evals are maybe the place that you get
+00:02:40.319 stuck. Um evals are harder. I think
+00:02:42.160 observability is more of a there's
+00:02:44.560 there's an easier solution to
+00:02:45.920 observability. Um, if you're not
+00:02:47.519 familiar with with Langmith, VC will
+00:02:49.680 show that off later on and and and
+00:02:51.280 obviously we build tools for all of
+00:02:52.640 this, but I'll actually try to talk a
+00:02:53.920 little bit about this more conceptually
+00:02:55.440 because I think that's more interesting.
+00:02:57.120 Um, so observability is is pretty is
+00:03:00.480 relatively easy to set up and and and
+00:03:02.560 see what's happening inside your agent.
+00:03:04.239 Evals is harder because uh I'll talk
+00:03:06.239 about this more, but for evals you have
+00:03:07.599 to you have to build up your own data
+00:03:08.720 sets and you have to build up your own
+00:03:09.840 metrics. And so eval is generally when
+00:03:12.000 we see people start to think about
+00:03:14.080 working with us or working with the
+00:03:15.519 solution here, but in our minds they're
+00:03:17.360 very kind of like tightly coupled um and
+00:03:19.840 and we we think observability powers
+00:03:21.680 eval in a bunch of interesting ways. So
+00:03:23.760 let me share my screen and and and jump
+00:03:26.000 into more of of of what exactly I mean
+00:03:28.560 by that.
+00:03:30.720 Cool. So so you know we're going through
+00:03:33.599 a big change in the world. um we're
+00:03:35.760 we're seeing you know a few years ago
+00:03:37.920 software was was everything that was
+00:03:39.840 being built and now a lot of folks are
+00:03:42.239 uh focused on building LLM apps and and
+00:03:44.400 and increasingly so on agents and these
+00:03:48.319 all these operate in like pretty pretty
+00:03:50.000 like fundamentally different ways which
+00:03:51.840 is which is giving rise to kind of like
+00:03:53.599 fundamentally new challenges and
+00:03:55.120 fundamentally new tooling that's needed.
+00:03:57.280 So software um is uh deterministic. You
+00:04:01.439 write a program, you run it once, you
+00:04:03.360 run it twice, it it it says the same
+00:04:05.200 thing each time. LLM apps, LLMs are of
+00:04:08.560 course nondeterministic and and they're
+00:04:10.080 also suffer from prompt sensitivity. But
+00:04:12.560 for for single call LLM apps, it's it's,
+00:04:15.200 you know, still relatively constrained.
+00:04:16.720 You call the LLM once with some context
+00:04:18.478 and that context is usually fixed. Plus,
+00:04:21.040 you add in the user question, there's
+00:04:22.400 some variable there, but that context is
+00:04:24.000 is um passed into the LLM. there's maybe
+00:04:27.600 some randomness, there's maybe some
+00:04:28.800 sensitivity to user input and you get
+00:04:30.960 back an answer, but it's generally one
+00:04:32.320 step. Agents, what happens with agents
+00:04:34.880 is you call these LLMs in a loop or in
+00:04:37.759 sequences and and these these
+00:04:39.360 non-deterministic errors or not or or or
+00:04:42.479 um differences start to kind of like
+00:04:44.160 compound and and you get emergent
+00:04:46.479 behavior from from the these agents as
+00:04:49.040 they start to discover and work with
+00:04:51.280 tools in a way that you didn't know they
+00:04:53.759 could even do. Um, and uh, that's great,
+00:04:57.840 but that also means that a lot of the
+00:05:00.479 the logic of your app no longer just
+00:05:03.360 lives purely in kind of like the code.
+00:05:05.759 Um, so what I mean by that is you think
+00:05:07.280 if you think about what the code to
+00:05:08.400 define an agent looks like, it generally
+00:05:10.240 looks like some sort let's say you're
+00:05:12.160 let's say you're using a framework like
+00:05:14.160 uh, lang chain um, or one that you built
+00:05:16.240 in house, you probably have this concept
+00:05:17.600 of like an agent abstraction that takes
+00:05:19.360 in a prompt and a list of tools. And so
+00:05:22.800 your app in code looks like this this
+00:05:25.759 agent class with a prompt and with some
+00:05:28.720 tools that are passed to it and maybe
+00:05:30.000 some other things, but that but that's
+00:05:31.280 kind of like uh what it looks like. But
+00:05:33.360 you don't actually know what that does
+00:05:36.080 until you run it because there's so many
+00:05:37.759 different ways that that could be
+00:05:38.800 interpreted. There's so many different
+00:05:40.000 potential inputs to that because usually
+00:05:42.080 the inputs some natural language and so
+00:05:44.240 you don't actually know what your
+00:05:45.120 agent's going to do until it until it
+00:05:46.800 runs. And so the code no longer kind of
+00:05:49.120 like fully documents the the core logic
+00:05:51.360 of your app. And that's one of the
+00:05:53.440 fundamental differences between between
+00:05:55.680 software and agents in in our opinion.
+00:05:58.240 You you just don't know what the agent
+00:05:59.840 will do until you run it.
+00:06:02.479 Um and and and so that changes things
+00:06:05.039 from from when things mess up. You go
+00:06:07.039 from debugging code to debugging
+00:06:09.600 reasoning. Uh so so in software, you
+00:06:12.479 know, software is deterministic. You've
+00:06:14.000 got the code that documents everything
+00:06:15.840 pretty perfectly. that's a source of
+00:06:17.280 truth. You debug things by identifying
+00:06:19.520 failed functions in a stack trace and
+00:06:21.280 and then you have these separate sets of
+00:06:22.800 APM tools. You also have your separate
+00:06:24.560 sets of kind of like evals or test
+00:06:26.319 running tools. Um and generally your
+00:06:28.400 tests and CI are pretty different and
+00:06:30.160 pretty disparate from your observability
+00:06:32.080 stack and observability solution. Um and
+00:06:35.199 and that starts to change a little bit
+00:06:36.639 with agents because now agents are
+00:06:38.000 nondeterministic which means that you
+00:06:39.680 you don't really know what's going to
+00:06:41.520 happen until you run them which means
+00:06:42.960 traces the observability for them are
+00:06:44.880 your sources of truth. that's your
+00:06:46.319 source of truth. Um, debugging is really
+00:06:50.720 turns from debugging kind of like stack
+00:06:52.400 traces to debugging failures and
+00:06:54.080 reasoning. And so like what goes into
+00:06:55.680 the LLM, uh, what comes out of it,
+00:06:57.919 debugging some of the context
+00:06:59.360 engineering around it. Um, and in order
+00:07:01.840 to do this well, you need to track
+00:07:03.120 threads of conversations, tools,
+00:07:05.039 reasoning context, and all of these can
+00:07:06.720 also be tied into things like eval and
+00:07:08.960 and and other things like that.
+00:07:12.319 So maybe starting from what we think the
+00:07:13.759 primitives of agent observability are.
+00:07:15.759 And so these are like the core
+00:07:17.440 components that power agent
+00:07:18.960 observability in kind of like ascending
+00:07:21.440 order of of complexity. So first you've
+00:07:23.919 got runs. This is like a single
+00:07:25.759 execution turn. You can think of this as
+00:07:27.280 a single LM call. This already has a
+00:07:29.360 bunch of context. It's got the inputs.
+00:07:31.039 It's got the outputs. The inputs include
+00:07:32.639 things like tools. Um there's also
+00:07:34.880 different parameters like the
+00:07:36.000 temperature that goes into it. Um, and
+00:07:38.000 then the outputs now, uh, you know, the
+00:07:40.479 outputs can are not just text anymore.
+00:07:42.960 They're a message and the message could
+00:07:44.240 have different components like reasoning
+00:07:46.080 and then a final response or tool calls
+00:07:48.000 that it makes. And so you've got these
+00:07:49.759 individual runs. A trace then consists
+00:07:52.479 of basically a list of these runs and
+00:07:54.319 you could have nested traces. So a trace
+00:07:55.919 could be like a trace of traces, but
+00:07:57.759 this is like a full agent execution from
+00:07:59.840 from start to finish without any human
+00:08:02.160 intervention. And so, and so that human
+00:08:03.840 intervention is is the piece that
+00:08:05.919 separates kind of like traces from
+00:08:07.440 threads because threads are then
+00:08:09.440 grouping these traces together where
+00:08:11.599 there's human kind of like intervention
+00:08:13.039 in between. And so if you think about
+00:08:15.440 kind of like a chatbot that you interact
+00:08:17.039 with, your message is a form of human
+00:08:19.039 intervention. So you send a message, it
+00:08:21.039 then runs, the agent might run, call
+00:08:22.960 some tools, those tools might get
+00:08:24.720 executed. All of these would be
+00:08:26.000 individual runs that add up to a trace.
+00:08:28.560 It then finishes, you send another human
+00:08:30.639 message that kicks off another trace.
+00:08:32.159 And so your whole conversation is is is
+00:08:34.240 kind of like this thread. And so that's
+00:08:36.080 how we see this kind of like stacking
+00:08:37.679 up. And these are the different levels
+00:08:39.039 that you really need to observe things
+00:08:40.559 at if you want to get a full sense of of
+00:08:42.559 what's going on um in your agents
+00:08:44.720 because no individual piece tells tells
+00:08:46.959 uh the full the full story.
+00:08:49.600 So this is what runs look like. You can
+00:08:51.839 see here that they have the the tools uh
+00:08:54.160 the input prompt. The output traces are
+00:08:57.360 are kind of like if this is a screenshot
+00:08:59.600 of Langmith. Traces are best represented
+00:09:01.360 by this kind of like waterfall view over
+00:09:02.800 here. And in fact, we actually do have a
+00:09:04.000 dedicated waterfall view to show off
+00:09:05.519 more things, but this is like the
+00:09:06.560 sequence of things and the nesting of
+00:09:08.080 things. And then threads are these turn
+00:09:10.560 components.
+00:09:13.200 So how how does agent evaluation differ
+00:09:16.160 from software evaluation? So we've
+00:09:17.519 talked about observability. I now want
+00:09:19.120 to talk about eval and then I'll kind of
+00:09:20.399 like tie them together. So first you're
+00:09:22.800 testing reasoning, not code pass. And um
+00:09:26.320 this is this is this is already where
+00:09:28.000 there's a tie-in to observability
+00:09:29.440 because just like there's these
+00:09:31.360 different primitives of observability
+00:09:33.760 just like there's these runs, traces,
+00:09:35.440 threads, you might want to evaluate
+00:09:37.519 reasoning across all of these um
+00:09:40.000 different uh kind of like dimensions. So
+00:09:42.080 you might want to test a single step of
+00:09:44.080 your agent. And this is just like a
+00:09:46.560 single LLM call. So if you make one LLM
+00:09:48.880 call and you've got this input, like
+00:09:50.240 does it produce the output that you
+00:09:51.600 expect? This is what we call kind of
+00:09:52.959 like a single step test. It's generally
+00:09:54.399 the easiest. It's the fastest. Did the
+00:09:56.000 agent make the right decision at this
+00:09:57.680 moment in time? A full turn is then like
+00:10:00.399 a run of of the agent. This is
+00:10:02.720 basically, you know, passing in uh top
+00:10:05.040 level user input, letting it run, seeing
+00:10:07.279 what the end result is. Um and then and
+00:10:10.640 uh uh and then testing that that output.
+00:10:13.279 And the output could could be a message,
+00:10:15.279 but it could also be a sequence of
+00:10:16.640 messages. It also could be um uh any
+00:10:19.360 artifacts that the agent creates along
+00:10:21.519 the way. And then multi-turn evals are a
+00:10:24.560 step above where you don't just like
+00:10:26.000 call it with one input, you call it with
+00:10:27.279 a sequence of inputs. And and this this
+00:10:29.920 brings in some other uh complications um
+00:10:32.240 which we'll talk a little bit more about
+00:10:33.680 later on. But now you have to figure out
+00:10:35.120 the sequence of inputs.
+00:10:37.360 And the second way that so so you've got
+00:10:39.440 these like new dimensions that you're
+00:10:40.880 going to want to test on. Um and and the
+00:10:43.839 second thing that differs is that
+00:10:45.680 production is really where you discover
+00:10:47.120 what to test for online. And this gets
+00:10:48.560 back to the fact that you don't really
+00:10:49.839 know what agents do until you ship them
+00:10:51.360 in production. So, one of the best
+00:10:52.480 things that we see companies do when
+00:10:53.760 they're building agents is ship early
+00:10:55.200 and shipped often. Even if it's just to
+00:10:57.120 a small cohort of users, that's where
+00:10:58.640 you really start to see uh user behavior
+00:11:01.120 and user inputs. And that's where you
+00:11:02.800 start to build up these test sets that
+00:11:04.800 you're going to test for uh later on
+00:11:06.720 along the way. So, diving a little bit
+00:11:09.839 more into kind of like singlestep
+00:11:11.279 evaluation. Um so, this is like user
+00:11:13.600 input. You run it once. You you you
+00:11:15.839 don't keep on running the sequence. You
+00:11:17.279 just call the model kind of like once.
+00:11:19.440 Um this this is good for validating
+00:11:21.360 individual agents in isolation. Um so
+00:11:24.399 it's good for if if you have some rules
+00:11:26.560 or you have some logic that if every
+00:11:28.399 time a user comes in requesting a
+00:11:29.839 meeting, the first thing you need to do
+00:11:31.120 is is check the calendar. This is this
+00:11:33.600 is a good check to see, hey does is the
+00:11:35.760 first thing the agent does it call the
+00:11:37.920 like check calendar tool. Um generally
+00:11:41.519 these are fast to execute and they
+00:11:43.920 generally have clear kind of like pass
+00:11:45.760 fail criteria.
+00:11:47.920 full turn evaluations keep this running.
+00:11:50.320 Um, so the user puts in a message, the
+00:11:52.399 AI calls the tool, you keep on looping
+00:11:54.320 until the AI decides that it's done. And
+00:11:56.480 so this validates the complete agent
+00:11:58.240 runs from input uh to to final output.
+00:12:01.279 Um, in an example might be if you're
+00:12:03.680 using a coding agent, you know, you'd
+00:12:04.959 let it run for a while. Did the coding
+00:12:06.399 agent produce working tested code? The
+00:12:08.880 benefits of this are that it uh includes
+00:12:11.200 kind of like real behavior of the agent
+00:12:13.279 along the trajectory. So multiple things
+00:12:14.959 in a row including kind of like tool
+00:12:17.200 usage and state changes. So like changes
+00:12:19.120 to the file system. Um and uh this is
+00:12:22.720 both good and bad but it's definitely
+00:12:24.639 more kind of like realistic. And then if
+00:12:26.880 we go to the multi-turn, this is what I
+00:12:28.480 was talking about about validating
+00:12:30.079 threads across multiple conversations
+00:12:31.920 turns. And um uh there you can do things
+00:12:36.800 like test whether it remembers previous
+00:12:39.040 things that were mentioned in previous
+00:12:40.480 turns or test that it asks like
+00:12:42.480 appropriate follow-up questions and then
+00:12:44.079 does information with that. The pros of
+00:12:46.160 this is this is the most usually this is
+00:12:48.000 the most realistic test of production
+00:12:49.600 behavior because most agents have some
+00:12:52.079 kind of like conversational or human in
+00:12:53.680 the loop aspect to them. The the the
+00:12:56.000 downside is this is actually really this
+00:12:57.360 is quite hard to do because the second
+00:12:59.920 user message might totally depend on
+00:13:02.240 what the first uh user message response
+00:13:04.880 is. Um and so you need you need some
+00:13:06.959 sort of checks to make sure that it's
+00:13:08.480 aligned along the way. Okay. So,
+00:13:09.680 generally when we see people running
+00:13:10.880 this, we see that they run this step.
+00:13:13.760 They get the output. They like check
+00:13:15.440 that it's within some within some kind
+00:13:17.760 of like constraints and then if it is
+00:13:19.360 and they and they can and they can uh
+00:13:21.120 guess the next user input, they they
+00:13:22.639 they put pass in another one.
+00:13:25.839 And so, just to maybe summarize some of
+00:13:27.519 the pros and cons and we see people
+00:13:29.120 doing these uh we see people doing
+00:13:30.880 different uh variants of these. It's not
+00:13:32.320 like there's any right one. You can you
+00:13:33.839 can also and absolutely should do
+00:13:35.040 multiple of these, but like uh the the
+00:13:37.920 singlestep ones are easiest to define
+00:13:39.760 kind of like metrics for. The downside
+00:13:41.519 here is that if you change the internals
+00:13:43.120 of your agent, these go out of date
+00:13:44.639 pretty easily. Um so actually these
+00:13:46.800 these probably aren't the first thing we
+00:13:48.240 see people build. We probably see them
+00:13:49.680 build things when they're a little bit
+00:13:50.880 more confident in their architecture.
+00:13:53.040 Traces like a full turn. This is what we
+00:13:54.880 see people build uh first usually
+00:13:56.800 because it's really easy to define
+00:13:58.160 inputs for these. The downside is it's
+00:14:01.199 harder to define metrics for these. Um
+00:14:04.399 and and and so oftentimes we actually
+00:14:06.800 see that to start people just create
+00:14:08.240 like five or 10 example inputs. They're
+00:14:10.160 judging things by eye. So they don't
+00:14:11.600 even have metrics, but they're running
+00:14:12.959 those by eye. And then when they start
+00:14:14.720 to sell on architecture, that's when
+00:14:16.079 they maybe test like, hey, is it doing
+00:14:17.519 this routing correct at a at a
+00:14:19.040 particular step or something than that
+00:14:20.480 like that? And then threads are are are
+00:14:24.560 again these multi-turn ones. The pros of
+00:14:26.399 this are some of the most realistic user
+00:14:27.839 behavior, but this is actually pretty
+00:14:29.120 hard to define uh things for.
+00:14:33.839 There's also different times that people
+00:14:36.079 should be testing uh agents. Um and uh
+00:14:40.399 uh traces power all of these like
+00:14:42.560 observability powers all of these
+00:14:44.079 different methods of evaluation. So
+00:14:46.160 offline eval is basically building up a
+00:14:48.320 data set, running your agent over that
+00:14:50.800 data set or LLM over that data set and
+00:14:53.120 then getting a score and trying to
+00:14:54.639 improve the score there. And so this
+00:14:56.320 happens before you ship to production
+00:14:58.160 and it's good for c uh catching
+00:14:59.839 regressions or benchmarking.
+00:15:02.560 Online evals happen after the agent
+00:15:04.720 finishes running. Um and so uh so the
+00:15:08.720 agent runs it sends a trace to lang lang
+00:15:11.199 on lang will side will will run some
+00:15:13.360 online eval. And this is really good for
+00:15:14.880 flagging issues in production because
+00:15:16.160 this is real production traffic.
+00:15:18.800 And then ad hoc is when you want to uh
+00:15:22.160 look at your production data and and
+00:15:23.839 kind of like score them along some
+00:15:25.279 dimension, but it's it's maybe like a
+00:15:27.440 one-off thing that you're curious about.
+00:15:28.959 And so this is really good for
+00:15:30.160 exploratory data analysis. Um, and so,
+00:15:33.279 you know, for example, um, we we have
+00:15:36.480 chat lang chain, which is chat over our
+00:15:38.240 docs, and I wanted to see what types of
+00:15:40.880 questions people were asking about
+00:15:42.079 langraph. And so I ran an evaluator to
+00:15:44.160 score runs to see whether the question
+00:15:45.839 was about langraph or not. And then once
+00:15:47.440 it was, I could look at those.
+00:15:51.279 And so there's all these different types
+00:15:52.639 of evaluations. Uh, uh, you run them at
+00:15:55.440 different points, you judge different
+00:15:56.639 things. how how how does agent
+00:15:58.639 observability uh power these different
+00:16:00.880 types? So first uh traces power manually
+00:16:04.000 debugging. So so I would absolutely call
+00:16:05.839 like manual debugging as a form of like
+00:16:07.920 you know manual ad hoc kind of like
+00:16:10.079 evaluation. Um and traces power this
+00:16:13.759 because you can basically just like look
+00:16:15.680 at the trace, see what went wrong, open
+00:16:17.920 it you the trace has all the individual
+00:16:19.759 runs so you can go to a particular run,
+00:16:21.519 open it up in a playground and then play
+00:16:23.120 around with it there and get a sense for
+00:16:24.480 what changed. Um, I have this running on
+00:16:27.279 I have this running every time I run an
+00:16:28.800 agent locally. Um, I don't look at it
+00:16:30.639 95% of the time, but the 5% I do, it's
+00:16:32.959 super valuable to to have that trace.
+00:16:35.839 You can also debug production issues
+00:16:37.440 this way because they're all setting up
+00:16:38.639 traces. Traces power offline evaluation.
+00:16:42.399 So, the offline evaluation is when you
+00:16:44.560 build up a data set and then run
+00:16:45.839 benchmarking runs over it. And and
+00:16:47.360 oftentimes these data sets are built
+00:16:48.959 from production traces because again,
+00:16:50.399 you don't actually know what you should
+00:16:52.480 be testing for until you see how users
+00:16:54.399 are using it. And so and so you you you
+00:16:56.480 ship your agent, you get some production
+00:16:57.920 traces, the agent runs over it, um and
+00:17:00.560 then you build up a data set. And so the
+00:17:01.920 workflow usually is like I'm logging
+00:17:04.079 everything to Langmith. The user will
+00:17:05.919 say, &quot;Hey, this went wrong. The agent
+00:17:07.839 gave a bad response, something like
+00:17:09.280 that.&quot; I'll go find the production trace
+00:17:11.359 in Langmith. I'll see like where it
+00:17:13.679 failed because this trace has a bunch of
+00:17:15.280 runs. And so maybe maybe I want to test
+00:17:17.359 the whole trace, but maybe I want to
+00:17:18.480 test a particular point. And so I I'll
+00:17:20.160 find kind of like the state of the agent
+00:17:22.400 at that failure point because tracing
+00:17:24.000 will track all all the inputs and
+00:17:25.439 outputs. So you know the state and then
+00:17:27.760 that state becomes the test case and
+00:17:30.080 then I'll go into my offline eval cycle
+00:17:32.080 where where I'll I'll try to I'll make
+00:17:33.679 some changes to a prompt run the prompt
+00:17:35.360 over fix it and and try to fix it up
+00:17:37.120 that way. Traces power online evals. So
+00:17:40.400 these are traces that are coming into
+00:17:41.840 into production. Um online evals run
+00:17:44.320 over these traces. One big difference
+00:17:45.840 here compared to offline evals is that
+00:17:47.760 in online evals you you obviously don't
+00:17:49.760 have the ground truth. So the types of
+00:17:51.360 evaluators that you're running are are
+00:17:53.120 are pretty different. Um you you can
+00:17:56.240 what types of things can you check for
+00:17:57.760 though even if you don't have ground
+00:17:58.880 truth you can flag for unusual tool call
+00:18:01.440 patterns. Um so you can you can check to
+00:18:04.000 see if the LLM's calling like the same
+00:18:05.600 tool a bunch in a row. Vec uh maybe you
+00:18:08.160 can touch on this later. I don't think
+00:18:09.280 you did this in online evals, but I
+00:18:10.720 think you actually did something kind of
+00:18:12.000 like in the loop when you were trying to
+00:18:13.440 improve our agent harness.
+00:18:15.120 >> Exactly. Yeah.
+00:18:16.320 >> Yeah. Do you maybe want to tell that
+00:18:17.520 story because I actually think that's
+00:18:18.559 pretty cool.
+00:18:19.280 >> Yeah. Yeah. I I definitely can. So like
+00:18:21.039 uh quick sneak peek and what we'll talk
+00:18:22.720 about in like 10 minutes, but so when
+00:18:24.960 we're trying to make our agents better,
+00:18:26.640 there's basically like what Harrison's
+00:18:27.919 saying, like we'll measure every single
+00:18:29.760 thing they're doing and we can see all
+00:18:30.960 the steps. So when we dig into those
+00:18:33.039 like as a team, as humans or we have an
+00:18:35.120 agent look at them, we observe these
+00:18:36.880 like weird pathologies that agents sort
+00:18:39.360 of trip up on. One thing that's really
+00:18:41.039 common with these reasoning models is
+00:18:42.960 that although they think through a
+00:18:44.480 problem a lot, they like will get down
+00:18:46.720 this rabbit hole where they just keep
+00:18:48.720 editing the same thing over and over
+00:18:50.000 again. Often it's a file. And like
+00:18:52.240 usually when that happens, like we see
+00:18:53.760 the result is like a failure. It's just
+00:18:55.440 like spiraling out of control. So like
+00:18:57.120 we have deterministic hooks that we can
+00:18:58.960 put into like our agent harness
+00:19:00.400 framework that detects like hey like you
+00:19:02.080 edit this file like five six times um
+00:19:04.640 take a step back and re-evaluate your
+00:19:06.640 decision or like go plan a little bit
+00:19:08.720 more. So like we basically use traces to
+00:19:11.280 observes these pathologies and then like
+00:19:12.960 we inject our experiments to try to make
+00:19:15.280 the harness better and then we
+00:19:16.559 reevaluate and see if that's actually
+00:19:17.919 making it better. And so you can do
+00:19:20.000 something like that as online eval and
+00:19:22.160 and it won't inject it back into the
+00:19:24.400 live running of the agent, but you can
+00:19:26.160 use it to fix up things after the fact.
+00:19:28.000 And this is really I was actually very
+00:19:29.520 excited to hear this because as I
+00:19:31.200 mentioned, one of the things about eval
+00:19:32.559 is that it's it's actually it's quite
+00:19:33.919 hard to build your own evals. Like you
+00:19:35.360 have to build your own data sets and you
+00:19:36.720 generally have to build your own metrics
+00:19:38.640 um because agents do different things
+00:19:40.240 and business logics might want to want
+00:19:42.160 to test them in different ways. But this
+00:19:43.840 is a pretty generic chest that we can
+00:19:45.440 kind of like add off the shelf and and
+00:19:47.200 kind of like give you as part of
+00:19:48.640 Langmith. And so I was I was pretty
+00:19:49.919 excited. It's not in Langmith yet, but
+00:19:51.600 this made me think that we should add it
+00:19:52.880 into Langmith as kind of like an
+00:19:54.240 off-the-shelf evaluator. Um, other
+00:19:56.880 things you can test for uh efficiency
+00:19:59.039 monitoring. So kind of like test whether
+00:20:00.640 the LLM's uh you know uh giving way too
+00:20:04.720 big outputs or way too small outputs. Um
+00:20:07.600 quality scoring. if you're able to test
+00:20:09.360 if you you we have some that can detect
+00:20:11.520 kind of like hallucinations and so you
+00:20:13.679 can check hey you know does the output
+00:20:15.440 contain anything that's not explicitly
+00:20:17.360 in some of the input context um and then
+00:20:20.480 also failure alerts and and and and this
+00:20:22.480 can look like uh this is actually very
+00:20:24.400 useful for some of the thread level
+00:20:26.000 evals when you have the whole
+00:20:27.120 conversation but if the user says
+00:20:28.480 something like no that's wrong or things
+00:20:30.640 like that um you can actually detect in
+00:20:32.799 their conversation if things are messing
+00:20:34.240 up and not have them have to report it
+00:20:36.159 directly Um, ad hoc insights is another
+00:20:39.360 thing that traces power. Um, and so this
+00:20:42.080 uh this is basically this is one of the
+00:20:43.840 cooler things we have in Langmith. You
+00:20:45.200 you send us all your traces and then you
+00:20:46.799 can run insights analysis over it and
+00:20:48.400 ask questions like how are people using
+00:20:51.120 my agents? Uh where where where and why
+00:20:54.240 are users getting frustrated? Um uh and
+00:20:57.520 and and you can and then we cluster
+00:20:59.520 those and then you can compare kind of
+00:21:01.360 we and then we show you metrics for each
+00:21:02.880 cluster and you can compare different
+00:21:04.320 clusters across those dimensions.
+00:21:07.679 And so uh yeah, we one of the core
+00:21:11.520 thesis that we're really realizing is
+00:21:13.679 that agent observability powers a bunch
+00:21:16.559 of other things that is a little bit
+00:21:18.080 different than uh in software. Like in
+00:21:20.559 software, observability kind of sits to
+00:21:22.400 the side. You know, your app like emits
+00:21:24.559 metrics and you go and look at those and
+00:21:26.480 you go and look at logs and you debug
+00:21:28.000 it, but it's a little bit to the side.
+00:21:29.679 With agents, it's much more part of the
+00:21:31.520 overall kind of like loop of of
+00:21:33.760 application uh development.
+00:21:37.039 Before going to questions, I want to
+00:21:39.039 switch over to VC to do the kind of like
+00:21:41.520 uh deep dive into some of the uh opus
+00:21:44.559 and codec stuff which was a late edition
+00:21:46.640 which is why we don't have a slide for
+00:21:48.080 it. Yeah. Awesome. Thanks, Harrison. Let
+00:21:51.120 me get my screen up as well.
+00:22:00.080 Cool. Awesome. So, real quick over the
+00:22:02.080 next 10 minutes, there's a few things
+00:22:03.360 that I want to cover that basically
+00:22:04.880 takes a lot of like Harrison's good
+00:22:06.400 content in the slides and goes over like
+00:22:08.960 what is the actual workflow that our
+00:22:10.880 team is doing every day when we're
+00:22:12.720 trying to make our agent better
+00:22:14.960 basically. So, the the team that I work
+00:22:17.200 on, so I lead a bunch of stuff for our
+00:22:19.520 uh our library called deep agents. So,
+00:22:22.000 let me show you that. That is right
+00:22:24.159 here. Go check it out. Basically what
+00:22:25.919 this is, it's our harness which allows
+00:22:28.320 you to take any model and then like
+00:22:30.080 customize it for your task, right? So
+00:22:31.600 like write your own prompts, like add
+00:22:33.039 your own tools, like add your own hooks
+00:22:34.640 like if you observe these pathologies as
+00:22:36.400 well. And what our team does is we want
+00:22:38.640 to make that the best place to customize
+00:22:40.400 your harness, but then also a great
+00:22:42.080 out-of-the-box experience for coding.
+00:22:43.919 And the way that we actually do that is
+00:22:45.919 we go and we look at existing
+00:22:48.799 benchmarks, existing existing evals, and
+00:22:50.880 we try to make them better. So, one of
+00:22:52.559 the ones that all of the Frontier Labs
+00:22:54.480 they test on, it's called Terminal Bench
+00:22:56.400 and Terminal Bench 2.0. So, actually I
+00:22:58.559 have the releases out here for uh Codeex
+00:23:01.280 and Opus 46. So, you can see like this
+00:23:03.919 is one of the ones that they run and
+00:23:05.679 there's a really big increase from GPD
+00:23:08.159 5.2 codecs to GPD 5.3 codec. So, like
+00:23:11.440 immediately for us, we're like, okay,
+00:23:13.200 that's something we need to take a look
+00:23:14.400 at. That's something we need to test in
+00:23:15.919 our harness to make sure that the user
+00:23:17.520 experience out of the box is amazing.
+00:23:19.440 And that means that hopefully the
+00:23:20.720 customizability experience will be
+00:23:22.080 amazing if you need to tweak it for
+00:23:23.280 something. Same thing with Opus. Um,
+00:23:25.600 this one's available in API immediately.
+00:23:27.600 So like was able to get it running ASAP
+00:23:31.520 essentially. And before jumping to the
+00:23:34.080 traces, I'll just show you like one more
+00:23:35.360 thing basically like our mental model of
+00:23:38.559 the day-to-day for how are we going to
+00:23:41.039 make our harness better and like what
+00:23:43.120 are some key levers basically that we're
+00:23:44.720 looking at. So we have the model, right?
+00:23:47.200 So that's like pick codeex, pick opus,
+00:23:49.760 pick sonnet, pick haiku if you need to
+00:23:51.520 run a little bit quicker. And then we
+00:23:52.960 have the harness which was what we
+00:23:54.559 provide and that's tons of sort of
+00:23:56.559 opinionated batteries included built-ins
+00:23:59.039 that you can tweak and change but things
+00:24:01.919 that we think are really helpful. So
+00:24:03.200 sort of like built-in prompts for hey
+00:24:05.120 like if you're approaching this problem
+00:24:06.320 in this way like planning in this way is
+00:24:08.320 really helpful. Using the file system in
+00:24:10.000 this way is really helpful. Delegating
+00:24:11.679 to sub aents is really helpful to keep
+00:24:13.279 your main context clean and to speed up
+00:24:14.960 work. Right? Another thing that's very
+00:24:17.600 particular often about these frontier
+00:24:20.240 lab sort of benchmarks is environment
+00:24:22.799 context, but this has like a really good
+00:24:24.640 analogy to your day-to-day maybe coding
+00:24:26.960 if that's what you're using coding
+00:24:28.000 agents for. It's, you know, environment
+00:24:30.080 context can be what's in my file system,
+00:24:32.640 how is my repository structured? What
+00:24:35.039 are the coding guidelines that my team
+00:24:36.480 is following? Right? All of this stuff.
+00:24:38.720 you want that maybe almost auto injected
+00:24:40.960 into the model context because that's
+00:24:43.520 just a place of error that you might
+00:24:45.200 introduce if every time you're doing a
+00:24:46.640 task it's searching for this right so
+00:24:48.000 these are sort of like priors that we
+00:24:49.760 try to bake into the model and we bake
+00:24:51.120 into the harness essentially and then
+00:24:52.960 there's middleares which I'll show you
+00:24:54.880 then sub agents which is this one I'm
+00:24:56.640 really excited about I actually just
+00:24:57.760 tweeted about it which is in deep agents
+00:25:00.720 in the harness you're not limited to one
+00:25:02.960 model provider or one model like use
+00:25:05.679 them all together find what's the best
+00:25:08.080 approach approach for your task in
+00:25:10.000 particular. Uh, use I'm going to when
+00:25:12.000 Codex is out, Codex 5.3, I'm going to
+00:25:14.159 use Codex 5.3 and Opus 46 together to
+00:25:16.880 see if we can like really push the
+00:25:18.400 frontier of like how good we can do on
+00:25:20.880 our coding tasks. So great, just like a
+00:25:23.760 quick primer. Now I'm going to dive into
+00:25:25.840 Langsmith to show you kind of how I
+00:25:28.799 manually look at traces. And then also
+00:25:30.880 I'm pretty excited to show you um
+00:25:33.120 something else which is how we do like
+00:25:34.880 automated evaluations like automated uh
+00:25:37.679 parsing of traces understanding traces
+00:25:39.600 at like a really big scale. So like 100
+00:25:41.919 tasks on like 200 300 tasks at once. So
+00:25:44.880 I had like a few up already. So you can
+00:25:46.720 see this is open 4 Opus 46. So Harrison
+00:25:49.840 DM' me like immediately I went I'm like
+00:25:51.679 okay let's get another run going for
+00:25:53.440 Opus 46 which is awesome. Um, let me
+00:25:56.240 maybe just show you like what terminal
+00:25:58.400 bench is like, uh, so you can get a feel
+00:26:00.320 of the task and then also some of the
+00:26:02.640 things that I look for as we're trying
+00:26:04.640 to make the harness better. Right? So I
+00:26:06.080 said like I might tweak prompts, I might
+00:26:07.600 tweak the middlewares, I might tweak all
+00:26:08.960 of that stuff. So this is the task
+00:26:11.440 description, right? So this is auto
+00:26:13.600 injected from terminal bench into the
+00:26:15.760 model. Looks like a human message, but
+00:26:17.440 just think that like someone is giving
+00:26:19.440 this task to the agent, right? So it's
+00:26:21.120 like complete this implementation define
+00:26:22.880 the dominant igen value vector and like
+00:26:25.840 this is the location of it basically
+00:26:27.600 right so it's like setting the scene um
+00:26:30.480 the the immediate thing actually that I
+00:26:32.559 look for is what is the first step that
+00:26:35.919 the model made which is let me start by
+00:26:38.400 reading the existing files to understand
+00:26:40.159 the problem like why do I actually care
+00:26:43.600 about that I'll tell you it's because I
+00:26:45.919 wrote like a very detailed prompt with
+00:26:48.080 the team about how should you actually
+00:26:51.520 start doing things right so like I have
+00:26:53.520 this thing like you are a deep agent so
+00:26:55.120 like powerful coding AI agent like when
+00:26:57.200 to stop basically you're working
+00:26:59.120 autonomously right so these are really
+00:27:01.919 important sort of like levers that I
+00:27:03.600 look at in particular for these offline
+00:27:05.600 evals there's one thing that comes up
+00:27:07.440 over and over again which is uh there's
+00:27:09.440 no human to help the model right but the
+00:27:11.440 model doesn't know that so sometimes it
+00:27:13.440 will like prematurely stop or it will
+00:27:15.679 ask an agent or it'll ask a human can
+00:27:17.840 you like respond to me or something
+00:27:19.600 Right. And as we're moving into the
+00:27:21.840 regime of uh give agent a task, it works
+00:27:25.200 almost async and then I come and review.
+00:27:27.279 That's not something that you want in in
+00:27:29.919 like your agent behavior basically. So
+00:27:31.440 how do we do that? Like maybe I put in
+00:27:33.120 the prompt to say like hey do not stop
+00:27:35.279 until like all these things are done.
+00:27:37.200 What's another way that we enforce that?
+00:27:38.960 I'll show you here. So like I talked a
+00:27:40.880 little bit about middlewares, right?
+00:27:42.400 which was think of middleares as
+00:27:44.720 basically like hooks around model
+00:27:46.640 actions that do that execute like sort
+00:27:48.960 of deterministic behavior. So here I
+00:27:51.200 have a few. So um I have right here I
+00:27:54.960 have a checklist basically that I give
+00:27:57.760 it. Let me scroll down. Um cool. So I
+00:28:01.760 basically say uh efficient verification
+00:28:04.399 right? So in coding agents in
+00:28:06.880 particular, verification is like really
+00:28:09.039 crucial because code is one of those
+00:28:11.520 domains where it's actually verifiable.
+00:28:13.679 I can actually generate tests. I can
+00:28:15.520 actually do linting. I can actually like
+00:28:17.600 use our coding best practices and the
+00:28:19.919 model can get feedback from those steps
+00:28:22.240 to say hey I'm doing this well or I'm
+00:28:23.919 not doing this well. But another thing
+00:28:26.159 that we can do is that if the model
+00:28:28.880 tries to finish, I can call these sort
+00:28:31.679 of like precompletion checklist
+00:28:34.000 middlewares basically that says like
+00:28:35.679 models like hey I'm done and I'm like
+00:28:38.240 you know before you say you're done can
+00:28:40.399 you go back and look at the checklist
+00:28:42.399 file to make sure that you've actually
+00:28:44.559 done each of these steps. Right? If
+00:28:46.720 you're doing this as part of a PR
+00:28:48.159 workflow then like maybe you'll actually
+00:28:50.080 like run those things on like your on
+00:28:52.960 your GitHub actions, right? And then
+00:28:54.080 that'll be feedback to the model. So
+00:28:56.000 this is like actually what I'm looking
+00:28:57.760 at every day, which is what was the
+00:28:59.679 first action that the model did, like
+00:29:01.200 what was the second action that the
+00:29:02.399 model did. And then I go back and maybe
+00:29:05.520 the thing that I'm like really excited
+00:29:06.960 to share as well, which is this is one
+00:29:09.360 trace. Terminal bench has 89 tasks,
+00:29:12.640 right? Um I'm running this for multiple
+00:29:15.200 models. So I'm just one person. There is
+00:29:18.080 no way that I'm going to be able to read
+00:29:20.080 all of this data, right?
+00:29:22.480 That's when these things come in like
+00:29:24.799 generating reports from your tracing
+00:29:27.039 data which is super valuable but you
+00:29:29.120 can't start on this journey if you don't
+00:29:31.120 start sort of like tracing your projects
+00:29:33.120 from the start right like this is only
+00:29:34.720 possible because every time I do a deep
+00:29:36.960 agent run that all gets automatically
+00:29:39.120 logged to my lang project and then later
+00:29:41.440 I can work with the team to say like hey
+00:29:43.200 like what are we interested in like what
+00:29:44.399 are these new things we want to try in
+00:29:45.600 the harness um what I have here is I'll
+00:29:48.960 show you um I'll show you this so like
+00:29:51.600 we'll will probably be releasing this as
+00:29:53.919 an example soon. But I have this skill
+00:29:57.039 which is a Langmith trace analyzer
+00:29:59.120 skill. What this does, it uses lang
+00:30:01.600 fetch. And what lang fetch basically
+00:30:03.360 does is it pulls the traces for my
+00:30:06.240 project into like my local environment.
+00:30:08.320 And then I have particular markdown
+00:30:10.799 files that tell it, hey, if we're doing
+00:30:12.640 a terminal bench analysis, what I want
+00:30:14.720 you to do is I want you to group all of
+00:30:16.480 the failure modes together. And then I
+00:30:18.480 want to I want you to propose potential
+00:30:21.440 fixes that we could do. And then like
+00:30:22.960 our team will go and like we'll actually
+00:30:24.320 like human review some of those. And
+00:30:25.840 this all happens in parallel. And like
+00:30:27.279 what do we get out of that? We get a
+00:30:28.880 report basically. And this report is a
+00:30:31.120 good like growing artifact that we can
+00:30:32.640 share with the team to say hey this is
+00:30:34.640 how research is progressing. This is
+00:30:36.320 like how well we're doing basically. So,
+00:30:37.919 I'll show you one from from yesterday
+00:30:39.440 that I made. Of course, today everything
+00:30:41.279 changes with new model releases, but uh
+00:30:43.679 we ran this on uh codeex 5.2 extra high
+00:30:48.159 and we got 65.2 pass rate. Great. Sounds
+00:30:51.279 good. That would have actually been um
+00:30:54.640 number one yesterday, right? Uh with the
+00:30:56.960 new releases that came out. So, I'm
+00:30:58.240 going to rerun on Opus today and like
+00:30:59.760 see how much how much better we can get,
+00:31:01.520 right? 65.2 would have been here
+00:31:03.440 basically. Uh so, this is like great
+00:31:05.520 feedback for the team. And then what
+00:31:06.720 does it do? it goes and like it
+00:31:08.000 categorizes the errors like hey like
+00:31:10.320 these are the mistakes basically that
+00:31:12.000 was that we were making the other thing
+00:31:13.919 that I really like is it's not just
+00:31:16.320 agent logical errors right I can read
+00:31:18.799 these traces and I can say hey like the
+00:31:20.960 agent is getting confused it's also
+00:31:22.799 sometimes like infrastructure errors
+00:31:24.399 like these are things that are out of
+00:31:25.600 your control you might be deploying your
+00:31:27.279 model somewhere and you're like hey it's
+00:31:29.440 just timed out for some reason but it
+00:31:31.279 might not be your fault like the agent's
+00:31:32.640 fault it might be hey this sandbox died
+00:31:34.880 or something you know these are all
+00:31:36.320 basically feedback loops that we can
+00:31:38.320 use. And this is how our team uses it
+00:31:40.399 every day. We put everything into
+00:31:42.320 Langsmith. I take a look at them. I read
+00:31:45.279 them. I update my prompts. I update my
+00:31:47.120 tool descriptions. I might try using
+00:31:48.559 multiple models. And then when I have a
+00:31:51.360 critical mass, I'll go and I'll run this
+00:31:53.519 workflow which generates this report
+00:31:55.760 using our agent skills. Like I use a
+00:31:57.519 deep agent to generate this and then
+00:31:59.360 we'll review with the team. And it's a
+00:32:01.039 very scientific process. It's basically
+00:32:03.120 there's a vibes way of doing it which is
+00:32:04.960 awesome as well. But then there's sort
+00:32:06.240 of this more scientific way when I track
+00:32:08.320 everything in Lenmith and try to improve
+00:32:10.080 things over time. So yeah, definitely
+00:32:12.480 will be a follow-up soon because we're
+00:32:13.760 going to have an Opus 6 Opus 4.6 run
+00:32:16.159 going probably in a couple hours. Um and
+00:32:19.120 yeah, excited to share some of the stuff
+00:32:20.640 and release the skills and answer
+00:32:22.480 questions.
+00:32:25.120 Cool. Awesome. Um so yeah, hopefully
+00:32:29.039 that was a good mix of some kind of like
+00:32:30.480 conceptual ways we think about things,
+00:32:31.840 but also some hands-on stuff. I think we
+00:32:33.440 got about 15 minutes left. So now we can
+00:32:35.440 jump into some of the questions. Um I
+00:32:38.559 see that there's 10 open. Um
+00:32:42.080 uh what is your intuitions on when folks
+00:32:44.080 will have continuous pipelines
+00:32:45.519 observability to eval to post- training
+00:32:47.440 in prod as as you have already made good
+00:32:50.399 progress on observability and evalu
+00:32:55.360 time compute is the way to go. Um I mean
+00:32:58.960 I'll take a stab here and then I think
+00:33:00.240 VC you've thought about this a bunch as
+00:33:01.840 well. Uh and and actually there is
+00:33:04.240 literally a slack thread on this that I
+00:33:06.240 tagged VC in uh actually as he was
+00:33:08.960 giving his talk. Um I mean the TLDDR is
+00:33:11.919 I think in in some place so so I think
+00:33:14.720 part of this is very similar to memory.
+00:33:16.559 Um like I view memory as a way of kind
+00:33:18.320 of like improving over time just like
+00:33:20.080 post training would be. Um and so yeah I
+00:33:22.799 think that would probably fall under the
+00:33:24.000 test time compute part. Memory is still
+00:33:26.960 um memory is still pretty new. Um, I
+00:33:30.320 don't think uh
+00:33:33.919 it's just memory is just a system and I
+00:33:36.399 I don't think there's anything more
+00:33:38.480 complex than that and it's just a system
+00:33:39.840 of setting up these um set setting up
+00:33:42.960 all this pipelining of data because
+00:33:44.559 basically you have to take these traces
+00:33:46.080 and you have to like do something with
+00:33:48.159 them and then you have to test whether
+00:33:50.240 it's good enough or maybe you don't test
+00:33:51.760 whether and you know do something with
+00:33:53.200 them like change the prompt then you
+00:33:55.120 then you uh test it then you you know
+00:33:57.600 commit it and release And it's kind of
+00:33:59.200 just setting up that pipeline, having
+00:34:00.880 that confidence in those automated
+00:34:02.399 tests, um or or kind of like not caring
+00:34:05.279 about like automated tests. Um I think
+00:34:07.760 we see very basic aspects of of memory
+00:34:10.960 being present already, but still very
+00:34:12.960 early on. Um but yeah, I I think this
+00:34:15.599 there are people doing this today is is
+00:34:17.520 what I would say. And it's pro but it
+00:34:19.040 but it's not post-training. It's it's
+00:34:21.760 kind of like test time compute. That
+00:34:23.679 would be my answer. I don't know if you
+00:34:25.199 have a different one or
+00:34:27.119 >> No, I I agree like we're generally very
+00:34:29.280 interested in memory. There's like maybe
+00:34:31.199 one thing I'll add which is it's not
+00:34:33.679 post training in terms of the RL post
+00:34:35.599 training but there is like a whole other
+00:34:37.679 class of training approaches which is
+00:34:40.800 like reflective optimization at scale
+00:34:42.960 which is basically like take a bunch of
+00:34:44.639 traces which have signal in them distill
+00:34:47.040 the learnings from them and then update
+00:34:48.800 the things that aren't the weights that
+00:34:50.159 are still incredibly important for like
+00:34:51.520 model performance. So that's like
+00:34:52.480 everything in the harness basically and
+00:34:54.639 kind of like from our results that helps
+00:34:56.639 a ton as well. You could take a model
+00:34:58.400 and you can improve the harness. You can
+00:34:59.839 get even bigger scales of improvement
+00:35:02.560 than you would have got from maybe
+00:35:03.599 switching the model. So yeah,
+00:35:06.880 are you using sandboxes for insights at
+00:35:08.960 scale? And if yes, any insights on the
+00:35:10.880 trade-offs and which one you're
+00:35:11.920 currently are the best ones? Um for our
+00:35:15.040 insights job right now, we're actually
+00:35:16.720 not using in uh sandboxes. So we're
+00:35:19.520 using deep agents. Deep agents comes
+00:35:21.280 with this concept of like a virtual file
+00:35:23.200 system which lets us do kind of like
+00:35:24.880 manipulation of of text data without
+00:35:27.680 using a sandbox. Um we do use sandboxes
+00:35:31.359 in other places generally pretty bullish
+00:35:32.960 on sandboxes. Um I don't I uh I think
+00:35:36.079 they will be a super important part of
+00:35:37.599 the infrastruct. I don't have a super
+00:35:39.280 strong opinion on any of the trade-offs
+00:35:41.040 or which one's uh best. VC anything to
+00:35:43.920 add there?
+00:35:44.720 >> No, I think I think yeah covered it.
+00:35:47.040 >> Cool. Um, as we see this huge shift in
+00:35:50.720 application development, do you see
+00:35:52.000 Agent Gentic being looked after by
+00:35:53.520 operationsdevops
+00:35:55.520 surre teams or will a new role for
+00:35:57.520 agentic operations emerge? Um,
+00:36:01.839 really good question. Uh, I think there
+00:36:04.000 will be a new role that emerges. I think
+00:36:05.760 like I think when you're an S sur is
+00:36:09.200 kind of like looking at like software
+00:36:11.200 errors and system errors and I think
+00:36:12.800 oftent times agentic ops um uh it is
+00:36:17.200 subject matter experts that are looking
+00:36:18.560 at something and saying hey like yeah
+00:36:20.079 this is an error because the agent said
+00:36:22.320 x and it should have said why like those
+00:36:24.000 are like don't get me wrong like devops
+00:36:26.320 will still be important for for parts of
+00:36:27.920 the agent but for the agent logic like
+00:36:29.760 that is that is a different folks it's
+00:36:31.440 it's subject matter experts um our
+00:36:34.480 traditional all these skills
+00:36:35.920 transferable? Probably not for this
+00:36:37.839 part. I think this is like this is like
+00:36:39.599 I mean like some of like the maybe like
+00:36:41.119 first principles part of like being
+00:36:42.720 really diligent and like tracking down
+00:36:44.480 stuff absolutely but like I think like
+00:36:46.160 the hard skills this is about being a
+00:36:48.240 subject matter expert. Um and then
+00:36:52.000 follow up for this how prevalent are
+00:36:53.760 agentic deployments today are we in the
+00:36:55.760 future or are folks still experimenting?
+00:36:57.680 VC, you've talked with a lot of people
+00:36:59.119 building on top of deep agents, which I
+00:37:00.880 think is our most like in is our most in
+00:37:03.839 the future agentic thing. What what are
+00:37:05.359 what are people building there?
+00:37:07.680 >> Yeah. Yeah. I think we are in the future
+00:37:10.240 and the future is like definitely
+00:37:11.520 accelerating and growing like more and
+00:37:12.960 more people are building sort of agentic
+00:37:16.079 or agentic adjacent apps, right? So
+00:37:18.640 there's a few things that keep coming up
+00:37:20.320 that a lot of teams are deploying with.
+00:37:22.160 So one is these sort of like customer
+00:37:24.400 service use cases. anything where
+00:37:26.880 there's sort of a workflow can almost
+00:37:29.359 capture it, but there are sort of
+00:37:31.680 decision steps and like context you need
+00:37:33.760 to gather and like more autonomy that
+00:37:35.440 you need to build, that's one place that
+00:37:37.839 we're seeing it's just easier to jump
+00:37:39.920 into agents rather than like enumerating
+00:37:41.920 everything in the workflow. So teams
+00:37:43.599 just embrace it because more and more
+00:37:45.520 the agents are getting more reliable,
+00:37:47.040 they're getting smarter. Customer
+00:37:48.400 service is one. There's also a bunch of
+00:37:51.200 interesting ones across finance and like
+00:37:53.920 recently I've been seeing them in like
+00:37:55.440 biology as well. Places where you have
+00:37:57.599 to crunch a bunch of data and then make
+00:38:00.320 decisions on it or give reports to
+00:38:02.560 decision makers. Those are generally
+00:38:05.200 good applications that we're seeing
+00:38:06.720 built on deep agents that people are
+00:38:08.880 like using and deploying today.
+00:38:11.599 >> How many tests would you recommend to
+00:38:13.599 run? How many times to call it a pass
+00:38:16.640 given the systems are probabilistic? Um
+00:38:20.720 I don't know if I have a super good
+00:38:22.240 heristic here. Uh I think it probably
+00:38:24.720 depends on how high of confidence you
+00:38:26.480 want. VC, you've been doing a bunch of
+00:38:29.200 terminal bench kind of like hacking.
+00:38:30.880 What have you seen in terms of
+00:38:32.079 variability between runs?
+00:38:35.119 >> Yeah, it depends on the data set. Not
+00:38:37.680 the fun answer, but I think like you do
+00:38:40.000 want to have some sort of like standard
+00:38:41.920 error confidence interval. Um people
+00:38:44.800 usually run it three to five times I
+00:38:46.800 would say. Um I would say for all use
+00:38:49.440 cases you shouldn't do that but the re I
+00:38:52.240 would say like it actually maybe
+00:38:53.599 bifrocate them mentally which is a lot
+00:38:55.520 of these like long horizon agent traces
+00:38:57.680 where there's one step that can maybe
+00:38:59.599 derail you. It's worth running it a few
+00:39:02.480 times just because there's a large error
+00:39:04.960 space there and then maybe more like
+00:39:06.800 simple classification ones maybe one or
+00:39:09.280 two times is good but good question. And
+00:39:11.440 I think also evolving depending on your
+00:39:13.760 industry.
+00:39:15.520 >> Cool. Um,
+00:39:19.040 how about leveraging observability to
+00:39:21.280 increase the security of Agentic
+00:39:23.280 applications? This is something we've
+00:39:24.560 talked about a little bit. So, uh, some
+00:39:26.400 thoughts here. I mean, like, um, I
+00:39:29.119 think, uh, I, yeah, once you have these
+00:39:31.359 traces, I think you can run things over
+00:39:33.200 them either kind of like online or ad
+00:39:35.599 hoc to, to test for kind of like
+00:39:38.480 malicious kind of like activity. So
+00:39:40.480 examples might be like testing for
+00:39:42.880 prompt injections, testing for indirect
+00:39:45.119 prompt injections where is where where
+00:39:47.119 like your agent calls a tool and the
+00:39:48.640 tool returns something that has been
+00:39:50.079 prompt injected. Um uh testing whether
+00:39:53.599 there's API keys that are being leaked
+00:39:55.760 or something like that. Um I think all
+00:39:58.000 of these are totally doable with with
+00:39:59.839 our current infrastructure. We uh this
+00:40:03.280 came up kind of recently so we don't
+00:40:04.720 have any kind of like good demos or
+00:40:06.320 examples of this. if this is interesting
+00:40:08.560 like please reach out and we would love
+00:40:10.240 we would love to work on this. Um VC
+00:40:12.880 anything else to add here?
+00:40:15.040 >> Um no I think you covered it. There's
+00:40:17.920 there's probably a lot of stuff at both
+00:40:19.680 the model layer and like the infra layer
+00:40:21.599 that you can do like prompt injection is
+00:40:23.200 one. There's like guardrails with LLMs
+00:40:26.160 can try to catch some of these like
+00:40:27.440 security injections. But yeah like
+00:40:29.520 Harrison said if there's any particular
+00:40:31.040 thing like our team is really happy to
+00:40:32.880 take a look at it. It's really
+00:40:34.079 interesting.
+00:40:36.560 Um
+00:40:38.160 what is the best slashrecommended way to
+00:40:40.079 get this integrated into a new agent
+00:40:42.000 development workflow? Um so okay so
+00:40:45.280 maybe a few thoughts here like step one
+00:40:47.119 I would say is like just setup tracing
+00:40:49.200 like I think that should be the bare
+00:40:50.400 kind like that's the that's the first
+00:40:52.079 step. If you're asking like how to do
+00:40:53.760 that, we have a bunch of integrations
+00:40:56.000 with a bunch of frameworks out there.
+00:40:57.760 Not only kind of like lane chain,
+00:40:59.359 langraph um but al but crew AI openai uh
+00:41:03.359 agents uh open a SDK directly. So we
+00:41:05.839 have a ton of integrations out there. We
+00:41:07.920 also support hotel um and so if you're
+00:41:10.319 already instrumenting your code with
+00:41:11.520 hotel or you're familiar with hotel, you
+00:41:12.880 can use hotel for that. And then we also
+00:41:14.560 have a custom SDK for kind of like
+00:41:16.079 tracing. Um and and so yeah, my my wreck
+00:41:19.040 would be kind of like set up tracing.
+00:41:22.000 Those three methods are the most common
+00:41:23.440 ways we see people do it. VC, after they
+00:41:26.240 set up tracing, what would you like what
+00:41:28.160 would be the two or three things you do
+00:41:29.839 after that?
+00:41:31.359 >> Yeah. So I think like Harris and I talk
+00:41:32.960 about this a lot to just like send me
+00:41:34.400 the trace. That's like the number one
+00:41:36.240 thing. So like once it's on, I'll tell
+00:41:38.800 you like what our workflow is. Couple
+00:41:41.200 steps. So, it's
+00:41:43.359 use the agent to do something that's
+00:41:45.200 sort of like meaningful to your team.
+00:41:46.880 And it when I say like make your first
+00:41:48.880 like eval, it can literally just be
+00:41:50.960 like, &quot;Hey, I do this thing every single
+00:41:52.560 day. Like, I'm trying to code this new
+00:41:54.079 feature. I'll just go do that.&quot; You need
+00:41:56.000 to like populate your data to like
+00:41:57.920 reflect on something. So, I'll use it
+00:41:59.520 for a task. Once I get a critical mass
+00:42:01.760 of honestly like five or something, I'll
+00:42:04.880 review it. So like I'll either manually
+00:42:07.119 go through it if especially if something
+00:42:09.119 went wrong in that session, I'll go and
+00:42:11.200 review it and then I'll try to aggregate
+00:42:13.119 thoughts over like the five to 10 and
+00:42:15.359 then try to make improvements basically.
+00:42:17.520 So it's like store them and that gives
+00:42:19.440 you the opportunity to like improve the
+00:42:22.160 thing you want. It could be switch your
+00:42:23.520 model, switch your prompt, switch your
+00:42:24.800 tools, like switch one of those things,
+00:42:26.319 but get the data and then look at it
+00:42:28.319 basically.
+00:42:30.880 Um, okay. Maybe last question and then I
+00:42:33.680 will go rapidfire through some of the
+00:42:35.599 ones here that are quicker. Um, have you
+00:42:37.920 tried any prompt optimization techniques
+00:42:39.920 to improve agent/deep agent prompts? VC,
+00:42:43.280 this is all you've been doing for the
+00:42:44.720 last few days. You want to take this
+00:42:46.000 one?
+00:42:46.720 >> Yeah. Yeah. Yeah. Um, yes. So, there's a
+00:42:50.079 huge class of research which is like
+00:42:52.240 prompt optimization. Like you might have
+00:42:53.680 heard of Jeepa. That's maybe where this
+00:42:55.200 question is coming from. Uh, yeah.
+00:42:57.760 Basically the flow that I shared is our
+00:43:00.400 most common flow. It's like a form of
+00:43:02.160 Japa basically. But uh take a bunch of
+00:43:05.359 traces, distill those insights. I will
+00:43:07.680 add one thing which is human priors
+00:43:10.160 injecting those into your prompts is
+00:43:12.079 incredibly valuable as well. Like I
+00:43:14.319 won't just like let the agent look at
+00:43:15.520 all the traces. I'll be like this is
+00:43:16.960 what our team thinks that you should do
+00:43:18.560 to improve them. Like take that into
+00:43:21.440 account as well and then improve and
+00:43:23.280 then rerun. The other thing I'll just
+00:43:24.960 roughly add is skills. We support that
+00:43:27.440 natively in deep agents. This is like a
+00:43:29.680 fantastic way to package more like
+00:43:32.480 semantic actions and like skills
+00:43:34.400 basically are prompts. Like they get
+00:43:35.920 injected into your system as prompts.
+00:43:37.440 They're specializations. If I see
+00:43:39.680 something coming up over and over again,
+00:43:41.280 I make it into a skill essentially and
+00:43:43.599 then go from there. So I think those
+00:43:45.680 there's I could talk for another hour
+00:43:47.200 about it, but like those are the two
+00:43:48.480 sort of like main ways that we've been
+00:43:49.760 doing it.
+00:43:50.800 >> Cool. And then I'm gonna maybe go rapid
+00:43:53.280 fire through as many as I can in the
+00:43:54.800 next three or so minutes. Any plan or
+00:43:57.200 roadmap for native gateway or proxy
+00:43:59.200 layer? Uh no. Um is there an API to turn
+00:44:02.880 trace on and off for different parts of
+00:44:04.240 the agent? Uh yes, there's a few
+00:44:06.160 different ways. Uh can ask on a forum or
+00:44:08.880 GitHub and and we'll give code snippets
+00:44:10.640 there. Um any kind of like sensitivity
+00:44:13.280 analysis or cost simulator tool. Um we
+00:44:16.640 have all the data around cost and
+00:44:18.319 performance there. I don't think we try
+00:44:20.560 we try to give you that data and let you
+00:44:22.240 make the trade-offs and you do the
+00:44:23.520 forecast. We don't have anything built
+00:44:24.880 in. Um, can you filter the data the
+00:44:27.440 traces just on data exchanges? Um,
+00:44:31.440 possibly. It depend. I I I don't fully
+00:44:33.839 understand this question. You can add
+00:44:35.599 you can you can add a bunch of metadata
+00:44:37.760 and tags to traces. And so if you can't
+00:44:39.839 do it natively, that would be the manual
+00:44:41.440 way to do it. Um, can you use middleares
+00:44:44.000 for tracing? Uh, you can, but you don't
+00:44:46.240 need to. Um, uh, well, it depends. If
+00:44:49.040 you're asking about lang chain
+00:44:49.920 middlewares, we already do it
+00:44:51.200 automatically, so you don't need to use
+00:44:52.240 it there. If you're talking about like
+00:44:53.440 middlewares and hooks and like cloud
+00:44:54.960 code, then yes. Um, what happens when
+00:44:58.079 tools have LLM calls? We are evaluating
+00:45:01.119 uh uh
+00:45:05.440 what happens when tools have LLM calls?
+00:45:07.359 How are we evaluating? Uh, you you
+00:45:09.760 evaluate the LM calls that are part of
+00:45:11.520 the tool um or the tool itself and and
+00:45:13.920 end to end. It's a combination of of
+00:45:15.680 kind of all of them. We have data
+00:45:17.359 residency requirements. Is Langmith a
+00:45:19.359 server Australia? Is Langmith server
+00:45:21.440 available in Australia? Um, not yet, but
+00:45:24.160 we do have a hybrid deployment and and
+00:45:26.400 self-hosted uh option. What features are
+00:45:29.200 you seeing getting used the most and
+00:45:30.720 least in Langmith at the moment? Most is
+00:45:33.119 absolutely tracing probably followed by
+00:45:35.200 like uh prompt playground and uh and
+00:45:39.359 insights agent. Least is maybe some of
+00:45:41.599 the alerting and monitoring stuff.
+00:45:43.359 That's a big focus for our us in the in
+00:45:45.440 the upcoming few months. What is your
+00:45:47.760 take on RLM and will Link Smith evolve
+00:45:49.839 to support RLM using threads and traces?
+00:45:52.400 Uh yeah, I think RLM is very similar to
+00:45:54.640 a lot of the coding agents out there. Uh
+00:45:56.240 I think we already support it pretty
+00:45:57.839 pretty well. Do you plan on adding retry
+00:46:00.000 and fallback model settings for prompts?
+00:46:01.839 Uh yes, uh we absolutely want to beef up
+00:46:04.319 our prompt hub support. Um if you have
+00:46:06.160 specific asks there, I think the retry
+00:46:08.160 and fallback is on our road map, but if
+00:46:09.599 you have specifics, please get in touch.
+00:46:11.359 we would love to chat. Um
+00:46:15.040 I there's there's more coming in than I
+00:46:17.680 can possibly kind of like answer, but um
+00:46:21.040 both the Zach and I are terminally
+00:46:22.960 online on Twitter, so please uh message
+00:46:25.599 us uh shoot us a shoot us a tweet. We'd
+00:46:27.760 love to chat about all this. All these
+00:46:29.599 questions have been great. Um if there's
+00:46:33.040 anything I can leave you guys with, it
+00:46:34.800 would just be that that observability
+00:46:36.640 powers all of this. And so I would set
+00:46:38.160 up observability and and tracing
+00:46:39.920 specifically. Like when when I say
+00:46:41.359 observability, I think sometime in
+00:46:42.560 software you think like data dog and all
+00:46:44.079 those production logs. No, no, no. Like
+00:46:45.680 observability for agents comes in way
+00:46:47.280 earlier. Like I would set that up. Um
+00:46:49.359 even like if you're not using Langmith,
+00:46:51.200 that's fine. Just like set it up. You're
+00:46:52.560 going to have a happier kind of like uh
+00:46:54.720 uh uh life. And obviously you should use
+00:46:56.640 Langmith. Um any last words of wisdom
+00:46:59.920 from you?
+00:47:01.680 >> No, I think I think you covered it.
+00:47:03.599 >> Cool. All right. Awesome. Thank you guys
+00:47:05.599 all for coming. We'll do more of these.
+00:47:07.280 Send us any questions on Twitter.

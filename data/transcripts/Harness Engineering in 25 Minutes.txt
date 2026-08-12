@@ -1,0 +1,855 @@
+# tactiq.io free youtube transcript
+# Harness Engineering in 25 Minutes
+# https://www.youtube.com/watch/DYUqTQAW-To
+
+00:00:00.000 Hey everyone, welcome back to my
+00:00:01.400 channel. So, guys, today we are going to
+00:00:02.800 discuss about something which you must
+00:00:04.600 have seen over LinkedIn, YouTube, and I
+00:00:06.200 guess lots of people talking. Uh many
+00:00:08.039 people on my videos as well were
+00:00:10.120 commenting that, &quot;Man, what is this
+00:00:11.560 hardness in cheating and everything?&quot;
+00:00:13.120 So, today we will cover the same. Not
+00:00:14.680 only would we understand it, we would
+00:00:16.560 actually see the real-world use case,
+00:00:17.960 how like few examples of how you can do
+00:00:20.320 the same, all the components of hardness
+00:00:22.320 engineering, and understand the same
+00:00:23.840 with a very good analogy. So, with that,
+00:00:25.600 let's start and understand the hardness
+00:00:27.280 engineering completely.
+00:00:29.000 So, great, everyone. Now, let's
+00:00:30.440 understand the hardness engineering. And
+00:00:32.080 before you move forward and I explain
+00:00:33.760 you this, let's first try to see if it
+00:00:35.360 is actually helpful or not. And for the
+00:00:37.280 same, I would like to show you this
+00:00:38.960 particular blog. Now, it has been
+00:00:40.560 written by LangChain. Okay, so what they
+00:00:42.480 did was that they basically improved
+00:00:45.000 their deep agent with hardness
+00:00:46.720 engineering. Now, in this competition,
+00:00:48.720 which is on Terminal Bench 2.0, which is
+00:00:50.720 a pretty good competition for everything
+00:00:52.200 related to agents, so let me show you
+00:00:53.680 that as well quickly. And again, I will
+00:00:55.520 be adding all the links in the comments.
+00:00:57.480 So, in this leaderboard, everyone, what
+00:00:59.840 they did was that they initially were
+00:01:01.840 having a rank which was something
+00:01:03.200 around, I guess, 26 or 7. So, they were
+00:01:05.600 in top 30.
+00:01:06.920 But without changing the model, just
+00:01:08.840 with the help of hardness engineering,
+00:01:10.800 they were able to get their deep agent
+00:01:13.240 in top five. Okay, so pretty pretty
+00:01:15.440 awesome article. I have, of course, read
+00:01:17.080 the same, and I will highly suggest that
+00:01:18.880 you also see the same that how they were
+00:01:21.680 able to increase from 52.8 to 66.5 on
+00:01:25.600 Terminal Bench 2.0. So, this shows us
+00:01:28.240 that yes, there is an actual, right,
+00:01:30.360 advantage of learning about this
+00:01:32.160 hardness engineering. Because just think
+00:01:33.920 about this, if people at LangChain,
+00:01:35.480 right, they were able to improve their
+00:01:37.160 models that much, how effective it would
+00:01:40.200 be for us, okay? So, let's try to
+00:01:42.320 understand it. Now, I have also made
+00:01:43.760 sure that it is divided into very
+00:01:45.400 easy-to-understand component as well,
+00:01:47.080 everyone. And let's see the same
+00:01:49.480 approach. So, the whole idea was that
+00:01:51.360 when people at LangChain deep agents,
+00:01:54.000 they improved their ranking, they didn't
+00:01:56.080 change the model. Okay, so that is the
+00:01:57.920 very very first understanding. So, they
+00:01:59.440 were using the same same model everyone.
+00:02:01.960 But, using the same model rather than
+00:02:03.880 thinking that, &quot;Hey, we are getting a
+00:02:05.479 bad rank. Let us wait for the newer or a
+00:02:08.399 better model to come in.&quot; Okay, they
+00:02:10.919 worked on the same. Added a harness. And
+00:02:14.000 were able to get in top five. Score was
+00:02:16.720 as I showed you 66.5, 52.8.
+00:02:19.680 And of course, plus 13.7 from the last
+00:02:22.280 uh overall rank. Okay. So, this of
+00:02:24.480 course will prove that, yes, this
+00:02:25.680 concept is having a lots of credibility.
+00:02:28.080 Now, let's try to understand the same
+00:02:30.080 everyone with a very very awesome
+00:02:31.520 example. Now, I think this will be clear
+00:02:33.560 to each and every one of you. So, the
+00:02:35.920 whole idea becomes that how all of us
+00:02:37.840 are having same amount of models, right?
+00:02:40.880 LLMs, which we have access to. So, we of
+00:02:42.959 course have, let's say, different models
+00:02:45.640 like Claude, Opus. Okay.
+00:02:48.400 Uh Fable was there, but it got
+00:02:49.800 discontinued. So, Fable. Then, of
+00:02:52.160 course, we have, let's say, OpenAI GPTs
+00:02:55.040 model. Or, of course, Gemini. And lots
+00:02:57.920 of open source model as well. So, we
+00:03:00.120 have recently GLM 5.2, I guess, which
+00:03:03.280 was pretty awesome in terms of uh cost
+00:03:06.280 as well as the result.
+00:03:07.840 Now, harness engineering, the whole idea
+00:03:10.040 becomes everyone that how can you build
+00:03:12.440 around the model so that you can get a
+00:03:15.320 much better result. So, just to showcase
+00:03:18.560 the same to you everyone, let's think,
+00:03:20.320 and I think each of you can easily
+00:03:22.480 understand the same with this example of
+00:03:24.440 a mobile phone or maybe say a laptop.
+00:03:26.880 So, what happens in a mobile phone
+00:03:28.560 everyone is that we are having a chip,
+00:03:30.400 right? So, we are having a chip inside
+00:03:32.600 our mobile.
+00:03:33.920 Uh not this one.
+00:03:35.239 Now, of course, uh many different
+00:03:37.200 different companies are using the same
+00:03:39.160 chip, which are created either by
+00:03:40.480 Snapdragon. And I think many of them are
+00:03:43.000 from AMD etc. as well. Or, of course,
+00:03:45.480 let's say Apple also creates its own.
+00:03:47.120 The whole idea is that you will see that
+00:03:48.560 in the Android market, uh a same chip is
+00:03:50.680 being used by multiple companies, right?
+00:03:53.240 And of course, then what they do
+00:03:54.800 everyone, they add lots of thing around
+00:03:56.920 this chip so as to make it a lot more
+00:03:59.120 usable. So, they can add a very good
+00:04:00.480 camera, right? So, they're having the
+00:04:02.000 same chip at the end of the day. And one
+00:04:03.920 more thing to understand is that
+00:04:05.760 this chip is something which everyone
+00:04:07.520 has access to.
+00:04:08.959 No one is going to buy this chip alone.
+00:04:10.920 So, in a similar manner, no one pays LLM
+00:04:14.200 directly, right? If you want to create a
+00:04:15.480 product LLM is not what going people are
+00:04:18.000 going to pay because each and every one
+00:04:19.798 of us of us is having the same access to
+00:04:21.959 the LLM. But by creating a complete
+00:04:24.120 ecosystem by providing, let's say, the
+00:04:26.120 screen okay? Then, of course, we can
+00:04:29.000 provide the body.
+00:04:30.720 Right? So, we can have the complete body
+00:04:32.520 and the flow on how we are accessing the
+00:04:34.600 same. Then, of course, security
+00:04:36.280 protocol, etc. So, how good is the
+00:04:38.480 security and everything, everyone? So,
+00:04:40.800 all those are the things which is making
+00:04:43.560 my complete phone. So, once I have added
+00:04:47.400 the same, everyone this is what
+00:04:49.760 completes my phone. So, I can just have
+00:04:52.200 a phone icon as well here. So
+00:04:55.120 finally, after getting all of these
+00:04:56.800 things, we would be having a complete
+00:04:59.120 complete phone, right? So, the idea is
+00:05:02.000 the same only and you can see that how
+00:05:04.360 if you are having a bad setup right?
+00:05:07.480 Let's say, you have not talked on the
+00:05:09.400 default setting, you have not seen that
+00:05:10.840 how can you get the best practices. You
+00:05:12.960 of course have very weak cooling, right?
+00:05:14.760 So, there is no thermal plan, camera
+00:05:16.840 pipeline left generic, you're not trying
+00:05:18.680 to use the chip to make your images
+00:05:20.919 better. Okay, it overheats. All these
+00:05:23.280 things will result in a poor setup or a
+00:05:24.880 poor phone. Just like how again with the
+00:05:27.160 having a same chip. But if we are having
+00:05:30.000 a very good setup, software is actually
+00:05:31.960 very much tuned. Okay, there is a solid
+00:05:34.040 cooling, there is a real thermal plan.
+00:05:35.760 Then, of course, camera pipeline built
+00:05:37.080 around the same. Then, of course, same
+00:05:38.720 chip is getting completely completely
+00:05:40.400 utilized. So, this is the whole
+00:05:42.640 idea about the harness engineering,
+00:05:44.680 everyone, that how by using the same
+00:05:46.680 model. Okay, by using the same model
+00:05:48.320 which are available, same LLMs, how are
+00:05:50.720 we able to set up around it, okay?
+00:05:53.360 Harness the model. So, I take it in this
+00:05:55.760 wording that how are we able to harness
+00:05:57.640 the same model
+00:05:58.960 to
+00:06:00.000 get a real-world result, okay? So, quick
+00:06:02.040 rule, same chip, same raw power, okay?
+00:06:04.640 But, the setup around it decides the
+00:06:06.480 complete result. Now, of course, you can
+00:06:07.880 understand the same with your laptop
+00:06:09.880 chips, with your mobile, or let's say
+00:06:12.320 with a car as well where the engine is
+00:06:14.040 same, okay? Your engine is giving you
+00:06:15.440 some torque or horsepower, but using the
+00:06:17.840 same we are able to create so many
+00:06:19.480 different different nice kind of cars.
+00:06:21.640 And in the same price, some car is
+00:06:23.240 giving you the same horsepower, but a
+00:06:24.640 much better exterior, much better
+00:06:26.240 experience.
+00:06:27.400 But, on the same side, some company
+00:06:28.760 might not be giving you around that. So,
+00:06:30.120 this building all around this complete
+00:06:32.720 chip
+00:06:33.640 or LLM, basically the technical model,
+00:06:35.640 is what matters. It will, of course,
+00:06:37.840 depend a lot on how the body is being
+00:06:39.840 created, how you are utilizing, right?
+00:06:42.200 How cool you are keeping your chip. And
+00:06:44.560 I remember a very good example. So, this
+00:06:46.480 was my very first phone which I
+00:06:47.840 purchased from my money, right? So, Poco
+00:06:50.440 F1. Pretty sure many of you must have
+00:06:52.000 used it. It was having this Snapdragon
+00:06:54.640 845 octa-core processor.
+00:06:57.880 Now, many companies were using the same,
+00:07:00.240 right? So, if you would have required
+00:07:02.200 like OnePlus and all these were using
+00:07:04.240 these different different phones. But,
+00:07:06.760 what people did in Poco was it was
+00:07:09.800 having a very good cooling chamber as
+00:07:11.640 well. So, it was having
+00:07:13.080 cooling system,
+00:07:14.440 liquid cooling system, which used to
+00:07:16.080 make sure that
+00:07:17.640 using the same chip again, we are able
+00:07:20.120 to get a much better overall result,
+00:07:22.800 right? So, in that case, it was very
+00:07:24.720 very fast. Yeah, this is something how
+00:07:26.240 it was. And I remember many companies
+00:07:28.120 were facing issue with the heat of the
+00:07:29.520 chip because it was so capable. So,
+00:07:31.360 rather than thinking that, &quot;Hey, let's
+00:07:32.720 move away from the next chip, 855.&quot;
+00:07:35.520 They made sure that they are using this
+00:07:37.280 one to the fullest. So, that is the
+00:07:38.560 whole idea, everyone. So, now let's see
+00:07:40.880 that how we have reached there.
+00:07:43.520 If you remember back in 2022, I think
+00:07:45.520 this was back in 2022 everyone, where we
+00:07:49.000 were having just prompt engineering. So
+00:07:51.360 it used to matter that what you are
+00:07:54.000 telling your AI. So if you used to say
+00:07:56.520 that hey, behave like this, this is how
+00:07:58.720 it it used to give you a much much
+00:08:00.440 better result, right? In a similar sense
+00:08:02.760 everyone, I hope all of you remember
+00:08:04.160 that how in the 2025 then, that is
+00:08:06.840 genuinely just last year, we came up
+00:08:08.520 with something known as prompt sorry
+00:08:10.600 context engineering. So now it didn't
+00:08:12.120 matter how you are prompting your AI,
+00:08:13.960 how you are telling it that hey, write
+00:08:15.240 my email like a professional and all
+00:08:16.680 these things. If you were able to give
+00:08:18.640 it the context of your previous email,
+00:08:20.800 or let's say instead of saying that hey,
+00:08:22.120 you are a software developer is D3,
+00:08:24.240 write my email like this. If you were
+00:08:25.720 able to give it the context, access to
+00:08:27.800 your files, right? What exactly matters
+00:08:30.040 the previous code, it was able to give
+00:08:32.080 you a much better result. Now that is
+00:08:33.919 where everyone, in this part now we are
+00:08:36.960 seeing that how in 2026 and yes, things
+00:08:40.080 are actually moving pretty fast. We have
+00:08:42.280 something known as context engineering.
+00:08:43.960 So quickly let's see that one message,
+00:08:45.560 one reply. Wording matters the most
+00:08:47.560 here.
+00:08:48.480 Breaks down on multi-step task, best for
+00:08:50.960 simple one-off task. When we move on to
+00:08:53.200 this context engineering everyone after
+00:08:54.839 this, then the whole idea was very very
+00:08:56.560 simple to understand that how this time
+00:08:58.880 let us show the model, let us give it
+00:09:00.440 the access to files, let us just provide
+00:09:02.640 the right files, anything which it
+00:09:04.400 wants. Memory and retrieval was also
+00:09:06.960 added. And then of course in a single
+00:09:08.760 session it was able to work. But if you
+00:09:10.440 think about this now, thanks to these
+00:09:12.160 different different
+00:09:13.960 AI agents which are coming in like
+00:09:15.920 Claude, code, codex, we don't now just
+00:09:18.720 give it a task. We just we make sure
+00:09:20.720 that we will be giving it a complete
+00:09:22.800 goal. Okay, so we will be telling that
+00:09:24.400 hey, create a complete application. Or
+00:09:26.720 maybe we will be giving it a complete
+00:09:28.280 PRD as well, that hey, this is what I
+00:09:30.160 want to create. Now we are not asking AI
+00:09:32.600 to just simply write us an email or
+00:09:34.240 something. We are genuinely asking you
+00:09:35.800 to come create a complete system. So
+00:09:37.760 that is where again everyone we have to
+00:09:39.320 give it the whole world on which it
+00:09:41.240 operates.
+00:09:42.440 Rules, tools, checks, limits, each and
+00:09:44.680 everything has to be very very nicely
+00:09:46.200 provided and handled. So, the whole idea
+00:09:49.120 about hardness engineering is that what
+00:09:50.880 level of control are we having, right?
+00:09:53.600 Then of course built for long and
+00:09:54.800 non-supervised run. Now, our AI doesn't
+00:09:56.840 just run for maybe a minute or two.
+00:09:58.960 Actually, now you can run AI for hours,
+00:10:01.040 right? We have agents in different
+00:10:02.640 different application in different
+00:10:04.760 different use cases where they run for
+00:10:07.240 hours. They are having all the access to
+00:10:09.240 our machine thanks to Claude, code, and
+00:10:11.640 Claude co-work, and all these different
+00:10:13.240 different types of things which have
+00:10:15.000 came over the last 6 month.
+00:10:17.040 So, that is what we are going to cover
+00:10:18.600 and that is the whole idea behind it.
+00:10:20.680 And of course, when your agent will be
+00:10:22.040 having 20 50 steps, so if you would have
+00:10:24.200 just go to let's say Claude code and if
+00:10:26.320 you give it something, right? It will
+00:10:27.480 keep on running for maybe 30 minutes, 40
+00:10:30.120 minutes doing things in steps. So, the
+00:10:32.240 question is now just not that okay what
+00:10:35.160 do I give it access to or what do I show
+00:10:37.000 my agent or my let's say AI? It actually
+00:10:40.200 becomes that hey, how can I control the
+00:10:42.480 complete world where it is operating?
+00:10:43.880 So, that is the whole idea everyone
+00:10:46.280 which you have to now shift. So, this is
+00:10:48.080 the whole mindset shift. So, let's now
+00:10:49.800 see about the different different things
+00:10:52.160 and understand the same via this analogy
+00:10:54.200 only of the mobile phone because it is
+00:10:56.320 going to be very important to understand
+00:10:57.839 that how exactly we achieve this
+00:10:59.600 hardness engineering. So, the number one
+00:11:01.560 everyone is like the setting that tell
+00:11:03.560 it how to behave. Now, it is not just a
+00:11:05.720 let's say sorry, it is just like a
+00:11:07.440 written file that agent needs before
+00:11:09.360 doing anything, okay? So, not just let's
+00:11:11.160 say do a good job. Complete specific
+00:11:13.120 stuff. Now, I think all of you will be
+00:11:14.400 able to relate to it that how
+00:11:16.680 Claude.md kind of help us with the same,
+00:11:19.080 right? So, let me just get this. Yeah,
+00:11:21.160 Claude.md everyone is a very very good
+00:11:22.960 example of this. And coming to your
+00:11:24.800 phone as well, if you just think about
+00:11:26.280 it, right? Exact instruction before
+00:11:28.080 starting what is allowed, what is
+00:11:29.440 blocked, what needs an okay from the
+00:11:31.320 user. Your phone cannot call uh by
+00:11:33.920 default, okay? It tries to be very
+00:11:36.160 secure that it is not sending data. It
+00:11:37.920 is not giving any default permission to
+00:11:40.280 uh let's say any of the application. So,
+00:11:42.960 two phones can actually ship with the
+00:11:44.440 exact same chip and a completely
+00:11:46.000 different default setting, right? One is
+00:11:47.800 let's say tuned for gaming and one can
+00:11:49.680 be tuned for battery life. Now, again,
+00:11:51.520 we have seen that how Samsung phone are
+00:11:53.600 very much uh
+00:11:54.960 towards the professional use case.
+00:11:57.720 Whereas uh let's say phone from IQ or
+00:12:00.080 other companies, they are very much uh
+00:12:01.960 optimized for gaming. And in the end,
+00:12:03.720 they can have a same chip, right? So,
+00:12:05.080 that is the whole idea, everyone. That
+00:12:07.000 setting profile is exactly what claw.mpt
+00:12:09.480 or any similar file looks like in our
+00:12:11.520 agent or in our harness engineering. It
+00:12:13.840 tells the brain how to behave in a
+00:12:15.520 project. Okay, so that is the whole
+00:12:16.880 idea, everyone. Now, let's move on to
+00:12:18.160 the next one. And this is actually the
+00:12:19.960 hard uh
+00:12:21.040 sorry, the hardware which is actually
+00:12:22.600 wired into.
+00:12:23.880 So, coming to the hardware, everyone,
+00:12:26.160 here the use case becomes that what
+00:12:28.360 exactly your agent have access to. Does
+00:12:30.600 it have access to your files, your Git?
+00:12:32.480 What are the different different
+00:12:33.520 connected tools? And in here, of course,
+00:12:35.280 MCP is something which comes into
+00:12:37.520 picture. Now, in a real-world example,
+00:12:40.520 you will see that how the most powerful
+00:12:42.320 chip which has ever been made will be
+00:12:44.440 useless if let's say the camera sensor
+00:12:46.320 is not connected to it, right? Many
+00:12:47.720 companies now what they do is
+00:12:49.760 by making sure that with the chip in
+00:12:52.720 center,
+00:12:53.720 they are able to process your images,
+00:12:55.600 right? So, again, the whole idea is that
+00:12:58.280 uh they are now connected to your
+00:13:00.480 camera, to your storage,
+00:13:02.520 to let's say the latest of the
+00:13:04.040 application. And even the like highest
+00:13:07.040 and let's say the largest of the games
+00:13:08.760 as well, right? We have phones in which
+00:13:10.240 we have two, three GB kind of games and
+00:13:13.440 chip is able to connect and just make
+00:13:15.680 sure that everything it is able to
+00:13:16.960 access there. So, that becomes very,
+00:13:18.760 very important in our real uh let's say
+00:13:21.400 world of AI. Files, Git, any connected
+00:13:24.160 tools, all of these things are very,
+00:13:25.360 very important. If they are not present,
+00:13:26.760 then Claude Opus, Fable, Mythos, any of
+00:13:29.240 the model will not be of any use, right?
+00:13:31.560 The next everyone is
+00:13:33.160 is the second pass. So, again, the whole
+00:13:36.120 idea is that once your agent or AI is
+00:13:39.440 running in a system, okay, so just like
+00:13:41.160 how Claude code runs.
+00:13:42.840 Now, of course, we have to make sure
+00:13:44.600 that we are having second look, we are
+00:13:46.240 checking each and everything. So, all
+00:13:48.400 those things become very important,
+00:13:49.480 right? Someone actually has to look at
+00:13:51.120 the result.
+00:13:52.240 And before it counts as finished, we
+00:13:54.040 have to do a test, a check. Okay,
+00:13:56.280 sometime maybe a second AI reviewing it.
+00:13:59.120 Or let's say human in the loop, which
+00:14:01.480 actually tell that hey, if the work is
+00:14:02.920 done or not. As an example, let's say
+00:14:04.600 you ask your AI to create a complete CRM
+00:14:08.400 system for you.
+00:14:09.720 Now, actually it checks in middle. It
+00:14:12.320 sees that hey, where I am exactly, takes
+00:14:14.560 a screenshot of the application, and
+00:14:16.040 then reviews itself as well sometime.
+00:14:18.440 So, these checks are always there,
+00:14:20.480 right? Now, just as an example, whenever
+00:14:22.800 you take a photo from your mobile, it of
+00:14:24.840 course understands that hey, if if you
+00:14:26.920 have a sequence in mobile where it takes
+00:14:28.800 multiple photos, it select the best one
+00:14:30.960 out of it, right? So, there is a review
+00:14:32.160 system in that case where it understand
+00:14:34.080 the frames, the exposure, what is
+00:14:36.160 missing, do I have to do some noise,
+00:14:38.360 let's say
+00:14:39.600 noise check or noise canceling in the
+00:14:41.640 images as well. So, all these things
+00:14:43.960 also come up here because without this
+00:14:46.240 in your world or in your system, now
+00:14:47.920 that we are using AI like this, it is
+00:14:49.960 not going to be of any help, right? If
+00:14:51.240 you ask it to create a CRM and it just
+00:14:53.000 gives you a very basic one or even the
+00:14:54.839 one which is not working. So, before now
+00:14:57.560 any AI hands over the result to you,
+00:14:59.720 okay, they are actually making sure that
+00:15:01.720 each and everything is getting checked.
+00:15:03.480 Now, as your role as a harness
+00:15:04.839 engineering, of course, you will have to
+00:15:06.080 take care of all these different
+00:15:07.720 different components, right, everyone?
+00:15:09.920 Now, the next everyone is the rule that
+00:15:12.040 enforces itself. So, the whole idea here
+00:15:14.160 is very very simple. Your phone, okay,
+00:15:17.040 it should be having proper rules which
+00:15:18.960 are enforcing itself. Now, what do I
+00:15:20.720 mean by that? So, instead of just saying
+00:15:22.360 in this kill.
+00:15:23.480 Claude.md that hey, don't do this. Avoid
+00:15:26.400 sending any images yourself or avoid
+00:15:28.160 calling. We make sure that we are having
+00:15:30.760 perfect proper rules, okay? So, that
+00:15:33.880 nothing goes outside. Nothing goes out
+00:15:35.640 of our control. Now, a very good example
+00:15:37.480 of this is that whenever any application
+00:15:39.360 is asking for access to your photos or
+00:15:41.320 to your files, of course it ask you
+00:15:43.440 first. It doesn't give that by default.
+00:15:45.280 Similarly, in the real AI space,
+00:15:47.720 we have something known as hooks. Okay,
+00:15:50.040 and hooks actually control what is
+00:15:52.000 possible, what is not. So, many of you
+00:15:53.480 must remember that for example, you
+00:15:55.760 could actually ask your
+00:15:57.840 AI to drop
+00:15:59.520 and delete all the tables.
+00:16:01.040 But, we can also add this hook in our
+00:16:04.200 setting.json, okay? And this works
+00:16:07.000 across Codex Claude. So, that if it
+00:16:09.320 tries to run this drop table or rm minus
+00:16:13.200 rm hyphen rf, any of these different
+00:16:15.680 different
+00:16:16.920 things which is it is trying to delete
+00:16:18.560 your data in the table or delete your
+00:16:21.040 complete folder, then it will not let it
+00:16:23.520 do that. Okay, similarly in a sense that
+00:16:25.880 if you are creating an application,
+00:16:28.760 before saying that hey, the same is
+00:16:30.760 done, it will run this particular thing
+00:16:33.080 and return back the result. So, if it
+00:16:34.760 fails, if any of the test is failing in
+00:16:36.680 my npm test, then of course it will try
+00:16:39.760 to first fix it. So, we are making sure
+00:16:42.280 that we are adding these hard rules,
+00:16:44.320 okay? So, the rules which are enforcing
+00:16:46.000 themselves
+00:16:47.120 into our system as well. So, when my
+00:16:50.400 complete brain, the AI is doing
+00:16:53.080 something in my world, in my machine on
+00:16:55.920 very anywhere I've given it a task,
+00:16:58.040 these things fires on its own and no
+00:17:00.040 asking. Stop risky action before they
+00:17:02.200 happen. So, that is the whole idea,
+00:17:04.040 everyone. It makes sure that it is able
+00:17:05.839 to give you the much level improve of
+00:17:07.920 control, which is a very very important
+00:17:10.199 part of your hardness engineering.
+00:17:11.920 Earlier, we were not having these
+00:17:13.760 things, but now we have to make sure
+00:17:15.400 that since we are creating and if I show
+00:17:17.640 you the definition as well everyone, let
+00:17:19.280 me just show you the definition. If you
+00:17:22.000 will search or harness engineering, it's
+00:17:24.079 a discipline of designing the system,
+00:17:26.319 tools, and execution environment that
+00:17:28.760 surround the AI model. It defines what
+00:17:30.960 an AI model can see, the tools it can
+00:17:33.200 call, so the first tool which I showed
+00:17:34.840 you, how it validates its own decision,
+00:17:38.000 and when it should stop transitioning AI
+00:17:40.440 from basic prompt to reliable autonomous
+00:17:42.800 system. So now as a harness engineer,
+00:17:44.920 you will be handling all these things.
+00:17:46.240 So as you can understand guides, feed
+00:17:48.280 forward just like agents.md everyone,
+00:17:50.440 sensors feedback evaluation loop,
+00:17:52.080 linters, output parser, validation
+00:17:54.120 logic, sandbox execution, secure
+00:17:56.440 environment within the restrictive
+00:17:57.840 permission, and of course the complete
+00:17:59.840 orchestration as well everyone, right?
+00:18:01.480 So that is the whole idea, that is where
+00:18:03.800 this complete system is helpful. Now
+00:18:05.960 along with this, one very important part
+00:18:07.760 and rather the last one is the
+00:18:08.840 specialized chip. And this I think is
+00:18:10.880 pretty important and easy to understand.
+00:18:12.760 Many of the phones now are having or
+00:18:14.680 laptops even are having some
+00:18:17.480 TPU, right?
+00:18:19.560 And it's chips as well. So along with
+00:18:21.640 the main chips everyone, it is having a
+00:18:23.800 proper chip, right? Which can work
+00:18:25.800 alongside. So we are having separate
+00:18:28.400 graphic processor along with the main
+00:18:30.200 chip. So in a similar manner, we are
+00:18:31.960 having a specialized chip, but we have
+00:18:33.840 the approach of handing off with a
+00:18:35.960 controlled
+00:18:37.680 context, right? Control on the context
+00:18:40.120 as well. Limiting the context. So that
+00:18:42.520 is where we have sub agents, right? In
+00:18:44.760 the AI world, that is what is known as
+00:18:46.360 sub agent, where
+00:18:47.720 if your cloud feeds or for example any
+00:18:49.760 of these things, codex etc.,
+00:18:51.920 they can call another sub agent with the
+00:18:53.560 limited context, and they can then work
+00:18:55.200 in parallel, do your work and
+00:18:56.560 everything. So in that case everyone,
+00:18:58.480 the same is going to be very very
+00:19:00.080 helpful. And these are majorly the
+00:19:02.040 component which you built around, right?
+00:19:04.200 So around your chip, you are actually as
+00:19:06.840 a harness engineering controlling all
+00:19:08.600 these different different things. And
+00:19:09.800 that is where the definition makes
+00:19:11.040 sense, that how
+00:19:12.520 uh you are able to, as a harness
+00:19:14.640 engineer, control how your AI behaves,
+00:19:17.360 so that it is actually able to do the
+00:19:19.480 same task without changing the brain.
+00:19:21.760 And that is where I guess the LangChain
+00:19:23.520 team did a very, very awesome job,
+00:19:24.840 right? So, with the deep agents, they
+00:19:26.600 were able to improve the complete uh
+00:19:29.000 thing by coming in the top five, okay?
+00:19:31.840 Just by making sure that they can
+00:19:33.280 control all of these different different
+00:19:35.320 knobs,
+00:19:36.240 handling all the things on which it is
+00:19:38.200 working on, and that is what they have
+00:19:39.600 explained in here as well, right? So,
+00:19:41.040 agent self-verification with the run,
+00:19:42.920 verify against big and run test,
+00:19:44.440 something which I've shown you. So, that
+00:19:46.640 is all across the harness engineering,
+00:19:48.640 everyone. And this shows us a very, very
+00:19:50.960 important part which we have to
+00:19:52.080 understand that the whole mindset shift
+00:19:54.440 everyone is that every mistake is
+00:19:56.600 actually now becoming a fix. So, if
+00:19:59.280 something goes wrong, it is not a chip
+00:20:01.000 problem. If, say for example, let's say
+00:20:03.400 that your camera in your phone is not
+00:20:04.840 performing well. It is not that your uh
+00:20:07.720 provider, like, say let's say Samsung or
+00:20:09.400 any other company, they will just get
+00:20:11.880 all the phones back, change the chip,
+00:20:13.240 and everything. No. They try to push an
+00:20:15.000 update. So, every mistake kind of
+00:20:17.120 becomes an opportunity. Okay, if there
+00:20:18.600 is a mistake, find the gap and fix it.
+00:20:20.520 This is what your mindset should be,
+00:20:22.120 because now our AI models are very, very
+00:20:23.920 mature, and they are able to give us a
+00:20:25.480 lot better results. So, if any mistake
+00:20:27.080 happen, agent does something wrong,
+00:20:29.160 the model is not replaced for it.
+00:20:31.120 What rule were missing? What check
+00:20:32.720 didn't exist yet? We add those checks,
+00:20:34.600 then we fix it, add the missing rule and
+00:20:36.400 check, so that same mistake can never
+00:20:38.640 repeat. So, this is a very, very
+00:20:40.560 important mindset shift, everyone, and
+00:20:42.200 that is how actually we will be able to
+00:20:44.200 take the best, because if you think
+00:20:46.200 about it, just using an expensive model
+00:20:48.280 will be very, very expensive to the
+00:20:49.880 company, and we have seen that how AI
+00:20:51.640 budget is running out for different
+00:20:52.960 different companies, right? So, this
+00:20:54.920 level of the reason companies are now
+00:20:56.800 running behind these harness engineers,
+00:20:59.320 or why harness engineering is becoming
+00:21:01.520 and will become another hot term, is
+00:21:03.760 very, very simple, that these or these
+00:21:06.080 people, if they understand this complete
+00:21:08.000 ecosystem properly, they of course are
+00:21:10.120 able to help and like do the work in a
+00:21:12.680 lot better sense by using the same
+00:21:14.240 brain. So, it is just like that you are
+00:21:16.080 giving the same brain, same number of
+00:21:17.800 tokens to some people, and one is able
+00:21:20.240 to do a work very, very nicely while
+00:21:21.880 others cannot. So, this becomes another
+00:21:23.480 criteria of how you can judge a person.
+00:21:26.120 And if he will be clear about harness
+00:21:28.040 engineering principle, and of course
+00:21:29.560 I've shown you the real world practical
+00:21:30.880 use case that full bench. I have also
+00:21:34.000 covered multiple different different
+00:21:36.080 articles which will be very, very good
+00:21:37.720 read. That's why I actually went through
+00:21:39.600 the same. And yeah, of course all of
+00:21:41.000 them has mentioned that how LangChain
+00:21:42.440 improved the same.
+00:21:43.800 Harness engineering leveraging Codex and
+00:21:45.400 the
+00:21:46.040 first agent first world because now of
+00:21:48.480 course we are not writing code
+00:21:49.600 ourselves. We are using these agents,
+00:21:51.200 okay? So, skill issue harness
+00:21:53.480 engineering for coding engine. Like
+00:21:54.640 these are very, very awesome articles
+00:21:55.880 which I will be sharing, and I will
+00:21:57.080 highly, highly suggest that you have a
+00:21:58.440 look. But this mindset shift now becomes
+00:22:00.680 very, very important everyone. And a
+00:22:02.320 very good example of the same I have
+00:22:03.720 given just in front of you that just
+00:22:05.600 like how we can add these automatic
+00:22:08.600 safety ads. Just where we are adding
+00:22:10.400 these hooks, okay? You should be aware
+00:22:11.960 about them. So, now if you're not aware
+00:22:13.920 about these things, of course you cannot
+00:22:15.520 use them. So, these all become something
+00:22:17.560 which is very, very important overall in
+00:22:20.120 now your
+00:22:21.400 let's say complete use case of being a
+00:22:23.760 harness engineer. Or like I want to see
+00:22:25.840 that harnessing the main power of AI.
+00:22:27.800 Okay? So, rather than treating it as
+00:22:29.720 actually a separate discipline, how to
+00:22:31.760 use AI the best, okay? So, again how we
+00:22:34.840 are making sure that we can block any
+00:22:36.800 action which is not good, how we can
+00:22:38.440 have a better guardrails, how we can
+00:22:40.880 check the result of the AI a lot better
+00:22:42.720 maybe via another agent, sorry another
+00:22:44.680 AI or agent, or let's say via human in
+00:22:46.680 the loop. But all these
+00:22:48.920 solutions everyone now we have to take
+00:22:51.080 the call
+00:22:52.160 based on our understanding. And this is
+00:22:54.160 now becoming very, very much in line
+00:22:55.920 because everyone now is moving towards
+00:22:58.040 the agent first development or agent
+00:22:59.880 first way of work where we are telling
+00:23:02.280 maybe Claude Claude code Claude cover of
+00:23:05.280 doing our stuff, right? And the better
+00:23:07.280 we understand this, the better we will
+00:23:08.720 be able to control each and everything.
+00:23:10.440 And I have shown you the progression as
+00:23:11.760 well that how we went from prompt to
+00:23:14.720 context to all the way to harness
+00:23:16.880 engineering. So this all understanding
+00:23:18.640 along with all the articles which I will
+00:23:19.920 share will make sure that you understand
+00:23:21.760 the same in complete complete depth. So
+00:23:24.000 with that I'm pretty sure that the whole
+00:23:25.520 idea, the mindset shift and how harness
+00:23:27.600 engineering work is a lot lot clearer. I
+00:23:29.720 found this to be pretty exciting because
+00:23:31.520 I feel that
+00:23:32.880 in future this will have a lots of
+00:23:34.600 effect on how companies are actually
+00:23:36.280 spending money on AI. What kind of
+00:23:38.360 skills they are looking for because now
+00:23:40.280 traditional skills might not be that
+00:23:41.840 relevant. How better are you able to use
+00:23:44.200 this complete AI of a superpower is
+00:23:46.760 going to be very very helpful. And of
+00:23:48.800 course in that your harness engineering
+00:23:50.320 becomes very well very well helpful,
+00:23:51.920 right? So do let me know if you want to
+00:23:53.600 even have a crash course on harness
+00:23:55.000 engineering and I would love to create
+00:23:56.320 that. Along with that everyone now as of
+00:23:58.920 now we have seen around a very long
+00:24:00.240 session. So basically we are giving it
+00:24:02.160 in a complete session. It is able to
+00:24:03.800 generate multiple things. But there is
+00:24:06.240 something now which is coming up as a
+00:24:07.680 loop engineering as well where
+00:24:09.760 in Claude as well either you give a
+00:24:11.120 slash goal or slash loop. And then it
+00:24:14.080 tries to work itself multiple task. It
+00:24:16.360 is able to generate and create a
+00:24:18.120 complete kind of a plan for the same as
+00:24:20.680 well, right? Starting multiple sessions.
+00:24:22.640 So how you can just ask Claude that hey
+00:24:24.320 this is what I want to do. And let's say
+00:24:26.120 that you just start multiple sessions in
+00:24:28.080 Claude, right? So you just start
+00:24:29.280 multiple Claude code windows. As an
+00:24:31.240 example, let's say this.
+00:24:33.120 Then you can have another one here only,
+00:24:34.720 right?
+00:24:35.600 So I think it is 100%. I have used it a
+00:24:38.000 lot, but should be fine. But yes, how
+00:24:39.880 you can do all these things that is
+00:24:41.280 something which falls into the
+00:24:42.480 discipline of loop engineering. So do
+00:24:44.520 let me know in the comments if you would
+00:24:45.920 like to like me to cover the same as
+00:24:47.800 well. And of course I can showcase the
+00:24:49.880 same in the next video with example. And
+00:24:52.520 of course if you would love me to create
+00:24:53.960 a complete crash course or you video
+00:24:55.680 showing the practical aspect because in
+00:24:57.400 here I just covered what it is. Of
+00:24:59.400 course we can have a complete practical
+00:25:00.880 that how we can complete a project by
+00:25:03.480 using all the principle of harness
+00:25:05.080 engineering and in the process we can
+00:25:06.360 understand the same as well. Okay. So
+00:25:09.600 or I'm pretty sure that now the whole
+00:25:11.520 idea and what exactly harness
+00:25:13.520 engineering is is a much more clear. Uh
+00:25:15.320 this is this diagram is also pretty good
+00:25:16.920 if you think about it. Prompt
+00:25:18.360 engineering what to say, context
+00:25:19.720 engineering what to see or what you will
+00:25:21.560 get the context from. Harness
+00:25:23.200 engineering is basically where we are
+00:25:24.480 building the complete world, right? So
+00:25:26.240 pretty awesome some diagrams are created
+00:25:27.720 which I think now will be very very
+00:25:29.840 clear to you if I just have them from
+00:25:31.960 Google. Harness engineering powerful AI
+00:25:34.480 brain which is like the chip which
+00:25:35.760 everyone is having. What are the
+00:25:37.120 constraint, what are the feedback loops,
+00:25:38.840 how are you having the verification,
+00:25:40.840 what is the infrastructure everything,
+00:25:42.480 what are the rule what are the
+00:25:43.960 permission it has. All of these things
+00:25:46.720 running around your agent is basically
+00:25:48.360 now making sure that it tells you and
+00:25:50.680 does the reliable software development
+00:25:52.080 or completes the job. So I'm pretty sure
+00:25:53.920 that now the whole idea is pretty clear
+00:25:56.480 and it's not a difficult idea but yes
+00:25:57.880 it's a pretty smart idea that hey now
+00:26:00.360 let's create the world around our agent
+00:26:01.880 because of course people are having the
+00:26:04.800 access to these models
+00:26:06.560 and though one more thing to clear it
+00:26:08.200 out here everyone that though
+00:26:09.960 of course there is a use case where you
+00:26:11.760 can create these models pretty well.
+00:26:13.560 Something like Claude is already they
+00:26:15.200 are creating Claude, ChatGPT and lots of
+00:26:17.440 open source models. Researchers and
+00:26:19.240 everyone or ML engineers are working on
+00:26:20.880 the same. But of course they are
+00:26:22.240 creating the complete harness around
+00:26:23.760 that as well. So if you think about this
+00:26:25.200 Claude code this complete Claude this is
+00:26:27.680 a complete harness, right? They're
+00:26:28.760 having the permission.
+00:26:30.280 They when you give Claude some task now
+00:26:32.120 of course I have the limit over but of
+00:26:33.560 course it tries to run the same, it
+00:26:35.040 tries to understand it and then works on
+00:26:37.560 that rather than a single interaction.
+00:26:39.200 You can of course connect any number of
+00:26:40.920 connectors here as well. Okay so all of
+00:26:43.120 these different different connectors you
+00:26:44.480 can
+00:26:45.400 just easily connect. So that is the
+00:26:47.360 whole idea everyone where the harness
+00:26:49.240 engineering now is going to be surely
+00:26:50.880 the next next big thing because if you
+00:26:52.880 think about it, all the applications
+00:26:54.680 which are getting famous are now using
+00:26:56.640 harness engineering in the back end some
+00:26:58.480 way or the other, right? So, with that
+00:27:00.280 everyone, pretty sure that the same is
+00:27:01.760 clear. Now, I will add all the links as
+00:27:03.320 well as this diagram which I've created
+00:27:04.720 so that you can download the same. Do
+00:27:06.520 let me know if you would love me to
+00:27:07.920 cover the practical aspect of harness
+00:27:10.080 engineering. And I think of course you
+00:27:11.960 have the cloud code crash course which
+00:27:13.560 I've uploaded where I have kind of
+00:27:15.480 covered that how do you use most of
+00:27:16.960 these things. And if you would like to
+00:27:18.880 cover loop engineering as
+00:27:20.600 And all these things are there also in
+00:27:22.080 the latest batch which I'm teaching
+00:27:23.400 agent 3.0 where we are going to learn in
+00:27:25.720 depth about all of these things. And of
+00:27:27.840 course harness and loop engineering also
+00:27:29.400 we have added into the syllabus. Or
+00:27:31.160 other like I think they were already
+00:27:32.160 there because we were building awesome
+00:27:33.640 projects in the same. So, do check out
+00:27:35.320 that as well. With that, please make
+00:27:37.200 sure that you like the video, share it
+00:27:38.800 with everyone, subscribe to my channel
+00:27:40.200 as well so that you don't miss out on
+00:27:41.760 any of such awesome deep dive into the
+00:27:43.680 concept. And let's meet in the next
+00:27:45.400 video everyone. So, thanks a lot. Let's
+00:27:47.160 move on.

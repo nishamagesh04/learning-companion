@@ -62,8 +62,8 @@ def run_demo():
         ]
         return pages, "Raw PDF Content Stream...", "pypdf"
 
-    pipeline.extraction_service.extract_text_from_pdf_bytes = mock_extract_demo
-
+    pipeline.extraction_service.extract_text_from_document_bytes = mock_extract_demo
+    print("MOCK EXTRACTION INSTALLED:", pipeline.extraction_service.extract_text_from_document_bytes)
     upload_req = PDFUploadRequest(
         title="AI Engineering RAG Architecture & Ingestion Guide",
         module_id=1,

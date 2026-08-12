@@ -1,0 +1,959 @@
+# tactiq.io free youtube transcript
+# Context Engineering in 29 Minutes: Complete Course
+# https://www.youtube.com/watch/-h9VVJIqtvA
+
+00:00:00.000 If you've been building AI agents,
+00:00:01.840 you've probably noticed something. Your
+00:00:03.560 agent works fine for the first few
+00:00:05.160 steps. It picks the right tools, reasons
+00:00:07.240 clearly, and stays on track. But
+00:00:08.840 somewhere around step 15 or 20, it
+00:00:11.120 starts getting a little sloppy. It
+00:00:12.920 forgets what you asked for, calls tools
+00:00:14.720 that don't make sense, or starts
+00:00:16.160 producing low-quality outputs. And most
+00:00:18.280 people's first assumption is that the
+00:00:19.880 model is the problem, but it's usually
+00:00:21.680 not. It's more often what the model is
+00:00:23.760 seeing. Organizing what the model sees
+00:00:25.880 is called context engineering, and it's
+00:00:27.720 quickly becoming one of the most
+00:00:29.120 important skills for anyone working in
+00:00:30.760 this space. I'm Marina,
+00:00:32.095 >> [music]
+00:00:32.119 >> a senior applied scientist at Twitch
+00:00:33.600 working on Gen AI. I went through dozens
+00:00:35.640 of sources for this video, engineering
+00:00:37.440 blogs, talks from conferences, academic
+00:00:39.480 papers, and practitioner reports, and
+00:00:41.480 distilled all of the best practices I
+00:00:43.440 can find into this one video. Here's
+00:00:45.280 what we'll cover. First, what context
+00:00:47.080 engineering is and why agents
+00:00:48.720 specifically need it. Then, the four
+00:00:50.760 core strategies that you need to know.
+00:00:52.680 After that, the ways agents fail when
+00:00:54.360 context goes wrong and how to prevent
+00:00:55.880 it. And finally, we'll compare how
+00:00:57.440 platforms like Claude Code, ChatGPT, and
+00:00:59.960 Manifold each approach this differently.
+00:01:01.570 [music] All right, let's start by
+00:01:02.760 actually defining what we're talking
+00:01:04.120 about. You've definitely heard of prompt
+00:01:06.000 engineering. That's the skill of writing
+00:01:07.800 good instructions for an LLM, like
+00:01:09.520 phrasing things clearly, giving good
+00:01:11.280 examples, and telling the model what
+00:01:12.920 role to play. And that works great when
+00:01:14.520 you're having a conversation with
+00:01:15.720 ChatGPT. But when you move from chatbots
+00:01:18.040 to agents, prompt engineering stops
+00:01:20.160 being enough. And the reason is pretty
+00:01:21.640 simple. An agent doesn't just answer one
+00:01:23.760 question. It takes actions like browsing
+00:01:25.760 the web, calling APIs, writing code, and
+00:01:28.080 running commands.
+00:01:29.080 >> [music]
+00:01:29.160 >> And it does all of this autonomously,
+00:01:31.160 step after step, sometimes for dozens of
+00:01:33.600 steps. Every single one of those steps
+00:01:35.560 produces output that gets added to the
+00:01:37.040 model's context. And that context is
+00:01:39.000 finite. So, context engineering is the
+00:01:40.800 discipline of designing the entire
+00:01:42.320 information system around the model, not
+00:01:44.600 just that initial instruction, but
+00:01:46.360 everything the model sees at every step.
+00:01:48.200 The system prompt, tool definitions, the
+00:01:50.200 results from previous calls,
+00:01:51.760 conversation history, and more.
+00:01:53.280 Anthropic's engineering team defines it
+00:01:55.120 like this. Context is the set of tokens
+00:01:57.520 included when you sample from an LLM,
+00:01:59.440 and context engineering is optimizing
+00:02:01.440 the utility of those tokens to
+00:02:02.800 consistently achieve a desired outcome.
+00:02:05.080 So, basically, it's making sure your
+00:02:06.479 agency is the right information in the
+00:02:08.080 right format at the right time.
+00:02:09.440 Anthropic actually describes context
+00:02:11.200 engineering as the natural progression
+00:02:12.840 of prompt engineering. It includes
+00:02:14.600 everything prompt engineering does, like
+00:02:16.480 clear instructions, good examples, and
+00:02:18.280 structured formatting, but it adds a
+00:02:20.080 whole layer on top, managing tools,
+00:02:22.440 external data, message history, memory
+00:02:24.480 systems, and dynamic state. You can
+00:02:26.320 think of prompt engineering as a subset
+00:02:28.120 of context engineering. Getting good at
+00:02:29.920 context engineering matters right now
+00:02:31.520 because agent adoption is accelerating
+00:02:33.680 really, really fast. Gartner projects
+00:02:35.560 that 40% of enterprise applications will
+00:02:37.840 integrate task-specific AI agents by the
+00:02:40.200 end of 2026, up from less than 5% in
+00:02:42.680 2025. Teams that figure out context
+00:02:44.920 engineering are the ones whose agents
+00:02:46.240 will actually work reliably. This is
+00:02:47.840 because agents move us from static
+00:02:49.600 prompts and rag pipelines to a dynamic
+00:02:51.560 system. Now, every tool call, retrieved
+00:02:53.800 document, and decision the agent makes
+00:02:55.760 gets packed into a context window that's
+00:02:57.640 filling up with operations the user
+00:02:59.440 never explicitly asked for. And context
+00:03:01.800 has a fixed size, which is a problem if
+00:03:03.800 it's filling up with a bunch of random
+00:03:05.080 stuff. LangChain has a nice analogy for
+00:03:07.000 this. Think of an LLM as a new kind of
+00:03:09.320 operating system. The model itself is
+00:03:11.360 the CPU. It does the [music] thinking.
+00:03:13.320 And the context window is RAM, the
+00:03:15.160 working memory where everything the
+00:03:16.480 model can currently see and reason about
+00:03:18.440 lives. Just like your computer slows
+00:03:20.280 down when RAM fills up, your agent's
+00:03:22.200 reasoning degrades when your context
+00:03:23.680 window gets crowded. This is called
+00:03:25.320 context drop. Chroma published a really
+00:03:27.519 important study where they evaluated 18
+00:03:29.880 frontier models, GPT-4.1, Claude-4,
+00:03:32.800 Gemini-2.5, Gwen-3, and others. What
+00:03:35.400 they found is that every single model's
+00:03:37.400 performance degrades as input length
+00:03:39.320 increases, [music]
+00:03:40.239 even well below the stated context
+00:03:42.120 window limit. A model with a 200K token
+00:03:44.360 window might start showing significant
+00:03:46.040 degradation at 50K tokens. The decline
+00:03:48.400 is continuous, not like a sudden cliff.
+00:03:50.239 Anthropic also talks about this in their
+00:03:51.960 engineering blog, confirming that
+00:03:53.760 context degradation is a gradient.
+00:03:55.802 [music] The technical reason has to do
+00:03:57.280 with how transformers work. Every token
+00:03:59.440 attends to every [music] other token,
+00:04:01.600 creating n squared pairwise
+00:04:03.440 relationships. As the context grows, the
+00:04:05.840 model's ability to capture all those
+00:04:07.560 relationships get stretched thinner
+00:04:08.902 [music] and thinner. It's like asking a
+00:04:10.360 person to keep track of an increasingly
+00:04:12.160 large number of things simultaneously.
+00:04:14.080 At some point stuff gets dropped.
+00:04:15.520 There's also a well-studied phenomenon
+00:04:17.279 called lost in the middle. A research
+00:04:18.959 team found that LLMs exhibit a U-shaped
+00:04:21.680 attention curve. They remember
+00:04:22.880 information at the beginning of the
+00:04:24.000 context well and at the end well, but
+00:04:26.360 information in the middle gets missed.
+00:04:27.898 [music] The team measured a 30-plus
+00:04:29.560 percentage point drop in accuracy when
+00:04:31.880 relevant information moved from the
+00:04:33.360 beginning of the context to the middle.
+00:04:34.960 So, you can think about what that means
+00:04:36.160 for an agent whose original instructions
+00:04:38.280 are buried under 50,000 tokens of tool
+00:04:40.600 outputs. Those instructions effectively
+00:04:42.760 disappear. So, we know the context
+00:04:44.520 window is finite and degrades as it
+00:04:45.919 fills. But, what's actually competing
+00:04:48.080 for that space? There are basically
+00:04:49.800 seven categories of information in an
+00:04:51.960 agent's context window. First, the
+00:04:53.600 system prompt. This is the agent's
+00:04:55.320 identity,
+00:04:56.063 >> [music]
+00:04:56.120 >> its behavioral rules, control flow
+00:04:58.000 logic, and instructions for how it
+00:04:59.600 should approach different types of
+00:05:00.800 tasks. In an agent, this isn't just
+00:05:03.120 like, &quot;You are a helpful assistant.&quot; It
+00:05:05.120 can define the entire architecture of
+00:05:07.160 how the agent operates. [music] Next, we
+00:05:09.000 have tool definitions. Every tool the
+00:05:11.520 agent could potentially call needs a
+00:05:13.080 schema in the context describing what it
+00:05:15.000 does, what parameters it takes, and when
+00:05:17.200 to use it. Then, we have the results of
+00:05:19.040 those tool calls. Every time the agent
+00:05:21.200 calls a tool, the result gets added to
+00:05:23.000 the context. A web page retrieval might
+00:05:25.120 be 5 to 10,000 tokens. A file read could
+00:05:27.880 also be similar. Fourth, [music] we have
+00:05:29.600 retrieved knowledge from rag. These are
+00:05:31.600 documents pulled from vector databases,
+00:05:33.960 search results, or API responses.
+00:05:36.560 Anything the agent or the system
+00:05:38.080 retrieves to inform the agent's
+00:05:39.560 decisions. [music] Fifth, conversation
+00:05:41.320 history. The full transcript of
+00:05:43.360 everything that's happened in the
+00:05:44.560 session, including the user's messages,
+00:05:46.720 the agent's responses, its reasoning,
+00:05:49.160 and its prior decision. This grows
+00:05:51.040 linearly with every turn. Sixth, memory.
+00:05:53.720 Both short-term memory from the current
+00:05:55.320 session and long-term memory from
+00:05:57.000 previous sessions. That [music] would be
+00:05:58.640 things like user preferences, prior task
+00:06:00.920 outcomes, and learned patterns. And
+00:06:02.760 finally, agent state. This is the
+00:06:04.480 agent's current plan, its to-do list,
+00:06:06.804 >> [music]
+00:06:07.120 >> progress markers, and scratchpad notes.
+00:06:09.360 All of that meta information that helps
+00:06:11.240 the agent track where it is in a
+00:06:12.600 multi-step task. [music] So, now we know
+00:06:14.440 what the problem is. The rest of this
+00:06:16.200 video is all about how to effectively
+00:06:18.160 make that context work well together.
+00:06:20.160 But even with perfect context
+00:06:21.560 engineering, [music] we're still going
+00:06:22.840 to benefit from a model that's built for
+00:06:24.440 this kind of work. Kimi just released
+00:06:26.320 K2.6, an open-source LLM that hit
+00:06:29.000 state-of-the-art on SweBench Pro. The
+00:06:30.960 reason it's relevant here is that it was
+00:06:32.600 built for this exact kind of agentic
+00:06:34.440 problem that we've been talking about.
+00:06:35.624 [music]
+00:06:36.200 Their team demonstrated it on a task
+00:06:37.720 where an agent ran autonomously for 13
+00:06:40.080 hours, made over 1,000 tool calls,
+00:06:42.440 modified 4,000 lines of code, and nearly
+00:06:45.080 tripled throughput on a code base
+00:06:47.040 already optimized.
+00:06:48.069 >> [music]
+00:06:48.080 >> It did all that while being
+00:06:49.280 significantly more cost-effective,
+00:06:51.080 especially for long-horizon agentic
+00:06:52.800 tasks. [music] K2.6 reaches the same
+00:06:55.160 outcomes in about 35 fewer steps than
+00:06:57.080 the previous version. Fewer unnecessary
+00:06:58.960 tool calls means less junk in the
+00:07:00.400 context window, [music] which means the
+00:07:01.880 model stays sharp for even longer. They
+00:07:03.520 also have an agent swarm where you can
+00:07:05.000 spin up 300 sub-agents in parallel. Each
+00:07:07.520 one gets its own clean context window,
+00:07:09.440 does focused work, and reports [music]
+00:07:11.040 back. We'll talk more about these
+00:07:12.320 strategies and how to implement them
+00:07:13.680 next. And the product is the full stack.
+00:07:15.720 Kimi Code is a CLI agent like Claude
+00:07:17.680 Code. They've got a website builder with
+00:07:19.320 solid front-end design and slide
+00:07:20.840 generation. [music] Plus, K2.6 is
+00:07:22.880 open-source if you want to run it
+00:07:24.040 locally. I'll link Kimi in the
+00:07:25.320 description if you want to check it out.
+00:07:26.880 Thanks to Kimi for sponsoring this
+00:07:28.080 video. Now, [music] let's start talking
+00:07:29.600 about how to effectively engineer our
+00:07:31.160 context. How do you decide what goes in,
+00:07:33.560 what stays out, and what gets
+00:07:34.760 compressed? LangChain published a widely
+00:07:36.960 cited framework that organizes every
+00:07:38.880 context engineering technique into four
+00:07:40.840 categories: write, select, compress, and
+00:07:43.800 isolate. Once you're familiar with these
+00:07:45.600 four buckets, every technique you
+00:07:47.160 encounter will fit into one of them,
+00:07:49.080 more or less. Let me walk through each
+00:07:50.840 one. The first strategy is write, and
+00:07:53.600 the problem it solves is really simple.
+00:07:55.280 Agents forget things. When an agent's
+00:07:57.200 context fills up and gets compacted,
+00:07:59.160 which we'll talk about more later, it
+00:08:00.840 loses information. And if the agent
+00:08:02.760 didn't write anything down before that
+00:08:04.400 happened, that information is just gone.
+00:08:06.480 So, write means giving the agent ways to
+00:08:08.640 persist information outside the context
+00:08:10.760 window. There are a few forms this
+00:08:12.440 takes. The first is scratch pads. This
+00:08:14.440 is literally giving the agent a tool
+00:08:16.200 that lets it take notes during a task.
+00:08:17.919 It can jot down intermediate findings,
+00:08:20.040 track decisions it made, or save
+00:08:21.800 information it knows it'll need later.
+00:08:23.440 Anthropic built something called the
+00:08:24.840 think tool, which gives Claude a
+00:08:26.280 dedicated workspace for working through
+00:08:28.200 these kinds of problems. On one
+00:08:29.720 benchmark, this improved performance by
+00:08:31.400 54% on certain tasks. The second form is
+00:08:34.360 rules files, which are a kind of
+00:08:36.000 persistent procedural memory. If you've
+00:08:38.000 used Claude code, you've probably seen
+00:08:40.080 claude.md. These are instructions that
+00:08:41.960 get loaded at the start of every agent
+00:08:43.799 session. Basically, the agent's standing
+00:08:45.920 orders. They define things like the
+00:08:47.680 project structure, its conventions, how
+00:08:49.920 to run tests, and what to be careful
+00:08:51.520 about. The agent reads them every time
+00:08:53.440 it starts up, so it never forgets the
+00:08:54.800 fundamentals. The third form is memory
+00:08:56.800 extraction, which is the agent saving
+00:08:58.839 facts, user preferences, or learned
+00:09:00.839 patterns so it can retrieve them across
+00:09:02.480 sessions. It's a file-based system that
+00:09:04.560 lets the agent store and consult
+00:09:05.960 information that lives outside the
+00:09:07.400 context window entirely. But, writing
+00:09:09.360 things down only helps if the agent
+00:09:11.320 pulls the right stuff back in at the
+00:09:13.080 right time. That's the second strategy,
+00:09:15.320 select. The core idea is simple. Don't
+00:09:17.839 give the agent everything, give it what
+00:09:19.600 it needs for this step. An agent with
+00:09:21.680 access to dozens of tools, a large
+00:09:23.960 knowledge base, and several sessions of
+00:09:25.800 conversation history can't load all of
+00:09:27.680 that into the context at once. So,
+00:09:29.360 something has to decide what's relevant
+00:09:31.320 right now. And the key question is, what
+00:09:33.600 makes that decision? In traditional rag,
+00:09:35.880 the system makes it. The user asks a
+00:09:37.840 question, you retrieve some documents,
+00:09:40.000 you stuff them into the prompt, and
+00:09:41.280 you're done. It's a static pipeline
+00:09:42.880 where the model has no say in what gets
+00:09:44.800 pulled in. Agentic rag flips this
+00:09:46.760 around. Now, the agent itself decides
+00:09:49.360 what to search for, what tools to use,
+00:09:51.400 how to refine its queries, and when it
+00:09:52.960 has enough information. It's retrieval
+00:09:54.680 as an iterative process instead of a
+00:09:56.600 one-shot pipeline. And that matters
+00:09:58.520 because what's relevant changes at every
+00:10:00.440 step of a multi-step task, and the agent
+00:10:02.920 is the only one who knows what it needs
+00:10:04.560 next. So, what does the agent actually
+00:10:06.600 select from? LangChain and Pinecone both
+00:10:08.880 distinguish three types of memory it can
+00:10:10.600 draw on. Episodic memory is basically
+00:10:12.960 few-shot examples. Here's how you
+00:10:14.560 handled something similar before.
+00:10:16.040 Semantic memory is a repository of facts
+00:10:18.240 the agent has learned or been told. And
+00:10:20.040 procedural memory is standing behavioral
+00:10:21.880 instructions, like the rule files we
+00:10:23.600 talked about. A well-designed agent
+00:10:25.520 draws from all three depending on the
+00:10:26.880 step. But, there's one selection problem
+00:10:28.960 that trips people up more than any
+00:10:30.440 other, tools. If your agent has access
+00:10:32.800 to a 40-something tools, that's
+00:10:34.320 potentially 10,000 tokens of tool
+00:10:36.480 definitions sitting in the context
+00:10:37.920 before any work has even started. And as
+00:10:40.200 we'll see in the failure mode section,
+00:10:41.960 too many tools doesn't just waste space,
+00:10:43.960 it actively confuses the model. The fix
+00:10:45.839 is to use rag over the tool definitions
+00:10:48.040 themselves. Instead of dumping every
+00:10:50.000 tool definition into the context every
+00:10:51.680 time, you use semantic search to surface
+00:10:54.040 just the relevant tools for the current
+00:10:56.040 step. A paper called rag MCP tested this
+00:10:58.520 and found tool selection accuracy jumped
+00:11:00.440 from 14% to 43% while cutting prompt
+00:11:03.520 tokens roughly in half.
+00:11:04.832 >> [music]
+00:11:04.960 >> Anthropic's general advice here is what
+00:11:06.680 they call a hybrid strategy. Load some
+00:11:08.839 essential information up front for
+00:11:10.560 speed, like the claw.md file, but let
+00:11:13.440 the agent do just-in-time retrieval for
+00:11:15.440 everything else. Front-load the basics
+00:11:17.160 and retrieve the rest on demand. But,
+00:11:18.680 even with good selection, context still
+00:11:20.760 accumulates. Every tool call the agent
+00:11:22.960 makes, document it retrieves, and
+00:11:24.760 decision it records all stays in that
+00:11:26.560 window. And that brings us to the third
+00:11:28.400 strategy, [music]
+00:11:29.160 compress. This one directly addresses
+00:11:31.440 the context rot problem that we talked
+00:11:33.200 about earlier. Imagine your agent has
+00:11:35.240 made 20 tool calls. Its context now
+00:11:37.720 contains, let's say, 80,000 tokens of
+00:11:40.240 accumulated tool outputs, conversation
+00:11:42.560 history, and reasoning traces. Most of
+00:11:44.600 those tool outputs are no longer
+00:11:46.240 relevant since the agent already acted
+00:11:48.200 on them, but they're still sitting there
+00:11:49.720 taking up space, degrading the model's
+00:11:51.560 attention, and driving up cost and
+00:11:53.040 latency. So, compression is about
+00:11:55.120 reducing token count while preserving
+00:11:57.160 the information that actually matters
+00:11:58.680 for whatever you're working on. And you
+00:12:00.200 can compress at three different points
+00:12:01.720 in the pipeline. First, before
+00:12:03.320 information enters the context at all.
+00:12:05.080 This is where chunking comes in, which
+00:12:06.600 is breaking large documents into smaller
+00:12:08.600 coherent pieces before retrieval and
+00:12:10.360 re-ranking them so that only the most
+00:12:11.800 useful chunks make it into the window at
+00:12:13.320 all. You can also summarize tool outputs
+00:12:15.400 on the fly before they enter the main
+00:12:16.960 context. [music] The second opportunity
+00:12:18.800 to compress context is while the agent
+00:12:20.720 is working. The most common technique
+00:12:22.600 here is summarization of conversation
+00:12:24.520 history. [music] A running summary gets
+00:12:26.320 continuously updated after each
+00:12:28.080 exchange. So, you always have a compact
+00:12:30.320 version of everything that's happened. A
+00:12:32.040 popular pattern is a hybrid approach
+00:12:33.960 where you keep, say, the last 10
+00:12:35.440 messages verbatim since the agent might
+00:12:37.800 still need the exact details, but you
+00:12:39.880 summarize everything older than that.
+00:12:41.720 Beyond summarization, there's plain
+00:12:43.360 trimming using hard-coded heuristics
+00:12:45.640 that remove older messages once the
+00:12:47.720 context hits a certain size. And Claude
+00:12:50.000 Code has auto-compaction built in. When
+00:12:52.480 the context hits 95% capacity, it
+00:12:55.120 automatically summarizes the full
+00:12:56.640 trajectory. That's a safety net, but
+00:12:58.560 ideally you're compressing proactively
+00:13:00.160 and not waiting for that trigger. And
+00:13:02.440 finally, you can use compression after
+00:13:04.400 the agent has acted on something. An
+00:13:06.400 easy win here is tool result clearing.
+00:13:08.680 Once a tool was called 15 steps ago and
+00:13:10.960 the agent already used the result, you
+00:13:12.520 can just drop the raw output. The agent
+00:13:14.560 doesn't need the full text of a web page
+00:13:16.640 it fetched ages ago, for example. You
+00:13:18.680 can replace it with a one-line summary
+00:13:20.240 or remove it entirely. Now, let's move
+00:13:22.040 on to the fourth and final strategy,
+00:13:23.520 which is arguably the most powerful one.
+00:13:25.560 Isolation is the strategy that makes
+00:13:27.680 multi-agent systems possible. So, here's
+00:13:29.800 the problem. If a single agent tries to
+00:13:32.160 do everything, like research, plan,
+00:13:34.560 code, test, and debug all in one long
+00:13:37.000 conversation, it will inevitably fill up
+00:13:39.120 its context. But, the deeper issue isn't
+00:13:40.960 just space, it's actually contamination.
+00:13:42.689 [music] The detailed file searches from
+00:13:44.560 the research phase are still sitting in
+00:13:46.440 the context when the [music] agent moves
+00:13:47.800 to implementation. That old research
+00:13:49.920 context is now just noise. It's
+00:13:52.200 distracting the model during a phase
+00:13:53.880 where it needs to be focused on writing
+00:13:55.400 clean code. [music] The solution is
+00:13:56.840 context isolation, which means giving
+00:13:58.720 different parts of the work their own
+00:14:00.400 separate context windows. The most
+00:14:02.480 obvious form of this is using
+00:14:03.960 sub-agents. A parent agent delegates a
+00:14:06.600 focused sub-task, like [music] search
+00:14:09.040 the code base for all files related to
+00:14:10.920 authentication, to a sub-agent. That
+00:14:13.200 sub-agent works on its own clean context
+00:14:15.280 window. When it reports back to the
+00:14:16.640 parent, it returns only a condensed
+00:14:18.320 summary, and all the messy search
+00:14:20.040 operations stay isolated in the
+00:14:21.640 sub-agent's context and never pollute
+00:14:23.400 the parent. Okay, so to sum up, the four
+00:14:25.560 key strategies are write, select,
+00:14:27.229 [music] compress, and isolate.
+00:14:28.920 Everything we cover from here forward is
+00:14:30.880 an application of one or more of them.
+00:14:32.640 Now that we understand the strategies
+00:14:34.040 for managing context well, let's look at
+00:14:36.000 what happens when we don't do a good
+00:14:37.480 job, because understanding failure modes
+00:14:39.320 is a really good way to proactively
+00:14:41.000 learn what we're trying to avoid. Drew
+00:14:42.400 Breunig published an influential
+00:14:44.040 two-part series in mid-2025 identifying
+00:14:46.839 four distinct ways that agents fail as
+00:14:48.720 their context grows. The first failure
+00:14:50.680 mode is context poisoning. Sounds very
+00:14:52.720 serious. This is when a hallucination or
+00:14:54.760 an error enters the agent's context and
+00:14:57.040 then gets referenced over and over in
+00:14:58.839 subsequent steps. Like if a tool
+00:15:00.600 returned bad data, or the agent itself
+00:15:02.440 made a flawed inference five steps ago,
+00:15:04.600 that bad information is now sitting in
+00:15:06.320 the context,
+00:15:07.185 >> [music]
+00:15:07.320 >> and the agent keeps building on top of
+00:15:08.920 it. This is a problem because agents
+00:15:10.640 iterate on their own output. So, each
+00:15:12.560 bad step compounds into the next one.
+00:15:14.520 The fix is context pruning, or actively
+00:15:16.640 removing outdated or conflicting
+00:15:18.280 information as new details arrive. You
+00:15:20.160 should also validate tool outputs before
+00:15:22.200 they enter the context, especially from
+00:15:24.040 external sources. And after the agent
+00:15:25.920 recovers from an error, compress the
+00:15:27.720 failed attempt history. Don't leave 10
+00:15:29.600 steps of dead-end debugging visible in
+00:15:31.400 the context when only the resolution
+00:15:33.040 matters. The second failure mode is
+00:15:35.040 context distraction. This is when the
+00:15:37.200 context gets so long that the model
+00:15:39.280 starts over-relying on its recent
+00:15:40.960 history and under-relying on what it
+00:15:42.640 learned during training. The agent
+00:15:44.200 basically stops thinking for itself and
+00:15:46.000 just repeats patterns from what it's
+00:15:47.520 recently seen. So, instead of
+00:15:49.000 synthesizing a novel plan, it rehashes
+00:15:51.200 past actions. [music]
+00:15:52.320 The fix is the same as the general
+00:15:53.840 advice we've been discussing. Summarize
+00:15:55.640 and prune aggressively, even when you
+00:15:57.560 have a large context window available.
+00:15:59.320 The third failure mode is context
+00:16:00.920 confusion. [music] This is when
+00:16:02.240 superfluous content gets in the context
+00:16:04.800 and ends up leading to low-quality
+00:16:06.480 responses. The classic example is tool
+00:16:08.840 confusion. The agent sees 46 tool
+00:16:11.360 definitions in its context and starts
+00:16:13.160 calling tools that have nothing to do
+00:16:14.440 with the task. There's a really good
+00:16:15.800 example of this from a benchmark study.
+00:16:17.600 A quantized Llama 3.18 billion model
+00:16:20.280 failed on Geo Engine benchmark when
+00:16:22.160 given all 46 available tools, even
+00:16:24.400 though the context was well within its
+00:16:25.800 window limit. But, it worked fine when
+00:16:27.480 only given 19 tools. The tools weren't
+00:16:29.600 too many for the context to hold, but
+00:16:31.320 they were too many for the model to
+00:16:32.920 reason about clearly. The fix is dynamic
+00:16:35.400 tool management. Keep the tool set
+00:16:37.320 relevant to the current phase. Use
+00:16:39.080 approaches like RAG MCP, which we talked
+00:16:41.120 about earlier, which does semantic
+00:16:42.880 retrieval over tool descriptions to
+00:16:44.560 surface only the relevant tools for each
+00:16:46.400 step. The fourth and final failure mode
+00:16:48.480 is context clash. This is when new
+00:16:50.600 information the agent has gathered
+00:16:52.280 during its run contradicts something
+00:16:54.040 already in the context. Maybe the system
+00:16:56.280 prompt says one thing, but a retrieved
+00:16:58.240 document says something different. The
+00:16:59.880 agent can't reconcile the contradiction,
+00:17:01.720 so it produces inconsistent behavior.
+00:17:03.480 Sometimes following one source,
+00:17:04.920 sometimes the other, and sometimes doing
+00:17:06.920 something that doesn't match either one.
+00:17:08.520 The fix here is to establish a clear
+00:17:10.439 authority [music] ordering in your
+00:17:11.760 context. For example, the system prompt
+00:17:14.040 takes priority over retrieved facts,
+00:17:15.800 which take priority over conversation
+00:17:17.319 history. When new information comes in,
+00:17:19.199 validate it against what's already in
+00:17:20.839 the context before injecting it. And use
+00:17:23.240 structured section. When new [music]
+00:17:24.800 information comes in, validate it
+00:17:26.760 against what's already in the context
+00:17:28.640 before injecting it. And use structured
+00:17:30.880 sections, XML tags, clear headers, so
+00:17:33.680 the model can parse which information
+00:17:35.440 comes from which source and which source
+00:17:37.240 to trust. [music] These four failure
+00:17:39.000 modes, poisoning, distraction,
+00:17:40.880 confusion, and clash, cover most of the
+00:17:43.320 ways agents break [music] down in
+00:17:44.680 practice. And the good news is, once you
+00:17:47.000 can name the failure, the solution maps
+00:17:48.880 to one of the four strategies we just
+00:17:50.400 covered. Poisoning is solved by
+00:17:52.080 compression and pruning. Distraction is
+00:17:54.360 solved by compression. Confusion is
+00:17:56.280 solved by selection. And clash is solved
+00:17:58.480 by writing and selection. It all
+00:18:00.280 connects back to write, select,
+00:18:01.640 compress, and isolate. So, now that we
+00:18:03.320 have the strategies and the failure
+00:18:04.880 modes, let's get into the practical
+00:18:06.400 stuff, starting with two things you'll
+00:18:08.160 work on first when building an agent,
+00:18:10.400 the system prompt and tool definitions.
+00:18:12.680 The way you approach these for an agent
+00:18:14.320 is really different from a chatbot. A
+00:18:15.960 system prompt for a chatbot basically
+00:18:17.840 sets the tone, like you are a helpful
+00:18:19.560 assistant, be concise and friendly, that
+00:18:21.560 kind of [music] thing. On the other
+00:18:22.640 hand, an agent system prompt defines its
+00:18:24.560 architecture. It specifies control flow,
+00:18:26.680 like how the agent should approach
+00:18:28.120 different types of tasks,
+00:18:29.582 >> [music]
+00:18:29.600 >> what tools to use in what situations,
+00:18:31.600 what to do when it encounters an error,
+00:18:33.360 and what safety guardrails to follow.
+00:18:35.120 It's closer to kind of writing a job
+00:18:36.760 description for an autonomous employee.
+00:18:38.840 Anthropic has a useful concept here that
+00:18:40.760 they call writing at the right altitude.
+00:18:43.280 There's kind of a Goldilocks zone for
+00:18:45.040 agent system prompts. Too prescriptive
+00:18:47.240 is bad.
+00:18:47.922 >> [music]
+00:18:48.080 >> If you write something like, &quot;If the
+00:18:49.720 user mentions billing and also mentions
+00:18:51.920 a refund and the amount is over $100,
+00:18:54.400 call tool X.&quot; That's just way too
+00:18:56.440 fragile and it will break on every edge
+00:18:58.320 case you didn't anticipate. On the other
+00:19:00.280 hand, too vague is also bad. &quot;Be helpful
+00:19:02.720 and use the appropriate tools.&quot; gives
+00:19:04.480 the agent nothing to work with. It
+00:19:06.080 doesn't know which tools are appropriate
+00:19:07.760 for what, and it can't make good
+00:19:09.080 autonomous decisions without concrete
+00:19:10.800 signals. So, [music] the sweet spot is
+00:19:12.360 specific enough to guide autonomous
+00:19:13.920 behavior, but flexible enough to let the
+00:19:15.960 model apply its own judgment in novel
+00:19:17.680 situations. You're giving the agent
+00:19:19.600 strong heuristics, not rigid rules. Here
+00:19:22.120 are a few more practical tips on writing
+00:19:24.200 system prompts. [music]
+00:19:25.160 Organize your system prompt with
+00:19:26.560 structure like XML tags or markdown
+00:19:28.840 headers that break it into sections that
+00:19:30.880 are distinct like [music] background
+00:19:32.360 information, instructions, and tool
+00:19:34.040 guidance. Start minimal and iterate on
+00:19:36.320 failures.
+00:19:37.048 >> [music]
+00:19:37.080 >> Don't try to anticipate every edge case
+00:19:39.000 up front. Run the agent against real
+00:19:40.840 tasks, observe where it breaks, and add
+00:19:42.960 instructions to address those specific
+00:19:44.840 failure modes. Remember that minimal
+00:19:46.600 doesn't necessarily mean short.
+00:19:48.183 >> [music]
+00:19:48.200 >> An agent system prompt for a complex
+00:19:50.160 workflow might be thousands of tokens,
+00:19:52.440 and that's fine as long as every token
+00:19:54.560 is relevant and necessary. And use
+00:19:56.520 few-shot examples. Instead of trying to
+00:19:58.400 articulate every rule in words, show the
+00:20:00.560 agent what good behavior looks like.
+00:20:02.360 Give the agent diverse canonical
+00:20:03.880 examples of correct tool selection, good
+00:20:05.760 reasoning, and proper multi-step
+00:20:07.280 execution. Beyond the system prompt,
+00:20:09.160 you'll also need to think about tool
+00:20:10.560 definitions. Every tool the agent could
+00:20:12.720 potentially call needs a schema that
+00:20:14.440 describes what it does, what parameters
+00:20:16.200 it takes, and when to use it. Each
+00:20:18.040 definition should be self-contained,
+00:20:20.040 robust to error, and have clear
+00:20:21.760 instruction. This means tool definitions
+00:20:23.920 can use a lot of context. In production,
+00:20:26.160 this is increasingly handled through
+00:20:27.520 MCP, the model context protocol, which
+00:20:29.760 is basically a standard way for agents
+00:20:31.480 to connect to external tools and data
+00:20:33.080 sources. You hook your agent up to an
+00:20:34.880 MCP server for GitHub, another for your
+00:20:36.960 database, another for your file system,
+00:20:39.280 and each
+00:20:40.640 its tools through a consistent
+00:20:42.040 interface. The catch is that MCP makes
+00:20:44.400 it really easy to plug in a lot of
+00:20:45.960 tools, and that's exactly the trap. When
+00:20:48.080 you've got four or five MCP servers
+00:20:50.080 connected, tool definitions can eat
+00:20:51.840 thousands of tokens before any work has
+00:20:53.680 even started. The default advice is to
+00:20:55.840 curate a minimal viable set of tools.
+00:20:58.440 But what if your agent legitimately
+00:20:59.960 needs a lot of tools? There are two main
+00:21:02.360 approaches to scaling. The first comes
+00:21:04.320 from Manas, a production agent platform.
+00:21:06.840 They explicitly warn against dynamically
+00:21:09.360 adding and removing tools
+00:21:10.640 mid-conversation. And the reason has to
+00:21:12.840 do with something that most people
+00:21:14.040 building agents don't even know about,
+00:21:15.840 the KV cache. Here's how it works. When
+00:21:18.360 you send tokens to an LLM, the model
+00:21:20.920 computes key value representations for
+00:21:23.320 each token. This is computationally
+00:21:25.440 expensive, so inference providers cache
+00:21:27.960 these representations. If the beginning
+00:21:30.160 of your context, the prefix, stays the
+00:21:32.600 same between API calls, the provider can
+00:21:35.360 reuse the cache computation and only
+00:21:37.640 process the new tokens at the end, which
+00:21:39.880 is much faster and cheaper. But if you
+00:21:41.760 rearrange or change the early part of
+00:21:43.800 your context between calls, you
+00:21:45.720 invalidate the cache and the provider
+00:21:47.680 has to recompute everything from
+00:21:49.200 scratch. For example, with Claude
+00:21:51.040 Sonnet, cached input tokens cost 30
+00:21:53.560 cents per million, while un-cached
+00:21:55.440 tokens cost $3 per million, a 10 times
+00:21:58.200 difference. For an agent making 30 or 40
+00:22:00.400 API calls per task, that adds up really
+00:22:02.400 fast. This is why Manifold recommends
+00:22:04.400 tool masking instead of tool removal.
+00:22:07.080 You keep all the tool definitions stable
+00:22:09.240 in the context. They sit near the top in
+00:22:11.080 that prefix that gets cached, but you
+00:22:13.000 mark certain tools as unavailable for
+00:22:15.120 the current phase. The definitions are
+00:22:16.920 still there for cache stability, but the
+00:22:18.640 agent knows not to use them. They also
+00:22:20.920 use consistent naming prefixes, which
+00:22:22.760 help the agent to reason about tool
+00:22:24.560 categories. The second approach when
+00:22:26.280 dealing with lots of tools is rag-based
+00:22:28.120 tool selection, which we touched on
+00:22:29.560 earlier. Instead of including every tool
+00:22:31.760 in every call, you use semantic
+00:22:33.400 retrieval to preselect only the tools
+00:22:35.400 relevant to the current step. The RAG
+00:22:37.200 MCP paper showed this improved accuracy
+00:22:39.520 by over three times while cutting token
+00:22:41.280 usage in half. These two approaches
+00:22:43.480 aren't mutually exclusive. Masking works
+00:22:45.800 well when your tool set is moderate, and
+00:22:47.920 rag-based selection works well when you
+00:22:49.760 have a really large number of tools. The
+00:22:52.080 broader principle behind all of this is
+00:22:53.960 simple. Stable content goes at the top
+00:22:56.280 of your context. This includes the
+00:22:57.920 system prompt, tool definitions, and
+00:22:59.880 anything that doesn't change between
+00:23:01.440 turns. Then dynamic content like
+00:23:03.480 conversation history, the current step,
+00:23:05.480 and the agent state go at the bottom.
+00:23:07.160 So, we've covered the four strategies
+00:23:08.760 for context engineering, common failure
+00:23:10.880 modes, and how to engineer system
+00:23:12.720 prompts and tools. Now, let's see what
+00:23:14.480 all of this looks like when you actually
+00:23:16.080 sit down to build something. This next
+00:23:17.880 part applies whether you're using a
+00:23:19.160 coding assistant or building your own
+00:23:20.960 agent from scratch. The principles are
+00:23:23.120 the same. The only difference is whether
+00:23:25.240 you're structuring the workflow yourself
+00:23:27.280 or programming the agent to do it. Dex
+00:23:29.400 Horthy, the CEO of Human Layer,
+00:23:31.480 presented a methodology at the AI
+00:23:33.160 Engineer Code Summit that's a really
+00:23:34.800 clean example of this. His team
+00:23:36.480 reportedly used it to ship around 35,000
+00:23:38.920 lines of code to a large Rust code base
+00:23:41.240 in a single 7-hour [music] session. The
+00:23:43.320 core idea is what Horthy calls frequent
+00:23:45.560 intentional compaction. Basically, you
+00:23:47.520 should proactively structure your
+00:23:48.960 agent's work into phases, where each
+00:23:51.040 phase produces a compacted artifact like
+00:23:53.360 a structured markdown summary, and each
+00:23:55.120 new phase starts with a fresh context
+00:23:57.000 window containing only that artifact.
+00:23:59.000 This way, you're deliberately staying
+00:24:00.360 below that 40 to 60% of the context
+00:24:02.720 window. Here's how it works in practice,
+00:24:04.920 and I'll mention which strategies show
+00:24:06.480 up at each step. Phase one is research.
+00:24:08.680 Before any code gets written, the agent
+00:24:10.840 explores [music] the code base. It reads
+00:24:12.760 files, traces data flows, and maps out
+00:24:15.040 the architecture relevant to the task.
+00:24:17.040 Sub-agents handle the raw file searches
+00:24:19.160 and code analysis. All those grep
+00:24:21.040 results and file contents stay in the
+00:24:23.160 sub-agent's context windows and never
+00:24:25.400 pollute the parents. That's the isolate
+00:24:27.400 strategy. The output of this phase is a
+00:24:29.640 research file, a compact markdown
+00:24:31.920 document with file paths, function
+00:24:34.080 signatures, existing patterns, and
+00:24:35.800 gotchas. That's the write strategy. The
+00:24:38.520 agent persists its findings externally,
+00:24:40.680 so they go on to the next step. And the
+00:24:42.282 [music] next step is a context reset.
+00:24:44.440 The raw research might have consumed 60
+00:24:46.560 to 80% of the context, but the research
+00:24:48.720 artifact compresses all of that down to
+00:24:50.360 maybe 15 to 20%. That's the compress
+00:24:52.760 strategy. Phase two is planning. A brand
+00:24:55.080 new context window opens containing only
+00:24:57.440 the research document and the problem
+00:24:59.040 definition. The agent uses this clean
+00:25:01.440 context to produce a detailed
+00:25:03.280 implementation plan. This is also the
+00:25:05.360 most important point for human review.
+00:25:07.680 If there's a logical error, you catch it
+00:25:09.560 here where fixing it is easy. If you're
+00:25:11.480 building your own agent, this is where
+00:25:13.200 you'd build in the human in the loop
+00:25:14.640 checkpoint if it's relevant. Phase three
+00:25:16.400 is implementation. At this point, we use
+00:25:18.480 another fresh context window, this time
+00:25:20.560 containing only the plan. The agent
+00:25:22.600 follows it step-by-step. For complex
+00:25:24.880 tasks that require multiple compaction
+00:25:26.960 cycles, a progress.md file tracks what's
+00:25:29.720 been completed and what remains. That's
+00:25:31.800 the right strategy again. This approach
+00:25:33.560 is really similar to what I do in my
+00:25:34.920 daily work at Twitch, and you'll see
+00:25:36.480 some version of it in most production
+00:25:38.240 systems. So now let's spend a few
+00:25:39.640 minutes looking at how some of the big
+00:25:41.160 boys approach context engineering.
+00:25:42.920 Claude Code is Anthropic's CLI-based
+00:25:45.200 coding agent, obviously, [music] and
+00:25:46.960 it's one of the best-documented examples
+00:25:48.880 of context engineering in practice. It
+00:25:50.800 uses a hybrid retrieval model where
+00:25:52.720 Claude.md files are loaded up front
+00:25:55.040 start of every session for foundational
+00:25:56.760 context, and then the agent uses tools
+00:25:58.680 like glob and grep for just-in-time
+00:26:00.600 navigation of the code base. It doesn't
+00:26:02.560 try to pre-index everything, but just
+00:26:04.280 explores on demand. It also has auto
+00:26:06.400 compaction that triggers at 95% context
+00:26:08.840 utilization, preserving architectural
+00:26:10.760 decisions in the five most recently
+00:26:12.400 accessed files. [music] It can spawn
+00:26:14.000 sub-agents for complex tasks, giving
+00:26:16.120 each one a clean context window.
+00:26:17.913 >> [music]
+00:26:18.000 >> And it has a memory tool for persisting
+00:26:19.640 information across sessions. Anthropic's
+00:26:21.760 overall philosophy here is do the
+00:26:23.480 simplest thing that works. They don't
+00:26:25.400 over-engineer the context pipeline.
+00:26:27.083 [music] They let the model be smart
+00:26:28.440 about what it needs and give it the
+00:26:29.720 tools to go find it. Manifold takes a
+00:26:31.680 more infrastructure-heavy approach than
+00:26:33.400 Anthropic. They've served hundreds of
+00:26:35.360 thousands of users with a
+00:26:36.520 general-purpose agent, so efficiency at
+00:26:38.960 scale is important. Their standout
+00:26:40.840 contribution is KB-cache aware context
+00:26:43.120 ordering that we talked about earlier.
+00:26:44.680 This is structuring every context so the
+00:26:46.440 prefix stays stable across turns to
+00:26:48.400 maximize cache reuse, and using tool
+00:26:50.800 masking rather than dynamic removal.
+00:26:52.880 They have an observation compression
+00:26:54.560 pipeline that processes every tool
+00:26:56.320 output before it enters the agent's
+00:26:57.868 [music] context. They maintain a
+00:26:59.280 persistent to-do list for state
+00:27:00.760 tracking, and they use the file system
+00:27:02.800 as overflow memory for evicted context.
+00:27:05.320 OpenAI's approach with ChatGPT agent,
+00:27:07.640 which evolved from the operator product,
+00:27:09.600 is architecturally different from both
+00:27:11.440 Claude Code and Manas. It's powered by a
+00:27:13.560 computer using agent model, and it takes
+00:27:15.680 a GUI-first approach. Instead of
+00:27:17.640 text-based tool calls, the agent
+00:27:19.680 interacts with a visual browser.
+00:27:21.280 Screenshots get added to the context as
+00:27:23.240 visual snapshots, and the model reasons
+00:27:25.120 over what it sees on the screen, plus
+00:27:26.920 its history of past screenshots and
+00:27:28.360 actions. The context engineering
+00:27:30.080 challenge here is different, of course.
+00:27:31.920 Visual tokens are expensive, so the
+00:27:33.760 agent needs to be selective about how
+00:27:35.480 many screenshots to keep. OpenAI uses
+00:27:37.680 reinforcement learning to discover
+00:27:39.080 optimal tool use strategies. Rather than
+00:27:41.160 explicitly programming when to use each
+00:27:43.160 tool, they train the agent across
+00:27:44.920 thousands of virtual machines and let it
+00:27:46.800 learn what works. Deep Research and
+00:27:48.600 Operator share state, enabling fluid
+00:27:50.720 transitions between browsing, text
+00:27:52.320 analysis, and code execution. The
+00:27:54.000 contrast with Claude Code is really
+00:27:55.760 interesting. Claude Code is code-centric
+00:27:57.760 with large context windows and
+00:27:59.320 text-based tool calls. ChatGPT agent is
+00:28:01.840 visual and general-purpose. Both need
+00:28:03.680 context engineering, but the specific
+00:28:05.440 challenges and solutions are, of course,
+00:28:07.080 different. Lastly, Google's ADK takes
+00:28:09.160 the [music] most principled
+00:28:10.160 architectural approach. They've codified
+00:28:12.040 three design principles for agent
+00:28:13.640 context. First, separate storage from
+00:28:15.920 presentation. The agent's durable state
+00:28:18.040 is not the same as what appears in each
+00:28:19.760 API call. Second, use explicit
+00:28:21.840 transformations, named ordered
+00:28:24.160 processors that transform context into
+00:28:26.200 testable, composable steps, rather than
+00:28:28.960 ad-hoc string concatenation. [music]
+00:28:30.800 And third, scope context by default.
+00:28:33.280 Every model calls these only the minimum
+00:28:35.200 required information, and nothing lands
+00:28:37.080 in context unless it's explicitly
+00:28:38.920 included. This is a more engineering
+00:28:40.840 discipline approach to context assembly,
+00:28:42.960 treating it as a pipeline with clear
+00:28:44.600 stages, rather than a prompt you just
+00:28:46.320 keep appending to. When you look across
+00:28:48.240 all these platforms, a common pipeline
+00:28:50.200 emerges. On [music] every single agent
+00:28:52.440 turn, the system goes through roughly
+00:28:54.320 the same steps. First, collect all the
+00:28:56.480 candidate information like user input,
+00:28:58.360 conversation history, tool results,
+00:29:00.240 retrieve documents, and agent state.
+00:29:02.200 Then select what's relevant for the
+00:29:03.640 current step and the remaining token
+00:29:05.320 budget. Then compress. [music] So,
+00:29:06.960 summarize, truncate, or restructure
+00:29:08.680 selected content to fit in the context.
+00:29:10.840 Arrange everything for maximum KB cache
+00:29:12.880 reuse, stable content [music] first, and
+00:29:14.800 dynamic content last. Then assemble the
+00:29:16.720 final context and make the API call.
+00:29:18.680 This stuff is changing quickly and
+00:29:20.040 there's still so much to learn. As
+00:29:22.080 usual, the best way to get good at this
+00:29:23.680 stuff is just to try things out. [music]
+00:29:25.400 Experiment and build and see what works.
+00:29:27.800 I've linked all my sources in the
+00:29:28.960 description, so if you want to go deeper
+00:29:30.400 on any of this, those are really good
+00:29:31.800 starting points. And if you're
+00:29:32.960 interested in the fundamentals of
+00:29:34.320 agents, I have a comprehensive course on
+00:29:36.120 that as well. Check that out up next.

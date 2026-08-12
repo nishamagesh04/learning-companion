@@ -1,0 +1,187 @@
+# tactiq.io free youtube transcript
+# How To Do AI Prompt Templating
+# https://www.youtube.com/watch/sooYV9qKLDg
+
+00:00:00.080 for a while now we've been working on
+00:00:01.959 learn till which is a tool that can
+00:00:03.800 generate quizzes from text websites and
+00:00:06.640 even YouTube videos if you want to try
+00:00:08.880 this out for free go to
+00:00:13.759 learn.com now figure out the best way to
+00:00:16.960 work with promps has been sort of a
+00:00:18.760 journey for us we've started with just
+00:00:21.600 very simple text based promps but then
+00:00:24.320 we realized we wanted something more
+00:00:26.199 complicated a bit more control so we
+00:00:27.880 started using yo files then we've also
+00:00:30.400 used Lang chain for a while which
+00:00:32.320 ultimately we didn't really feel was
+00:00:33.920 good enough in terms of design and what
+00:00:36.559 we've now landed on is Ginger 2 which is
+00:00:39.680 very capable templating engine combined
+00:00:42.760 with a basic setup for interacting with
+00:00:45.280 the open AI API which we use for learn
+00:00:48.120 tail now typically Ginger 2 is used for
+00:00:51.559 generating HTML but actually it's really
+00:00:53.960 suitable for tools that need to interact
+00:00:55.760 with an llm so I'm going to show you a
+00:00:58.079 really simple way to set it up you you
+00:01:00.039 can find the full code in get report
+00:01:01.680 store that's Linked In the description
+00:01:03.480 now this is just going to be an
+00:01:04.760 introduction video I might do more
+00:01:06.760 in-depth Ginger 2 video in the future if
+00:01:09.439 you'd like that let me know in the
+00:01:10.960 comments the first thing that I want to
+00:01:12.400 show you is a very simple function that
+00:01:14.720 helps us interact with the open AI API
+00:01:17.680 now in principle the API is not that
+00:01:19.560 complicated there's even a python SDK
+00:01:21.799 but I've written a simple wrapper around
+00:01:23.840 the API that makes it even simpler to
+00:01:25.920 use and that's what you see here so I've
+00:01:28.320 defined a couple of models in this case
+00:01:30.400 that's gpt3 and GPT 4 of course you can
+00:01:33.079 add any models here that you would like
+00:01:35.600 I've also defined a type that I'll talk
+00:01:37.960 about in a minute this by the way is the
+00:01:39.920 new type Syntax for python 3.12 and then
+00:01:43.680 I have a function called chatter and
+00:01:46.439 what that does is that it creates a chat
+00:01:49.320 interface for us that's really simple to
+00:01:51.719 use and the way this works is by using a
+00:01:53.960 closure so what this function does that
+00:01:55.799 it first creates an open a client but
+00:01:57.920 then it defines another function closure
+00:02:00.399 that actually can send a chat request
+00:02:03.000 and that function uses the scope that
+00:02:06.079 it's been defined in which contains the
+00:02:08.119 AI clients that's defined here so send
+00:02:11.319 chat request simply gets a query which
+00:02:13.520 is a string and then also returns a
+00:02:15.720 string and there I've written the code
+00:02:17.680 to actually interact with the chat
+00:02:20.440 interface so I'm passing the model I'm
+00:02:22.519 passing the message and then I'm also
+00:02:25.599 extracting the chat result from the
+00:02:28.080 response and then if there is no chat
+00:02:30.519 response I'm simply raising a value
+00:02:32.160 error and otherwise I return that result
+00:02:34.480 so basically this function wraps around
+00:02:36.519 all of this uh complexity and then I
+00:02:39.440 return that function which is actually
+00:02:42.120 really cool because then when I want to
+00:02:44.200 use this I can call the chatter function
+00:02:46.400 and then I get another function as a
+00:02:48.239 result that I can then simply call with
+00:02:50.080 a query so short this really a simple
+00:02:52.040 function but I think it's actually a
+00:02:53.319 nice application of a concept from
+00:02:55.560 functional programming so that's one of
+00:02:57.519 the ingredients that we need the second
+00:02:59.159 ingredient that we need is a way to
+00:03:01.080 formulate the promps and that's what
+00:03:02.800 we're using Ginger 2 templates for now
+00:03:05.480 if you want to use ginger 2 you of
+00:03:06.920 course need to install it and make sure
+00:03:08.440 you actually install Ginger 2 and not
+00:03:10.599 Ginger which is a separate package but
+00:03:13.200 once you do that then you can start
+00:03:14.599 defining templates I might find it
+00:03:16.400 helpful to install some of the
+00:03:17.760 extensions that are available for ginger
+00:03:20.280 for example this one I like very much
+00:03:22.000 called better ginger and this has syntax
+00:03:24.599 highlighting for ginger too so in my
+00:03:26.840 project here I've created a couple of
+00:03:28.720 Ginger templates so this is one of them
+00:03:30.760 and the nice thing about Ginger is that
+00:03:32.239 you can then incorporate these kinds of
+00:03:34.519 tags and then replace them by actual
+00:03:36.920 values so as an example for this video
+00:03:39.000 I've written a prompt that writes an
+00:03:40.560 email for a specific customer that a
+00:03:42.760 product is out of stock and I can just
+00:03:44.799 inject the product that's out of stock I
+00:03:46.519 can suggest a similar product I can also
+00:03:49.280 indicate a particular tone of voice so
+00:03:51.040 you could even personalize this to
+00:03:52.519 various customers and then the email
+00:03:54.640 should be signed by the CEO of the
+00:03:56.239 company so you can even swap out the CEO
+00:03:58.319 really easily which is awesome I'm just
+00:04:00.040 showing a very basic example of Ginger 2
+00:04:02.079 here there's way more capabilities like
+00:04:04.519 if else statements and lots of different
+00:04:06.799 things I'm not going to go through it
+00:04:08.120 now but those things are also incredibly
+00:04:09.720 helpful if you want to construct more
+00:04:11.239 complicated prompts final thing that I
+00:04:13.239 did is that I create a little helper
+00:04:15.040 function called process template that
+00:04:16.839 gets a template file that's a string and
+00:04:19.720 that also gets the data that should be
+00:04:21.399 passed to the template so I'm
+00:04:23.120 interacting here with the ginget 2
+00:04:24.880 package to load that file and then
+00:04:27.360 render the template and return the
+00:04:29.400 result so how do we then use that well I
+00:04:32.199 have a main file here where I first get
+00:04:34.479 an API key of course you need an API key
+00:04:36.560 if you want to interact with open AI API
+00:04:39.479 and then I call this chatter function
+00:04:41.800 and pass the API key and here I'm simply
+00:04:43.880 using gpt3 which is fine for this
+00:04:47.280 particular example but you can also
+00:04:49.240 switch it to another model if you wish
+00:04:51.919 then I've written some data so a
+00:04:54.840 customer name a product a similar
+00:04:57.160 product so purple widgets are obviously
+00:04:59.160 very popular so everybody wants those
+00:05:01.840 right so uh they're out of stock and
+00:05:04.320 only orange widgets are there we can
+00:05:06.759 indicate the tone of voice in this case
+00:05:08.600 we want it to be short and to the point
+00:05:10.360 no fluffy language and the CEO name is
+00:05:12.720 iron codes I'm the boss anyway what we
+00:05:15.880 can now do is create an email
+00:05:19.160 template and we can then use the process
+00:05:21.600 template function that we defined
+00:05:24.280 before so this is not called email
+00:05:26.560 template. ginger but this is called let
+00:05:29.080 me take a look create unavailable
+00:05:34.160 email there we go and the next thing
+00:05:37.479 that we need to do is then send the
+00:05:39.440 email template that we constructed to
+00:05:41.880 the chat function and that's going to
+00:05:43.759 give us a response which we're going to
+00:05:46.120 print so let me run this file so here
+00:05:49.120 you go we now have an email that the
+00:05:50.600 purple widget is no longer available and
+00:05:53.319 that the orange widget is a great
+00:05:55.039 alternative and what's nice about using
+00:05:56.759 templates like this that we can now very
+00:05:58.560 easily change them for example let's say
+00:06:00.759 I want a different tone of
+00:06:09.240 voice I like the co-pilot suggestion
+00:06:14.479 here
+00:06:16.240 there let's try it again I'm really
+00:06:18.720 curious now oh there we go oh we even
+00:06:21.800 get like banana and clown emojis I love
+00:06:24.440 this I have a question for you what do
+00:06:25.960 you use for managing your prompts and
+00:06:27.960 llm interactions do you use some
+00:06:29.599 something simple like what I've shown
+00:06:31.160 you today are you using a package like L
+00:06:33.599 chain something else let me know in the
+00:06:35.520 comments so today I covered just the
+00:06:37.800 basics and there's of course a ton of
+00:06:39.400 other things you can integrate in a flow
+00:06:42.000 like this as well such as Json parsing
+00:06:44.120 storing the result in database and so on
+00:06:47.319 however there are a few things that you
+00:06:48.960 need to think about when you're using
+00:06:50.960 something like open AI API in your
+00:06:53.280 project watch this video next to learn
+00:06:56.160 more thanks for watching and see you
+00:06:58.319 next time

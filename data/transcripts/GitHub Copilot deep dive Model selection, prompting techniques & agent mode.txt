@@ -1,0 +1,1797 @@
+# tactiq.io free youtube transcript
+# GitHub Copilot deep dive: Model selection, prompting techniques & agent mode
+# https://www.youtube.com/watch/0Oz-WQi51aU
+
+00:00:00.160 We're going between agent, edit, ask to
+00:00:03.439 kind of show how you can use these three
+00:00:06.640 different modes. Ask is really good at
+00:00:08.639 talking through changes that you want to
+00:00:10.320 do. Edit mode is for those specific
+00:00:12.559 changes that you want. And then agent
+00:00:14.719 mode is when you just want to vibe, so
+00:00:16.320 you just use agent mode to get it done
+00:00:17.840 for you. Agent mode is just so good,
+00:00:19.920 honestly. Yes. Oh my goodness.
+00:00:26.470 [Music]
+00:00:30.960 Hi everyone, I'm Cadia and I'm here with
+00:00:33.440 John and today what are we doing John? I
+00:00:36.719 think we're going to take a look at the
+00:00:38.239 whole bunch of different models that are
+00:00:39.680 available inside Copilot and we're going
+00:00:41.200 to just try them out in the different
+00:00:42.800 modes. So there's ask mode where we can
+00:00:46.399 just ask questions, get responses from
+00:00:48.320 Copilot. There's edit mode where we can
+00:00:51.840 pull in a bunch of files and do mass
+00:00:53.680 edits, refactors, changes across them.
+00:00:56.320 And then there's agent mode, which is
+00:00:58.800 really great. And this is one of my
+00:01:00.399 favorite ways to to do prompting for
+00:01:02.800 agent mode, right? Because what agent
+00:01:04.319 mode does it it takes really a fairly
+00:01:08.320 large prompt usually. Uh pretty
+00:01:11.040 descriptive about a number of different
+00:01:12.640 things you want to do, and it's going to
+00:01:14.799 run through it. It's going to pause
+00:01:17.360 every now and then, kind of ask if it's
+00:01:18.880 doing the right thing, tell us what it
+00:01:20.640 wants to do next, go ahead and do more.
+00:01:23.200 Uh, and then we get to kind of check in
+00:01:24.640 with it and and see how the progress is
+00:01:26.159 going each time. Um, but one of the keys
+00:01:29.119 to that is having a really good solid
+00:01:31.360 prompt. So, yes, it's kind of my
+00:01:33.600 standard for how I tend to do it
+00:01:34.960 nowadays where I actually just put the
+00:01:36.320 prompt into a readme. And uh, you know,
+00:01:39.840 just just so our audience knows, this is
+00:01:42.640 not my first cut at this, right? Uh, I
+00:01:46.000 was kind of working with Copilot and
+00:01:47.600 saying like, okay, this is what I want
+00:01:48.799 to do, but help me refine this readme.
+00:01:52.000 basically making it a full PRD, a full
+00:01:54.320 product requirement stock, uh, and
+00:01:56.320 putting all the things in there that we
+00:01:57.759 would need and then testing it out a
+00:01:59.280 little bit to see what things were good
+00:02:00.399 and what things were weren't. I imagine
+00:02:01.680 that's a lot of what a lot of the
+00:02:03.600 developers out there are hitting, right?
+00:02:05.119 It's just kind of tuning their prompts
+00:02:07.479 properly. So, the situation they're in.
+00:02:10.399 So, it's like using Copilot to create
+00:02:12.319 that PRD to use Copilot to build the app
+00:02:16.080 based on the PRD. I love it. So, what
+00:02:18.160 we've got here then is is this readme
+00:02:20.319 now which really contains all the stuff
+00:02:22.160 that I'm gonna feed into co-pilot and I
+00:02:25.040 guess you're going to do it with a model
+00:02:26.239 and we'll see how it goes. It's a basic
+00:02:29.040 travel reservation app, you know, so uh
+00:02:31.680 I want to view hotel rooms, I want to be
+00:02:33.599 able to make a reservation, etc. And
+00:02:36.160 intentionally we're keeping the
+00:02:37.519 technology stack really simple here,
+00:02:39.680 right? Obviously more complex. This
+00:02:42.239 isn't the way you do it in a real
+00:02:43.440 production app. I'm like loading Vue.js
+00:02:45.200 from a CDN. I don't have a build step
+00:02:46.959 for the front end, that kind of stuff.
+00:02:48.319 It's okay. It's okay. We want it to be
+00:02:50.400 fast so our viewers don't have to wait
+00:02:51.920 forever for a million, you know, node
+00:02:54.080 modules to pull down and install and all
+00:02:56.160 of
+00:02:57.239 that. And we've got some specific
+00:02:59.360 instructions. This is something I really
+00:03:01.120 like to do where I'm going to initially
+00:03:03.200 outline what the project structure is
+00:03:05.680 going to be. Now, some of the models
+00:03:08.000 that we're going to play with accept
+00:03:10.239 visual inputs, too. So I could as a
+00:03:12.959 visual diagram, but you know for now I'm
+00:03:15.440 just doing it in markdown here so that
+00:03:17.680 any of the models can read it. And I
+00:03:19.680 really love that you know you've
+00:03:21.519 structured the readme this way because
+00:03:23.920 sometimes when I ask agent mode with
+00:03:27.120 whichever model to you know to spin up a
+00:03:30.159 react app or spin up a view app, it's
+00:03:32.239 not able to do it accurately. So I think
+00:03:35.120 having this project structure to tell
+00:03:36.799 it, hey, here's exactly how I want you
+00:03:38.560 to do this. I think that's going to make
+00:03:40.159 a difference. I'm curious to see how
+00:03:41.680 that works. Plus, it's an opportunity
+00:03:43.440 for us as developers to kind of make
+00:03:45.200 things to hint at we like to have it
+00:03:47.840 structured because we all have different
+00:03:49.400 preferences where exactly we want our
+00:03:51.680 templates where we want, you know, our
+00:03:53.280 virtual end to exist. Every good
+00:03:55.040 readadme 2 always has setup instructions
+00:03:56.879 and that's useful for us as humans
+00:03:59.040 because of course we're going to want to
+00:04:00.319 be able to go in and set up this project
+00:04:02.080 elsewhere but it's also really useful to
+00:04:04.799 the model because it can look through
+00:04:06.799 this and it can get hints as to some
+00:04:09.920 want like you know I'm saying explicitly
+00:04:11.840 here like you're going to set up a
+00:04:13.040 Python virtual environment best practice
+00:04:15.439 right so hopefully we would run it
+00:04:17.519 through it'll actually go and do that
+00:04:19.199 for us how is the readme right and
+00:04:23.120 copilot instructions How are these two
+00:04:26.280 different? So in the instructions we
+00:04:30.000 have like operator interaction,
+00:04:32.800 security, environment variables, version
+00:04:35.639 control, code styling. So it's
+00:04:37.759 essentially like guiding the model on
+00:04:40.000 how you wanted to build the app, testing
+00:04:42.720 requirements, Python project. So I can
+00:04:44.720 see so like the readme is the PRD
+00:04:47.360 essentially where you're like, hey,
+00:04:48.479 here's what we're building. Here is a
+00:04:49.759 tech stack. And then in the
+00:04:51.400 instructions, you went ahead and gave it
+00:04:53.440 like specific guidelines on what you
+00:04:55.199 want the shape of the code to be. Yeah.
+00:04:57.759 And the the instructions are something
+00:04:59.680 I'll actually end up reusing between
+00:05:01.520 projects often, right? So if people
+00:05:03.919 haven't used copilot instructions yet,
+00:05:06.240 um a thing to know about it is it
+00:05:07.759 basically it's kind of like the
+00:05:08.960 pre-prompt like before you begin any
+00:05:11.120 interaction session with Copilot, it's
+00:05:13.440 going to have that already there. It's
+00:05:16.000 going to know the instructions file. So
+00:05:18.960 when you're working on one project, you
+00:05:20.880 put in there stuff that you want to
+00:05:22.000 apply kind of to every interaction you
+00:05:23.919 have, but you also want to narrow it
+00:05:25.840 down. So you know, that's why there's
+00:05:27.360 that like for Python projects only. If I
+00:05:30.160 happen doing a step that's not related
+00:05:33.120 to Python, it should basically just
+00:05:34.720 ignore that section because it's not
+00:05:35.919 going to be relevant. But then the other
+00:05:37.919 thing is I'll take this and I'll take
+00:05:39.120 the same copilot instructions file and
+00:05:40.639 it's just one of those things I seed
+00:05:42.320 into any new project and I might adjust
+00:05:45.199 it. But there's certain things that I'm
+00:05:46.960 going to want always to be the same,
+00:05:48.800 right? Um for sure. So here's one that I
+00:05:51.759 that I think is kind of fun. I picked
+00:05:54.080 this up from someone actually at a
+00:05:55.600 conference a little while ago. And yes,
+00:05:58.479 as Copilot's working, I want a history
+00:06:00.880 of what it's doing, right? Because
+00:06:02.400 eventually that chat session is going to
+00:06:04.400 go away. You know, I'm going to restart
+00:06:05.919 VS Code. I'm going to clear it out and
+00:06:07.360 do something else. I want an actual
+00:06:09.440 record uh not just of the actual
+00:06:11.840 commits, but of the actual changes that
+00:06:13.840 occurred locally before I even
+00:06:15.199 necessarily committed anything. So, I
+00:06:18.000 tell it, hey, make a change
+00:06:19.960 log.mmd and then each time you do
+00:06:22.880 something, add on to that change log.
+00:06:25.360 And that just gives me a history I can
+00:06:27.120 see. Love it. I've never seen this
+00:06:29.280 before and now that I'm looking at it,
+00:06:31.520 it makes so much sense. It makes so much
+00:06:33.919 so much sense to have it do its own
+00:06:35.360 versioning on the of the changes that
+00:06:36.960 it's doing. But should we like get into
+00:06:39.919 building something? Let's We've talked
+00:06:41.919 enough. Let's let's make make stuff
+00:06:43.440 happen. All right. Um what what model do
+00:06:46.400 you want to play with today? So I I've
+00:06:49.520 been partial towards Claude 3.5. For
+00:06:53.199 some reason I tend to get the best
+00:06:55.039 results from Claude 3.5, but I am open.
+00:06:58.639 But okay. So, I can start with 3.5 and
+00:07:00.800 you can do Yeah, I'll um And actually,
+00:07:04.080 before I even pick, why don't why don't
+00:07:05.840 we point out too right here, I'm looking
+00:07:08.240 in ask mode. Uhhuh. There's three modes,
+00:07:11.919 right? Uh there's there's ask, there's
+00:07:14.080 edit, and there's agent, right? So, in
+00:07:15.919 ask mode, you have the largest breadth
+00:07:18.400 of selection for your models. So, yes,
+00:07:20.720 we can see this list is a lot bigger.
+00:07:23.199 When you move into agent mode, you get a
+00:07:25.960 subset list. certain models just don't
+00:07:28.479 work in agent mode, right? Um, okay. So,
+00:07:30.800 this is what we have to work from for
+00:07:32.000 now and then we'll go and play with the
+00:07:33.520 others in in ask mode later, I guess. Do
+00:07:36.919 35. Um, you know what? Let's let's give
+00:07:40.000 people a preview, right? I've got Gemini
+00:07:42.800 2.5 Pro, right? Let's do it. Only came
+00:07:46.240 out recently. Uh, eventually this will
+00:07:48.319 move out uh, you know, hopefully to uh,
+00:07:51.199 GA, but for now we've got internal
+00:07:53.759 access to it, GitHub, so why not?
+00:07:58.080 All right. I think what I'm going to do
+00:08:00.160 is I'm just going to highlight the read
+00:08:01.680 me to give it focus and then I'm just
+00:08:03.599 going to say implement this. Oh, that's
+00:08:07.280 a very I'm going to I'm going to do the
+00:08:09.199 same thing. I've never been so like two
+00:08:12.479 words. Let's see what happens. Ready?
+00:08:14.800 One implement this. Okay, go.
+00:08:24.120 Boop. All right. Okay. So, so far
+00:08:26.240 already, you know, you can see Claude is
+00:08:28.319 already like writing stuff like it's
+00:08:30.800 Yeah. And it's it's telling me of course
+00:08:32.159 what he used for references, which is
+00:08:33.440 just the copilot instructions for now,
+00:08:35.120 right? Um, so Claude, it looks like is
+00:08:38.240 going right to building. Yes.
+00:08:40.839 Whereas 2.5 Pro is kind of giving me a
+00:08:44.000 description, a pretty heavy description
+00:08:46.720 of what its plan is going to be.
+00:08:49.120 Not going to lie, I'm liking what Gemini
+00:08:51.760 2.5 Pro did before it went into that
+00:08:54.959 terminal command. Right. Yeah. And you
+00:08:57.360 know, I always like to point out with
+00:08:58.480 these two, you're about to hit continue
+00:09:01.200 right there. Copilot can access the
+00:09:03.920 terminal, but only when you give it
+00:09:05.279 permission to. So, it's not going to
+00:09:06.560 like run off and do a whole bunch of
+00:09:08.480 stuff on your machine without you
+00:09:10.080 asking. It's going to pause there, say,
+00:09:11.839 "Okay, this is the command I want to
+00:09:12.880 execute. Do I have permission to go
+00:09:14.000 ahead?" I think that's hugely important.
+00:09:16.720 I think so, too.
+00:09:18.399 All right. So, we're both seeing here.
+00:09:20.080 We've got we've got files that are
+00:09:21.920 appearing. Yeah. And we've got the
+00:09:24.720 option to keep or undo any of those
+00:09:28.920 individually, but also to keep or undo
+00:09:32.720 them in unmas.
+00:09:34.680 Right. So, I'm liking what it's built so
+00:09:37.360 far and I'm going to keep those, but uh
+00:09:39.200 Oh, no. Um I know. So, Claude is still
+00:09:43.360 going and Gemini stopped. Why is Why
+00:09:46.000 does that happen? It's in preview mode.
+00:09:48.560 So, hey, you know, the the hosting, this
+00:09:51.519 is one of the reason we dog food things
+00:09:53.519 internally, right? Is because sometimes
+00:09:56.000 they break and we have to figure out
+00:09:57.600 why. Um, I have seen this happen before
+00:10:00.000 and I have a feeling it's because, you
+00:10:01.920 know, we have certain internal quotas
+00:10:03.519 and that sort of thing that we can use.
+00:10:04.800 So, I might have hit it, but I'm gonna
+00:10:06.560 actually just try telling it to continue
+00:10:10.480 and see if it's able to pick up from
+00:10:12.080 where it was. Maybe I'll
+00:10:14.880 if not I mean and this is one of those
+00:10:17.760 things with agent coding, right? It
+00:10:19.200 builds so much stuff. I really don't be
+00:10:22.640 afraid if it didn't work here and
+00:10:24.880 continue. I could just undo all of
+00:10:27.360 these, wipe it all out. I've still got
+00:10:29.360 my read me there and just start over and
+00:10:31.440 it's it's no my back. Just choose a
+00:10:34.240 different agent and go again. Right.
+00:10:36.959 Exactly.
+00:10:38.720 So Claude is still working. Claude is
+00:10:42.079 still going. Claude's going nuts. Let's
+00:10:43.600 Let's watch yours for a while because it
+00:10:44.880 looks like Gemini is spinning back up
+00:10:47.360 and so it'll be sitting for a while. So
+00:10:49.680 now Claude has started the flash server.
+00:10:51.920 Like it's Oh, you're actually at the
+00:10:54.079 point of executing right now. That's
+00:10:56.000 great. All right. What do we got? Um
+00:10:59.680 okay. Does that open? Want to try it?
+00:11:04.480 I see we've got an uh a Python app
+00:11:06.959 presumably the Flask app. Uh, we got the
+00:11:10.240 data JSON structure. We asked it to make
+00:11:12.160 a single main.js and a single index
+00:11:14.480 HTML. I'm going to guess for now it
+00:11:16.880 probably put the CSS embedded in the
+00:11:18.959 HTML or it's just using the base
+00:11:20.800 Tailwind styling. I don't know. Okay.
+00:11:23.519 Yeah, let's try it out. Uh, it's keeps
+00:11:26.640 opening in the wrong browser window.
+00:11:30.600 So, I'm just going to copy
+00:11:33.320 paste here.
+00:11:39.680 All
+00:11:41.000 right. Con. Yeah.
+00:11:45.120 Let's
+00:11:46.519 see. Okay. I need to zoom in here to see
+00:11:50.160 unexpected token. CDN tailwind.tss
+00:11:53.600 should not be used in. Oh, okay. So, I'm
+00:11:57.120 not too worried about that. I actually
+00:11:58.399 saw that during testing and it's
+00:11:59.839 basically just because we're doing like
+00:12:02.480 loading Tailwind. So, it's actually this
+00:12:04.880 one. It's actually that one. Yeah. Yeah.
+00:12:07.680 All right. Well, I mean, this gives us a
+00:12:09.360 chance to to show off one of our
+00:12:10.800 favorite things about Copilot, right?
+00:12:12.240 Which is when you hit a bug like this,
+00:12:15.120 you can just ask it what's going on and
+00:12:16.720 have it try to figure out a solution.
+00:12:19.440 Exactly what I was going to do. So, I
+00:12:21.360 got this error
+00:12:24.320 and then you just paste it. Something
+00:12:26.320 else I like to do is um I like to just
+00:12:29.200 like actually take a
+00:12:30.600 screenshot and just paste it. Oh, nice.
+00:12:34.079 Yes. and then just pop it in. And yeah,
+00:12:36.480 Claude does take that visual input. So
+00:12:39.279 like if you're using like I think 04
+00:12:42.320 Mini 04 Mini does not take visual input
+00:12:44.959 and you'll see it by like that. It
+00:12:46.639 crosses it out out there to indicate
+00:12:48.959 like no girl I cannot see that. Oh, that
+00:12:52.560 is so cool. I hadn't noticed that little
+00:12:54.399 UI change. That's
+00:12:57.040 We should probably point out to people
+00:12:58.399 too. I bet a lot of folks are used to
+00:12:59.839 dragging and dropping from their file
+00:13:01.600 tree in VS Code into the chat. Um, but
+00:13:05.839 the files you drop in, as you just
+00:13:07.519 demonstrated, don't actually have to be
+00:13:08.800 in your project. Like you can pull a
+00:13:11.120 file from anywhere on your computer,
+00:13:13.440 drag drop it onto the chat window and
+00:13:18.320 that's going to make it available to the
+00:13:20.560 interaction. All right, so you've been
+00:13:22.399 doing all this. Gemini has finally
+00:13:24.000 gotten to the point where I can run now.
+00:13:26.320 All right. So, it's setting up my
+00:13:27.600 virtual environment.
+00:13:29.760 Yay. It's built a whole bunch of files.
+00:13:34.399 That's a good call out because I don't
+00:13:36.959 believe Claude set up a a virtual
+00:13:39.120 environment. Unless it didn't I I was
+00:13:42.320 just vibing too hard.
+00:13:44.720 Vibing too hard.
+00:13:48.880 Yeah, it did. It's right here. Okay. So,
+00:13:51.760 it's one of the first things that it did
+00:13:53.440 was to create that. Okay.
+00:13:56.079 All right. So, so mine thinks it's done,
+00:13:58.160 but I didn't see it actually execute.
+00:14:02.800 What I'm going to do though, I know it's
+00:14:04.800 told me what I have to do, right? So,
+00:14:06.240 I'm just going to go into a new terminal
+00:14:08.000 window and I'm just going to execute.
+00:14:13.560 So, I'll activate my virtual environment
+00:14:16.800 and then I'll fire off Python.
+00:14:20.000 Come on, little terminal. Why don't you
+00:14:21.519 love me? Here we go. So, so far while
+00:14:23.920 you're doing that, I you can see why I
+00:14:26.240 tend to stick with claw 3.5 stonet. Um,
+00:14:30.079 because for me, I get the best I've been
+00:14:32.399 getting the best results using quad 3.5,
+00:14:37.199 you know, and that is what I tend to use
+00:14:39.199 a lot. Um, I think part of it is like
+00:14:42.639 it's just the right balance of like
+00:14:44.480 speed and precision, right?
+00:14:47.680 Okay, there we go. All right. Um,
+00:14:49.440 because yeah, like I I don't know. We'll
+00:14:51.199 see if Gemini's result is a lot better.
+00:14:53.600 I don't know. Does it load on the first
+00:14:56.160 try? Yeah. Okay. Oh, I I just didn't uh
+00:14:59.760 I didn't do my pip uh requirements
+00:15:01.920 install. That's all. Um fortunately, I
+00:15:05.040 know I know what that is. So, okay.
+00:15:06.720 Actually, though, I'm going to do it the
+00:15:08.160 right way, right? The right way, which
+00:15:10.399 is I like to I like to trust my own
+00:15:12.560 brain. I know what it does, but at the
+00:15:14.399 same time, I like to see how the model
+00:15:16.720 reacts.
+00:15:18.240 Yeah. Okay. So, I'm going to feed it
+00:15:19.760 back that error and hopefully it tells
+00:15:21.040 me I need to do a pip 3 install of the
+00:15:23.040 requirements file or something like
+00:15:25.000 that. Uhhuh. No. No. Okay. Why don't you
+00:15:29.120 know that? All right. Well,
+00:15:34.240 meanwhile, I'll check what we have here.
+00:15:39.720 Yeah. Did I resolve the error?
+00:15:44.160 Did not. Okay. So, we might have a
+00:15:46.079 little bit of a more debugging to do.
+00:15:48.959 Um, one, did it did it save the file
+00:15:51.759 after it changed it? Yeah, it did. Okay.
+00:15:56.000 So, I've had that problem occasionally
+00:15:58.519 where there's a there's a I guess so
+00:16:01.839 viewers should know there's the keep
+00:16:04.240 step, but sometimes you also have to
+00:16:06.560 manually save the file or do a save all
+00:16:08.800 I found just to actually get it down to
+00:16:11.680 disk. Yeah, it's all saved.
+00:16:16.079 Yeah, we kind of want to see what the
+00:16:17.600 model can do. So, okay, while you're
+00:16:21.040 doing that, um I've got mine spun up.
+00:16:23.040 So, let's take a look.
+00:16:26.480 This is fun.
+00:16:28.759 Yeah. Oh, although this gives me an
+00:16:31.279 opportunity to talk about this, by the
+00:16:32.399 way, since it's here. It's my Anyway, so
+00:16:35.360 Cassidy recently wrote a great blog post
+00:16:38.000 called Which AI model should I use with
+00:16:39.759 GitHub Copilot? Right. So, you're
+00:16:42.560 watching us jam here, but if you want
+00:16:44.560 like her opinions about what models are
+00:16:47.759 good for what, she's got a nice little
+00:16:49.360 TLDDR breakdown and then talking about
+00:16:51.680 each one, right? Let's see. Let's see.
+00:16:54.320 All right. Okay. So, so close. I know
+00:16:57.920 what this is, though. Okay, cool. You
+00:16:59.839 know, and I'll I'll we'll see what it
+00:17:01.440 we'll see what it does when I give it
+00:17:02.720 the input. But uh just to talk through
+00:17:05.039 that for viewers um
+00:17:08.079 uh Ginga is a generally serverside
+00:17:11.480 templating language and it uses a very
+00:17:14.720 similar
+00:17:15.959 syntax to uh what Vue.js does. So when
+00:17:21.599 you just dump them both into a single
+00:17:23.520 file, it can be a little confusing for
+00:17:26.079 the interpreters as to which thing it's
+00:17:28.000 supposed to interpret in which context.
+00:17:30.000 So it'll probably have to do some
+00:17:31.520 escaping here. Yeah, to protect um the
+00:17:36.320 server side uh rendering engine from the
+00:17:40.559 components that are only supposed to be
+00:17:41.760 interpreted on the front end by Vue. I
+00:17:44.480 see. Okay, there we go. So, yeah, it's
+00:17:46.799 it's it's wrapping it's going to wrap
+00:17:48.720 some stuff in
+00:17:50.120 raw, it looks
+00:17:54.360 like. And let's I don't know if I'll
+00:17:56.799 need to reload or not. Let's see if that
+00:17:59.039 takes.
+00:18:02.400 Yes.
+00:18:04.000 Oh, my goodness.
+00:18:07.200 All right. And um so so I have the same
+00:18:11.520 error. I'm so impressed. Okay. So Gemini
+00:18:14.559 was able to to do it and it resolved
+00:18:18.400 whatever error you had on the first go.
+00:18:21.120 Meanwhile, my quad Claudito
+00:18:23.799 here has been has not been able to
+00:18:26.720 identify the unexpected token on line
+00:18:30.080 131 in main.js. Right. Is this one of
+00:18:33.760 these places where we need And that's
+00:18:35.280 the actual line, right? Yeah. This is
+00:18:37.120 the line. So, I'm kind of looking to
+00:18:38.799 see. I could also change the model.
+00:18:43.160 Yeah. Yeah. Opportunity for us to find
+00:18:46.240 out. Um, which one should I use?
+00:18:50.880 Oh, wow. Wow. Um, I mean, 25's been
+00:18:53.919 performing well, but we've also kind of
+00:18:55.840 shown it off. 37. I know. I was going to
+00:18:59.200 go I was going to go 37. thinking and
+00:19:02.160 then we can ask right okay we can say
+00:19:04.640 like what is wrong with this what is
+00:19:06.720 wrong with the highlighted line yeah and
+00:19:10.000 maybe we give it the the mist we're
+00:19:12.000 seeing
+00:19:13.679 okay
+00:19:21.200 all right let's
+00:19:26.919 see so let's see is it referencing the
+00:19:29.840 instructions and Then it references
+00:19:31.840 main.js.
+00:19:34.559 All right. So, it's thinking, you know,
+00:19:36.240 thinking takes time. It does. But you
+00:19:39.440 know what's crazy? Like sometimes I feel
+00:19:41.520 like the models are slow. But are they
+00:19:43.640 slow? I don't think so. I think it's
+00:19:46.480 just like we're impat impatient. We want
+00:19:48.240 it to be like a microwave. We've gotten
+00:19:50.480 so used to having our answers right now.
+00:19:52.400 Wait a minute.
+00:19:54.559 If I could build this much this quickly
+00:19:56.559 20 years ago, I would have been listen
+00:20:01.320 craziness. Okay. All right. Okay.
+00:20:05.200 Now, what I love about this is unlike
+00:20:07.360 the others which are just like, okay,
+00:20:09.200 I'll rewrite it. And they kind of give a
+00:20:10.559 brief a deep explanation
+00:20:14.320 so now it's saying it's because there's
+00:20:16.080 a space, but I just added this space.
+00:20:18.720 So,
+00:20:20.400 um, remove the problematic space.
+00:20:23.760 adds a formatting method for better
+00:20:26.600 maintainability. All right, I'm just
+00:20:28.400 going to do this. How about that?
+00:20:31.840 Oh, if I do apply an editor from here.
+00:20:35.840 Yeah, let's see if it will intelligently
+00:20:38.720 know where to apply these changes. Good
+00:20:41.280 idea. Okay,
+00:20:43.840 what would you have done?
+00:20:46.320 You know, probably just because I've
+00:20:47.840 I've seen this a couple times, probably
+00:20:49.360 I would have asked it if room.pric price
+00:20:52.240 is actually a valid variable. Like it's
+00:20:55.440 possible that price isn't in the data
+00:20:57.919 model. And so sometimes I've seen syntax
+00:21:00.799 errors where it really should be telling
+00:21:02.159 you price doesn't exist, but instead
+00:21:03.919 it's just like the dot is invalid
+00:21:05.600 because it doesn't know how to descend.
+00:21:07.919 I was going to say I would expect a
+00:21:09.919 different error if it wasn't a valid
+00:21:11.840 variable. Yeah. Yeah. So that I mean
+00:21:13.679 that's just conjecture. I I don't know
+00:21:15.440 for sure, but I I like this because it
+00:21:18.360 actually we'll see whether it's able to
+00:21:20.720 call that format price method properly.
+00:21:24.240 So, we'll know whether it's actually
+00:21:25.440 getting through the template. Let's see.
+00:21:28.080 You know, this is my first time using
+00:21:29.720 Vue as well. I I have not touched view
+00:21:32.640 in a little while. We're seeing Looks
+00:21:34.240 like it's it's um persisting.
+00:21:38.320 Can you click on into the main JS line
+00:21:40.960 one? Yeah, that's so good. Yeah, it's
+00:21:42.880 the same line. Same one. It's not
+00:21:44.720 clearing the cash. That's our whole
+00:21:46.240 problem. Ah, and this is this is where
+00:21:50.000 the LLM's break down, right? Because
+00:21:51.840 they don't have full awareness of what's
+00:21:53.679 going on. We still have to think. Um, I
+00:21:57.600 know. We we can just ask it. We can just
+00:22:00.400 say like it looks like the browser isn't
+00:22:02.640 clearing the cache. Yeah. You want me to
+00:22:05.200 ask it? Yeah. I just want to see because
+00:22:07.440 like okay in case developers haven't
+00:22:10.000 used this before if you're in dev mode
+00:22:12.720 in Chrome if you have console open right
+00:22:16.400 then when you control hold down that
+00:22:18.720 refresh button what what you just showed
+00:22:21.120 Cadia um is that refresh button on
+00:22:24.960 Chrome has extra options it's got the
+00:22:27.039 extra empty cache reload but can we get
+00:22:30.400 can we get the model to know that that's
+00:22:32.000 true and to act let's find out so what
+00:22:34.720 do you what do you suggest I put here uh
+00:22:37.760 something like it looks like the page
+00:22:40.320 isn't changing even though we've saved
+00:22:42.960 it. The browser still has the old
+00:22:46.320 template or something like that.
+00:22:58.640 Let's see. I wonder if your thinking
+00:23:03.450 [Music]
+00:23:07.679 Think for me,
+00:23:09.000 Claude. You know what? I'm gonna say the
+00:23:11.520 same thing in mind. I was I was gonna
+00:23:15.159 say, yeah.
+00:23:18.000 Uh, so let's see what who should I do
+00:23:19.840 this with. Let's go into ask mode and
+00:23:22.720 I'll
+00:23:23.880 pick, you know what? Let's go with
+00:23:26.000 Copilot base. right now in case in
+00:23:29.000 case we're playing around with some
+00:23:31.120 naming conventions and stuff. This is
+00:23:32.960 internal only. I think right now copilot
+00:23:36.000 base goes to like uh 41 I think 4.1.
+00:23:39.679 Yeah. Yeah. Okay. So, this is really 41
+00:23:42.480 responding just so viewers know. It's
+00:23:44.480 fine the template.
+00:23:55.360 But you know this is this is also
+00:23:57.919 proving that you know when you take time
+00:24:00.080 to think through your process logically
+00:24:03.520 write down all your steps of what you're
+00:24:05.039 going to do you'll get better results
+00:24:06.880 right because Gemini 2.5 went into
+00:24:10.480 thinking planning and then started
+00:24:13.240 coding claude 3.5 said yes okay I'mma do
+00:24:17.279 it here you go right yeah it was it's
+00:24:21.200 interesting and you know I don't get me
+00:24:23.200 wrong I've had great success with cloth
+00:24:24.880 about 3.5. Yes, it is more limited. It's
+00:24:28.640 it doesn't go as deep. It doesn't give
+00:24:30.720 as much of a reasoning step ahead of
+00:24:32.559 time. And it sometimes feels like for
+00:24:35.039 very complex cases, I still need a
+00:24:37.360 bigger model.
+00:24:40.159 All right. Okay. So, you got some
+00:24:41.520 results. I've got some results.
+00:24:44.120 Good. Then refresh the browser to see
+00:24:46.480 the changes aren't showing up because
+00:24:47.919 you modified the source
+00:24:49.799 file. Okay. And then what's your
+00:24:51.840 step-by-step solution? confirm your
+00:24:54.320 changes almost identical. This is great.
+00:24:56.240 So you're 37. I'm looking in GPT41. They
+00:24:59.200 both say okay first make sure that the
+00:25:02.000 changes are actually there and copy your
+00:25:04.559 your main.js file into the static
+00:25:06.559 directory. Yeah. And then does your give
+00:25:10.320 us the commands to copy for Windows and
+00:25:13.360 Mac. Very very good. Okay. Um then it
+00:25:18.000 says refresh your browser. Browser.
+00:25:20.720 Yeah. Uh, and in mine it gives me a hard
+00:25:22.480 refresh. Uh, you know,
+00:25:27.600 uh, okay. Yours doesn't. And then it
+00:25:29.120 gives me some gave me some like, you
+00:25:30.640 know, you can set up a file watcher.
+00:25:33.360 All right. So, let's clear cache and
+00:25:35.279 see. But that was good. That is cool.
+00:25:38.080 Um, so 37 did not say clear cache.
+00:25:43.520 Okay. But maybe that earlier step is the
+00:25:46.240 right one then. Maybe the the copying it
+00:25:48.320 into the static. Maybe that's not
+00:25:50.559 actually maybe that's not a bad
+00:25:52.799 suggestion. So which I could see because
+00:25:55.679 you know again we're not really running
+00:25:57.039 this the right way. We're not running
+00:25:58.240 with a build step on the front end.
+00:26:00.000 Yeah. Which is why it's using the static
+00:26:01.919 directory I
+00:26:05.480 think. So
+00:26:10.360 copied there.
+00:26:16.159 All right. Okay. So, so we don't know
+00:26:19.520 which step was was the
+00:26:22.039 rightwhere in there. I think it was the
+00:26:24.559 copy because when I didn't copy and I
+00:26:27.600 was just like, "Okay, you didn't tell me
+00:26:29.039 to you didn't tell me to clear cash. Let
+00:26:30.720 me just clear clear the cash." Clearing
+00:26:32.720 the cash did not work. It's after I
+00:26:34.799 copied and clear the cash that it
+00:26:37.360 worked. So, it actually solved the
+00:26:40.320 issue.
+00:26:42.880 It did solve the issue. That's awesome.
+00:26:44.799 And um it's it's advice on like how to
+00:26:48.960 clear the cache and how to fix it. Turns
+00:26:51.679 out to both have been right. Turns out
+00:26:53.600 to both have been right. So thank you.
+00:26:55.919 Um I question by the way that you were
+00:26:58.159 asking about debugging, right? And it
+00:26:59.600 did give me good answers said okay you
+00:27:01.440 can set flask debug in your env file
+00:27:03.919 which makes sense right? Um so I'm just
+00:27:06.720 asking it can I do it without setting an
+00:27:08.240 env file and those results suck. So if
+00:27:11.120 there is a dash on the command on the
+00:27:14.480 actual same line, it doesn't
+00:27:17.400 know. All right. Okay. So we both have a
+00:27:19.919 working app. Awesome. Awesome. They
+00:27:23.120 actually look really really similar,
+00:27:25.159 right? Slightly different data
+00:27:27.120 assumptions, but whatever. Um, and I
+00:27:29.679 assume a lot of that's just because it's
+00:27:31.039 like basic Tailwind styling, right?
+00:27:33.360 Yeah. And look, I have some price here.
+00:27:36.480 Oh, yeah. Very interesting.
+00:27:40.000 So, let's see. Room. Let's see if we can
+00:27:42.720 book anything. Yeah,
+00:27:45.840 the date picker. Does it work? Okay. I
+00:27:48.960 mean, it drops like the same. Yeah, the
+00:27:50.799 same style. Yeah, it's the same style.
+00:27:52.320 Yeah, which is good cuz Oh, reservation
+00:27:55.440 created successfully. Yay. All right.
+00:27:58.480 Yep. Did it for me. Weird that it's
+00:28:01.240 using ID numbers for the reses, but
+00:28:04.159 yeah. Oh, interesting. Also interesting
+00:28:07.760 that the ID is showing up on the UI,
+00:28:11.039 right? Which like it shouldn't be. Okay,
+00:28:13.520 so let's let's do it. Let's let's fix it
+00:28:15.200 up because you know what we've shown
+00:28:17.120 here is actually a fairly unusual case.
+00:28:18.799 Like most developers, they're they're
+00:28:21.360 working on brownfield. They're working
+00:28:22.480 on stuff that's already there. Not green
+00:28:24.720 field building an app from scratch.
+00:28:26.720 True. You only do that once in theory in
+00:28:28.880 the lifetime of an app. Um so I like
+00:28:32.000 this idea of now we should refine it,
+00:28:33.600 right? So I could say something like,
+00:28:34.880 hey, the IDs aren't shouldn't be
+00:28:36.880 showing. And then I I like that yours
+00:28:39.120 shows price, so I'll ask it that, too.
+00:28:44.440 Okay. You know what? Um, let let's try
+00:28:47.039 out let's try out copilot base GPT41. It
+00:28:49.600 did so well on the ask step. I'm going
+00:28:52.320 to go into edit mode, I think, is what
+00:28:54.559 I'm going to do. All right, I'll follow
+00:28:56.159 your lead. Edit mode. Oh, if I go to
+00:28:58.559 edit mode, let me hit done. Edit mode.
+00:29:02.320 Okay. What are we doing? What are we
+00:29:04.159 doing? So, I'm gonna I'm gonna ask it to
+00:29:06.880 remove the IDs. I'm gonna ask add the
+00:29:09.840 price. Okay, go ahead. All right. So,
+00:29:12.720 I'm gonna I'm gonna grab basically just
+00:29:15.360 everything I think is going to be
+00:29:16.480 relevant. Like I don't think the N
+00:29:18.080 matters for this, but probably the
+00:29:19.919 static and the templates are going to be
+00:29:21.760 important. The the change log obviously
+00:29:24.159 won't. The data at Mike's I don't know
+00:29:26.000 if it has price in there.
+00:29:28.039 Um, and I wonder if I include the
+00:29:30.799 readme, I wonder if it'll adjust the
+00:29:32.480 readme. So, okay, I'm just going to pull
+00:29:34.320 all of those into my context. So, I
+00:29:38.240 before you keep going, I want to call
+00:29:39.440 this out. So, with a with edit mode,
+00:29:42.240 it's important to drag your files into
+00:29:44.399 the context window.
+00:29:46.480 Edit mode is going to iterate through
+00:29:48.320 anything I've given it as context. But
+00:29:51.679 unlike agent mode, which like will
+00:29:54.399 automatically expand the context, right?
+00:29:56.080 I don't think edit mode auto expands
+00:29:58.880 context. I think that's Yeah, I think
+00:30:01.120 that's why I'm calling it out. So, I
+00:30:02.720 just want you know if you're when you're
+00:30:04.720 watching this, I want you to know that
+00:30:06.320 when you're using edit mode, you have to
+00:30:08.159 give it access to those files and
+00:30:09.919 folders that you want it to be able to
+00:30:12.080 edit. Otherwise, I don't think it finds
+00:30:15.440 it automatically, right? I don't think
+00:30:18.080 so. Yeah, I don't think so. And that's
+00:30:19.840 intentional.
+00:30:21.440 Uh, okay, cool. So, yeah, context
+00:30:23.600 matters. Uh, there we go. Um I I
+00:30:27.159 should Yeah. And also at workspace
+00:30:30.080 doesn't work right. We can show that in
+00:30:32.240 in ask mode but in ask mode if you just
+00:30:35.279 want to include everything you can say
+00:30:36.480 at workspace and it basically give it
+00:30:39.039 access to all the files inside the VS
+00:30:40.720 code workspace. But edit mode that's not
+00:30:43.360 available. It's explicit addition as you
+00:30:45.679 said of of the files. Okay. Um so I'm
+00:30:48.640 just going to tell it to do things.
+00:30:50.679 Let's
+00:30:52.279 improve this app.
+00:30:55.840 one uh remove the reservation
+00:31:01.279 ids
+00:31:03.919 the front
+00:31:08.840 end just say page um I'm going to be
+00:31:13.200 explicit and say the visible ids like I
+00:31:15.840 don't want to do anything like remove
+00:31:17.279 the ids and have to infer what they are
+00:31:20.080 on the back end I just
+00:31:22.640 right it's just from the front end page.
+00:31:24.880 Yeah, exactly right. Uh to add price to
+00:31:30.720 the
+00:31:32.679 room
+00:31:34.919 lists available to the room
+00:31:41.640 types again visible. Okay, let's see
+00:31:44.480 what it
+00:31:48.840 does. So I can we can actually start to
+00:31:51.519 see what it's doing here, right? like it
+00:31:53.039 has a whole bunch of directories
+00:31:54.240 available as well as specific files. So
+00:31:55.679 you can see it's even searching for
+00:31:57.600 explicitly like where does reservations
+00:32:00.000 where do reservations those and then
+00:32:02.480 including only those matching files in
+00:32:04.559 the context. Yeah, that's kind of cool.
+00:32:07.200 Um all right, so I'm really glad I
+00:32:08.960 dropped in my data JSON. Um we we had
+00:32:12.159 told it in the readme for now we're not
+00:32:14.320 using a database. We're just using a
+00:32:15.840 JSON file because it's simple and easy,
+00:32:17.360 right? And we gave it some mock data and
+00:32:19.679 I I in the read me maybe I didn't
+00:32:22.240 actually include price in there.
+00:32:25.600 Interesting. Yeah. So, so it like your
+00:32:29.279 model inferred it, but mine decided not
+00:32:31.919 to add that because I didn't see it
+00:32:33.039 initially in there. So, now it's
+00:32:34.320 actually adding it to that JSON
+00:32:35.679 structure. Nice. Um, it's helpfully
+00:32:38.799 added a change log entry as we asked it
+00:32:41.360 to. Nice. Oh, yeah. The change log. Uh
+00:32:46.000 um it's putting the price into the the
+00:32:48.480 HTML right there. Great. Um and it's
+00:32:52.480 updated the
+00:32:54.120 JavaScript. I don't actually see any
+00:32:56.159 changes in there. That's interesting
+00:32:57.840 because I think there would be Well,
+00:32:59.360 there isn't a full OM here, but I wonder
+00:33:02.159 if we're going to run into a problem
+00:33:03.279 where is price
+00:33:05.640 not We may have to come back and do
+00:33:07.760 something manually. I don't know. I see.
+00:33:09.760 Uh I'll keep this and just reload there.
+00:33:17.360 Okay. No, it's good. Um, so we got a
+00:33:19.600 price visible uh for both of them and
+00:33:22.799 the IDs are gone. Perfect. Exactly what
+00:33:25.200 I want. And I actually like how your UI
+00:33:28.559 is styled better because I would much
+00:33:31.519 rather this cancel button to be on the
+00:33:33.760 side over here. I think that's pretty
+00:33:36.080 standard in industry. And I don't know,
+00:33:38.880 something about the spacing and I don't
+00:33:42.720 know, there's something that I'm I'm
+00:33:44.320 vibing with more on your page than this
+00:33:47.840 one. We could try this.
+00:33:49.799 Right. We were talking about visual
+00:33:52.080 inputs, right? Uh you can see my screen.
+00:33:54.799 Do you want to
+00:33:57.600 All right,
+00:33:59.679 let's
+00:34:00.760 see. Because another call out I had was
+00:34:05.559 um this model did not uh I lost the
+00:34:10.719 screenshot. I'll just do it again. It
+00:34:12.560 did not include anything in the change
+00:34:14.239 log. It's not doing it. It did not do
+00:34:17.918 it. That's weird right
+00:34:22.079 now. I wonder why. Should we Should we
+00:34:25.839 try one other thing while you're
+00:34:26.960 working? Yeah. just to make sure it's
+00:34:28.960 actually reading the co-pilot
+00:34:30.399 instructions, right? Um, we could put
+00:34:33.520 something like talk like a pirate at the
+00:34:35.760 top so that we can actually see in
+00:34:38.239 action that it's obeying the co-pilot
+00:34:40.480 instructions.
+00:34:47.520 Thought it was
+00:34:49.879 suggestions. Yes,
+00:34:52.480 but with a focus on code quality and
+00:34:54.480 maintainability. Why not? Why not?
+00:34:59.040 But um yeah, let's see if it's actually
+00:35:01.839 doing that and hopefully I understand
+00:35:04.880 um the language.
+00:35:09.920 So, I'm going to go to I'm just going to
+00:35:12.640 go to agent mode and I'm going to
+00:35:16.040 screenshot your
+00:35:19.720 UI and we're going to pop it in here.
+00:35:24.160 And who do we go with? Do I go uh well,
+00:35:28.400 let's see. I know Gemini 2 Flash. We
+00:35:30.880 know Claude 3.5 Sonnet and
+00:35:33.160 GPT40 will all be visual inputs. So,
+00:35:36.960 let's try Gemini.
+00:35:39.720 Okay. And you know what? Even Gemini
+00:35:42.000 Flash, I think, will Do we want to play
+00:35:44.320 with that? Oh, it's not in Asian mode,
+00:35:46.560 of course. Yeah. Yep. Sorry. My bad. No,
+00:35:50.400 no, no. So, I want to say like what
+00:35:52.160 would I say? Like I think I would just
+00:35:53.359 update UI to reflect the new design. I
+00:35:57.359 don't know. It's not that new, but
+00:36:00.079 that's all I would say. What would you
+00:36:01.599 say?
+00:36:03.440 No, I think that's perfect.
+00:36:05.920 Yeah, go with it.
+00:36:08.880 So, let's see if it talks like a parrot
+00:36:10.480 to see if it's actually using the
+00:36:12.800 reference it's saying here.
+00:36:15.520 Yeah, I mean, right. So, it says it's
+00:36:17.440 pulling it in. Mhm.
+00:36:21.359 So, how many changes do you have in your
+00:36:23.440 um change log? I'm curious. Great
+00:36:26.119 question. Um it it looks like it's been
+00:36:29.680 pretty good about it. Like I've got my
+00:36:31.480 initial commit. I've got Yeah, fixing
+00:36:36.079 the ginger problem. I've got um Whoops.
+00:36:40.280 Sorry. I've
+00:36:44.359 got input validation. The template
+00:36:47.599 change. Yeah. No, it looks it looks
+00:36:48.960 complete to me. I love it. Amazing. So
+00:36:51.599 again, I'm not sure why it's not
+00:36:53.119 updating the change log here, but it is
+00:36:56.560 talking like a pirate. Ahoy there,
+00:36:58.400 matey. I see ye want the UI too much.
+00:37:02.079 The design you've shared. Ye shared.
+00:37:06.960 Okay, so it is doing it good.
+00:37:10.640 Right now, this is interesting. You
+00:37:12.079 asked for a UI change, but it's changing
+00:37:14.720 the data structure.
+00:37:17.920 Wow.
+00:37:19.760 It's going above and beyond, but not
+00:37:21.200 necessarily in a good way. Um, unless
+00:37:23.440 Oh, you know what it did? It's pulling
+00:37:25.440 the data out of the the design as well
+00:37:27.920 as the layout,
+00:37:30.320 right? I wonder. So, we could go with
+00:37:33.200 this and just roll with it. Or we could
+00:37:35.200 cancel this run, undo everything that
+00:37:37.520 it's about to change, and then say just
+00:37:40.160 change the design, but not the data. See
+00:37:42.800 if that works. Be a little bit more. I
+00:37:44.960 mean it's doing clo I mean Gemini 2.5
+00:37:48.160 uses a lot of tokens look at this yeah
+00:37:52.160 which is something to be aware of right
+00:37:53.760 like and and while I don't know if
+00:37:56.480 there's a specific chart for it I know
+00:37:58.560 we have certain models marked as like
+00:38:00.480 premium or or using more tokens but I
+00:38:02.960 always feel like a good easy proxy for
+00:38:05.760 it is just how much output does it give
+00:38:08.480 me and how slow is it kind of imply that
+00:38:12.240 something's taking more energy. Yes,
+00:38:14.720 it's tempting to just always go with the
+00:38:16.320 highest power model. But hey, it was
+00:38:18.800 just Earth Day recently, right? So, I
+00:38:21.359 guess we should add in here, one way
+00:38:24.560 that you can be a little more
+00:38:26.680 eco-conscious is go with the lighter
+00:38:29.200 weight models when you know that they're
+00:38:30.960 going to be sufficient. Uh, and the side
+00:38:33.119 benefit of that is that they're faster,
+00:38:35.200 right? And then only going forward to
+00:38:37.839 those heavier models like 2.5 Pro for
+00:38:40.800 example or 37 and Claude when you really
+00:38:44.800 need that horsepower.
+00:38:48.640 Good call
+00:38:50.040 out. So now I have update the UI to
+00:38:52.880 reflect the new design. Do not change
+00:38:54.320 the content, just the UI styling. Is
+00:38:56.720 that sufficient? Let's see.
+00:39:00.320 Ohoy there, matey. And I missed it while
+00:39:02.800 I was talking. Did you you hit undo
+00:39:04.720 right on on the Yeah. Yeah. Yeah. I I
+00:39:06.560 even cancelceled it. I stopped and
+00:39:08.000 cancel and just removed it from the
+00:39:09.440 context window. When you hit cancel,
+00:39:11.520 does it auto undo?
+00:39:13.760 No. No. It just stops. It stops the
+00:39:17.160 generation. And then I I went up and
+00:39:20.160 just um click on this button to remove
+00:39:24.240 the last request. Nice.
+00:39:27.400 Okay. That's something I don't really
+00:39:29.440 mess around with much too, but good good
+00:39:31.440 call out, right? that like when I'm
+00:39:33.839 doing things in a session,
+00:39:36.070 [Music]
+00:39:37.200 it's keeping the full history and it it
+00:39:39.200 might, you know, as my session gets long
+00:39:40.720 enough, it might eventually start
+00:39:41.920 forgetting some of the older stuff, but
+00:39:44.400 you can go and you can manually manually
+00:39:47.359 remove elements history by just exing
+00:39:50.240 them out. Exactly. And it's also a
+00:39:53.359 really good way to remove any changes
+00:39:55.680 that you don't want. Um because then
+00:39:58.320 when you when you remove that request,
+00:40:00.000 it removes all the changes that it just
+00:40:01.839 did too. Nice. Yeah, it's pretty good.
+00:40:07.960 Okay. Lock these changes. Oh,
+00:40:13.200 it finally did it.
+00:40:15.680 It finally did it. Here.
+00:40:18.240 All right. All right. So, what do we
+00:40:20.320 got? Okay. We got index file changed. We
+00:40:22.800 got the main.js changed. And they they
+00:40:24.960 updated the change log. Yep. Um, but it
+00:40:28.000 didn't touch the JSON. There we go. All
+00:40:30.480 right.
+00:40:32.079 Yes. I wouldn't really got it to notice
+00:40:34.320 the change log issue. I have no idea.
+00:40:37.839 Oh,
+00:40:39.240 well, we we swear it's it's not
+00:40:42.400 passively listening when you clutch
+00:40:44.160 about things unless you press that
+00:40:45.520 microphone button.
+00:40:49.599 This UI does not look like yours cuz
+00:40:51.599 this is not blue. This is not blue.
+00:40:56.960 Oh, it's not paying attention. It did
+00:40:58.400 put the button here.
+00:41:01.040 Okay. Oh, yeah. And it did update like
+00:41:03.599 here. And now it just says availability
+00:41:05.200 and price like yours. Okay. All right. I
+00:41:09.680 want to do something. I'm going to add a
+00:41:11.760 color palette. You just gave me such a
+00:41:13.440 good idea. Oh, I'm gonna follow too.
+00:41:16.560 Second. I find one.
+00:41:20.240 Hello,
+00:41:21.400 Finder. Where are you? I do love this
+00:41:25.200 tip though, John, of using of having it
+00:41:27.599 do its own change log so you can kind of
+00:41:31.119 go through and see the history of the
+00:41:32.560 changes made that it made. It This has
+00:41:35.839 helped me up so much, right? Yeah, I
+00:41:38.079 love that. Yeah, you have a long editing
+00:41:39.920 session and it just flies out of your
+00:41:42.960 head. All right. Uh I'm gonna stick in
+00:41:46.720 edit mode. I think the context I used
+00:41:50.079 last time is actually pretty good.
+00:41:52.480 Um, I'm going to switch though to Gemini
+00:41:56.000 Flash, which is available in edit mode.
+00:41:58.160 And I'm going to say apply
+00:42:01.040 this color
+00:42:03.880 palette. And then I'm going to give it
+00:42:07.520 this. This is going to be ugly as I'll
+00:42:08.960 get out because I haven't like
+00:42:10.280 explicitly picked this palette for this
+00:42:12.319 purpose. I just grabbed an image I had.
+00:42:14.400 But I've got this color palette file.
+00:42:16.400 Okay. Which has like some more stuff in
+00:42:18.640 it. Oh, nice.
+00:42:23.960 Okay. Flash
+00:42:26.480 2.0 Flash. And it's it's it seems like
+00:42:28.800 it's cranking along like it gave me
+00:42:30.319 responses pretty quick. Um and it's
+00:42:33.359 doing what I would expect it to do. Uh
+00:42:36.480 oh, I love this. So, it's it's it's not
+00:42:39.920 even just defaulting to hex colors. It's
+00:42:42.800 actually using these named colors
+00:42:45.520 um as the sty. So I wonder is that part
+00:42:48.640 of tailwind or is that is it creating a
+00:42:51.680 separate CSS that has these named colors
+00:42:53.599 in it? I don't know. I do believe I do
+00:42:55.760 believe it's a tailwind tailwind thing.
+00:42:58.240 Okay. I you know I'm I'm so old I just I
+00:43:01.920 still default to Bootstrap. No, listen
+00:43:05.280 the thing is we use the tech that we
+00:43:07.359 know and that we're used to. You know
+00:43:08.560 what I'm saying, right? Yeah. It's like
+00:43:11.359 I was doing a I did a stream I did a
+00:43:14.240 stream earlier today and somebody was
+00:43:15.920 telling me to stop using Wow,
+00:43:20.480 it's ugly, but it's right
+00:43:24.160 to stop using npm and instead use PNPM.
+00:43:28.640 And I was like, you know, you know, not
+00:43:31.680 I'm just doing what I'm used to, right?
+00:43:34.880 Yeah, we we get these patterns like
+00:43:37.119 that's that's a great call out, too.
+00:43:38.800 Okay. So, you're giving me all kinds of
+00:43:40.160 great ideas, right? Um like Okay, now
+00:43:42.960 I'm because I've used PIP forever,
+00:43:45.200 right? But I know there's other options.
+00:43:47.599 So, let's ask I use PIP, too, right?
+00:43:51.200 Yeah. It's just I mean, it's forever,
+00:43:52.800 right? All right. I'm going to go for a
+00:43:54.400 fast one like uh 04 mini is 04 Mini. No,
+00:43:58.800 there it is. Yes. Okay. Uh and I'm going
+00:44:00.960 to ask it um what should I
+00:44:05.480 use instead of PIP? because I know
+00:44:09.119 there's other module managers out there.
+00:44:10.800 I just haven't gotten used to them.
+00:44:13.359 Guess what? We've been making all these
+00:44:14.960 changes. We should we should do a
+00:44:16.560 commit, you know.
+00:44:18.880 Oh my god. No. Right. Okay. Um since
+00:44:22.560 we're both working out the same
+00:44:23.520 codebase, let's make two different
+00:44:24.720 branches. What do you think? Oh, yeah.
+00:44:26.160 Yeah. Yeah. Okay. All right. Let's do
+00:44:28.240 it. So, I'm just gonna make a new branch
+00:44:31.920 and I'm going to call this one Peek
+00:44:34.359 John. Uh, and what did I use? I used uh
+00:44:38.240 Gemini
+00:44:39.319 2 cur and it's just like quad 3.5
+00:44:46.640 plus+
+00:44:49.280 and this is a great time to show off
+00:44:51.280 this button too. Right. Exactly. Right.
+00:44:54.960 Autogenerate.
+00:44:57.119 There we go.
+00:45:00.560 The one thing about this autogenerating
+00:45:04.000 comment um commit situation though
+00:45:05.839 they're so long sometimes and for me I'm
+00:45:09.280 like I would never write so much in a
+00:45:10.960 commit message but these very long
+00:45:13.280 commit messages have saved me so many
+00:45:15.240 times when trying to figure out issues.
+00:45:19.119 Mine for some reason um is not actually
+00:45:22.319 generating. I've never had this happen
+00:45:23.839 before. Are things
+00:45:25.960 staged? Um, click on the plus. I could
+00:45:29.839 Yeah, just add Oh, man. The DS. Well, oh
+00:45:32.560 well. DS.
+00:45:35.119 Um, in fact, let's fix that. Let's just
+00:45:36.960 add Yeah. Update the get more. Yeah. Y
+00:45:40.680 um uh Okay. Add Mac specific.
+00:45:47.200 Oh, right. Yeah.
+00:45:52.960 because coding.
+00:45:55.280 I have coding for everything, even your
+00:45:57.040 Even your git
+00:46:04.520 configs. It's weird as I thought I had.
+00:46:07.119 No, there we go.
+00:46:10.520 Okay, it is in there. Why is it
+00:46:15.000 Oh, interesting. That's so weird. All
+00:46:18.240 right, I'm not gonna I'm not going to
+00:46:19.599 bother debugging this right now. I'm
+00:46:20.880 just Yeah. Yeah. It's not worth it,
+00:46:22.560 honestly.
+00:46:26.160 But I mean, that said, the the answer it
+00:46:28.480 gave is correct, of course.
+00:46:31.280 All right, there we go. I've got I've
+00:46:32.720 got a commit message here. This is
+00:46:34.000 pretty nice, actually. It says like it
+00:46:35.920 is too long. Yes. But, um, it's telling
+00:46:38.960 me that's implementing it. It says it
+00:46:40.720 added the backend API. It created the
+00:46:42.400 front end. Oh, wow. Because like this is
+00:46:45.200 a really nice detailed commit message.
+00:46:47.440 It's very long. Very detailed. It is
+00:46:49.760 very long though. Yes.
+00:46:51.800 Um Okay. And I'm just gonna sync that.
+00:46:57.520 Um going back to what I was saying
+00:46:58.720 before, I didn't get a great answer and
+00:47:01.119 I think it's because I wasn't detailed
+00:47:02.160 enough. I said, "What should I use
+00:47:03.119 instead of pip and then it just says,
+00:47:05.040 well, you can use and and this is true.
+00:47:07.599 Like if you don't have pip itself
+00:47:09.599 installed, but you do have Python module
+00:47:12.160 pip, you can call Python 3 and just say
+00:47:14.560 execute this module pip." But that's not
+00:47:16.319 really what I meant. Um Uh, can I
+00:47:20.599 use a
+00:47:22.599 different
+00:47:25.000 Python module
+00:47:27.800 manager other than
+00:47:32.119 PIP? What are the pros and cons of each?
+00:47:40.119 Okay. And I love how we're going between
+00:47:42.960 agent, edit, ask to kind of show how you
+00:47:47.359 can use these three different modes,
+00:47:49.359 right? Um, so ask is really good at
+00:47:52.319 figuring out what can I use other than
+00:47:54.160 pip figuring out, oh, how can I improve
+00:47:57.280 this particular function? Oh, do you
+00:48:00.000 have any ideas on that? You know what I
+00:48:01.520 mean? Just like kind of talking through
+00:48:03.359 changes that you want to do. Edit mode
+00:48:05.520 is for those specific changes that you
+00:48:07.599 want. So you add the specific context,
+00:48:09.920 you ask it what you want and then it
+00:48:11.359 goes ahead and do it. And then agent
+00:48:13.359 mode is when you just want to vibe, you
+00:48:15.119 know, you just want you just want things
+00:48:17.440 done. So you just use agent mode to get
+00:48:19.119 it done for you. And we tend to just
+00:48:21.200 like flow. I mean, we've seen this
+00:48:22.720 today, right? We t just kind of flow
+00:48:24.400 between them for the different kind of
+00:48:26.559 things do at any given time, right?
+00:48:28.800 Yeah. Yeah. Oh, okay. This is great. Now
+00:48:32.000 it's giving me some good complete now
+00:48:35.599 now that I've prompted it the right way
+00:48:37.599 and really told it what I was trying to
+00:48:39.040 do
+00:48:41.400 and poetry. I have heard of poetry and I
+00:48:44.400 have not uh made use of that yet sadly.
+00:48:47.200 I'm told it has some told it's faster.
+00:48:49.839 Yeah. Which they call out here too. Um
+00:48:51.760 and it does those pi project tommo files
+00:48:54.160 so little specific and and well defined
+00:48:58.319 for what you're going to want to have
+00:48:59.920 for packages. Wow, so many options.
+00:49:03.839 It's too many these days. Essentially,
+00:49:05.599 just stick with PIP, you know. No, I I
+00:49:08.720 probably will. I say I'll change, but
+00:49:10.800 then I never change. So, you updated
+00:49:14.079 your UI, which gave me the idea to take
+00:49:17.599 a screenshot and ask ask Copilot, how
+00:49:22.400 can I up update this UI? Like, any
+00:49:26.800 suggestions?
+00:49:28.920 Yeah. and and you're using a screenshot.
+00:49:32.240 So, that means that you don't even have
+00:49:34.800 to have it inspect the code itself,
+00:49:37.760 which should make the response a little
+00:49:39.520 bit more lightweight and easier for it
+00:49:41.440 to process. Right. Exactly. So, I'm
+00:49:43.440 going to just go to ask
+00:49:45.160 mode and 03 mini doesn't have
+00:49:49.720 vision. Okay. 40 has vision. 40. Yeah.
+00:49:53.839 01 preview. O1 preview doesn't. So,
+00:49:56.160 these smaller ones don't have vision.
+00:49:58.400 So, let's use let's use 40 or 4.5. Oh,
+00:50:02.559 4.5 is a newer one. Okay, that doesn't
+00:50:05.280 have vision. Darn. Let's just use 40. So
+00:50:08.960 many models. So many. I can't keep them
+00:50:12.000 all in my head anymore. Yes. How can I
+00:50:15.440 improve this UI? That's all I'm going to
+00:50:19.960 say. Again, these type of abstract
+00:50:22.640 questions we can ask chat. I love it.
+00:50:28.720 So, accessibility
+00:50:31.319 enhancements, form validation, feedback.
+00:50:34.400 Oh, that's
+00:50:35.559 true. Responsive
+00:50:37.880 design, load
+00:50:40.040 indicators. How do you know there's no
+00:50:42.160 load indicator? I know, right? Like,
+00:50:44.240 it's just kind of a it's it's putting in
+00:50:46.240 some great generic suggestions even
+00:50:48.720 though it doesn't actually have the
+00:50:49.920 information as to whether there's one
+00:50:51.200 there or not. It can't from a static
+00:50:53.119 screenshot. Improve visual hierarchy.
+00:50:55.839 Okay. Okay. User feedback on actions,
+00:50:59.599 enhance room
+00:51:02.359 cards, security improvements. Is it
+00:51:05.040 going through the code? What what did it
+00:51:06.800 reference? Let's see. I wonder if some
+00:51:08.800 of this is because of the co-pilot
+00:51:10.000 instructions because I actually said in
+00:51:11.920 the instructions, do a security pass on
+00:51:14.319 everything. There we go. So, even though
+00:51:17.440 it's just doing a visual thing here,
+00:51:19.040 it's still reminding us. So, that's
+00:51:21.680 that's interesting. We might actually
+00:51:23.040 want to go I mean we could leave it but
+00:51:24.960 we this would imply to me too that I
+00:51:27.440 should improve my standard copilot
+00:51:29.760 instructions file and I should put a
+00:51:31.119 caveat in there you know that like if
+00:51:34.319 when you're giving advice about the code
+00:51:36.079 itself then talk about the security if
+00:51:38.480 you're doing like step or something
+00:51:40.640 don't. So I could improve that file but
+00:51:44.000 also so yeah it ref that would be a
+00:51:46.079 really good addition to the
+00:51:47.520 instructions. So it referenced the
+00:51:49.359 instructions, the screenshot, and I I
+00:51:52.160 forgot that I had the index.html file
+00:51:54.240 open. So that's that's where it's
+00:51:56.240 getting the validation feedback,
+00:51:58.880 accessibility, the loading indicators.
+00:52:01.440 So that's how it it knows that it's not
+00:52:03.280 there. Okay. So it's not just like
+00:52:05.440 randomly added. Yeah. I was like, wait,
+00:52:06.960 how do you know that? Because the file
+00:52:09.040 is open.
+00:52:11.440 Right. Right. Which is a good thing.
+00:52:12.800 Which is a good thing to think about. Um
+00:52:14.400 and you could remove it. Yes. But um
+00:52:16.760 you're in fact we should call out this
+00:52:18.800 little UI thing, right? Because as you
+00:52:21.280 said, you you were in edit mode, you
+00:52:23.200 dragged in certain Oh, you were in ask
+00:52:24.400 mode, but you dragged in certain files,
+00:52:26.319 but it also always pays attention to the
+00:52:28.160 file you currently have open and focused
+00:52:30.079 in your editor pane, unless you hit that
+00:52:32.400 little this little eye icon here. Yeah.
+00:52:36.079 So, you could have if we'd noticed
+00:52:38.079 questa. Yeah. Yeah. Okay. But these are
+00:52:41.599 honestly very good suggestions. Great
+00:52:44.160 suggestions. I love it. Um, you know, so
+00:52:47.760 one thing we haven't talked about
+00:52:48.960 because you got me thinking about
+00:52:49.920 security is we haven't thought talked
+00:52:51.599 about the all the other adjacent like
+00:52:53.920 other than just producing code and
+00:52:56.079 talking about code and config. What are
+00:52:58.880 the other things that we tend to use
+00:53:00.160 copilot for? Right? So security is one
+00:53:02.079 of them. security. Um, I might say
+00:53:04.800 something in in ask mode like, you know,
+00:53:07.599 at workspace again. I just want you to
+00:53:09.440 look at everything now, right? Uh, how
+00:53:11.839 can I make this app more secure? And I'm
+00:53:14.480 going to pop it here, too. You're using
+00:53:16.960 preview.
+00:53:19.760 Well, yeah. O4 mini even. O4 mini. Yeah.
+00:53:24.079 03 mini then. Okay. Oh, this will be
+00:53:27.599 fun. All
+00:53:29.240 right.
+00:53:31.640 Oh, I should have waited to hit enter
+00:53:33.760 until you did. Then we could have time.
+00:53:34.960 Ah, it's all right. Yeah, but in order
+00:53:37.520 to answer the Oh, it's still talking
+00:53:39.599 like a pirate. I may need to stop. And
+00:53:42.880 we're what we're seeing right now, too.
+00:53:44.240 You're on 03 mini. I'm on 04. Even
+00:53:46.400 though I hit enter first, you're getting
+00:53:48.000 responses way faster than you.
+00:53:51.200 That's true. Okay. And I'm just gonna
+00:53:54.240 remove that pilot.
+00:53:56.480 A I thought it had flavor.
+00:53:59.440 I just, you know, ohoy there, mate.
+00:54:05.520 Now, my system is like a face
+00:54:07.359 information. So, I wonder if I've
+00:54:08.800 actually stalled out here. I'm just
+00:54:10.640 going to stop. Interesting request. Oh,
+00:54:14.480 something I was just going to say was so
+00:54:16.559 to kind of answer that question that I
+00:54:18.559 that we've been seeing floating around
+00:54:20.240 of like what model do I use? How do I
+00:54:22.720 know what model to use? It's it's just
+00:54:25.760 it's a matter of trying the model. If
+00:54:28.720 you get the output you like, you know,
+00:54:30.640 you keep it. But if you don't, you
+00:54:32.480 remove the output from the context
+00:54:33.920 window or the the generation from the
+00:54:35.280 context window. Try a different model.
+00:54:37.760 You know what I mean? If you want to go
+00:54:39.359 back and forth think in thinking mode,
+00:54:41.680 use a reasoning model. If you want to,
+00:54:44.480 you know, not use up your tokens too
+00:54:46.319 much, you know, claw 3.5 is a really
+00:54:48.640 good one. I think um even GPT40 is a
+00:54:51.920 good one, too. for like copilot base or
+00:54:54.000 for for one is a good option. So let's
+00:54:57.680 look at our security recommendations.
+00:55:01.040 Um I mean I'm liking them. They're
+00:55:02.800 they're they're solid, right? Like okay,
+00:55:04.720 it's calling out in debug mode. Of
+00:55:06.720 course, I don't have any HTTPS. I don't
+00:55:09.599 have any CSRF. I have no cores. Like all
+00:55:12.000 the things you'd expect for like, hey,
+00:55:13.839 I'm just blasting out this project as
+00:55:15.599 fast as I can. Vibe coding. Vibe coding,
+00:55:19.200 man. Um I think I think that's one of
+00:55:21.520 those things. that's like so important
+00:55:23.520 too is that there's a big difference
+00:55:26.160 between making an app that works and
+00:55:28.240 making an app that's production ready
+00:55:30.160 and can really go out there, right? And
+00:55:32.319 security is probably the most important
+00:55:35.200 thing. So, if nothing else, like all
+00:55:37.359 y'all vibe coders out there, you're
+00:55:38.880 building awesome stuff. Once you figured
+00:55:41.359 out how to not just make it work on
+00:55:42.960 local host, your next step, make sure
+00:55:46.240 you ask C-Pilot, how can I make this
+00:55:48.880 more secure? What's wrong with it? and
+00:55:51.200 go through and just follow all those
+00:55:52.640 recommendations because you don't want
+00:55:54.240 to put something out there and then the
+00:55:56.160 next day have someone worm their way in
+00:55:58.240 and just I know all your keys and that's
+00:56:01.760 what's been happening. That's that's
+00:56:03.760 what's been happening and it's been
+00:56:05.200 painful. But yeah, so these are actually
+00:56:08.079 very solid suggestions from both both
+00:56:10.400 models. Yeah. Yeah. I love it. I'll have
+00:56:13.839 I have to go figure out what flask WTF
+00:56:16.319 is. I've never heard of that. I know.
+00:56:17.599 I've never I've never heard of that.
+00:56:20.799 All right, cool. So, some What's another
+00:56:22.400 thing that that we always want to do uh
+00:56:24.559 besides just security passes?
+00:56:27.520 Security
+00:56:30.359 passes. Accessibility pass.
+00:56:34.119 Accessibility. I love it. All right,
+00:56:36.160 let's let's grab another. I'm going to
+00:56:38.079 go this time
+00:56:39.640 with what haven't we played with
+00:56:42.520 here? I don't think I've done 4.5,
+00:56:45.119 actually. I know. Me either.
+00:56:48.799 together. Workspace
+00:56:51.319 workspace. How can I ensure that this
+00:56:56.480 stuff
+00:56:59.319 is
+00:57:02.599 is accessible?
+00:57:05.200 Right.
+00:57:07.359 Yeah, we're both using the same model
+00:57:08.880 here, but we use slightly different
+00:57:12.000 we're getting some some slightly
+00:57:13.680 different um
+00:57:16.280 respons. See, the content is the same,
+00:57:18.720 but the format is very The format is
+00:57:20.559 different. Yeah.
+00:57:24.400 I love that they both give us um like,
+00:57:26.559 okay, here's what you have and here's
+00:57:28.079 how you can improve it type thing. Yeah,
+00:57:31.119 just this example changes kind of stuff.
+00:57:34.079 Yes. Oh, and then yours, this is great.
+00:57:36.559 Yours is going on to even like more
+00:57:39.359 detailed color contrast, keyboard nav,
+00:57:41.680 keyboard navigation.
+00:57:44.160 Yes. Page title and headings. These are
+00:57:47.839 really really good solid suggestions.
+00:57:51.520 Yeah, for anyone who doesn't who hasn't
+00:57:53.359 come across the term accessibility
+00:57:54.720 before, uh what we mean here is things
+00:57:57.680 like making this available to people who
+00:58:00.319 are color blind or have low vision
+00:58:03.200 capabilities or even blind. Um and
+00:58:06.400 there's other subtle things too, but
+00:58:08.480 this is all about making sure that your
+00:58:09.839 site is usable by someone regardless of
+00:58:13.599 their personal differences and
+00:58:14.720 experiences. It's too easy to assume
+00:58:17.280 that, hey, uh, you know, I experience
+00:58:19.599 the site a certain way, so everybody
+00:58:21.119 else does. But there's really simple
+00:58:23.200 things that can trip people up. Like if
+00:58:24.720 two colors, it's hard to see the
+00:58:26.559 difference if you have certain kinds of
+00:58:28.000 color blindness, then you're not going
+00:58:30.079 to know that those are two different
+00:58:31.200 buttons or they do two different things,
+00:58:34.000 right? So, this is a really good pass to
+00:58:36.240 just make sure it's it's available for
+00:58:37.839 everyone. And also worth noting um if
+00:58:41.200 you're working for certain government
+00:58:43.200 agencies or certain government funded
+00:58:45.280 agencies, you're actually required in
+00:58:47.680 certain cases to make sure that your
+00:58:50.400 interfaces are accessible. So it's not
+00:58:52.480 just a good idea, it's a legal
+00:58:53.520 requirement. We just did an
+00:58:54.880 accessibility pass. What
+00:58:57.559 about testing?
+00:59:00.520 Testing. What good is an app without
+00:59:03.680 testing? I'm going to call out something
+00:59:05.200 specific here too in my co-pilot
+00:59:07.040 instructions because I did think about
+00:59:08.880 this. Um, testing requirements, right?
+00:59:12.960 Include unit tests for new
+00:59:14.240 functionality. Minimum code coverage
+00:59:17.200 percentage like right like how much of
+00:59:18.799 my code is actually touched by tests.
+00:59:20.960 Um, integration tests for API endpoints.
+00:59:22.960 Obviously, we could expand this, but
+00:59:24.400 okay. I'm going to go with 04.
+00:59:28.200 Oh, now I'm jealous. I'll do 03 mini.
+00:59:31.760 Oh, you want to go 304 again? Okay. All
+00:59:33.760 right, that's cool. That's cool. Um, and
+00:59:36.480 we're in ask mode. Yeah, I'm just gonna
+00:59:39.359 at workspace it again, I think. I mean,
+00:59:41.440 it's a lot of workace. It's not It's not
+00:59:43.680 such a big application yet. If if we had
+00:59:46.880 I was going to say like I' I'd hesitate
+00:59:48.640 to use at workspace in a larger project
+00:59:52.160 uh because it would just be too much,
+00:59:53.520 but here it's only going to include like
+00:59:55.280 20 files maybe or so. Yeah. So we also
+00:59:59.119 have a slashcomand test which is slash
+01:00:02.280 testworkplace slash tests as well. We
+01:00:06.400 can just do that directly. Mhm.
+01:00:10.960 The one thing here I'll say is
+01:00:14.680 um the the the idea of generating tests
+01:00:17.680 itself like we can add to this right. So
+01:00:20.720 aside from just saying slash tests, I
+01:00:22.720 might say something
+01:00:24.680 like make
+01:00:26.920 tests and use and here I'm going to call
+01:00:30.160 it a specific file and I'm going to
+01:00:33.200 include that data file data.json
+01:00:38.079 data validation.
+01:00:41.440 So that it won't just be like, okay,
+01:00:43.040 yeah, you got a you got a 200, okay, on
+01:00:45.440 a page, but it'll actually look at what
+01:00:47.200 it should be returning from our data
+01:00:49.200 source. Nice. That's that's a great tip,
+01:00:52.720 right? Let's do it. Let's do it. Oh,
+01:00:57.280 so the first thing 03 mini Okay. Okay.
+01:01:02.559 Oh, I need a Python interpreter. When
+01:01:04.799 did my interpreter Why do I keep getting
+01:01:07.119 kicked out? I mean, yeah, it should
+01:01:09.599 automatically pick your VM, you think,
+01:01:11.720 but oh well.
+01:01:14.920 Um, pi test versus v test. I'm gonna go
+01:01:17.599 with pi test, I think. I'll have to redo
+01:01:20.400 this one second because it's Yeah, it's
+01:01:22.720 stalled out on that. Sure.
+01:01:27.000 No. Make
+01:01:33.240 test can't type because I'm rushing.
+01:01:36.599 Yeah. I have this most of the time this
+01:01:39.920 thing I see like the faster you go the
+01:01:41.599 slower you go and it's it's consistently
+01:01:44.160 so true. I wonder if we should have used
+01:01:46.559 Asian mode for this.
+01:01:49.720 Oh, cuz we are in chat. Yeah, but it's
+01:01:53.920 actually doing more than I would expect
+01:01:55.760 in in ask mode,
+01:02:01.200 right?
+01:02:03.440 Oh, okay. Here we go.
+01:02:06.200 Select drip. Yes. Okay, that's sweet.
+01:02:09.520 So, this is one of these cool things,
+01:02:11.040 right? Um I we get used to certain idees
+01:02:15.640 and copilot will work in VS Code. It'll
+01:02:19.440 work it in the Jet Brains series of
+01:02:21.640 idees. Uh we've got a chat in Eclipse
+01:02:24.720 now, which is really cool. And then
+01:02:27.119 we've got code completion, but not full
+01:02:29.839 chat and a few other IDEs like
+01:02:33.280 M. Um, but I will say like even though I
+01:02:38.240 used to use idea jet brain stuff a lot
+01:02:41.359 like that's kind of where I um nowadays
+01:02:44.799 the integration between C-Pilot and VS
+01:02:47.359 Code where it can do things like it can
+01:02:49.440 automatically fire off these separate
+01:02:51.640 panels tell VS Code how to attach the
+01:02:54.559 test frameworks that kind of stuff. To
+01:02:56.400 me that's huge. That's part of what
+01:02:58.240 really keeps me using it in this
+01:03:00.000 environment.
+01:03:02.280 Yeah,
+01:03:03.960 huge. So 04 Mini responded and you know
+01:03:08.880 you have all these steps and stuff. 03
+01:03:11.520 Mini just told me here's a step-by-step
+01:03:13.920 overview of what test will be created
+01:03:16.400 and then that's it.
+01:03:19.599 Stop it. So it did change the import
+01:03:22.079 JSON, but then it didn't go beyond that.
+01:03:24.200 Huh. Okay. I wonder if if you keep that
+01:03:27.520 in Oh, actually I didn't I didn't notice
+01:03:29.760 this right here. I keep forgetting I
+01:03:33.039 keep forgetting this new UI. Yes. Yeah,
+01:03:36.160 I keep forgetting this new UI where like
+01:03:38.160 you can see the files that were changed
+01:03:40.880 right in the context window. So, but
+01:03:43.520 that's a good call out because I was
+01:03:45.440 ready to say like it didn't do it.
+01:03:47.680 Right. Right. But it did actually. Oh,
+01:03:51.280 yours your test pass. I mean, it it did
+01:03:54.400 it did do it. It went through. It made
+01:03:57.200 my tests. Um, now that said, this is the
+01:04:00.720 entirety of the test. So, I'm not super
+01:04:02.799 happy with that. And you know how you
+01:04:04.640 said, "Hey, we should commit, John."
+01:04:06.240 You're absolutely right because I'm
+01:04:08.880 gonna undo all this
+01:04:12.160 and we're gonna try commit as you go.
+01:04:15.520 I'm say something like make unit tests.
+01:04:17.280 And now that I know I should
+01:04:19.400 using pi test, why not?
+01:04:23.799 Okay, surprisingly all the tests passed.
+01:04:29.359 So, let's take a quick look through.
+01:04:30.640 Okay, it's it's it's got it's embedded
+01:04:32.319 the data in the Python, which is maybe
+01:04:34.960 not the way I would do it, but I I get I
+01:04:37.280 get it. I understand why. What do we
+01:04:39.520 actually have for tests here? Yeah. So,
+01:04:41.599 we have
+01:04:44.799 Yeah. loading up the data. Uhhuh. Patch
+01:04:48.559 it. All right.
+01:04:51.280 Testing the route. Testing the route.
+01:04:53.839 Testing get
+01:04:55.640 rooms. Testing reservations.
+01:04:58.880 Beautiful. I would restructure it, but
+01:05:01.200 it's but it's a good set of tests.
+01:05:04.000 Success checking. Success checking. This
+01:05:07.680 is really good actually. And I am very
+01:05:09.920 impressed and surprised that it ran on
+01:05:11.680 the first try. Yeah.
+01:05:14.079 Yay. Now, one thing that strikes me
+01:05:16.480 about this is that these are not item
+01:05:18.960 potent, right? I mean, it's gonna after
+01:05:21.119 it runs these tests, I don't think
+01:05:22.559 there's any kind of roll back or
+01:05:23.680 anything because it's just using JSON.
+01:05:25.440 So, this is gonna actually alter our
+01:05:28.000 data for the app. And I wonder if that's
+01:05:31.280 just like it couldn't figure out how to
+01:05:33.039 do it since we weren't using a real
+01:05:34.640 database with a roll back capability or
+01:05:37.119 did it put a mock in there and I didn't
+01:05:38.880 notice.
+01:05:40.640 Yeah, it didn't alter our JSON file at
+01:05:44.079 all. Oh, when it ran it. Okay, so it
+01:05:46.400 must be doing something. Oh, here we go.
+01:05:48.480 It's right here. So, it loaded
+01:05:52.640 and it's passing in the original data.
+01:05:56.160 Load data override save. So, I think the
+01:05:58.960 data it's using is here, right? I think
+01:06:02.559 that's why it created this
+01:06:04.839 um this dummy data sort of situation so
+01:06:08.000 that it wouldn't override the data.json.
+01:06:10.880 Interesting. That's a funky workaround I
+01:06:13.760 would not have thought of. Creates
+01:06:15.839 temporary data. Yeah. Yeah. Okay. Okay.
+01:06:18.799 All right. That's an interesting
+01:06:22.200 pattern like it. Um All right. Um
+01:06:27.039 there's one more thing I'd love to do
+01:06:28.799 before we run out of time today. Okay.
+01:06:31.440 Which is I would love to talk about
+01:06:34.799 documentation.
+01:06:36.720 Ah good old docs. Good old docs. So how
+01:06:40.960 do we think that it's good for us to go
+01:06:43.200 about doing? I have an idea in my head,
+01:06:45.200 but how would you approach it? I think I
+01:06:47.839 would approach it by what I typically do
+01:06:50.400 is I'm just going to close some stuff
+01:06:55.400 here. So, typically I just have the
+01:06:58.079 readme
+01:06:59.160 open and I would do at workspace in chat
+01:07:02.799 mode. I would use Claude 3.5 because
+01:07:05.839 Claude is a very good writer. Okay. And
+01:07:08.799 I would say um update the readme based
+01:07:12.240 on the
+01:07:15.000 um the current project structure or
+01:07:17.760 something like that. Okay, cool. I'm
+01:07:21.039 going to try a different approach
+01:07:22.480 simultaneously and I'm going to do this
+01:07:24.079 one using Gemini Flash. I'm going to do
+01:07:26.960 it with edit and I'm going to bring in
+01:07:30.319 the source code, the templates
+01:07:35.039 actually. Yes, it's true. I would use
+01:07:38.720 edit or agent to do this because then it
+01:07:41.280 actually does it.
+01:07:43.920 Maybe I, you know, this is a slightly
+01:07:46.480 different flow. I want to try this out.
+01:07:48.880 Um, okay. Make
+01:07:51.559 documentation for this app. Uh give
+01:07:55.799 me an exec
+01:07:59.480 uh summary
+01:08:04.200 docs and a flash does visual well it
+01:08:08.160 does multimold input. Uh but if I ask
+01:08:10.640 for a workflow diagram
+01:08:14.960 maybe it'll use mermaid or something.
+01:08:17.920 Let's just be explicit and workflow
+01:08:19.279 diagrams using
+01:08:22.040 mermaidjs. Yeah. Okay. So, I didn't say
+01:08:25.600 include a diagram and I'm going to use
+01:08:26.960 agent mode and claw 3.5. That's what I
+01:08:29.359 would use because sometimes when I ask
+01:08:32.399 um in ask mode, if I say update the
+01:08:35.198 readme, it doesn't um return the
+01:08:38.960 contents of the readme in that code
+01:08:41.120 block format for me to just apply it.
+01:08:44.238 So, that happens sometimes in ask mode.
+01:08:47.600 So, actually using edit or agent is a
+01:08:49.920 better move.
+01:08:51.759 Interest. So this will be really
+01:08:53.279 interesting, right? Because both of
+01:08:55.120 these modes have relative freedom in in
+01:08:58.479 like being able to modify and create a
+01:09:02.719 large number of files. Um, but I wonder
+01:09:05.679 if edit was the wrong approach because I
+01:09:07.920 see that it's actually rewriting my
+01:09:11.040 files instead of creating new ones. Oh,
+01:09:14.000 but you said explicitly update the read
+01:09:15.520 me. Okay, so we might see we might see
+01:09:17.279 very very similar.
+01:09:20.880 There you go.
+01:09:22.719 I I think what I'm going to do I like
+01:09:25.120 this. I like what it gave me for output.
+01:09:27.120 It's telling me the API. Uh it's telling
+01:09:30.080 me the post,
+01:09:31.640 etc. Um it's got the workflow diagrams.
+01:09:35.439 It did it in Mermaid.
+01:09:39.399 Great. Let me let me keep this for now
+01:09:41.839 just so I can preview it so we can
+01:09:43.679 actually see what it looks
+01:09:47.960 like. There we go. My renderer is up.
+01:09:50.719 All right. So, it's got it's got all the
+01:09:52.238 instructions I had in there. It has the
+01:09:53.719 existing setup instructions, etc., etc.,
+01:09:58.320 and then it's kind of added sections at
+01:10:00.960 the end. The API endpoints, example
+01:10:03.480 responses. Love
+01:10:05.400 it.
+01:10:07.159 Um, post, get, delete. Yeah. Um, and the
+01:10:11.920 workflow sequence diagrams. If I were in
+01:10:14.560 a if I weren't just using the native
+01:10:16.719 embedded
+01:10:18.560 um markdown renderer inside VS Code,
+01:10:21.840 there's other plugins you could use or I
+01:10:23.520 could commit this into the repo and
+01:10:25.679 really see the mermaid diagrams. So,
+01:10:27.840 actually maybe I'll do that.
+01:10:30.800 Yeah, on this side. So, it just updated
+01:10:33.280 it. Maybe because I said update, so
+01:10:36.239 there isn't a lot of changes. So, it
+01:10:40.320 updated the stack. It gave it like let
+01:10:43.760 me actually go to
+01:10:45.159 the so we can see this better. Hold
+01:10:49.960 on. Here we go. So it updated the like
+01:10:53.679 the abouts what the app is about and
+01:10:56.159 actually it removed Tailwind CSS to
+01:10:58.400 Bootstrap. Interestingly
+01:11:02.640 what? Uhhuh. Did it actually it updated
+01:11:06.560 the features? Did it actually make that
+01:11:09.679 change or is it just It did implementing
+01:11:11.760 it. Bootstrap Bootstrap 5 instead of
+01:11:15.120 Tailwind.
+01:11:17.199 It added testing. It updated the project
+01:11:20.719 structure.
+01:11:22.719 Um and then it added a testing
+01:11:24.960 instruction and then it added like the
+01:11:26.640 updated the JSON output and that's it.
+01:11:31.679 Okay. So, actually, I think your prompt
+01:11:34.640 worked a lot better for updating
+01:11:37.360 documentation or
+01:11:39.159 or oh, or Gemini over Claude. Oo. Okay.
+01:11:44.159 So, I'm going
+01:11:45.560 to just undo and and do it again with a
+01:11:50.400 different with a different model.
+01:11:53.199 Why not? Why not? While you're doing
+01:11:54.480 that, I'm going to try a slightly
+01:11:56.239 different approach here, too, where I'm
+01:11:58.159 going to I really want it to make a
+01:12:00.239 separate file for this this time. I
+01:12:03.360 don't think I can do that.
+01:12:06.880 Um, what if you tell it to explicitly
+01:12:10.239 create a new file in edit mode? Yeah.
+01:12:14.199 Okay. Okay. So, I'll do that. I'll say
+01:12:16.719 new file
+01:12:18.280 docs.md. Um, yeah, I've got all the same
+01:12:21.679 context I had before.
+01:12:26.000 I'm I'm just going to copy copy your
+01:12:28.159 prompt and see if I can
+01:12:33.000 get maybe not all of it. Um Oh, okay.
+01:12:36.880 Okay. Yes, it did it.
+01:12:40.159 Nice.
+01:12:43.280 And so here we have Gemini updating the
+01:12:47.239 readme in the context window instead of
+01:12:52.400 in the readme file. This is something I
+01:12:55.600 noticed with Gemini a lot of times where
+01:12:59.440 it won't actually do the thing. It will
+01:13:02.719 say okay it will do it in the window and
+01:13:04.960 like I have to apply it.
+01:13:07.600 Isn't that interesting? So like here is
+01:13:09.600 the entire updated readme which actually
+01:13:11.760 looks beautiful. So Gemini is a Gemini
+01:13:14.719 2.5 Pro is a go for
+01:13:17.080 readmemes but it didn't
+01:13:20.440 actually apply it and because like I
+01:13:23.360 said with readmes it doesn't return all
+01:13:25.920 of it in that um like a code block with
+01:13:28.640 in markdown format. So all of this would
+01:13:31.840 have to be like copy pasted copy pasted
+01:13:36.239 but okay. So now I'm going to say okay.
+01:13:38.640 I wonder if there's a way to file now.
+01:13:42.080 Yeah, I'm going to say okay, update the
+01:13:43.840 file now.
+01:13:46.800 And see if that will work.
+01:13:49.560 Sweet. Meanwhile, I actually I actually
+01:13:51.920 went and pushed my last not the last set
+01:13:53.920 of changes, but the one before where it
+01:13:55.440 put the output into the readme. I pushed
+01:13:57.920 that up to GitHub just so that people
+01:14:00.080 can see what those mermaids look like.
+01:14:03.600 Yeah. Oh, that's so nice. Oh, wow. Wow.
+01:14:09.360 That's
+01:14:10.600 nice. That's nice. Yeah. So, now I can
+01:14:13.440 see the actual interaction between all
+01:14:15.040 my components on every flow.
+01:14:19.120 See, my PM is going to love
+01:14:20.980 [Laughter]
+01:14:23.480 this. Do we have anything else we want
+01:14:25.520 to try or do we wrap up? I know I'm
+01:14:28.400 running. So, we did
+01:14:29.880 security
+01:14:31.480 accessibility. Uh we did testing, we did
+01:14:34.840 documentation. I think that's good and
+01:14:37.120 we played with so many
+01:14:39.560 models for this project.
+01:14:43.199 I think the key a key takeaway I have is
+01:14:47.360 claw 3.5 sonnet is still very good for
+01:14:50.480 everyday coding tasks. Yeah. And even
+01:14:53.920 like 03 and 04 mini as well. Those those
+01:14:57.360 also did really well and they're fast.
+01:14:59.920 Yeah. especially for just like pure like
+01:15:01.920 fairly contained code generation. Those
+01:15:04.640 performed beautifully. Um and then
+01:15:06.719 Claude 35 was really good in agent mode
+01:15:09.120 for that large building. Both Claude 35
+01:15:12.800 and Gemini 25 Pro did a great job with
+01:15:16.719 that agentic work of just like
+01:15:18.880 completely build something green field
+01:15:21.199 for us. Agreed. And I I I really love
+01:15:25.440 the way that Gemini 20 Flash did
+01:15:28.320 documentation. I think that was really
+01:15:30.000 super solid. Yes, I actually agree. And
+01:15:33.600 that's why I ended up switching to
+01:15:36.400 Gemini 2 Pro because it it's it's really
+01:15:39.679 good at technical documentation cuz I'm
+01:15:42.159 just scrolling through what it did right
+01:15:43.520 now and I'm just like, "Yeah, this looks
+01:15:45.120 really good. I love it." So, key
+01:15:47.920 takeaway in terms of what's the best
+01:15:50.400 model to use?
+01:15:52.880 It
+01:15:55.320 depends. you know, those those smaller
+01:15:57.679 faster
+01:15:58.840 models, you know, some of the the the
+01:16:01.199 GPT
+01:16:02.600 minis certainly um you know, the flash
+01:16:06.400 models good for quick generation. The
+01:16:09.520 reasoning models uh really good for
+01:16:13.199 talking through and also for building
+01:16:15.120 documentation because they're just
+01:16:16.480 verbose and they have all the right
+01:16:18.520 stuff. We saw benefits of using the
+01:16:22.080 visual inputs. Oh yeah, Gemini and on
+01:16:27.400 GPT40 for fixing up the UI the way we
+01:16:30.560 want and I'm sure there's lots of other
+01:16:32.000 things we could do with them.
+01:16:34.800 So all in all, try the models you have
+01:16:37.920 access to them not just in Copilot in VS
+01:16:41.760 Code but also on GitHub models. You
+01:16:43.679 know, you can test out so many models on
+01:16:46.320 github.com using GitHub models. So go
+01:16:49.199 forth and play. Have fun. Have fun.
+01:16:51.840 Don't be so serious. Have fun.
+01:16:55.679 That's what it's all
+01:16:57.000 about. It's been awesome working with
+01:16:59.120 you today. Thank you so much. You too,
+01:17:00.719 John. This has been really, really good.
+01:17:02.640 Really, really fun. Wicked. All right,
+01:17:05.520 I'll see you around. Bye. Bye.

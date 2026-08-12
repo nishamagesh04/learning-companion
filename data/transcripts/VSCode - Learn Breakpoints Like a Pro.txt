@@ -1,0 +1,380 @@
+# tactiq.io free youtube transcript
+# #Debugging in VSCode - Learn Breakpoints Like a Pro | VSCode #Debugger Tutorial (Lecture 1)
+# https://www.youtube.com/watch/Mkh8z_2IleA
+
+00:00:00.480 Hey. Hi YouTube. How are you? I hope you
+00:00:02.560 all guys are doing great. Uh from this
+00:00:05.279 video onwards, we are going to start a
+00:00:06.879 debugging uh session or a series where I
+00:00:10.160 will teach you how to debug your code.
+00:00:12.719 Uh most developers know how to code. But
+00:00:15.200 not every developer knows how to debug.
+00:00:17.520 And let's be honest, how many of uh us
+00:00:20.560 still use print statements? Print here,
+00:00:23.199 print there with some crazy lines and
+00:00:25.519 suddenly your clean code become a mess.
+00:00:28.320 But what if I told you there's a better
+00:00:30.480 way, a smarter, faster, cleaner way to
+00:00:32.640 understand what's going wrong in your
+00:00:34.160 code or if you are given legacy code and
+00:00:37.040 you have to understand how the flow goes
+00:00:39.760 without flooding your terminal with
+00:00:41.360 print statements. So that's debugging.
+00:00:45.840 So every uh you can say every code
+00:00:48.800 editor ID has their own debugger and all
+00:00:51.920 works similar way. So in this video we
+00:00:54.640 are going to see in VS code and the
+00:00:56.960 coding language that I'm going to use
+00:00:58.399 it's Python but uh definitely the basics
+00:01:01.600 remain same no matter whatever language
+00:01:03.840 you are using. So what debugging is it
+00:01:06.479 lets you pause your code inspect
+00:01:08.320 variables step through the logic and
+00:01:10.080 even catch bugs you don't know they
+00:01:13.280 exist. Okay. So in this series I will
+00:01:16.799 teach you how to debug like a pro using
+00:01:19.360 VS Code.
+00:01:21.680 So uh there will be lots of videos like
+00:01:25.040 uh you can see on the screen. Lecture
+00:01:26.640 one will be we will start with the
+00:01:28.479 basics like break points how breakpoints
+00:01:30.720 helps. Then in lecture two we will move
+00:01:33.520 to the watch panel to trick variables in
+00:01:35.840 real time. How we can utilize watch
+00:01:38.000 panel? What is the power of watch panel?
+00:01:40.880 Then comes our first challenging video.
+00:01:43.200 I I will try to add more challenging
+00:01:45.119 videos so that whenever you learn
+00:01:46.640 something I will throw a challenge to
+00:01:48.720 you and we will solve that challenge in
+00:01:50.479 that video al
+00:01:56.240 whatever you have learned whether it is
+00:01:58.640 correct or not and definitely there is
+00:02:00.479 no right or wrong this or that in
+00:02:03.200 debugging basically you have to apply
+00:02:06.399 your own brain all the people have
+00:02:08.959 different kinds of techniques applying
+00:02:10.479 break points wherever you have to apply
+00:02:12.239 break points And no matter what uh how
+00:02:15.120 good your debugging skills are whenever
+00:02:17.440 you are deployed to a project then if
+00:02:19.920 you don't have understanding of their
+00:02:22.000 business then definitely you're not
+00:02:23.520 going to able to understand what are the
+00:02:25.280 pain points and how to debug it because
+00:02:27.520 without understanding the uh you can say
+00:02:30.400 business logic because let's suppose I
+00:02:32.560 give you a problem about find this is a
+00:02:35.360 code to find leap year but if you don't
+00:02:37.200 know the business logic behind finding a
+00:02:38.720 leap year then how you will debug so
+00:02:40.879 understanding the business logic is
+00:02:42.239 really really important but this whole
+00:02:43.760 video is about debugging so we can park
+00:02:46.000 it. Then lecture three we will
+00:02:48.879 understand the call stack to see how
+00:02:51.120 your functions are flowing. Lecture four
+00:02:52.959 will be to learn how to set conditional
+00:02:55.360 break points. How there are different
+00:02:56.879 types of break points, normal
+00:02:58.160 breakpoints, conditional break points,
+00:03:00.319 lock points and triggered break points
+00:03:02.800 are also there. Then in lecture five we
+00:03:05.280 will see lock points which are
+00:03:07.440 synonymous to print statements.
+00:03:10.319 uh then our favorite print then print
+00:03:11.920 statement. Then lecture six is finally
+00:03:14.400 how we it's about the handle raise
+00:03:17.680 exceptions in the right way. Okay. So
+00:03:20.400 let's dive in or let's look into lecture
+00:03:23.200 one which will be about the um the basic
+00:03:27.360 understanding of break points. Okay. So
+00:03:30.159 if you have been stuck with using print
+00:03:32.239 statement it's time to level up. By the
+00:03:34.480 end of this series, I can say definitely
+00:03:36.720 you will be able to track down books
+00:03:38.319 faster and build more confidence. So
+00:03:40.720 let's get started with uh break points
+00:03:42.640 in lecture one. Okay. And definitely uh
+00:03:45.519 I will be looking into the second
+00:03:46.959 monitor. So don't worry about it. And I
+00:03:49.680 can say that
+00:03:51.680 um this is just a one page uh
+00:03:54.159 presentation that I have made for you.
+00:03:56.480 Uh let me close it and yeah so all these
+00:03:59.360 lectures, all these codes are here in uh
+00:04:01.840 this repo. I will give this link of this
+00:04:04.000 repo in the uh description box of the of
+00:04:08.159 this video. Um and I think it is in the
+00:04:10.799 master branch. So please switch to
+00:04:12.239 master branch. And here you can see some
+00:04:14.319 challenges are there. Currently it's in
+00:04:15.920 building. So I have just made one uh two
+00:04:18.079 challenges. And here are the lectures.
+00:04:20.478 Okay. So let's switch to VS code and
+00:04:23.759 let's see what we can explore in the
+00:04:25.520 first video. Okay. So uh in the first
+00:04:28.800 lecture this is about breakpoints. Okay.
+00:04:31.440 So what actually a breakpoint is? A
+00:04:33.440 break point is a marker that tells any
+00:04:35.919 kind of editor in this case it's VS code
+00:04:38.880 to pause execution here. So I can look
+00:04:42.000 around
+00:04:43.600 what is happening in the code and it
+00:04:46.160 lets you freeze the code right at the
+00:04:48.240 line and inspect the variables step
+00:04:50.080 through line by line and understand the
+00:04:51.759 flow without editing your code. Okay. So
+00:04:56.160 um we will go with very simple uh
+00:04:58.080 programs and then definitely in the
+00:05:00.240 whole series uh I will try to add lots
+00:05:02.639 of things how you can debug dockerize
+00:05:04.880 container your AWS app GCP app and lots
+00:05:07.680 more thing but first start with the very
+00:05:10.240 basic things okay so here you can see
+00:05:13.600 okay this is a very simple program where
+00:05:15.440 we are having input list and we are
+00:05:17.919 calling a method which is sum of list
+00:05:20.479 and this is the input list we are
+00:05:22.240 passing and it is having sum as zero row
+00:05:24.960 and it is iterating over the list and it
+00:05:26.960 is adding and we are returning a sum.
+00:05:28.560 Okay, so let's suppose you got this
+00:05:30.240 program. Okay, definitely in real life
+00:05:32.960 you will not get a very simple program
+00:05:34.639 but let's take this a simple program.
+00:05:36.720 Okay, so now how you run this program?
+00:05:39.039 It's very simple. You go here and you
+00:05:41.039 select run Python file and once you run
+00:05:43.520 it you get the answer 100 because 40 +
+00:05:45.680 30 + 20 + 10 it's 100. Okay. So uh how
+00:05:50.479 we can debug it? Okay, what's the main
+00:05:52.800 thing in debugging? Okay, let's suppose
+00:05:55.360 um how we debug generally let's suppose
+00:05:57.919 you want to see what is actually in this
+00:06:00.160 rest sum or maybe what is happening
+00:06:02.080 inside this function you want to say it
+00:06:04.000 so you generally have some print
+00:06:05.680 statements and look at the variables
+00:06:07.600 what are what is being what is happening
+00:06:09.919 in the background okay but what we can
+00:06:13.440 do using debugging is we can introduce
+00:06:15.680 some break points okay so this is the
+00:06:17.840 break point as I told you break points
+00:06:19.840 is a marker okay that tells the VS code
+00:06:22.560 to you have to pause your execution
+00:06:24.479 here. Okay. Now if I add a break point
+00:06:27.680 then I can debug the code. How I can
+00:06:29.680 debug the code here at the left one.
+00:06:33.600 Okay. And just before it I think you
+00:06:36.160 know what is virtual environment is.
+00:06:38.639 Okay. How to activate it. So once you
+00:06:41.039 have the virtual environment you can
+00:06:42.479 simply activate it using source. Uh
+00:06:45.199 maybe uh in Windows it is a bit
+00:06:47.199 different but you can easily find it
+00:06:48.880 anywhere. Okay. source uh VNV then bin
+00:06:53.039 then activate okay so it will activate
+00:06:55.520 your virtual environment and inside this
+00:06:57.919 virtual environment in bin there is your
+00:07:00.160 Python interpreter so you have to it
+00:07:02.240 should be selected here okay you can
+00:07:03.759 select it uh through here okay so it's
+00:07:06.160 not a big deal okay currently it's
+00:07:08.880 selected to global but you can choose
+00:07:10.880 anyone okay you can use this one also
+00:07:13.120 okay it's better to select your virtual
+00:07:16.319 uh Python interpreter from your virtual
+00:07:18.080 environment for your project. Okay. So I
+00:07:21.680 think this is a very basic thing. Okay.
+00:07:23.919 Then what you can do? So if you have to
+00:07:26.160 debug this program then just go to this
+00:07:28.080 one and see there are two things. Python
+00:07:30.960 debugger uh debug python file and debug
+00:07:34.000 using launch.json.
+00:07:36.160 So as of now uh we are just going with
+00:07:39.280 debug python file. Okay. We can see what
+00:07:42.000 uh the next other one is. Okay. So if I
+00:07:46.720 add a break point here, it means that
+00:07:49.440 your program will start executing and it
+00:07:51.840 will stop here. Okay, cool. So it start
+00:07:56.400 running. So the what what was the first
+00:07:58.240 line of the program? It was input list.
+00:08:00.160 So it rain. So here you can see we have
+00:08:02.960 a variable which is input list which
+00:08:05.120 which is of list type. And don't focus
+00:08:09.039 lot on the special variables and
+00:08:10.800 function variables. Okay.
+00:08:13.440 So in this input list we have four
+00:08:18.240 data integer type of data. At zero we
+00:08:21.680 have something at one we have this is
+00:08:23.440 the index and this is the values and the
+00:08:25.039 length is four. You see how you can see
+00:08:27.840 whether uh what we are having like uh in
+00:08:30.479 input list we are having some values and
+00:08:32.320 it is also appearing in line. Okay
+00:08:34.479 that's the power of debugger. Okay.
+00:08:37.679 Now
+00:08:39.360 if uh so here you can see this one.
+00:08:41.760 Okay, this menu this is really really
+00:08:43.839 important.
+00:08:45.760 Okay, so um
+00:08:50.240 the first one uh its name is continue.
+00:08:53.360 So continue means run until next break
+00:08:55.839 point. Okay, let's suppose you have more
+00:08:58.000 than one break points. So you can move
+00:09:00.399 to your next breakpoint. Okay, let me
+00:09:02.160 just uh make it a bit uh easier for you.
+00:09:05.360 Okay, so we have um input list. Let's
+00:09:08.800 suppose we have something print some
+00:09:12.240 okay then we have print uh something
+00:09:15.360 maybe we can add anything okay sd
+00:09:19.200 anything okay and let's suppose we add
+00:09:21.279 some break points let's suppose first
+00:09:22.800 break point I have added here next
+00:09:24.880 breakpoint is let's suppose I have added
+00:09:27.120 here next breakpoint is here let's
+00:09:29.600 suppose next breakpoint is here so
+00:09:31.440 breakpoint is you can add any number of
+00:09:33.600 break points definitely it should be
+00:09:35.200 logical for this demo purpose I have I
+00:09:37.839 am adding n numbers of break points but
+00:09:39.519 it should be applied where you have to
+00:09:42.640 look at what is happening okay let's
+00:09:44.720 suppose next breakpoint is here okay now
+00:09:47.839 um so let's again debug it okay so I
+00:09:50.880 have clicked here the first one is
+00:09:52.720 continue so where the program stopped
+00:09:56.000 first time first time it stopped where
+00:09:58.959 the first breakpoint was the first
+00:10:01.040 breakpoint was here so it stopped and
+00:10:03.279 see no none of the variable is none of
+00:10:05.760 the local or global variables are there
+00:10:07.760 Okay, don't focus on special and
+00:10:09.279 functional variables. Okay, we can look
+00:10:10.959 at it later. But currently there is no
+00:10:13.200 local variables or global variables.
+00:10:14.959 Okay, but if I do it which is continue
+00:10:17.839 means move until next break point. So
+00:10:20.320 currently the break point is at ninth
+00:10:22.240 line. It should move to 10th line. So it
+00:10:25.120 moved to 10th line. Okay. Now once we
+00:10:28.079 move to 10th line, we have already
+00:10:30.240 initialized the variable which is input
+00:10:32.079 list. So see you can see it here input
+00:10:34.160 list. The variable is already created.
+00:10:37.360 So this is what continue is. Okay. Then
+00:10:40.240 step over means run this line and move
+00:10:43.120 to next. Okay. So if I press this here.
+00:10:45.360 So run this line and move to next. So it
+00:10:47.440 moved to 11th line. Okay. Then the so
+00:10:51.680 simply we have to move one by one. Okay.
+00:10:54.240 Then it is uh the third one in the menu
+00:10:57.279 is step into. Okay. What actually step
+00:11:00.000 into is go into functional calls. So we
+00:11:02.880 can see that there is a function call
+00:11:04.640 which is sum of list. Okay. Now we have
+00:11:08.000 to see uh see um what difference I can
+00:11:10.800 show it if I do this. So it didn't went
+00:11:14.000 inside the function but definitely once
+00:11:16.880 the function call has happened it
+00:11:19.040 created a variable which is rest sum
+00:11:20.800 because this function is returning
+00:11:22.160 something it got stored in rest sum. So
+00:11:24.480 here you can see a variable has been
+00:11:26.000 created rest sum and input list was
+00:11:27.760 already there. So here you can also see
+00:11:29.760 what are the variables we have. So we
+00:11:31.279 have rest sum input list we already have
+00:11:33.040 and what uh the sum of list returned
+00:11:34.959 100. Okay, but what I want is uh I want
+00:11:38.640 to show you how to go inside the method.
+00:11:41.519 Okay, so let's do it. Let's um let me
+00:11:44.959 stop this debugger and let's move again.
+00:11:47.360 Okay, so continue to next breakpoint.
+00:11:49.760 Continue to next breakpoint. Now we want
+00:11:52.560 to explore this third item which is step
+00:11:54.800 into. So step into the function. Okay,
+00:11:57.600 whenever you have to step into a method,
+00:11:59.839 you can do this. Okay, so we moved
+00:12:02.480 inside the function and here you can see
+00:12:04.959 because this function is having x. Okay,
+00:12:07.920 because input list has been passed and
+00:12:10.639 it has been referencing as x. So here
+00:12:12.720 you can see we have x. It is the same as
+00:12:14.639 input list. But now in this local scope
+00:12:17.200 the variable name is x. Okay. Now if we
+00:12:20.320 move to next line. So how we can move to
+00:12:22.560 next line? This is how we can move to
+00:12:24.000 next line. Now another variable has been
+00:12:26.240 created which is sum is equals to zero.
+00:12:28.560 Okay. Now uh if I will do this so it
+00:12:31.519 will keep iterating. So currently if you
+00:12:34.240 see sum is zero. Okay. And now if I will
+00:12:36.959 move next now the sum value has become
+00:12:39.279 10 because first element was 10 and it
+00:12:41.360 added up to added in the sum. So
+00:12:44.480 initially it was 0 0 + 10 is 10. So if I
+00:12:47.279 keep going like this step over step over
+00:12:50.800 so it will keep doing like this and at
+00:12:53.040 the end we will get 100 and finally the
+00:12:56.320 flow came to return sum. So this is how
+00:12:58.800 function works because we go into inside
+00:13:01.040 the function then there are some
+00:13:02.880 declarations some uh service logics are
+00:13:05.279 there and then finally we return a
+00:13:06.880 variable. Okay. So now if I will do this
+00:13:09.279 so think where it will come because the
+00:13:12.639 control will move again to again from
+00:13:16.160 where it was called. So it was called
+00:13:17.839 from 11th line and it again came back to
+00:13:20.079 11 9th. Okay. Now you can see okay uh
+00:13:23.279 what was the uh what what we got? we
+00:13:26.560 return uh sum of list as 100 but
+00:13:28.880 definitely we have not stored it. So if
+00:13:30.959 we move to next line definitely we will
+00:13:33.600 be storing this whatever some list has
+00:13:35.839 returned it has been stored to rest sum
+00:13:37.920 and rest sum is having 100. So we move
+00:13:40.240 to next line. Okay and this one is just
+00:13:43.040 to restart. So it will start your whole
+00:13:46.079 program. Okay. If you do this simple
+00:13:48.079 okay it will start. Okay. So for as of
+00:13:51.120 now I'm not going inside the method. So
+00:13:53.519 this was the state where we have earlier
+00:13:56.240 and this is just to stop the debugger.
+00:13:58.880 Okay. So let let me move to next line.
+00:14:00.959 So this is the final thing because this
+00:14:03.440 was the last break point. Okay. And if I
+00:14:06.079 do this
+00:14:07.760 then definitely the debugger will stop.
+00:14:09.760 Okay. So and how you can remove a break
+00:14:13.040 point? Simply double uh just click on
+00:14:14.800 it. Okay. So if I will now now let's
+00:14:17.279 suppose I don't want a break point here.
+00:14:19.760 Okay. So if I run this and debug. So
+00:14:22.320 this is the place where first break
+00:14:24.399 point appeared. So it stopped there.
+00:14:26.959 Maybe run to next breakpoint. I move to
+00:14:29.360 next break point. Move to next
+00:14:31.199 breakpoint. What do you think it will
+00:14:32.480 move to 11th line or 12th? Definitely
+00:14:34.320 12th because at 11th we don't have a
+00:14:36.399 break point. So it moved to 11th line
+00:14:38.320 and we have rest sum as 100. Now if I
+00:14:40.480 will press it again the program will end
+00:14:42.959 because everything executed
+00:14:44.320 successfully. So this is how break
+00:14:46.560 points help. Okay. So break points helps
+00:14:49.199 you to pause the execution, freeze your
+00:14:51.680 code uh and inspect the variables and
+00:14:54.800 definitely in future we will see this
+00:14:56.560 break points call stack and watch and
+00:14:58.639 definitely it's going to be very very
+00:15:00.560 helpful. So that's it in this video
+00:15:02.480 where we have learned about break points
+00:15:04.240 and in future video in the next video we
+00:15:06.399 are going to see watch panels which is
+00:15:08.240 really really interesting.
+00:15:10.720 Meet in the next video till then
+00:15:12.079 bye-bye.

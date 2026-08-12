@@ -1,0 +1,801 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/SJqGYwRq0uc
+
+00:00:00.000 No text
+00:00:03.200 Okay, so let's start at the beginning. What is GitHub Copilot? GitHub Copilot
+00:00:09.040 is an AI pair programmer that helps you write code faster. It is designed to help with programming tasks and serves
+00:00:16.239 as your assistant while you're working in your editor and on github.com. Don't forget that part. But it's more than
+00:00:24.000 just code completion. It's a complete coding companion that can help you write
+00:00:29.359 code from natural language, understand shell commands, remember things you forgot, describe changes in your pull
+00:00:35.840 requests, and even help you with debugging, plus so much more. It is
+00:00:40.879 available in Visual Studio Code, Visual Studio, Jet Brains, Neoim, Xcode, on
+00:00:47.680 GitHub mobile, and in your terminals, and on github.com.
+00:00:53.120 You can use it with a variety of programming languages in your editor of choice. Now, how do you gain access to
+00:01:00.239 GitHub Copilot? To use GitHub Copilot, you must have a GitHub account and a
+00:01:06.320 GitHub Copilot license. There are four license options available to you. You
+00:01:12.000 can sign up for GitHub Copilot for free or Copilot Pro for individuals or you
+00:01:18.080 can get access from your job through a Copilot business or an enterprise license. If you're a student or an
+00:01:25.119 educator, you can get access to Copilot Pro for free through GitHub education.
+00:01:30.479 You can also get free access if you are a popular open-source project maintainer. To see a list of all the
+00:01:36.079 features available for each tier or each license, click the link that pops up on the screen. If you've never used GitHub
+00:01:43.600 Copilot before, I encourage you to sign up for Copilot for free to give it a go.
+00:01:49.280 It's really good. Once you sign up for GitHub Copilot, you are ready to install and use it in your editor. Installing
+00:01:56.640 GitHub Copilot differs depending on where you're using it. If you're using VS Code, navigate to the extensions
+00:02:03.840 marketplace and search for GitHub Copilot. Click on the extension that pops up and
+00:02:09.440 click install. This will install two extensions. GitHub Copilot, which
+00:02:15.840 provides inline coding suggestions and its companion, GitHub Copilot Chat, a
+00:02:21.120 conversational AI assistant that helps you with coding specific tasks. Once
+00:02:26.480 installed, you'll need to sign into VS Code with your GitHub account that has access to GitHub Copilot. If you didn't
+00:02:34.080 previously authorize VS Code in your GitHub account, you're prompted to sign in to GitHub in VS Code.
+00:02:41.360 Alternatively, you can sign into GitHub and VS Code by selecting the accounts menu in the activity bar and then sign
+00:02:48.400 in with GitHub to use GitHub Copilot. Once you do that, you're navigated to
+00:02:53.760 your browser where you can grant GitHub the necessary permissions needed for GitHub Copilot. Click continue to
+00:03:00.640 authorize Visual Studio Code to approve and you're all set. Return to your
+00:03:06.080 editor and you'll notice a Copilot icon at the top next to the command center.
+00:03:11.680 You'll also notice a Copilot icon at the bottom of the editor where if you click it, it may ask you to select the account
+00:03:18.800 you want to use. Then we'll show you the menu options where the status should say ready. If you see these icons in your VS
+00:03:26.640 Code, you've successfully installed GitHub Copilot and you're ready to use
+00:03:31.680 it. Now, if you're using Jetrains IDE, let me show you how you can install
+00:03:37.200 GitHub Copilot. I'll be using PyCharm today, but these instructions are the same across Jetrains editors. Open your
+00:03:44.720 editor of choice and navigate to the plugins marketplace. Search for GitHub
+00:03:50.319 Copilot and click install and restart your IDE. Open up a project and you'll
+00:03:56.080 notice a Copilot icon on the right hand side of your editor. You'll also notice
+00:04:01.200 two icons on the left hand side, one with GitHub Copilot with a question mark and the other with a chat icon. Select
+00:04:09.519 the first Copilot with the question mark icon to get a brief overview of what GitHub Copilot is and a welcome message.
+00:04:18.160 Click on the copilot with the chat icon to open up Copilot chat where you can get help with programming related
+00:04:24.000 queries. If you see these icons in your Jetrains IDE, you've successfully installed
+00:04:30.400 GitHub Copilot. If you didn't previously authorize Jet Brains in your GitHub account, you're
+00:04:36.639 prompted to sign in to GitHub in your editor. Alternatively, you can click on
+00:04:41.919 the Copilot icon at the bottom and select login to GitHub. Click copy and
+00:04:48.000 open and click continue in your browser to approve the permissions needed. Press
+00:04:53.360 commandV or controlV to paste the code. Click continue and finally select
+00:04:59.440 authorize GitHub Copilot plugin. Return to your editor and you will see a
+00:05:05.280 message that GitHub Copilot has been successfully installed. Now we can authorize GitHub Copilot chat. Click on
+00:05:12.880 the chat icon and click the authorize button. Select copy and open and paste
+00:05:18.800 the code in your browser. Click authorize GitHub Copilot for Jet Brains IDE. Return to your editor and you
+00:05:26.880 should see a greeting from GitHub Copilot chat. Once you've done that, you're now ready to use GitHub Copilot
+00:05:33.280 in Jet Brains. Okay, now that we have Copilot installed in our editors, let's take a look at how
+00:05:40.080 to use it. For today's example, I'll be using Python in VS Code. Create a new
+00:05:46.080 file called validate_email.py. Once you start typing, GitHub copilot
+00:05:52.080 will generate suggestions based on what it believes you want to do. For example,
+00:05:57.199 I can import the re module and when I click enter, copilot will give me suggested code based on what it believes
+00:06:03.600 I want to do. Because the file is named validate email, it provides code for
+00:06:09.919 validating an email. I can click the tab key on my keyboard to accept a suggestion. When I click the return key,
+00:06:17.440 it keeps the fun going by providing the main function to run the code. If I hover over the suggested code, I can see
+00:06:25.039 the multiple options available to me. I can also open the completions panel to
+00:06:30.479 see even more suggestions that's been generated and accept suggestions from there. This is inline code complete in
+00:06:38.240 action where that gray text represents ghost texts that have copilot's
+00:06:43.919 suggestions. If you try this on your machine and you got a different response, that is okay.
+00:06:51.440 One thing to keep in mind when you're working with GitHub Copilot or any LLM is that responses are nondeterministic.
+00:06:59.039 This means that we're likely to get a different result each time we use GitHub Copilot. and the result I get may differ
+00:07:06.319 from the one that you get. We can take this a step further by using GitHub copilot chat. Let's say we want to
+00:07:13.520 understand what this code means. I'm seeing it for the first time and I want to get up to speed very quickly. I can
+00:07:21.280 open up Copilot Chat and type slashexplain and get a detailed explanation of what's happening in the
+00:07:27.840 code. You'll notice that Copilot chat has a view of the currently open files as indicated by the icon right here.
+00:07:34.960 When I click enter, I get a nicely formatted explanation of the code.
+00:07:40.639 Now, let's say I wanted to improve the reax and allow users to enter multiple email addresses. I can make that query
+00:07:47.759 right here in Copilot Chat. I can say allow users to enter multiple email
+00:07:53.520 addresses for validation and also improve the reax to be more robust.
+00:07:58.960 Then I get a plan, an updated code block and a list of changes that were made. I
+00:08:05.840 can click the apply in editor button to accept the changes and GitHub Copilot will go in and make the updates on my
+00:08:12.720 behalf. Now before we wrap up here, let me take some time to address the elephant in the
+00:08:19.680 room. There are so many co-pilots out there. So what makes GitHub Copilot
+00:08:25.759 different and what's the difference between GitHub Copilot and other copilots? Well, GitHub Copilot is
+00:08:32.719 specifically designed for programming. And because it works and exists where you work in your editor and on
+00:08:39.760 github.com, there is no need to go back and forth between your browser or
+00:08:45.200 another application and your code. You're able to truly stay focused and no longer context switch. So when you hear
+00:08:53.600 the words GitHub copilot, know that it is referring to your personal AI payer
+00:08:59.200 programmer. So, we covered quite a bit today, but you now know what GitHub
+00:09:04.640 Copilot is, how to get access to it, how to install it, authenticate, and start
+00:09:10.640 using it. You also know the difference between GitHub Copilot and other Copilot tools. I'm going to teach you what you
+00:09:16.000 No text
+00:09:17.680 need to know about large language models or LLMs and how to interact with them with prompt engineering. Prompts are
+00:09:24.560 what power LLMs to make us more productive in our work. When you understand the power of prompting and
+00:09:30.399 its limitations, you can do even more faster.
+00:09:37.200 Before we get into prompt engineering, we should understand more of what LLMs are under the hood. Large language
+00:09:44.000 models are a type of AI that are trained on large, hence the name, amounts of
+00:09:49.279 text data to understand and generate humanlike language. They work by predicting the next word in a sentence
+00:09:55.760 based on the context of the words that came before it, making their responses relevant and coherent to humans that use
+00:10:02.160 them. You can think of it as an ultra smart autocomplete. There are three things you really need to know to
+00:10:08.480 understand LLMs. Context, tokens, and limitations.
+00:10:14.800 Think of context as the surrounding information that helps an LLM understand what you're talking about. Just like in
+00:10:21.680 a conversation with a friend, the more context you have, the more the conversation will make sense. In the
+00:10:28.320 world of LLMs, text is broken down into units of tokens. A token can be a word,
+00:10:35.040 a part of a word, or even a single letter. The AI model processes tokens to
+00:10:40.160 generate responses. The number of tokens you use with an LLM can impact its
+00:10:45.200 response. Too few tokens and it may lack context, but too many and it might get
+00:10:50.880 overwhelmed. While LLMs are powerful, they aren't all
+00:10:56.000 powerful. They don't truly understand language like humans do. They rely on
+00:11:01.360 patterns and probabilities that were in the data they trained on. We won't get
+00:11:06.560 into the training side of things in this episode, but hopefully this quickly explains why we need a diverse and broad
+00:11:13.600 training set for the best responses. Models are never perfect, so they
+00:11:19.200 sometimes provide incorrect or nonsensical answers, sometimes called hallucinations. You can work with LM's
+00:11:26.800 power and limitations by combining everything into a prompt. A prompt gives
+00:11:31.839 the model context via tokens and works around the model's potential limitations
+00:11:36.880 so that the model can give you a response. For example, if you prompt an LLM with write a JavaScript function to
+00:11:44.560 calculate the factorial of a number, it will use its training to give you a function that accomplishes that task.
+00:11:51.360 Depending on how the model was trained, it may understand your prompt differently and output different code.
+00:11:58.160 This is why you may see different outputs from various models out in the world like OpenAI's GPT, Anthropics
+00:12:05.279 Claude, Google's Gemini, and so on and so forth. These are all trained
+00:12:10.480 differently and understand an output differently as a result.
+00:12:16.079 So now we know what a prompt is, but what is prompt engineering? Honestly,
+00:12:21.120 it's just a term for crafting prompts. Just like how clear instructions can help a friend complete a task exactly
+00:12:27.839 how you want, a well-crafted prompt can help an LLM understand and deliver what you're looking for, good prompt
+00:12:35.040 engineering can drastically improve the quality and relevance of the outputs you get from an LLM. Now, let's talk about
+00:12:42.959 some key components of effective prompting. An effective prompt is clear
+00:12:48.320 and precise. Ambiguity can confuse the model, so don't forget that an effective
+00:12:55.040 prompt also gives enough context. You want to provide enough background information to get the job done without
+00:13:02.079 overwhelming the model with unnecessary detail. And don't forget, you can always
+00:13:07.760 iterate and refine your prompts. If you ask for something and you don't get what you expect, tweak your language. Now,
+00:13:16.560 imagine you're using GitHub Copilot and you say, "Write a function that will square numbers in a list." At first
+00:13:23.680 glance, this sentence isn't too bad. But let me ask you, what language should the
+00:13:29.839 function be written in? Do you want to include negative numbers? Will the input ever have non-numbers? Should it affect
+00:13:36.240 the given list or return a new list? Let's refine our prompt a bit. So we can
+00:13:41.920 say write a Python function that takes a list of integers and returns a new list
+00:13:47.360 where each number is squared excluding any negative numbers. Do you see the
+00:13:52.639 difference? This prompt is clear and specific about the language we want to use, what the function should do, what
+00:13:59.279 constraints there are, and the expected input type. By giving GitHub Copilot more context, the output will be more
+00:14:06.560 relevant to exactly what we want from it. In summary, prompt engineering is
+00:14:11.760 really about being a good communicator with the computer. Very similar to coding. By crafting your prompts
+00:14:18.399 thoughtfully, you can harness the full power of tools like GitHub Copilot to make your experience smoother and more
+00:14:25.760 efficient. Now, as you're working with GitHub Copilot and other LLM tools, you
+00:14:31.440 may run into times where you're not getting the output you hoped for. The problem isn't always because you're not
+00:14:37.360 specific enough. Here are some things you might be running into and how you can improve them. Prompt confusion.
+00:14:43.360 Sometimes we mix multiple requests or aren't clear enough which can lead to confusing outputs. For example, we might
+00:14:50.800 highlight something in VS Code and say fix the errors in this code and optimize it. Is the AI supposed to fix the errors
+00:14:57.839 or optimize it first? What should it optimize for? Speed, memory,
+00:15:03.199 readability? To solve this, break it down. Separate
+00:15:08.320 your asks in the prompt. First, fix the errors in the code snippet. Then,
+00:15:14.720 optimize the fixed code for better performance. Building out a prompt iteratively will make it more likely
+00:15:20.639 that you get the final result that you want because each step of the way has been thought through. We've discussed
+00:15:26.720 that tokens are units of words or partial words that a model can handle.
+00:15:31.839 It's important to remember that there's a limit to how many tokens a given model can handle at once. If your prompt is
+00:15:38.880 too long or the expected output is very extensive, the LLM might start
+00:15:44.000 hallucinating, cut itself off, and only give you a partial response or just fail
+00:15:49.040 entirely. You want to keep your prompts concise. Similarly to before, you will
+00:15:54.480 want to iterate on smaller parts, but also only provide necessary context.
+00:16:00.720 Does the LLM need your entire code file to work? Or can it just use a few lines of code in a certain function? Instead
+00:16:07.680 of asking for it to generate an entire application, could you ask it to make each component step by step? And
+00:16:15.600 finally, we often assume that the LLM knows more than it does. If you say,
+00:16:20.880 "Add authentication to my app," does it know what your app even does? Does it know which technologies you might want
+00:16:27.279 to use? When doing a prompt like this, you need to explicitly state your
+00:16:32.800 requirements, outline your specific needs, mention best practices if needed,
+00:16:38.079 and be ready to iterate again with edge cases and restraints. By stating all
+00:16:44.959 your requirements, you help ensure that the LLM doesn't overlook critical aspects of your request when it
+00:16:50.639 generates the output. We've gone over a lot in this section. Prompt engineering
+00:16:56.240 is an art and a science and you'll get better with practice. As a quick
+00:17:01.600 overview, when you're working with GitHub Copilot or any other LLM tool,
+00:17:06.959 you use tokens to give the model context given any limitations it might have.
+00:17:12.000 Your prompts should be clear, concise, and precise for the best results,
+00:17:17.039 providing as much context as the model might need. You should break down your prompts into smaller chunks. if there
+00:17:23.919 are multiple tasks to be completed and iterate from there. You should be specific about your requirements and
+00:17:30.240 needs so that the model understands the constraints of what it should provide for you. I don't want to be the reason
+00:17:34.000 No text
+00:17:35.760 my app gets hacked and neither do you. If we want to be good developers, we have to be secure developers.
+00:17:46.720 Most security teams through no fault of their own don't have sufficient time and resources to properly secure their
+00:17:53.440 company's code. So as developers, we are the first line of defense, which is
+00:17:59.280 tough because half of us don't get enough formal security training to do this properly and end up having to learn
+00:18:05.360 these skills on the job. Fortunately for you, GitHub is here to help. Both with
+00:18:11.039 Copilot, which can help you securely build and fix code, and with a bunch of
+00:18:16.400 security tools that are available for free if you're building open-source code. Today, I have a super special
+00:18:23.840 guest here with me to help us get up and running with all things security. Hey, April.
+00:18:29.039 Hey, Cadia. How are you? Good. How are you doing? Nice. Welcome to the show. Thank you for having me.
+00:18:34.400 And she's going to take it away. All right, Cadesha, let's dig right in to some security best practices.
+00:18:43.360 Copilot doesn't just know how to write code. It also understands how to make code more secure, but it isn't perfect
+00:18:49.600 and really are any of us. So, you really have to know what to ask and you shouldn't rely on it as your only
+00:18:56.000 security tool. But we're going to get to that in a little bit. Let's start with a simple example. I'm putting some
+00:19:01.200 information into a SQL database using an insert statement. I may have heard of a problem called SQL injection. And that's
+00:19:07.280 where someone puts a malicious instruction like drop table which would delete my existing data into an
+00:19:12.640 unprivileged text entry like a comment box or a name field. But I might not know how to defend against this problem.
+00:19:19.039 So one technique I can use is to simply ask Copilot to regenerate my code. I can delete the function where I write to the
+00:19:25.679 database. Make sure my comment explains what I want to do. Then let co-pilot come up with a solution. And then now
+00:19:32.799 this part is really important. Actually read what it wrote. I don't want to just
+00:19:37.840 blindly accept any co-pilot suggestion. I want to check its work and I want to learn from it. Now here I can see that
+00:19:44.720 it is sanitizing the input making sure it doesn't contain any malicious text before adding it to my insert statement.
+00:19:51.440 If I don't want to delete and recreate code or if I have a large amount of code that I want to check. Another option is
+00:19:57.120 I can simply ask Copilot to look through and fix it. I can do this by selecting a block of code and then asking copilot a
+00:20:04.160 question like are there any vulnerabilities in this function or I can work more broadly by selecting the
+00:20:10.240 whole file or even using at workspace which lets copilot take into account
+00:20:15.600 other files in the project as well. So let's try asking at workspace what's the attack surface. That's just a fancy way
+00:20:22.320 of saying how might someone try to attack this project and I can see that copilot makes a bunch of recommendations
+00:20:28.080 here. These include specific changes to my code as well as certain packages I might want to consider adding to the
+00:20:34.000 project to make it more secure. Oh, and by the way, if you want even broader recommendations, including general code
+00:20:40.240 quality or efficiency, you can use the slash command fix. And whatever recommendation it makes, I can always
+00:20:46.400 follow up with more detailed questions asking C-Pilot to explain what a specific security problem is or even to
+00:20:52.720 propose alternate ways to fix the problem. Now, even though Copilot can help with finding vulnerabilities and
+00:20:58.799 suggesting ways to fix them, it isn't an end-to-end replacement for all security tools. This is partly because Copilot is
+00:21:05.280 a generalist and not a specialist. And because C-Pilot can't always see the full context of your production
+00:21:11.520 environment, build purpose security tools can consider things like which compiler you're using, what environment
+00:21:17.440 variables are set, and how you are deploying your application. Fortunately, GitHub has a number of security
+00:21:23.200 offerings, all of which are free to open source maintainers, so you can use them at no cost on your public repositories.
+00:21:30.320 Let's take a look at a few of these. If you've been working on code in a public GitHub repository, you may have already
+00:21:35.760 noticed a pull request come in from someone called Dependabot. That's GitHub's tool for checking that your
+00:21:40.880 dependencies are vulnerability free and up to date. You can turn this on or off
+00:21:46.400 in your repository settings. Just scroll down to security and click on code security. Here I've enabled dependabot
+00:21:53.919 alerts. These tell me which dependencies have known vulnerabilities. And here I've enabled dependabot security updates
+00:22:00.799 which automatically create a pull request that updates those dependencies to safe versions. Below this is a
+00:22:07.280 section called code scanning. If you don't see this section, you're probably working in a private repository. But if
+00:22:13.600 you do have it, I recommend clicking the setup button next to CodeQL analysis.
+00:22:18.880 This will make it possible for GitHub to look for pattern-based vulnerabilities in our code. Things like SQL injection
+00:22:25.120 problems that I mentioned earlier. This happens automatically as you commit new code to your repository. When you make
+00:22:30.880 new pull requests and also as a periodic scan, if a new problem is found, you'll
+00:22:35.919 get a notification from GitHub. and then you'll want to fix it probably by doing something like opening up your code and
+00:22:42.000 asking Copilot to help you repair the vulnerability that was pointed out in the notification. In some cases though,
+00:22:48.240 you might not even need to do that. You might have noticed already right under that button to turn on CodeQL, there's
+00:22:54.720 another setting called C-Ilot autofix. GitHub will use the Copilot engine behind the scenes for you, automatically
+00:23:01.440 suggesting a fix for that problem. Then all you have to do is accept to fix the PR and no need to run GitHub Copilot
+00:23:08.080 manually. There are a bunch of other security features we don't have time to explore, but there's one more you should
+00:23:13.360 definitely turn on in your public repositories. Secret scanning. Secret scanning makes it possible for GitHub to
+00:23:19.520 warn you about exposed secrets like passwords or security tokens. You never want these to be directly embedded in
+00:23:25.520 your code. So secret scanning lets you know if it finds any and tells you where to remove them. And with push protection
+00:23:31.440 turned on, it'll help proactively block any new secrets from being committed into your GitHub codebase. Thank you so
+00:23:37.520 much, April, for giving us such a thorough understanding of security best practices on GitHub and with GitHub
+00:23:43.600 Copilot. So security is an incredibly deep topic, and we don't expect you to
+00:23:48.880 be an expert, but for now, just remember these three things. Whenever you're
+00:23:54.000 coding, ask C-Pilot to help you find and fix vulnerabilities in your code. This might just be running SLFix in Copilot
+00:24:01.360 chat or it could be something more detailed like selecting a suspicious or brand new piece of code and asking
+00:24:07.760 Copilot to check it for vulnerabilities. Number two, when Copilot or another tool
+00:24:12.960 does find a problem, ask Copilot for more details so you can learn about that
+00:24:18.000 type of problem and how you might prevent it from happening again in the future. The third and final tip is go
+00:24:23.600 into the code security settings on each of your repositories and make sure dependabot code scanning and secret
+00:24:30.159 scanning are all turned on. And if they send you alerts, remember that GitHub helps you fix them. Together, these
+00:24:37.039 steps will help you keep vulnerabilities out of your applications and will allow you to keep learning so you can be a
+00:24:42.960 better, more secure developer. [Music]
+00:24:45.000 No text
+00:24:49.200 Just to refresh your memory, GitHub Copilot is an AI pair programmer that helps you write code faster. To use
+00:24:56.080 GitHub Copilot, you must have a license. You can sign up for GitHub Copilot
+00:25:01.120 license by visiting gh.io/copilot. Once you have access, you can install
+00:25:07.600 the extension in your editor. Authenticate and you'll be good to go. To learn how to install the extension,
+00:25:14.799 check out the first episode in this series. Now, let's say you want to create a rock paper scissors game in
+00:25:21.440 Python. We can start by creating a new file and adding a comment in our code that says, "Create a rock paper scissors
+00:25:28.240 game where the player inputs their choice and plays against a computer that randomly selects its move with the game
+00:25:34.799 showing who won each round. add a score counter that tracks player and computer
+00:25:39.840 wins and allow the game to continue until the player types quit. Once I
+00:25:44.880 press the return or enter key on my keyboard, you'll notice the text in gray that's being provided by GitHub Copilot.
+00:25:51.440 This is called ghost text, and you can hit the tab key on your keyboard to accept the suggestion. Now, let's create
+00:25:58.720 the main function for the game. Again, we'll see ghost text being generated by
+00:26:03.760 GitHub Copilot. If you hover over the text, you'll get this menu option that allows you to see other suggestions.
+00:26:11.039 Accept a single word, accept the current suggestion, and even open up the completions panel. So, you can see even
+00:26:17.840 more suggestions that were provided. Let's take a look at what we have. You'll see a list of all the suggestions
+00:26:24.240 for varying ways this code could be implemented. I'm going to go ahead and accept the first suggestion. I can
+00:26:30.880 either hit tab to accept or I can select the suggestion from the completions
+00:26:36.240 panel that we have open right here. Let's invoke the function, run it in our terminals and play the game.
+00:26:45.050 [Music] Okay, now that we have the MVP of the
+00:26:50.559 game, let's update the game a bit. This time I'm going to use inline chat to allow a more flexible input handling. I
+00:26:58.320 can highlight the portion of the code to update, press command or control I on my
+00:27:03.360 keyboard and write my prompt. So I can say allow the user to enter R for rock,
+00:27:10.640 P for paper, and S for scissors. I can choose the model I want to use, hit
+00:27:16.640 enter, and watch the updates roll in. [Music]
+00:27:26.159 Let's test the changes. And amazing, they're working. The inline chat feature
+00:27:33.120 is really good at helping you apply quick fixes to your code. But if you want to work more deeply, you can use
+00:27:40.000 Copilot Chat for that. GitHub Copilot Chat can help you with code explanations, building out full MVPs,
+00:27:46.559 writing tests, fixing terminal errors, and much, much more. Let's use copilot
+00:27:52.080 chat to create a graphical user interface or guey for our rock paper scissors game. Click the chat icon to
+00:27:59.120 open up the chat panel. Then enter your prompt. Create a simple guey using a library like tkinter for the game.
+00:28:06.960 You'll notice I have my file opened on the right hand side and it is displayed here in the chat panel as context. If
+00:28:14.080 you don't want Copilot chat to use the currently open files for context, click the disable file icon and it will be
+00:28:20.799 removed. However, best practice is to allow Copilot to see your currently open
+00:28:26.399 file so it can generate relevant code for you. Let's reenable the context of
+00:28:31.919 the file. Choose our model. We'll be using cloud 3.5 sonnet today and send
+00:28:37.200 the request. You'll notice a few things once the suggestion is complete. we have here
+00:28:44.000 where it tells us that it's using the one file as reference. Then it provides
+00:28:49.039 us with the plan of action and the actual code block that we're going to be using. We're also provided with the code
+00:28:56.399 citations that we can see right here in the chat panel. You have a few options
+00:29:02.240 available to you. You can have the code read aloud to you. You can also retry sending the request if you didn't like
+00:29:08.799 the response. and you can up and downvote the provided code. Let's take a
+00:29:14.159 closer look at the code block that we were provided with. If you hover over
+00:29:19.279 the code block, you'll notice three icons appear. The first is the apply in
+00:29:25.279 editor button. This allows you to quickly apply code changes in your file with a single click. No need for copying
+00:29:32.320 and pasting. The next icon is the insert at cursor button which allows you to
+00:29:37.840 insert the code block at the current position of the cursor in your file. Then we have the copy button that allows
+00:29:44.880 you to copy the generated code. If you click the more actions button, those three dots that you see here, you'll see
+00:29:51.760 a drop- down menu that allows you to run the code directly in your terminal or add the code to a new file. Let's use
+00:29:59.039 the apply editor button to update the code. Great. You'll see here that the entire
+00:30:06.080 file was changed. We can now accept, discard, or show or hide the changes
+00:30:11.760 that were made with the options right here. Let's accept these changes and see
+00:30:17.200 what we have. It looks like Copilot Chat has refactored the entire code to be a gooey
+00:30:24.799 based rock paper scissors game that has two main methods within a class. The play method handles the core game logic
+00:30:32.240 and the run method starts the event loop of the guey window. When we run the
+00:30:37.760 code, we see that we can now play the game more interactively.
+00:30:42.880 Okay, so let's take a look at some other amazing things you can do with GitHub Copilot Chat. We've added slash commands
+00:30:50.240 to help you get explanations of code, fix code, create a new notebook, write
+00:30:55.360 tests, and much more. There are shortcuts to common prompts that we found to be particularly helpful in
+00:31:02.159 day-to-day development from our own internal usage. Open up Capella chat and press the slash key on your keyboard.
+00:31:09.039 You will see a list of slashcomands that pop up that you can use. For example, I can select the /explain command and get
+00:31:16.480 a full explanation of the code in my current file. I can also use the /help command to get
+00:31:23.440 an overview of how GitHub Copilot can help me and a list of available slashcomands and what they do. So if
+00:31:30.559 you're ever stuck, just remember slashhelp. You can give Copilot additional context
+00:31:37.039 and help it to understand your questions by using variables in the chat interface. You can attach a file with
+00:31:43.519 the hash file variable or search through your codebase with the hash codebase variable. We have a list of variables
+00:31:50.240 available to you at the link in the description. Chat participants are like experts who have a specialty that they
+00:31:56.799 can help you with. You can invoke a chat participant by typing at in the chat input field followed by the participant
+00:32:04.080 name. Some of these include at workspace which has context about your entire
+00:32:09.679 workspace, at terminal which has context about the integrated terminal in VS code
+00:32:15.919 and at GitHub which has knowledge about your GitHub repository issues pull
+00:32:21.120 requests and can also search the web. So for example, if I invoke the at
+00:32:27.039 workspace chat participant, I'll give copilot access to my entire repository.
+00:32:32.960 This may be helpful if I want to quickly know where our function is defined or if I want to create a detailed readme of my
+00:32:39.360 project. One of the most recent and most exciting features of GitHub Copilot is
+00:32:44.559 GitHub Copilot edits. With Copilot edits, you can start a coding session quickly to iterate on code changes using
+00:32:52.320 natural language. It allows you to edit multiple files at the same time and
+00:32:57.679 brings the conversational flow of copilot chat and fast feedback from inline chat together in one experience.
+00:33:05.360 Let's use copilot edits to add a more detailed scoreboard to the game that we have. Since I have the VS Code speech
+00:33:11.679 extension installed, I can use it to talk to Copilot edits. So I can say add
+00:33:17.519 a detailed scoreboard to track and display the number of ties, player wins, and computer wins after each round. You
+00:33:25.440 can choose your model, attach relevant files, and send the prompt. Once you do,
+00:33:31.679 you'll be able to see the responses being streamed in.
+00:33:37.360 Let's click accept and run the game. We can see that the additional game
+00:33:42.640 stats were added on the guey for the game. Copilot edits become even more
+00:33:47.679 powerful when you use it to edit multiple files at the same time. We'll take a look at this in another episode.
+00:33:55.440 For now, I want you to remember everything you learned in this video about GitHub Copilot. As you can see, it
+00:34:02.320 is much more than just code completion. It is a beautiful AI pair programmer
+00:34:07.760 that can help you get your work done so much faster while staying in the dev flow. Look at this for example. Now that
+00:34:15.760 we finished the game, let's push this for review in VS Code. Click the source
+00:34:20.879 control button. Stage your changes and then click this sparkly icon in the comment message box. You'll see a commit
+00:34:28.399 message generated by GitHub Copilot. We can take it a step further by getting code reviews in our editors. I can
+00:34:35.280 highlight a portion of the code. Click the sparkle icon that pops up and select review using copilot.
+00:34:42.480 Now I can get an initial review of my code before pushing it for final review from my team. You can also get this
+00:34:48.800 initial review by copilot done on github.com if that's your preference. If
+00:34:53.918 you're using Jetrains IDE, you have access to Copilot Code Complete and you also have access to Copilot chat. To see
+00:35:00.800 a full list of features available in Jet Brains, check out the link in the description below.
+00:35:05.000 No text
+00:35:09.359 We're building the backend API for Plan Venture, a travel itinerary builder that
+00:35:14.960 helps users plan their trips. A full description of what we're building today is included in the starter repository
+00:35:22.000 that you can clone at this link. To build along with me, you'll need access
+00:35:27.040 to a code editor. I'm using VS Code, have Python installed on your machine,
+00:35:32.480 and have access to an API client like Bruno to test our routes. You'll also
+00:35:38.079 need access to GitHub Copilot. So, make sure you sign up for free if you haven't already done so. We'll be using the
+00:35:44.400 Flask framework with SQL Alchemy for the database and we'll add authentication
+00:35:49.440 and full CRUD functionality for managing trips. Each trip will include a destination, start and end dates and a
+00:35:56.560 basic itinerary structure with location coordinates for mapping. We'll focus primarily on the MVP or the basic
+00:36:03.680 features needed to support the front end that we'll build in the next episode. Our goal today is to create a working
+00:36:10.400 API that handles user authentication and basic trip management. I would love for
+00:36:16.320 you to follow along and use GitHub Copilot to build with me. Now, let's go to the codes. Okay, so on GitHub,
+00:36:23.520 navigate to this repository, gh.io/plan venture. Clone the repo and cd into the
+00:36:31.200 plan venture API directory. Now, let's create a virtual environment. Open your
+00:36:37.520 terminal and type python-m venv space venv. Click enter or the
+00:36:44.240 return key on your keyboard. Now type source venv/bin/activate
+00:36:50.320 to activate and use the virtual environment. You'll know the environment is active when your terminal indicates
+00:36:56.240 venv right here. Now let's install our dependencies. Type pip install-r
+00:37:03.920 requirements.txt txt. And finally, let's start the basic server that we have. So,
+00:37:09.760 in your terminal, run flask run-debug. Your server should now be on port 5000.
+00:37:16.720 Open up your API client to test that it's running. I'm using Bruno today, so in Bruno, I can create a new get
+00:37:23.520 request, add the URL, and click run. I should get a message that says, "Welcome
+00:37:28.880 to Plan Venture API." And it looks like we're ready to start building.
+00:37:34.240 So the next thing we want to do is to set up our database. So open up the app.py file and open up copilot chat and
+00:37:42.400 type at workspace. Update the flask app with SQL alchemy and basic
+00:37:47.520 configurations. Choose the claude 3.5 sonnet model and press enter to send the
+00:37:53.280 prompt. You'll get an output of a plan, a code block, and a summary of the changes made from GitHub copilot. Let's
+00:38:00.800 take a look at what it just generated for us. Let's accept these changes. So to update
+00:38:07.040 the app.py file, click this apply in editor button and Copilot will make this
+00:38:12.320 update for us. Now let's save this code change in a new
+00:38:18.160 file. Click the three dots here and select insert in a new file. Save the
+00:38:23.359 file and do the same thing below for the other changes.
+00:38:31.040 Finally, let's install our dependencies. Return to Copilot chat and type at
+00:38:36.720 workspace update requirements.txt with the necessary packages for flask API
+00:38:41.920 with SQL alchemy and JWT.
+00:38:53.520 accept the changes by clicking the apply and editor button and save the file.
+00:38:59.359 Now let's create our user and trip models based on the GitHub copilot issue
+00:39:04.400 that we were assigned. The user needs an email, a password, and we must include
+00:39:09.760 password hashing and timestamps. The trip needs to have a destination, start
+00:39:14.800 and end dates, coordinates, and an itinerary with a user relationship. That's a lot to get through. So, let's
+00:39:21.680 bring April in to help us get these things done. Hey, Kadesha, are you ready to build these models? Absolutely.
+00:39:27.200 All right, let's get started. Open up your IDE. We're going to navigate to GitHub Copilot and then drop down to
+00:39:33.040 C-Pilot edits. Once we've navigated to Copilot edits, we want to attach the files. Then, we want to choose the
+00:39:39.040 Claude 3.5 sonnet model and type create SQL Alchemy user model with email password hash and timestamps. Add code
+00:39:46.400 in new files. Now, let's watch Copilot Edits get to work. It's going to give us
+00:39:51.520 a plan. Then, you'll see that it's created some new folders, files, and it's going to give us the full code that
+00:39:57.440 we need for our user model. Let's go ahead and accept these changes, save the
+00:40:02.960 files, and take a look at the code. [Music]
+00:40:22.640 Hey, [Music]
+00:40:37.440 hey, hey.
+00:40:52.460 [Music]
+00:40:59.359 Now, we're going to create a Python script to create the database tables. We're going to go ahead and return to CopilotEdits and type in update code to
+00:41:06.960 be able to create the DB tables with a Python shell script.
+00:41:15.480 [Music]
+00:41:35.760 Accept the code and initialize the database. Open your terminal and run python init_db.py.
+00:41:43.119 You'll see a new plan venture. DB file generated. Let's install an extension so we can see the tables. Navigate to the
+00:41:49.760 extensions tab and search for SQLite viewer. Click install and then you should be
+00:41:55.520 able to click on the DB instance and have a better look at the tables. Let's go ahead and create the trip model.
+00:42:01.119 We're going to navigate back to copilot edits and type create SQL alchemy trip model with user relationship,
+00:42:06.720 destination, start date, end date, coordinates, and itinerary. Every time I see co-pilot creating files
+00:42:13.119 and generating folders, and updating code, my mind is absolutely blown. Let's
+00:42:19.040 accept these changes and see what we have.
+00:42:25.690 [Music]
+00:42:40.690 [Music]
+00:42:53.119 Cool. Now let's run python init_db.py to add the trips to the database.
+00:43:00.079 Awesome. We just completed those database models in record time. Let's commit our changes and work on the
+00:43:06.000 authentication next. And this actually brings me to a great hidden gem in VS Code. Navigate to the source control
+00:43:12.079 button here and stage your changes. Now this sparkly icon here, click it and you
+00:43:17.680 will see copilot generate a commit message. How cool is that?
+00:43:22.880 If you notice, I always make sure that I'm reviewing the suggestions that Copilot provides. This ensures that I
+00:43:28.800 catch any errors right away and I can adjust the code as needed. So far though, it's doing a pretty swell job.
+00:43:36.000 So, I was just taking a look at this GitHub issue to build the author plan venture. For our authenticated user route, I wanted to make sure that we
+00:43:42.160 include password hashing and salt for extra security. So, we're going to go ahead and go back and open up copilot
+00:43:47.359 edits again. create password hashing and salt utility functions for the user model.
+00:43:53.359 Let's take a look at what's been generated. We can click the file links here that were changed by copilot edits.
+00:43:59.440 So, let's click on each file and see what it's outputed.
+00:44:22.400 Let's accept these changes. Now, let's set up the JWT token and validation.
+00:44:27.680 Continuing on in our GitHub Copilot chat window, we're going to go ahead and type setup JWT token generation and
+00:44:33.200 validation functions. We can see changes are being generated. And let's have a look at that.
+00:44:50.560 Hey,
+00:44:59.230 [Music] hey, hey.
+00:45:16.640 Hey,
+00:45:21.839 hey,
+00:45:27.040 hey.
+00:45:33.030 [Music]
+00:45:38.250 [Music]
+00:45:47.920 Hey,
+00:46:00.880 Let's save these changes and install the JWT package. Let's create the actual route so we can register a new user.
+00:46:07.040 We'll continue to type in the chat window with GitHub Copilot. Create all roots for user registration with email
+00:46:12.960 validation. Let's accept these changes and have a look at GitHub Copilot's output.
+00:46:18.440 [Music]
+00:46:35.450 [Music]
+00:47:07.280 I don't
+00:47:20.450 [Music]
+00:47:28.000 Really cool. That was so nice to watch. I guess it's time to test our registration route. It is absolutely.
+00:47:34.640 We're going to go ahead and use Bruno today. So, let's head over to Bruno. We're going to add our own URL. So, it's
+00:47:39.760 going to be the base URL/register. We're going to make it a post request
+00:47:44.960 and we're going to add our JSON body. So, I'm going to say email test@mail.com
+00:47:51.119 and password test1234. Super secure. very secure. Now, of course, that password is just
+00:47:58.000 for this demo. Make sure to use a much more stronger password for your login. Yes. And we don't need to set any off
+00:48:04.400 token yet because we're going to get that access token from the server when we register. Exactly. So, let's set up our headers.
+00:48:11.680 So, I'm adding content- type application/json. This looks really good. So, let's run
+00:48:18.240 this and hope for a 200 response. Sweet. It's working. Amazing. If we go
+00:48:25.680 to our Plan Venture DB, we should see the user now showing up once we refresh
+00:48:30.720 the file. Perfect. We have test at.com in our database.
+00:48:36.160 It looks like everything is working really nicely. Absolutely. Let's add the login route. Nice. We're going to keep using copilot
+00:48:42.800 edits because it's just so fun and honestly easy to use. Create login route
+00:48:47.920 with JWT token generation. This should give us the full route that we can accept and test right away in Bruno.
+00:48:58.480 Okay, now it's time to test the route in Bruno. So, I'm going to add a JSON body with the user email and password that
+00:49:05.280 we've already previously registered. I'm also going to add the content type header with application/json.
+00:49:11.920 Again, let's make it a post request and hit send. Nice. So it looks like our
+00:49:17.200 login route is working and our user is able to register and login successfully
+00:49:22.880 and we built these routes pretty seamlessly using natural language and the power of GitHub copilot edits. That
+00:49:29.760 was so much fun. The next thing that we need to do is an off middleware to protect our routes.
+00:49:35.520 Ah, of course. Let's head back into GitHub copilot edits to get this done.
+00:49:41.040 Type in create off middleware to protect routes. Now, here's a bit of an Easter
+00:49:46.079 egg for you. If you're using Visual Studio Code locally, you can speak to Visual Studio Code using your natural
+00:49:52.160 voice. Oh, and that's because of the VS Code voice extension, right?
+00:49:57.760 Absolutely. It is so much easier and more convenient to speak instead of typing sometimes.
+00:50:03.119 So, let's take a look at the changes. Let's accept these changes and test the
+00:50:08.880 roots again to definitely make sure that they're working.
+00:50:14.240 Oh wow, it looks like everything is working perfectly. Yep. And that means authentication is
+00:50:21.280 complete. So let me go ahead commit these changes and push them in for review.
+00:50:26.720 Wow, that was so much that we got done in such a short time. There's one more
+00:50:33.119 route that we need to do, but thanks so much, April, for all that work that you did. Let's take a look at the GitHub
+00:50:39.119 issue for the next route and keep working. Okay, so it looks like the trip route needs full cred operations with a
+00:50:45.280 default itinerary template. Let's continue using copilot edits to get this done. So I'm going to pop open copilot
+00:50:51.280 edits and type create trip routes blueprint with CRUD operations. So I'm
+00:50:56.720 expecting to get the create, read, update, and delete routes with this prompt. So let's take a look at what was
+00:51:03.119 generated. [Music]
+00:51:20.920 [Music]
+00:51:32.480 Hey, hey, hey. Hey, hey, hey, hey, hey, hey, hey, hey, hey, hey,
+00:51:38.460 [Music]
+00:51:47.050 [Music] hey.
+00:52:09.680 Okay, let's accept these changes, save our files, and test the routes.
+00:52:15.920 [Music] The first route to test is the create route. Let's add the URL /trips. Now we
+00:52:23.599 can add our JSON body with the destination, start date and end date like so. Make it a post request. Add our
+00:52:31.280 headers content- type application/json and authorization which is going to be
+00:52:37.760 our bearer token. Let's log in a user. Grab the access token. Return to the
+00:52:44.240 create trip request in Bruno and add the bearer token. If you're using another
+00:52:49.680 API client, add your token in the appropriate area and let's send the
+00:52:54.720 request.
+00:53:18.420 [Music]
+00:54:06.740 [Music]
+00:54:27.910 [Music]
+00:54:49.470 [Music]
+00:55:30.400 Give me the heat.
+00:55:39.760 Amazing.
+00:55:48.840 [Music]
+00:55:58.319 Now, let's add the default itinerary template. Open up edits and type create
+00:56:03.520 a function to generate the default itinerary template. Let's take a look at the changes, accept them, and save the
+00:56:10.799 files. But first, let's make sure that we review the code that we just got from Copilot.
+00:56:36.900 [Music]
+00:56:43.839 Hey,
+00:56:54.319 hey, hey.
+00:57:00.250 [Music]
+00:57:05.480 [Music]
+00:57:10.690 [Music]
+00:57:15.910 [Music] Hey,
+00:57:25.599 hey,
+00:57:36.000 Hey,
+00:57:44.720 [Music]
+00:57:51.680 hey, [Music]
+00:58:07.359 Hey,
+00:58:21.230 [Music]
+00:58:28.240 Hey.
+00:58:42.110 [Music]
+00:58:53.599 Okay. Now when we run the get trip by ID route, we should get an itinerary
+00:58:59.680 attached to it like so. Amazing. Everything is looking really good.
+00:59:06.720 There's so much more that we can add to this API, but this is looking good for this project. Let's set up cores and add
+00:59:13.839 a basic health check endpoint and be done with the MVP.
+00:59:27.910 [Music]
+00:59:39.540 [Music]
+00:59:44.960 Great. So, let's accept these changes.
+00:59:51.200 And it looks like we just completed the MVP of the API, which means you just
+00:59:56.960 built an API with GitHub Copilot. Cadia, before we wrap up this MVP, we
+01:00:02.960 probably need to add some documentation in the readme. Uh, that's a really good point. And we should also add some tests.
+01:00:09.200 Absolutely. So, I like to use GitHub Copilot Chat to quickly and efficiently write readmes for me. So, I'm going to
+01:00:16.480 go ahead and open up GitHub copilot chat and type in at workspace create a detailed readme about the plan venture
+01:00:23.520 API. I can click and get the full readme file that I can just now pop into the
+01:00:28.640 API readme documentation and we're done. Ah, that is so lovely. Now, there's
+01:00:34.319 truly no reason for us to have empty readme files.
+01:00:37.000 No text
+01:00:41.520 I want to show you how to build a front-end project with GitHub Copilot. And what better way to do that than to
+01:00:47.040 build a React client. Now, let's take a look at what we'll be building.
+01:00:54.400 So, we're building the front-end client for Plan Venture, a travel itinerary builder that helps users plan their
+01:01:00.400 trips. This project builds on top of the previous episode where we built the backend API with Flask and GitHub
+01:01:07.280 Copilot. To build along with me, you'll need access to a code editor. I'm using
+01:01:12.480 VS Code, the most recent version of Node.js, and a package manager such as npm installed on your machine. Or you
+01:01:20.240 can open up a code space to build in the cloud. You'll also need to be familiar with building clientside applications
+01:01:27.040 with React as that's the library we'll be using today. We'll be using React
+01:01:32.240 with VIT for the client and material UI as the component library for ease of
+01:01:37.520 styling. We'll add protected routes, allow users to add their trips and itinerary information with the ability
+01:01:44.559 to make updates as needed. Our goal today is to create a working front-end
+01:01:49.839 app that handles user authentication and basic trip management. A full
+01:01:54.880 description of what we're building today is included in the starter repository that you can clone at this link. I'd
+01:02:00.960 love for you to follow along and use GitHub copilot to build with me. Now, let's go to the codes on GitHub.
+01:02:08.160 Navigate to this repository gh.io/plan venture. Clone the repo and cd into the
+01:02:15.680 plan venture client directory. You'll notice that we have a pretty barebones React app with vit already set up for
+01:02:22.319 us. Let's install our dependencies and start the dev server. Open your terminals and run npm install. Your
+01:02:30.079 server should now start on localhost 5173 and you should see this UI in your
+01:02:35.119 browser when you click the link. Amazing. Now let's take a look at the code and see what we have. We have
+01:02:42.000 protected routes already configured with React Router DOM. We also have material UI configured for styling and a basic
+01:02:49.119 navbar and footer in the homepage. We have our off contacts and the main layout component already configured and
+01:02:55.920 actually I can come in here and open up copilot chat and ask at workspace tell
+01:03:01.760 me about the configuration setup in the react app. It will give me a detailed description of all the code that's
+01:03:08.240 already in our directory. This way we can get up to speed much faster.
+01:03:13.839 Awesome. Now that we know what we have, let's take a look at the GitHub issue that has the details of what we need to
+01:03:19.920 build. So it looks like the first thing we need is to set up authentication. So
+01:03:25.200 we'll need to build a login and a registration form. Let's first create an off layout component that we can use for
+01:03:32.559 all authenticated routes. Open up copilot chat and type at workspace
+01:03:38.400 create off layout component with navigation and centered content. Click the three dots and insert the code into
+01:03:46.000 a new file. Now let's take a look at what was generated.
+01:04:01.680 Great. Let's save the code. And now let's create a login form to implement the off layout component. Open up
+01:04:08.480 copilot chat and type at workspace. Build a login form component with the email and password fields and
+01:04:14.960 validation. Let's now create a new folder named off in the components folder. Return to
+01:04:21.520 Copilot Chat and click the three dots again. Select insert into new file. Save
+01:04:26.960 the file in the off folder.
+01:04:32.710 [Music]
+01:04:45.860 [Music]
+01:04:51.839 Now, let's update the home component to route us to the login page. Open up copilot edits and type update the navbar
+01:04:58.480 to use the new login page and add a get started button to the homepage that routes us to the login page.
+01:05:05.880 [Music]
+01:05:11.990 [Music] Let's review the code, accept the
+01:05:17.359 changes,
+01:05:23.359 and refresh your browser page. Now that that's resolved, let's commit our
+01:05:28.559 changes and take a look at what we have so far.
+01:05:35.119 Great. You will see the new get started button on the UI and the login page. Now
+01:05:41.280 let's create a signup page so new users can register. Open Copilot chat and type
+01:05:47.119 at workspace. Create a signup form component matching the login form style and a new signup page. Be sure to update
+01:05:54.880 routing. Select insert into a new file to save
+01:06:00.160 the signup form into the off folder. Go back to copilot chat once again and
+01:06:05.760 click the three dots. Select insert into a new file to save the signup page. Save
+01:06:10.799 that file in the pages folder. Open your routes.gsx file and click the apply in
+01:06:16.640 editor button from the updated code block that we were given from GitHub copilot.
+01:06:24.270 [Music]
+01:06:42.720 refresh your browser and test out the new pages.
+01:06:48.079 Let's commit our changes and then update the off context file.
+01:06:53.839 Open up offcontext.jsx JSX file and also open up copilot chat. Then type setup
+01:06:59.839 authentication context and token management. Type hash file and attach the protected routes.jsx file. Click the
+01:07:08.480 apply and editor button to accept the changes in the offontext.jsx file. And
+01:07:13.839 let's review the changes.
+01:07:27.760 Open up the protected routes.jsx file and click apply in editor and accept
+01:07:32.880 these changes. If any errors come up, we're going to resolve them with GitHub copilot.
+01:07:41.039 Now, let's move on to making a request to the backend server so we can register and login. For that, I'm going to bring
+01:07:47.440 in Christopher to help us build faster to create the login and the signup forms. We are going to wind up working
+01:07:54.240 across three files. Fortunately, GitHub copilot chat has an ability to allow us
+01:07:59.599 to edit multiple files at one time. We're going to add those files into chat
+01:08:04.799 and then instruct Copilot to create both the login and the signup forms. We can
+01:08:11.440 explore all the code that has been generated, ensure that everything works
+01:08:16.880 and apply that in editor.
+01:08:48.399 Hey,
+01:08:58.799 hey, hey.
+01:09:19.679 Hey,
+01:09:24.880 hey, hey.
+01:09:40.080 Once we've applied those changes, now we can return to the site and actually test everything. And we can see that we can
+01:09:47.600 register a brand new user and that we can log in as that brand new user.
+01:09:54.158 Whenever we're creating a website, we want to make sure that it's easy for people to do some of the most common
+01:10:00.560 tasks, we want to make sure that they are able to very quickly log in. So, we
+01:10:07.920 want to add that to the navbar on the left side. Returning back into Copilot
+01:10:13.840 Chat, we're going to do that same thing of working across multiple files. We'll instruct Copilot Chat to add in that
+01:10:21.760 functionality to the navbar. Explore the changes again that it's made. And let's
+01:10:26.960 go back to the browser and make sure that everything looks good. We can now see that login link inside of our nav
+01:10:36.159 section. Let's test that and make sure that we can still log in as that user
+01:10:42.080 that we created previously. Continuing down this path of making sure
+01:10:48.880 that our users have easy access to the information that they're going to be most frequently interested in. Let's
+01:10:55.280 update that dashboard to add in information about their trips. We'll
+01:11:00.719 then tell Copilot to build out that dashboard layout with the sidebar
+01:11:06.480 navigation. Copilot will generate the code and just like always, we'll want to review the code and make sure that it
+01:11:14.159 looks good. Now that we have that layout, let's
+01:11:20.320 create that trips card and the trips list component to showcase all of those
+01:11:26.159 trips. Going back to Copilot, we're going to have it create the trip card and the trip list component for
+01:11:32.159 displaying all those trips. And we'll tell it to also add a message for the
+01:11:38.000 various loading states. We'll also tell Copilot to generate the dashboard component to display the trips that
+01:11:45.199 users are routed to on login. If a user has no login, then we want to show them
+01:11:51.360 a welcome message on that dashboard. I also want to make sure if there's an error when the user runs the site that
+01:11:58.400 we display a fun little error message. I'm going to tell Copilot to add that in
+01:12:04.560 and to add in the assets into the appropriate folders.
+01:12:12.030 [Music]
+01:12:25.190 [Music] Let's save all those files, review all
+01:12:30.320 the changes, and make sure that everything looks good.
+01:12:36.320 One thing I want to highlight here is the fact that we were working
+01:12:41.679 interactively here. And this is one real big thing whenever you're working with Copilot is that you can take a look at
+01:12:48.800 what it's done and provide additional suggestions. So, you don't need to bundle everything up into one huge
+01:12:56.239 prompt. And now let's return back to the site and see how all of this works.
+01:13:03.199 We've got the login, the logout, and all of the error code all working properly.
+01:13:12.560 If you notice, I always make sure that I'm reviewing the code changes that
+01:13:18.080 Copilot provides. This ensures that I catch any errors right away and then I
+01:13:23.360 can ask the AI to make updates or I can adjust the code manually as needed. So
+01:13:29.280 far though, it looks like we're doing pretty well. Wow, we're making such great progress
+01:13:34.800 here. Thanks so much, Christopher, for all your help. Now, let's move on to the actual trip management side of things.
+01:13:42.320 We need to create a new form that allows users to add their trips and save them to the dashboard. We'll need to make a
+01:13:48.640 post request to the /trip/new route. And for the date picker, we'll use the dayjs
+01:13:54.880 library. Let's open up copilot and get started. Type create a new trip form
+01:14:00.000 with destination and date inputs. Use dayjs library. Open up your terminals
+01:14:05.440 and install these dependencies. We need dayjs for the date picker and we also
+01:14:10.800 need mux date picker to work along with it.
+01:14:17.600 Let's review our changes. Accept these changes. And now let's test
+01:14:22.960 out our UI.
+01:14:42.960 Let's go back to copilot edits and type create an itinerary day and time slot components for managing daily activities
+01:14:50.159 with editing capabilities.
+01:14:55.760 Let's review our changes, accept these changes, and save our files.
+01:15:06.320 Okay, so open up copilot edits and type. If the user doesn't have an itinerary for their trip, prompt them to add an
+01:15:12.880 itinerary. Also include a default itinerary template.
+01:15:21.040 Let's review the changes, accept the changes, and save our file.
+01:15:56.410 [Music]
+01:16:40.480 Wow, we just built a fully functional MVP of the application in a short time
+01:16:46.560 with GitHub Copilot. This is truly the power of building alongside an AI tool
+01:16:51.679 that just works.
+01:16:53.000 No text
+01:16:57.360 Probably the most basic question when writing code is this, does it work? And
+01:17:02.480 the way we find this out is by running the application. But as our codebase grows and becomes more complex, this act
+01:17:10.000 becomes tedious and honorous. Fortunately, we can automate this by creating tests. Let's talk about
+01:17:17.360 testing, unit test, and this thing called testdriven development.
+01:17:25.280 Before we get started, I want to highlight that our goal today isn't to dig deep into the nuances of testing.
+01:17:32.000 That could be its own series. Instead, we want to highlight the core concepts
+01:17:37.040 and how we can get started testing our code. Today, I have a very special guest, Christopher, to help us get up
+01:17:43.679 and running with all things testing with GitHub Copilot. Thanks for the intro, Cadia. Now, let's
+01:17:49.040 get started with some definitions. What is testing and why is it important? Testing is sort of as the name implies
+01:17:55.679 ensuring our code does what we expect it to do. This can take many forms. We can
+01:18:01.040 have acceptance tests where we make sure our app meets a certain set of defined functionality or integration tests where
+01:18:08.480 we ensure that our app is able to talk across the various systems like databases and the APIs. And we have unit
+01:18:15.440 tests which is what we're going to focus on here where we test small units of
+01:18:20.719 code. Unit tests are focused on the code itself and are broken down into small
+01:18:26.719 well units. These are small atomic isolated actions that our code performs.
+01:18:32.640 It could be things like ensuring a number is within a range or an error is being thrown at a correct time or that a
+01:18:40.159 value is returned. But why are unit tests important? Well, it allows us to
+01:18:45.920 ensure our code is performing the way we expect it to. As Cadia highlighted at
+01:18:51.120 the beginning, if we don't actually run our code, how do we know it works? And
+01:18:56.719 we're doing that at a very low level in an automated fashion with unit tests.
+01:19:02.560 And that's what's great about that process. You can literally have thousands of tests which run at a
+01:19:09.520 command and quickly give you the status of your application. Additionally, they
+01:19:14.800 can let you know if any changes you made to your code have broken something you weren't expecting, which is something I
+01:19:21.360 think we've all experienced. Now, let's ask Copilot to create some unit tests
+01:19:26.560 and explore them. I'm going to start by opening up the validators pi file and
+01:19:32.000 highlighting the validate email format function which will focus copilot's attention on that function. I open up
+01:19:39.360 copilot chat and you'll notice that it will actually suggest utilizing the slash command tests as you might expect.
+01:19:47.280 That will actually help us quickly create our tests. When I run this for
+01:19:52.320 the first time, Copilot will ask whether or not I want to configure a testing
+01:19:57.520 framework for our project. I'm going to dismiss this. I'm going to just stick
+01:20:03.360 strictly to setting up unit tests. It will give me a little bit of an overview of what it wants to do and then generate
+01:20:11.600 the code for me. What I'm going to notice is it's testing the function both
+01:20:16.960 on it succeeding. So, in other words, it is a valid email address. And if it's failing, I can now add this into a brand
+01:20:25.199 new file called test validators. I now have my collection of tests for that
+01:20:32.640 function. And if I run these tests, what I'm going to notice is it will come back and tell me that everything succeeds.
+01:20:40.800 Now, let's shift our focus to TDD or test-driven development. This is one of
+01:20:46.000 those times where breaking down the English words actually gives us a really good explanation of what the terminology
+01:20:52.880 means. We've already covered tests making sure that something works. Driven
+01:20:58.080 in English is something which leads or guides us and development is of course
+01:21:03.760 writing code. So in a nutshell, TDD is allowing the tests to drive how and what
+01:21:11.440 we develop as we are writing our code. Specifically with TDD, we actually write
+01:21:18.080 our tests first and then the actual implementation. This gives us a lot of great advantages.
+01:21:25.760 And the way that you'll typically walk through this is in a pattern known as
+01:21:30.800 red green refactor. Now, it does take a little bit of time to adjust one's brain
+01:21:37.120 to this approach, but as I highlighted, there are a lot of advantages. It gives you the opportunity to see how your code
+01:21:44.560 will actually behave before you've written it and ensure that the tests you write are testing what you expect them
+01:21:51.840 to test. So, you'll write those tests first. They'll fail because you haven't
+01:21:57.280 actually created the code. It might not even build because of that fact. You
+01:22:02.400 then create just enough code for the test to pass. So if I'm testing that an
+01:22:09.600 error is thrown if a number is less than zero, then that's all that I'm going to write for the code to do. Then when you
+01:22:17.440 rerun the test, it works. That's the green part. This gives you the assurance that you've actively made a change to
+01:22:24.719 the codebase to implement the desired functionality. Finally, you implement
+01:22:30.320 any refactoring to make your code look good. If you're anything like me, you
+01:22:35.440 probably start by just making things work and then focus on making it pretty afterwards. And that's basically what
+01:22:41.199 we're doing here. And what's great is we have our unit tests to tell us the
+01:22:46.719 changes we made didn't break anything. But what about for a function that
+01:22:51.840 doesn't exist at all? We can still do that with Copilot. So, I explain to Copilot, I want a brand new function to
+01:22:58.719 validate usernames. I provide the criteria that I'm expecting. I want it to be at least three, but no more than
+01:23:06.000 16 characters. Always start with a letter or an underscore. It can't be
+01:23:11.920 multiple underscores. And that after the first letter, you can then have underscores, numbers, and additional
+01:23:18.639 letters.
+01:23:27.520 Copilot will generate the unit tests based around that functionality. I'll go back one more time and run those tests.
+01:23:34.480 They're going to fail because again that function doesn't exist. I return to Copilot. I ask it to create that
+01:23:40.880 function. Copilot generates that code. I'm going to insert that into my
+01:23:46.239 validators. [Music]
+01:23:53.679 And again I run the tests. I see everything passing. So I've done
+01:23:59.840 that true red code didn't even exist and green everything now succeeds. Now that
+01:24:06.800 we've got all of our tests created, let's talk a little bit about some best practices here. The primary reason
+01:24:13.600 Copilot is so good at working with unit tests is unit tests are at the end of
+01:24:18.800 the day just code. So document your tests, make them pretty, treat them just
+01:24:25.280 like you would production code. Create utilities to make writing tests faster
+01:24:31.600 and make sure that you're keeping your tests updated as you make changes to your code. And again, Copilot can help
+01:24:38.960 you out every step of the way. We sadly don't have the time to cover every
+01:24:44.480 aspect of test-driven development or unit tests, but there are plenty of
+01:24:49.679 resources available, some of which we'll share in the show notes. I'll add that I
+01:24:55.360 think what's helped me the most is really learning about designing unit tests, mock objects, where you pretend
+01:25:03.120 things are something else, and other types of tests that you can create.
+01:25:08.880 Thanks so much, Christopher, for coming on and showing us how we can implement TDD with GitHub Copilot and truly teach
+01:25:15.600 us a lot about testing in general. I really hope you learned as much as I did in today's episode. Testing is an
+01:25:22.239 essential part of development and having the ability to add tests in a more efficient manner makes it less tedious
+01:25:28.400 to write. Today, I'm going to teach you what you
+01:25:29.000 No text
+01:25:35.280 need to know to start refactoring and reviewing code with GitHub Copilot. Whether you're polishing your first
+01:25:40.320 project or just looking to clean up your code, GitHub Copilot's got your back.
+01:25:48.080 First off, what exactly is a code review and what does it mean to refactor when
+01:25:53.199 it comes to your code? Code review is like having a second pair of eyes on your code. It helps you catch bugs,
+01:25:59.440 improve code quality, and ensure consistency. Refactoring, on the other hand, is the process of restructuring
+01:26:06.480 existing code without changing its functionality. Think of it as tidying up your workspace to make things more
+01:26:12.880 efficient and easier to understand. In any development project, maintaining clean and efficient code is crucial to
+01:26:19.920 make future work easier. But let's face it, it's easy to let things get messy,
+01:26:25.280 especially when you're juggling multiple tasks. That's where GitHub Copilot can come in handy. It not only assists in
+01:26:32.159 writing code, but also makes the review and refactoring process smoother and more efficient. Now, let's take a look
+01:26:38.960 at some real world examples. Imagine you have a function that's getting too long and too hard to follow. With Copilot,
+01:26:46.480 you can highlight that function and ask for refactoring suggestions. Copilot might break it down into
+01:26:52.560 smaller, more manageable pieces or optimize the logic for better performance. Another example is suppose
+01:26:59.120 you have a block of code that's not following your team's naming conventions. Copilot can automatically
+01:27:04.480 suggest the correct variable names helping to ensure consistency across your project. Okay, so let's say that we
+01:27:11.520 have this dashboard component and we want to see if there's anything that can be improved. We can open up Copilot chat
+01:27:17.840 and ask how can I improve this code. Copilot will then take a look at our code and give us some suggestions on
+01:27:24.000 ways the code could be improved. Let's take a look at what it generated.
+01:27:41.120 So we can apply these suggestions by clicking the apply an editor button and copilot will make the updates for us. We
+01:27:48.719 can also ask copilot to explain each suggestion for us step by step. We can take this a step further by asking
+01:27:55.280 specific and direct questions. Say for example, I wanted to create a custom hook to centralize the trip fetching
+01:28:01.600 logic in our application to make it reusable across components. I can create
+01:28:07.040 a new chat conversation and ask how can I extract the data fetching logic into a custom hook. We will then be given
+01:28:14.239 refactored code that allows us to extract this logic out of the dashboard component into a new hook directory that
+01:28:20.960 we can then use in multiple components throughout our application.
+01:28:27.679 Much better.
+01:29:03.280 Hey,
+01:29:08.480 hey,
+01:29:13.600 hey.
+01:29:32.400 Now, what if we wanted to identify redundant code in our component? With my
+01:29:37.520 file open, I can ask, are there any redundant code in this file?
+01:29:42.800 You'll see here that Copilot found some redundancies that it corrected on my behalf in the generated code block. I
+01:29:50.719 can go ahead and accept these changes where needed. Reviewing and refactoring your code with GitHub Copilot is a great
+01:29:57.280 way to do an initial overview of the work that you've done. You can also ask copilot for performance improvement
+01:30:03.120 suggestions, how to make functions more modular, adding comments for readability, upgrading syntax to be more
+01:30:09.920 modern, and so on and so forth. We can also, if you have access, use copilot
+01:30:16.000 code review on github.com to make the code review process even more seamless.
+01:30:21.040 Let's take a quick look. Let's say we have this pull request that includes component for the front end of a React
+01:30:26.560 project. I can actually get an initial review of my code from GitHub copilot.
+01:30:32.400 So on github.com you will notice under reviewer you have copilot. Click the
+01:30:39.199 request button and wait for copilot to review your code. Once it's complete,
+01:30:44.239 scroll down on your page and you will see some of Copilot's comments. One thing to note is that Copilot will
+01:30:50.960 always leave a comment review and not an approve review or a request changes
+01:30:56.639 review. This means that Copilot's reviews do not count toward required reviews for pull request and Copilot's
+01:31:03.760 reviews will not block merging changes. I can accept these suggestions by clicking the commit suggestions drop-own
+01:31:10.080 menu then press commit changes. This will update the file with the suggested changes right on github.com. I can also
+01:31:17.760 batch accept suggestions by clicking the add to batch button. When you're finished with your PR, you can request
+01:31:24.080 additional reviews from Copilot and go through accepting the suggestions once again. With Copilot code review, you can
+01:31:31.440 ask GitHub copilot to take a first look at your code before asking your team for that final review. So, what are the key
+01:31:39.040 components of using Copilot for code review and refactoring? We can break this down into five areas. Automated
+01:31:46.480 suggestions. This is where Copilot suggests improvements and optimizations as you review your code. Consistency
+01:31:53.440 checks. This is where Copilot helps maintain coding standards by suggesting consistent naming conventions and
+01:32:00.080 structures for your functions. Refactoring assistance. Whether it's simplifying complex functions or
+01:32:06.080 reorganizing your codebase, Copilot provides actionable refactoring tips.
+01:32:11.120 Error detection. GitHub Copilot can spot potential bugs or inefficiencies that
+01:32:16.320 you might have missed while building. Comment support. Copilot can help generate clear comments in your code by
+01:32:23.360 making your code easier to understand for others. Now remember, you are the
+01:32:28.800 pilot and we call it C-pilot for a reason. It's a powerful tool, but it
+01:32:34.080 does have some limitations. C-Ilot, like any LLM, relies on the
+01:32:39.520 context you provide. So unclear or poorly documented code might lead to
+01:32:44.719 less effective suggestions. Additionally, while Copilot can catch many issues, it's not a substitute for a
+01:32:52.159 thorough human review. Always double check the changes it suggests to ensure they align with your project's goals and
+01:32:58.400 standards as well as your organization's policies. To wrap things up, GitHub
+01:33:03.760 Copilot is an invaluable assistant for code review and refactoring. It helps you maintain clean, efficient, and
+01:33:10.400 consistent code, saving you time and reducing errors. By integrating Copilot
+01:33:15.679 into your workflow, you can focus more on building great features and less on
+01:33:20.719 the nitty-gritty of code maintenance.

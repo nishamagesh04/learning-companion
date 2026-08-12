@@ -1,0 +1,1926 @@
+# tactiq.io free youtube transcript
+# AI-Assisted Coding Tutorial – OpenClaw, GitHub Copilot, Claude Code, CodeRabbit, Gemini CLI
+# https://www.youtube.com/watch/wlpBCazAY9Q
+
+00:00:00.080 In this course, you will learn about AI
+00:00:01.839 assisted software development. I'm Bo KS
+00:00:04.560 and I'm teaching this course. AI coding
+00:00:06.960 tools are not just a trend or a gimmick.
+00:00:09.840 They're genuinely transforming how
+00:00:11.840 professional developers work. Studies
+00:00:14.240 show that experienced developers can
+00:00:16.079 have extreme productivity gains while
+00:00:18.720 maintaining quality when they use these
+00:00:20.800 tools effectively. But here's the key
+00:00:23.439 word, effectively. You can't just
+00:00:25.760 install an AI coding tool and expect
+00:00:28.080 magic to happen. you need to understand
+00:00:30.560 how these tools work, when to use them,
+00:00:33.360 and perhaps more importantly, when not
+00:00:35.280 to use them. So, what exactly are we
+00:00:37.200 going to cover in this course? We're
+00:00:39.360 going to start with the fundamentals.
+00:00:42.640 Understanding how AI models actually
+00:00:44.960 work, what tokens are, why context
+00:00:48.000 windows matter, and what hallucinations
+00:00:51.039 mean in the AI world. Then we'll get
+00:00:53.840 hands-on, taking you through the entire
+00:00:56.800 coding life cycle from generation to
+00:00:59.680 review. You will master AI pair
+00:01:02.320 programming and Agentic terminal
+00:01:04.479 workflows using top tier tools like
+00:01:06.799 GitHub C-Pilot, Anthropics Claude Code,
+00:01:10.000 and the Gemini CLI. The course also
+00:01:13.040 covers open-source automation with
+00:01:14.960 OpenClaw, teaching you how to set up a
+00:01:17.439 highly customizable, locally hosted AI
+00:01:20.240 assistant for your development
+00:01:22.080 environment. Finally, you will learn how
+00:01:24.240 to maintain high code quality and
+00:01:27.439 streamline your team's workflow by
+00:01:29.840 integrating code rabbit for automated
+00:01:32.880 AIdriven pull request analysis. Code
+00:01:36.159 Rabbit provided a grant to make this
+00:01:38.079 course possible and it's a good addition
+00:01:40.320 to your AI tool stack. So, let's talk
+00:01:43.280 about who this course is for. This
+00:01:45.360 course assumes you have some programming
+00:01:48.240 experience. You don't need to be an
+00:01:50.479 expert, but you should be comfortable
+00:01:53.119 writing basic programs, know how to use
+00:01:55.840 a code editor, and have a basic
+00:01:58.880 understanding of Git. AI tools are most
+00:02:02.000 powerful when you already understand the
+00:02:04.159 fundamentals of coding. One more thing
+00:02:06.960 before we dive in. Throughout this
+00:02:08.878 course, I want you to actually code
+00:02:11.360 along with me. Don't just watch. Open up
+00:02:14.239 VS Code, install the tools I'm showing
+00:02:16.480 you, and practice. The best way to learn
+00:02:19.200 AI assisted coding is by doing it.
+00:02:21.680 You'll develop an intuition for what
+00:02:23.440 works and what doesn't, and you'll find
+00:02:25.599 your own workflow that fits how you like
+00:02:27.920 to code. All right, let's get started
+00:02:30.560 with the fundamentals.
+00:02:35.599 Before we start using AI coding tools,
+00:02:37.840 we need to understand some key terms.
+00:02:40.319 These concepts will come up throughout
+00:02:42.640 the course, and understanding them will
+00:02:45.440 help you get better results from any AI
+00:02:48.080 tool you use. First up, tokens. Think of
+00:02:51.680 tokens as word pieces. They're how AI
+00:02:55.120 reads your code and text. When you type
+00:02:57.920 something to an AI, it doesn't see
+00:03:00.080 individual characters or words the way
+00:03:02.879 we do. It breaks everything down into
+00:03:05.440 tokens. A token might be a word, part of
+00:03:08.319 a word, a punctuation mark, or even a
+00:03:10.720 space. The word function might be one
+00:03:13.840 token, while functionalize might be
+00:03:16.640 broken into multiple tokens. Why does
+00:03:19.680 this matter? Because AI services often
+00:03:22.640 have token limits. Free tiers limit how
+00:03:25.920 many tokens you can use per day or
+00:03:28.159 month. So, understanding tokens helps
+00:03:31.040 you understand why sometimes you hit
+00:03:33.200 limits and why longer prompts cost more.
+00:03:36.959 Next, a context window. The context
+00:03:40.080 window is how much information the AI
+00:03:42.319 can remember at once during a
+00:03:44.799 conversation. Think of it like the AI's
+00:03:47.280 short-term memory. If you have a small
+00:03:49.599 context window, the AI can only consider
+00:03:52.159 a small amount of code or conversation
+00:03:54.480 at a time. With a larger context window,
+00:03:57.439 the AI can understand more of your
+00:03:59.519 project, remember earlier parts of your
+00:04:01.599 conversation, and give more relevant
+00:04:04.400 suggestions. Context windows are
+00:04:06.799 measured in tokens. Uh, for example,
+00:04:09.439 GPT4 has a context window of about
+00:04:12.159 128,000 tokens. Claude has up to 200,000
+00:04:15.680 tokens. Gemini can handle over a million
+00:04:18.079 tokens. But when you watch this video, a
+00:04:20.798 lot of these services may have even more
+00:04:23.040 tokens they can handle. In practical
+00:04:25.360 terms, this means some AI tools can
+00:04:27.680 analyze your entire codebase at once,
+00:04:30.160 while others can only look at a few
+00:04:32.240 files at a time. Now, this is a really
+00:04:34.639 important one. Hallucinations. A
+00:04:36.880 hallucination is when the AI confidently
+00:04:39.680 suggests something that's completely
+00:04:41.520 wrong. It might make up a function that
+00:04:43.520 doesn't exist or reference a library
+00:04:45.520 that was deprecated years ago or even
+00:04:48.639 invent API methods that never existed.
+00:04:51.520 The AI doesn't know it's wrong. It's
+00:04:54.000 just predicting what tokens are likely
+00:04:55.840 to come next based on its training data.
+00:04:58.479 Sometimes those predictions are spot-on
+00:05:00.560 and sometimes they're completely made
+00:05:02.160 up. This is why you should always verify
+00:05:05.040 AI suggestions. Don't just accept code
+00:05:08.320 blindly. You need to test it. You need
+00:05:10.320 to check the documentation. You need to
+00:05:12.560 make sure all the functions actually
+00:05:14.400 exist. And then finally, prompts. A
+00:05:17.199 prompt is a simple instructions,
+00:05:19.600 a simple instruction to the AI. It could
+00:05:21.840 be a comment in your code, a question in
+00:05:23.919 a chat interface, or a detailed
+00:05:26.479 description of what you want. The
+00:05:28.479 quality of your prompts directly affects
+00:05:30.800 the quality of AI responses. Vague
+00:05:33.680 prompts get vague responses, but
+00:05:35.680 specific detailed prompts get specific,
+00:05:38.160 useful code. We'll talk more about
+00:05:40.560 prompt engineering later, but for now,
+00:05:42.720 you just need to remember that the
+00:05:44.000 clearer you are about what you want, the
+00:05:46.000 better results that you'll get. Okay,
+00:05:48.080 let's talk about when you should use AI
+00:05:50.000 assistance and when you should just code
+00:05:51.680 things yourself. So AI is good for
+00:05:54.240 writing boilerplate code like getters,
+00:05:56.000 setters, basic CRUD application op
+00:05:58.240 operations, uh learning new frameworks
+00:06:00.160 or syntax, writing tests and
+00:06:01.840 documentation, refactoring repetitive
+00:06:03.680 patterns, getting unstuck on syntax
+00:06:06.000 errors. But sometimes you need to code
+00:06:08.880 yourself like when you're designing
+00:06:10.319 system architecture, making security
+00:06:12.639 critical decisions, writing complex
+00:06:14.639 business logic, learning new concepts
+00:06:16.400 for the first time or working on
+00:06:18.639 performance critical optimizations.
+00:06:21.600 Basically, you need to remember that you
+00:06:24.720 need to use AI to speed up
+00:06:26.720 implementation, but keep architectural
+00:06:29.440 decisions to yourself. AI is great at
+00:06:32.400 the how, how to implement something, how
+00:06:34.560 to write the syntax, how to structure a
+00:06:36.319 function, but you should be deciding the
+00:06:38.800 what and why. What you're building and
+00:06:41.520 why you're building it that way. Think
+00:06:43.600 of AI as a very fast, very knowledgeable
+00:06:46.000 junior developer. They can write code
+00:06:48.160 quickly, but you need to review it,
+00:06:50.319 guide the architecture, and make the
+00:06:52.319 important decisions.
+00:06:57.199 Okay, time to get hands-on. I have uh VS
+00:07:01.120 Code going right now and I'm going to
+00:07:03.039 show you how to get GitHub Copilot set
+00:07:06.000 up and how to use it. So, if you don't
+00:07:08.479 already have VS Code installed, just
+00:07:10.800 pause the video and go download it from
+00:07:12.639 code.visisualstudio.com.
+00:07:14.880 It's completely free. So, let's install
+00:07:18.319 Copilot. Now, I'm going to go to this
+00:07:20.720 extensions icon right here, and then I'm
+00:07:23.759 just going to search for GitHub Copilot.
+00:07:27.199 Now, an important note here, you may see
+00:07:30.479 two extensions in the marketplace
+00:07:33.440 uh because uh there there's an original
+00:07:35.919 GitHub C-Pilot that's now deprecated.
+00:07:39.840 What you want is GitHub Copilot chat.
+00:07:43.520 So, I'm just going to click the install
+00:07:45.120 button on GitHub Copilot Chat and then
+00:07:48.160 it's going to install and then I'll see
+00:07:50.800 this page here about the extension. So,
+00:07:55.120 this is an all-in-one extension. There
+00:07:57.360 used to be a few different ones. So,
+00:07:59.280 this single extension now handles both
+00:08:01.360 the chat and the code completions. So,
+00:08:04.720 after it installs, you're going to have
+00:08:06.400 to log in. It could come up with a login
+00:08:08.479 page or you're going to have to click
+00:08:10.720 this person icon. to the account icon in
+00:08:14.080 here. And then we're going to sign in.
+00:08:16.400 There's a few different ways to get
+00:08:18.160 signed in. I'm going to click the backup
+00:08:20.960 and sync settings. And then there's a
+00:08:23.360 sign in button here. And then I'll sign
+00:08:25.759 in with GitHub. Now, it's going to open
+00:08:28.479 up a browser and it's going to have me
+00:08:31.120 authorize with GitHub to sign in. So,
+00:08:33.519 I'll just click continue here and then
+00:08:35.760 authorize. And now, we'll go back into
+00:08:38.320 Visual Studio Code. And now we can just
+00:08:41.200 confirm that we're signed in to GitHub
+00:08:44.480 Copilot. I'm going to go to manage
+00:08:45.760 extension account preferences and go to
+00:08:48.160 GitHub Copilot chat. And then I'm just
+00:08:51.279 going to confirm that I'm using my
+00:08:53.279 current account which is BOCS.
+00:08:56.240 Okay. Now you should see a GitHub
+00:08:58.640 C-Pilot icon in the corner here. If you
+00:09:01.120 don't, we can just rightclick on this
+00:09:02.640 bar. I'm going to turn on C-pilot
+00:09:04.480 status. And I can click here to finish
+00:09:07.519 the setup. I'm just going to click on
+00:09:09.760 use AI features and then this will
+00:09:13.120 finish the setup of GitHub Copilot. And
+00:09:15.920 now we're set up and we're we can now
+00:09:18.560 see the chat in this right hand side of
+00:09:21.600 the screen here. And we can actually
+00:09:23.920 toggle the chat with this button in the
+00:09:26.880 corner. So this is how we can basically
+00:09:30.320 open the chat. So I can close the chat
+00:09:32.160 with the X. I can open the chat by going
+00:09:35.200 to that. And then we can actually do a
+00:09:37.279 new chat, quick chat. There's a few
+00:09:39.839 other things. Configure inline
+00:09:41.200 suggestions.
+00:09:42.720 And so now a little bit about pricing.
+00:09:45.519 So GitHub offers Copilot free, which is
+00:09:49.040 super powerful. Basically, you get 2,000
+00:09:51.839 code completions and 50 chat or agent
+00:09:54.080 requests every month. If you're a
+00:09:56.560 student, teacher, or open-source
+00:09:58.959 maintainer, you can still get the pro
+00:10:00.959 plan free, which gives you unlimited
+00:10:03.440 completions and more advanced premium
+00:10:05.680 models like GPD5 or Cloud 4. So, you can
+00:10:09.920 always look into that if that's
+00:10:11.440 something that you think that you would
+00:10:12.880 be interested in. Okay, let's try out
+00:10:15.920 our first AI suggestions. I'm going to
+00:10:18.959 just create a new file. So, I will just
+00:10:22.800 create a file called demo.j. JJS
+00:10:26.560 and I'm going to close my chat for now.
+00:10:30.079 So in this demo.js
+00:10:34.000 um even though we only installed the
+00:10:37.040 chat extension, our ghost text
+00:10:39.360 completions are built right in. So if I
+00:10:41.920 just put in a comment here function to
+00:10:45.279 calculate
+00:10:46.800 the area of a circle, you could see that
+00:10:50.160 even while I was typing this comment, it
+00:10:52.079 was suggesting the end of the comment.
+00:10:54.959 So now that I see this, I can press
+00:10:56.880 enter to accept one line or tab to
+00:10:59.519 accept this entire function. So you can
+00:11:03.200 see the gray text appear and when you
+00:11:05.680 but it's temporary, but if you press
+00:11:07.600 tab, it'll put the whole text in. And
+00:11:10.399 this is a function to calculate the area
+00:11:12.959 of a circle. I didn't even have to write
+00:11:14.320 anything. And now let me show you a few
+00:11:16.480 more examples. It's actually give me a
+00:11:18.399 suggestion for another uh com inline
+00:11:21.920 comment here. But I'm going to do
+00:11:23.600 something else. I'm going to say
+00:11:24.880 function to validate an email address
+00:11:30.560 using reax. And if I just wait here,
+00:11:34.480 it's going to suggest this whole
+00:11:37.760 function here. validate email. So this
+00:11:41.519 is a function with a proper reax pattern
+00:11:45.440 which is pretty impressive. So I'll just
+00:11:46.959 press tab here to select it. Now I'm
+00:11:50.560 going to try another one uh something
+00:11:53.040 even more complex function to fetch data
+00:11:56.959 from an API and I'll just and log the
+00:11:59.680 response. Now it's just showing the
+00:12:03.279 beginning of this right now. So I
+00:12:05.600 pressed enter and it's giving me async
+00:12:07.680 function fetch data URL. If I hover over
+00:12:10.000 this, it's going to show me uh some
+00:12:12.800 options. So right now it's only giving
+00:12:16.000 one out of one option. So there's only
+00:12:17.760 one option to accept. But let me show
+00:12:19.839 you something. I'm going to press tab to
+00:12:21.360 accept this option. Press tab to accept
+00:12:23.920 this option. And now I press enter. I
+00:12:26.639 haven't pressed tab. But if I hover over
+00:12:29.279 this, we can also just instead of
+00:12:32.240 accepting the whole option, accept one
+00:12:34.720 word at a time. So it's going to either
+00:12:37.680 be command or alt and then the arrow
+00:12:39.920 button. So basically I'm just accepting
+00:12:42.320 one word at a time here. And now it's
+00:12:44.800 giving me the rest of the function. Now
+00:12:47.279 if I hover over this again, I can see it
+00:12:50.399 says one out of three. That means there
+00:12:53.600 are three different options I can
+00:12:56.800 accept. See, I can just scroll through
+00:12:59.279 these three different possible codes
+00:13:01.680 that it's giving me. And there's also
+00:13:03.920 the shortcut. If you kind of hover over
+00:13:05.600 this, it shows you the shortcut. So,
+00:13:08.720 it's either going to be alt bracket or
+00:13:11.519 it's going to be your option bracket,
+00:13:14.000 uh, depending on if you have Mac or
+00:13:15.360 Windows. So, I can just scroll through
+00:13:17.440 these just with my shortcut keys on my
+00:13:20.720 keyboard. So, that's pretty nice because
+00:13:23.839 Copilot doesn't always know exactly what
+00:13:25.920 you want, but it may have a few
+00:13:27.360 different options. And then once you
+00:13:28.880 find the one you like, you just press
+00:13:30.320 tab to select it. So, basically, you can
+00:13:33.519 choose the code that fits that best fits
+00:13:36.079 your coding style or project needs.
+00:13:39.440 Okay. Now, I'm going to give you another
+00:13:40.639 pro tip that's going to dramatically
+00:13:41.920 improve your suggestions. It's the
+00:13:43.360 neighboring tabs trick. So, let me
+00:13:46.000 create a few more files really quick.
+00:13:48.480 Okay. So, let's see what I've just set
+00:13:50.160 up. I have a user test.js with a test
+00:13:53.519 for our users. I have a users.css
+00:13:58.079 with some styling for our users. And now
+00:14:00.880 I'm just going to go into our user.js
+00:14:03.760 file. And we're going to see that
+00:14:06.639 basically AI has a limited context
+00:14:08.560 window, a short-term memory of what
+00:14:10.720 you're working on. And by default,
+00:14:12.959 Copilot looks in the file you're
+00:14:14.320 currently typing in, but it also scans
+00:14:16.320 the other tabs you have open in VS Code.
+00:14:19.600 So to really understand this example, I
+00:14:22.320 just want to show you just one more time
+00:14:23.600 the user.est
+00:14:25.600 basically I'm using for looking for a
+00:14:27.600 specific data uh test ID called user
+00:14:32.560 card name. So now what hap let's see
+00:14:35.360 what's happen I go back into users.js.
+00:14:38.160 I'm going to import my users.css file.
+00:14:42.880 It's going to automatically fill in
+00:14:44.240 users.css CSS and it's going to suggest
+00:14:47.519 a function. I'm going to fill in that
+00:14:50.959 function, but I'm also going to pass in
+00:14:53.440 an avatar URL. And then see, you can
+00:14:57.279 basically se uh use the autocomp
+00:15:00.800 completion and then go in and make some
+00:15:02.880 changes. And now look, it's giving me an
+00:15:06.720 entire suggestion. And I'm just going to
+00:15:11.199 put tab to fill this in. And you can see
+00:15:14.160 it's getting the classes from our CSS
+00:15:18.639 and it's adding this test ID user card
+00:15:22.320 name. So it's getting the classes that
+00:15:24.720 we create right in the CSS and it knows
+00:15:27.760 to use the test ID user card name. And
+00:15:32.000 then so that's exactly what we want and
+00:15:35.600 it it figure out the context based on
+00:15:38.160 our other files. So without those tabs
+00:15:41.519 open, Copilot might suggest a generic
+00:15:44.000 name like container or user box. But
+00:15:46.399 with the files, it knew what we actually
+00:15:49.759 needed. Okay, let's do a quick practice
+00:15:52.560 exercise together. I'm going to create a
+00:15:54.000 new file. This one's going to be called
+00:15:56.320 to-do.js.
+00:15:58.160 And we'll just close all these other
+00:15:59.600 files we have open. Okay, just let's
+00:16:02.480 just start with this comment. to-do app
+00:16:05.360 with add, remove, and list functions.
+00:16:10.240 And then I'll just press enter here. And
+00:16:14.240 look, it it knows that I want to start
+00:16:16.800 with an array. So I'll just press tab to
+00:16:19.279 set that. Plus, let's just make sure I
+00:16:21.600 spell functions right up here. And then
+00:16:25.279 it's automatically
+00:16:27.440 I don't even have to give it another
+00:16:28.639 comment. It's already saying function
+00:16:30.160 add to-do. So I'll just press tab to
+00:16:31.839 accept that. Now it's filling in the
+00:16:34.079 function. I just press tab to accept
+00:16:35.680 that. Now it's giving me my remove
+00:16:38.959 function. So I press tab to select that.
+00:16:42.720 And now it's giving me my list function.
+00:16:44.720 So I press tab to accept that. And
+00:16:47.759 basically in just a few seconds we got a
+00:16:50.639 basic to-do app structure. And all I had
+00:16:53.360 to do was add that comment at the very
+00:16:55.759 beginning. Of course, you'd want to test
+00:16:57.839 this and make sure it works the way you
+00:16:59.360 expect, but AI just saved us a lot of
+00:17:02.320 typing. Okay, now that we got the basics
+00:17:04.480 down, let's unlock the true powerful
+00:17:06.480 features of GitHub Copilot. So, Copilot
+00:17:09.359 isn't just a code completer. It's
+00:17:12.400 basically a full-on development partner.
+00:17:14.480 So, we're going to cover the three main
+00:17:15.760 interaction modes, the model selection,
+00:17:18.079 and how to give C-Pilot a rule book for
+00:17:21.520 your specific project. GitHub Copilot
+00:17:25.119 now categorizes your quest into three
+00:17:27.839 distinct modes. So as mode is the
+00:17:30.400 default. It's great for questions,
+00:17:31.919 explanations, and learning. Edit mode
+00:17:34.640 spec is specifically for refactoring and
+00:17:37.039 making spec direct changes to your
+00:17:39.200 existing files with a clear diff view.
+00:17:42.559 And then agent mode is is the autonomous
+00:17:45.039 mode. This is where Copilot plans and
+00:17:47.600 executes multi-step tasks across your
+00:17:50.320 entire repository. Knowing when to
+00:17:52.640 switch between these will keep you from
+00:17:54.000 getting AI hallucinations and knowing
+00:17:56.080 your code stays clean. And again, this
+00:17:58.480 is all in the chat, which I'm just about
+00:18:00.160 to show you about. So, let me
+00:18:02.400 demonstrate how these actually feel in
+00:18:04.559 practice. So, I'm going to open the main
+00:18:07.039 chat. We can click this chat button up
+00:18:09.280 here, or we can do control alt I or
+00:18:11.760 command alt I depending on if you have
+00:18:14.160 Windows or Mac. So, I just did command
+00:18:17.039 alt I and I got this chat session here.
+00:18:20.000 I'll close this. So after we open this
+00:18:22.880 chat window, notice this dropdown right
+00:18:25.760 here. We have a we can change the mode
+00:18:28.160 from agent mode, ask mode or edit mode
+00:18:30.559 or plan mode. So I'm going to go to ask
+00:18:33.440 mode. Also, we can select different
+00:18:37.440 LLMs or models that we want to use for
+00:18:40.320 the request. And so we're in ask mode.
+00:18:44.240 So in ask mode, I can be very broad. So
+00:18:47.120 I can at say something like what does
+00:18:49.600 the reduce method do in JavaScript and
+00:18:53.760 how does it compare to a for loop and
+00:18:56.640 then I can send that and then it's just
+00:18:59.440 going to do some thinking and this
+00:19:02.480 working section this is basically what
+00:19:05.120 it's thinking to itself before it comes
+00:19:07.600 up with the answer. Okay, so now it it
+00:19:10.880 came up with the answer.
+00:19:12.480 Array.prototype.reduce runs reducer
+00:19:14.480 function across an array of elements. So
+00:19:16.480 it gives it signatures, it key
+00:19:17.840 behaviors, when to use versus a for
+00:19:20.960 loop, and it even gives some examples.
+00:19:23.840 So it's basically a tutorial style
+00:19:25.600 response. It's a safe mode because it's
+00:19:28.480 not going to change a single line of my
+00:19:30.799 code unless I manually copy it out. And
+00:19:34.320 you can get into this ask mode just from
+00:19:39.039 or your file. Like let's say you have a
+00:19:41.840 function here. I can right click on here
+00:19:44.160 and then go to explain. And basically
+00:19:48.080 now it's going to um use the ask mode to
+00:19:53.840 explain a function in my code and it's
+00:19:57.600 going to break down the logic for me. So
+00:20:00.640 here's the explanation of that code. So
+00:20:02.960 this is another example of how to use
+00:20:05.360 ask mode and it can help you explain
+00:20:08.000 code that you're working in. Okay, I'm
+00:20:10.240 just going to go up here and start a new
+00:20:12.480 chat or you can always just keep using
+00:20:14.720 the same chat. But basically now I'm
+00:20:18.000 going to go into edit mode. So this is
+00:20:21.200 where you know you want to change
+00:20:23.679 something. So I'm going to look at this
+00:20:25.520 code here and you can see it's already
+00:20:27.840 added the file the current file context.
+00:20:30.320 It's giving the current file context to
+00:20:32.480 the chat. And this is basically an old
+00:20:36.400 callbackbased
+00:20:38.080 function. So I'm going to say refactor
+00:20:41.520 to async a wait and add a 5-second
+00:20:43.760 timeout. And we just wait. And we're
+00:20:46.960 going to just watch the editor.
+00:20:49.440 Basically, instead of just giving a
+00:20:52.559 block of code on the sidebar, it applies
+00:20:54.720 the changes directly to my file in a
+00:20:57.280 diff view. I can see the old code in red
+00:21:00.480 and the new code in green. And then I
+00:21:03.120 can review every single line and click
+00:21:05.600 apply or discard or actually keep or
+00:21:08.880 undo. So I'm just going to press keep.
+00:21:13.360 And so this is the fastest way to
+00:21:16.400 refactor. And I kept the the new code
+00:21:19.840 here which is going to be a lot more
+00:21:23.120 robust than my previous code. Okay. I
+00:21:26.720 could continue along with in agent mode
+00:21:29.360 in this chat, but I sometimes if I'm
+00:21:31.520 doing something all something completely
+00:21:33.280 different, I like starting a new chat.
+00:21:35.360 And now I'm going to go into
+00:21:38.480 agent mode. So you can see it says
+00:21:41.200 describe what to build next. So agent
+00:21:44.880 mode does more than just write code.
+00:21:46.720 It's going to think and it's going to
+00:21:48.720 act. So I can give it a massive task.
+00:21:53.039 So I'm saying create a full rest API
+00:21:54.880 with express that has JWT authentication
+00:21:57.600 and saves users to a local SQLite
+00:22:00.480 database and then just start. Now we're
+00:22:03.840 going to watch the sidebar and so it's
+00:22:06.720 going to start by doing all the planning
+00:22:08.240 here and basically it's going after it
+00:22:11.919 creates the the plan it can actually
+00:22:14.320 create new files install the necessary
+00:22:16.720 mpm packages to my terminal write
+00:22:19.760 middleware. It can even run a test build
+00:22:23.039 to make sure its own code doesn't have
+00:22:24.720 any syntax errors. So you can see it's
+00:22:28.480 now created a plan and it's going to
+00:22:32.799 work to implement the plan. And as it
+00:22:36.720 goes, we are going to have to basically
+00:22:41.120 um give it some feedback. So it says
+00:22:43.840 allow edit to sensitive files. The model
+00:22:45.679 wants to edit package.json.
+00:22:48.159 So I'm just going to click allow. And
+00:22:50.480 you can see it's now generating all
+00:22:53.120 these files right in our project
+00:22:55.200 directory. And as it work as it's
+00:22:57.760 working, we can see it has a little icon
+00:23:01.520 under the different things that's been
+00:23:02.880 created. So we can go through and just
+00:23:04.960 like check in on the code that's being
+00:23:08.960 created. So it's even creating folders,
+00:23:12.320 directories within the folders. And so
+00:23:15.760 we'll just let this work for a little
+00:23:17.520 bit and then come back once it's uh
+00:23:19.679 finished. Okay, now it basically just
+00:23:23.520 finished. It says what it's done. It it
+00:23:25.520 it says what it builds, the files it
+00:23:28.080 added. Next step, run install and start
+00:23:30.559 the server locally. It gives us the
+00:23:32.559 commands to run and then some test
+00:23:34.960 examples, how to log in. So now we can
+00:23:39.600 try that. First, let me just keep all
+00:23:42.159 these changes. And it says, &quot;What would
+00:23:44.799 you like me to do?&quot; Yes, install and
+00:23:47.919 start server. So now we will be able to
+00:23:51.120 see whether it can actually run things
+00:23:54.240 in the terminal right from the agent.
+00:23:57.120 And anytime it's going to run a command,
+00:23:59.440 we're often going to have to allow it.
+00:24:01.760 So now it's doing mpm install. And
+00:24:04.640 instead of clicking allow, I can enable
+00:24:07.039 auto approve. So now it'll just
+00:24:08.480 automatically allow everything. Now this
+00:24:10.400 is more risky, but for now I am going to
+00:24:12.640 do that.
+00:24:13.760 And uh it's suggest um it just wants to
+00:24:17.919 make sure we really want to do this. And
+00:24:19.760 yeah, I'll trust it. So now it's
+00:24:22.320 actually seeing that there's some server
+00:24:24.559 issues and it's just going to go along
+00:24:27.200 and try to fix all the issues itself. So
+00:24:30.480 it's going to ask some questions along
+00:24:32.640 the way and continue to try to kind of
+00:24:35.120 figure out things and get everything
+00:24:37.200 working. So, we just created an entire
+00:24:40.480 working application. And so, while
+00:24:43.200 agents are powerful, they're not magic.
+00:24:44.799 So, you always want to look at the plan
+00:24:46.080 it generates and just make sure it
+00:24:49.039 doesn't go too wild on your code base.
+00:24:52.000 And next, I want to talk to you about
+00:24:54.799 repository customization. You can
+00:24:57.440 actually train Copilot on your project's
+00:24:59.760 rules using a special file. So instead
+00:25:02.720 of telling copilot every time to use
+00:25:05.600 typescript or use functional components,
+00:25:08.080 you can make this file called GitHub or
+00:25:10.960 copilot instructions and then you can
+00:25:13.919 just put the instructions here and then
+00:25:16.640 it will use all these instructions
+00:25:18.559 whenever it's working. Also, you don't
+00:25:20.880 even have to write this file yourself
+00:25:22.559 anymore. What I can do is just go into
+00:25:25.120 chat and just put slashinit. And this is
+00:25:28.000 going to generate or update work
+00:25:29.760 workplace instructions. And then I just
+00:25:32.960 run that. And now it's going to scan my
+00:25:35.520 project. It's going to basically figure
+00:25:38.400 out what I'm using. And it's going to
+00:25:40.320 generate custom a customized instruction
+00:25:43.200 file for me. So now every suggestion it
+00:25:46.320 gives will automatically follow the
+00:25:48.640 project's specific naming conventions
+00:25:51.440 and style guidelines. In this case, it's
+00:25:54.880 creating instructions based on the
+00:25:57.279 application that it created, but it's
+00:26:00.880 still a good example of how you can
+00:26:02.480 create these instructions. So I can go
+00:26:04.960 here and then I can see the instructions
+00:26:07.679 that it created. So these are the
+00:26:10.960 instructions it created based on this
+00:26:13.760 application and so I can go through and
+00:26:17.360 always change things like maybe it says
+00:26:19.039 always use JWT secret for environment
+00:26:22.000 from environment and changes that sign
+00:26:23.679 or verify tokens. I could change that to
+00:26:25.840 use something else. Maybe I don't want
+00:26:27.679 to use SQL SQL light. I can change so it
+00:26:31.760 uses what I want to use. Okay. Now I'm
+00:26:34.159 going to talk about participants and
+00:26:36.159 slash commands. So think of participants
+00:26:39.360 as department heads. Basically we we
+00:26:42.880 would put this into the chat. So I can
+00:26:45.520 do at workspace when we want when we
+00:26:48.400 have a question about the whole project.
+00:26:50.640 So let me show you an example of that.
+00:26:52.880 So it' say at work workspace where is
+00:26:56.400 the database connection defined? So
+00:27:01.360 basically it's looking through our whole
+00:27:04.559 project to find this information. So the
+00:27:07.760 database connection is defined in DB.js
+00:27:09.679 s as the endpoint DB instance the user
+00:27:12.240 model imports and then it can answer a
+00:27:14.480 question and then you would use at
+00:27:16.799 terminal to ask how to do things in the
+00:27:20.320 command line like maybe like how to how
+00:27:22.720 do I terminal how do I prune my docker
+00:27:25.279 images we can use at vs code to um
+00:27:30.080 basically do something associ that's
+00:27:33.440 directly related to VS code like set up
+00:27:35.679 debugging for node another thing would
+00:27:38.559 be at gith GitHub at GitHub is a new
+00:27:41.200 thing that lets you search your PRs and
+00:27:43.440 issues directly from VS Code. And then
+00:27:46.799 we al also have our slashcomands
+00:27:49.520 slashdoc generate documentation
+00:27:51.440 slashexplain explain the codefix to fix
+00:27:54.720 errors in the selection slash test
+00:27:56.720 generate unit test new create a new
+00:28:00.080 project structure. So right now I don't
+00:28:02.720 have any tests. So I'm just going to
+00:28:04.720 type in slash tests. And it says it
+00:28:07.679 looks like you may not have test set up
+00:28:08.720 in this repository. Would you like to
+00:28:10.240 set them up? And accept. So now it's
+00:28:12.960 just going to go and create all the
+00:28:14.960 tests for this project. And then I have
+00:28:17.760 the option, do I want to use or Mocha?
+00:28:20.399 For the test I will use just there's
+00:28:22.480 just basically two different JavaScript
+00:28:24.080 testing frameworks. And it's just going
+00:28:26.159 to go and ask me questions anytime it
+00:28:29.440 needs some user input.
+00:28:34.159 Okay. Now, let's talk more about code
+00:28:36.320 rabbit. Automated code review is one of
+00:28:39.440 the more valuable uses of AI in the
+00:28:42.240 development workflow. Think about it.
+00:28:44.559 How many times have you pushed code,
+00:28:47.039 waited a day or two for a code review,
+00:28:49.760 then had to context switch back to fix
+00:28:52.559 issues? With AI code review, you get
+00:28:55.039 feedback in minutes while the code is
+00:28:56.880 still fresh in your mind. So, what is
+00:28:59.279 Code Rabbit? So, Code Rabbit is an AI
+00:29:02.480 powered code review platform. It has So,
+00:29:05.760 here's some of the things it does. We
+00:29:06.960 have automatic PR reviews. The moment
+00:29:09.120 you create a pull request, Code Rabbit
+00:29:10.880 analyzes your changes, security
+00:29:13.039 analysis. It catches vulnerabilities
+00:29:15.279 before they reach production. Also, code
+00:29:17.760 quality suggestions, not just bugs, but
+00:29:20.399 ways to make your code better. Natural
+00:29:23.440 language chat, you can discuss if the
+00:29:25.039 feedback right in the PR comments. Also,
+00:29:28.240 it's a learning system. It learns your
+00:29:29.840 code base and code patterns over time.
+00:29:32.320 It integrates with GitHub, GitLab,
+00:29:35.360 um I mean GitLab, Bitbucket, and Azure
+00:29:37.760 DevOps. If you use any of those
+00:29:39.760 platforms, you can use Code Rabbit. So,
+00:29:42.159 let me explain the workflow. First, you
+00:29:44.399 create a poll request. Then, Code Rabbit
+00:29:46.799 automatically kicks off a review. Then
+00:29:49.120 within the minutes within minutes within
+00:29:51.279 minutes you get a summary of your
+00:29:52.640 changes identified issues with severity
+00:29:55.200 levels specific suggestions for
+00:29:57.279 improvements security vulnerability
+00:29:59.440 alerts. Then step four you can chat with
+00:30:02.559 code rabbit to ask questions or request
+00:30:04.640 clarifications.
+00:30:06.320 And then finally when you push new
+00:30:08.480 commits code rabbit does incremental
+00:30:11.679 reviews. And then there's going to be
+00:30:14.240 different review types based on the
+00:30:16.000 severity all the way um from critical
+00:30:18.640 which are severe issues that may cause
+00:30:20.399 failure or security breaches all the way
+00:30:22.559 down to trivial which are low impact
+00:30:24.720 quality improvements. So let me show you
+00:30:27.279 code rabbit in action. I have this
+00:30:30.720 sample project here called techart. It's
+00:30:33.840 basically a simple e-commerce API built
+00:30:36.240 with ExpressJS
+00:30:38.559 I have on GitHub, but here is it running
+00:30:41.760 locally on my computer. Basically,
+00:30:44.159 there's all these products you can add
+00:30:46.320 to your cart. And once you add to your
+00:30:48.559 cart, you can see them over in the cart
+00:30:50.320 here. over here. You can sort by price,
+00:30:54.240 you can sort by category, you can sort
+00:30:57.200 by
+00:30:58.720 low to high, and then it's like I said,
+00:31:02.480 just a e-commerce site. So, let's start
+00:31:05.840 by setting up Code Rabbit. So, I'm over
+00:31:08.960 on Code Rabbit AI, code rabbit.ai,
+00:31:13.600 and I will you can either log in or get
+00:31:16.000 a free trial. You want to connect your
+00:31:18.320 GitHub to Code Rabbit because it's going
+00:31:20.399 to work right through your through
+00:31:22.240 GitHub. So, I'm just going to authorize
+00:31:24.480 Code Rabbit. And then I'll get this
+00:31:26.640 installed. And I can either um authorize
+00:31:30.480 install for all repositories or specific
+00:31:32.480 ones. Since I'm just using one for this
+00:31:35.520 tutorial, I'm just going to authorize it
+00:31:37.120 for a specific one. And I'll go to
+00:31:39.600 techmart and install and authorize.
+00:31:43.679 And it's always good to have two-factor
+00:31:45.200 authentication on GitHub and any other
+00:31:47.279 important website. And that's pretty
+00:31:50.960 much it for the setup. Now, if we
+00:31:53.840 already had PRs on this repo, then we
+00:31:57.360 could review a PR right here. But we
+00:32:00.720 don't yet. I'm going to be making one.
+00:32:03.360 So, let's skip to the app. Okay. So, the
+00:32:06.320 setup is complete and Code Rabbit is now
+00:32:09.200 watching for poll requests. So, let's
+00:32:12.399 simulate a real development scenario. I
+00:32:15.760 have my code here in VS Code. I'm going
+00:32:18.240 to add a discount code feature to this
+00:32:20.080 e-commerce app, and I'm intentionally
+00:32:22.399 going to make some mistakes that
+00:32:23.840 developers commonly make, the kind of
+00:32:26.080 things that slip through when you're
+00:32:27.600 coding quickly. So, let me create a new
+00:32:30.480 branch. So, it's just going to be called
+00:32:32.799 feature/disountcodes.
+00:32:35.279 And now, I will create a new file called
+00:32:38.559 discount service.js. JS this will handle
+00:32:42.240 our discount code logic and I'll just
+00:32:44.880 paste in some code some code here we
+00:32:48.640 have an inmemory discount codes um we
+00:32:52.080 have again it would be a database in
+00:32:53.919 production but this is just an example
+00:32:55.360 we have admin credentials and then we
+00:32:57.840 have the code to apply a discount code
+00:33:01.360 to cart not going to review this in
+00:33:03.679 detail because that's not the point of
+00:33:04.880 this tutorial but we have a route to
+00:33:08.880 create a new discount ount code to
+00:33:11.360 delete discount codes and to search the
+00:33:14.799 discount codes for autocompletes. So
+00:33:17.279 I'll save that and then I'm going to
+00:33:19.279 update our server.js.
+00:33:22.080 So we want to be able to use the route.
+00:33:25.120 So I'm going to require a discount
+00:33:26.799 service and then I'm going to get get
+00:33:30.720 the use the route here the the
+00:33:33.360 API/disounts.
+00:33:35.279 Okay. Okay, now down in the terminal,
+00:33:37.360 I'm just going to commit this and create
+00:33:38.960 a pull request. So, get add and then I
+00:33:43.039 will get commit with this message about
+00:33:45.840 adding a discount code. And then I'll
+00:33:48.320 just push it. So, I'll just push that to
+00:33:50.720 GitHub. Now, I'll just go over GitHub
+00:33:53.440 and create a pull request. And I'll add
+00:33:57.039 a very simple description, not what you
+00:33:59.039 would normally do, but for this example,
+00:34:00.799 I will create this pull request. So now
+00:34:03.760 we just can wait here and you can see
+00:34:07.919 it's doing some checks and so we just
+00:34:11.199 have to wait a minute or two and then
+00:34:13.119 code rabbit starts its review and it's
+00:34:16.480 currently processing the new changes and
+00:34:19.040 gives us this cool little uh asky art
+00:34:21.440 here. Code rabbit just finished up and
+00:34:25.199 look at this. It so what it does first
+00:34:27.359 is it generates a summary of exactly
+00:34:29.839 what the PR does. added discount code
+00:34:32.239 functionality. Introduce admin panel for
+00:34:34.079 managing discount codes, discount code
+00:34:35.679 support, expiration tracking to control
+00:34:38.800 validity periods. So that's kind of nice
+00:34:41.760 to get a summary of what the commit is
+00:34:45.119 of what the PR is. But here's where it
+00:34:47.679 gets interesting. If we scroll down a
+00:34:49.359 little bit here, we are going to find
+00:34:51.679 the issues. So first it has a nitpick
+00:34:56.399 comment creation currently accepts
+00:34:58.960 accepts empty invalid code. So basically
+00:35:02.240 something that you could change, but
+00:35:03.599 it's not super important. And then
+00:35:06.079 prompt for all review comments with AI
+00:35:08.720 agents. So uh if an AI agent is going to
+00:35:12.400 be looking through this, but look at
+00:35:14.160 this. We we got some issues. So it's
+00:35:16.640 going to uh each there it's going to be
+00:35:19.839 different types of issues and it's going
+00:35:21.280 to use a color and a word like this to
+00:35:23.440 tell us what type of issue. This is a
+00:35:25.599 major issue. Remove the hard-coded admin
+00:35:28.560 password. Hard coding secrets and code
+00:35:30.079 is a security risk that makes rotation
+00:35:32.960 difficult. So obviously no one's going
+00:35:35.599 to put an admin password in code
+00:35:38.400 probably not. But you may accidentally
+00:35:40.320 put some keys or some other hard-coded
+00:35:42.800 information and this is going to find it
+00:35:45.280 and it's going to give us a proposed fix
+00:35:48.079 and even the code that we need to to do
+00:35:51.280 to fix it and then some commitable
+00:35:53.760 suggestions. So I can just click commit
+00:35:56.320 suggestion. I can just click commit
+00:35:57.839 suggestion just like this and it's now
+00:36:00.320 going to add the change there. And then
+00:36:03.520 we can scroll down. It's going to find
+00:36:06.079 another issue here. So it says this is a
+00:36:09.599 another major issue. Don't trust client
+00:36:13.280 supplied totals. Validate inputs and
+00:36:17.119 clamp totals. So basically this is
+00:36:20.560 accepting cart total from the client
+00:36:22.480 which can be manipulated. This can
+00:36:24.560 should be computed server side. So now
+00:36:27.359 it's going to give us some suggestions
+00:36:28.960 for how to fix this. So we could fix it
+00:36:31.280 right here if we wanted with this
+00:36:33.200 commitable suggestion. Uh I'm going to
+00:36:35.920 skip that for now because you already
+00:36:37.280 know how that works. And now we have a
+00:36:40.320 critical issue. This is even worse.
+00:36:42.960 Protect admin list uh delete endpoints.
+00:36:46.720 They're currently unauthenticated.
+00:36:49.280 So someone can access this these admin
+00:36:52.560 in endpoints without being
+00:36:54.160 authenticated. anyone can enumerate or
+00:36:57.359 delete discount codes. So that's
+00:36:59.200 obviously very bad. We go down here and
+00:37:02.320 we see now this is just a minor issue.
+00:37:05.440 Um so this just says remove or properly
+00:37:09.200 input search discount. It's dead code
+00:37:12.320 with unfixed bugs. So we can see it's
+00:37:16.560 going to give us some different things
+00:37:19.200 that we need to do to fix this. And one
+00:37:22.240 thing cool is that we can actually um
+00:37:26.079 chat with code rabbit right in in the
+00:37:30.880 PR. So here I can say something like
+00:37:34.240 this is the authentication problem. I
+00:37:37.359 can say at code at code rabbit AI can
+00:37:40.240 you show me how to properly secure these
+00:37:41.680 admin endpoints using middleware and
+00:37:44.000 then comment here and then I had to
+00:37:46.320 refresh it and now we can see the code
+00:37:48.079 rabbit's response. I'll show you how to
+00:37:50.320 create an authentication middleware for
+00:37:51.920 securing your admin endpoints. Here's a
+00:37:53.440 clean approach. And now it's going to
+00:37:55.359 give the complete approach of how it's
+00:37:58.079 going to do it. Some benefits, some
+00:38:00.000 alternatives.
+00:38:01.599 And we didn't necessarily have to do
+00:38:03.440 this in this case because we could have
+00:38:06.640 also looked at this example fix. But you
+00:38:10.000 can see now it's giving us a much more
+00:38:12.720 indepth solution of how to fix this. And
+00:38:16.400 we can also use commands to interact
+00:38:19.280 with code rabbit. So if I do atcode
+00:38:21.920 rabbit ai summary, this is going to
+00:38:24.800 regenerate the PR summary. And then we
+00:38:28.000 can see I just refresh and it comes in
+00:38:30.320 here. Summary regeneration triggered.
+00:38:33.440 And we can see it's going to be a little
+00:38:34.880 different the summary up here. We also
+00:38:36.960 can do code rabbit AI resolve to mark to
+00:38:40.079 mark resolve comments. And we can do
+00:38:44.560 code rabbit AI generate doc strings. And
+00:38:48.079 this is going to add documentation.
+00:38:51.119 It's basically going to
+00:38:55.200 um add generate documentation for for
+00:38:57.760 the discount functions. And we can see
+00:39:00.000 now it says dock string generation in
+00:39:02.240 progress. So you can see it added a
+00:39:04.880 commit that references pull request. And
+00:39:07.839 then also basically it's creating a new
+00:39:11.119 PR. So once I'm done going through all
+00:39:14.640 this and choosing whether I want to
+00:39:17.760 basically resolve the conversation if I
+00:39:20.720 want to uh implement these commitable
+00:39:25.440 suggestions and also it does warns you
+00:39:28.400 review the code before committing but uh
+00:39:31.040 in this case I'm just going to commit
+00:39:32.480 that suggestion and then once you're
+00:39:35.280 ready you can just merge the poll
+00:39:38.079 request and then I'll just confirm the
+00:39:39.760 merge here. I can go over to the dock
+00:39:42.960 stream string one that was created and
+00:39:45.280 we can go to file changed and we can see
+00:39:47.520 we have doc strings on these this
+00:39:50.640 function here. And if we go down we can
+00:39:54.160 see that this time the review was
+00:39:57.119 skipped because it was authored by the
+00:40:00.560 user configured for code rabbit reviews.
+00:40:02.960 So basically it it um by default code
+00:40:05.839 rabbit skips reviewing PRs authored by
+00:40:08.960 itself. So I can just merge that pull
+00:40:11.200 request. So here are some key code
+00:40:13.920 rabbit commands you should know. I
+00:40:16.000 talked about a little but we have pause
+00:40:18.480 which will pause automatic reviews.
+00:40:20.640 Resume resume automatic reviews. Uh
+00:40:23.599 review which is going to request an
+00:40:26.079 incremental review. Full review which
+00:40:29.440 completes a new review. Then we have
+00:40:33.119 summary which we already saw that
+00:40:35.920 updates the PR summary con resolve which
+00:40:40.240 will mark resolved com comments. Then we
+00:40:44.240 can show the configur the configuration.
+00:40:46.720 We can show the command reference. We
+00:40:49.040 can we already show generating
+00:40:50.800 documentation. We can generate a
+00:40:53.200 sequence diagramgram which is basically
+00:40:55.200 a way to visualize the code flow and
+00:40:57.440 then we can help plan the
+00:40:59.119 implementation.
+00:41:00.640 Now we can also customize code rabbit's
+00:41:03.040 behavior with a code rabbit.yaml file in
+00:41:06.480 the repository root. So I can just add
+00:41:09.920 code rabbit.yaml.
+00:41:12.800 So here's an example of our
+00:41:15.280 configuration file. So the profile
+00:41:18.480 setting is interesting. So chill is
+00:41:21.599 going to focus on important issues,
+00:41:24.160 fewer nitpicks. But if we change it to
+00:41:26.480 assertive, it's going to be more
+00:41:27.920 thorough and include style suggestions.
+00:41:31.520 And then we have some other other ones
+00:41:34.319 like request change workflow we don't
+00:41:36.560 false high level summary true auto
+00:41:38.480 review enabled but for drafts it's
+00:41:41.839 false. Uh chat auto replay true. So you
+00:41:44.960 can basically set it to behave how you
+00:41:48.720 want. Now as far as the profile uh like
+00:41:52.079 for production repository I recommended
+00:41:54.079 assertive mode but for personal projects
+00:41:56.640 or learning chill is going to work
+00:41:58.880 great. Now code rabbit has a CLI tool
+00:42:03.839 that lets you get reviews before you
+00:42:06.640 even commit. You can install with
+00:42:09.200 homebrew mpm. Then you just have to
+00:42:11.440 authenticate and then you can uh use it
+00:42:13.920 to do an interactive review and then
+00:42:15.920 also get basically plain text output or
+00:42:18.720 you can get your um an output for AI
+00:42:22.960 agents. So I'll do brewtap code rabbit
+00:42:25.839 AI tap and then I'll just do brew
+00:42:28.480 install code rabbit and I'll do code
+00:42:30.960 rabbit o to get authenticated actually
+00:42:35.440 off login.
+00:42:37.440 So I'll just log in here. Okay, I'm
+00:42:40.720 logged in. And now I can just call do
+00:42:44.000 code rabbit right from the command line.
+00:42:46.000 Code rabbit. And it's going to be
+00:42:47.839 reviewing the same the same code changes
+00:42:51.040 that we were reviewing on the website
+00:42:53.599 because I haven't pulled down all of the
+00:42:56.480 fixes onto my local repository. So we
+00:43:00.240 can just see how it can review all those
+00:43:03.280 same things but locally. Okay, now it
+00:43:06.480 has found these problems. The critical
+00:43:09.440 bug, hard-coded credentials and source
+00:43:11.760 code, missing a weight and reference,
+00:43:14.240 non-existent endpoint, missing input
+00:43:16.160 validation, and then some of them are
+00:43:18.800 critical. So now if I just go into it,
+00:43:21.920 we can see what the problem is. And we
+00:43:26.240 have a chance to um close this. We can
+00:43:30.079 apply. So we see so if we press A it
+00:43:32.560 will just apply the suggestion or we can
+00:43:35.440 copy the prompt to fix with AI or R
+00:43:38.640 would be to reject the commit. So I'll
+00:43:41.359 just apply this suggestion. Oh I guess
+00:43:44.319 this this in this case it didn't have a
+00:43:46.240 suggestion but I know some of them do.
+00:43:48.400 So if I go up to this critical one I can
+00:43:53.200 apply this suggestion and you can see
+00:43:55.680 this applied and committed the
+00:43:58.319 suggestion. We have a green dot because
+00:44:01.440 that one was uh committed. And we can
+00:44:04.000 also apply this suggestion. Okay. Again,
+00:44:06.480 no suggestion to apply. Sometimes
+00:44:08.160 there's the the they they have
+00:44:09.599 suggestions, sometimes they don't. But
+00:44:12.400 um it will tell us what to do to fix it
+00:44:14.640 if it doesn't have the suggestion. And
+00:44:18.000 we can always copy this prompt to fix it
+00:44:21.760 with AI. So let me show you how that
+00:44:25.200 would work. So this is says missing a
+00:44:27.440 way and references non-existent
+00:44:29.920 endpoint. And so what I'm going to do is
+00:44:33.280 just press C to copy the prompt to fix
+00:44:36.079 with AI. And here is the the prompt that
+00:44:40.800 it's going to copy. Now I can just open
+00:44:45.440 my chat over here and then I'm just
+00:44:48.720 going to paste in that prompt and then I
+00:44:51.599 will submit it. So this is how we can
+00:44:54.880 use one AI code rabbit to find the the
+00:44:58.319 bugs and then we can use another AI
+00:45:01.280 GitHub Copilot to fix the bugs. So some
+00:45:05.040 of them we're going to be able to
+00:45:07.359 basically apply a fix right from Code
+00:45:09.359 Rabbit but some of them will be a little
+00:45:11.280 more complex. So we can use GitHub
+00:45:14.079 Copilot to do the fixes here. Okay. Now
+00:45:17.839 it gives a summary of the changes. We
+00:45:20.560 can actually look at what the changes
+00:45:22.480 here are here and we can see that it
+00:45:26.160 made the changes based on the problem
+00:45:28.400 that code rabbit found. So we can keep
+00:45:30.400 those changes and we can basically just
+00:45:33.760 keep doing that using our GitHub copilot
+00:45:36.400 or another AI agent to to fix things.
+00:45:39.200 And there's even a faster way to go
+00:45:41.200 about that. So, I'm going to just close
+00:45:44.560 out of code rabbit. And this time I'm
+00:45:47.119 going to call I'm going to run code
+00:45:48.880 rabbit again, but I'm going to put
+00:45:51.359 prompt only. So now it's not going to
+00:45:54.960 have that visual mode. It's not going to
+00:45:57.200 give you a chance to it's not going to
+00:45:59.040 tell you what's wrong. It's not going to
+00:46:00.800 give you a chance to apply changes. It's
+00:46:03.680 just going to give us the prompt that we
+00:46:06.160 need to give to GitHub Copilot or give
+00:46:08.880 to another AI agent so it can do all the
+00:46:11.920 fixes on its own. Cuz honestly, uh, if
+00:46:15.520 I'm just trying to move quickly,
+00:46:16.880 especially if it's like just a simple
+00:46:18.640 personal project, uh, I don't really
+00:46:21.200 care what the problems are or why
+00:46:23.920 they're they're problems. I just want
+00:46:25.680 them fixed. So, in this way, we can get
+00:46:27.920 the prompt to just give right to the AI
+00:46:30.960 and then it will fix it. And while we're
+00:46:33.599 waiting um for this to give us the
+00:46:36.720 prompt to give to the AI, I want to tell
+00:46:39.839 you about how you can even automate this
+00:46:43.040 process. So I could just go into my AI
+00:46:46.480 and just and just say this implement the
+00:46:48.720 discount code feature, then run code
+00:46:51.040 rabbit-prompt-on
+00:46:53.200 and fix any issues it finds. So now it
+00:46:56.880 knows to implement the discount code
+00:46:59.280 feature and then it can just run the AI
+00:47:03.520 the AI agent can just run code rabbit on
+00:47:06.720 its own and then find the problems and
+00:47:09.200 fix the problems. So okay but now it
+00:47:12.640 this is finished running. So it it gives
+00:47:14.960 us the prompt that we can just copy and
+00:47:18.800 we can paste into the agent. But when we
+00:47:24.400 actually just tell the AI agent to use
+00:47:26.640 code rabbit, this creates a powerful
+00:47:29.680 feedback loop where your AI assistant
+00:47:32.160 writes code and code rabbit quality
+00:47:34.720 checks it. It's basically like having
+00:47:37.280 two AI assistants collaborating. So one
+00:47:40.480 writes and one reviews. So it's going
+00:47:43.359 through right now just to write write
+00:47:46.319 the code based on the code rabbit review
+00:47:48.640 that we already got. We just covered
+00:47:50.720 Code Rabbit's core code review features,
+00:47:53.680 the CLI, and how it works with AI
+00:47:55.520 agents. But Code Rabbit has been
+00:47:57.520 shipping some powerful new features, and
+00:47:59.200 I want to demo the ones I think are the
+00:48:01.520 most useful. Code rabbit plan, premerge
+00:48:04.880 checks, and some advanced CLI workflows.
+00:48:09.520 First up is Code Rabbit Plan. The idea
+00:48:12.400 is simple. Before you write any code,
+00:48:14.720 you create a plan. You describe what you
+00:48:17.359 want in a GitHub issue and Code Rabbit
+00:48:20.800 analyzes your codebase and generates a
+00:48:24.079 detailed coding plan. Let me show you
+00:48:26.960 how it works. So, I got a GitHub issue
+00:48:30.079 here on my TechMart demo repo. It says
+00:48:34.960 users should be able to save products,
+00:48:36.400 their personal wish list, view their
+00:48:37.760 wish list, and so on. Now, watch this.
+00:48:40.800 I'm going to create a new comment at
+00:48:43.680 code rabbit AI plan and then I'll just
+00:48:48.640 comment that. And so now code rabbit is
+00:48:53.119 going to start analyzing my entire
+00:48:55.200 codebase and generate a coding plan.
+00:48:57.920 Okay, now it finished creating a plan.
+00:49:01.359 So we have a summary of the plan and
+00:49:04.559 then it's going to give us some design
+00:49:07.599 choices some and even some different
+00:49:10.960 options that we can use and then it's
+00:49:13.839 going to give some imple some exact
+00:49:16.800 implementation steps. So task one wish
+00:49:20.160 list status storage structure and then
+00:49:22.240 what we have to do then what we have to
+00:49:24.240 do for task two all the different things
+00:49:26.000 we have to implement and so on and then
+00:49:29.440 we also have the phase two frontend wish
+00:49:31.599 list experience and it's going to give
+00:49:34.000 us some everything we have to do and
+00:49:37.040 then if we scroll a little bit we can
+00:49:38.400 see the prompt for AI agents so
+00:49:41.040 basically we can just copy this prompt
+00:49:44.400 for AI agents to write all the code we
+00:49:48.240 And same with here we have another
+00:49:50.880 prompt for AI agents. And then we have
+00:49:54.079 the research. We also have our next
+00:49:56.559 steps. So this is going to combine all
+00:50:00.400 we can have basically all of our prompts
+00:50:02.559 in one. And then we can it says we can
+00:50:06.880 iterate on the plan uh continue to kind
+00:50:10.079 of get some more feedback. So basically,
+00:50:13.200 instead of telling an AI agent, add a
+00:50:15.520 wish list feature and hoping it figures
+00:50:17.760 out your architecture, you give it this
+00:50:20.559 contextrich plan. The agent knows
+00:50:23.760 exactly which files to modify, which
+00:50:26.160 patterns to follow, and what the
+00:50:28.480 acceptance criteria are. You can also
+00:50:31.280 reply to this comment. We could reply
+00:50:33.440 here, and we can refine the plan. So
+00:50:37.040 like if I disagree with the design
+00:50:38.480 choice, I could just say so and code
+00:50:40.079 rabbit will update it. And this works
+00:50:42.400 with GitHub issues, GitLab, Jira, and
+00:50:46.319 linear. You can even set it to auto
+00:50:48.800 plan. Anytime you add a feature label to
+00:50:51.040 an issue, it automatically generates a
+00:50:52.880 plan. Next, I want to talk about
+00:50:55.440 premerge checks. This turns Code Rabbit
+00:50:58.640 from a helpful reviewer into an actual
+00:51:01.040 quality gate that can block bad PRs from
+00:51:05.119 merging. Let me show you a real example.
+00:51:08.000 I've already created a PR on TechMart
+00:51:10.880 that adds a loyalty program feature. But
+00:51:13.920 before we look at the PR, let me show
+00:51:16.480 you how to turn on premerge check. So in
+00:51:19.280 Code Rabbit, you can go to configuration
+00:51:22.240 and then click review and then we can
+00:51:24.800 click premerge checks. And this is where
+00:51:27.359 you would turn it on. You do need the
+00:51:29.920 pro mode to turn it on, but you can
+00:51:32.640 still create a check even if you don't
+00:51:35.119 have pro mode on. You just have to start
+00:51:38.240 the check manually. So to ch start the
+00:51:40.880 check manually, we just go to our poll
+00:51:44.480 request and then we just comment code AI
+00:51:48.960 review and I comment on that and it's
+00:51:52.160 going to do the check. Now, if we had
+00:51:54.240 premerge checks enabled, it would
+00:51:56.960 automatically start that without having
+00:51:59.119 to comment this. And we can see that
+00:52:03.119 this PR isn't very good. Uh, the title
+00:52:06.400 just says stuff and the description just
+00:52:09.839 says some changes and the code has some
+00:52:13.680 issues. Okay, it finished up and it has
+00:52:16.079 this walkth through of what's going on
+00:52:19.280 and then it finds some problems
+00:52:22.800 like that there's a bad title and how we
+00:52:26.480 should replace the title. We also have
+00:52:28.880 some checks here. These are actually um
+00:52:33.359 the description is checked because there
+00:52:36.319 is a summary automatically added here.
+00:52:40.160 So, it's going to basically fix our bad
+00:52:42.960 description and put in an all new
+00:52:45.200 summary of what happened. And then we
+00:52:48.400 have all these actionable
+00:52:51.599 uh fixes. So, all these issues just like
+00:52:54.960 what we've seen before. And not only do
+00:52:58.480 we have the issues, we have the prompt
+00:53:01.280 that we can um uh use with our AI
+00:53:05.440 agents. And you can see it's finding all
+00:53:08.480 the issues in the code. So you can set
+00:53:12.720 this up so it runs this automatically on
+00:53:15.839 every pull request. A pre-check. I also
+00:53:19.119 want to mention multi-reo analysis. This
+00:53:22.559 is for teams that have multiple repos
+00:53:24.559 that depend on each other like a backend
+00:53:27.200 API and a front-end app in separate
+00:53:30.480 repos. you link them in code rabbit's
+00:53:33.760 settings either through the web
+00:53:35.440 interface or in your.code rabbit.yaml.
+00:53:38.800 So in your code rabbit.yaml you're just
+00:53:40.960 going to specify the repository that is
+00:53:45.359 linked. So now when someone changes an
+00:53:48.000 API endpoint in the backend repo code
+00:53:51.680 rabbit checks the front-end repo and
+00:53:54.160 says hey the front end is consuming this
+00:53:56.000 endpoint and your change will break it.
+00:53:58.000 Those findings show up right in the PR
+00:54:00.079 review. So if you work with
+00:54:02.000 microservices or separate front-end
+00:54:04.640 backend repos, this can be a gamecher
+00:54:08.720 and it's available on the pro plan. Now
+00:54:12.240 I'm going to show you the CLI in in
+00:54:15.200 action with some advanced workflows. So
+00:54:18.079 earlier we covered the basics, but let
+00:54:20.079 me show you the real power which is
+00:54:22.079 using it as a quality gate for code
+00:54:24.720 you're actively writing. So I have some
+00:54:28.319 uncommitted changes. this rewards
+00:54:30.480 calculator.js file. I'm going to
+00:54:33.280 actually run code rabbit before I've
+00:54:36.319 even committed anything. So in the
+00:54:39.119 terminal, I'll just run code rabbit. And
+00:54:41.520 I already know there's been some files
+00:54:44.000 that have changed. So I'll just hit
+00:54:46.319 enter to get into the review. And you
+00:54:48.960 can see code rabbit is going to find
+00:54:50.960 some issues right uh before we even
+00:54:54.720 commit the code. So that can be nice
+00:54:58.079 when you're actually in development. And
+00:55:01.119 just like before, you can uh copy the
+00:55:03.359 prompt to fix with AI. So basically get
+00:55:05.839 into this generate, review, fix loop.
+00:55:08.880 And one last thing I want to talk about
+00:55:10.559 with code rabbit. An independent company
+00:55:13.520 called Martian recently published the
+00:55:16.720 first rigorous benchmark for AI code
+00:55:18.880 review tools. It's called the code
+00:55:21.200 review bench and they tested 13
+00:55:25.119 different tools. So you can see all
+00:55:27.119 these tools including code rabbit uh
+00:55:29.280 gemini code cloud cursor and code rabbit
+00:55:32.559 is at the very top. So it ranked number
+00:55:35.359 one in its F1 score which measures
+00:55:38.800 measures the balance of catching real
+00:55:41.280 issues without giving you false
+00:55:43.680 positives. So this was across nearly
+00:55:47.040 300,000 poll requests. And it's a
+00:55:50.240 completely independent organization not
+00:55:52.720 associated with code rabbit. So that's
+00:55:54.880 code rabbit. To summarize, it
+00:55:56.880 automatically reviews every PR you
+00:55:59.040 create, catches security issues, bugs,
+00:56:01.680 and code quality problems. You can chat
+00:56:04.720 with it to discuss feedback. The CLI
+00:56:08.240 lets you review before you commit. And
+00:56:10.799 it integrates with AI coding agents for
+00:56:13.440 automated quality control.
+00:56:18.400 Okay. Okay, now let's talk about command
+00:56:20.000 line AI tools. These are powerful
+00:56:22.720 alternatives to IDE based tools like
+00:56:24.880 C-Pilot. We'll focus on two, Clog Code
+00:56:27.920 and Gemini CLI. So why use uh CLI tools?
+00:56:33.040 Well, they're more powerful autonomous
+00:56:34.720 cap. They have more powerful autonomous
+00:56:36.400 capabilities. They're better for
+00:56:38.559 terminalheavy workflows.
+00:56:41.200 They're they often have larger context
+00:56:43.920 windows and they're great for system
+00:56:46.240 administration and devops. So cloud code
+00:56:49.760 from anthropic I think is good for
+00:56:52.240 complex reasoning tasks. So we can
+00:56:55.040 install with this npm install and then
+00:56:57.680 just anthropic-ai/cloud-code.
+00:57:01.839 Now cloud code requires a claude pro
+00:57:04.640 subscription or API credits. There's no
+00:57:08.319 free tier, but it's worth it for the
+00:57:10.640 capabilities.
+00:57:12.160 We can start an interactive session just
+00:57:14.160 by typing in claude.
+00:57:17.119 And then we are going to just basically
+00:57:19.760 do some setup and we're going to have to
+00:57:22.799 log in. So, it brought me to a website
+00:57:25.760 that I just had to authenticate on. And
+00:57:29.760 now login is successful. So, we can just
+00:57:33.040 go through the rest of the setup. Okay.
+00:57:35.520 Now I can start talking to Claude. So
+00:57:38.880 let's just start with this. Analyze this
+00:57:41.280 codebase and suggest improvements. And
+00:57:44.240 we're still using the TechMart codebase.
+00:57:48.720 So Claude is reading through the files
+00:57:51.200 trying to understand the architecture
+00:57:54.000 and then eventually it should give us
+00:57:55.599 some recommendations. So it's continuing
+00:57:58.400 through reading the different files in
+00:57:59.920 the codebase. And here is the overview.
+00:58:03.680 So it gives the overview and then it
+00:58:07.200 gives some issues. Um some of the issues
+00:58:11.200 are some issues that we already knew
+00:58:13.040 about but then it also gives some
+00:58:15.200 additional things such as this race
+00:58:17.920 condition user ID collection on
+00:58:19.839 registration. Uh cart can reference
+00:58:22.480 deleted invalid products. Um, and it has
+00:58:27.359 some information about the architecture,
+00:58:29.920 the code quality, error handling,
+00:58:33.599 and it it even has some information
+00:58:36.240 about the front end and some missing
+00:58:38.880 features. And then it gives a summary of
+00:58:41.440 the top five things. And some of this
+00:58:43.760 stuff we knew from some of our uh from
+00:58:46.319 earlier in this course, but some of it's
+00:58:47.920 all new, like the course allows all
+00:58:49.760 origins with credentials. And then I can
+00:58:53.119 just ask it to fix. I can say yes,
+00:58:55.839 please fix all five. And then we can go,
+00:59:00.079 we can see that it's going to just think
+00:59:02.079 through this. It makes a list of things
+00:59:03.359 it's working on. And then it starts
+00:59:06.400 working on everything. And then I'm
+00:59:09.680 going to say yes, allow all edits during
+00:59:12.559 this session. So it's just going to make
+00:59:13.920 all the changes. And now we can watch it
+00:59:16.480 as it basically makes all the changes
+00:59:18.720 right within the terminal. And now we
+00:59:21.359 can give it permission to run bash
+00:59:23.839 commands. It's going to basically
+00:59:25.680 install b-crypt. So that's one great
+00:59:28.559 thing about the CLI is that it can
+00:59:31.280 actually do things right within the the
+00:59:35.200 terminal and run different commands. Now
+00:59:37.839 clog code actually has different
+00:59:39.520 thinking modes for different levels of
+00:59:41.920 analysis. So when we're giving it
+00:59:44.319 commands, we can tell it think for quick
+00:59:46.720 an analysis, think hard deep reasoning,
+00:59:49.920 think harder, and ultra think for
+00:59:51.839 maximum depth analysis. We basically
+00:59:54.240 just tell it ultra think, and then we
+00:59:55.839 would tell it what to do. And then Cloud
+00:59:58.319 would spend more time reasoning uh
+01:00:00.880 through the problem before responding.
+01:00:03.520 Okay, now it's done. And it would give
+01:00:05.599 the summary of all the changes and it
+01:00:08.480 tells what what it changed and the files
+01:00:10.640 that it changed. Basically, it just did
+01:00:13.920 everything. Now, we could also within
+01:00:16.960 our project directory, we could make a
+01:00:19.119 file called claude.md
+01:00:23.200 and then we can give claude context. So,
+01:00:27.359 basically we could say what type of
+01:00:29.200 application we're using, what kind of
+01:00:31.760 technology we're using, um different
+01:00:34.559 coding standards, the project structure.
+01:00:37.839 We could just put this all in basically
+01:00:39.920 in plain English. So it has it could
+01:00:42.960 understand the project and conventions
+01:00:45.520 and then would follow them and the
+01:00:47.200 suggestions. So here's like an overview
+01:00:49.680 of what I was talking about with claude
+01:00:52.160 and we can also resume a pre I didn't
+01:00:54.799 say this but we can resume a previous
+01:00:56.240 session with the claude dash resume. And
+01:01:00.319 then here's the different thinking modes
+01:01:01.839 I was talking about. Now let's talk
+01:01:04.160 about the Gemini CLI. Google's Gemini
+01:01:07.280 CLI has some unique advantages. There's
+01:01:09.920 a massive context window with over 1
+01:01:12.079 million tokens. There's a good free tier
+01:01:14.880 with 1,000 messages per day and it's
+01:01:17.040 multimodal. It can process images. So to
+01:01:20.559 install Google Gemini, we'll just do mpm
+01:01:23.760 install-g
+01:01:25.520 and Google Gemini CLI and then we can
+01:01:28.319 log in with Gemini O login. Then we have
+01:01:32.720 a little setup here and we'll log in
+01:01:34.960 with Google and then it's just going to
+01:01:37.119 open the authentication page in my
+01:01:39.839 browser which I have on my other screen
+01:01:42.400 but it's pretty straightforward. Okay,
+01:01:44.720 I've successfully
+01:01:46.640 logged in and we need to restart. And
+01:01:49.839 it's right now just going through and
+01:01:52.160 learning about my application. And it
+01:01:54.480 gives us tips for getting started up
+01:01:56.559 here. Uh including creating a Gemini MD
+01:02:00.400 kind of like our cloud MD to customize
+01:02:03.040 interactions. And it's just basically
+01:02:06.880 exploring our codebase to start off
+01:02:09.359 with. And it's actually running the
+01:02:11.599 application and just testing it out. And
+01:02:14.880 I haven't even done anything. It's just
+01:02:17.119 I haven't given any commands. It's just
+01:02:19.280 trying to figure out on its own how
+01:02:21.440 everything works. So it successfully
+01:02:23.680 logged into the demo account and
+01:02:24.799 verified the session and basically just
+01:02:27.440 actually ran the whole account. I didn't
+01:02:30.319 even tell it the whole application and
+01:02:32.319 logged in and everything. And basically
+01:02:35.440 just like claude CLI, I can just type in
+01:02:38.400 any message, give it any commands and it
+01:02:40.720 will just update all the files. One
+01:02:43.440 thing about amazing about Gemini is that
+01:02:45.200 you can show it images and we'll
+01:02:46.960 understand them. You can basically like
+01:02:49.040 if you have a sketch of a UI on paper,
+01:02:50.799 you can send the photo and ask it to
+01:02:53.119 turn into a React component or I'm going
+01:02:56.240 to try something. I'm going to take a
+01:02:58.480 screenshot of this keyboard and I've put
+01:03:02.960 that screenshot into this folder the
+01:03:06.160 Ziotechart
+01:03:08.000 and I'm going to give it a command. So
+01:03:10.079 I'm saying find the product image from
+01:03:11.760 the screenshot and add two more keys and
+01:03:14.319 I'm passing in the keyboard. So right
+01:03:17.920 now we have 1 2 3 4 5 6 7 or 1 2 3 4 5 6
+01:03:23.280 7 8 nine keys on the keyboard. Let's see
+01:03:26.319 if it can actually add more keys to the
+01:03:29.680 keyboard. It is just an SVG. So, I'm
+01:03:33.119 seeing if it can get that image and
+01:03:36.880 figure out what SVG that that images of
+01:03:40.079 and then add the keys to the the SVG.
+01:03:43.599 And then it's giving me some options of
+01:03:45.359 what I want it to do. It's it's asking
+01:03:47.359 what I want to do. I'm going to enter
+01:03:48.640 custom value and I'm going to say update
+01:03:51.039 the SVG file to add more keys to the
+01:03:53.119 image. Now, I'm not sure if it actually
+01:03:55.599 read the PNG file or if it just happened
+01:03:59.200 to find the keyboard.svg because it was
+01:04:01.280 the same. It still uh started with
+01:04:04.400 keyboard. But let's see if it's actually
+01:04:06.240 able to add keys to that image to the
+01:04:08.559 SVG file. Oh, good. It gives me a little
+01:04:11.119 joke while while we're waiting. And I'll
+01:04:13.520 just say to allow the change. And I
+01:04:16.720 think this could be adding the keys to
+01:04:19.359 the file. Okay, now let's check again.
+01:04:22.319 So, we have eight keys. I'm going to
+01:04:23.839 refresh. And there's 10 keys. It worked.
+01:04:27.440 It added two more keys to this keyboard.
+01:04:30.160 Okay. So, it didn't actually read the
+01:04:32.079 screenshot like I was hoping, but it
+01:04:34.079 still managed to do what I wanted. And
+01:04:37.359 it does have the ability to to read
+01:04:39.760 images. So, both Clog Code and Gemini
+01:04:44.319 CLI are both great for different
+01:04:47.680 reasons. Honestly, I do like clog code
+01:04:51.200 better, but um you do have to pay uh you
+01:04:56.160 have to get a good plan to make it work
+01:04:58.160 the in the best way. Okay, now I want to
+01:05:01.359 show you something different.
+01:05:06.079 We've talked about AI that helps you
+01:05:07.760 write code, but what about an AI that
+01:05:09.920 you that can actually do things for you?
+01:05:12.400 So, OpenClaw is an open-source personal
+01:05:15.359 AI assistant that runs on your own
+01:05:17.280 computer.
+01:05:18.480 It's a little bit like having a junior
+01:05:20.480 developer who never sleeps, can use any
+01:05:22.240 tool, and remembers everything you've
+01:05:23.920 told it. I've been using it personally
+01:05:26.400 and I have been really liking it. It's
+01:05:28.799 been helping me with a lot of things.
+01:05:30.160 Here's what makes OpenCloud different
+01:05:32.160 from other AI tools. First, it's always
+01:05:35.200 available. You can message it from
+01:05:37.039 WhatsApp, Telegram, Discord, or any chat
+01:05:40.319 app you already use. It's like texting a
+01:05:42.880 co-orker who happens to have access to
+01:05:45.200 your computer. Second, it has persistent
+01:05:48.400 memory. Unlike chat GPT where you start
+01:05:51.119 fresh each conversation, OpenCloud
+01:05:53.760 remembers context 24/7. It knows your
+01:05:57.039 projects, your preferences, your ongoing
+01:05:59.359 tasks. Now, the memory isn't perfect,
+01:06:02.240 but it's better than some of the other
+01:06:03.920 tools. Third, it can actually take
+01:06:06.640 actions. It can run commands, open
+01:06:08.960 browsers, manage files, deploy projects,
+01:06:12.160 even send emails. For developers
+01:06:14.960 specifically, OpenClaw is powerful
+01:06:17.920 because it can run tests and fix failing
+01:06:20.319 ones automatically.
+01:06:22.160 It can manage cloud code or codec
+01:06:24.559 sessions from your phone, check your
+01:06:26.880 GitHub notifications and respond to
+01:06:28.799 issues, deploy code to staging or
+01:06:31.440 production, monitor your services and
+01:06:33.839 alert you to problems. Imagine you're on
+01:06:36.400 a walk and you get a notification that
+01:06:37.920 tests are failing. You just text your
+01:06:40.240 OpenClaw, fix the failing test, and open
+01:06:42.480 a PR. It does the work while you finish
+01:06:45.039 your walk. So, here's the OpenClaw
+01:06:47.839 website. Now, the setup is very
+01:06:51.920 straightforward because it you just go
+01:06:54.160 to the website and it gives you
+01:06:55.920 basically the quick start, the one line,
+01:06:58.160 and then you just have to run this on
+01:07:02.000 whatever computer you want to set it up
+01:07:03.839 on. Basically, it runs it can run on
+01:07:06.960 your laptop, Mac Mini, a cloud VM. Uh
+01:07:11.039 you can configure which chat services to
+01:07:13.119 connect, set up your API keys, and start
+01:07:16.640 chatting. So, I'm not going to go
+01:07:18.160 through the whole setup because it's
+01:07:20.480 very straightforward, but I'll show you
+01:07:22.319 how it works because I already have it
+01:07:25.119 set up on my computer. I have a laptop,
+01:07:28.559 but I also have another Mac computer.
+01:07:30.559 And I have OpenCloth set up on my other
+01:07:33.280 Mac computer. Um, I guess it's I it's
+01:07:36.960 really a Mac Studio, not a Mac Mini, but
+01:07:39.039 you can run on a lot of different types
+01:07:40.640 of uh computers. So, here is my the the
+01:07:44.240 chat interface. I was just chatting
+01:07:46.880 about it. I was just chatting with
+01:07:49.039 OpenClaw about my personal website,
+01:07:51.599 kins.cc.
+01:07:53.280 So, if I go to the website, it's very
+01:07:55.680 old. I haven't updated this for so long
+01:07:59.280 and so I was thinking about just telling
+01:08:02.880 uh so basically I asked if it could
+01:08:04.880 figure out how to access my website uh
+01:08:07.440 through GitHub because it's hosted on my
+01:08:09.440 GitHub which I already have connected to
+01:08:11.280 GitHub. I already have connected to
+01:08:13.920 OpenClaw and so it cloned the repo. It
+01:08:17.759 found the correct repo. It cloned it and
+01:08:20.479 then it just gave me these suggestions.
+01:08:23.520 So, I'm not I'm actually just going to
+01:08:26.238 say make it update the website. So, I'm
+01:08:30.640 just saying update the website in
+01:08:32.399 whatever way you think is best. And so,
+01:08:35.679 since it has access to my GitHub and
+01:08:37.920 this is stored on GitHub pages, it can
+01:08:39.920 actually make live changes to my
+01:08:43.120 website. So, it's saying I'll do a full
+01:08:45.279 refresh, modern design, updated content,
+01:08:47.520 everything current. Let me build it out.
+01:08:49.359 I actually have no idea what it's going
+01:08:51.439 to come up with and it's live, but you
+01:08:53.679 know, this website's not super
+01:08:55.279 important. Normally, you're going to
+01:08:56.719 want to verify things before you update
+01:08:58.640 things live, but let's just see what it
+01:09:00.479 comes up with. While it's doing that,
+01:09:02.560 I'm going to show you some other things
+01:09:03.679 on OpenClaw. So, there's a few things
+01:09:06.158 you can actually get set up on this. One
+01:09:07.839 of them is the cron jobs, which is very
+01:09:10.158 interesting. Basically, you can tell
+01:09:13.040 Open Claw that you want to do things on
+01:09:15.279 a regular basis, and then it will create
+01:09:17.679 a cron job. So, I have a few uh a few
+01:09:20.319 things set up. So, I have it so it will
+01:09:22.238 check different sponsorships for my
+01:09:24.000 personal channel in my hey.com email. I
+01:09:27.520 have it so it's going to work on a a SAS
+01:09:30.799 that I'm building every night. I have it
+01:09:33.759 give me a morning briefing of just
+01:09:36.719 important information
+01:09:38.719 uh every morning for my calendar. I have
+01:09:41.359 it uh basically every week it's going to
+01:09:44.399 write me one YouTube script with slides
+01:09:48.080 to make a YouTube video. I have it so it
+01:09:50.799 can uh automatically outreach to
+01:09:53.759 sponsors for my personal channel. And so
+01:09:56.800 it's going to have do these things based
+01:09:59.040 on the cron job. So, one cool thing
+01:10:01.840 about OpenClaw is I have it set to
+01:10:05.360 connect to my email, but it can also do
+01:10:08.960 things that don't have a a direct way to
+01:10:11.120 connect. So, I have email through
+01:10:13.120 hey.com and there's not an API or it's
+01:10:17.199 hard to connect spec uh directly, but I
+01:10:20.960 can have it use a web browser, a visual
+01:10:24.080 web browser on the computer. So, I have
+01:10:26.480 it actually access my hey.com email
+01:10:30.000 through just like a regular web browser
+01:10:33.600 and it just uses the the visual cues and
+01:10:36.560 everything to access and do things on my
+01:10:39.679 hey.com email. So, that's one thing cool
+01:10:42.880 is it's not just a CLI, it can also do
+01:10:46.000 things on your desktop. So, let me go
+01:10:48.480 back over to my chat and it says done.
+01:10:52.080 if it finished making all these changes
+01:10:54.880 to my personal website. So, let me just
+01:10:58.880 go over to it and refresh and see what
+01:11:00.960 it looks like. Okay, this is
+01:11:03.440 interesting. So, it just like completely
+01:11:05.600 made these changes to my personal
+01:11:07.600 website. We even have a new photo on
+01:11:09.600 here and it says what I'm working on, uh
+01:11:13.600 where to find me, some featured videos,
+01:11:16.400 get in touch. It's now giving my uh
+01:11:18.560 hey.com email address and I have a now
+01:11:22.880 page about what I'm working on now. So,
+01:11:27.280 okay, I'm just going to leave it up for
+01:11:29.520 here for here. Um, it looks pretty nice.
+01:11:34.880 So, that's just kind of interesting how
+01:11:38.239 I could just tell it to make changes to
+01:11:40.480 a live website and it'll just make those
+01:11:43.120 changes. I didn't even know what to
+01:11:44.400 expect. And interesting, it now it added
+01:11:46.480 a link to
+01:11:46.960 nowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowow.com
+01:11:48.320 explain what a now page is which is
+01:11:50.000 where I where I got the idea for a now
+01:11:52.400 page. I wonder where that link is. Oh
+01:11:54.960 this is a now page. So this is actually
+01:11:58.400 something created by Derek Civers uh
+01:12:02.000 author and creator that I follow. So you
+01:12:05.520 basically you can tell open claw to do
+01:12:07.920 anything. Um, like I said, some I've
+01:12:11.040 asked it to make a tutorial with a
+01:12:14.000 slideshow and a script. So, if I go to
+01:12:17.440 my personal tutorial website, this all
+01:12:19.600 SQL syntax in 14 minutes,
+01:12:21.600 >> SQL syntax in as quickly as possible.
+01:12:23.679 Whether you're just getting started or
+01:12:25.040 need a quick refresher, department, and
+01:12:27.360 projects. These tables have columns like
+01:12:29.600 ID, name, salary, department ID, hire
+01:12:31.920 date, and so on. So, this whole
+01:12:34.320 tutorial, it's a 13 or 14-minute
+01:12:36.400 tutorial. It was created with openclaw.
+01:12:39.280 I just it made all these slides and it
+01:12:42.719 made the script and I just read the
+01:12:44.400 script and went through the slides to to
+01:12:46.640 explain SQL syntax in 14 minutes. And so
+01:12:51.040 basically, Open Clock can help you with
+01:12:53.360 whether you're a software developer, a
+01:12:55.199 creator, um, and or whatever you do,
+01:12:59.199 it's going to be able to to help you
+01:13:01.520 with anything that you're doing on a
+01:13:02.800 computer. And it also works great with
+01:13:06.480 other tool the other tools we covered
+01:13:09.280 with code rabbit. It can actually
+01:13:11.600 connect with code rabbit. It can connect
+01:13:13.600 with cloud code. It can connect with
+01:13:16.000 copilot. Anything that has a CLI it can
+01:13:19.600 use because it's actually working right
+01:13:22.320 on my local computer. So it can monitor
+01:13:25.280 your PRs and ping you when you code red
+01:13:27.760 rabbit finds issues. It can spawn cloud
+01:13:30.159 code sessions and manage them remotely.
+01:13:32.719 It basically is an orchestration layer
+01:13:35.199 for your entire AI workflow. So the open
+01:13:38.960 cloud documentation has so much
+01:13:40.239 information. Basically these are all the
+01:13:42.159 messaging platforms you can connect to
+01:13:44.159 it on. So I currently have it to set up
+01:13:46.400 on WhatsApp and discord and so I can
+01:13:49.520 contact I can send messages openclaw
+01:13:52.239 through discord. So, I've connected to
+01:13:55.760 this open claw, uh, this maltbot. It
+01:13:59.040 basically, uh, that's my open claw. And
+01:14:01.760 I I can say I'm going to say, &quot;What is
+01:14:04.960 on my calendar?&quot; And it's only going to
+01:14:08.159 respond to Discord if you messaged it on
+01:14:10.960 Discord. It's only going to respond on
+01:14:13.040 WhatsApp if you messaged it on WhatsApp.
+01:14:15.679 But you can tell it from any platform to
+01:14:18.480 send to any other platform. So on
+01:14:20.400 Discord, I could tell it to send
+01:14:21.920 something to my WhatsApp. Okay, now it's
+01:14:24.480 giving me my upcoming calendar. Nice.
+01:14:28.080 It's even wishing me a happy birthday.
+01:14:29.920 The key insight with OpenClaw is that
+01:14:31.840 it's self-improving. You can literally
+01:14:34.320 ask it to build new capabilities for
+01:14:36.159 itself. Say you wanted to check your
+01:14:38.719 email every morning. You tell it create
+01:14:41.199 a skill that checks my hey.com inbox
+01:14:43.840 each morning and summarizes important
+01:14:46.159 emails. It builds the integration, tests
+01:14:48.880 it, and starts using it. This is
+01:14:51.360 different from traditional software
+01:14:53.199 where where you have to wait for someone
+01:14:54.960 to add features. With OpenClaw, if you
+01:14:57.440 can describe it, it can probably build
+01:14:59.679 it. OpenClaw also works beautifully with
+01:15:02.480 the other tools we've covered. With Code
+01:15:05.280 Rabbit, OpenClaw can monitor your PRs
+01:15:07.679 and ping you when Code Rabbit finds
+01:15:09.840 issues. With Cloud Code, OpenClaw can
+01:15:13.040 spawn cloud code sessions and manage
+01:15:15.520 them remotely. And with C-Pilot,
+01:15:18.880 OpenClaw can commit and push code you're
+01:15:21.679 writing in VS Code. It becomes the
+01:15:24.080 orchestration layer for your entire AI
+01:15:26.880 workflow. If you're interested, check
+01:15:28.880 out OpenClaw.ai.
+01:15:30.960 There's an active community building
+01:15:32.560 skills and sharing workflows.
+01:15:38.159 The most productive developers don't
+01:15:40.159 just use one AI tool. They combine them
+01:15:43.920 strategically. So here's how you could
+01:15:46.560 use different tools for different
+01:15:48.640 things. So for planning, you could use
+01:15:50.480 cloud code with Ultraink for
+01:15:52.719 architecture decisions. Then you can
+01:15:56.239 implement using C-pilot in VS Code for
+01:15:59.199 rapid coding. You could use code rabbit
+01:16:02.880 to catch issues. You could use Gemini
+01:16:06.080 for its large context window and open
+01:16:10.400 clock can actually kind of combine all
+01:16:12.880 things these things together because
+01:16:16.239 open clock can use any CLI tool. So it
+01:16:19.199 can use clog code, it can use code
+01:16:20.960 rabbit, it could use Gemini and
+01:16:23.360 basically each tool has a different
+01:16:25.120 thing that it does best. So the
+01:16:27.280 combination is more powerful than any
+01:16:29.679 single tool. Now let's talk about model
+01:16:33.199 context protocol or MCP. It's basically
+01:16:37.360 a way to give AI tools extra
+01:16:39.040 capabilities. So think of MCP servers
+01:16:42.480 like apps for your AI. Without MCP, your
+01:16:45.920 AI is limited to what you tell it. It
+01:16:48.800 can't search for documentation, access
+01:16:50.560 databases, or test websites. But with
+01:16:52.480 MCP, it can access real-time information
+01:16:54.719 and interact with external systems.
+01:16:57.280 Basically, it's a way to give your AI
+01:17:00.480 your um AI different tools that it can
+01:17:03.120 use. So, for example, for cloud code,
+01:17:06.640 you can create a config file at just uh
+01:17:10.159 cl.cloudmcp.json
+01:17:13.280 if you're on Mac. And then if you put in
+01:17:17.040 this code or this JSON, it's basically
+01:17:21.120 going to give Cloud the ability Cloud
+01:17:23.360 the ability to browse the web and test
+01:17:25.520 websites for you. So it's giving the the
+01:17:29.280 Puppeteer tool to be able to go through
+01:17:33.120 websites and then Duck.Go that's
+01:17:36.480 basically uh for for web search. And so
+01:17:40.880 the puppeteers for the browser
+01:17:42.880 automation, you can also give it
+01:17:46.000 different MCP servers that will allow it
+01:17:47.840 to do file operations or connect to
+01:17:51.360 GitHub for repo management or uh
+01:17:55.360 Postgress for database queries. And now
+01:17:58.400 here's another pattern you can use to
+01:18:00.400 kind of combine different AI tools. You
+01:18:04.480 can first write tests with cloud code.
+01:18:07.760 Then you can generate test code with
+01:18:09.840 Gemini. You can implement with co-pilot
+01:18:12.800 agent mode saying something like
+01:18:14.960 implement the payment services service
+01:18:16.880 to pass all these tests. Then you can
+01:18:19.440 review with code rabbit which is going
+01:18:21.840 to catch different edge cases you
+01:18:23.520 missed. So the tests can guide the AI
+01:18:26.960 implementation and code rabbit quality
+01:18:28.880 checks everything. This is a good
+01:18:30.960 pattern because tests give the AI
+01:18:33.280 concrete goals to code against and then
+01:18:37.040 you have the immediate feedback on
+01:18:39.199 correctness. So let's try combining
+01:18:42.719 everything right now. So first I'll run
+01:18:46.640 claude and then I'll just say ultrathink
+01:18:49.440 plan the architecture for a user
+01:18:51.280 dashboard with analytics. So, we'll
+01:18:54.480 start by planning everything with
+01:18:56.480 Claude. And then it's I just have to
+01:18:58.719 confirm that I want to proceed. And it's
+01:19:00.800 realized that the project directory is
+01:19:03.040 currently empty. And then it's just
+01:19:04.960 going to give me some choices of how I
+01:19:07.280 want to of what framework I want to use.
+01:19:09.840 So, I'm going to basically answer some
+01:19:13.360 questions so it knows exactly what I
+01:19:15.760 want. And I'll submit my answers. And
+01:19:18.320 now it's able to use uh tools. It can do
+01:19:21.280 a web search. Okay. It's created the
+01:19:23.679 plan and I can actually execute the plan
+01:19:25.840 itself. So I can tell it what I want to
+01:19:28.400 do. I'll just execute the whole plan.
+01:19:31.520 And now it's basically going to just
+01:19:33.199 build the entire project. Took a while,
+01:19:35.199 but it actually build out the entire
+01:19:37.520 dashboard. I'll just ask it to commit
+01:19:40.080 this.
+01:19:41.600 Now I'll just ask it to run locally.
+01:19:44.159 Okay, it has the server running locally.
+01:19:47.199 Okay, here it is running and there's a
+01:19:48.719 login. We don't have to look at the
+01:19:50.239 whole thing right now. And now I can
+01:19:52.159 open up VS Code and basically look
+01:19:55.679 through the code. And I'm just going to
+01:19:57.840 tell it to look through the code and
+01:19:59.600 suggest improvements. And it's going to
+01:20:02.000 implement secure visitor ID and some
+01:20:04.239 other improvements here. Now I'm just
+01:20:06.320 going to ask it to open a PR with the
+01:20:08.320 change. So there we go. Okay. Now I'm
+01:20:11.360 going to tell it to run code rabbit
+01:20:12.960 prompt only and fix any issues it finds.
+01:20:16.400 So basically this is how we can use one
+01:20:19.920 AI tool inside another AI tool and then
+01:20:23.600 I just have to allow the command. Okay,
+01:20:26.239 in this case it looks like the review
+01:20:29.120 from Code Rabbit had no actionable
+01:20:31.280 issues reported. I guess that's good.
+01:20:34.239 But now you can see how this would work.
+01:20:36.239 Uh if you did have it's always good to
+01:20:37.840 to run a review just to see if there is
+01:20:39.679 issues and then it can fix it right
+01:20:41.360 within the within the AI tool. Okay,
+01:20:45.520 let's talk a little bit about AI code
+01:20:48.480 quality. So AI generate code needs human
+01:20:51.760 oversight. And so here's a good quality
+01:20:54.159 checklist. You want to make sure it
+01:20:56.000 actually runs, that the the logic makes
+01:20:58.000 sense, that the functions and variables
+01:20:59.600 are defined and just see if it feels
+01:21:02.480 wrong and definitely test edge cases.
+01:21:05.360 And there's a lot of things you need to
+01:21:07.040 look out for. Sometimes AI will make up
+01:21:09.280 functions, the wrong parameters and
+01:21:12.320 such. There could be missing air
+01:21:13.760 handling. Honestly, right now, AI can
+01:21:17.199 often solve some of these mistakes
+01:21:19.199 itself because a lot of AI tools will
+01:21:22.000 check its own code after writing it and
+01:21:26.400 then make the the make the fixes. But
+01:21:29.920 it's still good to check things
+01:21:33.040 yourself. And what's really important is
+01:21:36.960 checking for security. There's so many
+01:21:38.960 stories out there of people that vibe
+01:21:41.440 code an app and it has horrible
+01:21:43.760 security. So you never want to accept AI
+01:21:46.640 code that has hard-coded passwords or
+01:21:48.560 APIs, eval with user input, uh SQL
+01:21:52.239 without parameterized query sensitive
+01:21:54.080 data and error message and disabled
+01:21:55.760 security features. And you're always
+01:21:57.520 going to want to verify that input
+01:21:59.840 verification is present that there's
+01:22:01.840 proper authentication authoriz and
+01:22:03.600 authorization that secrets use
+01:22:05.760 environment variables. This is very
+01:22:07.360 important. A lot of people have
+01:22:08.560 vibecoded uh secrets onto GitHub where
+01:22:12.719 anybody can use it. Uh we want to make
+01:22:14.880 sure the dependencies are up to date and
+01:22:16.719 errors don't expose internals. Now these
+01:22:19.360 are security essentials for whether
+01:22:21.520 you're using AI tools or not. But you
+01:22:24.880 definitely want to check when you're
+01:22:27.920 using AI for coding. AI doesn't
+01:22:30.880 understand your security context. Only
+01:22:33.920 you do. So let me show you a concrete
+01:22:36.080 example. AI might create code like this
+01:22:39.440 here, which is basically a function that
+01:22:41.199 builds a SQL query using string
+01:22:43.360 concatenation.
+01:22:44.880 That's a classic SQL injection
+01:22:46.800 vulnerability. So, here's the safe
+01:22:48.800 version. It uses parameterized queries
+01:22:51.360 instead. And this is exactly the kind of
+01:22:54.239 thing that Code Rabbit catches
+01:22:56.320 automatically in code reviews. So,
+01:22:59.120 that's uh Code Rabbit is especially
+01:23:02.080 helpful when you're using AI to write
+01:23:05.360 code. So, let's just talk a little bit
+01:23:08.400 about how to write a good prompt because
+01:23:10.560 better prompts equals better results.
+01:23:13.280 So, basically
+01:23:15.679 use this formula where you're giving a
+01:23:18.320 lot more information. Don't don't just
+01:23:20.639 uh to try to be as specific as possible.
+01:23:22.560 Basically, you want to be specific about
+01:23:25.199 input parameters and types, expected
+01:23:28.000 output format, error handling
+01:23:30.159 requirements, style preferences, and
+01:23:32.880 that's going to make your your resulting
+01:23:34.639 code better. So, here's just a final
+01:23:37.520 quick reference for what tool to reach
+01:23:40.480 for like get uh based on the tools that
+01:23:43.280 we've covered in this tutorial. GitHub
+01:23:46.400 Copilot is great for real-time coding in
+01:23:48.719 VS Code, quick completions, learning new
+01:23:50.639 APIs. Then code rabbit for PR reviews
+01:23:53.360 and qu and quality gates security
+01:23:55.440 analysis team consistency. Then we have
+01:23:57.679 cloud code and gemini are great for uh
+01:24:01.120 complex refactoring architectural
+01:24:02.960 discussions autonomous dev sessions and
+01:24:05.280 then open claw for background automation
+01:24:08.239 multi-tool orchestration and proactive
+01:24:10.159 assistance. And like I said earlier co
+01:24:12.800 open claw can help tie everything else
+01:24:14.960 together. So we've covered a lot in this
+01:24:18.239 course. So let's recap what we've
+01:24:20.719 learned. AI speeds up implementation,
+01:24:23.120 but you make the decisions. Also, uh you
+01:24:25.920 should always use the right tool for the
+01:24:27.360 job. Always verify AI generated code.
+01:24:30.719 Security is your responsibility. And
+01:24:33.600 better prompts equals better results. So
+01:24:37.040 here are just some tools and resources
+01:24:39.040 from today's course. You can also check
+01:24:41.280 the description for links. And thanks
+01:24:44.960 for watching. Leave a comment and let us
+01:24:47.920 know what AI tools you're excited to
+01:24:49.840 try. Happy coding.
+01:24:54.320 And I want to demo ones I think are most
+01:24:56.880 useful. Code rabbit plan, premerge
+01:25:00.239 checks, and some advanced CLI workflows.
+01:25:04.880 First up is Code Rabbit plan. The idea
+01:25:07.760 is simple. Before you write any code,
+01:25:10.080 you create a plan. You describe what you
+01:25:12.719 want in a GitHub issue and Code Rabbit
+01:25:16.239 analyzes your code base and generates a
+01:25:19.440 detailed coding plan. Let me show you
+01:25:22.320 how it works.

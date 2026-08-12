@@ -1,0 +1,719 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/8jtIXRyGMQU
+
+00:00:00.000 No text
+00:00:00.240 All right, so this is not just another
+00:00:02.320 VIP coding video. If you actually want
+00:00:04.560 to build production ready apps, not just
+00:00:06.879 stuff that breaks, then stick around.
+00:00:09.440 We've all been there, right? We have an
+00:00:11.280 awesome idea for an app, so we write the
+00:00:13.679 prompt, throw it at our coding agent,
+00:00:16.000 and you're like, "All right, let's go."
+00:00:18.560 And then you get the results back, and
+00:00:21.119 they're not quite right. Features are
+00:00:23.439 missing. There are bugs everywhere. The
+00:00:25.760 UX is kind of terrible. And the agent
+00:00:28.480 even added stuff you did not ask for. So
+00:00:31.359 here's the thing. Coding agents are
+00:00:33.680 incredibly powerful, but they need
+00:00:36.000 structure. They need the same kind of
+00:00:38.239 details that real developers use like
+00:00:41.040 edge cases, user stories, architectural
+00:00:44.480 decisions, that kind of stuff. And
+00:00:46.000 No text
+00:00:46.879 that's exactly where SpecKit comes in.
+00:00:49.440 It's this structured workflow from
+00:00:51.440 GitHub that gives your agent all the
+00:00:53.600 context it needs to build stable and
+00:00:56.239 production ready applications. So in
+00:00:58.719 this video you'll learn how to use spec
+00:01:00.399 kit with any coding agent whether that's
+00:01:02.800 claw code cursor windsurf codeex or
+00:01:05.920 whatever you use and we'll follow proper
+00:01:08.560 development practices too like using git
+00:01:11.360 for version control branching testing
+00:01:14.560 and a lot more. By the end of this,
+00:01:16.799 you'll consistently be able to build
+00:01:18.640 quality apps that actually match what
+00:01:21.119 you had in mind. So, let's jump into
+00:01:23.520 this. But first, what is SpecKit? In
+00:01:26.640 short, it's a workflow that executes
+00:01:29.280 scripts and very fine-tuned prompts to
+00:01:32.400 produce high quality context for your
+00:01:34.720 coding agent. And we will go through
+00:01:36.960 each of the steps in detail. It
+00:01:39.360 basically introduces or reintroduce
+00:01:42.799 specd driven development into your
+00:01:44.880 workflow. Specdriven development has
+00:01:47.119 been around for ages. It's basically how
+00:01:49.680 real software development teams figure
+00:01:51.600 out what they need to build. So they'll
+00:01:53.600 go through an analysis phase. So they'll
+00:01:56.079 plan out the changes, break everything
+00:01:58.399 up into individual tasks, maybe even
+00:02:00.960 split up the work between multiple
+00:02:02.640 developers, and finally go and implement
+00:02:05.040 and test those changes. And now we're
+00:02:07.280 finally seeing this proven methodology
+00:02:09.520 being used by coding agents as well. And
+00:02:12.319 since everything is documented and
+00:02:14.000 planned up front, the agent knows
+00:02:15.840 exactly what it needs to do. In fact, if
+00:02:18.239 you start a new conversation, the agent
+00:02:20.319 can simply pick up from where it left
+00:02:22.000 off. Let's have a look at all the core
+00:02:24.000 components of this workflow and we will
+00:02:26.000 No text
+00:02:26.640 cover each of these in detail when we
+00:02:28.879 actually use it in the system. First, we
+00:02:31.120 have the constitution step. This is
+00:02:33.280 usually set up at the very start of your
+00:02:35.440 project. And this is where you set all
+00:02:37.200 the project principles and standards.
+00:02:39.920 Usually, we'll only set this up once at
+00:02:42.000 the start of the project. And we'll only
+00:02:44.319 touch this if we ever want to add
+00:02:46.319 something to the text stack or change
+00:02:48.080 the agents behavior. Then for the main
+00:02:50.560 workflow, we have something called the
+00:02:52.800 feature life cycle. This is where we'll
+00:02:55.200 run all the actions needed to plan and
+00:02:57.840 implement our actual feature. And the
+00:03:00.319 first action is specify. This is where
+00:03:03.120 we tell the agent what we would like to
+00:03:05.200 build. This step excludes any technical
+00:03:07.840 information. It's purely the business
+00:03:10.000 requirements for this feature. After
+00:03:12.159 that, we have an optional action called
+00:03:14.080 clarify. This is where the agent can
+00:03:16.159 look at our requirements and ask any
+00:03:18.640 follow-up questions. Now that we have
+00:03:20.879 our requirements down, we can go into
+00:03:23.360 the planning phase. Now, the planning
+00:03:25.680 phase is really cool. This will create a
+00:03:28.319 plan, the data models, the service
+00:03:31.120 interfaces
+00:03:32.640 and even perform research. Then once we
+00:03:35.519 have an implementation plan, the next
+00:03:37.519 step is to take the plan and break it up
+00:03:39.599 into individual tasks. These are all the
+00:03:42.560 individual tasks like the actual code
+00:03:45.120 changes to implement this feature. Then
+00:03:48.080 we have another optional step called
+00:03:50.319 analyze. This will simply look at
+00:03:52.400 everything that's been produced before
+00:03:54.080 it to make sure that the documentation
+00:03:56.080 is complete and we've covered
+00:03:57.840 everything. Then finally, we have the
+00:03:59.840 implement step. This is where we tell
+00:04:01.680 the coding agent, hey, we have
+00:04:03.599 everything we need. So go ahead and
+00:04:05.439 implement all of these tasks. And after
+00:04:07.680 that, we should be able to test our
+00:04:09.120 changes in the system and ask the agent
+00:04:11.680 to make any fixes or any adjustments.
+00:04:14.319 But once we're happy, we can go ahead
+00:04:15.920 and create a pull request and merge our
+00:04:18.399 changes into the main branch. And if we
+00:04:20.798 ever wanted to add a new feature, we can
+00:04:23.040 simply start this entire process again.
+00:04:25.360 And this will create separate specs,
+00:04:27.280 separate plans, etc. Enough talk. Let's
+00:04:30.639 actually add specit to a project. And
+00:04:32.880 let's run through this workflow and all
+00:04:34.800 of these steps together. So for this
+00:04:36.000 No text
+00:04:36.960 demo, I'm actually going to create a new
+00:04:39.280 next.js project. So open up your
+00:04:41.600 terminal and run npx create next app at
+00:04:45.199 latest. And I'll just add period to
+00:04:47.759 install next.js JS in this current
+00:04:49.440 folder. I'll just say yes to all of
+00:04:51.600 these defaults. And we can verify that
+00:04:54.080 our installation is working by running
+00:04:56.400 npm or pnpm rundev. Then let's open up
+00:05:00.639 this URL. And we should see this next.js
+00:05:03.680 boilerplate. Cool. Now let's have a look
+00:05:06.000 at adding specit to our project. The
+00:05:07.000 No text
+00:05:08.240 first thing I want to point out is that
+00:05:09.759 specit is supported by pretty much any
+00:05:12.160 coding agent out there. You can see all
+00:05:14.320 the agents currently supported on their
+00:05:16.080 GitHub page and they're adding support
+00:05:18.000 for more agents all the time. But trust
+00:05:20.400 me, once you see how this works, you can
+00:05:22.160 pretty much use this with any agent out
+00:05:24.320 there. For this video though, I'll show
+00:05:26.000 you how to use claw code cursor as well
+00:05:29.280 as the codec.
+00:05:31.360 The easiest way to set up specit is by
+00:05:33.680 running this command. But you will need
+00:05:36.000 uvx installed on your machine. So to
+00:05:38.400 install UV, I'll link to this page in
+00:05:40.560 the description. You can simply run this
+00:05:42.800 command on either Mac O X, Linux or
+00:05:46.080 Windows. So simply copy this command and
+00:05:49.520 run it in PowerShell if you are using
+00:05:51.600 Windows. Afterwards, we can install
+00:05:53.520 SpecKit by copying this command. Then
+00:05:56.240 back in our project. I'm just going to
+00:05:58.240 open up a new terminal. Let's paste in
+00:06:00.720 that command. And what we'll do is
+00:06:03.120 remove project and just replace it with
+00:06:05.759 a dot. This will install Specit in its
+00:06:08.319 current working directory. All right,
+00:06:10.240 you should see this screen. So, let's
+00:06:12.479 say yes. And now you can select your AI
+00:06:15.280 agent. As I mentioned, I'll show you a
+00:06:17.520 couple of agents in this video. So,
+00:06:19.280 let's install it for Claude. And then
+00:06:21.600 for the script type, I'll select
+00:06:23.520 PowerShell as I'm using Windows. And
+00:06:26.000 that's really it. We get these next
+00:06:28.080 steps that says we can run constitution,
+00:06:30.319 specify, plan, etc. And we also have
+00:06:33.360 those optional commands like clarify and
+00:06:36.479 analyze. And if we jump back to our
+00:06:38.560 little diagram, it's all of these steps
+00:06:40.960 over here. Now, I'm also going to
+00:06:43.360 install this for other agents. So, I'll
+00:06:45.759 just run the same command again. And
+00:06:47.759 this time, let's add cursor. I'll select
+00:06:50.240 PowerShell again. And finally, let's run
+00:06:53.520 it again. And I'll set this up for
+00:06:56.479 codeex like so. Cool. So, what did these
+00:06:59.000 No text
+00:07:00.080 commands actually do? Well, in our
+00:07:02.400 project, we now have this specify folder
+00:07:06.080 and we can see changes to the cursor
+00:07:08.000 folder, codeex, and claude. When we
+00:07:10.800 expand this specify folder, we get this
+00:07:14.000 memory file which contains this
+00:07:16.400 constitution. By default, this is just a
+00:07:19.120 blank template containing all the main
+00:07:21.199 sections for this constitution file.
+00:07:24.240 Looking at our diagram, it's this step
+00:07:26.639 over here. So we'll run a command that
+00:07:29.199 will actually generate the constitution
+00:07:31.360 and then populate that file with all of
+00:07:33.520 our project principles and standards.
+00:07:36.000 Then we also have this scripts file and
+00:07:38.800 these are little helper scripts that the
+00:07:40.639 agent will use to set up certain things
+00:07:42.960 in our project and these scripts are
+00:07:45.039 actually fascinating. The agent will use
+00:07:47.360 these to do things like create new
+00:07:49.680 branches and anything else it needs
+00:07:52.240 during this workflow. Then we also have
+00:07:54.560 templates and the agent will reference
+00:07:56.720 these templates when creating the spec,
+00:07:59.120 the plan and the task files for our
+00:08:01.759 feature. Depending on which agent you
+00:08:04.000 set up for you, it might just be clawed,
+00:08:06.240 maybe just codeex, just cursor. But
+00:08:08.720 irrespective, these folders look very
+00:08:11.039 similar. We get these commands. In fact,
+00:08:14.160 if I open up codeex, you will see it
+00:08:16.960 looks exactly the same. Just instead of
+00:08:19.280 commands, it's called prompts. Or if we
+00:08:22.000 open up claude, we get those same
+00:08:24.000 commands as well. And each of these
+00:08:26.479 commands is simply a detailed list of
+00:08:29.280 instructions that the agent will follow
+00:08:31.840 during the spec kit workflow. So I think
+00:08:34.479 let's finally start going through this
+00:08:36.320 workflow. The very first step is to set
+00:08:38.880 up our constitution. So back in our
+00:08:41.360 editor, we can simply open up our coding
+00:08:43.679 agent. Whether that's cursor or claude
+00:08:46.000 code or codeex, it really doesn't
+00:08:48.160 matter. you will be able to follow
+00:08:50.240 along. And since sonnet 4.5 just came
+00:08:53.040 out, let's actually start with clawed
+00:08:55.360 code. So I'll just go into accept all
+00:08:58.080 edits mode and I'm actually going to run
+00:09:01.519 the init command. Now this is not part
+00:09:03.920 of specit, but it does give claw code
+00:09:06.560 context on what technologies are being
+00:09:08.640 used in this project and what the folder
+00:09:09.000 No text
+00:09:10.800 structure looks like. I'm also going to
+00:09:12.880 rename this node to
+00:09:15.519 claude code. So now that we have our
+00:09:17.680 project set up and we have specit
+00:09:19.600 installed, I'm actually going to create
+00:09:21.360 our first commit. I'll just call this
+00:09:24.080 initial. Let's commit this. And now we
+00:09:27.519 can continue with our project. The very
+00:09:29.920 first step we need to run is
+00:09:31.680 constitution. Technically, this is
+00:09:33.920 optional, but I highly recommend running
+00:09:36.480 this and it's really easy. In claude
+00:09:39.360 code or codeex or whatever agent you're
+00:09:41.680 using, the process is exactly the same.
+00:09:44.560 So in order to run these commands what
+00:09:46.560 you can do is start a new conversation
+00:09:49.120 and in cloud code enter front slash then
+00:09:52.399 go to constitution and now we can
+00:09:54.959 provide the rules and the standards for
+00:09:56.880 our project. Since I'm using nextjs I
+00:09:59.519 can keep this really simple by saying
+00:10:02.000 write clean and modular code and use
+00:10:05.120 nex.js15 best practices. Let's run this.
+00:10:09.440 All right, the constitution step is done
+00:10:11.920 and we can see that in the specify
+00:10:14.240 folder under memory, this constitution
+00:10:17.279 file was indeed changed. So if we have a
+00:10:20.000 look at this, we no longer have the
+00:10:22.160 template skeleton. It's been fleshed out
+00:10:24.560 with a lot of details like next.js15
+00:10:27.920 best practices, rationale, component
+00:10:31.440 organization and a lot more. Now, at
+00:10:34.959 this stage, I have to mention that this
+00:10:37.440 is a human in the loop process. Of
+00:10:40.240 course, you can blindly follow these
+00:10:42.000 steps and you'll most likely get very
+00:10:44.079 good results. But don't be afraid to
+00:10:46.640 make changes to these files. If you see
+00:10:49.040 something in here that you don't like,
+00:10:50.959 go ahead and remove it or add more
+00:10:53.200 stuff. So, personally, I'm happy with
+00:10:55.360 that file. So, again, I'll create
+00:10:57.440 another commit which I'll call
+00:11:00.079 constitution. Let's commit this. Before
+00:11:03.440 we continue to the next step, let me
+00:11:05.279 also show you how to use these commands
+00:11:07.120 in other coding agents. For example, if
+00:11:09.920 you're using cursor, all you have to do
+00:11:12.160 is press front slash and look for the
+00:11:14.320 constitution command. And then we can
+00:11:16.959 provide all of our rules like update the
+00:11:19.360 constitution with nextjs15 best
+00:11:21.680 practices. And that's it. It will work
+00:11:24.160 exactly the same as claw code. or if you
+00:11:26.880 were using something like codeex which
+00:11:29.120 we also installed earlier you will
+00:11:31.440 notice that if you enter front slash the
+00:11:33.839 specit commands are not there. However,
+00:11:36.560 we can still use specit simply by
+00:11:39.120 opening up the codeex folder and instead
+00:11:42.079 of them giving us commands we just get
+00:11:44.399 the prompts themselves. So we can just
+00:11:46.880 say just like we did earlier something
+00:11:49.200 like use next.js 15 best practices. Then
+00:11:52.880 all we have to do is grab the command
+00:11:55.680 file and add it to the chat. So that's
+00:11:58.399 why I said that it really doesn't matter
+00:12:00.000 No text
+00:12:00.079 what coding agent you use, whether or
+00:12:02.399 not they support slash commands. All you
+00:12:04.480 have to do is drag and drop the prompts
+00:12:06.399 into the chat and the agent will know
+00:12:08.639 exactly what to do. Right? Now that we
+00:12:10.720 have the basic project structure set up
+00:12:12.959 and we've created all of these files and
+00:12:15.120 the constitution, we can move on to
+00:12:17.519 building our very first feature, which
+00:12:19.760 is effectively the basic app. But before
+00:12:22.240 we do that, I personally like to deploy
+00:12:24.560 my project to GitHub at this stage. So
+00:12:27.440 I'll select publish branch. Then I'll
+00:12:29.760 just say create a private repository.
+00:12:32.240 And our project is now available on
+00:12:34.399 GitHub. Cool. Now I'm going to clear the
+00:12:37.200 chat. And we can finally start
+00:12:39.040 implementing our very first feature. The
+00:12:41.760 first thing we need to do is to run
+00:12:43.519 specify. This is where we tell the agent
+00:12:45.920 that we want to build a new feature and
+00:12:48.160 what that feature is about. And
+00:12:50.160 remember, we're not giving any technical
+00:12:52.160 information at this stage. It's purely
+00:12:54.399 the business requirements. So, back in
+00:12:56.720 our coding agent, we can type specify.
+00:13:00.399 And now, let's provide the details on
+00:13:02.240 the feature that we'd like to build.
+00:13:04.000 Like, I would like to build a basic
+00:13:06.000 expense tracking app. So, add, view, and
+00:13:08.639 delete expenses. Track personal expenses
+00:13:11.440 with amount, date, categories, and
+00:13:13.600 description. It's a simple dashboard
+00:13:15.600 showing recent expenses and basic
+00:13:17.839 totals. do not implement user or as this
+00:13:20.880 is just a personal tracker for myself.
+00:13:23.360 And that's actually it. Let's run this.
+00:13:26.000 And yes, this is a very simple app, but
+00:13:28.320 I really want to focus on the core
+00:13:30.000 concepts of using specit and not spend
+00:13:32.399 hours sitting here waiting for an agent
+00:13:34.639 to build a massive project. Now, I do
+00:13:36.720 want to show you something cool. After
+00:13:38.639 sending this prompt, the agent executed
+00:13:40.880 this script. And this script actually
+00:13:43.279 created a new branch. We can see that
+00:13:45.360 we've now moved away from the master
+00:13:46.959 branch and we're now on this 001 I would
+00:13:50.240 like branch. And I really like this
+00:13:52.639 behavior. We're not overwriting
+00:13:54.560 everything on the master branch. We are
+00:13:56.720 creating a separate branch where we
+00:13:58.399 create these changes in isolation. And
+00:14:00.000 No text
+00:14:00.639 only once we're happy with the results
+00:14:02.800 do we merge it back into the master
+00:14:04.720 branch, keeping the master branch clean
+00:14:06.800 and stable. Specit also created the
+00:14:09.519 specs folder where we can see a new
+00:14:12.079 folder matching the branch name. And
+00:14:14.800 within this folder, we also have a file
+00:14:16.959 called spec. And if we have a look at
+00:14:19.199 the spec file, it shows the initial user
+00:14:22.160 input. And we've got a lot of valuable
+00:14:24.240 stuff in here like the user scenarios
+00:14:26.320 and testing, acceptance scenarios, edge
+00:14:30.000 cases, functional requirements, and an
+00:14:33.839 acceptance checklist. If you're a
+00:14:35.920 project manager or ever used in software
+00:14:38.240 development, then this will all seem
+00:14:40.320 very familiar to you. Right now that we
+00:14:42.480 have our spec defined, I'm again going
+00:14:45.040 to create a new commit called specify.
+00:14:49.120 And I'm going to clear my chat. And the
+00:14:51.279 nice thing about this workflow is we
+00:14:53.040 don't have to repeat everything we did
+00:14:54.880 before. We can simply start a new
+00:14:56.880 conversation and the agent will know
+00:14:59.120 exactly where it was in the process. The
+00:15:01.680 second part of this workflow is clarify.
+00:15:04.560 So now that we have our spec file, we
+00:15:07.199 can run the clarify command and the
+00:15:10.160 agent will now look at that spec file
+00:15:12.079 and ask us any clarifying questions. So
+00:15:15.199 it says it's analyzed the specification
+00:15:17.600 and identified several critical
+00:15:19.760 ambiguities. So it's got five questions
+00:15:22.560 for us and this is really cool. I highly
+00:15:25.440 encourage you to try this yourself and
+00:15:27.279 it's really interesting how it's able to
+00:15:29.760 identify gaps and ask really good
+00:15:31.839 questions. Of course, we can also
+00:15:33.839 provide our own option if none of these
+00:15:36.000 work for us, but I'm just going to say B
+00:15:39.199 and move on to the next question. Then
+00:15:41.680 question two, should the system allow
+00:15:43.920 negative amounts to represent refunds or
+00:15:47.040 returns? That's interesting. I'm going
+00:15:49.519 to say A. And for option three, are both
+00:15:52.800 descriptions and categories required
+00:15:54.880 when adding an expense? And I'll just
+00:15:57.360 say A. They have a question four. What
+00:16:00.320 does recent expenses mean for the
+00:16:02.320 dashboard display? The last 10 expenses,
+00:16:05.279 all expenses for the last 30 days, all
+00:16:08.320 expenses ever recorded? I'll just say B.
+00:16:12.320 Then for the final question, what
+00:16:14.240 category should be available for expense
+00:16:16.720 clarification? Now, this time it's not
+00:16:18.880 giving us any options. So, I'm actually
+00:16:21.440 just going to say use your best guess.
+00:16:24.639 So, I'm not going to give it this list.
+00:16:26.720 I'll simply let the agent decide. And
+00:16:28.880 that's it. We can see that the spec file
+00:16:31.040 was now updated with all of this new
+00:16:33.360 information. And that really is the
+00:16:35.440 power of this workflow. It really forces
+00:16:38.160 you to think about what you're trying to
+00:16:40.160 build. And by asking clarifying
+00:16:41.000 No text
+00:16:42.639 questions, it's really fleshing out
+00:16:44.399 these requirements. Now that the spec is
+00:16:46.720 done, I'm going to create a new commit
+00:16:49.120 called clarify. And our agent is
+00:16:51.920 actually proposing the next step, which
+00:16:53.680 is to run the plan command. Again, I
+00:16:56.399 like to keep these conversations lean.
+00:16:58.480 So, I'm going to clear the conversation.
+00:17:01.120 Then, I'm going to run plan. But here's
+00:17:04.000 the thing about the plan step. Now, you
+00:17:06.079 could run the plan step by itself. But
+00:17:08.240 this is also where you have an
+00:17:09.679 opportunity to give the technical
+00:17:11.599 details that the agent needs to
+00:17:13.760 implement. For instance, for our app, we
+00:17:16.240 will not be using authentication and
+00:17:18.559 we'll simply use local storage to
+00:17:20.480 persist data. You could provide your
+00:17:22.640 entire text stack here. like maybe
+00:17:24.640 you're using a postgress database with
+00:17:26.559 drizzle OM maybe you're using an
+00:17:29.039 authentication library like better or
+00:17:32.000 maybe you're using something like shaden
+00:17:33.840 for the components this is really where
+00:17:36.000 you provide all of that information and
+00:17:38.400 rules so I'll simply say use nexjs with
+00:17:42.000 the app router route handlers and server
+00:17:44.480 actions add any backend serverside logic
+00:17:47.760 to a server folder in the source folder
+00:17:50.640 use local storage to persist data do not
+00:17:53.440 implement off. Then let's run this. I am
+00:17:56.559 going to jump ahead during these
+00:17:58.080 sections as it can take minutes for each
+00:18:00.160 of these steps to complete. But here you
+00:18:02.480 can see the agent came up with a
+00:18:04.080 detailed checklist of everything it
+00:18:05.919 needs to do during this planning phase.
+00:18:08.720 All right. And now that the planning
+00:18:10.160 phase is done, we can see it made a lot
+00:18:12.799 of changes to our project. It created
+00:18:15.039 this quick start file which is actually
+00:18:17.200 really useful. It describes what this
+00:18:19.919 feature is about and basically how to
+00:18:22.320 use it. So how do you start the app? How
+00:18:24.720 do you navigate it? It shows you all the
+00:18:27.039 test scenarios and exactly the steps to
+00:18:29.919 recreate it. So a lot of very useful
+00:18:32.480 info. You of course get this planning
+00:18:34.559 document again containing a summary of
+00:18:37.520 our feature, the tech stack and things
+00:18:40.720 like documentation,
+00:18:42.559 the source code structure for the
+00:18:44.640 project, all the contracts and a lot lot
+00:18:48.080 more. It really plans out all the phases
+00:18:50.720 and all the artifacts that make up this
+00:18:53.200 project. You can even see things like
+00:18:54.880 the data models. So if you were using a
+00:18:57.440 database, you would even see the
+00:18:58.880 proposed schema in this file as well. We
+00:19:01.520 also get things like research and under
+00:19:04.000 contracts, we can see all the interface
+00:19:05.919 definitions for things like APIs, file
+00:19:09.360 uploads, etc. This also updated our
+00:19:12.559 agents files. So we can see the claw. ND
+00:19:15.280 file and the agents MD file were updated
+00:19:18.480 to reflect all the features and the plan
+00:19:20.000 No text
+00:19:20.799 as well. So since this step is done, I'm
+00:19:23.440 actually going to create a new commit
+00:19:25.200 and call it /ash plan. So now that we're
+00:19:28.640 done with plan, we can move on to tasks.
+00:19:31.679 This will break the plan up into
+00:19:33.440 actionable steps. Let's run this and
+00:19:36.880 give us some time to cook. Cool. The
+00:19:39.039 task step is complete. So we can have a
+00:19:41.679 look at its file. Now this is really the
+00:19:43.919 crux of the solution. Here we can see
+00:19:46.240 the feature will be implemented in
+00:19:48.160 phases like phase 3.1 which includes all
+00:19:52.080 the setup and foundation. For phase 3.2
+00:19:55.520 we have storage and utility. For phase
+00:19:58.400 3.3 we have contract tests using
+00:20:01.120 testdriven development. We have phase
+00:20:03.440 3.4 which includes the server action
+00:20:06.320 implementation as well as testdriven
+00:20:09.120 development. you have the component
+00:20:11.120 layer etc. And each of these tasks have
+00:20:14.000 a unique number like T001, T002
+00:20:18.400 all the way down to T30. So if we want
+00:20:21.520 we can reference a specific task in the
+00:20:23.919 chat by just saying hey go and implement
+00:20:26.640 T001
+00:20:28.400 or implement all the features from T001
+00:20:32.480 to T00 as an example. So before we
+00:20:36.240 actually run the implement step, I'm
+00:20:38.000 just going to commit tasks and let's
+00:20:40.799 clear the chat. Now we could leave this
+00:20:42.000 No text
+00:20:43.200 blank and agent will simply run through
+00:20:45.039 all the tasks from the start to the end.
+00:20:47.679 But of course we have to keep context
+00:20:49.440 windows in mind as well. The longer the
+00:20:52.000 context gets, the worse the output will
+00:20:54.480 be. So I actually recommend implementing
+00:20:56.720 all of this in small chunks. So you
+00:20:59.440 could say implement T001
+00:21:03.360 and maybe we can have a look at where it
+00:21:05.360 would make sense. So phase 3.1 actually
+00:21:08.240 ends at T005.
+00:21:10.799 So we could say implement T 01 to T005
+00:21:16.080 or we can just say implement phase 3.1.
+00:21:20.159 Let's run this. And I'm going to fast
+00:21:22.480 forward through all of this. But
+00:21:23.919 basically, I'm just going to accept any
+00:21:25.760 commands and any changes that this agent
+00:21:27.840 wants to make. All right. So, the agent
+00:21:29.760 implemented everything in phase 3.1 and
+00:21:32.480 it also updated this actual tasks file.
+00:21:34.960 So, you can see each of these tasks have
+00:21:36.720 been marked with an X. So, to clear up
+00:21:39.039 the context, I'll run the clear command
+00:21:41.840 and let's call the implement command.
+00:21:44.000 And let's say please continue with phase
+00:21:48.000 3.2.
+00:21:49.520 And while this is generating the code, I
+00:21:52.000 do want to show you something. In the
+00:21:53.840 source folder, we now have this server
+00:21:57.039 folder containing all the services
+00:21:59.280 logic. And that is because during the
+00:22:01.120 constitution or during the planning
+00:22:03.120 phase, we specifically said we wanted
+00:22:05.600 all the backend logic to be stored in
+00:22:08.159 the server folder. So this is really
+00:22:10.640 adhering to all the rules that we set
+00:22:12.640 out from the start. And another key
+00:22:14.559 feature of spec kit is it really loves
+00:22:17.280 testdriven development. So you should
+00:22:19.760 see this test folder somewhere in your
+00:22:21.840 project. And this is really following
+00:22:23.679 the principle of testdriven development
+00:22:26.159 where before you build any
+00:22:27.919 functionality, you actually build tests
+00:22:30.000 No text
+00:22:31.039 that you would run and all of those
+00:22:32.960 tests would fail up front and then you
+00:22:35.280 start implementing your actual
+00:22:36.559 functionality to get the test to pass
+00:22:38.960 and then you can start adding polish and
+00:22:41.120 exception handling, performance
+00:22:42.640 enhancements, etc. Cool. So phase 3.2 is
+00:22:46.159 done. I'm going to clear the chat. We
+00:22:48.720 can run the implement command again and
+00:22:50.880 let's say please implement phase 3.3 and
+00:22:56.320 send this. And we can see the agent
+00:22:58.480 updated all of the task for phase 3.2. I
+00:23:01.679 just like how structured this is. The
+00:23:03.760 agent knows exactly what it needs to do.
+00:23:06.080 If we close our editor right now and
+00:23:08.640 start it in another hour or so, the
+00:23:10.559 agent will know exactly where it needs
+00:23:12.480 to continue. Let me know down in the
+00:23:14.400 comments below which coding agent you
+00:23:16.400 use. I'm really a fan of the new Claude
+00:23:18.720 Code CLI, but I do tend to use Codeex
+00:23:21.440 quite a lot. Let me know what you
+00:23:23.200 prefer. Also, if you're enjoying this
+00:23:25.200 video, please consider leaving a like
+00:23:26.960 and subscribing to my channel. And this
+00:23:29.520 is cool. This is what I was referring to
+00:23:31.360 earlier where the agent will actually
+00:23:33.280 now run those testing scripts to make
+00:23:35.520 sure that everything actually fails.
+00:23:37.679 Then it will start to implement the
+00:23:39.360 actual functionality for our
+00:23:40.880 application. And if you're seeing all of
+00:23:42.960 this red stuff on the screen, this is
+00:23:45.120 totally valid. You can even see the
+00:23:46.960 agent saying, "Cool, the tests are
+00:23:48.960 failing as expected because we haven't
+00:23:51.360 built the actual app yet." And towards
+00:23:53.440 the end of the implementation, the agent
+00:23:55.200 will run all of these tests again. And
+00:23:57.360 that time, they will pass. And that is
+00:23:59.360 how the agent will know to sign off this
+00:24:01.360 feature. All right, cool. We're done
+00:24:03.200 with that phase. And this time, I'm
+00:24:05.600 actually just going to say implement as
+00:24:07.679 this is a relatively small feature to
+00:24:09.760 implement. And on the topic of the new
+00:24:11.919 cla code CLI, did you know you can
+00:24:14.320 actually see our usage limits as well?
+00:24:16.240 So if you go to claw.ai and to settings,
+00:24:19.039 so you can see exactly how much usage
+00:24:20.880 you have left in the current session. So
+00:24:23.039 what we see now is initially it executed
+00:24:25.679 those test scripts, right? And the
+00:24:27.440 scripts failed because we haven't
+00:24:29.039 actually implemented the logic yet. And
+00:24:30.960 now we can see all the backend logic of
+00:24:33.120 our app being built. So we can see the
+00:24:35.200 server action was added as well as
+00:24:37.760 client components. And just like that,
+00:24:40.320 everything was implemented. Now, this is
+00:24:42.720 so cool. The application is ready for
+00:24:44.480 manual testing via the quick start
+00:24:46.799 guide. You might remember this quick
+00:24:48.880 start file that we saw earlier. This
+00:24:51.039 shows us all the different test
+00:24:52.320 scenarios and the steps that we need to
+00:24:54.720 execute to perform this testing. All
+00:24:56.960 right, let's have a look. So, we get our
+00:24:58.000 No text
+00:24:59.360 personal expense tracker. Let's try to
+00:25:01.919 add an amount. We can change the date,
+00:25:04.640 select the category. So, let's try to
+00:25:06.960 add it. And this works. And if we look
+00:25:10.159 at local storage, you can see the
+00:25:12.080 expense is being stored in local
+00:25:14.159 storage. Let's try to add another like
+00:25:17.039 so. And cool, that works. It's also
+00:25:20.000 added to entertainment. And of course,
+00:25:21.919 we get the totals and the breakdown.
+00:25:24.720 Right. So now that this feature is
+00:25:26.880 working, what we can do is go ahead and
+00:25:29.279 commit this. So I'll say implement. And
+00:25:32.400 from my point of view, this feature is
+00:25:34.720 complete. So I'm actually going to
+00:25:36.960 publish this branch which will push this
+00:25:39.120 to GitHub. Then I can go ahead and
+00:25:41.279 create a pull request. If you are using
+00:25:43.600 the Git CLI, you can actually get the
+00:25:45.440 agent to create the pull request for
+00:25:47.360 you. But what I'll do is simply go to
+00:25:49.120 the GitHub repo, go to pull requests,
+00:25:52.080 create new pull request. Then we're
+00:25:54.320 going to merge this feature branch into
+00:25:57.279 our master branch. Let's create this
+00:25:59.679 pull request. And of course, we can give
+00:26:00.000 No text
+00:26:01.840 it a title and a proper description. So
+00:26:04.880 we could say create the base app. Click
+00:26:07.919 on create pull request. And there are no
+00:26:10.480 conflicts. So let's click on merge pull
+00:26:12.960 request. Let's click on confirm merge.
+00:26:15.760 And since the merge was successful, we
+00:26:17.760 can now delete this branch. So let's
+00:26:20.159 delete it. And that's it. We no longer
+00:26:22.960 see that feature branch in this list.
+00:26:25.200 And the master branch now contains all
+00:26:27.440 of those new changes. Back in our code
+00:26:29.919 editor, we can simply switch our branch
+00:26:32.640 back to master. And we can run this
+00:26:35.200 command to sync all the changes. So this
+00:26:38.320 will download all those new changes that
+00:26:40.400 we merged into master onto our own
+00:26:42.559 machine. And of course if we refresh the
+00:26:45.279 app, everything is still working. So
+00:26:47.520 what do we do if we want to add more
+00:26:49.279 features? Well, thankfully that's super
+00:26:50.000 No text
+00:26:52.000 easy. We don't have to execute
+00:26:54.080 constitution again and all we have to do
+00:26:56.720 is run specify again. So just as an
+00:26:59.440 example, let's say we wanted to add some
+00:27:01.919 budgeting feature to this. So, we could
+00:27:04.159 say, "Please add a budget tracking
+00:27:08.320 feature to this app." Now, watch what
+00:27:11.360 happens when I run specify again. First
+00:27:14.080 off, we can see down here that specit
+00:27:17.520 just created a new feature branch. So,
+00:27:20.000 we've left master and now we're working
+00:27:22.320 in an isolated branch which will only
+00:27:24.880 focus on these specific features again.
+00:27:27.360 And in the specs folder, we can see a
+00:27:29.840 subfolder containing the branch name.
+00:27:32.240 And now we can simply run through this
+00:27:33.919 entire workflow again and all of the
+00:27:36.559 files and artifacts generated by this
+00:27:39.200 will be added to this specific folder.
+00:27:41.600 And of course after we've tested the
+00:27:43.200 change and we're happy, all we have to
+00:27:45.360 do is create that pull request and merge
+00:27:47.520 it back into main. I'm really impressed
+00:27:49.840 by specit and I hope after seeing this
+00:27:52.000 video you are too. Definitely give this
+00:27:54.480 repo a star as I think these guys are on
+00:27:56.799 to something big. Thank you for watching
+00:27:59.200 and I'll see you in the next video.
+00:28:01.279 Bye-bye.

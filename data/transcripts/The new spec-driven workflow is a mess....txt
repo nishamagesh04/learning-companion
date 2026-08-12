@@ -1,0 +1,267 @@
+# tactiq.io free youtube transcript
+# The new spec-driven workflow is a mess...
+# https://www.youtube.com/watch/nnUMJX9013Y
+
+00:00:00.000 Sitting alone in a dark room, tinkering
+00:00:02.200 at your code was by far the best thing
+00:00:04.040 about the software developer job. And
+00:00:06.240 naturally, the world has this
+00:00:07.800 unexplained need to destroy everything
+00:00:09.680 that's quiet, satisfying, and can
+00:00:11.520 actually make you happy. So, they came
+00:00:13.480 up with the idea of pair programming,
+00:00:15.280 where instead of one person thinking
+00:00:16.960 carefully and moving forward, you now
+00:00:19.040 have two people negotiating every
+00:00:20.680 insignificant coding decision as if
+00:00:22.560 their life depends on it. Then, when
+00:00:24.720 this didn't gain traction, they came up
+00:00:26.680 with test-driven development. This
+00:00:28.760 usually sounds reasonable until you
+00:00:30.520 realize you are now writing code for
+00:00:32.159 code that doesn't exist yet, testing
+00:00:34.120 behavior you haven't even fully
+00:00:35.480 understood, and then reshaping
+00:00:37.000 everything just to satisfy the test you
+00:00:38.720 wrote 5 minutes ago.
+00:00:39.955 >> [music]
+00:00:40.040 >> Then, we were all forced to do scrum,
+00:00:42.120 which meant slicing your work into
+00:00:43.720 artificial fragments that management can
+00:00:45.760 manage and then wasting most of your day
+00:00:47.880 in daily stand-ups, sprint planning,
+00:00:49.800 backlog refinement, sprint reviews, or
+00:00:51.640 retrospectives. But, I'm afraid the pain
+00:00:54.040 is not going to end here because a new
+00:00:56.000 methodology is emerging, and this one
+00:00:57.800 actually kills the little joy we
+00:00:59.240 developers had left. Spec-driven
+00:01:01.880 development is the new thing every vibe
+00:01:03.440 coder and wannabe product manager is
+00:01:05.319 excited about. Despite our complaints,
+00:01:07.840 the chances are some of us will be
+00:01:09.480 forced to work in this new setup sooner
+00:01:11.160 than we think. So, in this Monday
+00:01:12.640 morning review, we'll look at what
+00:01:14.120 spec-driven development actually is and
+00:01:16.400 how it can impact our future.
+00:01:17.945 >> [music]
+00:01:18.120 >> Then, in the second part of the video,
+00:01:20.240 we'll look at the actual supporting
+00:01:21.760 evidence for this methodology in
+00:01:23.600 real-world projects because to quote a
+00:01:25.600 recent article I read, &quot;The reports of
+00:01:27.600 code's death are greatly exaggerated.&quot;
+00:01:29.680 At [music] score, the idea of
+00:01:31.120 spec-driven development is really
+00:01:32.680 simple. Instead of just sitting down and
+00:01:34.680 building something, you first write a
+00:01:36.280 very precise machine-readable document
+00:01:38.480 that describes what you want to build,
+00:01:40.200 why you want to build it, and what
+00:01:41.600 success looks like. You can probably see
+00:01:43.920 that this is already sounding terrible
+00:01:45.680 because the one thing developers hate
+00:01:47.520 writing more than tests is
+00:01:48.920 documentation. Then, crucially, this
+00:01:51.640 spec becomes the source of truth for
+00:01:53.280 your application. In STD, the spec is
+00:01:55.560 apparently alive. In traditional
+00:01:57.560 development, specification is most of
+00:01:59.720 the time an afterthought. You write it,
+00:02:02.000 you feel good about yourself, then you
+00:02:04.080 file it somewhere and let it deprecate
+00:02:05.880 gradually because nobody has the time to
+00:02:07.960 keep documentation in sync with the
+00:02:09.880 actual product. These were the good old
+00:02:12.160 days when writing code was still
+00:02:13.840 considered a valuable skill. Now, thanks
+00:02:16.160 to AI code generation, the barrier to
+00:02:18.240 writing code has collapsed to almost
+00:02:19.960 nothing, and the industry is quickly
+00:02:21.760 getting crowded with vibe coders who are
+00:02:23.760 more than excited to celebrate the death
+00:02:25.600 of the real software engineers. But,
+00:02:27.840 since vibe coding is usually a disaster
+00:02:30.000 waiting to happen, spec-driven
+00:02:31.560 development is now being formalized by a
+00:02:33.600 lot of big companies. One of the biggest
+00:02:35.720 efforts on this front is GitHub SpecKit,
+00:02:37.800 which allows you to focus on product
+00:02:39.760 scenarios and predictable outcomes
+00:02:41.640 instead of vibe coding every piece from
+00:02:43.400 scratch. So, instead of just vibe
+00:02:45.520 prompting your AI assistant and hoping
+00:02:47.440 for the best, you now get to act like a
+00:02:49.240 professional in the CLI and walk through
+00:02:51.480 four very official-looking stages. You
+00:02:54.040 start with a specify step, where you
+00:02:56.040 describe what you want with as many
+00:02:57.680 details as humanly possible.
+00:02:59.472 >> [music]
+00:02:59.680 >> Here, you're expected to define user
+00:03:01.280 journeys, business requirements, success
+00:03:03.240 criteria, and pretty much everything
+00:03:05.320 else used to figure out while building
+00:03:07.160 the actual thing. Then, in the planning
+00:03:09.400 step, you pretend you still care about
+00:03:11.280 architecture. This is where you define
+00:03:13.320 your tech stack. If you happen to know
+00:03:15.240 anything about tech or stacks, you write
+00:03:17.400 up your dependencies, and you design
+00:03:19.200 your system. This is interesting because
+00:03:21.520 the entire premise of AI coding is that
+00:03:23.680 you don't have to think about these
+00:03:25.040 things too much anymore, but now you're
+00:03:26.920 formalizing them even more than before.
+00:03:29.200 Then, [music] the task step is where you
+00:03:30.880 break everything into neat little chunks
+00:03:32.760 of granular work items, dependencies,
+00:03:34.960 and acceptance criteria. Basically,
+00:03:37.040 these are the old Jira tickets now
+00:03:38.760 defined in plain text in a markdown
+00:03:40.520 file. Then, finally, in the
+00:03:42.680 implementation phase, you sit back,
+00:03:44.640 relax, and let the AI one-shot your
+00:03:46.640 million-dollar startup idea. One of the
+00:03:48.760 biggest red flags, in my opinion, is
+00:03:50.760 that this model expects us to front-load
+00:03:52.600 our entire thinking and planning in the
+00:03:54.200 specification phase. In my experience,
+00:03:56.920 you usually learn about problems and
+00:03:58.560 edge cases while actively working on
+00:04:00.320 them. With this model, we are expected
+00:04:02.160 to understand [music] it completely
+00:04:03.520 before writing a single line of code,
+00:04:05.400 and this is by far the biggest fiction
+00:04:07.400 in software development.
+00:04:08.902 >> [music]
+00:04:09.200 >> However, it somehow gets worse thanks to
+00:04:11.560 BIMAD, or the breakthrough method of
+00:04:13.240 agile AI-driven development. This is a
+00:04:15.680 newly proposed methodology where,
+00:04:17.760 instead of writing code, you are
+00:04:19.279 orchestrating a team of AI agents with
+00:04:21.358 various skills and responsibilities, all
+00:04:23.480 communicating between them through
+00:04:24.960 various markdown files. Your job is to
+00:04:27.520 sit in the middle and make sure these
+00:04:29.320 agents don't completely lose the plot,
+00:04:31.520 all while building new billion-dollar
+00:04:33.160 startups every 12 hours. The natural
+00:04:35.600 conclusion of this trajectory is that
+00:04:37.520 you are now expected to manage a system
+00:04:39.360 that writes software for you based on
+00:04:41.120 documents that try to approximate
+00:04:42.840 reality before reality has had a chance
+00:04:44.960 to contradict you. This is where tools
+00:04:47.160 like Hero AI come in, which basically
+00:04:49.120 functions as a digital babysitter for
+00:04:51.120 your fleet of AI hallucinations. But, if
+00:04:54.000 you are not ready yet to change your job
+00:04:55.640 description to prompt architect or
+00:04:57.280 system orchestrator, the good news is
+00:04:59.520 that a lot of the things I mentioned are
+00:05:01.080 really far-fetched, and the software
+00:05:02.640 engineering job is not as dead as some
+00:05:04.600 would like you to believe. A few days
+00:05:06.560 ago, I read a really good article where
+00:05:08.600 the author starts with a simple but
+00:05:10.200 uncomfortable observation.
+00:05:11.840 Specifications written in English only
+00:05:14.160 feel precise [music] until you try to
+00:05:15.880 implement them. You think you've written
+00:05:17.800 a perfectly precise spec until you
+00:05:19.480 realize Live Sync doesn't explain what
+00:05:21.760 happens when two users in different time
+00:05:23.560 zones delete the same paragraph during a
+00:05:25.640 Wi-Fi flicker. These are the moments
+00:05:27.800 when the prompt experts are usually
+00:05:29.320 realizing that their one-sentence
+00:05:31.160 requirements, which worked well when
+00:05:32.880 building a to-do app, isn't enough to
+00:05:34.680 cover all the edge cases of real-world
+00:05:36.640 projects. Code emerged because the human
+00:05:39.120 brain can only juggle so much until it
+00:05:41.280 runs into cognitive overload. Code helps
+00:05:43.640 humans compress complexity into
+00:05:45.480 something manageable. As D extra noted,
+00:05:48.080 the point of abstraction isn't to be
+00:05:49.680 vague, it is to create a level where we
+00:05:51.480 can finally be absolutely precise. The
+00:05:54.080 industry may try to rebrand us as
+00:05:55.960 digital babysitters for AI
+00:05:57.720 hallucinations, but the task of
+00:05:59.400 understanding the problem, building the
+00:06:01.360 abstraction, and ensuring it actually
+00:06:03.440 works well in the wild still remains. A
+00:06:05.960 vibe might get you 80% of the way there
+00:06:08.240 in 10 seconds, but that last 20% [music]
+00:06:10.680 is where real engineering lives. And
+00:06:13.000 here's the really interesting thing.
+00:06:14.840 More studies are coming out showing that
+00:06:16.680 those last 20% are now harder and more
+00:06:19.200 time-consuming because increased use of
+00:06:21.240 AI correlates with higher rates of
+00:06:22.880 software instability, including more
+00:06:24.720 frequent rollbacks and patches. Code
+00:06:26.880 still requires human validation,
+00:06:28.600 customization, and debugging,
+00:06:30.360 particularly for edge cases and
+00:06:32.000 business-specific logic. But, the most
+00:06:34.320 concerning aspect of all this is skill
+00:06:36.240 development. Last week, I posted a video
+00:06:38.880 about the recent updates in the web dev
+00:06:40.560 world, and the number of people saying
+00:06:42.360 that these updates are now irrelevant
+00:06:43.880 was pretty surprising. Studies show that
+00:06:46.320 over-reliance on AI weakens
+00:06:47.920 understanding, especially in debugging,
+00:06:49.960 and results show that developers using
+00:06:51.920 AI performed worse in knowledge
+00:06:53.480 assessments, suggesting that outsourcing
+00:06:55.640 cognitive effort reduces long-term
+00:06:57.640 competence. We all love a good graph,
+00:07:00.040 and the latest data from the 2026 Dora
+00:07:02.600 AI report has given us a particularly
+00:07:04.800 fascinating one. This describes what
+00:07:06.800 researchers are calling the U-shaped
+00:07:08.640 productivity curve. At the start of the
+00:07:10.720 curve, you have the vibe peak, where
+00:07:12.640 beginners and prompt architects enjoy an
+00:07:14.800 80% speed boost because they're building
+00:07:17.000 simple CRUD apps and to-do lists where
+00:07:19.080 the stakes are low and the edge cases
+00:07:20.840 are nonexistent. But, as soon as you
+00:07:22.920 move toward a real-world system, you
+00:07:24.880 fall off a cliff into the complexity
+00:07:26.720 trough, and productivity actually drops
+00:07:29.040 below baseline human speed. Digital
+00:07:31.280 babysitting turns out to be more
+00:07:32.880 cognitively taxing than actual
+00:07:34.520 engineering because you can spend hours
+00:07:36.520 debugging a hallucination that an AI
+00:07:38.560 one-shotted into your codebase in a few
+00:07:40.480 seconds. So, that 20% of real
+00:07:43.200 engineering is becoming the new
+00:07:44.880 bottleneck where all your saved time
+00:07:46.600 goes to die, proving that while AI can
+00:07:48.680 generate code at the speed of light, it
+00:07:50.640 still debugs at the speed of a
+00:07:51.960 frustrated human trying to read a
+00:07:53.600 stranger's mind. We'll mix things up
+00:07:55.680 this week, and instead of the usual
+00:07:57.560 awesome trivia, I have an awesome
+00:07:59.080 recommendation. Don't Starve is one of
+00:08:01.280 the games I've been playing for years
+00:08:02.960 when I'm looking for a bit of escapism.
+00:08:05.160 It also teaches you to craft items, cook
+00:08:07.400 food, and survive the elements, which
+00:08:09.120 will come in handy once we all lose our
+00:08:10.760 jobs and the world economy goes to sh-
+00:08:12.840 If you like this video, you should
+00:08:14.520 consider joining our community where I'm
+00:08:16.400 posting more dedicated weekly content.
+00:08:18.640 Please don't forget to smash all the
+00:08:20.080 buttons, and until next time, thank you
+00:08:22.440 for watching.

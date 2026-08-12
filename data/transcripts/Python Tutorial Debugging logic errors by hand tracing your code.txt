@@ -1,0 +1,333 @@
+# tactiq.io free youtube transcript
+# Python Tutorial:  Debugging logic errors by hand tracing your code
+# https://www.youtube.com/watch/Jq5ac_BNzHs
+
+00:00:00.949 hi guys welcome back this Frank and in
+00:00:03.750 this video I'm going to show you how to
+00:00:06.210 do some debugging using a technique
+00:00:09.030 known as hand tracing okay so some
+00:00:12.300 points before we get into it
+00:00:14.870 point number one is that this is a
+00:00:17.250 technique you can use to find logic
+00:00:19.439 errors now what's a logic error logic
+00:00:22.050 error is a type of area where you know
+00:00:24.150 you run your program it compiles or it
+00:00:26.910 executes it's fine there's no syntax
+00:00:28.320 errors don't try to say but for some
+00:00:30.660 reason you get the wrong number right
+00:00:32.729 there the wrong output or whatever so
+00:00:34.710 let's say that you write a program
+00:00:37.250 supposed to add two numbers together you
+00:00:41.879 know and ask you for the two numbers you
+00:00:44.040 type in five and two and for some reason
+00:00:46.980 the output is 99 right or some other
+00:00:50.370 crazy hopefully you get garbage values
+00:00:52.440 out right so that could be an example of
+00:00:54.690 a logic error okay there's no there's
+00:00:57.360 nothing syntactically wrong with it the
+00:00:58.890 code executes it's just you get the
+00:01:00.510 wrong help book it's the wrong answer
+00:01:02.070 whatever okay so point number two is the
+00:01:05.580 keys to how this thing works what
+00:01:08.189 happens is that your brain you use your
+00:01:11.189 brain as the CPU you use a piece of
+00:01:14.670 paper as memory as you know the
+00:01:16.860 computer's memory and then the code is
+00:01:20.850 the code right and so you step through
+00:01:23.610 each instruction one after the other and
+00:01:27.020 you use your brain to interpret the
+00:01:29.460 instruction and then you update memory
+00:01:32.460 which is that piece of paper okay and
+00:01:34.530 then you can see what's happening in
+00:01:36.420 memory as you step through the
+00:01:37.740 instructions and by going through this
+00:01:39.299 process eventually hopefully the error
+00:01:41.880 becomes you know apparent now point
+00:01:44.820 number three is that debugger programs
+00:01:46.530 they automate this this is what
+00:01:48.869 debuggers do they just automate the
+00:01:51.240 process for you so that we even have to
+00:01:53.759 have that paper okay you know you step
+00:01:57.869 through the code step over the code your
+00:02:00.030 debugger programs that ship with visual
+00:02:03.240 studio code blocks you know the debugger
+00:02:06.210 program in Python idle they do this for
+00:02:09.598 you they keep track of variables in your
+00:02:11.430 memory and how they
+00:02:12.760 and jazz each instruction executes okay
+00:02:16.090 and so it's up to you to recognize where
+00:02:17.769 the problem is as you are stepping
+00:02:20.680 through the code okay
+00:02:22.360 now point number four is this technique
+00:02:24.610 is also how you can understand code and
+00:02:27.310 some algorithms right so an algorithm so
+00:02:29.620 you you have some algorithms written in
+00:02:32.739 pseudocode or even plain language right
+00:02:34.780 you know if you just read those things
+00:02:36.970 right it's just words on a page unless
+00:02:40.150 you really dig into the meat of you know
+00:02:43.569 sample code or you know the printed
+00:02:46.659 algorithms or what you see in a textbook
+00:02:48.549 whatever you're not really gonna
+00:02:50.650 understand what's happening with those
+00:02:52.900 algorithms how they work or how that's
+00:02:54.519 how it works unless you dig into a you
+00:02:56.889 know line by line at least a little bit
+00:02:59.260 so you can get a feel for how they
+00:03:00.430 actually work programming is about
+00:03:02.650 managing your memory so if you can't
+00:03:04.359 understand what's happening in memory
+00:03:06.040 you can't program okay and then point
+00:03:09.609 five this is something I stress to my
+00:03:11.290 students you must be able to do this
+00:03:15.040 this is a fundamental foundational skill
+00:03:18.209 that helps you to understand as though
+00:03:20.769 sage is a second ago what's happening in
+00:03:22.989 memory and how to find withdrawal to
+00:03:25.510 your code okay if you could do this
+00:03:27.400 successfully then you understand the
+00:03:29.739 code that was written and you can you
+00:03:31.480 can find logic errors okay a lot carrots
+00:03:34.389 are different than syntax errors we'll
+00:03:35.949 cover how you can debug syntax errors in
+00:03:38.019 another video right now though we're
+00:03:39.879 just gonna focus on hand tracing all
+00:03:42.970 right so let's see an example of
+00:03:44.699 applying this technique to find a logic
+00:03:47.919 error in a relatively simple program
+00:03:50.519 right so on the right I've got a program
+00:03:53.199 that I wrote that I think is gonna find
+00:03:55.180 the average of three numbers okay so
+00:03:58.799 I'll go ahead and run it and you know
+00:04:03.129 I'll enter three numbers and 20 and 30
+00:04:07.510 right now before I hit enter after 30
+00:04:10.150 what should the average be will 10 plus
+00:04:12.010 20 plus 30 is gonna be 60 C divided by 3
+00:04:15.909 is 20 so that average should be 20 right
+00:04:18.539 now my program says incorrectly that the
+00:04:21.820 average is 40 okay so this is an example
+00:04:25.740 logic error I'm expecting 20 came out
+00:04:27.810 instead I got 40 something's wrong
+00:04:31.620 got to figure it out gotta find out what
+00:04:33.720 the problem is
+00:04:34.620 all right so let's walk through an
+00:04:36.000 example of doing an tracing okay so on
+00:04:38.759 their right hand side I got my code on
+00:04:40.560 my left hand side I got my piece of
+00:04:42.120 paper and remember your piece of paper
+00:04:45.229 represents your computer's memory right
+00:04:49.919 and so what we're doing is we're
+00:04:52.110 creating what's sometimes referred to as
+00:04:53.849 a memory map I'm basically gonna show us
+00:04:59.009 how our memory changes over time as the
+00:05:00.690 program executes its brains the CPU
+00:05:02.340 papers memory and the code is the code
+00:05:04.520 okay so here's how you do it you just go
+00:05:06.900 through one line at a time so if you
+00:05:09.419 look at this first line of code what
+00:05:12.030 happens
+00:05:12.690 well this variable called num one comes
+00:05:18.870 into existence okay now what's this line
+00:05:23.159 of code do well it ask the user to enter
+00:05:25.440 a number so in my example I typed in 10
+00:05:30.449 right well what goes into the num 1
+00:05:32.849 variable not an integer right because
+00:05:35.669 remember the input function returns a
+00:05:38.159 string so what's going in there is the
+00:05:40.770 string 10 right so that's first line
+00:05:44.490 second line it takes what's inside of
+00:05:47.669 num1 and then returns an integer copy of
+00:05:51.180 it and then overrides what's another one
+00:05:54.330 with it so well we end up with after
+00:05:57.030 that second line is the integer 10
+00:05:58.919 assign the number one okay and they're
+00:06:01.259 gonna go to the next line of code do a
+00:06:03.270 similar thing though two comes into
+00:06:04.860 existence okay
+00:06:06.780 yeah if we ask user for a number they
+00:06:10.259 typed 20 that was me on a tire 20 and
+00:06:12.630 then the string 20 was returned placed
+00:06:15.090 in a num to the next line happens we
+00:06:18.719 feed that string them to that the strain
+00:06:21.630 that's associated with them to the
+00:06:23.009 string 20 into the in function when it
+00:06:25.169 returns is the integer 20 which over
+00:06:27.060 writes what was in num2 and then we're
+00:06:30.330 gonna do some one thing for
+00:06:31.420 three right the user typed the string 30
+00:06:35.520 gets stored in them three and then yeah
+00:06:39.760 that was for this line of code right
+00:06:40.900 here and then the next line of code
+00:06:42.520 excuse what happens that string 30 gets
+00:06:45.250 fed to int int returns an integer
+00:06:48.240 version or an integer copy which we
+00:06:50.440 assigned to them three overwriting the
+00:06:51.850 string version so now we've got three
+00:06:53.770 variables 10 20 30 so now we come up to
+00:06:57.960 this line right here the average line
+00:07:00.370 and that causes the average variable to
+00:07:04.660 come into existence right and so what
+00:07:08.650 gets a sign there well we look at this
+00:07:11.230 arithmetic expression here and go
+00:07:14.830 through and I'm using our brain again or
+00:07:17.050 of operations tells us that division
+00:07:19.240 happens first
+00:07:20.410 right so num 3 divided by 3 well what's
+00:07:24.790 3 30 30 divided by 3 is what 10 okay and
+00:07:29.590 then we take num1 and num2 which was 10
+00:07:33.910 and 20 and that gives us 40 which gets
+00:07:38.980 assigned the average but wait a minute
+00:07:41.340 the average of 10 20 and 30 is 20 not 40
+00:07:45.520 so guess what line of code was the
+00:07:48.010 problem this one right here because we
+00:07:51.700 expect that average should have 20
+00:07:53.860 assigned to it not 40 so this is my
+00:07:57.160 problematic line of code okay so at this
+00:07:59.860 point that's why that's my idea it seems
+00:08:03.040 pretty obvious to me so I have to come
+00:08:06.310 up with fix right hypothesis to what
+00:08:10.390 would fix it well what I need is but
+00:08:13.510 somehow I know averages to work I have
+00:08:15.430 to do the addition first and then the
+00:08:17.230 division right so that means that I have
+00:08:19.540 to override my order of operations ok so
+00:08:24.310 that's what I think my fix is that's my
+00:08:26.500 hypothesis now I need to test that
+00:08:28.630 hypothesis right so let me go ahead and
+00:08:31.450 run it again so now I type in my 10 I
+00:08:34.809 type in my 20 I type in my 30 and boom
+00:08:38.919 it's fixed right so that's really all
+00:08:42.039 there is to it
+00:08:43.360 right your brain is the CPU piece of
+00:08:46.209 papers memory and then you just trace
+00:08:47.980 your the lines of code one at a time
+00:08:49.750 until hopefully something sticks out at
+00:08:55.959 you that's obvious as to what the
+00:08:57.459 problem is
+00:08:58.120 like it was here now if at any time I
+00:09:01.540 was reading lines of code here and I
+00:09:05.200 wasn't sure how to update my memory
+00:09:07.810 well that would clue me in that I wrote
+00:09:09.760 some code here that I don't know what it
+00:09:11.200 does right so for example if I was like
+00:09:13.870 all right let's go look at this first
+00:09:15.070 line here all right what is input deal
+00:09:16.750 I'm not sure well that's a clue that you
+00:09:19.810 should go back to the text or whatever
+00:09:21.579 your source material is oh okay how does
+00:09:24.100 input work what actually does go in num1
+00:09:26.040 if you don't know that then you don't
+00:09:28.149 have any business writing a program that
+00:09:30.490 uses the input function right and you go
+00:09:32.890 back and relearn how the input function
+00:09:34.120 works what if I'm on line 2 here and I'm
+00:09:36.279 like well I don't know what the in
+00:09:37.149 function does I'm not sure what to put
+00:09:38.560 in num1 time for you go back to the
+00:09:40.510 textbook and read up on the info I'll go
+00:09:43.329 to python org or whatever right and so
+00:09:45.880 on if you're not sure if you looked at
+00:09:47.620 you know this average line and you're
+00:09:49.779 like oh I don't see any reason you know
+00:09:51.820 that this should be giving me the wrong
+00:09:53.860 answer you know you look at that you
+00:09:55.810 don't understand the order of operations
+00:09:57.190 you're like well num1 num2 no 3/3 that
+00:10:00.100 should be correct right I mean what's
+00:10:01.449 what's the problem well if you couldn't
+00:10:03.820 figure that out if you didn't see that
+00:10:05.230 the problem was the order of operations
+00:10:07.149 will that should clue you in to go back
+00:10:09.070 in review you know doing basic
+00:10:11.260 arithmetic in Python or whatever
+00:10:13.240 programming language you're using right
+00:10:14.740 this isn't something that's just limited
+00:10:15.970 to Python I mean this is a technique for
+00:10:18.790 finding logic errors no matter what
+00:10:21.310 program language you're using all right
+00:10:24.579 so let's look at another example of
+00:10:26.529 using hand tracing and in this case
+00:10:28.269 we'll start off with some code that was
+00:10:30.640 already written maybe we didn't write it
+00:10:32.290 ourselves and we want to figure out what
+00:10:34.870 it's doing right so well we'll trace
+00:10:37.779 through it for hands beneath computer
+00:10:39.430 paper is gonna be you know memory and
+00:10:43.390 we'll just go through the killer didn't
+00:10:44.860 discover what this program does without
+00:10:46.209 even running it right so let's let's
+00:10:49.390 let's get started with it so when that
+00:10:50.980 first line happens you got x equals int
+00:10:52.839 right input basically what that's doing
+00:10:55.300 is that's asking the user for
+00:10:57.120 that numbers been converted and stored
+00:10:58.770 into X so let's say that they type seven
+00:11:04.050 okay so the end receving is assigned to
+00:11:06.600 X now second line happens right and that
+00:11:12.360 line he's gonna have store and why
+00:11:15.750 whatever energy they type so let's say
+00:11:17.460 they type for this time okay so we got
+00:11:20.970 our two variables they look like that
+00:11:22.020 the next line is equals zero
+00:11:23.839 besides the integer zero to Z and then
+00:11:26.820 we get to that wild loop right so let's
+00:11:28.680 trace through that well well while Y is
+00:11:31.620 greater than zero well dude is four is
+00:11:33.839 greater than zero so we'll enter the
+00:11:35.550 body of the loop what do we do we add
+00:11:37.350 the contents of X to Z so what's in X 7
+00:11:40.320 so that's Z become seven and then we
+00:11:45.990 subtract one for y okay so once we do
+00:11:50.279 that with our the top loop is y greater
+00:11:51.900 than zero yep so enter the body of the
+00:11:53.580 loop what do we do at X to Z X is still
+00:11:56.279 seven so Z becomes 14 and then we
+00:11:59.460 subtract one from Y go to the top of the
+00:12:03.150 loop is y greater than zero yes here the
+00:12:05.580 body--the loop add X to Z again X is
+00:12:07.860 till seven so Z which was 14 becomes 21
+00:12:11.660 subtract one from Y Y becomes one go to
+00:12:16.380 the top loop is y greater than zero yes
+00:12:18.300 because one square that's earlier the by
+00:12:19.950 the loop and X to Z one more time right
+00:12:23.850 so that's 28 subtract one from y Y
+00:12:29.850 becomes zero for the tough loop is y
+00:12:32.490 greater than zero no while loops done
+00:12:34.740 killer print Z will print out 28 so what
+00:12:38.910 numbers did we did we enter in at the
+00:12:41.430 beginning it was seven for x and y for
+00:12:47.310 four so what did we just end up doing
+00:12:50.270 right now
+00:12:52.020 the answer is 28 but what seven times
+00:12:55.170 for 28 so we just did is we used a loop
+00:12:59.750 to multiply two numbers together so
+00:13:04.260 let's test that let's see if we get to
+00:13:06.060 actually get 28 that's what we thinks
+00:13:07.860 going to happen
+00:13:08.710 ok so 7 in 428 ok let's try a different
+00:13:16.029 number right just to make sure that
+00:13:18.040 we're almost quite to different numbers
+00:13:19.720 together just to make sure that it
+00:13:21.490 wasn't a one-off
+00:13:22.600 all right so about five times six oh
+00:13:25.570 look it's 30 how about 30 times 4
+00:13:32.080 oh look it's 120 right so we just
+00:13:35.709 discovered how that this program is
+00:13:37.870 we'll find to type two numbers together
+00:13:39.700 and how is the most plain those two
+00:13:41.380 numbers together by doing repeated
+00:13:43.959 additions okay so that's gonna bring
+00:13:47.800 this video to a close if you felt that
+00:13:51.160 the video was useful please consider
+00:13:53.940 giving the video a thumbs up and if you
+00:13:58.510 thought that the video sucked well then
+00:14:00.820 you've got that thumbs down button as an
+00:14:03.459 option as well if you'd like to see more
+00:14:06.250 videos for interested in more content
+00:14:08.320 from the channel feel free to hit that
+00:14:09.520 subscribe button and as usual if you're
+00:14:11.920 a student of mine and you have further
+00:14:14.440 questions feel free to drop me an email
+00:14:17.260 or to stop by my office hours okay
+00:14:21.310 thanks for watching and we'll see you
+00:14:23.320 next time

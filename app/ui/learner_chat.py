@@ -19,7 +19,7 @@ from app.services.chat_service import answer_question
 STORAGE_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "uploaded_files")
 os.makedirs(STORAGE_DIR, exist_ok=True)
 
-SUPPORTED_VIA_PIPELINE = {"pdf", "docx", "md", "csv"}
+SUPPORTED_VIA_PIPELINE = {"pdf", "docx", "md", "csv", "vtt", "srt"}
 
 st.set_page_config(page_title="AI Learning Companion", layout="wide")
 
@@ -202,9 +202,9 @@ with chat_col:
             st.write(msg["text"])
 
     prompt = st.chat_input(
-        "Ask a question, or attach a file to upload...",
+        "Ask a question about your courses or video transcripts...",
         accept_file="multiple",
-        file_type=["pdf", "docx", "md", "csv", "txt"],
+        file_type=["pdf", "docx", "md", "csv", "txt", "vtt", "srt"],
     )
 
     if prompt:
@@ -236,9 +236,13 @@ with chat_col:
                     answer, sources = answer_question(db, question_text)
                     st.write(answer)
                     if sources:
-                        with st.expander("Sources used"):
+                        with st.expander("📚 Sources & References used"):
                             for c in sources:
-                                st.caption(f"Chunk {c.chunk_index} (resource {c.resource_id}): {c.chunk_text[:200]}...")
+                                res_obj = db.query(LearningResource).filter(LearningResource.id == c.resource_id).first()
+                                r_title = res_obj.title if res_obj else f"Resource #{c.resource_id}"
+                                r_type = res_obj.resource_type if res_obj else "DOC"
+                                type_icon = "🎬" if r_type == "VIDEO" else "📄"
+                                st.caption(f"{type_icon} **{r_title}** (Chunk {c.chunk_index}): {c.chunk_text[:250]}...")
 
                     resp = ChatResponse(message_id=user_msg.id, answer_text=answer, model_name="gemini-flash-lite-latest")
                     db.add(resp); db.commit()
@@ -251,7 +255,7 @@ with kb_col:
 
     kb_upload = st.file_uploader(
         "Add file",
-        type=["pdf", "docx", "md", "csv", "txt"],
+        type=["pdf", "docx", "md", "csv", "txt", "vtt", "srt"],
         label_visibility="collapsed",
         key="kb_panel_uploader",
     )
@@ -272,9 +276,10 @@ with kb_col:
         st.caption("No files uploaded yet.")
     for r in files:
         status_icon = "✅" if r.processing_status == "COMPLETED" else ("⏳" if r.processing_status not in ("COMPLETED", "FAILED") else "❌")
+        type_icon = "🎬" if r.resource_type == "VIDEO" else ("📄" if r.resource_type == "PDF" else "📝")
         col_name, col_del = st.columns([4, 1])
         with col_name:
-            st.caption(f"{status_icon} {r.file_name}")
+            st.caption(f"{status_icon} {type_icon} {r.file_name}")
         with col_del:
             if st.button("🗑", key=f"delete_{r.id}", help=f"Delete {r.file_name}"):
                 delete_kb_file(db, r.id)

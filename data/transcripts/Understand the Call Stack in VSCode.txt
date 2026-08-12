@@ -1,0 +1,106 @@
+# tactiq.io free youtube transcript
+# Understand the Call Stack in VSCode #Debugger | Python Debugging Tutorial (Lecture 3)
+# https://www.youtube.com/watch/SoT5UBlCFqk
+
+00:00:00.160 Hey. Hi YouTube. How are you? I hope you
+00:00:02.000 all guys are doing great. In this video,
+00:00:04.080 we are going to continue with our
+00:00:05.920 debugging series. Uh till now we have
+00:00:08.480 seen lots of thing. Uh like we have seen
+00:00:10.800 how we can debug our application using
+00:00:13.599 this variable, how we can inspect the
+00:00:15.280 variables. We have also seen watch uh
+00:00:17.840 how to use this watch, how to use uh how
+00:00:19.760 to add expressions and all. And today we
+00:00:21.600 are going to see call stack. And
+00:00:23.680 definitely you can access this whole
+00:00:26.080 playlist here in the debugging session.
+00:00:27.920 And I have also added two challenges
+00:00:29.519 here. And then we have this uh repo also
+00:00:33.360 Python debug lectures where you can find
+00:00:35.600 all the code that I am using. So today
+00:00:39.120 we are going to start with call stack.
+00:00:41.200 So let's see what actually call stack
+00:00:42.800 is. Callst stack is like a path of your
+00:00:45.280 code. Whatever path it has taken, it's
+00:00:48.320 like a ladder of function calls to reach
+00:00:50.480 the current line. Each time a function
+00:00:53.120 is called it's pushed into the one of
+00:00:56.079 the stack which we call as call stack
+00:00:59.600 and when the function finishes is it is
+00:01:02.320 popped off. Each time a function is
+00:01:04.640 called it adds a new frame to the stack.
+00:01:07.920 You can use call stack panel to see how
+00:01:11.200 your program arrived here and what the
+00:01:14.159 state of each function was at that time.
+00:01:17.840 This can be helpful when you are
+00:01:19.360 debugging deep or nested logic. So let's
+00:01:22.640 suppose let me just remove this. This is
+00:01:24.880 the lecture three call stack. So if you
+00:01:28.320 see this code first of all we have final
+00:01:30.479 price and it's calling a function which
+00:01:32.320 is checkout. Then in checkout we are
+00:01:34.640 just calculating a discounted price and
+00:01:37.520 discounted price is uh is calling a
+00:01:40.479 method which is apply discount and which
+00:01:42.240 is having some business logic or some
+00:01:44.400 logic here. Okay. So if I want to see
+00:01:46.880 call stack, let's suppose I add a break
+00:01:49.119 point here. Okay, let me just hide all
+00:01:52.079 this thing for now. Just let's only
+00:01:55.119 focus on call stack. So we have final
+00:01:57.520 price. Okay, so uh if I just hit this uh
+00:02:01.200 debugger uh if I just add this debugger.
+00:02:04.320 So currently in the call stack you can
+00:02:06.000 see we just have one function which is
+00:02:07.600 lecture 3 call stack. py because we are
+00:02:10.000 calling this function. Now if you move
+00:02:11.920 inside this function it will call
+00:02:13.760 another function which is again call
+00:02:15.920 stack.py but it is in seventh line.
+00:02:18.640 Seventh line here you can see. So first
+00:02:21.360 this was the method and then it called
+00:02:23.120 another method. So it moved into like a
+00:02:25.599 stack data structure. Now if we just go
+00:02:28.319 inside again this call st uh apply
+00:02:30.959 discount method it will again create
+00:02:33.680 another it will make entry to another
+00:02:35.920 method. So this is the method. So it as
+00:02:39.200 I already told you like it tells you
+00:02:41.760 it's like a letter of function calls and
+00:02:44.239 it gives us the path of the code has
+00:02:47.200 taken to reach the current line. So to
+00:02:49.519 reach this line it has moved from this
+00:02:51.840 to this to this and I also added one
+00:02:56.080 more statement that once
+00:02:59.280 a function is called it is pushed into
+00:03:01.280 the stack and when the function finishes
+00:03:03.680 it's popped off. So if you can see uh to
+00:03:06.720 reach this third line we have moved from
+00:03:08.879 this function to this function to this
+00:03:10.560 function. Now if I just uh like maybe I
+00:03:14.640 can just come back. So if I just uh
+00:03:18.000 press this one which is uh step out then
+00:03:21.200 it came back and now this there was
+00:03:24.000 another method which was at the top of
+00:03:25.599 this stack call stack it popped off. And
+00:03:28.080 now if I came out of uh if I step out of
+00:03:32.480 this method also if I went to this
+00:03:34.640 method and now I'm just left with only
+00:03:37.519 this method which is the initial method.
+00:03:40.720 So we called this method it added to the
+00:03:42.879 stack. We called this method it added to
+00:03:44.720 the stack and when we call uh uh this
+00:03:48.480 method it again came into the stack and
+00:03:51.599 one by one like a stack it popped off.
+00:03:54.959 And if I just end this uh debugging like
+00:03:57.680 this. So the whole thing is gone. So
+00:04:00.400 it's very simple and it's generally
+00:04:02.640 helpful when uh when you're debugging uh
+00:04:06.000 a deep or a nested logic. Okay. So
+00:04:08.879 that's it for call stack. In the next
+00:04:10.959 video we are going to see conditional
+00:04:12.640 break points which is really really
+00:04:14.319 helpful in debugging journey. So that's
+00:04:17.279 it. Meet you in the next video. Till
+00:04:19.199 then bye-bye.

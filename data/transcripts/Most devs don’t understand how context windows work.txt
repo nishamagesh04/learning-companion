@@ -1,0 +1,291 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/-uW5-TaVXu4
+
+00:00:00.080 There's a constant debate among devs at
+00:00:01.760 the moment is how good actually are
+00:00:04.000 coding agents and the debate usually has
+00:00:06.319 two sides. It has the side that says no
+00:00:08.400 coding agents suck. I hate AI coding.
+00:00:10.480 And the other side of the debate says
+00:00:11.920 no, you're just using them wrong. This
+00:00:13.840 is a skill issue. Now, I can see both
+00:00:15.759 sides of this debate, but if there is a
+00:00:18.640 skill issue that I see most often with
+00:00:20.480 devs, it is not thinking enough about
+00:00:22.720 the context window. The context window
+00:00:24.560 is the main constraint that most AI
+00:00:26.880 coding agents face these days. And
+00:00:28.560 honestly, most devs don't even really
+00:00:30.720 know what it is or how it impacts how
+00:00:33.120 you use these coding agents. If that's
+00:00:34.880 you, you have come to the right place.
+00:00:36.399 We are going to explain everything you
+00:00:38.079 need to know as a user of coding agents
+00:00:40.559 about what the context window is and how
+00:00:42.399 it impacts coding agent performance. So,
+00:00:44.239 let's get started right away by talking
+00:00:46.160 about what actually makes up the context
+00:00:48.160 window. The context window is the entire
+00:00:50.800 set of input and output tokens that the
+00:00:52.800 LLM sees. The input tokens are the
+00:00:54.879 things that you pass to the LLM. You
+00:00:57.199 might pass it a system prompt which is
+00:00:59.199 and some instructions to say to the LM
+00:01:01.120 what it should do and maybe a user
+00:01:02.559 message to initiate the conversation and
+00:01:04.479 then once you've sent that the LLM
+00:01:06.000 starts streaming back some assistant
+00:01:07.920 messages which are the output tokens and
+00:01:10.560 the input plus the output tokens make up
+00:01:13.119 the entire context window. As the
+00:01:15.040 conversation grows longer, let's say
+00:01:16.880 you're chatting with Claude or chat GBT,
+00:01:19.119 the more input and output tokens are
+00:01:20.880 going to be in that context window. So
+00:01:22.640 we usually talk about the context window
+00:01:24.320 kind of growing or the number of tokens
+00:01:26.240 that you're spending inside that context
+00:01:27.920 window growing and eventually it's going
+00:01:29.520 to grow so so long that you will hit a
+00:01:32.400 limit. Each model has a hardcoded limit
+00:01:35.439 which is set by the model provider. And
+00:01:37.680 let's say here you pass too many input
+00:01:40.000 tokens. You've got a system message, a
+00:01:41.600 user message and 100 more messages.
+00:01:43.680 Let's say well you will get an error
+00:01:45.360 from the LLM provider saying you have
+00:01:47.119 hit the limit of the context window. You
+00:01:49.439 might even hit this with a single super
+00:01:51.759 long message. Let's say you're uploading
+00:01:53.439 some documents or you're asking the LLM
+00:01:55.439 to transcribe a video or an enormous
+00:01:57.600 image. And this limit of the context
+00:01:59.759 window is usually described in tokens.
+00:02:02.240 If you don't know what a token is, then
+00:02:03.520 you can check out my YouTube video on
+00:02:05.040 tokens, which I'll link here. Now, you
+00:02:06.719 can actually hit the limit while
+00:02:08.720 generating tokens, too. For instance,
+00:02:10.800 you can just be chatting with the system
+00:02:12.319 like this and it will maybe tell you an
+00:02:14.560 extremely long output which overruns its
+00:02:16.959 context window and it will just stop
+00:02:19.200 because the context window has been hit.
+00:02:20.959 You can take a look at models.dev to
+00:02:23.040 check out the different context window
+00:02:24.480 limits and lots of other information
+00:02:26.239 about different models. For instance,
+00:02:27.760 Claude Haiku 4.5. If we zoom over here,
+00:02:31.280 we can see a context window limit of
+00:02:33.200 200,000 tokens. Down here, we can see a
+00:02:35.440 limit of 2 million tokens. Let's take a
+00:02:37.920 look at that. Boom, boom, boom, boom,
+00:02:39.519 boom. And we have Gemini 2.5 Pro. Gemini
+00:02:42.080 kind of as a selling point has really
+00:02:43.920 large context windows. But as we'll see
+00:02:45.599 in a second, uh bigger is not always
+00:02:47.920 better. We'll see too that there are
+00:02:49.200 some models here like Quen Math Plus
+00:02:51.200 which only have about 4,000 tokens
+00:02:54.560 inside here. So smaller models and older
+00:02:56.959 models too often have much smaller
+00:02:58.959 context window limits. So why do these
+00:03:00.720 models impose context window limits at
+00:03:03.040 all? Why not just allow infinite amount
+00:03:05.120 of text to be passed through the model?
+00:03:06.560 Well, some of it is to do with the
+00:03:07.840 constraints of the architecture of the
+00:03:09.280 model. LLM processing is expensive and
+00:03:11.440 so adding more text and more context
+00:03:13.519 window means you're using more memory
+00:03:15.280 per process. But also, the larger the
+00:03:17.280 context window, the more performance
+00:03:19.599 degrades. In other words, the more
+00:03:21.360 information that you give a model, the
+00:03:23.040 worse it's going to perform. This is
+00:03:24.480 true across tiny models all the way up
+00:03:26.720 to very, very large models. And the
+00:03:28.720 reason for that is that all models
+00:03:30.640 suffer from a problem of retrieving
+00:03:33.120 information from their own context. This
+00:03:34.959 is the classic needle in a haystack
+00:03:36.720 problem. If you have one piece of
+00:03:38.480 information in a huge big bloated
+00:03:40.480 context and you're trying to get the LM
+00:03:42.400 to refine that and take that do
+00:03:44.319 something with it, then it's going to
+00:03:45.920 really struggle. This is especially true
+00:03:47.519 for information that's in the middle of
+00:03:49.920 a conversation. For instance, I've put
+00:03:51.760 this very unscientific graph here where
+00:03:53.680 we have the impact on the output here
+00:03:55.760 and the position in conversation. What
+00:03:57.519 happens is that for really long chats
+00:04:00.000 here where we have each individual
+00:04:01.519 message represented by this little
+00:04:02.879 circle, the information in the middle of
+00:04:04.879 the chat is going to be less prioritized
+00:04:07.120 by the LLM. So the stuff at the start
+00:04:09.040 and the stuff at the end is deemed most
+00:04:11.519 important by the attention mechanism
+00:04:13.200 that the LLM uses. This is not really
+00:04:15.280 intended behavior. It's just an emergent
+00:04:17.358 property of how these systems are
+00:04:18.798 designed. So this is really really
+00:04:20.880 important when you're doing AI coding.
+00:04:22.720 The stuff at the start of the
+00:04:23.840 conversation is going to have most
+00:04:25.440 impact and the stuff at the end is going
+00:04:27.280 to have the most impact. But all the big
+00:04:29.040 bloated stuff in the middle is not
+00:04:31.120 necessarily going to impact the result
+00:04:33.919 that strongly. It still has an impact of
+00:04:36.000 course, but much less than the stuff at
+00:04:37.440 the start and the end. And this mimics
+00:04:39.280 human behavior, too, if you've ever
+00:04:40.880 heard of primacy bias and recency bias.
+00:04:43.360 You will probably remember the start of
+00:04:45.280 this video and the end of the video
+00:04:47.280 better than the guff in the middle.
+00:04:48.639 However, the shorter the context window,
+00:04:50.880 the fewer lostinthe- middle problems
+00:04:52.639 you're going to come across. Models just
+00:04:54.560 do better with less, more focused
+00:04:57.280 information, just like humans do. This
+00:04:59.120 means that regularly clearing your
+00:05:00.960 coding agent chats will refresh the
+00:05:03.280 agents memory and clear its context
+00:05:05.120 window making for much better
+00:05:07.120 performance when you actually go to use
+00:05:08.880 it. Let's actually dive into a coding
+00:05:10.560 agent that I use, Claude Code. I've run
+00:05:12.479 a command called context here, and we
+00:05:14.240 can see the context usage that we've
+00:05:16.240 used up. We've used 95k tokens out of
+00:05:19.120 200k limit. This is on set 4.5 which has
+00:05:22.639 a 200k context window limit. Nearly 8%
+00:05:25.120 of it is just on the system prompt here
+00:05:27.360 and 40% is on these messages. So 77k
+00:05:31.360 tokens that is the content of the
+00:05:33.199 conversation that I've run through so
+00:05:34.639 far. Now if I had some work to do that
+00:05:36.320 was related to the chat thread that I've
+00:05:38.160 just done, which I think is just sort of
+00:05:40.160 uh reworking some documentation, then
+00:05:42.720 105k tokens of free space, that feels
+00:05:45.280 pretty good to me. But I would
+00:05:46.639 definitely start getting scared once I
+00:05:48.560 only had about let's say 50k tokens left
+00:05:51.280 at which point I would run clear which
+00:05:53.440 clears the conversation history and
+00:05:54.960 frees up the context window. You do have
+00:05:56.800 an alternative in claude code here which
+00:05:58.639 is to compact the conversation. If I run
+00:06:00.800 this it clears the conversation history
+00:06:02.800 and creates a summary of what happened.
+00:06:05.520 In other words, it takes all of these
+00:06:07.039 messages and just creates a smaller
+00:06:09.360 message out of them. In theory, that
+00:06:11.120 will pull us further away from the
+00:06:12.960 context window limit and we'll get fewer
+00:06:14.720 lost in the middle problems. However,
+00:06:16.160 this does take some time and of course
+00:06:17.759 you're using an LLM to generate a
+00:06:19.360 summary. So, you are spending tokens
+00:06:21.039 here. It's already taken about a minute
+00:06:22.960 doing this and it's finally done. And we
+00:06:24.639 can press control0 to see the full
+00:06:26.800 summary. We can see it's created a
+00:06:28.319 pretty lengthy summary of the
+00:06:30.000 conversation we just had without any of
+00:06:32.240 like the files that it's pulled in or
+00:06:34.080 anything like that, but it preserves
+00:06:35.600 some of the intention, some of the
+00:06:37.120 vibes, and it's like a sort of mini
+00:06:38.880 rules file just for this conversation.
+00:06:40.800 If we run context again, we can see that
+00:06:42.560 we now have 90% of free space and the
+00:06:45.360 messages instead of like 70k tokens,
+00:06:47.440 whatever they were before, is now only
+00:06:48.960 4K. So compacting is useful when you
+00:06:50.880 want to preserve the vibes of a
+00:06:52.639 conversation. But clear is should be
+00:06:54.560 your default when you just want to clear
+00:06:56.319 it. Go back to a blank slate and keep
+00:06:58.880 going from there. Whenever you're
+00:07:00.080 working with a coding agent, you really
+00:07:01.759 do need full transparency, full
+00:07:04.240 understanding of what's happening in
+00:07:05.440 your context window at any time. I want
+00:07:08.000 to give you a word of warning here too
+00:07:09.520 about MCP servers. MCP servers are super
+00:07:12.479 attractive because they allow you to
+00:07:14.319 plug and play with different pre-made
+00:07:16.319 tool sets out there in the ecosystem,
+00:07:18.000 but they can bloat your context
+00:07:19.680 incredibly rapidly. You might have a
+00:07:21.440 conversation here where like a third of
+00:07:22.880 it is system prompt. You know, a big
+00:07:24.880 chunk of it is MCP tools just from a
+00:07:27.440 couple of MCP servers and then just a
+00:07:29.840 few extra stuff is messages. So, I tend
+00:07:32.000 to be extremely extremely cautious about
+00:07:35.120 adding MCP servers to my setup because I
+00:07:37.360 know how important having a lean context
+00:07:41.039 window is. I also don't tend to write
+00:07:43.520 very very large cursor rules or claw
+00:07:46.240 rules because again, I'm just so scared
+00:07:48.240 of these lostinthe- problems. And as a
+00:07:50.240 result, I really enjoy working with AI
+00:07:52.479 coding agents and I get really decent
+00:07:54.080 performance out of them, I think. And
+00:07:55.599 hopefully, if you take on this paranoia
+00:07:57.360 that I've developed, you'll get great
+00:07:59.199 results, too. So, that's what a context
+00:08:00.800 window is. It is the input and output
+00:08:02.960 tokens that make up the entire thing
+00:08:04.960 that the LLM can see at any one time.
+00:08:07.199 Every LLM comes with a context window
+00:08:09.599 limit, a hard-coded limit set by the mod
+00:08:12.000 provider, which is basically how many
+00:08:14.879 tokens they think the LLM can reasonably
+00:08:17.599 handle. All LLMs are prone to lost in
+00:08:20.400 the middle problems where stuff in the
+00:08:22.479 middle of the context window ends up
+00:08:24.400 being dep prioritized. And so when
+00:08:26.080 you're assessing an LLM, you shouldn't
+00:08:27.680 just look at how big the context window
+00:08:29.520 is. You should look at how well it
+00:08:31.280 retrieves information from its context
+00:08:33.120 window. For instance, in April, Meta
+00:08:35.120 announced Llama for Scout, which if I
+00:08:37.839 hide myself is just down here, and it
+00:08:40.159 has a 10 million context window limit,
+00:08:42.399 but it turned out after people actually
+00:08:43.760 played with it, it suffered from really
+00:08:45.680 bad lost in-the-middle problems. And
+00:08:47.279 even though you could feed it that
+00:08:48.480 information, it wouldn't really do
+00:08:50.000 anything with it. So I hope you have a
+00:08:51.680 better understanding of the limits of
+00:08:54.000 these models and how you can work around
+00:08:56.000 those limits and understand them better
+00:08:57.680 to get better results. If you want to go
+00:08:59.519 deeper into LLM then I have just put out
+00:09:02.240 a AISDK crash course. This is a crash
+00:09:04.800 course for Versel's AIDK which I think
+00:09:07.519 is the perfect way to get started with
+00:09:10.720 LMS if your primary language is
+00:09:12.880 TypeScript. But just a couple more days
+00:09:14.480 you can get this for 99 bucks. So head
+00:09:16.959 to aihero.dev if you want to learn more.
+00:09:19.680 Thanks so much for following along. I
+00:09:21.040 love talking about this stuff and I
+00:09:22.720 really think this is valuable
+00:09:24.000 information. If there's anything LLM
+00:09:25.600 based that you want me to cover,
+00:09:26.800 especially talking about it in the
+00:09:28.080 context of Typescript, let me know in
+00:09:29.680 the comments. So thanks for watching and
+00:09:30.959 I will see you very

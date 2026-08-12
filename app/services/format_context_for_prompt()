@@ -1,0 +1,23 @@
+def format_context_for_prompt(self, response: RetrievalResponse) -> str:
+        """
+        Formats retrieved chunks into a clean, structured context string 
+        ready to be injected directly into the LLM prompt.
+        """
+        if not response.retrieved_chunks:
+            return "No relevant learning material context found."
+
+        context_blocks = []
+        for rank, chunk in enumerate(response.retrieved_chunks, start=1):
+            header = f"[Source #{rank} | Page {chunk.page_number or 'N/A'}]"
+            if chunk.section_heading:
+                header += f" (Section: {chunk.section_heading})"
+            
+            block = f"{header}\n{chunk.chunk_text}"
+            context_blocks.append(block)
+
+        formatted_context = (
+            "=== RETRIEVED LEARNING MATERIAL CONTEXT ===\n"
+            + "\n\n".join(context_blocks)
+            + "\n==========================================="
+        )
+        return formatted_context

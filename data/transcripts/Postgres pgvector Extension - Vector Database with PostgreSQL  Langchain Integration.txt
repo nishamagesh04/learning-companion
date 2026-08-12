@@ -1,0 +1,857 @@
+# tactiq.io free youtube transcript
+# Postgres pgvector Extension - Vector Database with PostgreSQL / Langchain Integration
+# https://www.youtube.com/watch/FDBnyJu_Ndg
+
+00:00:00.000 one of the big trends in technology at
+00:00:02.159 the moment is Vector databases which are
+00:00:04.620 often used in conjunction with language
+00:00:06.720 models in this video we're going to look
+00:00:08.519 at how we can use postgresql as a vector
+00:00:11.160 database by adding an extension called
+00:00:13.679 PG Vector we're going to see how to set
+00:00:16.020 that database up using a Docker image
+00:00:18.539 and we're also going to dive into how to
+00:00:20.400 actually create these vectors or
+00:00:22.140 embeddings using Lang chain and openai
+00:00:24.960 and then store those vectors into the PG
+00:00:27.720 Vector database and finally we'll show
+00:00:29.939 how to query that database using both
+00:00:32.399 Lang chain and also in raw SQL in order
+00:00:35.100 to pull out some insights based on the
+00:00:36.899 vectors that are stored in that database
+00:00:39.059 so let's get started I have the GitHub
+00:00:41.219 for PG Vector open here I'll leave a
+00:00:43.559 link to this below the video and you can
+00:00:45.120 see the gist of what this is it's an
+00:00:46.739 open source Vector similarity search for
+00:00:49.379 postgres now there are other Vector
+00:00:51.360 databases out there such as chroma and
+00:00:53.640 Pinecone and others but the benefit of
+00:00:55.860 postgres is that it comes with all of
+00:00:58.440 the normal benefits of using a database
+00:01:00.719 as you can see here it's got asset
+00:01:02.579 compliance point in time recovery joins
+00:01:05.339 and all sorts of other brilliant
+00:01:07.020 features and postgres is a mature
+00:01:09.119 database it's reliable and it's used a
+00:01:11.220 lot in the development community so you
+00:01:13.320 can trust postcode SQL and this
+00:01:14.880 extension will allow you to turn it
+00:01:16.799 essentially into a vector database that
+00:01:18.900 allows you to query for similarity now
+00:01:21.180 in this video we're going to use this
+00:01:23.040 piece of text here it's the State of the
+00:01:25.020 Union text and I'm going to leave a link
+00:01:26.939 to this below the video I've already
+00:01:28.500 downloaded this and it's here in this
+00:01:30.780 local directory now I've also got a
+00:01:32.640 Jupiter notebook up in here and we're
+00:01:34.439 going to use this notebook throughout
+00:01:35.880 the video now what we're going to do in
+00:01:37.439 this notebook is we're going to use LINE
+00:01:39.299 chain as you can see here from the
+00:01:41.220 Imports and we're going to take that
+00:01:42.960 State of the Union text and we're going
+00:01:45.060 to split it into chunks and then we're
+00:01:47.100 going to embed each chunk into a vector
+00:01:50.040 and we'll walk through more about what
+00:01:51.659 that means as we go through the video
+00:01:53.280 what we've imported here from linechain
+00:01:55.500 is the text loader and we can use that
+00:01:57.540 to load in text files we also have the
+00:01:59.640 record source of character text splitter
+00:02:01.920 and this is used to split up a piece of
+00:02:04.140 text into chunks and finally we have the
+00:02:06.659 open AI embeddings object imported from
+00:02:09.360 the line chain dot embeddings module now
+00:02:11.640 embedding is the process of turning a
+00:02:13.920 piece of text into a vector and the
+00:02:16.260 vector that's produced from that is also
+00:02:17.940 known as the embedding we're going to
+00:02:19.800 see in this video how we can use the
+00:02:21.480 openai embedding models and line chain
+00:02:24.300 can call these on your behalf and from
+00:02:26.459 that we'll get a set of victims and
+00:02:28.020 we're going to later on store them in
+00:02:29.640 postgresql using this PG Vector
+00:02:31.920 extension now because we're going to be
+00:02:33.420 calling the open EI apis we also need a
+00:02:36.540 DOT end file here that contains an
+00:02:38.760 openai API key and we use the python dot
+00:02:42.120 in module here and call this load.in
+00:02:44.400 function in order to load that into your
+00:02:46.860 application so that's a bit of setup
+00:02:48.720 here just make sure you download the
+00:02:50.099 State of the Union text or any other
+00:02:51.959 piece of text that you want and what
+00:02:53.640 we're going to do now is read that text
+00:02:55.379 in using the text loader and of course
+00:02:57.540 in order to make this work you also need
+00:02:59.400 to install langchin dot end and openai
+00:03:02.459 in your environment so I'm going to copy
+00:03:04.080 a command just above this cell here I'm
+00:03:06.540 going to insert the cell Above This is
+00:03:08.040 the command that you would need to run
+00:03:09.360 it's a pip install command and the
+00:03:11.340 libraries online chain the open EI
+00:03:13.260 library and python.inf so comment that
+00:03:16.140 out and what we're going to do is get
+00:03:17.580 started we have as I said a fail called
+00:03:19.860 State of the Union dot text here I'm
+00:03:22.200 going to copy that and we're going to
+00:03:23.459 bring it into the notebook and what
+00:03:25.080 we're going to do is we're going to
+00:03:26.040 create a loader object by instantiating
+00:03:28.260 the text loader that we've imported
+00:03:29.940 above and let me create some cells here
+00:03:32.040 so that we can see this better we pass
+00:03:33.959 the name of the file into this text
+00:03:35.940 loader and we're also going to pass an
+00:03:37.560 encoding and set that equal to UTF 8. so
+00:03:40.799 that gives us our loader object and we
+00:03:42.900 can get the documents from that by
+00:03:44.819 calling the loader.load function so
+00:03:47.159 let's try this out and in the cell below
+00:03:49.019 that we're going to do a couple of print
+00:03:50.700 statements here first of all we're
+00:03:52.140 printing the documents this is going to
+00:03:54.000 print each document that's loaded from
+00:03:56.099 that text loader and that's only one
+00:03:57.780 document as you can see in the second
+00:03:59.519 print statement when we print the length
+00:04:01.860 of that list of documents that gives us
+00:04:03.959 back one so now we have this state of
+00:04:06.420 the union dot text loaded in using the
+00:04:08.459 text loader and that's available as a
+00:04:10.500 document object which is a lang chain
+00:04:12.480 native object so now that we've got this
+00:04:14.700 document we're going to split it into
+00:04:16.079 chunks and we're going to use this
+00:04:17.760 object that we've imported from
+00:04:19.320 livechain it's called the recursive
+00:04:20.760 character text splitter in order to do
+00:04:22.680 that so let's go to the cell below here
+00:04:24.479 and I'm going to create a variable
+00:04:25.620 called text splitter and that is going
+00:04:27.780 to be an instance of this recursive
+00:04:30.120 character text splitter and we're going
+00:04:31.860 to pass two keyword arguments to this
+00:04:33.660 the first one is the chunk size that's
+00:04:35.759 the number of characters that we want to
+00:04:37.680 use in each Chunk from the original text
+00:04:39.960 in this case we're going to say we want
+00:04:42.060 a thousand characters in each chunk and
+00:04:44.220 then when that has read a thousand
+00:04:46.020 characters from the text it's gonna then
+00:04:48.419 create a new chunk after that and when
+00:04:50.400 it creates the new Chunk we can
+00:04:51.600 optionally specify some overlap here
+00:04:53.880 that's using the chunk overlap keyword
+00:04:56.220 argument and let's set that equal to 80
+00:04:59.100 in our case just randomly setting that
+00:05:01.380 to 80 of them once we've got the text
+00:05:03.300 splitter object what we can do is get
+00:05:05.220 back a set of text by calling the text
+00:05:07.860 splitter dot split documents function
+00:05:10.620 and the split documents function it
+00:05:12.660 takes in those documents that were
+00:05:14.100 loaded just above here using this text
+00:05:16.440 loader and then when we called the
+00:05:18.060 loader.load function that gave us back
+00:05:19.800 these documents which we're passing in
+00:05:21.660 as an argument to the split documents
+00:05:23.940 function and that gives us back a set of
+00:05:26.340 chunks essentially a set of texts that
+00:05:28.919 are a thousand characters each and that
+00:05:31.080 1000 characters is determined by this
+00:05:33.240 chunk size argument that we used on the
+00:05:35.520 text splitter so let's now see an
+00:05:37.440 example of what these chunks look like
+00:05:39.300 let's print the very first one out to
+00:05:41.520 the notebook and you can see we have
+00:05:43.560 some content here and that's set to the
+00:05:46.139 first 1000 characters of the very first
+00:05:48.780 Chunk from that original text and if we
+00:05:51.360 need to know how many chunks we have
+00:05:53.100 after splitting this up we can print the
+00:05:55.560 length of the resulting text and you can
+00:05:57.960 see here that we have 42 chunks so so
+00:06:00.120 now what we have is we have a set of
+00:06:02.039 chunks we have a set of texts that have
+00:06:04.259 been gathered from this original state
+00:06:06.300 of the union.txt file and each chunk has
+00:06:09.060 1000 characters what we want to do now
+00:06:11.460 is take each one of those chunks and
+00:06:13.800 create a vector or an embedding from the
+00:06:16.560 text that's contained within the chunk
+00:06:18.300 and of course a vector is just a set of
+00:06:20.460 numbers packed together into what is
+00:06:22.740 essentially like a python list so we're
+00:06:24.720 going to take each chunk here and we're
+00:06:26.520 going to create a vector from that and
+00:06:28.560 we're going to do that by calling the
+00:06:29.819 open AI embedding models and we pass
+00:06:32.160 through that some text and then it will
+00:06:34.380 return to us a vector for that text and
+00:06:37.199 later we'll store that Vector in the PG
+00:06:39.419 Vector database now what I'm going to do
+00:06:41.460 is go to this documentation on the
+00:06:44.160 openai website and this has some
+00:06:46.139 information about embeddings and you can
+00:06:48.660 see it has many use cases in beddings
+00:06:50.520 for example search clustering
+00:06:52.259 recommendations and normally detection
+00:06:54.500 diversity measurement and classification
+00:06:56.699 and as it says and embedding is a vector
+00:06:59.160 of floating Point numbers and the key
+00:07:01.620 Point here is that the distance between
+00:07:03.240 two vectors measures their relatedness
+00:07:05.639 it's a similarity metric between the two
+00:07:08.220 pieces of text the closer the distance
+00:07:10.259 the more similar the texts are and this
+00:07:12.780 is something that is used a lot with
+00:07:14.220 Vector databases to find the appropriate
+00:07:16.979 pieces of text when you're calling the
+00:07:19.500 open AI or other language models so how
+00:07:22.020 do we get these embeddings let's scroll
+00:07:23.639 down we can get the embeddings by
+00:07:25.500 sending our text to the embeddings API
+00:07:28.259 endpoint and we can also specify a
+00:07:30.120 choice of embedding model and the
+00:07:32.099 default that is used by Lang chain and
+00:07:33.840 the one that we're going to use is this
+00:07:35.340 one here text embedding Ada and it's
+00:07:37.800 version number two the response that we
+00:07:39.660 get from that will contain an embedding
+00:07:41.340 which we can then save to PG Vector so
+00:07:43.620 let's get started in doing this we're
+00:07:45.120 going to go back to the notebook and
+00:07:46.560 scroll down let's create an embeddings
+00:07:49.020 object here by instantiating that open
+00:07:51.300 AI embeddings object that we imported at
+00:07:54.479 the top here and that was from the line
+00:07:56.220 chain dot embeddings module we imported
+00:07:58.620 that let's now instant it and then we're
+00:08:01.080 going to test its usage by getting a
+00:08:02.940 vector back when we call the embeddings
+00:08:05.160 dot embed query function so this is a
+00:08:08.099 function defined on the instance of open
+00:08:10.380 AI embeddings it's called embed query
+00:08:12.419 and we can pass any string to this for
+00:08:14.819 example in this case testing the
+00:08:16.680 embedding model and that's going to give
+00:08:18.300 us back a vector and it's going to do
+00:08:20.099 that by calling the openai API which
+00:08:23.160 will return this Vector that you can see
+00:08:25.020 below and remember the vector is just
+00:08:27.060 like a python list of floating Point
+00:08:29.039 numbers and these numbers are according
+00:08:31.440 to the open AI embedding model
+00:08:33.020 representing this text in the best
+00:08:35.219 possible way using these floating Point
+00:08:37.080 numbers and what happens with these open
+00:08:39.539 AI embedding models they return the
+00:08:41.458 vector and it has a particular Dimension
+00:08:43.979 so let's look at that now you can see
+00:08:45.839 the dimensionality of the vector it has
+00:08:49.399 1536 numbers in that list so it's
+00:08:52.820 1536 Dimensions so when you use this
+00:08:55.680 open AI embeddings object in launching
+00:08:57.899 you are making queries to the open Nei
+00:09:00.420 API so you won't need that API key to be
+00:09:03.240 set up now the goal here is we're going
+00:09:05.100 to take this vector and we're going to
+00:09:06.779 store it in PG vector and the postgres
+00:09:09.360 database but not for this particular
+00:09:11.459 piece of text we're going to do it for
+00:09:13.080 the chunks that we've extracted from the
+00:09:15.180 state of the union text so before we do
+00:09:17.100 that let's see an example of how we can
+00:09:19.019 get an embedding for the first five
+00:09:21.720 chunks that we've extracted in that text
+00:09:24.000 I'm going to create a variable here
+00:09:25.320 called doc vectors and again we're going
+00:09:27.839 to use this embeddings object here and
+00:09:29.700 this time we're going to call another
+00:09:30.779 function it's the embed documents
+00:09:32.940 function and we're going to use these
+00:09:34.560 texts that we extracted earlier on so
+00:09:36.660 what I'm going to do is pass in a list
+00:09:38.040 comprehension here and for each text T
+00:09:40.320 I'm going to get the page content from
+00:09:43.019 that and that's going to be for each T
+00:09:44.880 and these texts and we're only going to
+00:09:46.740 use the first five so we don't send a
+00:09:48.839 call to the open AI API for every single
+00:09:51.120 piece of text in this demonstration here
+00:09:53.160 once we've done that we can print out
+00:09:54.899 the doc vectors below and you can see
+00:09:56.940 I'm actually getting a module not
+00:09:58.800 founded in here so if we scroll to the
+00:10:00.600 bottom it's saying we could not import
+00:10:02.040 The Tick token python package so let's
+00:10:04.560 copy the PIP install command here
+00:10:06.420 apparently we need this package to use
+00:10:08.760 the open AI embedding so what I'm going
+00:10:10.620 to do is paste that in here remember the
+00:10:12.600 exclamation mark at the start of that if
+00:10:14.580 you're in a Jupiter notebook that tells
+00:10:16.260 the notebook that we want to run this as
+00:10:18.480 a command and once that's completed I'm
+00:10:20.399 going to clear it out and we're going to
+00:10:21.779 go back up here and we're going to rerun
+00:10:23.640 this cell and hopefully this time we're
+00:10:25.380 going to get back five vectors for each
+00:10:27.959 chunk that we've sent to the open AI
+00:10:30.060 embedding mode now remember there's a
+00:10:31.620 lot of numbers in these vectors so we're
+00:10:33.360 not going to see that particularly
+00:10:34.560 clearly what I'm going to do is print
+00:10:35.940 out the length of the vectors we should
+00:10:38.040 see five vectors coming back here and
+00:10:40.260 let's do this in a new cell so that we
+00:10:42.000 don't always call that API we can also
+00:10:44.160 print the very first document vector by
+00:10:46.380 indexing in at 0 here and we get back
+00:10:48.959 the first Vector for that particular
+00:10:51.240 chunk the very first chunk of the State
+00:10:53.459 of the Union text so at this point let's
+00:10:55.560 introduce PG Vector into the equation
+00:10:57.839 and we're going to see how we can take
+00:10:59.279 the vectors that we are getting back
+00:11:01.440 from the API and store them in a
+00:11:03.839 postgresql database and then query that
+00:11:06.300 database to find vectors or texts that
+00:11:08.700 are similar to a given query now before
+00:11:10.680 we do this let's ask the question why
+00:11:12.839 might you want to use a vector database
+00:11:14.640 well one reason as you can see here is
+00:11:16.800 that when you send a query to the openai
+00:11:19.140 embedding API endpoint each request that
+00:11:22.019 you send is going to incur some sort of
+00:11:24.300 cost and if you're sending lots of them
+00:11:26.579 over the same pieces of text that is
+00:11:28.980 going to be inefficient it's going to
+00:11:30.240 cost you money that you could save by
+00:11:32.100 taking the resulting vectors and storing
+00:11:34.260 them in a database so if you have a lot
+00:11:36.300 of documents in a corpus and you split
+00:11:38.220 these documents further into different
+00:11:39.959 chunks and you send all of those chunks
+00:11:42.240 to the open AI endpoints if you
+00:11:44.579 continually do that for the same chunks
+00:11:46.560 in your applications rather than storing
+00:11:48.600 them in a database that is inefficient
+00:11:50.160 it's going to cost you money that you
+00:11:51.959 wouldn't need to spend otherwise and of
+00:11:53.700 course storing these vectors in a
+00:11:55.260 database is also faster rather than
+00:11:57.420 going over the network and getting the
+00:11:59.100 embedding things you can query the
+00:12:01.079 database and that can in many ways be
+00:12:03.360 faster as well and one final reason
+00:12:05.279 Vector databases they come with built-in
+00:12:07.740 similarity functions such as the cosine
+00:12:10.019 distance as well as the L2 Norm or the
+00:12:12.720 L2 distance these distance metrics are
+00:12:15.060 built in and that can help you if you're
+00:12:17.640 finding similar pieces of text to a
+00:12:19.980 given query so let's get started and
+00:12:22.019 what we're going to do is we're going to
+00:12:23.279 go to this Docker image and this is an
+00:12:25.560 image for the PG Vector extension for
+00:12:28.019 postgres and you can copy this Docker
+00:12:30.660 Pokemon here and we can paste that into
+00:12:32.640 the terminal and this is going to pull
+00:12:34.320 the PG vector image from Docker Hub and
+00:12:37.019 it's going to store that locally for you
+00:12:38.640 to use now in order to do this if you're
+00:12:40.560 on Windows or a Mac you will need Docker
+00:12:42.959 desktop installed once we have that
+00:12:44.880 installed we can run another Docker
+00:12:46.620 command it's the docker images command
+00:12:48.360 this is going to show us all of the
+00:12:49.920 images that we have on our computer and
+00:12:51.839 you can see at the top here the PG
+00:12:53.399 vector image is now here so the question
+00:12:55.560 is how do we take this image and create
+00:12:57.660 a container and run that container based
+00:13:00.180 on the image let's go back to the pg
+00:13:02.100 Vector GitHub page and as you can see
+00:13:04.200 it's got additional installation methods
+00:13:06.360 this is the one with Docker and it's got
+00:13:08.160 that Docker pull command that we just
+00:13:09.899 ran and below that as it says it adds PG
+00:13:12.540 Vector to the postgres image and we are
+00:13:14.940 going to run this particular image the
+00:13:17.040 same way as we would run the postgres
+00:13:18.779 image so let's click that link and we're
+00:13:20.519 going to be taken to the docker Hub page
+00:13:22.680 for postcode SQL and in order to start
+00:13:24.959 the postgres image I'm going to scroll
+00:13:26.700 down to this section here and we have a
+00:13:29.100 Docker run command here that tells us
+00:13:31.380 how we can run the postgres image and
+00:13:33.779 start a container based on that image
+00:13:35.639 and one thing we need to do here is
+00:13:37.320 specify the postgres password when we
+00:13:39.540 use that Docker run command so we're
+00:13:41.639 going to use a very similar command to
+00:13:43.560 this one I'm going to go back to the
+00:13:45.300 terminal and I'm going to clear out the
+00:13:47.160 docker images here and we're going to
+00:13:48.839 use the docker run command and we're
+00:13:50.820 going to give the resulting container
+00:13:52.620 and name of PG Vector Dash demo we're
+00:13:55.500 then going to set an environment
+00:13:56.880 variable within the container we can do
+00:13:58.740 that using the e flag and we're going to
+00:14:01.139 set the postgres password here and in my
+00:14:03.959 case I'm going to set that equal to test
+00:14:05.639 we're also going to add a port mapping
+00:14:07.800 here from Port 5432 on the host to 5432
+00:14:12.300 within the container and that's going to
+00:14:14.100 allow us to connect to that port in the
+00:14:16.860 container from our host and finally we
+00:14:18.839 need the name of the image that we want
+00:14:20.279 to start a container from if I scroll
+00:14:22.019 back up here it says PG vector image
+00:14:24.180 that we downloaded so we can paste that
+00:14:25.800 in at the end of the docker run command
+00:14:28.200 so let's try this out just now if we run
+00:14:30.180 this command you can see that things are
+00:14:32.519 starting up here and at the bottom it
+00:14:34.680 says that the database system is ready
+00:14:36.899 to accept connections so we are started
+00:14:39.480 we are running and now we can use PG
+00:14:42.180 Vector within our postgres database so
+00:14:44.880 let's now see how to do that now I'm
+00:14:46.680 going to use PG admin in order to
+00:14:48.720 connect to postgresql and allow us to
+00:14:51.360 view the tables through a graphical user
+00:14:53.820 interface so I've got PG admin open here
+00:14:56.639 and on the browser on the left hand side
+00:14:58.380 I'm going to right click and I'm going
+00:15:00.060 to create a new server group here and
+00:15:01.920 I'm just going to call This Server group
+00:15:03.360 bug bites that'll add that to the
+00:15:05.579 browser on the left hand side and then
+00:15:07.139 we can then register a server within
+00:15:09.300 that group and I'm just going to call
+00:15:10.740 This Server PG Vector test and then we
+00:15:13.079 can Define the connection details on the
+00:15:15.660 connection tab here now the host is
+00:15:17.519 going to be localhost we can access the
+00:15:19.860 postgresql database that's running in
+00:15:21.779 the container through localhost because
+00:15:23.639 of that Port mapping that we added and
+00:15:25.980 the ports were Port 5432 so we can keep
+00:15:28.740 that as it is and we can use the
+00:15:30.540 password that we specified in the docker
+00:15:32.760 run command and that was test once we've
+00:15:34.980 done that we can hit save here and
+00:15:36.779 hopefully this is going to make the
+00:15:38.220 connection and it does as you can see
+00:15:39.899 here we now have access to this PG
+00:15:42.240 Vector test database if we look at the
+00:15:44.880 databases in that server you can see
+00:15:46.920 we've got one called postgres for the
+00:15:49.139 demo that we're about to do I'm going to
+00:15:50.519 create a new database here and I'm just
+00:15:52.320 going to call this Vector underscore DB
+00:15:54.839 and then we can hit save and that's
+00:15:56.279 going to create a new database on that
+00:15:58.199 server called vector DB what we're now
+00:16:00.720 going to do is make a connection to this
+00:16:02.880 database on our Jupiter notebook and
+00:16:05.399 we're then going to store the vector
+00:16:06.600 embeddings that we got back from the
+00:16:08.699 open AI embedding models into this
+00:16:11.040 database so let's see how to do that now
+00:16:12.899 if we go back to the browser and go back
+00:16:14.699 to our Jupiter notebook we're going to
+00:16:16.380 need to install a couple of libraries
+00:16:18.240 here now in order to make the connection
+00:16:19.980 from python to postgres we need the
+00:16:22.560 python driver for postcode SQL so that's
+00:16:24.720 this here it's the cycle pg2 binary and
+00:16:27.420 we're also going to install another
+00:16:28.860 Library called PG vector and we can use
+00:16:31.440 the PIP install command to get both of
+00:16:33.720 these into the notebook environment once
+00:16:36.240 these are installed we're going to go to
+00:16:37.500 the documentation for launching and
+00:16:39.959 there is a page here on the PG vector
+00:16:42.300 vector store and this is one of the many
+00:16:44.399 Vector store Integrations that langchain
+00:16:46.920 has you can see others on this left hand
+00:16:49.079 sidebar for example we have Integrations
+00:16:51.420 with Azure cognitive search Cassandra
+00:16:53.759 chroma and many more here including
+00:16:56.339 mongodb Atlas as well now we're going to
+00:16:58.860 follow some of the documentation on this
+00:17:01.199 page here in order to use the PG Vector
+00:17:03.839 object and launching so let's get the
+00:17:06.179 import into our notebook from
+00:17:09.079 linechain.vectorstores.pg Vector we're
+00:17:10.740 going to go back to the notebook and I'm
+00:17:12.299 going to remove the PIP install command
+00:17:13.859 and we're going to import the PG Vector
+00:17:16.079 object once we've got that we're going
+00:17:17.819 to then set up a connection string to
+00:17:20.220 our postgresql database and this uses
+00:17:22.799 the postgres protocol here and then we
+00:17:25.439 have a user of postgres who has a
+00:17:27.359 password of test and remember we set
+00:17:29.400 that in the docker run command and then
+00:17:31.320 we have this at symbol and we have the
+00:17:33.600 host here which is just localhost with
+00:17:35.700 Port 4532 finally we have a slash and
+00:17:39.240 then we have the name of the database
+00:17:40.980 that we're connecting to in this case
+00:17:42.480 it's the vector DB and if we go back to
+00:17:44.880 PG admin that's the name that we gave
+00:17:47.039 this database here what we're also going
+00:17:49.140 to do is go back to the notebook and I'm
+00:17:50.940 going to set up a variable here called
+00:17:52.380 collection name and we're setting that
+00:17:54.299 to State of the Union vectors what we're
+00:17:56.580 now going to do is instantiate this PG
+00:17:58.679 vector object so let's copy that and
+00:18:01.020 we'll store the instance in a variable
+00:18:02.820 called DB here and we're going to pass
+00:18:04.799 some parameters to the pg Vector object
+00:18:07.200 we need to pass the embedding model that
+00:18:09.720 we're going to use here so we can use
+00:18:11.039 the embedding keyword argument and we're
+00:18:13.200 going to pass the embeddings object that
+00:18:15.240 we created above so if we go up here we
+00:18:17.280 created this here when we instantiated
+00:18:18.960 the open AI embeddings object and that's
+00:18:21.720 the object that's used to call the
+00:18:23.039 openai embedding API endpoint behind the
+00:18:26.039 scenes once we've got that we can also
+00:18:27.720 pass our documents into this PG Vector
+00:18:30.419 object these are the documents that we
+00:18:31.919 want to create embeddings from and we're
+00:18:34.080 going to use the text that we chunked up
+00:18:36.120 here from the text splitter so let's
+00:18:38.340 copy that and paste it into this
+00:18:40.559 argument we also want to specify a
+00:18:42.780 collection name here and we're going to
+00:18:44.100 set that equal to the State of the Union
+00:18:45.840 vectors and finally in order to actually
+00:18:48.059 make the connection to a postgresql we
+00:18:50.460 need to also pass a connection string
+00:18:52.440 here and we're going to do that using
+00:18:54.000 this string that we built up just above
+00:18:55.980 here now before we run this there is a
+00:18:57.840 small mistake here rather than
+00:18:59.220 instantiating PG Vector directly we are
+00:19:02.280 going to call a function on this and
+00:19:03.960 that's the from documents function and
+00:19:06.059 this is kind of like a factory function
+00:19:07.500 what this does is it takes in the
+00:19:09.539 documents and it creates the embeddings
+00:19:11.220 from those documents and stores them in
+00:19:13.679 the database so we're using the PG
+00:19:15.660 vector class and we're calling the from
+00:19:17.760 document static method here in order to
+00:19:20.039 create this DB object so let's now try
+00:19:22.140 to run this and we're going to see that
+00:19:23.820 this gives us back an error and if we go
+00:19:26.160 to the bottom here the error that we're
+00:19:27.960 getting is that the type Vector does not
+00:19:30.179 exist now this is a type that's added to
+00:19:32.640 postgres by the PG Vector extension so
+00:19:35.520 this implies that PG Vector is not set
+00:19:37.980 up on this Vector DB that we have here
+00:19:40.740 so how do we enable the PG Vector
+00:19:43.260 extension it's already loaded into the
+00:19:45.419 docker image or the docker container
+00:19:47.220 what we need to do is enable it on this
+00:19:49.260 database we can do that by using the
+00:19:51.299 query tool on PG admin or you can use
+00:19:54.000 the P SQL command line tool all we need
+00:19:56.640 to run here is the create extension
+00:19:58.679 command and we can pass the name of the
+00:20:00.840 extension in our case it's vector and
+00:20:03.000 when we run this we get back the create
+00:20:05.039 extension query returns successfully and
+00:20:07.919 now if we go back to our notebook here
+00:20:09.900 and rerun this hopefully we are not
+00:20:12.000 going to get that error anymore and
+00:20:13.799 indeed that that has completed
+00:20:15.360 successfully so we've called the PG
+00:20:17.760 Vector from documents function we've
+00:20:20.160 passed the embedding object that we want
+00:20:22.140 to use to create the embeddings as well
+00:20:24.480 as the text that we want to embed so the
+00:20:27.059 question is has this added anything to
+00:20:29.220 our database let's go back to PG admin
+00:20:31.740 and we're going to go to the schemas
+00:20:33.120 here and we're going to go down to the
+00:20:34.740 tables within this schema and you can
+00:20:36.600 see we now have two tables here we have
+00:20:38.580 a line chain PGE collection table let's
+00:20:41.039 have a look at all of the rows in that
+00:20:42.780 table this gives us back a single row
+00:20:45.120 and it contains a uuid along with a name
+00:20:48.120 and that name is matching The Collection
+00:20:50.280 name that we set in the Jupiter notebook
+00:20:52.440 State of the Union vectors and we also
+00:20:54.720 have another table here of line chain PG
+00:20:57.299 embedding so let's look at the first one
+00:20:59.100 100 rows of that table and we're going
+00:21:01.500 to see what has been created here when
+00:21:03.539 we called that from documents function
+00:21:05.700 I'm going to make this bigger here and
+00:21:07.440 we can see we have a uuid we have a
+00:21:09.600 collection ID that matches the State of
+00:21:11.700 the Union collection that we set but the
+00:21:13.919 important column here is the embedding
+00:21:15.900 this is storing the embedding that we
+00:21:17.820 got back from the open AI API it's
+00:21:20.160 storing it in this column and it has a
+00:21:22.500 type of vector this is a type that's
+00:21:24.299 added by the PG Vector extension and if
+00:21:27.480 we scroll to the other columns in this
+00:21:29.640 table we also have a document column
+00:21:31.500 that stores the text from the chunk that
+00:21:34.320 was used to create the vector so
+00:21:36.179 importantly this table contains the
+00:21:38.340 embedding and the original document for
+00:21:40.740 that embedding and line chain has stored
+00:21:43.020 all this into postgresql when we called
+00:21:45.179 that from documents function so how can
+00:21:47.340 we actually use these embeddings that
+00:21:49.559 have been stored let's see an example
+00:21:51.360 now if we go back to our notebook I'm
+00:21:53.460 going to go down here to the cell below
+00:21:55.500 and I'm going to define a query here
+00:21:57.539 let's see what did the president see
+00:21:59.640 about Russia we can then use this DB
+00:22:02.039 object and we're going to call a
+00:22:03.900 function on that called similarity
+00:22:06.240 search with score so I'm going to tab
+00:22:08.760 over here for some Auto completion it's
+00:22:10.740 this function here similarity search
+00:22:12.539 with the score and we can pass our query
+00:22:14.700 into that and as well as the query we
+00:22:16.860 can pass the number of documents that we
+00:22:18.600 want to get back let's say we want to
+00:22:20.100 get back two vectors or two documents
+00:22:22.980 from that table that are most similar to
+00:22:25.620 the query that we've issued above here
+00:22:27.600 let's store the result of that in a
+00:22:29.340 variable called similar and we can look
+00:22:31.500 over each of these and print them to a
+00:22:34.080 notebook so for each document in that
+00:22:36.419 similar return statement let's print
+00:22:38.340 them to the notebook and if we look
+00:22:40.380 below at the documents that are coming
+00:22:41.880 back you can see that the content does
+00:22:43.919 explicitly mention Russia in these
+00:22:46.440 comments and that is true for the second
+00:22:48.720 document as well which is talking about
+00:22:50.400 Putin and Russia so what's happened here
+00:22:52.740 is we've taken this query what did the
+00:22:55.080 president say about Russia and we've
+00:22:56.820 called the similarity search with score
+00:22:58.740 function which under the hood is sending
+00:23:01.020 a query to our postgresql table and that
+00:23:03.780 query takes the text that we're passing
+00:23:06.059 in here and it is automatically
+00:23:07.500 embedding that using the embedding model
+00:23:09.900 that we have here in the from documents
+00:23:12.179 function and what's being returned are
+00:23:14.039 the two most similar documents to this
+00:23:17.340 particular query and this is very useful
+00:23:19.380 in our applications if we have a large
+00:23:22.140 Corpus of embedded texts we can very
+00:23:25.020 quickly find the texts that are most
+00:23:27.120 similar using the similarity metrics
+00:23:29.520 that are built into PG vector and other
+00:23:31.980 Vector databases and each document that
+00:23:34.380 is returned here not only contains the
+00:23:36.659 document object with the text but it
+00:23:38.640 also contains this distance metric here
+00:23:40.740 and the lower the distance the more
+00:23:42.720 similar the text is to the original
+00:23:44.760 query and you can see the distance here
+00:23:46.860 has a value of 0.56 the one below that
+00:23:49.919 of 0.57 so these are the two pieces of
+00:23:53.159 text that are most similar to the query
+00:23:55.620 that we passed in and the PG Vector
+00:23:57.840 extension allows us to find the is using
+00:23:59.880 that geometric distance calculation that
+00:24:02.640 it adds to postgresql now if we go back
+00:24:05.039 to the GitHub page for PG Vector we're
+00:24:07.200 going to look at the section here and
+00:24:09.059 you can see that create extension
+00:24:10.559 command that we had to issue earlier on
+00:24:12.539 what we also have is the ability to
+00:24:14.940 insert embeddings into a table using the
+00:24:17.640 normal SQL insert into statement and you
+00:24:20.400 can see we can also create tables and
+00:24:22.380 use the vector data type on a particular
+00:24:25.020 column if we scroll down what I'm going
+00:24:27.179 to look at is some of the new operators
+00:24:29.159 that are added to the database by PG
+00:24:31.980 Vector we can get these here for example
+00:24:34.260 in the distances section we have this
+00:24:36.720 operator here we also have this one here
+00:24:39.299 for the negative inner product and we
+00:24:41.880 have the cosine distance operator here
+00:24:44.340 so we can use these different distance
+00:24:45.720 metrics and the top one I should have
+00:24:47.580 said is the L2 distance we can use these
+00:24:50.159 to take a vector and find the most
+00:24:52.440 similar vectors based on the distance in
+00:24:55.440 the geometric Vector space so let's see
+00:24:58.260 an example of how to issue a raw SQL
+00:25:00.900 query and find this information what I'm
+00:25:03.360 going to do is go back to the Jupiter
+00:25:04.980 notebook and we're going to get an
+00:25:06.059 embedding for a random query or rather
+00:25:08.700 we can actually use this query that we
+00:25:10.919 had above so I'm going to remove this
+00:25:12.360 code here and I'm going to issue another
+00:25:15.000 statement here we're going to use the
+00:25:16.559 embeddings object and we're going to
+00:25:18.059 call the embed query function and pass
+00:25:20.580 that query into that that's going to
+00:25:22.559 give us back a vector and what I'm going
+00:25:24.600 to do is copy this vector and we're
+00:25:26.340 going to bring that into an SQL
+00:25:28.140 statement so to replicate what line
+00:25:30.179 chain did what I'm going to do is go
+00:25:31.799 back here and to the pg embedding table
+00:25:34.380 I'm going to go to the query tool and
+00:25:36.240 we're going to select a particular
+00:25:37.860 column from this table the document
+00:25:39.779 column and we're also going to add
+00:25:41.159 another statement here for the embedding
+00:25:43.440 in a second the table we're getting this
+00:25:45.419 data from is the line chain PG embedding
+00:25:48.059 table and we are going to limit the
+00:25:49.919 results to two results as we did in the
+00:25:52.559 Jupiter notebook now what we're going to
+00:25:54.240 pass in here is not the raw embedding
+00:25:56.700 itself we're going to calculate the
+00:25:58.440 cosine distance between every single
+00:26:01.260 Vector in this table and the vector that
+00:26:03.779 we pulled out here for this query so
+00:26:06.240 let's go back to PG admin and we're
+00:26:08.460 going to use the brackets here I'm going
+00:26:10.320 to put a statement in here we're going
+00:26:11.700 to look at the embedding column and
+00:26:13.440 we're going to use the cosine distance
+00:26:15.000 and at this point I'm going to pass in a
+00:26:17.279 string containing the vector that we got
+00:26:19.740 back here from openai and this is
+00:26:22.320 actually a little bit easier to do if
+00:26:23.820 you print it directly with a print
+00:26:25.380 function in Python it will then rather
+00:26:27.779 than one floating Point number per line
+00:26:29.820 it will print it out like this you can
+00:26:31.380 then copy that and we're going to go
+00:26:32.940 back to PG admin and we're going to
+00:26:34.980 paste that Vector into this cosine
+00:26:37.559 distance calculation here and that's
+00:26:39.600 going to be as a string make sure you
+00:26:41.279 surround the vector with the string
+00:26:43.080 characters and then we're going to Alias
+00:26:44.940 the result for each row in the table
+00:26:46.799 we're going to call the Alias cosine
+00:26:48.600 distance and then finally if we go back
+00:26:50.760 to the SQL statement here we're going to
+00:26:53.460 order the results by the cosine distance
+00:26:55.799 and remember the smaller values of the
+00:26:58.140 distance indicate the most similar
+00:27:00.179 vectors so if we want to get the most
+00:27:01.860 similar we can just call order by
+00:27:03.419 because it goes from smallest to largest
+00:27:05.640 by default and we can get the two most
+00:27:07.860 similar by limiting the results to so
+00:27:10.380 this is an SQL query that is going to
+00:27:12.360 use the cosine distance between every
+00:27:14.460 embedding and this particular Vector
+00:27:16.380 that we're passing in it's going to
+00:27:17.640 calculate the cosine distance and it's
+00:27:19.200 going to return to us the two most
+00:27:21.360 similar documents from that table to the
+00:27:24.299 query that we're passing in so let's
+00:27:25.980 execute that query and you can see the
+00:27:28.020 result that we're getting back here when
+00:27:29.760 we expand this text you can see that
+00:27:32.159 this is indeed talking about Russia so
+00:27:34.320 there is a measure of similarity to the
+00:27:36.000 query that we issued and we got back a
+00:27:37.679 vector for that query and that Vector is
+00:27:40.440 passed directly into the SQL and we're
+00:27:42.960 using well I've changed this now to the
+00:27:45.179 L2 distance but we can also use the
+00:27:46.980 cosine distance here and we get back a
+00:27:49.320 set of results and we can look at the
+00:27:51.419 second document as well and you can see
+00:27:53.700 this is also talking about Russia so
+00:27:55.919 we're getting back similar queries and
+00:27:57.840 this is how PG vector works you can use
+00:28:00.179 these operators over a vector column
+00:28:03.059 type and if you pass another Vector in
+00:28:05.460 as a comparison Vector it's going to
+00:28:07.500 return to you the most similar vectors
+00:28:09.419 in the table and remember the reason
+00:28:11.460 these are the most similar is because we
+00:28:13.200 are ordering by the cosine distances
+00:28:15.360 that we're getting back here if you
+00:28:17.279 remove the ordering it's just going to
+00:28:18.600 give you back for each row in the table
+00:28:20.640 the cosine distance as an additional
+00:28:22.919 column and just to finish this video I'm
+00:28:25.020 going to show one more query let's say
+00:28:26.700 we wanted to get the average Vector in
+00:28:29.100 this table we can use the average
+00:28:30.840 function in SQL and we can pass in that
+00:28:33.360 embedding column which remember is a set
+00:28:35.580 of
+00:28:36.559 1536 dimensional vectors we can get that
+00:28:39.659 average and we're going to take that
+00:28:41.159 from the line chain PG embedding table
+00:28:44.279 so for every single Vector in the table
+00:28:46.380 this is going to return to us another
+00:28:47.940 Vector of the same Dimension that is the
+00:28:50.640 average of every single Vector in that
+00:28:53.279 table and this average Vector can be
+00:28:55.200 thought of as representing the average
+00:28:57.179 piece of text and the Corpus that we've
+00:28:59.880 passed into this table and the average
+00:29:01.620 Vector you might also hear it called a
+00:29:03.419 centroid so that's all for this video in
+00:29:05.460 this video we have looked at the PG
+00:29:07.380 Vector extension for postgresql and how
+00:29:09.900 that can be used to store vectors using
+00:29:12.419 the vector data type and how it also
+00:29:14.760 adds different operators that allow you
+00:29:16.799 to find the most similar vectors to
+00:29:19.140 another one that you're passing in as a
+00:29:21.299 query we've also looked in this video at
+00:29:23.279 how to use LINE chain tools such as the
+00:29:25.679 PG vector class in order to work with
+00:29:28.679 embeddings and integrate with embedding
+00:29:31.500 databases or victim databases we've seen
+00:29:33.899 how to use this open AI embeddings
+00:29:35.700 object in order to call the openai apis
+00:29:38.640 for the embedding models and get back
+00:29:40.620 vectors for a piece of text and then we
+00:29:43.620 store that text in the vector database
+00:29:45.600 which can then be used later on in our
+00:29:48.000 applications so I hope this video has
+00:29:49.740 been helpful if you're interested in
+00:29:51.059 more videos on this type of content just
+00:29:53.399 let me know in the comments thanks again
+00:29:55.140 for watching give it a like And
+00:29:56.820 subscribe to the channel if you've
+00:29:58.200 enjoyed and we'll see you in the next
+00:29:59.880 video

@@ -1,0 +1,524 @@
+# tactiq.io free youtube transcript
+# GitHub Copilot Mission Control: Assign, Steer & Track Your Coding Agents | GitHub Universe 2025
+# https://www.youtube.com/watch/UCm3fGTKGjM
+
+00:00:00.560 Hello all, welcome to TechR. Today we
+00:00:04.880 are exploring into one of the most
+00:00:06.960 exciting GitHub copilot features
+00:00:09.760 announced at Universe 2025. The mission
+00:00:13.599 control view of managing copilot agent
+00:00:16.640 activities.
+00:00:18.720 GitHub Universe is GitHub's flagship
+00:00:21.600 annual event where the latest
+00:00:23.519 innovations, AI breakthroughs, and
+00:00:26.560 developer tools are unveiled to shape
+00:00:29.039 the future of software development. This
+00:00:32.079 year's Universe introduced a collection
+00:00:34.800 of incredible updates, each packed with
+00:00:38.399 powerful enhancements designed to
+00:00:40.640 elevate the developer experience. And in
+00:00:43.760 this video we will explore how mission
+00:00:46.640 control gives you a unified intelligent
+00:00:50.079 way to assign, steer and track your
+00:00:53.360 copilot coding agent in action. We are
+00:00:56.879 in this agentic era where every
+00:00:59.920 developer's day-to-day activities start
+00:01:02.399 by assigning task to different agents.
+00:01:05.760 Our dream is to have an AI assistant who
+00:01:10.479 doesn't just suggest the code but
+00:01:12.799 actually takes care of the task, follow
+00:01:15.520 the directions and report back when it
+00:01:18.000 is done. We have reached that point.
+00:01:21.119 With GitHub Copilot machine control, you
+00:01:24.400 can now assign,
+00:01:26.479 steer, and track what your coding agents
+00:01:30.159 are doing from one single place. In this
+00:01:34.079 video, we will dive deeper into what
+00:01:36.880 this new feature means to you, how to
+00:01:39.680 use it effectively and why it is a huge
+00:01:42.960 step forward in agentic AI assisted
+00:01:46.479 development. If you have adopted the
+00:01:49.600 agentic or AIdriven SDLC,
+00:01:54.000 your days are filled with context
+00:01:56.000 switching. It's not only the context
+00:01:58.240 switching between your tasks like the
+00:02:00.719 coding, unit testing, documentation,
+00:02:03.040 refactoring, but also now we have a
+00:02:06.640 different kind of context switching
+00:02:08.560 where you start a copilot session from
+00:02:12.000 VS code, another in your github.com
+00:02:15.280 platform, maybe even triggering a couple
+00:02:17.920 of sessions from your multiple CLI. The
+00:02:21.360 complexity of your context switching
+00:02:24.480 between the task and between the agent
+00:02:27.680 sessions and different interfaces.
+00:02:31.120 It is very hard to remember which AI
+00:02:33.519 task did completed in progress where you
+00:02:37.120 want to intervene. Also, you may be
+00:02:39.440 wondering whether your agent finished a
+00:02:42.480 refactoring job that may kickstart
+00:02:45.280 another set of work for you. Did it open
+00:02:48.319 a PR where it's ready for reviews? All
+00:02:51.280 such questions comes when we deals with
+00:02:53.760 multiple agents.
+00:02:56.080 GitHub listened to your thoughts.
+00:02:58.319 Mission control fixes that by giving you
+00:03:00.959 one central dashboard to see gate and
+00:03:04.879 manage every coding agent task. You may
+00:03:08.640 be wondering what is exactly this
+00:03:10.879 mission control brought to the table.
+00:03:14.480 Let us look into the journey of copilot.
+00:03:19.200 The copilot began as a AI based code
+00:03:22.239 completion tool which help us in the ID
+00:03:25.280 to complete your coding suggestions.
+00:03:28.720 Then came the copilot chart where we
+00:03:31.040 started talking to our AI agents and
+00:03:34.080 then we got the agent mode in the ID.
+00:03:36.799 Still as a developer we are in control.
+00:03:39.680 We interacted with the agent mode
+00:03:42.159 stopped in the middle and accepted few
+00:03:44.959 of the file suggestions etc. After that
+00:03:49.280 the real agentic era started where the
+00:03:52.959 copilot coding agent an AI partner that
+00:03:56.319 can carry out the India task introduced
+00:03:59.920 along with the copilot coding agent in
+00:04:02.400 the platform. Copallet CLI also came
+00:04:05.360 with a lot of great features. As a
+00:04:08.319 developer, my extended screen have
+00:04:11.599 minimum of five different CLI terminals
+00:04:14.560 talking to multiple agents at the same
+00:04:17.519 time. I interact with the copiler coding
+00:04:20.000 agent from VS code as well as in the
+00:04:22.800 github.com platform.
+00:04:25.360 With mission control, you finally have a
+00:04:28.560 way to command those agents. the agents
+00:04:31.680 irrespective of started from the CLI or
+00:04:35.360 VS code or com you have a centralized
+00:04:39.280 place to assign the task or steer their
+00:04:43.120 progress interact with them and add more
+00:04:46.880 task in the middle of execution track
+00:04:49.919 the outcomes like a true mission
+00:04:52.160 director.
+00:04:53.680 This is the true power of agentic AI.
+00:04:56.639 You are in full control where the agents
+00:04:59.759 are actually doing the activities.
+00:05:02.800 This the mission control your new
+00:05:05.759 cockpit for AI development. You can
+00:05:08.880 navigate to the mission control using
+00:05:11.919 github.com/copilot
+00:05:14.720 agents. Every task your copilot agent
+00:05:18.400 creates, every PR they open, closed,
+00:05:22.080 every changes they make, all visible in
+00:05:25.840 one streamlined view. You can check the
+00:05:28.880 status, review the logs, how it's
+00:05:31.759 performed the activities, jump into the
+00:05:34.720 PR and verify whether the PR have all
+00:05:38.639 the details and also steer the agent in
+00:05:42.080 the mid session. Let us explore that
+00:05:45.280 steering mode in a later point. Right
+00:05:48.320 now this is a completed task where I
+00:05:52.320 have started the task at the time of an
+00:05:55.039 repository creation which defined a
+00:05:57.759 complete real store management system
+00:06:01.280 with a lot of changes. This the PR
+00:06:03.600 details where 23 files are completed and
+00:06:07.360 it's got merged also. That's why in the
+00:06:10.560 agent section it's in the closed tab and
+00:06:13.919 in the open tab we have only one right
+00:06:16.319 now. Let us start with assigning a task.
+00:06:19.759 Think about this like delegating a work
+00:06:22.639 to a teammate except in this case your
+00:06:26.160 teammate is an AI agent. No complaint
+00:06:30.160 back it just listen take the context and
+00:06:33.680 complete your work. So we are going to a
+00:06:37.039 repository called Micasa W. It's right
+00:06:40.160 now an angular [clears throat]
+00:06:41.360 application.
+00:06:43.039 The application is uh for a furniture
+00:06:45.919 store with a some of the pages. Let us
+00:06:50.479 have a look on the pages right now. It's
+00:06:53.120 deployed as part of GitHub pages and I'm
+00:06:56.800 just opening the deployed application.
+00:06:59.520 This is a furniture application, online
+00:07:02.160 furniture application where homepage
+00:07:04.800 consist of different sections like the
+00:07:08.240 products information, the furniture
+00:07:10.720 details, contact and everything. And
+00:07:13.039 shops have the list of items with the
+00:07:16.000 price and the discount and all the links
+00:07:18.960 associated with that. About is not
+00:07:22.080 defined. Similarly, contact is also not
+00:07:24.880 defined. These two are to define. So
+00:07:27.520 only two pages right now. This is our
+00:07:29.759 application and it's a simple angular
+00:07:32.400 application with a lot of hardcoded
+00:07:34.319 values. No backend CLI. So you can say
+00:07:37.759 it's a prototype. We started with
+00:07:39.840 prototyping
+00:07:41.440 and remember this endear application is
+00:07:43.840 developed by my copilot coding agent. I
+00:07:46.960 provided the Figma designs with the help
+00:07:49.520 of MCP. Copilot is able to achieve this
+00:07:53.039 application. Now we are going to work on
+00:07:56.319 this application in our agent mode.
+00:07:59.919 So the initial prototype is completed.
+00:08:02.560 Obviously our look is to define the APIs
+00:08:06.479 and the database schema. So I'm asking
+00:08:09.840 copilot to refactor my kasa v
+00:08:13.680 application.
+00:08:16.479 What are things I need to do? define a
+00:08:19.360 proper API using net
+00:08:25.280 let decide the version and all. I need a
+00:08:28.720 donet API. I have a couple of
+00:08:32.080 requirements. Let me just complete it.
+00:08:34.399 Define a SQL light database
+00:08:39.919 schema by extracting the
+00:08:44.399 product and shop details.
+00:08:50.160 Define sample data as part of the
+00:08:56.560 database.
+00:08:59.120 replace all the
+00:09:02.640 hardcoded
+00:09:04.399 data in the UI with proper API endpoint
+00:09:11.519 integration.
+00:09:14.320 So we defined our requirements to
+00:09:16.959 refactor the Kasa by angular application
+00:09:21.519 into API project and database schema.
+00:09:24.959 It's a reverse angle. We are extracting
+00:09:27.279 everything from casav. So assign this
+00:09:30.720 task to copilot. You can see immediately
+00:09:33.279 copilot start working on that and
+00:09:35.839 initializing a PR. Let it initialize the
+00:09:39.839 PR. Once it's initialized the PR, we can
+00:09:43.120 directly go into that and you can
+00:09:46.640 observe that copilot started the initial
+00:09:49.200 PR with our original prompt as the
+00:09:53.279 description. After initial analysis,
+00:09:56.480 this will be getting replaced with the
+00:09:59.200 step or task copilot is going to
+00:10:01.680 perform. Let copilot complete this task.
+00:10:05.360 Meanwhile, as a developer, I'm switching
+00:10:08.160 to my VS code where the same application
+00:10:11.519 is loaded and I have observed that the
+00:10:14.320 readme is not providing the complete
+00:10:16.800 detail. I'm going to start another
+00:10:19.680 thread here. Update the readme with
+00:10:22.480 proper feature
+00:10:25.440 information
+00:10:27.040 and other details.
+00:10:30.399 Simple prompt to update the readme file
+00:10:33.920 with complete details. This task is also
+00:10:37.279 going to be delegated to copilot coding
+00:10:40.560 agent. You can continue or learn more
+00:10:45.040 about coillet coding agent. Whatever the
+00:10:47.680 task you want to take, you can do it.
+00:10:50.560 Now the delegation process in progress.
+00:10:53.600 Once it's properly delegated to cop
+00:10:56.160 coding agent, you will be getting a PR
+00:10:59.120 details where agent start working on
+00:11:02.640 updating your readme file.
+00:11:06.320 It can be the updation of readme file or
+00:11:08.800 it can be the updation or creation of
+00:11:11.839 the complete unit test cases.
+00:11:14.160 refactoring we already started or a
+00:11:16.800 complete feature implementation as we
+00:11:19.120 don't have an about page or a contact
+00:11:22.399 page I need a simple contact page I can
+00:11:25.760 ask copallet to start working on that as
+00:11:28.640 well so this one is created and the
+00:11:31.600 details are available here in your ID
+00:11:34.640 itself if you want to stick to the ID
+00:11:37.200 itself you can use the GitHub extensions
+00:11:40.480 to monitor all the p the ones you assign
+00:11:44.480 to copilot as well as the created by you
+00:11:48.640 from the ID itself. In this case, there
+00:11:51.279 are two draft p where copilot is working
+00:11:54.880 the readme file which we started from
+00:11:57.920 the ID and also the refactoring casaw
+00:12:01.920 which we started in com. So both are in
+00:12:04.959 draft mode in progress and copet is
+00:12:08.399 working on these two PR. In case there
+00:12:12.720 are other PR created by me or waiting
+00:12:15.600 for my review, all details are available
+00:12:18.160 in this particular extension. If I want
+00:12:21.120 to track everything from the ID, I have
+00:12:24.320 this feature available integrated to my
+00:12:27.200 ID. So there are two
+00:12:30.639 parallel threads started. Let me just
+00:12:33.040 refresh the agent control. I can see
+00:12:35.760 that copilot agent is working two of my
+00:12:38.880 task here. Refactoring and readme. It's
+00:12:42.560 not only two agent sessions. If you want
+00:12:46.079 to add some more agent sessions, you
+00:12:48.880 will be able to do that one. For
+00:12:51.360 example, in our application, we don't
+00:12:53.760 have a proper contact page and I'm
+00:12:58.320 asking copilot to design that page all
+00:13:00.639 together. Design a proper contact page
+00:13:05.680 with all details aligned to existing
+00:13:09.920 styles.
+00:13:12.720 Starting another agent thread. So we
+00:13:16.240 started one more agent thread which is
+00:13:18.959 cued. Right now there are three
+00:13:20.880 different agents working for us. Now
+00:13:23.600 going to the refactoring
+00:13:27.040 agent work. The agent came up with a
+00:13:29.839 detailed uh plan. The checklist is
+00:13:33.680 creating the API database schema
+00:13:37.279 integrate API with the front end testing
+00:13:40.000 and validating. So these are the step
+00:13:42.959 copilot is going to do. I understand
+00:13:45.600 that I missed the API unit test project
+00:13:48.720 as part of this. So I am going to ask a
+00:13:52.240 pilot. This is called steering or you
+00:13:55.360 are going to intervene in the middle of
+00:13:58.639 the session.
+00:14:01.120 This is the real game changer. In real
+00:14:04.160 time you are asking copilot to modify
+00:14:07.360 the flow or include a different thing.
+00:14:11.440 You can interact with the copilot coding
+00:14:13.519 agent while it is coding itself. In this
+00:14:16.959 case, I'm going to ask copilot
+00:14:20.399 at API test project and complete test
+00:14:26.320 cases under / API
+00:14:30.880 test folder.
+00:14:33.600 So I need a different one. API folder
+00:14:36.880 will contain my APIs. Along with that I
+00:14:41.519 need a test folder with all my test
+00:14:44.160 projects.
+00:14:46.079 So adding this task to copilot after the
+00:14:50.560 current share that is a building net API
+00:14:53.839 that's a tool execution. Once this tool
+00:14:56.399 execution complete copilot will look
+00:14:59.120 into my suggestion or my comments and
+00:15:02.480 start including that as part of the task
+00:15:05.519 list. It immediately adjust its plan,
+00:15:09.360 rewrite the code and continue the
+00:15:12.639 execution.
+00:15:14.800 We received a response from copilot. I
+00:15:17.760 acknowledge the new requirement that is
+00:15:20.000 adding an API test project and also it
+00:15:23.279 acknowledged that it will create a test
+00:15:25.839 project for API with comprehensive test
+00:15:28.720 cases. So this will be added as a new
+00:15:32.320 task and included as part of it the
+00:15:35.920 endear execution. This going to be the
+00:15:39.279 real interaction between you and your
+00:15:42.480 agents. So let copilot agent works on
+00:15:45.839 this meantime going back to the chat
+00:15:49.360 area. This is the place we do the
+00:15:52.079 brainstorming or discussion with the
+00:15:54.480 copilot. Add the context as multiple
+00:15:58.160 things. sometimes create an issue then
+00:16:00.399 assign that issue to copilot. There is
+00:16:03.440 an inventory.net library project where
+00:16:06.560 multiple teams are contributing library
+00:16:09.519 elements. I have asked copallet to check
+00:16:12.800 whether this particular repository have
+00:16:14.880 a code comments and documentation.
+00:16:17.360 Documentation angle we have a readme and
+00:16:19.839 testing empty files. Looks fine. But
+00:16:23.040 when it comes to source code files, the
+00:16:26.320 controller files, there is not enough uh
+00:16:30.639 XML based documentation. So the summary
+00:16:33.839 is that the code includes clear method
+00:16:36.880 naming but lacks detailed code comments
+00:16:39.920 or documentation. So now I need a proper
+00:16:43.199 documentation for this particular
+00:16:45.440 repository. So there is a slash task
+00:16:49.120 defining the task for copilot coding
+00:16:52.399 agent. So slash task at detailed code
+00:16:57.759 comment and documentation
+00:17:01.120 for my controller methods.
+00:17:07.359 So you do the analysis with the help of
+00:17:09.760 copilot chart. From the chart directly
+00:17:12.640 using slash task you can hand over your
+00:17:17.119 work to copilot coding agent. So you are
+00:17:20.240 interacting with the coding agent
+00:17:22.400 smoothly using t / task method. This is
+00:17:26.880 a real handover. You just hand over your
+00:17:29.760 work the identified issues. Maybe you
+00:17:32.480 are doing identification or root cause
+00:17:35.120 of a particular bug. Once you identify
+00:17:37.440 it, you hand over to coding agent to fix
+00:17:40.400 it. In this case, it's a lack of
+00:17:42.799 documentation or it can be a refactoring
+00:17:46.160 or implementation of the exception
+00:17:48.240 handling or missing accessibility
+00:17:51.039 standards. You can define your own task.
+00:17:54.480 Hand over to copilot coding agent using
+00:17:57.840 /task. Once it's hand over, it will be
+00:18:01.200 available under your agent's mission
+00:18:04.000 control area. Just refreshing you have
+00:18:07.200 this the one commence for inventory.net.
+00:18:10.720 So there are three agents working for
+00:18:14.160 me. One is completed. So four different
+00:18:17.520 agent task be kickstarted. There is one
+00:18:21.200 more feature available that's a custom
+00:18:23.840 agent. You can define custom agents and
+00:18:27.679 handover. That part we will discuss as
+00:18:30.720 part of our next video. So mainly the
+00:18:33.840 mission control is the unique place for
+00:18:37.600 handing over or delegating the task. We
+00:18:40.480 have looked at the mission control. How
+00:18:43.760 to assign the task from mission control
+00:18:47.039 from copilot chart using / task from VS
+00:18:50.799 code and get all the views in the
+00:18:53.919 centralized mission control view. You
+00:18:56.480 will be able to track the progress of
+00:18:58.960 your agents using the machine control
+00:19:02.400 UI. Agent will give you the proper
+00:19:06.400 information. In this case, the
+00:19:08.400 refactoring completed the first set of
+00:19:10.960 task and it's doing the testing
+00:19:14.320 and validation steps. Apart from this,
+00:19:17.600 the real power or the real new feature
+00:19:20.799 introduced here is the steering or you
+00:19:23.760 can interact while the copal coding
+00:19:26.000 agent works. In our case, as part of
+00:19:28.559 interaction, we asked Copal coding
+00:19:31.039 agents to include an API test project as
+00:19:34.640 part of its works. It's created the test
+00:19:37.919 project task in the middle of the
+00:19:40.240 checklist and start working. This one is
+00:19:43.280 not part of our initial
+00:19:46.160 prompt but in the middle of the work we
+00:19:49.520 asked copal to change the direction and
+00:19:52.559 include or modify the existing flow
+00:19:56.799 that's a steering effect let us review
+00:19:59.679 the progress of our refactoring task the
+00:20:03.440 agent is working on this refactoring
+00:20:06.400 while you are referring the progress of
+00:20:09.360 a single task if you want to look at the
+00:20:11.840 other agent sessions you have all the
+00:20:14.480 agent sessions S here you can quickly
+00:20:17.679 see there are three agent sessions in
+00:20:20.640 progress. Some of them are completed and
+00:20:24.320 the previous chat history as well. In
+00:20:27.280 case you want to jump into a specific
+00:20:29.440 agent session, you can do it from here.
+00:20:32.640 Click any task it will open the logs and
+00:20:35.360 jump straight to that PR Copilot
+00:20:37.840 created. Now we are in the refactoring
+00:20:40.640 PR created by Copilot. It's almost
+00:20:44.159 completed doing the code security scan.
+00:20:48.400 That is another feature released as part
+00:20:51.039 of universe 2025.
+00:20:53.840 Any PS created by Copilot coding agent
+00:20:59.440 automat
+00:21:00.960 using GitHub advanced security that's a
+00:21:04.000 code will ensure that copilot created
+00:21:07.600 code is secure. So you don't need to
+00:21:10.960 worry about the security of the code
+00:21:13.200 generated by copilot coding agent. We
+00:21:16.320 will look that further in a different
+00:21:18.320 video. Here it's running the codeql
+00:21:21.120 security scan for the changed files.
+00:21:26.159 So let us see the PR overview. It's
+00:21:29.120 created the API infrastructure test
+00:21:32.000 project database schema sample data
+00:21:35.280 integrated with the angular front end
+00:21:37.919 testing and validation done by coding
+00:21:40.000 agent documentations are updated or
+00:21:43.280 created new documentation
+00:21:45.600 and also it's having the screenshot
+00:21:47.840 looks exactly like our application
+00:21:50.320 itself
+00:21:52.159 detailed screenshots captured here and
+00:21:55.200 how to run the application we need to
+00:21:57.440 start with the API line then start the
+00:22:00.000 angular application
+00:22:02.400 then run the test cases. The technical
+00:22:05.679 details are also provided in detail. Now
+00:22:09.039 if you feel you want to continue your
+00:22:11.679 journey bringing this PR PR means
+00:22:15.840 obviously Copal created new branch where
+00:22:18.799 all the changes are captured. If you
+00:22:21.280 want to continue the task in your
+00:22:23.760 favorite ID maybe a GitHub web or the VS
+00:22:27.200 code or code spaces you will be able to
+00:22:29.919 do that using code option available on
+00:22:33.520 top. Either you can open it in the code
+00:22:35.919 space copilot created branch will be
+00:22:39.440 directly loaded in your code space or in
+00:22:42.080 local using VS code insider or desktop
+00:22:45.600 or the CLI mode. All sessions stay in
+00:22:49.039 sync. So let me just open this
+00:22:51.840 particular branch in VS Code Insider.
+00:22:55.520 Directly going to VS Code Insider.
+00:23:01.120 Allow it. Clone and open. Just adding a
+00:23:05.760 review folder for me to review it.
+00:23:09.120 Select the destination. This repository
+00:23:12.159 is getting cloned to VS Code right now
+00:23:15.360 directly from our agent session. This
+00:23:19.280 means you can start a task on web,
+00:23:22.640 review it on desktop and merge it from
+00:23:25.520 mobile. Based on your preference, you
+00:23:29.520 can switch between different
+00:23:33.039 ids and coding platforms smoothly using
+00:23:37.200 agent mission control dashboard. Here we
+00:23:40.640 have the refactored application
+00:23:42.640 available. the SRC that's a modular one
+00:23:46.240 available earlier but with changes in
+00:23:49.440 terms of integration of the services the
+00:23:52.559 product services are integrated here and
+00:23:56.000 the API project contain a casabive API
+00:23:59.120 with a controller product controller
+00:24:01.120 with the two methods for getting all the
+00:24:03.280 products and a specific product details
+00:24:08.480 and we have asked for a test project
+00:24:11.279 under the API That's a test project
+00:24:14.320 available. So if I go to the test
+00:24:16.960 project, you can see there are multiple
+00:24:20.320 test cases added for the DV context and
+00:24:24.880 the controller testing elements. The
+00:24:27.200 fact is defined here. That's the test
+00:24:29.679 cases associated with the DV context and
+00:24:32.480 the controller test cases are available
+00:24:34.480 here where a valid ID returns the
+00:24:38.159 product invalid ID returns no data. So
+00:24:42.080 multiple test cases added based on the
+00:24:45.440 negative and the positive test cases.
+00:24:48.559 Let us summarize what points we
+00:24:51.760 discussed till now. First we started
+00:24:55.520 assigning task directly from our mission
+00:24:58.799 control dashboard. We assigned the task
+00:25:01.840 from VS code and it's reflected as part
+00:25:04.559 of mission control. be assigned the task
+00:25:07.520 using your chat session using slashtask
+00:25:11.279 that is also reflected in your mission
+00:25:13.520 control. You are able to intervene or
+00:25:16.400 steer the copilot conversation in the
+00:25:19.279 middle of coding agent work and also you
+00:25:23.760 open the completed PR directly into your
+00:25:26.799 VS code insider for review and approval.
+00:25:32.400 Here we are treating AI is a complete
+00:25:35.600 collaborator not as a replacement. We
+00:25:39.120 both developer as well as the AI agents.
+00:25:43.760 There are four different tasks completed
+00:25:46.320 with my agent over the complete course
+00:25:49.600 of this video. This mission control
+00:25:52.559 represents a shift from AI assisting
+00:25:56.400 individuals to AI collaborating with us.
+00:26:00.960 Soon you will be managing multiple
+00:26:03.440 agents. Some may be writing codes, some
+00:26:06.240 may be doing the review, some may be
+00:26:08.720 doing the planning activities and all
+00:26:11.600 working under your observation or
+00:26:13.760 supervision from this unified command
+00:26:16.480 center. Developers will move from coding
+00:26:19.840 every line to orchestrating the AI
+00:26:22.640 powered workflows.
+00:26:25.600 So that is the new GitHub copilot
+00:26:28.240 machine control. your hub to assign
+00:26:30.720 steer and track coding agents. Try it
+00:26:33.520 today if you have access. Create a task.
+00:26:36.799 Get copilot how to do it. In the win in
+00:26:40.080 the middle of the copilot session to add
+00:26:42.320 more features or deviate the course of
+00:26:45.360 action by copilot. If you like this
+00:26:47.919 video useful, hit that like button,
+00:26:50.799 subscribe to Techril and turn on
+00:26:53.039 notifications so you never miss a
+00:26:55.360 copilot update. See you in the next
+00:26:57.760 video. Until then, keep coding with
+00:27:00.320 co-pilot agents.

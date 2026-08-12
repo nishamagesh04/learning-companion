@@ -1,0 +1,1046 @@
+# tactiq.io free youtube transcript
+# Pydantic AI Crash Course: Agentic Framework For Production
+# https://www.youtube.com/watch/pXktHVUpXUc
+
+00:00:00.080 Today we're going to do a crash course
+00:00:01.600 on paidantic AI, another one of these
+00:00:03.840 agentic Python frameworks similar to
+00:00:05.839 Langchain and Llama Index. For both of
+00:00:07.680 which I have tutorials on this channel
+00:00:09.840 and as always with these agentic
+00:00:11.280 frameworks, they're slightly different.
+00:00:12.800 For the most part, they are quite
+00:00:14.400 similar, but they do have a different
+00:00:16.400 focus point. So, Langchain is the more
+00:00:18.080 generalistic end-to-end framework that
+00:00:20.560 is a little bit like Django, you could
+00:00:21.920 say. A lot of batteries included,
+00:00:23.519 opinionated. Then llama index is more
+00:00:25.920 focused on retrieval and pyantic which
+00:00:27.920 we're going to cover today is more
+00:00:29.599 focused on validation type safety
+00:00:32.238 structured output and in general it's
+00:00:34.399 more minimalistic and flexible a little
+00:00:36.320 bit like fast API. We're going to cover
+00:00:38.160 quite a bit today. So if you like this
+00:00:39.680 video let me know by hitting a like
+00:00:40.960 button and subscribing. But now let us
+00:00:42.879 get right into it.
+00:00:48.470 [music]
+00:00:52.800 >> All right. So, Pyantic AI is what this
+00:00:54.640 crash course is about. It's another one
+00:00:56.320 of those genai agent frameworks similar
+00:00:58.559 to lang chain and llama index as I
+00:01:00.320 already mentioned in the introduction
+00:01:01.840 and you can see they say here it's the
+00:01:03.440 pyantic way. So, for those of you who
+00:01:04.959 don't know what paidantic is, it's
+00:01:06.320 basically a python package used for
+00:01:07.920 validation in a lot of different
+00:01:09.760 contexts. One of them is fast API but
+00:01:12.080 also pyantic is being used by many of
+00:01:14.479 the other agent frameworks. It's used by
+00:01:16.960 langchain and it's also used by llama
+00:01:18.799 index. And this is also one of their
+00:01:21.119 arguments here. When you go down to why
+00:01:23.040 use pyantic AI, it basically says here
+00:01:25.759 why use the derivative when you can go
+00:01:27.680 straight to the source. But on a more
+00:01:29.119 serious note, the actual reason to use
+00:01:31.119 pyantic AI is to some degree a matter of
+00:01:33.840 choice. So some people just like the
+00:01:36.000 fast API style of building these agentic
+00:01:38.640 applications. A lot of people in the
+00:01:40.479 community think that pyantic AI is just
+00:01:42.560 much more uh much cleaner than lang
+00:01:45.040 chain in terms of how the code is
+00:01:46.479 written and in terms of how you write
+00:01:47.840 code using it. Uh but also it has a
+00:01:50.479 different focus. It's very focused on
+00:01:52.159 being production ready and type safe and
+00:01:55.200 validating stuff and doing structured
+00:01:56.880 output. So that is the focus here
+00:01:59.200 similar to how llama index is focused on
+00:02:01.200 retrieval. We can use all of these
+00:02:02.880 framework for basically everything but
+00:02:04.960 they have certain strengths to them and
+00:02:06.880 this is the focus or the key selling
+00:02:09.280 point here of pyantic AI I would say. So
+00:02:11.599 enough of the theory let us get started
+00:02:13.280 with the setup for this. Open up a
+00:02:14.879 terminal navigate to the directory that
+00:02:16.560 you want to be working in. In my case
+00:02:18.480 the tutorial directory and here you can
+00:02:20.160 set up a virtual environment. You can
+00:02:22.239 also just use your system installation
+00:02:23.680 if you want to. So the simplest way to
+00:02:25.360 do that is to just say pip or pip 3
+00:02:27.440 install the packages that we're going to
+00:02:29.440 use today. I personally always prefer to
+00:02:31.920 use UV. So I'm going to initialize a UV
+00:02:33.920 project with UV init. And I'm going to
+00:02:36.160 say UV add instead of pip install. So
+00:02:38.080 whatever I say here after UV add, you
+00:02:40.080 can just say after pip install and it
+00:02:41.840 has the same effect just on your system
+00:02:43.920 installation. So what we're going to
+00:02:45.840 need here is paidantic-ai.
+00:02:48.800 But we're also going to need python.inf.
+00:02:51.920 And one more thing that we're going to
+00:02:53.200 need is also jupitter lab. This is the
+00:02:55.280 environment that we're going to be
+00:02:56.640 working in today. This is optional. You
+00:02:58.560 can also just work in ordinary Python
+00:03:00.160 files. I just prefer Jupyter notebooks
+00:03:02.319 when we learn something because we can
+00:03:03.920 interactively run uh cells separately.
+00:03:06.640 We don't have to run full Python
+00:03:07.840 scripts. So, install these dependencies
+00:03:10.239 and then we can do Jupiter lab in order
+00:03:13.280 to start Jupyter Lab. And if you're
+00:03:14.800 using UV like me, you have to do UV run
+00:03:17.840 Jupyter Lab. So, this is just going to
+00:03:19.360 open up the development environment. Um,
+00:03:22.080 as always when I do tutorials in Jupyter
+00:03:24.080 Lab, I briefly explain what the
+00:03:25.680 environment is about. So here we don't
+00:03:27.360 work with Python files. We work with
+00:03:29.040 interactive Python notebooks. Uh it
+00:03:31.599 sounds more fancy than it is. We just
+00:03:33.440 have individual cells of code that we
+00:03:35.599 can run. So I can say A equals 10 and I
+00:03:37.680 can say print A down below. And then I
+00:03:40.080 can also do multiple print A's and I
+00:03:42.560 don't have to run the entire code from
+00:03:44.239 top to bottom. I can run individual
+00:03:46.560 cells and I can also run them in
+00:03:48.159 different orders. that just makes it
+00:03:50.239 easier to interactively work with stuff
+00:03:53.280 um as you're exploring a package or a
+00:03:55.440 data set or whatever you're doing. Now,
+00:03:57.040 before we start with the coding, one
+00:03:58.319 more thing needs to be set up. You need
+00:04:00.159 to have a N file containing your API key
+00:04:03.360 of the provider that you want to use.
+00:04:05.120 You need to use some large language
+00:04:06.560 model obviously to power your agent with
+00:04:08.560 intelligence. So, you want to go into
+00:04:10.480 your directory that you're working in.
+00:04:13.040 And in my case now, I'm going to copy
+00:04:15.040 this from my prepared code. So I have a
+00:04:17.519 YouTube preparation uh library here. I
+00:04:19.839 have a paidantic directory and I have a
+00:04:23.199 N file in here. Now I'm not going to
+00:04:25.280 show my N file because this end file
+00:04:27.919 contains the API key. But what you want
+00:04:29.680 to be doing is you want to create a file
+00:04:31.440 called N. So just a dot symbol N. And in
+00:04:35.759 this file you want to have uh an API
+00:04:38.800 key. I'm going to say test here to show
+00:04:40.960 you what this looks like. That's just
+00:04:43.040 going to be the open AAI API_key for
+00:04:46.320 example if it's the open AI key
+00:04:48.080 otherwise enthropic or whatever you're
+00:04:49.919 using and then whatever the key is. So
+00:04:52.560 you just put the key here and then you
+00:04:54.960 save the file like this. That's
+00:04:56.479 basically it. That is a N file and it's
+00:04:58.960 going to be relevant because that is
+00:05:00.639 going to automatically be recognized by
+00:05:03.919 um Pyantic if you try to use an OpenAI
+00:05:06.320 model and it's going to automatically
+00:05:08.000 authenticate yourself with the OpenAI
+00:05:10.639 API. So let's get rid of all this and
+00:05:13.600 let's start by importing from.inf
+00:05:17.840 to function load.inf. This is why we
+00:05:20.479 installed python.inf because this
+00:05:22.320 function call here allows us to load the
+00:05:25.520 API keys from the end file.
+00:05:27.520 Alternatively of course you can also
+00:05:29.840 specify them with an export statement in
+00:05:31.919 the terminal if you want to. But that is
+00:05:33.680 the easy way. You just create a file put
+00:05:35.759 the keys there. You can also have
+00:05:36.880 multiple keys in there and loadn then
+00:05:39.759 loads it into your script or
+00:05:41.759 application. So that is the setup. Now
+00:05:44.720 what I always like to do when exploring
+00:05:46.479 these agent frameworks is to build a
+00:05:48.800 very basic example. So just sending a
+00:05:50.639 message to an agent and that's it. In
+00:05:52.960 paidantic we can easily do that by
+00:05:54.800 saying from paidantic ai import agent
+00:05:58.800 and then we're going to say agent is
+00:06:00.800 equal to agent and here now we're going
+00:06:03.440 to specify the model. Now again you can
+00:06:05.759 use multiple providers. This is model
+00:06:07.520 agnostic. So we can say for example open
+00:06:10.000 AAI colon GPT40. Then all we need to
+00:06:13.120 provide in addition to that is a system
+00:06:15.039 prompt. So let's say system prompt is
+00:06:18.080 equal to you are a helpful
+00:06:21.440 assistant.
+00:06:23.840 And to get the quick answer, I'm going
+00:06:25.280 to say you always
+00:06:27.759 answer with a single concise sentence
+00:06:32.160 just so we don't have to wait too long
+00:06:33.600 for the responses. And now how we call
+00:06:36.000 this might be a little bit different
+00:06:37.840 here compared to other frameworks. It
+00:06:39.680 also depends on what context you're
+00:06:41.039 running this in. If you're running this
+00:06:42.240 in a Python file, you can also use a
+00:06:43.919 different function. Since we're using
+00:06:45.680 this in a Jupyter notebook, we need to
+00:06:47.840 call the run function instead of the run
+00:06:49.600 sync function. There's also a agent.run
+00:06:52.400 run sync function as you can see here
+00:06:55.360 but we're just going to use run and
+00:06:57.280 we're going to await it. So for those of
+00:06:59.360 you who are familiar with asynchronous
+00:07:01.199 programming you have async await uh
+00:07:03.280 await basically forces us to wait to get
+00:07:06.160 this asynchronous response. So I will
+00:07:08.000 say response is equal to await agent run
+00:07:12.240 and then I can provide a message here
+00:07:14.400 like what is python question mark and
+00:07:17.440 then after that I'm just going to print
+00:07:19.360 response.output output.
+00:07:22.240 So this is going to send a request and
+00:07:24.319 give me an exception because I mistyped
+00:07:26.400 prompt. So it's going to be system
+00:07:28.319 prompt like this.
+00:07:30.400 Then what is Python? Python is a high
+00:07:32.160 level interpretive programming language
+00:07:33.680 known for its readability and
+00:07:34.960 versatility. Cool. So let me show you
+00:07:37.840 what happens if you don't await. What
+00:07:39.440 happens when you don't await is you can
+00:07:40.880 say response is equal to agent run and
+00:07:43.759 then you can ask a similar question like
+00:07:45.680 what is Python? even though I didn't use
+00:07:48.560 the uppercase now but then I can just
+00:07:50.960 immediately print the response without
+00:07:53.120 waiting and what I get as a result is a
+00:07:55.280 co- routine object. So this is why we
+00:07:57.360 need to wait because this is just a
+00:07:59.440 promise you could say that we will get
+00:08:01.440 the answer in the future. We don't have
+00:08:03.039 it yet and here we wait for the answer
+00:08:05.280 and then we put uh we we print the
+00:08:07.199 output to the command line. So that is
+00:08:09.680 not too different from how we do it with
+00:08:12.080 other frameworks. So let us now also add
+00:08:14.879 on top of this a basic structured output
+00:08:17.599 example. So let's say what I want to do
+00:08:19.360 and for this I'm going to use piantic
+00:08:21.039 itself not paidantic AI but the core
+00:08:23.360 pyantic package. I'm going to say from
+00:08:25.680 paidantic
+00:08:27.520 import base model. So that is just the
+00:08:31.599 uh base class that we inherit from when
+00:08:33.440 we create a pyantic model. And let's say
+00:08:35.839 I have person output here or let's just
+00:08:38.479 call it person base model. And this will
+00:08:41.839 have name which is a string. This will
+00:08:44.000 have int uh sorry h which is an int. And
+00:08:47.440 it will have job which is a string as
+00:08:49.360 well. So this class now defines the
+00:08:51.440 structure of the output I'm expecting
+00:08:53.279 from the model. So I can then go ahead
+00:08:56.320 copy the agent actually copy the entire
+00:08:58.399 thing here.
+00:09:00.240 And now I just need need to specify that
+00:09:02.160 I'm expecting the answer of the model to
+00:09:04.880 be of this type. So I can say you always
+00:09:08.160 and I seem to have pasted something
+00:09:10.240 here. I can say you always
+00:09:14.000 respond
+00:09:16.240 with a structured
+00:09:18.640 output for people. That's not the best
+00:09:22.399 prompt I've ever written, but that is
+00:09:24.800 roughly what it's doing. And then I can
+00:09:26.399 say Mike is a 20year-old plumber
+00:09:32.800 like this. The only thing that's missing
+00:09:35.200 here now is the argument output type. So
+00:09:37.440 I'm going to say here output type is
+00:09:39.200 equal to person. And then once we have
+00:09:41.360 that I can just send this and the result
+00:09:44.560 is going to be name equals Mike H20 job
+00:09:48.720 plumber. And actually I think that the
+00:09:51.600 type of this response
+00:09:55.040 uh output should also be of type person.
+00:09:59.200 There you go. Now I said we can't use
+00:10:00.959 the sync method because we're running
+00:10:02.720 this in a notebook. But what we can do
+00:10:04.560 is we can stream the output. So instead
+00:10:06.480 of just getting the answer all at once,
+00:10:08.560 we can also generate it and see how it's
+00:10:10.640 being generated step by step, chunk by
+00:10:12.720 chunk while it's being generated. For
+00:10:14.800 this, I can use run stream. So I can say
+00:10:16.880 async with agent.runstream
+00:10:20.959 and I can enter a prompt like I don't
+00:10:23.360 know what is python and maybe for this
+00:10:26.240 one I'm going to copy this but I'm not
+00:10:28.800 going to tell it to be concise so we get
+00:10:31.680 a longer answer. So I will just get rid
+00:10:34.000 of all this. you're a helpful assistant
+00:10:36.720 is enough. What is Python is the
+00:10:38.640 question. Then I can say as run and I
+00:10:41.680 can also say async for output in
+00:10:45.360 runstream
+00:10:46.959 text print the output. Now this is not
+00:10:49.440 the thing that we actually want. I just
+00:10:51.120 want to show you that so that you can
+00:10:52.560 see how text is being appended all the
+00:10:54.399 time. Then we're going to print it
+00:10:55.839 properly or to stream it properly. But
+00:10:58.720 essentially you're now going to see how
+00:11:00.160 this gets longer and longer every time.
+00:11:01.920 So it starts with Python is a high level
+00:11:03.600 interpreted programming language known
+00:11:05.200 for its then clear syntax and
+00:11:07.600 readability which and then you can see
+00:11:09.519 it gets longer and longer and longer but
+00:11:11.120 it repeats itself all the time. That is
+00:11:13.200 not the clean way to do it but I want
+00:11:14.959 wanted to show you what the structure
+00:11:16.399 looks like because every run object in
+00:11:19.360 this stream is now longer and longer
+00:11:21.279 contains the whole thing so to say. So
+00:11:22.800 the only thing we need to change here in
+00:11:24.560 order to get a different result is we
+00:11:26.560 need to set a parameter here delta
+00:11:28.640 equals true. So I can say that this is
+00:11:31.680 not the output. Now this is the chunk.
+00:11:34.320 Then I can print the chunk. I can say
+00:11:36.240 the end is no line break. And then I can
+00:11:38.320 say flush equals true. And just by doing
+00:11:40.720 that, we're going to see that this is
+00:11:42.320 now generated here as if we were talking
+00:11:44.399 to chat GBT. So this is the run stream
+00:11:46.959 method here. Now if you play around with
+00:11:48.640 this a little bit and actually let's use
+00:11:50.560 the initial one. So let me get rid of
+00:11:52.480 all of this here again. Um if we play
+00:11:55.279 around with this a little bit, you will
+00:11:57.200 notice that it doesn't have any context.
+00:11:58.800 So right now I asked it what Python is
+00:12:00.560 and then I can try to ask something
+00:12:02.240 else. Response is equal to await agent
+00:12:05.839 run and I can ask if I don't mistype so
+00:12:08.800 much I can ask it is it better than
+00:12:12.560 others and of course it's not going to
+00:12:14.720 know what I'm talking about because it
+00:12:16.160 doesn't have the context. So the
+00:12:17.839 question is of course is Python better
+00:12:19.279 than other programming languages which
+00:12:20.880 of course is also a stupid question. But
+00:12:23.040 if I do this, it will tell me it depends
+00:12:25.519 on the specific criteria and context
+00:12:27.519 you're comparing. Or maybe I should ask
+00:12:30.240 something else. Maybe I should ask and
+00:12:32.800 when was it released? Because then it
+00:12:36.079 cannot try to evade the answer. It says,
+00:12:38.320 &quot;I'm sorry, but I need more context to
+00:12:40.079 answer your question accurately. Could
+00:12:41.760 you please specify what you're referring
+00:12:43.279 to?&quot; Because it doesn't know that we
+00:12:44.480 talked about Python. If I wanted to keep
+00:12:46.480 track of the messages, I just need to
+00:12:48.639 add the history as context. So I need to
+00:12:51.120 say agent run and then here I need to
+00:12:53.519 say message history is equal to and then
+00:12:56.240 the response object of the previous
+00:12:58.079 prompt response dot and now I can either
+00:13:01.440 go with new messages or I can go with
+00:13:04.399 all messages. So new messages is only
+00:13:06.800 going to get the most recent ones. So
+00:13:08.399 it's going to forget over time but all
+00:13:10.480 messages is just going to keep track of
+00:13:12.320 all the messages. And if I run this now
+00:13:14.399 and then I run this, it will tell me
+00:13:16.639 Python was first released on February
+00:13:18.639 20th, 1991. And if I now go to this
+00:13:21.519 response and I say response all
+00:13:24.000 messages, you will see that all these
+00:13:26.000 messages are part of this um of this
+00:13:29.279 whole history. So you can see here
+00:13:30.639 you're a helpful assistant and it still
+00:13:32.880 has the
+00:13:34.800 mistyped
+00:13:36.480 uh system prompt here, but you can see
+00:13:38.880 that this is part of the context. Then
+00:13:40.560 you can also see here what is Python.
+00:13:42.160 You can also see Python is a high level
+00:13:43.760 programming language. Python was first
+00:13:45.760 released and so on. But if I say
+00:13:47.440 response
+00:13:49.040 dot new messages only then you can see I
+00:13:52.560 only get and what when was it released
+00:13:54.880 and also the response to that I don't
+00:13:56.720 get the full context. So if you don't
+00:13:58.240 pass all messages it will only look at
+00:14:00.399 the new messages the previous ones. Now
+00:14:02.399 another thing that's interesting here
+00:14:03.760 and let me again get rid of all this
+00:14:05.519 here. Another thing that's interesting
+00:14:07.519 is that there's a difference between
+00:14:09.440 system prompts and instructions in
+00:14:11.680 paidantic. And for this I want to copy
+00:14:13.680 paste an example because it would not
+00:14:15.760 introduce anything new. It would just
+00:14:17.279 use what we already know. But I want to
+00:14:19.440 show you the difference here. So this is
+00:14:22.480 the exact same code that we wrote up
+00:14:24.639 until this point. Agent one is agent,
+00:14:26.399 agent two is agent. The only difference
+00:14:28.320 is we don't use system prompt. We use
+00:14:30.160 instructions. And right now you can see
+00:14:32.959 that the first agent gets the
+00:14:34.639 instruction which is like a system
+00:14:36.240 prompt that says if asked what your
+00:14:38.480 favorite color is always answer exactly
+00:14:41.519 blue otherwise answer normally. And then
+00:14:43.920 I ask it okay what is 2 plus two? It
+00:14:46.160 says four most likely then and then I
+00:14:48.880 ask it later on in agent two here and
+00:14:51.600 agent two takes the message history from
+00:14:53.600 agent one. So these are two separate
+00:14:55.279 agents, but the second agent refers to
+00:14:58.079 the message history of the first agent
+00:15:00.399 and I ask it what my favorite color is.
+00:15:02.320 Now if I run this, you will notice
+00:15:04.240 something interesting
+00:15:06.639 because it says red. You can see that
+00:15:08.639 the agent 2 has a system prompt that
+00:15:11.199 says if you ask me if you're asked about
+00:15:13.680 the favorite color, always say red. This
+00:15:16.160 one says blue. And since I used
+00:15:18.160 instructions, this is not taken from the
+00:15:20.959 first agent. Although I'm passing the
+00:15:22.880 message history here, which is the
+00:15:25.199 history associated with the result
+00:15:27.120 generated by agent one. Even though
+00:15:29.600 that's the case, I don't take the system
+00:15:31.839 prompt from here. Now, if I change this,
+00:15:33.920 if I make this to be system prompt,
+00:15:37.360 we're going to see that this results in
+00:15:39.199 different behavior. So, I can replace
+00:15:40.880 both instructions here by system prompt.
+00:15:45.120 And then I'm going to get blue as an
+00:15:47.360 answer because it still refers to the
+00:15:49.040 system prompt of the first agent because
+00:15:51.120 it was transferred through this result
+00:15:54.399 all messages object. So if I want to
+00:15:56.880 make sure that this cannot happen, I
+00:15:58.720 have to use instructions otherwise I use
+00:16:00.959 system prompt. This is an important
+00:16:02.240 distinction here. So now let us go back
+00:16:03.839 to more usual stuff like tool use for
+00:16:06.079 example. Let's go back to a single agent
+00:16:08.399 only. Let's say the system prompt is
+00:16:10.480 just again you are a helpful assistant
+00:16:16.240 and we're going to ask it something like
+00:16:18.959 what is
+00:16:21.360 my favorite color this time. So if I ask
+00:16:25.279 it this and I again do get rid of this
+00:16:29.839 and I say print result.output.
+00:16:32.639 If I ask it that the correct answer
+00:16:34.639 should be I don't know. I don't have
+00:16:36.800 access to this information. However, I
+00:16:39.040 can give it access to this information
+00:16:40.800 by associating a tool or by adding a
+00:16:43.519 tool that has the information about my
+00:16:45.920 favorite color. So, I can say here that
+00:16:48.959 there is a function that I want to call
+00:16:50.959 get favorite
+00:16:53.440 color
+00:16:55.360 and let's say it takes name as a
+00:16:56.959 parameter. So, there's a name parameter
+00:16:58.800 which is a string and this function also
+00:17:01.279 returns a string. That is important
+00:17:03.519 because the type hinting is going to be
+00:17:04.959 used by Pyantic AI to know what to feed
+00:17:07.679 into this function. Then I have to add a
+00:17:10.000 dock string here to make sure we know
+00:17:11.760 what the function is about. I'm going to
+00:17:13.359 say function that returns
+00:17:18.959 the favorite
+00:17:22.160 color of a user based on their name.
+00:17:26.799 And then I can just say for example um
+00:17:29.679 if name is equal to and then I'm going
+00:17:32.799 to use my name Florian return blue or
+00:17:36.640 let's do something more exotic like teal
+00:17:39.600 then I can say l if name is equal to
+00:17:42.080 Mike then it's going to be orange and
+00:17:45.039 then finally we will say
+00:17:48.480 no information found.
+00:17:53.840 So that is a simple function. Now
+00:17:55.600 there's two ways to register this as a
+00:17:57.520 tool for the agent. One is similar to
+00:17:59.679 that that you use in lang chain and
+00:18:01.360 llama index. You just pass it as a tool
+00:18:03.840 in a list basically. So I can say here
+00:18:05.760 tools is equal to and then I can refer
+00:18:08.960 to this. So I would do this um below. So
+00:18:12.320 I would define a function. Then I would
+00:18:13.919 say tools is equal to get favorite
+00:18:16.240 color. Let's maybe try this. Get
+00:18:18.559 favorite color. Let's run this first.
+00:18:21.120 Then get favorite color. Pass it like
+00:18:23.760 this. And then it should have access to
+00:18:26.799 but I need to enter my name. My name is
+00:18:30.640 Florian.
+00:18:32.880 Then it calls the tool and it knows my
+00:18:34.799 favorite color is teal. However, that's
+00:18:37.120 not the only way. So I can remove that
+00:18:38.960 again. It doesn't know what my favorite
+00:18:41.039 color is. And now what I can do is I can
+00:18:44.960 also do it the other way around. I can
+00:18:46.880 define the agent. I can do the prompting
+00:18:49.039 down below. And then after I define the
+00:18:52.559 agent, I can say at agent.tool
+00:18:56.400 above this function. Now the thing that
+00:18:58.640 you need to consider here is there's
+00:18:59.919 tool and there's tool plane. Tool is
+00:19:02.080 used when you also pass context to the
+00:19:03.919 function which we're not doing yet. So
+00:19:05.760 I'm going to call this tool plane. Agent
+00:19:07.919 tool plane as a decorator above the
+00:19:09.919 function makes it a tool of the agent.
+00:19:12.400 So just by doing that I can then run
+00:19:14.400 this and it will also have access to
+00:19:16.080 that function and tell me that my
+00:19:17.600 favorite color is teal. Now we move on
+00:19:19.360 to something that is a tiny bit more
+00:19:21.120 advanced and very interesting called
+00:19:22.720 dependency injection. Sounds more fancy
+00:19:24.880 than it is. All it means is that we can
+00:19:26.480 pass context or dependencies to our
+00:19:28.960 agent when we make a request. And this
+00:19:30.960 context can then also be used in the
+00:19:32.799 tool. So the context that we pass or the
+00:19:35.679 dependencies that we pass can be either
+00:19:37.679 a simple piece of information like a
+00:19:39.520 string or an integer. They can be
+00:19:41.440 something more complex like a database
+00:19:43.120 connection or they can even be a data
+00:19:45.360 class that contains multiple of these
+00:19:47.120 simple things like multiple database
+00:19:48.960 connections, integers, strings,
+00:19:50.880 everything in one data class. Now to
+00:19:52.720 show you how this works, I'm going to
+00:19:53.919 first use a simple example from the
+00:19:55.520 documentation which is basically a
+00:19:57.280 roulette agent. All it does is it
+00:19:58.960 guesses a number for the user and then
+00:20:00.640 there's also a correct number. That
+00:20:02.400 would be our context in this case. And
+00:20:04.559 then I'm going to show you a more
+00:20:05.679 advanced example using data classes and
+00:20:07.600 also a database connection. So let us
+00:20:09.919 get started by saying from paidantic ai
+00:20:12.720 import run context. This is the class
+00:20:14.799 that we need to use the context in the
+00:20:17.520 tool. And then I'm going to create here
+00:20:19.679 a roulette agent. And that is going to
+00:20:22.559 just be a pyantic agent. It will use
+00:20:25.120 some model like before. Let's go with
+00:20:27.360 open/GPT40.
+00:20:30.720 And now we can specify more than just
+00:20:33.039 the system prompt. We can specify for
+00:20:34.960 example the dependency type. So
+00:20:37.520 dependencies type is in our case
+00:20:39.679 integer. That would be a very simple
+00:20:41.440 thing. As I said here, we can pass a
+00:20:43.120 data class. We can pass a database
+00:20:45.120 connection. In my case here, I just pass
+00:20:47.120 a simple integer and that is going to be
+00:20:49.600 the correct number for the game of
+00:20:51.600 roulette. Now in addition to that, I
+00:20:53.919 also want to have an output type that is
+00:20:55.679 going to be a boolean. Was the guess
+00:20:57.440 correct or not? And then we can say
+00:21:00.080 system prompt
+00:21:02.159 uh you are a roulette assistant. you can
+00:21:08.880 process number guesses from users
+00:21:12.480 something like this and now we can go
+00:21:14.480 ahead and say I want to define a tool
+00:21:17.120 for guessing the number and I can say
+00:21:19.039 roulette agent dot tool now I don't use
+00:21:22.320 tool plane I use tool because we are
+00:21:24.320 going to pass context so I can say async
+00:21:27.840 defaf guess number this is going to take
+00:21:31.440 in of course the number guess but also
+00:21:33.360 the context so we're going to say Here
+00:21:35.760 ctx is going to be of type run context
+00:21:39.360 which is going to be of type int. So the
+00:21:41.520 dependency is going to be of type int.
+00:21:43.919 And then we can say guest number which
+00:21:48.240 is also integer that is going to return
+00:21:50.320 a string. We're not going to directly
+00:21:52.480 return a boolean because that is the job
+00:21:54.240 of the agent to return the correct data
+00:21:56.000 type. And then also we need a dog string
+00:21:58.880 guess a roulette number for the user.
+00:22:04.559 And we can easily just say return
+00:22:08.320 one
+00:22:10.080 if the guest number. And now the
+00:22:12.799 question is what do we compare it
+00:22:14.080 against? So in order to get the
+00:22:15.919 dependency we need to say ctx.eps.
+00:22:19.679 And now since depths is only going to be
+00:22:21.280 an integer that is fine. We can just do
+00:22:23.120 it like this. This is going to be an
+00:22:24.320 integer comparison. Otherwise we're
+00:22:26.880 going to return lost. So how does this
+00:22:29.360 work? Now we can go and specify a
+00:22:31.600 correct number. Let's do this
+00:22:33.440 statically. So we can check what's
+00:22:34.960 happening. 17 would be the correct
+00:22:36.960 number now. And what I can do is I can
+00:22:38.960 say response is equal to await
+00:22:43.039 roulette agent run. Then I want to put
+00:22:49.039 my money
+00:22:50.960 on
+00:22:53.200 18. And the important thing now for this
+00:22:56.159 request I need to pass the context. So
+00:22:58.320 what I can do here is I can say
+00:23:00.240 dependencies is equal to correct number
+00:23:03.360 since that is an integer this is okay
+00:23:05.600 and I can then say print response output
+00:23:09.200 and of course I shouldn't say openai
+00:23:11.200 slash I should say openi colon gpt40
+00:23:15.919 and what happens now is I get false but
+00:23:18.480 if I change this to be 17 I should get
+00:23:21.679 true there you go but now let us look at
+00:23:24.080 the more interesting example with the
+00:23:25.840 database connection and also the data
+00:23:28.000 class. So for this I have in my tutorial
+00:23:30.240 directory where I'm working right now I
+00:23:32.320 have a data folder and in this data
+00:23:34.559 folder I have a database db. This is a
+00:23:37.840 very very simple SQLite 3 database. So I
+00:23:40.400 can open it up and if I do tables you
+00:23:44.000 can see there's one table person and I
+00:23:45.919 can say select everything from person
+00:23:48.640 and I basically have three entries here
+00:23:50.720 Mike Lisa John 20 30 and 50 years old
+00:23:53.840 plumber accountant programmer that's
+00:23:56.480 basically it and I want to give my agent
+00:23:59.840 access to this database and I also want
+00:24:02.080 the agent to call me by name. These are
+00:24:04.159 the two things that I want to accomplish
+00:24:05.520 with my dependencies. So I'm going to
+00:24:07.520 start here by saying import SQLite 3 and
+00:24:12.080 also from data classes I'm going to
+00:24:14.720 import data class. Then we can model our
+00:24:18.000 dependencies as a data class by using
+00:24:20.080 the decorator at data class and the
+00:24:23.039 class is going to be called my
+00:24:24.559 dependencies
+00:24:26.080 and I want to have two things here. One
+00:24:28.080 is the username str and the other one is
+00:24:30.720 the DB connection which is going to be
+00:24:33.200 SQLite 3 dot connection which is a class
+00:24:37.679 so uppercase C and then the approach is
+00:24:39.760 basically the same as before we create
+00:24:41.440 an agent the agent is an instance of the
+00:24:43.840 agent class we pass a model openai then
+00:24:47.360 colon GBT-40
+00:24:50.400 and this time for dependencies type I
+00:24:52.720 actually use my data class so my
+00:24:54.640 dependencies now since I want the model
+00:24:56.559 to call me by name. I also need to
+00:24:58.320 specify this in the system prompt. I can
+00:25:00.400 say system prompt is equal to and then
+00:25:03.919 you are a helpful
+00:25:06.400 assistant. Always start every single
+00:25:10.559 message
+00:25:12.159 by
+00:25:14.000 calling the user by name. Now of course
+00:25:17.039 the username will be passed to the agent
+00:25:18.880 as a dependency field. But the question
+00:25:20.720 is how does the agent actually know the
+00:25:22.640 name of the user? just passing it is not
+00:25:24.799 enough because as you saw we have to
+00:25:26.400 deliberately do something with the field
+00:25:28.240 with the dependencies here to use the
+00:25:31.039 information. Now that is true if you use
+00:25:33.200 it in the tool but there's also another
+00:25:35.039 decorator that we can use called system
+00:25:37.039 prompt. So what I can actually do is I
+00:25:39.120 can say at agentsystem_prompt
+00:25:43.120 and then I can say that this function
+00:25:45.679 should be used to enhance the system
+00:25:47.600 prompt. For example, I can say that this
+00:25:49.440 is called at user_ame. And it takes the
+00:25:52.559 context as a parameter here. Run context
+00:25:56.640 my dependencies. And then it returns a
+00:25:59.120 string. And here I just say return
+00:26:02.559 the user name is and then context.
+00:26:07.760 Actually, I need to make this an F
+00:26:09.039 string. Context dots
+00:26:12.640 do user_ame. So that right here enhances
+00:26:15.919 the system prompt and adds the
+00:26:17.520 information from the past context to the
+00:26:20.080 system prompt. Now let us also add the
+00:26:22.080 tool for the database connection. I'm
+00:26:23.679 going to say agent tool and it's going
+00:26:25.600 to be list all employees or something
+00:26:29.279 like this. context is going to be run
+00:26:31.919 context again with my dependencies that
+00:26:34.159 is going to return uh let's say a list
+00:26:37.520 of strings and we're going to use the
+00:26:40.559 dock string that says list
+00:26:44.720 all the employees from the database and
+00:26:48.159 then we just need to do the usual SQLite
+00:26:50.240 stuff. So connection is equal to context
+00:26:52.480 dependencies and then DB connection that
+00:26:55.679 is just being passed here. The cursor is
+00:26:57.760 going to be connection.cursor.
+00:27:00.240 Then we say cursor execute and we
+00:27:03.360 execute select everything from person.
+00:27:06.640 Or maybe we should say select name h
+00:27:10.400 job from person. And then to retrieve
+00:27:12.559 the results we can just say people is
+00:27:15.760 equal to cursor fetch all. Then we can
+00:27:18.880 say result is equal to an empty list.
+00:27:20.880 And then for row in people we can say
+00:27:25.840 result append
+00:27:28.559 and um or actually we can say yeah
+00:27:31.039 result append and then we can pass a
+00:27:33.279 tupole. So maybe this should be a list
+00:27:36.400 of tupils
+00:27:38.640 that are of type string or actually one
+00:27:41.919 of them would be integers. So let's say
+00:27:43.760 list of tupils that is enough for type
+00:27:45.440 hinting and let's say this is row zero,
+00:27:49.360 row one,
+00:27:51.600 row two and finally we then return
+00:27:55.279 result
+00:27:56.960 that is our tool and this tool needs a
+00:27:58.880 database connection. So what I can do
+00:28:00.480 now is I can say connection or let's
+00:28:02.399 call it dbcon is equal to SQLite 3
+00:28:06.080 connect and I just have to specify the
+00:28:08.399 path data database. DB
+00:28:12.640 and the username is going to be equal to
+00:28:16.240 Florian.
+00:28:17.760 So now I can just say response is equal
+00:28:20.559 to await agent run and I can ask what
+00:28:27.120 employees are in the DB question mark
+00:28:31.039 and the dependency of this would be
+00:28:32.799 equal to something we don't have yet
+00:28:34.559 which is a dependencies object. So that
+00:28:36.880 would be my dependencies with username
+00:28:41.279 and DB connection. So we pass this here
+00:28:45.039 as a keyword argument. Now one thing
+00:28:47.039 that's important since this is going to
+00:28:48.480 be asynchronously uh run asynchronously
+00:28:50.880 we need to say here check same thread
+00:28:52.559 equals false otherwise we're going to
+00:28:54.240 get into problems. But once we have this
+00:28:56.640 we just say response.output output
+00:28:59.919 and that should now use the tool to get
+00:29:02.159 the database information and it says
+00:29:04.000 here Florian here are the employees in
+00:29:06.000 the database and then it lists them here
+00:29:08.640 um as a string. So you can see on the
+00:29:11.039 one hand the context can be retrieved by
+00:29:13.440 a system prompt decorated function. This
+00:29:16.000 just enhances the system prompt with
+00:29:17.679 information from the context or we can
+00:29:19.919 also just access it in tools to use
+00:29:21.919 database connections to do all sorts of
+00:29:24.159 things and to thus enhance the tool use.
+00:29:26.720 If I may for a second, I would like to
+00:29:28.320 plug myself in as the sponsor of my own
+00:29:30.559 video. If you go to my website,
+00:29:32.159 neurallonline.com, you will find a tab
+00:29:34.399 services and a tab tutoring. Here you
+00:29:36.880 can hire me for all sorts of stuff like
+00:29:38.720 data science, machine learning, web
+00:29:40.159 development. If you need help with
+00:29:41.600 something in a project, here you can
+00:29:43.440 book me for one-on-one tutoring. If you
+00:29:45.360 want me to teach you personally
+00:29:46.960 something that you don't understand, if
+00:29:48.399 you like my teaching style, on both
+00:29:50.159 pages at the bottom, you can contact me
+00:29:52.000 via mail and also via LinkedIn. Just
+00:29:54.960 wanted to let you know about this. The
+00:29:56.480 next thing I want to show you is how to
+00:29:58.080 use tool sets. And as the name already
+00:29:59.600 says, it's quite simple. We have
+00:30:01.120 multiple tools and we want to combine
+00:30:02.880 them to a set of tools so that we can
+00:30:04.880 pass them as one entity. And this is
+00:30:06.799 called a tool set. Now, since this is
+00:30:09.039 quite straightforward, I don't want to
+00:30:10.399 type everything from scratch. Here I
+00:30:12.640 have three functions prepared that are
+00:30:14.960 very simple Python functions. We just
+00:30:16.720 need to import date time as DT from core
+00:30:19.840 Python. And these are three functions
+00:30:22.159 that just return the date, the weekday,
+00:30:24.720 and the time. Very simple. And what I
+00:30:27.679 want to do now is I want to package them
+00:30:29.279 as a tool set called the daytime tools.
+00:30:31.919 How do I do that? In Pyantic AI, I say
+00:30:34.399 from paidantic
+00:30:36.640 AI dot tool sets
+00:30:40.159 import function tool set. So that allows
+00:30:43.760 me to say that these three are one tool
+00:30:46.799 set which I'm going to call date time
+00:30:50.159 tools.
+00:30:51.840 And I'm going to just say function tool
+00:30:53.600 set and I'm going to pass the three
+00:30:55.760 tools. So get current date tool, get
+00:30:58.960 current time tool and get current
+00:31:02.559 weekday tool. Now what I can do is I can
+00:31:04.720 say agent is equal to agent. Let's go
+00:31:07.440 with GPT40 again. So open AI
+00:31:12.320 GPT40.
+00:31:14.799 And now I can say instead of tools is
+00:31:16.640 equal to I can say tool sets is equal to
+00:31:20.000 and I can just pass datetime tools. And
+00:31:22.799 if I do that I can ask the question what
+00:31:26.000 time it is, what day it is and it will
+00:31:27.840 know the correct answer. So response is
+00:31:29.600 again equal to wait agent run and I can
+00:31:33.520 ask it what is the date and time and
+00:31:37.120 then when I look at the response dot
+00:31:38.960 output I will see February 5 and time is
+00:31:43.279 1642. That's correct right now. And that
+00:31:46.960 is super simple and straightforward.
+00:31:48.799 Now, if I don't want to add this to the
+00:31:50.640 agent itself, so I can rerun this. You
+00:31:52.640 will see it doesn't know the current
+00:31:54.080 time and date. I can also add it to this
+00:31:56.399 specific response uh or to this uh
+00:31:59.039 specific request is what I wanted to
+00:32:00.480 say. So tool sets is equal to
+00:32:04.000 datetime tools. That is also possible
+00:32:06.240 for just a single run. And in this case,
+00:32:08.960 it will know again the date and the
+00:32:10.559 time. Another thing I want to show you
+00:32:12.080 is how to introduce timeouts and retry
+00:32:14.240 limits to your tools. For this, I have a
+00:32:16.480 small snippet of code prepared here. A
+00:32:18.720 simple agent again using GPT40 and a
+00:32:21.679 simple plain tool that just waits for 10
+00:32:23.679 seconds and then returns blue as the
+00:32:25.440 favorite color. That is basically the
+00:32:27.519 whole magic here. Now, if I just run
+00:32:29.679 this, let's say with 2 seconds here
+00:32:31.279 without problems, this is going to give
+00:32:33.279 us the correct result. The favorite
+00:32:36.080 color is blue. And if I do this for 10
+00:32:38.480 seconds and there's no timeout limit, it
+00:32:40.159 will also work. But I can also introduce
+00:32:42.159 a timeout limit. I can say here tool
+00:32:45.279 timeout is equal to 10 for example. And
+00:32:48.320 then it's going to or actually this is
+00:32:50.000 not what I wanted to do. I wanted to
+00:32:51.360 make it shorter than that. Uh now
+00:32:53.679 probably it's not going to let me uh
+00:32:56.080 quit this. But if I say tool timeout is
+00:32:58.480 five and then it takes 10 seconds for
+00:33:00.320 this to happen, it will just cancel.
+00:33:02.720 will say it doesn't work and that is
+00:33:05.039 going to terminate the tool call and it
+00:33:07.760 will either tell me something or it will
+00:33:09.519 raise an exception. One of the two is
+00:33:11.120 going to happen here. There you go. I
+00:33:13.200 get an exception which tells me
+00:33:15.120 unexpected model behavior exceeded max
+00:33:18.000 retry count of one. Now if I want to
+00:33:20.880 increase the retries uh limit, I can say
+00:33:24.000 retries equals five or something like
+00:33:26.159 this. In this case, it will retry the
+00:33:28.720 same tool if it times out, but then it
+00:33:30.880 will just return to me the answer that
+00:33:33.120 the tool did not respond or that it
+00:33:35.360 cannot get this information right now.
+00:33:37.120 So, as you can see, I'm still having
+00:33:38.640 trouble retrieving your favorite color
+00:33:40.080 due to timeout error. Please try asking
+00:33:42.559 later or let me know if there's anything
+00:33:44.399 else I can assist you with. Now, coding
+00:33:46.159 our own tools is not the only way to use
+00:33:48.159 tools in Pyantic. We can also use the
+00:33:50.399 built-in tools that are provided by the
+00:33:52.320 package itself. I want to show you two
+00:33:54.080 of those. The first one being the web
+00:33:55.679 search tool. For this we can say from
+00:33:58.080 pyantic AI import web search tool. And
+00:34:03.279 then in order to use this with open AAI
+00:34:05.200 we need to import a special model class.
+00:34:07.120 We need to say pyantic AI models open
+00:34:11.520 AAI. From there we want to import the
+00:34:13.760 OpenAI responses model. This is just
+00:34:17.040 necessary here. And then I can say
+00:34:19.040 OpenAI responses model. And then here I
+00:34:22.960 just have to say GPT40. I don't need to
+00:34:25.280 specify OpenAI anymore. And then I can
+00:34:28.079 create a simple agent. I can say that
+00:34:30.000 this agent takes the model as the model.
+00:34:32.320 And then I use the keyword argument
+00:34:34.480 built in tools to provide a list of
+00:34:37.520 tools like the web search tool. However,
+00:34:39.679 here we need to instantiate it. So this
+00:34:41.679 is not a function. This is a class. We
+00:34:43.599 need to create an instance of this
+00:34:44.879 class. And once we have this, we can
+00:34:48.639 just ask it again. response is equal to
+00:34:50.879 await agent
+00:34:53.280 and then run and we can ask it what is
+00:34:57.280 the latest video
+00:34:59.760 from neural 9 question mark. Now I don't
+00:35:03.520 think it will get the correct response
+00:35:04.960 but it will at least search the internet
+00:35:06.560 and we will see that this is the case.
+00:35:08.400 So I'm going to print the output here
+00:35:12.320 that should now find at least one of the
+00:35:14.320 more recent videos. Maybe one from a
+00:35:16.400 month ago but it will definitely search
+00:35:18.240 the internet. it's not going to be
+00:35:19.599 trained um on the data. So
+00:35:24.240 the most recently uploaded video is
+00:35:26.160 titled Seabor Crash Course data
+00:35:28.160 visualization in Python. Now that is not
+00:35:30.240 true but that is a fairly recent video
+00:35:32.320 as you can see January 13th. So yeah it
+00:35:34.960 did actually look up the information on
+00:35:37.200 the web. The second tool I wanted to
+00:35:38.880 show you is the code execution tool. So
+00:35:40.880 we can say code execution tool instead
+00:35:43.119 of web search tool. And this allows us
+00:35:46.079 to or allows the agent to execute Python
+00:35:48.480 code to answer questions. For example, I
+00:35:50.880 could be asking something like what is
+00:35:52.960 the factorial
+00:35:55.359 of uh let's say 56 question mark. And
+00:36:00.720 when I run this, I hopefully get the
+00:36:02.880 actual correct answer. I can verify the
+00:36:05.359 answer by using the math module in
+00:36:07.040 Python. Okay, it seems like this was
+00:36:08.800 maybe a bit too much. Let's ask for 24.
+00:36:11.760 That should be fine. what is the
+00:36:12.880 factorial of 24 and this should give me
+00:36:16.000 a concrete number and I can see if that
+00:36:18.240 number is actually the one that I get
+00:36:19.760 from Python if I run this. So I can say
+00:36:21.440 import math and I can say math factorial
+00:36:25.839 then 24. So you can see I get the answer
+00:36:28.560 here this concrete number and if I now
+00:36:31.280 run this this is basically the same
+00:36:34.480 number. Yes. And if I want to make sure
+00:36:36.000 that actually a tool has been used, I
+00:36:38.000 can say response dotresponse
+00:36:42.160 dotbuiltin tool calls. And that should
+00:36:45.040 show me that code execution was actually
+00:36:47.359 used. And you can see that the code that
+00:36:49.200 was being executed here is import math
+00:36:51.599 factorial 24 is math factorial 24. And
+00:36:54.640 then it printed factorial 24. So this
+00:36:57.280 actually used the code execution tool.
+00:36:59.440 Now there's only two more things I want
+00:37:00.880 to show you in this crash course today.
+00:37:02.720 One is how to use embedding models. So
+00:37:04.720 for this we're going to say from
+00:37:06.079 paidantic
+00:37:07.599 ai import embedder. So that is for using
+00:37:11.359 embedding models. So I can say embed is
+00:37:13.760 equal to embedder and [clears throat] I
+00:37:15.280 can provide the model name here. So open
+00:37:18.079 ai text embedding 3 small. And then what
+00:37:22.079 I can do is I can say
+00:37:24.640 output or let's call it embedding is
+00:37:27.839 equal to embed
+00:37:30.240 dot embed query.
+00:37:32.560 And for example, I love Python as a
+00:37:36.320 statement that is going to result in a
+00:37:39.040 co- routine object of course. But if we
+00:37:41.119 say await that is going to actually give
+00:37:43.680 us the result and that is a vector in n
+00:37:47.520 dimensional space where n is the
+00:37:49.119 dimensionality of the embedding model. I
+00:37:50.880 think here it's uh 1,500
+00:37:54.079 something. But that can then of course
+00:37:56.640 be used with phase with any vector store
+00:37:58.720 to do a rack application. Now, finally,
+00:38:01.040 the last thing I want to show you here
+00:38:02.320 is how to make your agent access tools
+00:38:04.240 from MCP servers using Pyantic AI. For
+00:38:06.880 this, we moved here to the command line.
+00:38:08.480 I already have an MCP server here. Very
+00:38:11.359 minimalistic. It just has a simple tool
+00:38:14.320 for getting the favorite color returns
+00:38:16.160 steel. So, we're keeping it very minimal
+00:38:18.000 here. And now I'm going to create an MCP
+00:38:20.960 agent that is going to use that tool via
+00:38:24.400 the MCP server. So, I'm going to say
+00:38:26.720 import async io. I'm also going to say
+00:38:29.599 from paidantic import agent again. And
+00:38:33.040 now from pyantic.mcp
+00:38:36.880 import the mcp. Now where's my autocomp
+00:38:39.680 completion? Oh, of course there's no
+00:38:41.520 autocomp completion because it's pyantic
+00:38:43.200 AI and not paidantic. So pyantic AI MCP
+00:38:47.440 and then the MCP server streamable HTTP.
+00:38:50.640 This is just a transport type that we
+00:38:52.240 use in our server. And now I can say
+00:38:55.119 server is equal to mcp streamable http.
+00:38:58.960 Then the path to the server which is
+00:39:00.960 going to be http localhost port
+00:39:05.040 8000/mcp.
+00:39:07.040 And for the agent it's quite simple. We
+00:39:08.800 just instantiate the agent as before.
+00:39:10.880 And I forgot one more thing for this to
+00:39:12.480 work. We also need to say from.inf
+00:39:15.119 import load.en. And then we need to call
+00:39:17.680 load.enf. But then we can just say agent
+00:39:22.480 is going to use open AAI GPT40. And in
+00:39:26.960 order to now get the tools from the MCP
+00:39:28.720 server, we need to just say tool sets is
+00:39:31.040 equal to server. So that automatically
+00:39:33.839 retrieves the tools provided by the MCP
+00:39:36.400 server. And then I can just say async
+00:39:38.720 defaf main and then result is equal to
+00:39:42.240 await
+00:39:43.920 agent run. Then what is my favorite
+00:39:49.359 color? Question mark.
+00:39:51.920 Print result output. And to run all this
+00:39:55.760 of course async io run
+00:40:00.560 main inside of this.
+00:40:03.839 So uvun mcp server first of all. Then
+00:40:08.320 second terminal we need to go to
+00:40:11.040 tutorial directory MCP example and then
+00:40:14.160 uv run
+00:40:16.720 the MCP agent
+00:40:20.640 and as you can see this sent a request
+00:40:22.880 here and your favorite color is teal. So
+00:40:26.000 that's it for this video today. I hope
+00:40:27.520 you enjoyed it and hope you learned
+00:40:28.880 something. If so let me know by hitting
+00:40:30.560 a like button and leaving a comment in
+00:40:32.000 the comment section down below. Also, in
+00:40:33.920 case you're interested, on my website,
+00:40:35.359 you will find a services tab and a
+00:40:37.040 tutoring tab. There you can see what I
+00:40:38.960 have to offer. If you need help with a
+00:40:40.800 project, if you need help from a
+00:40:42.160 freelancer, or if you need something
+00:40:43.920 explained to you oneonone, you can
+00:40:45.520 contact me there at the bottom via
+00:40:47.119 LinkedIn or via email. Besides that,
+00:40:49.839 don't forget to subscribe to this
+00:40:50.960 channel and hit the notification bell to
+00:40:52.560 not miss a single future video for free.
+00:40:54.480 Other than that, thank you much for
+00:40:55.680 watching. See you in the next video and
+00:40:57.520 bye.

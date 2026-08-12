@@ -1,0 +1,421 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/miEFm1CyjfM
+
+00:00:00.000 No text
+00:00:00.060 what is going on guys welcome back in
+00:00:02.100 this video we're going to learn how to
+00:00:03.179 use postgres or postgres SQL or
+00:00:05.759 postgresql in Python so let us get right
+00:00:08.519 into it
+00:00:13.010 [Music]
+00:00:17.000 No text
+00:00:18.060 alright so when we go to the stack
+00:00:19.500 Overflow developer survey and we look at
+00:00:21.660 the most popular Technologies we can see
+00:00:23.699 the two relational databases are at the
+00:00:25.859 very top we have MySQL and we have
+00:00:28.260 postgres and if we only go to
+00:00:30.359 professional developers we can see even
+00:00:32.279 that postgres is at the very top being
+00:00:34.320 the most popular database technology the
+00:00:37.320 most popular database amongst
+00:00:38.940 professional programmers which means
+00:00:40.920 that it can be quite useful to learn
+00:00:42.300 about it so that you have at least a
+00:00:44.100 beginner level experience and this is
+00:00:46.920 what we're going to learn about in this
+00:00:48.180 video we're going to set up postgres
+00:00:49.379 we're going to connect to it with python
+00:00:51.120 and we're going to run some basic
+00:00:52.559 statements so that you see how you can
+00:00:53.940 interact with that database using python
+00:00:56.899 so what we want to do first is we want
+00:00:59.039 to go to
+00:01:00.020 postgresql.org you want to click then on
+00:01:02.160 this download button you want to click
+00:01:04.080 on your respective operating system in
+00:01:06.060 my case Windows now and then you want to
+00:01:08.580 just download the installer up here so
+00:01:10.320 you click on this link and then you can
+00:01:11.820 choose a version I just always take the
+00:01:13.979 most recent one so 15.2 as of right now
+00:01:16.860 and then again you choose your operating
+00:01:19.020 system in my case this one I download
+00:01:21.960 the file I save it on a desktop
+00:01:24.900 or in the downloads folder wherever you
+00:01:26.939 want and once this installer is
+00:01:29.640 downloaded you can just click on it it's
+00:01:32.220 going to start
+00:01:33.659 and in my case I already have it
+00:01:35.939 installed so I'm not gonna click until
+00:01:38.040 the end
+00:01:39.299 because then it would just replace my
+00:01:41.100 current installation but what you want
+00:01:42.720 to do is you want to click on next you
+00:01:44.280 want to select all these components you
+00:01:45.840 want to click on next again in my case
+00:01:47.520 now it says existing installation has to
+00:01:49.740 replace everything so I'm not going to
+00:01:51.479 do it in your case it's going to ask you
+00:01:53.280 for a username or I think not username
+00:01:56.340 just password for the admin account it's
+00:01:58.200 going to ask you for the Locale and
+00:01:59.759 stuff like that very simple stuff just
+00:02:01.560 pick your country your language just
+00:02:03.360 pick a password and then continue with
+00:02:05.100 the installation it's not too
+00:02:06.299 complicated and in the end it's going to
+00:02:08.639 probably ask you some things about the
+00:02:10.739 stack builder in my case I just skip
+00:02:12.540 this installation you can also follow
+00:02:15.120 through with it I just installed the
+00:02:16.980 server and that's it the important thing
+00:02:18.900 is that you also have PG admin for
+00:02:21.180 installed because this is the tool that
+00:02:22.620 we're going to use to set up everything
+00:02:24.900 to to also monitor everything while
+00:02:27.599 we're connecting with python so once you
+00:02:30.599 have all this installed what you want to
+00:02:32.040 do is you want to run PG admin you just
+00:02:33.840 open up your start menu you type PG and
+00:02:36.239 then you see here PG admin 4.
+00:02:38.940 this is basically the tool that we use
+00:02:40.680 to connect to the postgres database and
+00:02:43.500 this also usually starts the database
+00:02:45.720 unless of course the service cannot be
+00:02:47.640 started now in your case when you run
+00:02:49.560 this for the first time it's going to
+00:02:50.760 ask you for a master password that you
+00:02:52.680 have to set in my case it asked me to
+00:02:54.780 enter the already existing master
+00:02:56.280 password I chose a very complex one one
+00:02:58.980 two three four and then when you click
+00:03:02.160 on servers up here
+00:03:04.680 um it's going to ask you again for the
+00:03:06.239 postgres user for the database so here
+00:03:08.519 again I have a very complex password one
+00:03:10.980 two three four and then once you're
+00:03:13.920 logged in you're going to see here the
+00:03:15.300 databases now chances are this is not
+00:03:17.640 going to work as flawlessly as uh it
+00:03:20.220 seems here changes are the service is
+00:03:22.379 not going to start changes are you going
+00:03:23.819 to get some exceptions here so if you
+00:03:25.800 get the problem that you cannot connect
+00:03:27.180 to the server because the service isn't
+00:03:28.860 running or because you get this error
+00:03:30.360 message that postgres isn't running what
+00:03:33.540 you can do is you can right click here
+00:03:35.040 open the task manager you can go to
+00:03:36.780 Services you can scroll down here to
+00:03:39.840 where is it postgres this service here
+00:03:42.420 you can right click it and start it now
+00:03:45.180 chances are it's not going to start
+00:03:47.459 because of some problems if you get this
+00:03:50.159 problem that you cannot start the
+00:03:51.420 service it automatically crashes you
+00:03:53.220 open Services down here
+00:03:55.080 you scroll down again to that service to
+00:03:58.739 this postgres service you right click it
+00:04:00.659 you go to properties you go to log on
+00:04:02.940 and you change from this account here to
+00:04:05.280 local system account and you allow
+00:04:07.080 service to interact with desktop you
+00:04:08.940 save this you then right click again and
+00:04:11.280 you start then it should work now if you
+00:04:13.500 get any other problems
+00:04:15.480 um you will have to Google because this
+00:04:17.579 is the problem I encountered I'm not
+00:04:19.079 sure what kind of problems you can
+00:04:20.940 encounter in addition to that but this
+00:04:22.740 is the one I encountered and this is how
+00:04:24.300 I fixed it once this server is running
+00:04:26.340 you can just connect
+00:04:27.840 um
+00:04:28.560 you can just connect to the database and
+00:04:31.199 that's it so this is what we have here
+00:04:32.820 this is the postgres database down here
+00:04:35.220 we have uh schemas we can open this up
+00:04:37.560 and here we would find also the tables
+00:04:39.780 down here now we don't have any tables
+00:04:41.520 yet but this is where we're going to see
+00:04:43.740 our tables and we can of course also
+00:04:45.360 just right click on a database open a
+00:04:47.340 query tool and with this software now do
+00:04:50.340 some query
+00:04:51.720 but we want to do it in Python so we're
+00:04:52.000 No text
+00:04:53.820 going to install a python package we're
+00:04:55.320 going to connect to the service and
+00:04:56.759 we're going to run the python code for
+00:04:59.460 the database operations and the package
+00:05:01.740 that we want to use here is called uh
+00:05:04.380 Psy cop PG I think this is how it's
+00:05:07.800 pronounced pip install
+00:05:10.320 it's PSI
+00:05:12.740 copg probably for postgres and then two
+00:05:16.500 this is the package we want to install
+00:05:18.180 today
+00:05:19.740 and once the package is installed we can
+00:05:21.900 open up the development environment of
+00:05:23.400 our choice we can create a new file
+00:05:26.660 main.py we can then import this package
+00:05:30.479 by saying import PSI
+00:05:33.539 cop G2 and then we're going to just
+00:05:36.780 connect to the database in a very
+00:05:38.699 similar way to sqlite3 so those of you
+00:05:41.520 guys who have already worked with
+00:05:42.660 sqlite3
+00:05:44.639 um it's very very similar the functions
+00:05:47.340 are basically the same or the methods so
+00:05:50.460 what we do first here is we start a
+00:05:52.080 connection object by saying PSI or
+00:05:55.259 whatever the package is called dot
+00:05:56.880 connect and now we provide a couple of
+00:05:58.860 keyword parameters keyword arguments
+00:06:01.320 first of all the host of our database is
+00:06:03.960 localhost now if you want to connect to
+00:06:06.479 a remote database obviously you have to
+00:06:08.100 provide the the host that this database
+00:06:10.380 is running on the host that it's running
+00:06:12.060 on on your system is the following you
+00:06:14.039 just right click on this uh postgres 15
+00:06:17.280 thing and you click on properties you go
+00:06:19.560 to connection and here you can see it's
+00:06:21.240 localhost it's Port 5432 and it's
+00:06:24.840 username postgres
+00:06:26.340 so this is what you need to connect
+00:06:28.800 this is what we're going to enter here
+00:06:30.180 now host is localhost the DB name the
+00:06:32.819 database name is there is postgres this
+00:06:35.340 is the name that we see here this is the
+00:06:37.979 database
+00:06:40.560 um the user is going to also be postgres
+00:06:46.139 the password in my case is one two three
+00:06:49.080 four whatever you set this to uh and the
+00:06:51.900 port is just five four three two which I
+00:06:54.240 think is the default so this is actually
+00:06:55.979 an optional parameter here to pass now
+00:06:58.620 from this connection similar to sqlite3
+00:07:00.960 you also want to get a cursor by saying
+00:07:03.419 cursor equals connection dot cursor and
+00:07:06.780 this is what we use then to actually
+00:07:08.400 execute the commands so we do something
+00:07:12.120 here
+00:07:13.020 some database stuff in the end what we
+00:07:15.240 want to do is in order to whatever we
+00:07:17.039 did here whatever statements we executed
+00:07:18.780 in order to commit them to the actual
+00:07:20.639 database what we do is we say connection
+00:07:22.259 dot commit
+00:07:24.419 and then what we want to do in the end
+00:07:26.099 is we want to close the cursor and we
+00:07:27.960 want to close the connection
+00:07:31.380 and everything else is going to be done
+00:07:33.060 in between so here we're going to do the
+00:07:35.099 actual database work you could say so
+00:07:37.860 first of all what we want to do is want
+00:07:39.060 to execute a simple statement I like to
+00:07:40.979 use multi-line strings for SQL
+00:07:44.280 statements and we're going to just say
+00:07:46.139 here create table if not exists
+00:07:49.680 and if it doesn't recognize here that
+00:07:51.539 I'm writing SQL code I'm just going to
+00:07:53.639 press Alt Enter here in pycharm I'm
+00:07:56.400 going to inject a language or reference
+00:07:58.319 and I'm going to scroll down here to
+00:08:02.039 postgres and then it's going to
+00:08:03.960 recognize the syntax here in this string
+00:08:05.900 so create table if not exists I think
+00:08:09.660 with an S right person and we're going
+00:08:12.479 to just provide a simple person
+00:08:13.800 definition here so we're going to say ID
+00:08:15.660 is an integer
+00:08:17.660 and a primary key
+00:08:21.120 name is going to be a bar chart 255.
+00:08:25.620 H is going to be an integer and then
+00:08:27.780 gender is going to be a character
+00:08:31.620 that's basically it that is our
+00:08:33.240 statement so if I just run this python
+00:08:35.820 code now if I just run this file you can
+00:08:37.679 see nothing happens here in the command
+00:08:39.179 line but if I go into the database here
+00:08:41.099 I open up the tables
+00:08:43.320 maybe I need to refresh
+00:08:46.200 there you go we have the person table
+00:08:47.940 and I can actually right click here and
+00:08:50.519 use the query tool to now say select
+00:08:53.279 everything maybe I can zoom in as well
+00:08:56.640 no it doesn't seem like that but select
+00:08:58.740 everything from person
+00:09:00.899 I can just run this here and you can see
+00:09:03.000 we have ID name H gender
+00:09:06.300 so this worked and now of course with
+00:09:09.600 that table we can also insert some data
+00:09:12.060 we can select some data so let's go
+00:09:13.620 ahead now and say cursor.execute we want
+00:09:17.279 to execute the following statement
+00:09:18.839 insert into person
+00:09:21.800 values and here we first need to Define
+00:09:24.779 what we're actually inserting so we're
+00:09:26.640 going to say ID name age and gender
+00:09:31.860 and the values are going to be the
+00:09:33.839 following we're just going to say here
+00:09:35.940 one
+00:09:38.339 mic
+00:09:41.040 uh 30 male
+00:09:44.459 and we're going to copy this a couple of
+00:09:46.320 times we're going to
+00:09:48.480 change this to two three four five we're
+00:09:51.959 going to change mic to Lisa we're going
+00:09:54.720 to change this here to John we're going
+00:09:57.120 to change this here to Bob I'm going to
+00:09:59.459 change this here to Julie and the ages
+00:10:02.160 are going to be 30 30 54.
+00:10:06.779 80 and 40 and then we're going to
+00:10:09.899 obviously say female here and female
+00:10:12.420 here
+00:10:13.860 there you go and now before we run this
+00:10:15.779 because then I would have to delete the
+00:10:17.339 database or maybe let's do that so I can
+00:10:19.260 show you how to delete a database
+00:10:21.720 um or the table sorry not the database
+00:10:23.399 if I run this now
+00:10:24.959 uh we still see nothing here but if I go
+00:10:27.360 down to postgres and I rerun that
+00:10:29.339 statement by pressing F5 you can see we
+00:10:31.740 now have these entries here and I can
+00:10:34.200 also just go ahead and right click this
+00:10:36.779 table and say delete drop and then it's
+00:10:40.140 going to ask me are you sure you want to
+00:10:41.459 delete or drop the table yes and now the
+00:10:44.519 table does no longer exist if I run the
+00:10:46.380 statement we cannot see this table so I
+00:10:49.019 can rerun the script now if I don't do
+00:10:50.880 that if I just run the script again it's
+00:10:52.560 going to tell me that I already have
+00:10:54.120 this primary key in there so it's not
+00:10:56.279 going to allow me to do the same thing
+00:10:57.660 again
+00:10:59.160 and because of that we want to drop this
+00:11:02.399 table before you run the code again or
+00:11:04.680 at least you want to truncate the table
+00:11:06.000 so at least you want to delete all the
+00:11:07.680 entries
+00:11:09.360 all right
+00:11:10.560 um so that's that let's go ahead now and
+00:11:12.899 select some values so we can say
+00:11:14.640 something like
+00:11:16.200 um cursor dot execute and want to have a
+00:11:19.620 simple select everything from person
+00:11:23.660 where age is less than 50 for example
+00:11:29.760 that is our statement and this is going
+00:11:32.459 to return multiple values so maybe
+00:11:34.140 actually let's go ahead and first do
+00:11:35.880 something where we only get one value so
+00:11:38.160 let's say where name equals Bob
+00:11:42.360 and then we're going to just say print
+00:11:45.140 cursor fetch one
+00:11:48.600 cursor fetch one is just going to give
+00:11:50.459 us one uh result so this is going to be
+00:11:53.399 a single instance if I run this now you
+00:11:55.620 can see here we get four Bob ATM those
+00:11:58.560 are the values for Bob
+00:12:01.200 um and we can also do something else we
+00:12:02.940 can also say cursor execute
+00:12:07.320 select everything from person where H is
+00:12:13.019 less than 50 and this is going to give
+00:12:16.380 us more than one result so we can either
+00:12:18.360 do print cursor fetch all this is going
+00:12:21.600 to give us a a collection a list of
+00:12:24.060 tuples or we can just say four Tuple so
+00:12:27.240 four row in cursor dot fetch all
+00:12:31.860 we can print individual rows that's also
+00:12:34.920 possibility now in order to be able to
+00:12:36.480 run all this we need to again delete the
+00:12:38.220 table
+00:12:39.300 uh or drop the table this usually you
+00:12:42.060 would make this part of python script up
+00:12:43.800 here you would say drop table or
+00:12:45.240 truncate table or something like that
+00:12:47.399 but we're going to do it now just like
+00:12:49.019 this you can see we get Bob first and
+00:12:50.760 then we get one two five for the second
+00:12:52.560 query Mike Lisa Julie all below the age
+00:12:55.620 of 50.
+00:12:57.959 now
+00:12:59.040 the last thing I want to show you here
+00:13:00.660 is something not necessarily similar to
+00:13:04.680 prepared statements because this Library
+00:13:06.420 here does not offer any built-in methods
+00:13:09.660 for prepared statements we cannot really
+00:13:11.760 do that here like we could do that in
+00:13:14.300 sqlite3 but we can use a function called
+00:13:17.639 mogrify to basically format in multiple
+00:13:21.720 values and it's not exactly the same uh
+00:13:24.660 but it works kind of the same way so I
+00:13:28.200 don't think it's as secure but we can do
+00:13:29.760 something like the following we can say
+00:13:31.339 SQL equals and then cursor mogrify and
+00:13:35.760 we can say for example here select
+00:13:37.500 everything
+00:13:39.600 from person where and now we have two
+00:13:42.839 things we want to say name equals
+00:13:46.320 um or maybe let's do even something more
+00:13:48.180 complicated let's say I want to have a
+00:13:49.740 name that starts with a certain letter
+00:13:51.240 so let's say we want to have the letter
+00:13:53.940 j John and Julie but we only want to
+00:13:56.639 have those that are below the age of 50.
+00:13:58.560 so we can say here where start
+00:14:01.860 underscore
+00:14:03.480 or starts underscore with and you want
+00:14:07.079 to pass the name and a certain string so
+00:14:10.079 percent s to let it then later on fill
+00:14:13.019 it in and we want to say that
+00:14:17.459 the H has to be below percent s
+00:14:21.720 so another thing that we're going to
+00:14:25.440 um to format in here and we just pass
+00:14:28.320 now here J as a character and 50 as an
+00:14:32.399 integer value so this is the full query
+00:14:34.800 here
+00:14:36.120 um and we can first of all only print
+00:14:38.399 the SQL statement if we want to and then
+00:14:40.680 later on we can also just say
+00:14:42.740 cursor.execute SQL and then we can of
+00:14:45.660 course say print
+00:14:47.279 cursor fetch all
+00:14:50.100 in this case it's going to be just one
+00:14:51.720 entry but we can still do fetch all so
+00:14:54.420 let's one more time delete the table
+00:14:56.100 this is going to be the last time I
+00:14:58.019 think
+00:14:59.519 and then let's run this again
+00:15:01.980 and you can see here this is the actual
+00:15:03.720 query we have select everything from
+00:15:05.760 person where starts with name j and h
+00:15:08.519 less than 50 you can see 50 is not a
+00:15:10.860 string even though we use percent s and
+00:15:13.680 J is a character or string even though
+00:15:16.560 we use the same placeholder and that is
+00:15:19.320 the result set you can see the
+00:15:20.579 difference between fetch one and fetch
+00:15:22.500 always if we get still one entry but we
+00:15:24.660 get this in a list because it assumes
+00:15:26.100 that there are multiple entries and here
+00:15:28.139 we just get one entry
+00:15:30.120 and this is how you use postgres in
+00:15:32.579 Python so that's it for today's video I
+00:15:33.000 No text
+00:15:35.220 hope you enjoyed it and hope you learned
+00:15:36.540 something if so let me know by hitting
+00:15:38.220 the like button and leaving a comment in
+00:15:39.540 the comment section down below and of
+00:15:40.980 course don't forget to subscribe to this
+00:15:42.420 Channel and hit the notification Bell to
+00:15:44.100 not miss a single future video for free
+00:15:45.899 other than that thank you much for
+00:15:47.399 watching see you next video and bye
+00:16:04.380 thank you
+00:16:05.270 [Music]

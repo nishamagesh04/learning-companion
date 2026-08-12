@@ -1,0 +1,1876 @@
+# tactiq.io free youtube transcript
+# Build a Game Using Python and GitHub Copilot | GitHub Copilot Tutorial For Beginners | Simplilearn
+# https://www.youtube.com/watch/eGpNMBKzPPY
+
+00:00:00.240 While I set up the live stream, you guys
+00:00:02.159 can let it let us know your responses on
+00:00:04.319 the poll. I'm sure you can see the poll
+00:00:06.799 pop popping up on your screens.
+00:00:12.080 Hey, I'm sure you can see the results as
+00:00:15.440 well. Can see the responses,
+00:00:22.800 right?
+00:00:24.800 Okay. So people on YouTube in case
+00:00:27.119 you're watching us uh
+00:00:30.720 live here just let us know your
+00:00:33.120 introductions as well and people on Zoom
+00:00:35.920 let us know your responses on the poll.
+00:00:40.960 Great. Thanks so much everyone for
+00:00:42.879 introducing yourselves on the chat. What
+00:00:44.960 I'm looking for is responses on the
+00:00:46.879 poll. Um
+00:00:50.480 okay, another few seconds and I'm going
+00:00:52.480 to be closing the poll down.
+00:00:54.960 This is for us to understand what your
+00:00:57.600 background is, where you come from, so
+00:00:59.199 that you know when we actually get to
+00:01:01.760 the live demo part. Uh we want to ensure
+00:01:04.720 that you understand what we're speaking.
+00:01:14.560 Yeah.
+00:01:18.720 Okay. All right. So, I'm just going to
+00:01:21.040 end this poll right here and uh share it
+00:01:23.520 with uh Hy. Hi, you can see these
+00:01:26.640 results. I'm sure a lot of them are
+00:01:29.680 actually freshers
+00:01:31.600 and uh these people belong to the data
+00:01:35.280 or the tech roles. Karthik, yes, please
+00:01:38.560 email us at webinars at simplearn.net.
+00:01:42.159 Okay. Yeah.
+00:01:46.159 Yes. Yes. Okay. Amazing. So thanks for
+00:01:50.640 your responses. Now we know your
+00:01:53.280 background. You know uh we know your uh
+00:01:56.159 you know which which domain you're
+00:01:58.000 working in or which domain you're a
+00:02:00.240 student of or whatever it is. So we have
+00:02:02.479 understood that. So let me just quickly
+00:02:04.719 also jump into uh some just just setting
+00:02:08.318 the agenda for for today. Like I said,
+00:02:10.959 we'll help you understand why or how
+00:02:13.280 GitHub is really useful and then Amy
+00:02:16.080 will take over and he'll he help you
+00:02:18.239 understand how the adventure game is
+00:02:20.080 built and uh you know we'll also kind of
+00:02:24.080 help you understand how career
+00:02:26.959 opportunities are spanning out in the
+00:02:28.640 Genai space and then later we'll talk
+00:02:30.959 about uh you know the applied gen
+00:02:33.040 generative AI specialization talk about
+00:02:35.200 the enrollment steps and of course um
+00:02:37.519 you know we'll end it up with Q&amp;A. So
+00:02:39.599 I'm sure you might have a lot of
+00:02:40.879 questions uh you know in during the
+00:02:44.160 session or whenever we're doing the live
+00:02:46.239 demo you might have a lot of questions.
+00:02:48.319 So just make sure you use the Q&amp;A box
+00:02:50.879 effectively. Yeah. And if you have
+00:02:52.720 posted your question already just wait
+00:02:55.519 for uh us to respond. Do not post it
+00:02:58.080 again because again you know we kind of
+00:02:59.840 miss uh the other questions that are
+00:03:02.319 asked. So just make sure that you are
+00:03:05.040 posting your question only once and it
+00:03:06.879 will be addressed. we might not address,
+00:03:09.200 you know, every question that comes out
+00:03:10.879 individually and call out the students
+00:03:12.720 name. They're close to 250 of you here.
+00:03:15.280 So, it's going to be hard for us to keep
+00:03:16.879 track. Um, so I'll kind of pull
+00:03:18.720 questions together and pass it on to him
+00:03:21.040 at the end. But if there's something
+00:03:22.800 relevant, I'll stop in between and then,
+00:03:25.200 you know, interrupt and ask his
+00:03:27.440 thoughts. Okay. Great to know that a lot
+00:03:30.319 of you are attending the webinar for the
+00:03:31.920 first time. But uh are you now clear
+00:03:34.799 about what's how to do the questions,
+00:03:37.680 how we're going to go about the session?
+00:03:39.599 Uh a quick thumbs up or maybe a chat
+00:03:43.040 message would help
+00:03:45.440 if you're clear what to do when you have
+00:03:48.080 a question, what we're going to do in
+00:03:49.440 the session, how your questions are
+00:03:52.159 going to be answered. Yeah.
+00:03:56.159 Okay.
+00:03:58.080 Amazing.
+00:04:00.159 That's great. A lot of thumbs ups. Yeah.
+00:04:05.280 Great, great, great. So now that this is
+00:04:09.040 clear, let's just proceed quickly. Uh
+00:04:11.920 introduce about simply learn. Like I
+00:04:13.519 said, I mean I I saw a lot of messages
+00:04:16.478 uh that said, okay, I'm attending this
+00:04:18.160 webinar for the first time, my first
+00:04:20.000 time, third time, whatever it is. So I'm
+00:04:22.160 just going to quickly introduce Simply
+00:04:23.840 Learn to you and uh what we do. So we've
+00:04:26.080 been operational since 2010 and uh you
+00:04:29.440 know ever since we've touched more than
+00:04:31.040 8 million careers worldwide across
+00:04:33.680 people from 150 plus countries. We've
+00:04:36.320 got 50 plus global partnerships with a
+00:04:39.040 lot of leading universities um and
+00:04:41.199 organizations and we provide
+00:04:43.360 certifications career aligned learning
+00:04:45.440 paths in these domains and of course a
+00:04:48.240 lot more than what you see here. So AI
+00:04:51.360 being one of them. Uh we've got a lot of
+00:04:54.000 courses around data science, machine
+00:04:56.320 learning, business analytics also uh
+00:04:59.919 some tech domains which is cloud
+00:05:01.280 computing, cyber security. We've also
+00:05:03.840 got uh certifications in agile, scrum,
+00:05:06.720 project management. Um you know we've
+00:05:08.960 also recently launched a lot of new
+00:05:11.199 courses that are uh for the leadership
+00:05:13.919 force. We actually introduce Hy and hand
+00:05:16.479 it over to him for his introduction as
+00:05:18.400 well. So he is the director of
+00:05:20.880 technology and innovation. um he's got
+00:05:22.880 10 years of experience more than that in
+00:05:25.039 cloud engineering devops and of course
+00:05:27.280 um geni and he leads automation platform
+00:05:30.800 engineering initiatives and of course uh
+00:05:33.520 you know enterprise level AI initiative
+00:05:35.440 so he's got immense expertise in Python
+00:05:38.080 all the geni tools and of course um
+00:05:40.560 GitHub copilot which is what you know is
+00:05:42.720 going to be a huge part of the session
+00:05:44.720 today um hy welcome to the session I
+00:05:47.919 know you're a passionate educator as
+00:05:49.600 well so I'll just hand it over to you
+00:05:51.759 and uh then you know we can proceed to
+00:05:54.479 the session.
+00:05:56.639 >> Thank you. So hello everybody.
+00:05:58.944 [clears throat]
+00:05:59.680 Nice to meet you all. It's my first
+00:06:02.560 webinar but I've been in education for a
+00:06:05.840 while now. As the slide clearly states
+00:06:10.400 I've been doing this for around 10 years
+00:06:12.080 now. Right now I lead a group of
+00:06:14.400 engineers developing chat bots for the
+00:06:17.680 development of
+00:06:20.240 industrial solutions via Gen AI using
+00:06:23.280 images, videos and other things. So
+00:06:25.680 pretty passionate about what I do. I'm
+00:06:27.919 also a teacher here in in SimplyLearn in
+00:06:30.720 the Michigan Genai specialization. So I
+00:06:34.080 pretty I know pretty well what you'll go
+00:06:37.759 through during the course and I can tell
+00:06:39.919 you that it's really really fun. It's
+00:06:42.560 open for almost everyone. We have
+00:06:44.880 beginners. We have cases where people
+00:06:47.120 just come from different backgrounds and
+00:06:49.360 we all get together and get to a simple
+00:06:52.319 and guiding principle which is we'll all
+00:06:54.560 learn and we will be able to generate
+00:06:56.880 solutions from what we learn. So it's a
+00:06:59.520 pretty practical plus theoretical kind
+00:07:01.759 of course and I really really recommend
+00:07:03.840 it and we have a lot of fun.
+00:07:07.039 >> Right. Absolutely. So that's what uh
+00:07:09.360 today's session is for. So we definitely
+00:07:11.440 going to have a lot of fun learning
+00:07:13.520 about GitHub co-pilot. So one question
+00:07:17.199 which we thought we could uh you know
+00:07:19.120 cover before we head to the actual
+00:07:22.240 demonstration is a lot of them are
+00:07:24.639 freshers here. So how do you think
+00:07:27.039 GitHub copilot is relevant in this
+00:07:29.840 context and how does it really help
+00:07:31.599 someone build codes faster? What are
+00:07:34.800 your thoughts?
+00:07:37.120 So, GitHub basically is a versioning
+00:07:40.880 system that was developed a few years
+00:07:43.199 ago. GitHub lets you generate good
+00:07:46.240 practices for development projects like
+00:07:49.360 everyone it the main purpose of it is
+00:07:52.000 you have like a tree let's say and you
+00:07:53.599 can start generating different branches.
+00:07:55.840 So, every time someone wants to submit
+00:07:58.160 code for the main branch you just submit
+00:08:00.879 it. So, it's a great versioning tool.
+00:08:02.639 It's owned by Microsoft and with the
+00:08:05.120 partnership between Microsoft and Open
+00:08:08.240 AI,
+00:08:09.759 GitHub copilot was developed. And what
+00:08:12.080 is GitHub copilot? It's an AI tool. It's
+00:08:14.879 a genai tool with which has an LM behind
+00:08:18.319 probably GPT 4.0 or a similar model that
+00:08:22.720 is just exclusively for coding. So it
+00:08:25.520 has been trained on most of the data we
+00:08:28.000 all know which comes from Stack Overflow
+00:08:30.400 and different coding uh educational
+00:08:33.519 systems and real world examples. So it
+00:08:36.640 basically lets you code with like
+00:08:39.440 steroids on you start doing what you
+00:08:43.039 want. you tell it exactly how you need
+00:08:45.040 it and it generates code for you in a
+00:08:48.080 way that's pretty simple and that you're
+00:08:50.160 able to modify and make it better just
+00:08:54.399 by using your assistant. So it's
+00:08:56.959 basically a tool that lets you be 10
+00:09:00.800 times more productive as a coder. So you
+00:09:03.279 don't have to worry that much about the
+00:09:05.120 little issues that may arise like
+00:09:07.519 debugging or others. you focus more on
+00:09:11.279 solving complex logical problems. So it
+00:09:14.320 works really really well. Well well
+00:09:17.040 >> right okay got it. So I think uh that
+00:09:20.959 kind of clarifies how GitHub copilot is
+00:09:23.839 an AI tool that kind of assists in um
+00:09:27.279 coding. So is is that kind of clear to
+00:09:29.680 everyone? Uh and now you guys know why
+00:09:33.040 um why we're using GitHub copilot today.
+00:09:36.320 Is that clear? A quick yes on the chat
+00:09:38.480 will help
+00:09:41.360 because the next portion is literally
+00:09:45.839 about that. Yeah.
+00:09:48.560 Okay. Cool.
+00:09:51.120 And if you have used GitHub Copilot,
+00:09:53.920 you're welcome to kind of uh mention
+00:09:56.480 that on the chat as well.
+00:09:59.600 Okay. Okay.
+00:10:02.959 Okay. That's amazing. So I think a lot
+00:10:05.120 of them are familiar now. So should I
+00:10:07.360 hand it over to you here Amy because I
+00:10:09.200 think this is the interesting part of
+00:10:10.399 the session. I'm also equally excited.
+00:10:12.959 So I'm just going to let you screen
+00:10:14.720 share. I'm going to stop sharing here.
+00:10:21.279 >> Great. So the good one of the most
+00:10:23.920 important aspects of GitHub Copilot is
+00:10:27.279 that is completely free.
+00:10:29.440 >> Right.
+00:10:31.440 Once all you need to do is create a
+00:10:33.279 GitHub account and you're basically
+00:10:35.440 ready to go,
+00:10:36.720 >> right?
+00:10:37.440 >> And today we have a really cool project
+00:10:40.320 in mind. It's one of the projects that
+00:10:42.720 we actually use inside the Genai
+00:10:45.200 specialization.
+00:10:46.880 So we are going to go like in a linear
+00:10:52.160 fashion. We'll handle the problem
+00:10:54.560 statement and what we want to build and
+00:10:56.959 then we'll get into building them. Yes.
+00:11:00.000 As said, GitHub is free as well. GitHub
+00:11:02.480 is anyone can use it and it's a web
+00:11:05.600 interface and you can also have your
+00:11:07.839 GitHub desktop. It's a pretty
+00:11:10.079 well-rounded tool that almost every
+00:11:12.399 developer on Earth uses and you can find
+00:11:14.720 tutorials and examples over there. So,
+00:11:17.519 the main idea behind our project today
+00:11:20.560 is we want to see or to create an
+00:11:25.120 adventure game. This adventure game
+00:11:27.120 looks a lot like
+00:11:29.200 games from the 70s and 80s that were
+00:11:31.760 textbased. But textbased games are cool.
+00:11:35.360 Why? Because you can generate as many
+00:11:37.279 options for it as you like. And as we
+00:11:40.560 have seen in the past few years like
+00:11:42.560 table games like Dungeons and Dragons
+00:11:44.959 and other sort of games that are more
+00:11:47.680 role-playing games
+00:11:50.240 in in a in a text fashion help us a lot
+00:11:54.000 with understanding what we're going to
+00:11:55.519 do. So basically what we want is the
+00:11:58.079 game to allow users to explore different
+00:12:00.640 locations, make choices, and complete a
+00:12:03.839 simple quest. In this development of the
+00:12:08.000 of the adventure game, we're going to be
+00:12:10.720 focused and we're going to be able to
+00:12:12.880 see in practice how we
+00:12:16.639 do certain fundamental concepts that are
+00:12:19.760 in Python and other programming
+00:12:21.360 languages like variables, lists, loops,
+00:12:25.440 conditionals, and functions. All of
+00:12:27.920 which are basic parts of programming.
+00:12:31.760 The idea is that with GitHub Copilot,
+00:12:35.360 we're going to be able to improve our
+00:12:37.440 code efficiency and reinforce some
+00:12:40.240 Python skills that maybe we have or we
+00:12:42.560 don't have. And it's pretty readable.
+00:12:45.360 So, we're going to go ahead and
+00:12:48.480 get started.
+00:12:50.320 The main idea is we have a player. The
+00:12:53.519 player is going to take the role of an
+00:12:55.360 explorer who's searching for a legendary
+00:12:57.839 treasure hidden in a nation in an
+00:13:00.560 ancient land. So, let's go ahead and get
+00:13:03.279 started.
+00:13:04.320 >> Yeah, sure.
+00:13:04.880 >> I you're seeing my screen right here and
+00:13:08.320 this is VS Code. VS Code is an
+00:13:11.680 interactive development environment
+00:13:14.000 design that's owned by by Microsoft and
+00:13:18.560 it has everything we might need as
+00:13:21.040 developers. And here we have GitHub
+00:13:23.760 copilot. We have see we can see the
+00:13:26.320 usage. We can see everything we need.
+00:13:28.639 And all we have to do is connect it to
+00:13:30.639 our GitHub account and we can go ahead
+00:13:33.519 and try it.
+00:13:35.760 Inside this IDE, we can create files, we
+00:13:39.600 can program, we can do almost everything
+00:13:42.000 that has to do with coding itself. So
+00:13:44.720 our first step is going to be to create
+00:13:47.120 our adventure game file. We're going to
+00:13:49.680 go ahead and click new file and create a
+00:13:52.800 Python file. How are we going to start
+00:13:55.120 it? Pretty simply, we're just going to
+00:13:57.199 let it know the name of our file via a
+00:14:03.120 comment. If you see here, I used this
+00:14:07.360 symbol. And all this symbol does is says
+00:14:10.480 this is a comment. This is something the
+00:14:12.639 computer will not execute [laughter]
+00:14:14.800 since it's just a way to give it more
+00:14:17.920 human readability. So it's we start with
+00:14:20.880 our adventure game.py and we're going to
+00:14:23.839 start by creating a few comments about
+00:14:26.320 what we want or the main idea behind
+00:14:29.120 what we're going to do. So, we're going
+00:14:31.360 to have an explorer
+00:14:35.519 that is searching
+00:14:39.360 for a legendary treasure.
+00:14:43.839 And as you see, Copilot is trying to
+00:14:47.440 autogenerate what I'm going to do. And
+00:14:49.920 if I want to accept it, all I have to do
+00:14:52.560 is press tab.
+00:14:54.720 >> So, uh, Hy, just a quick request. Can
+00:14:57.680 you zoom in a bit because I think people
+00:15:00.160 are finding it hard to read the font.
+00:15:03.199 >> Um,
+00:15:03.839 >> of course.
+00:15:07.839 >> But yeah, it's it's better. I guess the
+00:15:11.760 learners can help me here. Um, if it's
+00:15:14.720 better, just let me because I I I find
+00:15:16.480 it okay. So, I'm using a laptop. Okay.
+00:15:20.000 If you're using a mobile phone, you
+00:15:21.600 might not be able to see a shared screen
+00:15:23.920 in the gallery view. Just make sure
+00:15:25.760 you're swiping right to see the screen.
+00:15:29.040 And uh also I think his volume is fine,
+00:15:31.680 guys. I don't see an issue there. So in
+00:15:33.600 case you've got issues with volume, just
+00:15:35.360 maybe put on a headphones. Yeah, I think
+00:15:37.279 Hy you can carry on now.
+00:15:39.680 >> Okay, I'm going to uh increase the input
+00:15:42.399 volume just in case that makes it a bit
+00:15:45.279 better.
+00:15:48.240 >> I think it's totally okay, Hy. Okay.
+00:15:52.240 So, now that we have our comment that
+00:15:55.440 says what's going to happen, we want to
+00:15:58.480 go ahead and start doing our task. And
+00:16:02.800 our task is going to be able to start
+00:16:05.279 the game. How do we start the game?
+00:16:09.040 We're going to not necessarily import
+00:16:10.880 random, but we're going to define a
+00:16:12.800 function. We're going to define
+00:16:16.160 game
+00:16:18.079 or game intro. And as you see, GitHub
+00:16:21.600 Copilot is already creating the content
+00:16:24.160 for us. If we go here, it says, &quot;Okay,
+00:16:28.240 do you want to do a statement of print?&quot;
+00:16:31.120 That's going to say, &quot;Welcome to the
+00:16:32.480 adventure game.&quot; And we can go ahead and
+00:16:35.199 say, &quot;Okay, tab.&quot; Because I really
+00:16:37.759 wanted to go with print and welcome to
+00:16:40.800 the adventure game. After this, what
+00:16:43.680 else do we want to do? tell the player
+00:16:46.720 what they're supposed to be doing, which
+00:16:49.279 is your explorer searching for a
+00:16:51.680 legendary treasure in a mystical forest.
+00:16:54.079 Just to give you guys a an idea of why
+00:16:57.440 this is happening, turns out that LLMs
+00:17:00.480 are great at predicting the next word
+00:17:03.040 that's going to come. So in the J and AI
+00:17:05.599 specialization what we learn is how this
+00:17:08.160 comment is basically building upon the
+00:17:11.679 four main principles of prompt
+00:17:13.439 engineering which are context a clear
+00:17:17.839 question uh clear question context input
+00:17:21.599 data and the expected output. So in a
+00:17:24.480 way with this context
+00:17:28.240 our copilot is able to predict what
+00:17:31.360 we're looking for.
+00:17:35.440 So we can go ahead and print our last
+00:17:40.320 print statements which are your choices
+00:17:42.880 will determine your fate. Choose wisely.
+00:17:46.080 Let's go ahead and begin. This was just
+00:17:49.440 our game intro, but now we have to
+00:17:52.240 choose paths.
+00:17:54.720 How do we do this? And if you want to
+00:17:57.039 learn a bit more about Python for those
+00:17:58.960 of you who are beginners, this is the
+00:18:01.760 keyword for a function. So, we're going
+00:18:04.320 to define something that we're going to
+00:18:06.000 be able to use and reuse again and again
+00:18:09.679 and again. And the main idea behind this
+00:18:13.039 is we can create it with our with our
+00:18:15.679 own name and everything that comes
+00:18:17.840 afterwards with the indentation is part
+00:18:21.039 of
+00:18:22.799 this function. So we'll get to see that
+00:18:25.840 a bit more.
+00:18:27.760 And here we go ahead and print you come
+00:18:31.120 to a fork in the road. How do we want
+00:18:33.679 this to happen?
+00:18:36.400 There's two possibilities that GitHub
+00:18:38.400 copilot is giving us. One is dark cave
+00:18:40.799 and the other the other one is towards
+00:18:42.880 the river. But since we're in a forest,
+00:18:47.280 do we want the dark cave or do you want
+00:18:50.080 the river?
+00:18:51.840 I would probably change this a bit and
+00:18:54.799 instead of river I would say a
+00:19:00.400 towards the clear
+00:19:04.080 path
+00:19:06.160 in the forest.
+00:19:10.640 If you saw that I accidentally hit
+00:19:15.919 a key
+00:19:17.840 MBS code and copilot are telling me
+00:19:20.480 would be read okay there's something
+00:19:22.480 wrong there wrong there and what is
+00:19:24.799 wrong with what I did basically what we
+00:19:28.640 can learn inside the specialization is
+00:19:30.400 this is a string and a string always has
+00:19:33.600 to be denoted this way a string just
+00:19:37.039 refers to a several to some characters
+00:19:40.559 that are not a number. So, a lot of
+00:19:44.640 of of the text we see are strings.
+00:19:50.400 Now,
+00:19:52.640 we have a few possibilities.
+00:19:56.720 And what we are going to do here is just
+00:19:58.799 press tab. And you can see here
+00:20:01.679 something here. We're creating what we
+00:20:04.480 call a variable. And what is this
+00:20:07.120 variable? Variables are a lot like
+00:20:09.840 remember in math class when we had x is
+00:20:12.000 equal to two. So in this case we're
+00:20:14.400 calling it instead of x we're calling it
+00:20:16.400 choice. And what's going to happen
+00:20:18.480 inside the choice? We have an input
+00:20:21.280 meaning the person or the user has to
+00:20:24.320 input some type of information meaning
+00:20:28.080 left or right. And this is going to
+00:20:30.720 strip for from any other lettering
+00:20:33.679 that's inside. and it's gonna lowerase
+00:20:36.320 it just so it knows which one is it. If
+00:20:40.799 the choice is gonna be left, then we're
+00:20:43.679 gonna
+00:20:45.280 go into the dark cave.
+00:20:51.919 If choice is right, then we're going to
+00:20:54.000 go into the clear path.
+00:20:56.960 But if you see a lot, if you see this,
+00:21:01.760 these are conditionals and control
+00:21:04.400 statements. So if our choice is going to
+00:21:07.440 going to be left, we go into dark cave.
+00:21:10.000 L if the choice is right, then we go to
+00:21:12.720 clear path else. So if we have none of
+00:21:16.559 this, we have an invalid choice. So this
+00:21:20.559 is a bit of what we do inside of Python
+00:21:24.960 programming. So now since we have a dark
+00:21:28.159 cave variable, we need to construct the
+00:21:31.120 logic that's going to go inside our dark
+00:21:33.280 cave. How do we do it? We can start with
+00:21:36.400 the print. And if you see here, if I
+00:21:39.200 just start typing, it's going to start
+00:21:42.320 trying
+00:21:46.080 to predict
+00:21:48.320 what I'm writing.
+00:21:55.840 Now we have printed. You find yourself
+00:21:58.720 in a dark cave.
+00:22:01.360 It actually says it's dark and eerie and
+00:22:04.480 you hear strange noises.
+00:22:07.280 Do you want to explore deeper in the
+00:22:08.960 cave or turn back?
+00:22:11.840 And now we have another choice that we
+00:22:14.480 can create. Since this choice and this
+00:22:18.000 choice are both part of separate
+00:22:20.960 functions, we can name them the same.
+00:22:23.679 And this is something that we learned
+00:22:25.360 which are called local scopes and global
+00:22:28.080 scopes for variables.
+00:22:31.280 If we choose explore, then we're going
+00:22:33.600 to let our explorer win because it's
+00:22:37.360 going to find the hither the hidden
+00:22:39.120 treasure chest.
+00:22:41.120 And with this in mind, we have a winning
+00:22:43.600 choice. But if the choice is going back,
+00:22:47.039 you safely return to the fork in the row
+00:22:50.240 and we just give it a choose path inside
+00:22:53.280 the l.
+00:22:55.440 Now that we have the dark cave,
+00:22:58.400 we need no yeah the else and just an
+00:23:01.679 invalid choice in case the person just
+00:23:05.520 picks at random and doesn't use either
+00:23:08.400 the explore or back that we're trying to
+00:23:11.280 use. Now we need to define what happens
+00:23:14.159 in the clear path. In the clear path we
+00:23:18.240 are going to start by saying you find
+00:23:19.760 yourself in a clear path. And then what
+00:23:23.120 do we want? We want to keep talking
+00:23:26.559 about the clear path. The sun is shining
+00:23:28.720 and the birds are singing. And what is
+00:23:32.159 the choices we will leave to our
+00:23:35.200 explorer? We could follow the path or
+00:23:39.440 take a shortcut through the bushes.
+00:23:42.320 And how do we do this? Again, we're
+00:23:44.080 creating a variable that's going to be
+00:23:46.480 called choice. And we are asking the
+00:23:48.880 user for an input.
+00:23:51.520 With this in mind, we can continue. If
+00:23:55.120 the choice is going to be equal to
+00:23:56.559 follow, you follow the path and come
+00:23:59.200 across a beautiful waterfall. You take a
+00:24:01.919 moment to enjoy the view, but then
+00:24:04.159 decide to head back to the fork and in
+00:24:06.960 the
+00:24:08.880 and in the road. So now we have to
+00:24:11.520 generate the choose the alif. If you
+00:24:14.960 choose a shortcut, what's going to
+00:24:17.200 happen? You're going to find another
+00:24:19.919 treasure. Or if we don't want it to find
+00:24:22.559 another treasure, all we have to do
+00:24:26.960 is remove this couple of print
+00:24:28.880 statements
+00:24:30.799 and print something here like
+00:24:34.960 unfortunately
+00:24:39.600 you have failed
+00:24:42.240 in your mission
+00:24:44.960 and what we have to do is change it and
+00:24:48.159 co-pilot will understand that this is an
+00:24:51.440 end to the game.
+00:24:54.559 Now we have both of our paths ready.
+00:24:58.720 What are we going to do?
+00:25:04.799 We're going to create our main which has
+00:25:08.240 game intro choose path and if name is
+00:25:12.080 equal to name it's going to be name.
+00:25:15.279 So, let's go ahead
+00:25:17.679 and
+00:25:19.520 give this a try. How are we going to do
+00:25:21.760 this? We're going to control save
+00:25:25.520 and we're going to save it in our
+00:25:27.039 building adventure game with Copilot.
+00:25:30.640 I don't want it to be saved with the
+00:25:32.320 comment. Click save.
+00:25:36.159 And how do we run it? We say let's run
+00:25:39.039 Python files. Sorry.
+00:25:42.240 Run Python file. And here in the
+00:25:44.960 terminal, we're going to be able to test
+00:25:47.360 it.
+00:25:48.960 And as you see, we're printed. Welcome
+00:25:51.360 to the adventure game. You're an
+00:25:52.880 explorer searching for a legendary
+00:25:54.720 treasure in a mystical forest. Your
+00:25:57.279 choices will determine your faith.
+00:25:59.440 Choose wisely.
+00:26:01.679 You come to a fork in the road. Do you
+00:26:03.760 want to go left towards dark cave or
+00:26:05.919 right towards the clear path in the
+00:26:08.240 forks? So, let's say I write nonsense
+00:26:11.039 and I write when when
+00:26:14.480 Wednesday invalid choice. Please try
+00:26:17.520 again. And that's the whole idea behind
+00:26:20.400 the logic we generated by the else
+00:26:23.679 statement. So as you see here, let's
+00:26:26.480 keep going in the game and I'll go back
+00:26:28.799 to the Python script. If I do write and
+00:26:32.960 it's in caps lock since we generated the
+00:26:36.799 lower uh function now it knows that this
+00:26:40.640 right is the same as this red
+00:26:44.400 let's say that we are going to take
+00:26:46.159 shortcut
+00:26:51.200 unfortunately you have failed your
+00:26:52.799 mission but how do we run it again we
+00:26:56.720 use Python
+00:26:58.559 and we say adventure
+00:27:02.320 game. PY
+00:27:05.200 and again we can start. Let's say this
+00:27:07.840 time we're going to go left in a dark
+00:27:10.400 cave. It's our canary. We hear strange
+00:27:13.039 noises. Do we want to explore? Let's
+00:27:15.760 explore.
+00:27:18.480 And congratulations, we found the
+00:27:20.559 legendary treasure.
+00:27:22.720 So this is a bit this is a project that
+00:27:25.360 we do in the Python refresher for you
+00:27:27.840 Michigan. And it's really really nice
+00:27:30.320 because we have all of the aspects the
+00:27:32.799 basic aspects of Python programming. So
+00:27:35.840 I hope you enjoyed the demo and let me
+00:27:38.799 know if you have any questions.
+00:27:41.039 >> Yeah, actually there are a bunch of
+00:27:42.480 questions. Uh one of the questions that
+00:27:44.400 Ada had is um so is Copilot good just
+00:27:49.039 for Python or does it also support other
+00:27:52.480 languages?
+00:27:54.640 It also supports other languages,
+00:27:56.640 JavaScript, C, C car C car C car C car C
+00:27:58.000 car C car C car C car C car C car C
+00:27:58.159 sharp it's for almost every programming
+00:28:00.720 language that you can think of.
+00:28:03.440 >> All right, got it. And also aside from
+00:28:07.039 you know adventure games a learner has a
+00:28:09.200 question um saying can I use Copilot for
+00:28:12.640 word search puzzles in their own
+00:28:15.360 language not in English but you know the
+00:28:17.760 language that they speak.
+00:28:20.480 Yeah, that's the main idea behind the
+00:28:22.880 new LLMs.
+00:28:24.960 >> They're able to
+00:28:27.679 speak in a way or understand different
+00:28:30.080 languages.
+00:28:31.919 >> For example, my native language is
+00:28:33.840 Spanish and Copilot works great with
+00:28:36.559 Spanish and English. And if you try it
+00:28:39.679 with Portuguese or French or whatever
+00:28:41.520 language you can think of, it actually
+00:28:43.520 works really well.
+00:28:46.880 >> Nice. Uh so can I think uh a couple of
+00:28:50.720 learners have this question about
+00:28:52.399 visuals. So can you know GUI based games
+00:28:56.000 also be built with GitHub copilot? Is
+00:28:59.840 that also possible?
+00:29:02.240 >> Exactly. And what could we do in that
+00:29:04.880 case? Here we have a chat with copilot
+00:29:07.760 and we can say it here it has as context
+00:29:10.720 the current file and let's ask it. Let's
+00:29:12.640 go ahead and ask it live. How can I
+00:29:15.840 generate a GUI for my adventure
+00:29:21.520 >> game?
+00:29:24.240 >> And you can use a few libraries. I can
+00:29:26.880 already tell you a bit about this, but
+00:29:28.720 it's already giving you a structure for
+00:29:31.120 the Python GUI adventure game project.
+00:29:36.559 And the main idea for this is
+00:29:39.840 we can start uh playing or or executing
+00:29:45.360 the created file and start changing it
+00:29:47.679 to see how it works, if it works well,
+00:29:50.480 if it doesn't. Let's go ahead and now
+00:29:53.520 see what it changed. It generated the
+00:29:56.799 GUI for you. So let's try in the
+00:30:00.799 terminal again. Mhm.
+00:30:03.520 >> To see how it works.
+00:30:07.039 this adventure file.
+00:30:11.360 Oh, sorry. It's I'm I'm going to have to
+00:30:14.159 reshare my screen real quick because it
+00:30:17.200 the GUI is local. So,
+00:30:20.559 I need to be able to
+00:30:24.399 play here.
+00:30:30.000 Turn it all down.
+00:30:43.200 The GUI doesn't seem to be working. And
+00:30:45.600 this is something that could happen
+00:30:48.559 sometimes,
+00:30:52.000 but
+00:30:54.399 let's wait and see.
+00:31:06.320 Here we go. Now we have the adventure
+00:31:10.240 game with a GUI.
+00:31:13.520 And this is the GUI. It's a simple GUI,
+00:31:16.720 but we have a starting point to generate
+00:31:20.000 our own game. There's even libraries for
+00:31:22.720 like Pygame that you can generate the 2D
+00:31:25.520 game. And what's important about this
+00:31:28.640 now you have the logic behind it. All
+00:31:31.760 you would have to add is the visual
+00:31:34.159 aspect of it. Show the animation of the
+00:31:36.720 little adventure moving and choosing the
+00:31:39.360 different paths. But this is a great
+00:31:41.840 starting point because and I I I do I
+00:31:45.600 say this from the bottom of my heart.
+00:31:47.279 Usually the logic is one of the hardest
+00:31:49.600 aspects of generating visually appealing
+00:31:53.760 programs.
+00:31:57.840 Right. Uh can someone use Jupiter
+00:32:00.720 notebook as well for this or
+00:32:04.240 >> of course if we want to do it with a
+00:32:07.679 Jupyter notebook? Let me just
+00:32:10.880 How do I leave
+00:32:13.440 full screen mode?
+00:32:26.159 Jupiter.
+00:32:33.519 I need a new tab.
+00:32:42.080 Let's
+00:32:45.279 >> This is within GitHub itself, right?
+00:32:49.519 Yeah.
+00:32:50.240 >> Yeah. Okay.
+00:32:50.960 >> This is all inside of GitHub.
+00:32:54.159 >> And the main idea is
+00:32:57.760 I can't seem to get out of new open new
+00:33:01.760 text file.
+00:33:03.440 >> If we save the file as or let's say here
+00:33:07.840 new file, we can save it as a Jupyter
+00:33:11.200 notebook. So let's call it adventure.
+00:33:13.919 >> Mhm.
+00:33:16.159 >> YB.
+00:33:17.919 And it now knows that it's a Jupyter
+00:33:20.799 notebook. So all we have to do is
+00:33:24.799 >> this is a Jupiter
+00:33:28.960 note
+00:33:30.559 and we can run it and just select the
+00:33:33.440 Python environment that you want to use.
+00:33:36.799 Let's say here we can go ahead and
+00:33:38.640 print.
+00:33:40.159 So
+00:33:42.480 welcome to the adventure game and it's
+00:33:45.600 exactly the same. Amazing.
+00:33:48.720 Neat. Great. Also in the code, uh, Hy
+00:33:52.000 Ala has a question. So, if you can just
+00:33:54.480 go back to that. So, what is strip? Um,
+00:33:57.760 let me just strip lower.
+00:34:02.000 Yeah,
+00:34:02.399 >> the strip.
+00:34:04.159 >> In this case, it's in case remember when
+00:34:06.640 I was trying it and I gave it a
+00:34:08.639 nonsensical
+00:34:10.320 like I said Wednesday instead of left
+00:34:12.239 and right. What we do with strip with
+00:34:15.040 strip is basically to remove
+00:34:18.800 to remove the white space that is behind
+00:34:21.839 or afterwards like if someone presses a
+00:34:24.399 space bar and then left you remove that
+00:34:27.119 space and the lower is in case someone
+00:34:30.800 doesn't write left and right in lower
+00:34:32.719 case but write writes it completely in
+00:34:35.760 uppercase and the lower function
+00:34:38.079 basically turns it into a right in lower
+00:34:41.280 case. That way when the comparison is
+00:34:44.000 done you know that the uh uppercase
+00:34:47.280 right is the same to this lower case
+00:34:49.359 right.
+00:34:51.199 >> Got it. All right. And uh yeah some more
+00:34:54.639 questions before we proceed. So is there
+00:34:57.119 any other software other than copilot
+00:34:59.440 that we can do with Python? It's a
+00:35:01.359 similar question that we got some some
+00:35:03.599 while back.
+00:35:05.839 Yeah, there's there's a lot of of new
+00:35:08.560 models that actually have great
+00:35:12.240 erh
+00:35:13.920 code services. The same chat GPT can
+00:35:16.560 help. There's a an IDE that's only for
+00:35:20.000 LLMs which is called cursor and in
+00:35:22.400 cursor you can basically decide what
+00:35:24.480 model you want to use as a code
+00:35:26.240 assistant. There are other projects for
+00:35:29.359 example Google Google cloud has its own
+00:35:32.880 its own uh coding assistant I think
+00:35:36.240 Julia is the name and there's a few more
+00:35:38.960 that you can use for whatever purpose
+00:35:41.680 you have most of them offer similar
+00:35:45.119 things
+00:35:46.320 >> yeah sorry
+00:35:47.839 >> yeah so is it is it similar to Google
+00:35:50.240 collab or did you mention Google cloud
+00:35:53.119 sorry
+00:35:54.560 >> it's Google cloud and it's just
+00:35:56.560 basically Gemini but in your CL in your
+00:36:00.160 in your
+00:36:02.079 development environment,
+00:36:03.839 >> right?
+00:36:04.480 >> And the thing is that
+00:36:07.520 Google Collab is a great way to
+00:36:11.599 have a Jupyter notebook online that you
+00:36:14.880 are not using your local resources on.
+00:36:17.680 >> So it's just it just works and you can
+00:36:19.839 save your progress, but it's not
+00:36:21.680 persistent. meaning that if you
+00:36:23.280 disconnect from it, you lose the
+00:36:25.599 progress or the execution you had. Your
+00:36:28.960 code will still be there, but the the
+00:36:31.680 results won't be there. But and we use
+00:36:34.240 collab a lot as a simple place to test
+00:36:36.960 new things and especially if you don't
+00:36:39.359 want to use it locally and maybe it's a
+00:36:42.160 it's a a big project like for example
+00:36:44.800 yesterday in class we were trying some a
+00:36:48.800 guns model which is a generative
+00:36:50.400 adversarial network to generate images
+00:36:52.640 that are as real as possible and Google
+00:36:56.000 collab offers like 24 hours of GPU
+00:36:59.119 usage. So instead of waiting 20 minutes
+00:37:02.079 for code to execute, it only took three.
+00:37:04.960 And that those are the some of the
+00:37:07.359 advantages of Google Collab.
+00:37:10.160 >> Right. Got it. All right. Um so a couple
+00:37:13.760 of questions related to uh the code. You
+00:37:16.880 you did mention that you know we're
+00:37:18.160 going to be doing this in the Python
+00:37:19.599 refresher module of the course. Um so
+00:37:22.880 learner has a question. What uh why are
+00:37:25.520 only if else and else if used as
+00:37:28.960 conditional statements? Aren't there any
+00:37:31.280 other statements that can be used as
+00:37:34.160 well? And let's say someone is stuck,
+00:37:37.359 you know, um they're not able to proceed
+00:37:40.000 or understand what to do next.
+00:37:43.040 How do they go about?
+00:37:46.320 In this case, when we talk about
+00:37:48.240 conditionals like if, if else, we have a
+00:37:51.920 few ways to exit a loop. And you're
+00:37:55.520 absolutely right. We could also use
+00:37:57.280 while loops. We could also use other
+00:38:00.000 types of conditionals. But we have break
+00:38:02.480 statements. We have basically a lot of
+00:38:05.680 ways to exit loops just to make sure
+00:38:08.400 that everything is working. And these
+00:38:10.640 conditionals, why do we use them in this
+00:38:12.960 case? It's because they're kind of
+00:38:15.920 simple for what the purpose of the game
+00:38:18.800 is. But in most cases, most of the
+00:38:21.040 projects are not this short. A lot of
+00:38:24.079 people, and I've seen my students do it,
+00:38:26.400 they get really excited and create
+00:38:29.200 really cool projects with it. So if you
+00:38:31.760 just try different things, for example,
+00:38:33.839 here I can think of creating a while
+00:38:36.720 loop in the main function just to make
+00:38:39.920 sure that the game continuously run even
+00:38:42.480 if you lose.
+00:38:46.720 >> Got it. And uh yeah, can also Java be
+00:38:50.800 used to build this game or does one need
+00:38:53.920 to do it?
+00:38:56.240 I mean, yeah,
+00:38:57.040 >> it can also be used. It can also be used
+00:38:59.599 like you can build it in whatever
+00:39:01.040 programming language you want. Usually
+00:39:03.200 this project is for the Python refresher
+00:39:05.680 since for Genai Python seems to have
+00:39:08.400 more a community support and in data
+00:39:11.839 science and ML areas Python
+00:39:16.240 has more more to offer. There's there
+00:39:20.079 has been more developed towards Python
+00:39:22.800 than other languages.
+00:39:25.520 >> Right. Um so you you also did this
+00:39:28.880 entire thing on GitHub. So does the
+00:39:31.040 co-pilot by any chance or you know I
+00:39:35.200 mean in general if you're using any AI
+00:39:37.599 tool here which is like Chad GPT or
+00:39:39.839 anything else Gemini does it help us fix
+00:39:42.720 bugs as well? Um is there is there a
+00:39:46.880 facility that kind of helps our course
+00:39:49.520 correct?
+00:39:51.359 Of course, if let's say we have the most
+00:39:54.960 usual problem that it's the indentation
+00:39:59.599 when we have a function, the indentation
+00:40:02.160 after choose path and this semicolon has
+00:40:05.359 to be in the same line. Why? Because
+00:40:07.839 this tells the program dark cave is
+00:40:10.160 inside this if statement. So only if
+00:40:12.720 this is true, it goes inside. Here we
+00:40:15.839 see I'm making a mistake here. And both
+00:40:19.920 Copilot and VS Code are telling me, hey,
+00:40:23.599 something's wrong here. Something's
+00:40:25.520 wrong here. And Copilot can probably fix
+00:40:28.240 it for you once you try to run it.
+00:40:31.119 >> Of course. Of course. So that way it's
+00:40:33.359 easier. Um, so another question that
+00:40:36.640 TJSV has is Copilot works in uh does it
+00:40:39.920 work on Python idle or not?
+00:40:44.560 Copilot works in a lot of different
+00:40:47.520 IDEs.
+00:40:50.160 >> In the Python one, in the IDLE that
+00:40:53.520 comes installed with Python, I don't
+00:40:55.200 think so because that's not really a big
+00:40:58.079 IDE, but PyCharm has support for
+00:41:00.960 Copilot. A lot of the big ones like
+00:41:03.599 Atom,
+00:41:05.760 most of them have support for
+00:41:07.280 >> Copilot.
+00:41:10.960 And uh yeah I think because you
+00:41:13.599 mentioned Gemini as well a learner has
+00:41:15.760 this question is it is it really better
+00:41:18.480 than any other AI tool in terms of
+00:41:20.480 coding um you know because we're using
+00:41:23.280 GitHub specifically in the course and
+00:41:26.079 also you mentioned it's there in the
+00:41:27.440 Python refresher. Is there a reason why
+00:41:29.760 we're doing that or you know it's it's
+00:41:32.400 it's all equal equally good
+00:41:36.240 >> in this case
+00:41:39.839 Gemini is pretty good co-pilot is pretty
+00:41:42.880 good as well it's basically your choice
+00:41:45.920 >> like sometimes you can ask a few of them
+00:41:48.480 just to try and see what you're doing
+00:41:50.319 wrong what you can make better just keep
+00:41:53.119 in mind that programming and especially
+00:41:55.680 LLM and genai development is a thought
+00:41:58.640 about making mistakes and trying to
+00:42:01.599 solve issues that arise or come up at a
+00:42:04.880 certain point in time. Someone like me
+00:42:07.200 whose day-to-day is solving issues, I
+00:42:10.480 usually don't I'm pretty model agnostic
+00:42:14.960 in the way that I I want to use most of
+00:42:18.079 them for what they're better at. And I
+00:42:20.720 can't definitely say Chad GPT is better
+00:42:23.359 or Gemini is better or the models from
+00:42:26.560 Anthropic like Claude are better. Not
+00:42:29.119 necessarily. There some of them have
+00:42:31.040 some better aspects to them like
+00:42:35.599 but most of them are are pretty equal in
+00:42:39.040 the coding space.
+00:42:41.440 >> Right. Got it. Got it. All right. A lot
+00:42:45.680 of more questions actually about uh
+00:42:48.000 coding. Certainly people I think have uh
+00:42:51.440 you know this has kindled interest in
+00:42:53.440 them. So I mean you did mention that
+00:42:56.000 this is relevant to Python and
+00:42:57.920 understanding but um another question
+00:43:01.520 that learner has is Python the best
+00:43:05.359 language to use. You did mention that
+00:43:08.079 you know we can use other languages as
+00:43:10.000 well but a learner has a very valid
+00:43:12.640 question which is many students struggle
+00:43:14.880 to connect the dots between logic based
+00:43:17.280 projects like these and AI workflows
+00:43:20.240 right uh which is a valid question
+00:43:22.240 again. So could you share how problem
+00:43:24.400 solving exercises like this helps build
+00:43:27.680 intuition for building machine learning
+00:43:31.040 models? If you can explain that
+00:43:33.599 correlation because I mean I actually
+00:43:35.680 did ask you this question if you
+00:43:37.119 remember when we had our initial
+00:43:38.560 conversation.
+00:43:40.960 >> So how does this work? Sometimes people
+00:43:45.280 see a function and say okay this is like
+00:43:48.800 a simple function for a game and it all
+00:43:52.400 only uses if l if and else statements
+00:43:55.280 but it what it turns out is that this is
+00:43:57.680 more than enough for what we do for
+00:44:00.240 example in frameworks like langchain.
+00:44:02.319 When we create a tool in Langchain that
+00:44:04.400 has the ability to go out to the
+00:44:07.040 external web like use a serp serpev API
+00:44:11.280 call to Google search or is able to
+00:44:14.000 connect to a database. Most of what we
+00:44:16.720 will do has looks like functions and
+00:44:19.920 this function type style or what looks
+00:44:22.960 like simple code actually has everything
+00:44:25.520 we will need to generate a project like
+00:44:28.319 a chatbot that has its own knowledge.
+00:44:30.560 when we generate a rag a rag based model
+00:44:33.760 for example so we retrieve information
+00:44:36.640 from text or images or PDFs and save
+00:44:40.560 them in a vector database we're using
+00:44:44.079 the same principles so what's the main
+00:44:46.560 idea behind this type of of of exercises
+00:44:50.400 it's getting comfortable writing code
+00:44:52.800 and one of the most important aspects of
+00:44:55.200 being comfortable in writing code is not
+00:44:58.000 being afraid of making mistakes There's
+00:45:00.640 not a single person in the world that
+00:45:02.480 knows everything about coding. But if
+00:45:05.040 you have the basic four or five things
+00:45:07.760 you can do with Python, you're going to
+00:45:09.839 be able to generate solutions on your
+00:45:12.160 own, especially for model development or
+00:45:16.160 or genai production ready development
+00:45:20.400 because a lot of them look a lot like
+00:45:22.480 this.
+00:45:24.560 >> Yeah. So uh you know another question
+00:45:29.200 about coding again about learning to
+00:45:32.319 code in general um but guys remember the
+00:45:35.119 correlation between building machine
+00:45:36.960 learning models and also learning logic
+00:45:39.119 based games like this that was the
+00:45:40.960 agenda of this session but anyway so um
+00:45:43.920 Hy what was what is your advice to
+00:45:45.839 learners is it is it good that someone
+00:45:47.839 learns coding from scratch um without
+00:45:51.359 using AI or is it smart is it a smart
+00:45:54.800 thing to do to learn or take help of AI
+00:45:57.920 to code and build games and you know we
+00:46:00.319 can also I'm sure use AI there are a lot
+00:46:02.319 of cap capabilities that AI has in
+00:46:04.720 building a lot of other applications as
+00:46:06.880 well not just games what are your
+00:46:08.880 thoughts there
+00:46:12.160 >> personally I am someone that has the
+00:46:14.720 belief that you don't need to reinvent
+00:46:16.480 the wheel
+00:46:17.440 >> you always need to keep it as simple and
+00:46:19.200 as nice for you as possible a lot of
+00:46:21.920 learning how to code a lot of years ago,
+00:46:25.359 the hardest aspect of it was the initial
+00:46:27.920 learning curve where you felt completely
+00:46:30.480 lost. But if you use tools like
+00:46:32.880 co-pilot, what I recommend is use them.
+00:46:36.640 Ask it, okay, how does this work?
+00:46:38.480 Explain it to me in layman's terms. Give
+00:46:40.240 me a a few more examples. And in that
+00:46:42.560 way, you you get an understanding of
+00:46:44.560 what you're doing. And even though it's
+00:46:46.800 going to generate code for you, after
+00:46:49.119 you start learning it, you're going to
+00:46:50.880 see that you understand what's going on
+00:46:53.040 here. and this and that these letters
+00:46:55.839 and whatever is happening here doesn't
+00:46:58.160 look as scary as it was on the first day
+00:47:00.800 you started. So, I'm always pro using
+00:47:04.160 tools. Just be mindful that a lot of of
+00:47:08.079 learning is also having the spirit to
+00:47:12.880 understand that if you don't know it and
+00:47:15.040 and you ask the copilot to do it, take
+00:47:18.400 the time to see how he did it and why he
+00:47:21.040 did it and ask it more questions because
+00:47:23.280 that's how you learn that fundamental
+00:47:26.960 based knowledge that you're going to
+00:47:28.240 need for the rest of your career.
+00:47:31.839 >> Got it. Got it. Got it. All right. Um,
+00:47:36.000 so let's probably just switch gears a
+00:47:39.760 bit and you know proceed the rest of the
+00:47:41.839 session. By the way, uh, Hy, a lot of
+00:47:43.920 learners also had this question about
+00:47:45.920 whether you could share this with them.
+00:47:47.920 Um, is that possible by any chance?
+00:47:50.079 Could you do that?
+00:47:51.280 >> Of course.
+00:47:52.240 >> Yeah,
+00:47:55.839 >> I'm going to stop sharing and I'll send
+00:47:57.520 it via the chat if you want.
+00:47:59.440 >> Yeah, of course. That that'll help.
+00:48:05.520 I think I'm just going to uh
+00:48:10.160 take my screen share back and go back to
+00:48:14.079 our deck.
+00:48:20.880 Let's just give uh him a couple of
+00:48:23.200 minutes here. He's going to share the
+00:48:25.680 code and
+00:48:27.520 you guys can use it. I'm I'm going to
+00:48:30.000 send it be don't it says only
+00:48:34.960 a host and panelist is that can you
+00:48:37.839 resend it from there?
+00:48:39.920 >> Yeah, sure. I I I'll I'll take it from
+00:48:42.240 there.
+00:48:45.520 >> There we go.
+00:48:48.800 >> Yeah, I'm just going to
+00:48:52.000 download it.
+00:49:00.800 and share it.
+00:49:11.119 Okay. So, I've just shared the code on
+00:49:13.359 the chat.
+00:49:18.000 Right.
+00:49:19.680 Great. Uh I think the learners now
+00:49:21.760 you're able to see my message on the
+00:49:25.440 chat. Yeah. Yeah. Great. That's great.
+00:49:29.119 Um so I'm just going back to what Amy
+00:49:31.839 said a while back that you know using
+00:49:34.079 these AI tools is just going to help you
+00:49:36.559 become smarter and also help you
+00:49:39.200 understand how LLMs are built. That was
+00:49:41.040 the aim of this session more than
+00:49:43.440 helping you understand how an adventure
+00:49:45.680 game is built. So that's the reason we
+00:49:48.079 wanted to highlight this project because
+00:49:49.920 this is the part of the applied
+00:49:52.400 generative way specialization and it's
+00:49:54.319 also a part of the Python refresher
+00:49:56.079 module in the AGS course right so we're
+00:50:00.079 going to talk about the course in a
+00:50:01.520 while but a lot of you may kind of have
+00:50:04.400 this question about okay how does this
+00:50:06.960 uh fit in the larger context how does
+00:50:09.119 this course or how does this project
+00:50:11.440 help me become better equipped or better
+00:50:14.319 literate in generative AI and how do I
+00:50:16.880 use it in my career? Right? So, we're
+00:50:18.720 just going to talk about some roles that
+00:50:21.440 are opening up for uh you know people
+00:50:24.720 wanting to pursue a career here. So,
+00:50:26.559 hey, I think I'll hand it over to you
+00:50:28.160 and you can explain the learners again.
+00:50:30.160 Maybe you could just reiterate the
+00:50:31.520 correlation of what we did with Genai as
+00:50:34.240 well.
+00:50:36.640 >> Of course. So, basically we have a few
+00:50:39.599 careers that have opened up with this
+00:50:41.520 whole LLM booms.
+00:50:44.240 One of the most important one ones is
+00:50:46.559 prompt engineering. Actually knowing how
+00:50:49.040 to talk or how to guide an LLM towards
+00:50:52.880 the result you want is really important.
+00:50:55.040 Why? Because LLMs are designed on the
+00:50:58.640 basis of predicting the next word. So if
+00:51:01.680 you generate a prompt that follows the
+00:51:04.720 instructions, the context, the input
+00:51:08.000 data, and the desired output, you're
+00:51:10.400 going to be able to harness the entire
+00:51:12.400 power of an LLM.
+00:51:15.359 In a Genai application developer, this
+00:51:17.839 is more of what I do in my day-to-day.
+00:51:23.200 Basically a Genai application developer
+00:51:25.680 does a lot of
+00:51:28.880 development geared towards a real world
+00:51:31.440 solution. So let's say you need a
+00:51:34.800 chatbot to
+00:51:37.200 do customer assistance in a first base
+00:51:39.280 and that way your human talent can take
+00:51:41.440 care of more complex problems.
+00:51:44.480 And during this whole course and the
+00:51:46.800 whole genius specialization, we focus on
+00:51:49.760 a lot of different
+00:51:52.160 possibilities. One of them is prompt
+00:51:54.480 engineering AI product prototyper. We
+00:51:58.079 actually do a few prototypes during
+00:52:00.160 class with different demos with
+00:52:02.480 different exercises that we try and we
+00:52:06.240 also have course and projects which are
+00:52:08.880 based on real world examples. So it's a
+00:52:11.200 lot of problem based uh problem based
+00:52:14.000 learning that will actually help you
+00:52:16.480 towards a more uh to have the ability to
+00:52:20.400 execute different things in the future
+00:52:22.400 or in your uh career. A lot of our
+00:52:26.559 students work in the industry. Maybe
+00:52:29.680 they don't have a tech background but
+00:52:31.520 they want to start building in tech and
+00:52:34.079 with this they're able to guide their
+00:52:37.200 career towards something that they're
+00:52:39.280 looking for.
+00:52:40.960 And as uh
+00:52:43.920 and we'll see here and you will see in
+00:52:46.000 the specialization that with the content
+00:52:49.760 that's provided, we're able to generate
+00:52:52.960 a person that can choose any of these
+00:52:55.680 roles
+00:52:57.200 based on what they liked more and what
+00:52:59.520 they would like to specialize themselves
+00:53:02.160 more on. So it's a it's pretty it's
+00:53:05.359 pretty complete in the way it was
+00:53:08.559 designed.
+00:53:10.400 Right. Yeah, of course. So, someone had
+00:53:12.640 actually had this question about, oh,
+00:53:14.240 okay, I'm a newbie. How should I get
+00:53:16.400 started? So, I guess this course will
+00:53:18.960 help them start from scratch both in
+00:53:21.280 terms of understanding how programming
+00:53:22.960 works and of course how eventually, you
+00:53:25.599 know, generative AI models are built and
+00:53:27.760 what roles it can open them up to. Uh,
+00:53:30.400 someone actually had this question again
+00:53:32.160 about how is this going to help me find
+00:53:35.119 roles in machine learning. So, I think
+00:53:36.960 you just answered that. I hope the
+00:53:38.640 learners uh who ask this question, you
+00:53:42.160 know, have their question answered.
+00:53:44.559 Someone wants a Python full tutorial.
+00:53:46.960 Well, you know, you'll have to meet
+00:53:48.720 Jamie, sorry, Amy in um the cohort in
+00:53:52.880 the next cohort that uh you know, we're
+00:53:55.359 starting. So, that's how you'll be able
+00:53:57.200 to get a full full tutorial from him.
+00:54:00.559 Okay. So, Trisha has a question here.
+00:54:03.599 Does it help that you know someone is
+00:54:06.400 equipped with GitHub copilot and it
+00:54:08.800 helps them in interviews especially
+00:54:10.880 coding interviews in both Python and and
+00:54:14.240 Golang. Does it does it help
+00:54:18.000 >> in that case? It really depends and I'm
+00:54:20.240 sorry I can't provide like an specific
+00:54:22.160 answer but a lot of interviews now are
+00:54:25.599 live coding in a way that you can't use
+00:54:27.920 AI tools and they don't really focus on
+00:54:31.680 the solution working what they focus on
+00:54:34.400 is understanding the logic behind of how
+00:54:36.640 you think through the problem and how
+00:54:38.559 you would get to a solution and in case
+00:54:42.480 and in some cases a lot of the
+00:54:44.240 interviewers are going to ask you more
+00:54:45.760 about your experience what you have
+00:54:47.839 built what you have worked on your
+00:54:50.000 personal projects and by diving deep
+00:54:53.280 into what you have done you'll get
+00:54:55.760 they'll get a better sense of okay this
+00:54:57.920 person actually knows what they're
+00:54:59.680 talking about like experience knows
+00:55:02.000 experience and if you tried it and even
+00:55:04.319 if you failed like I personally always
+00:55:07.040 in my interviews I always tell my my
+00:55:09.520 failures like how I started a startup
+00:55:11.920 that basically developed two products
+00:55:14.000 and it went under under three in under
+00:55:16.240 three months and that's Okay, because
+00:55:18.559 this is what a bit what life and
+00:55:21.200 programming is about. So it's it's
+00:55:23.520 basically it will help you more to learn
+00:55:27.200 but in the interview level it depends on
+00:55:29.839 what type of interview you have.
+00:55:32.400 >> Right. Got it. All right. Uh so let's
+00:55:35.599 again kind of proceed and talk a little
+00:55:38.000 bit more about what we just spoke how
+00:55:40.720 this course can really help. So uh for
+00:55:43.520 learners wanting to understand how you
+00:55:45.760 can kickstart your journey in generative
+00:55:48.960 AI without really having a background in
+00:55:52.640 tech without really uh knowing to code
+00:55:56.079 this program is is for you. But remember
+00:55:59.200 you know the focus is largely on
+00:56:00.960 generative AI and less on coding and
+00:56:03.680 game development. This particular
+00:56:06.240 webinar was around a topic that was a
+00:56:08.319 capstone project. We just head to that
+00:56:10.319 segment in a while. But what you get out
+00:56:12.799 of this course is a certificate jointly
+00:56:15.280 offered from Michigan engineering
+00:56:17.280 professional education and simply learn.
+00:56:19.520 You also get a verified digital badge
+00:56:22.319 that is again jointly offered with uh
+00:56:24.640 Michigan engineering proad and simply
+00:56:26.640 learn. Yeah. So I'm just going to show
+00:56:28.079 you how this looks like. Uh just a
+00:56:32.400 moment.
+00:56:40.720 Yeah, I'm just going to take the screen
+00:56:42.880 share here. Yes.
+00:56:46.559 Yeah. So, this is how your certificate
+00:56:49.359 and the digital batch that I was
+00:56:51.119 mentioning jointly offer. This is how
+00:56:53.200 they're going to look like. Okay. Yeah.
+00:56:56.079 And of course, uh skills across the full
+00:56:59.040 Genai stack, you're going to understand
+00:57:01.280 everything that is associated that you
+00:57:03.280 need to know about Genai. And uh the
+00:57:06.960 course itself is structured in such a
+00:57:08.640 way that you get a lot of live classes,
+00:57:10.559 a lot of uh labs and of course capstones
+00:57:13.200 that are aligned towards gener one of
+00:57:15.839 them being what we covered today. Okay.
+00:57:18.559 So that's how the course is uh
+00:57:20.160 structured and let's just look at how
+00:57:22.000 the curriculum is built. Um hey if you
+00:57:24.640 can just take the learners through the
+00:57:26.799 curriculum as well. I know you did that
+00:57:28.480 already uh you know but if you can just
+00:57:30.960 highlight the other modules that we
+00:57:32.880 didn't talk about today as well.
+00:57:35.920 Great. So, basically we have a few
+00:57:38.559 courses inside the gen specialization
+00:57:41.359 and you even have the opportunity to
+00:57:43.040 take some that you might like more that
+00:57:46.400 are like that you can select that are
+00:57:48.880 not part of the main branch of it.
+00:57:52.240 First, we start with AI literacy. AI
+00:57:54.720 literacy is a basic course on LLMs, the
+00:57:57.760 development of LLMs, how they work as a
+00:58:00.400 whole. And you can think of it like a
+00:58:02.559 like like an inverted pyramid. We go
+00:58:04.799 from general knowledge into more
+00:58:06.480 specific knowledge. From AI literacy, we
+00:58:09.200 move on to models and architectures.
+00:58:11.680 That's where we learn the transformers
+00:58:13.599 architectures. We take a look at guns
+00:58:16.000 and baes. BAEs being variational outer
+00:58:18.799 encoders and GANs being gener
+00:58:23.359 being
+00:58:25.760 being models that are basically
+00:58:27.520 adversarial networks, generative
+00:58:29.119 adversarial networks. From there on we
+00:58:31.680 move into building our applications
+00:58:33.440 where we will look into different
+00:58:37.359 tools that can help us like what we do a
+00:58:40.000 really d deep dive into lang chain to
+00:58:42.640 generate an agentic style structure for
+00:58:46.400 our solutions how to consume them how to
+00:58:49.359 generate langchain tools and we go into
+00:58:52.000 a few other frameworks like ruai and
+00:58:54.559 others that are really helpful in in a
+00:58:57.280 lot of ways we go into economics and
+00:59:00.240 ethics of Genai via the governance
+00:59:03.920 course. And we end with more a more
+00:59:09.040 based on how to apply it to business and
+00:59:12.240 a whole cenai
+00:59:14.400 specialization course a project that
+00:59:17.200 will help you in in like putting all
+00:59:20.720 everything that you learn into a single
+00:59:23.839 >> project. Absolutely. So actually I'm
+00:59:26.720 just going to show the other capstone
+00:59:28.880 projects as well so the learners really
+00:59:31.440 understand. So remember uh just what Hy
+00:59:34.720 just uh said these are your modules and
+00:59:37.599 there there's also going to be an
+00:59:39.760 academic master class and also you know
+00:59:43.280 foundation class on how you can use
+00:59:45.839 Microsoft 365 copilot and also Azure AI
+00:59:49.200 fundamentals. You're going to have these
+00:59:51.359 three electives and here you go. These
+00:59:54.960 are your industry projects. I'm sure
+00:59:57.040 you're able to see my screen. You can
+00:59:59.440 build a business intelligence assistant.
+01:00:01.520 You can build an HR chatbot. These are
+01:00:04.559 your projects.
+01:00:06.319 Yeah, here you go. This is the one that
+01:00:08.880 we picked. You can also have, you know,
+01:00:11.920 build interactive storytelling using
+01:00:14.400 chat GPT, understand custom orders using
+01:00:17.839 Python. So this is how
+01:00:21.040 doing these projects under the guidance
+01:00:23.200 of your trainers is going to help you
+01:00:27.200 build all that you need to you know get
+01:00:30.799 get into data science or machine
+01:00:32.640 learning or whatever it is that you just
+01:00:34.880 asked. Yeah. So this is how the course
+01:00:37.680 is built and we're going to talk about
+01:00:39.920 the enrollment steps in a while. Just uh
+01:00:42.640 allow us some more time. How you'll
+01:00:45.040 access this course is through a learning
+01:00:47.280 environment that is unique to you. You
+01:00:49.760 get access to uh your own login. Of
+01:00:52.480 course, you're able to attend live
+01:00:54.480 classes through that. Let's say you miss
+01:00:56.000 a live class, you're always able to
+01:00:58.079 attend the next one that's coming up in
+01:00:59.760 the upcoming month or you know take a
+01:01:02.160 look at the recording as well. You also
+01:01:04.480 have uh guidance sessions, sessions that
+01:01:07.359 involve clearing your doubts from your
+01:01:09.520 mentors and a dedicated cohort manager
+01:01:12.720 or learner support manager who can help
+01:01:15.359 you with your queries. Uh whether it's
+01:01:17.440 related to learning, whether it's
+01:01:18.880 related to accessing your uh material or
+01:01:22.640 whether it's related to your progress,
+01:01:24.480 anything. Okay. So that's how that's how
+01:01:27.920 you're able to keep a track of how much
+01:01:30.480 you've completed in the course, how far
+01:01:32.240 you are and uh also of course even the
+01:01:35.440 capstone project is actually available
+01:01:38.079 on the learning environment itself. And
+01:01:40.319 another uh feature that we offer is
+01:01:42.400 career support. Now remember this is
+01:01:44.559 assistance uh for learners in India and
+01:01:47.680 the US. What you have is you're able to
+01:01:51.599 understand from industry uh you're able
+01:01:54.240 to expand your network and get guidance
+01:01:57.359 on how you can improve your interview
+01:02:00.000 performance how your resume should be uh
+01:02:03.119 written. You'll get AI powered profile
+01:02:05.839 optimization as well with the help of
+01:02:07.760 tools and yeah we will prepare you with
+01:02:11.359 some questions that may come up in
+01:02:13.680 interviews that for jobs that you're
+01:02:15.440 taking up. Okay. So this is how career
+01:02:18.000 support spans out for this particular
+01:02:19.839 course. But remember this is by no means
+01:02:22.160 that we're telling you you're going to
+01:02:24.480 have a job for sure. Okay. Obviously
+01:02:27.599 that depends on the skills and how you
+01:02:29.839 utilize the course as well. But what we
+01:02:32.000 offer is this and this happens slightly
+01:02:35.280 towards the end of your course. Okay.
+01:02:38.079 And and these questions about how the
+01:02:40.640 learning environment looks like and um
+01:02:43.280 how the career support works. You can
+01:02:45.040 actually ask a learning advisor much
+01:02:47.119 more in detail before you actually
+01:02:49.040 enroll. Okay. So what you do is I'm
+01:02:52.720 going to launch a very quick poll and uh
+01:02:55.200 if you're interested in the course you
+01:02:57.359 can answer a yes and after you answer
+01:03:00.720 yes your you know response is recorded.
+01:03:03.680 If you live in the US, you might receive
+01:03:06.160 a call in the next few hours. But let's
+01:03:08.400 say you're in India or anywhere else in
+01:03:10.319 the world, you will receive a call in
+01:03:12.160 the you know next tomorrow sometime and
+01:03:15.440 then you can explain your needs to the
+01:03:17.359 learner advisor and see if you fit in
+01:03:20.799 into the course and if you do you can be
+01:03:23.119 a part of the upcoming cohort. Okay. So
+01:03:26.079 this is how the certificate I I showed
+01:03:27.680 you the certificate already and also the
+01:03:29.440 digital badge. So I think um you know
+01:03:32.160 you're already aware of how it looks
+01:03:33.760 like. These are your course fees. So in
+01:03:36.559 Indian rupees it's 1 lakh 49,9.99
+01:03:40.079 and uh in USD it is close to $3,000. But
+01:03:44.480 you also have the option of paying in
+01:03:46.960 installments you can pay 6,700 odd
+01:03:50.000 rupees a month or $300 a month based on
+01:03:53.839 wherever you stay again with the help of
+01:03:56.400 our financing partners. Okay. So these
+01:03:59.280 are options again that you can discuss
+01:04:01.520 with your learning advisor when they
+01:04:03.680 call you and uh ask you about your
+01:04:06.319 interest you can actually discuss these
+01:04:08.160 options again as well. So our upcoming
+01:04:11.039 cohort actually starts very very soon in
+01:04:13.119 the next couple of weeks. So in case you
+01:04:15.520 want to be a part of our cohort
+01:04:17.280 definitely you should consider uh
+01:04:19.680 clicking a yes on the poll that I'm
+01:04:21.599 about to launch. Let me quickly
+01:04:25.599 yeah launch a poll. So in case you
+01:04:28.400 answer a yes, remember you will receive
+01:04:30.400 a call asking your interest in the
+01:04:32.799 program. Now these timings are central
+01:04:34.960 time in the US. So um that's about 8:00
+01:04:39.440 p.m. India time. Okay. Sorry, I'm I may
+01:04:44.559 be wrong. I think it's 700 a.m. India
+01:04:47.359 time. Again, I'm really sorry. I I
+01:04:49.280 because I assumed a lot of learners will
+01:04:51.200 be from the US. So I just entered uh
+01:04:53.599 center time. So in case you want to look
+01:04:55.520 at when the course
+01:04:58.720 is going to start for the Indian
+01:05:00.720 learners, you can check out this link
+01:05:03.119 shared the link on the chat if you open
+01:05:04.799 it. If you live in India should be able
+01:05:06.799 to see the timings in IST as well. Okay.
+01:05:09.359 I may be wrong with the conversion. So
+01:05:11.039 but this is in central time in the US.
+01:05:14.480 Okay. And the poll is also live. So in
+01:05:16.960 case you're interested, please
+01:05:18.480 definitely ensure that you're clicking a
+01:05:21.039 yes. And uh some of you may be eligible
+01:05:23.920 for scholarships as well depending on
+01:05:26.400 your experience and depending on how
+01:05:28.400 much you already have as background in
+01:05:31.280 in generative AI or in tech. So just
+01:05:34.000 ensure that you also mention this to a
+01:05:36.240 learning advisor. Okay. Um so while you
+01:05:39.680 guys answer this poll I'm just going to
+01:05:42.720 see if there are any related questions.
+01:05:45.359 I'm going to take questions related to
+01:05:47.039 AI because you know the whole webinar
+01:05:48.960 the point of the webinar was to talk
+01:05:50.799 about how this is useful in
+01:05:53.760 understanding generative AILM models.
+01:05:57.119 Okay. So let me see
+01:06:00.480 how long in the course Rishab I think
+01:06:03.119 just answered that. Yeah it's about 3
+01:06:06.079 months long.
+01:06:10.799 Price also I've mentioned when is the
+01:06:13.920 start date? Yeah. So the start and end
+01:06:15.599 date are here
+01:06:18.319 um on your screens. Anyone wondering
+01:06:20.720 when does the course start? What are the
+01:06:22.400 timings? Here they are. And yeah,
+01:06:25.280 specific schedule will be shared with
+01:06:27.520 you uh when you start the course. You
+01:06:30.400 will know which module, which trainer
+01:06:33.599 and all of that before you start. But
+01:06:36.400 you can still check with learning
+01:06:38.160 advisor roughly on how each module is
+01:06:40.960 going to be scheduled, what are the
+01:06:42.240 classes will happen with each module.
+01:06:45.599 Okay.
+01:06:52.000 Um I think ha we can take this question
+01:06:54.960 about uh you know the background in
+01:06:57.599 math. So how important is it to
+01:06:59.440 understand mathematical derivations of
+01:07:01.839 concepts like gradient descent or is it
+01:07:05.200 sufficient to just focus on the final
+01:07:06.960 formulas and their practical
+01:07:08.960 applications. Um I think this this would
+01:07:11.839 be something that you know we can
+01:07:13.599 answer.
+01:07:16.640 Math is something that's always nice to
+01:07:19.200 know, but it's something that you don't
+01:07:21.359 need to fully understand in order to
+01:07:24.880 develop solutions.
+01:07:26.960 >> So, we go through a bit of basic
+01:07:30.480 concepts and what we use the most in AI
+01:07:34.160 and and LLMs is gshian statistics. So,
+01:07:37.520 means, average, standard deviation, but
+01:07:40.240 those are all concepts that we can get a
+01:07:42.000 hang of. So I wouldn't be scared of of
+01:07:46.079 facing that challenge because it's
+01:07:47.839 really something that you can learn
+01:07:49.280 along the way and get get a bit better
+01:07:51.760 at and you're not going to have to be an
+01:07:54.160 expert to understand the development of
+01:07:56.480 these applications.
+01:07:58.160 >> Of course you got it. All right. So I
+01:08:01.359 think that Ankush I hope that answers
+01:08:03.680 your question. You don't have to be an
+01:08:06.000 expert. Yeah knowing some basics
+01:08:09.280 definitely help. Uh Akshhat actually has
+01:08:12.480 a question for you and I wanted to take
+01:08:14.400 this you know earlier when we were doing
+01:08:15.920 the code. Um what are some of your
+01:08:18.640 favorite projects that you and the
+01:08:21.679 students have made using copilot and
+01:08:24.640 this can be in general as well outside
+01:08:27.279 of your simply learn teaching
+01:08:28.799 experience.
+01:08:31.439 So, one of my favorites has been uh chat
+01:08:34.238 bots. Like when we get to the rag aspect
+01:08:38.080 in the building LLM applications course,
+01:08:40.880 it was amazing to see students create
+01:08:43.439 chat bots that actually solve day-to-day
+01:08:46.000 problems. Like a lot of us think that we
+01:08:48.000 need to create an amazing project, but
+01:08:50.719 actually things that help us in our
+01:08:52.319 day-to-day really help. And these guys
+01:08:54.719 created a chatbot for a univers for the
+01:08:57.839 university. they're they they learn at
+01:09:01.679 and what it does it it solves frequently
+01:09:04.319 asked questions that students have about
+01:09:07.520 solutions or uh general questions of
+01:09:10.880 sorts and in our cohorts I really liked
+01:09:14.238 one that has to do with langu basically
+01:09:18.799 we have a multi- aent system that is
+01:09:22.158 trying to detect fraud inside of a data
+01:09:26.238 set that's provided by the by by KGO and
+01:09:31.198 this student went so hard and like went
+01:09:34.719 so deep into solving the issue that the
+01:09:37.600 result was amazing.
+01:09:39.439 >> Wow, great. Thanks for sharing that. A
+01:09:42.479 couple of questions on careers as well.
+01:09:45.040 Um which is also a very interesting
+01:09:47.839 question actually. I just saw that I
+01:09:50.640 think I missed it. The learner delete
+01:09:53.600 it.
+01:09:55.760 Just hang on. Yeah.
+01:09:58.000 I think the learner has reposted the
+01:09:59.840 question. So in your experience, what do
+01:10:01.920 you think is the most underrated skill
+01:10:04.239 in Python development um that
+01:10:07.040 significantly impacts you know real
+01:10:09.520 world data science or machine learning
+01:10:12.960 domain of work?
+01:10:16.159 So
+01:10:17.920 in data science and in genai engineering
+01:10:21.920 a lot of people overlook the
+01:10:24.000 object-oriented programming aspect of
+01:10:26.239 Python which is pretty useful in the
+01:10:29.280 day-to-day. So creating functions,
+01:10:31.120 creating methods, creating classes and
+01:10:34.159 reusing code as much as possible usually
+01:10:36.719 optimizes your solution so it can run a
+01:10:39.840 bit better. It's more understandable
+01:10:42.320 and [clears throat] a lot of the basics
+01:10:43.679 are really important to get a hang of.
+01:10:47.760 >> Right.
+01:10:49.280 Got it. Actually, I did see another very
+01:10:52.880 interesting question from the same
+01:10:54.080 learner who asked this but uh forgot. I
+01:10:58.719 think I dismissed his question by
+01:11:00.400 mistake. Let me still see.
+01:11:07.840 No, I think that was a question. Anyway,
+01:11:10.320 just going to go ahead and ask the next
+01:11:12.159 one. Uh, which is Yeah, I think this was
+01:11:16.480 a question. Thanks, J Bala. Could you
+01:11:18.960 share how you've seen students or early
+01:11:22.159 career professionals successfully
+01:11:24.000 leverage Python to get into roles in AI
+01:11:27.199 or data science? If you can share maybe
+01:11:29.679 some case studies of such learners.
+01:11:35.840 For example, I had a I have a student,
+01:11:38.560 he's in the in the cohort right now,
+01:11:41.840 >> which when he learned how to handle
+01:11:44.239 files, he actually generated a solution
+01:11:46.719 for the company he worked at where he's
+01:11:48.880 trying to or he he did actually he
+01:11:51.920 organized all the files with a basic
+01:11:54.400 Python script and this got him the
+01:11:56.640 opportunity to move into a more tech
+01:11:59.520 related job
+01:12:00.960 >> which seems like a simple solution but
+01:12:03.920 it solves every day
+01:12:05.679 everyday issues and it helped him move
+01:12:08.239 along. We have a few uh
+01:12:12.320 tech leads meaning project managers that
+01:12:14.640 are in tech projects who are actually
+01:12:17.360 thinking of become becoming more
+01:12:19.280 technical in the roles. Instead of being
+01:12:21.280 managers, they want to be more hands-on
+01:12:23.520 with their day-to-day project. So
+01:12:25.920 there's a few projects that they're
+01:12:27.440 developing like the fraud one I was just
+01:12:30.320 talking about in the last example is for
+01:12:33.440 the company that that person works at
+01:12:35.920 and they're actually going to implement
+01:12:37.520 it if they have good results in the next
+01:12:39.760 few weeks.
+01:12:42.719 >> Understood. A lot of learners have
+01:12:44.719 questions about coding, but we're not
+01:12:46.320 going to take that today because
+01:12:48.239 remember what I said learners, this is
+01:12:50.239 about knowing how you can uh leverage
+01:12:54.239 Genai tools for getting your job done.
+01:12:58.000 Okay. Um, so another question that came
+01:13:00.400 up early in the session, Hy, is what
+01:13:03.040 makes AI unique? Okay. What makes I I'm
+01:13:06.800 assuming what makes GitHub unique than
+01:13:08.960 other Genai tools? What is so unique
+01:13:11.840 about it and why not opt anything else?
+01:13:14.640 I think you answered that but yeah maybe
+01:13:17.199 you could just reiterate.
+01:13:21.040 >> So the question is about GitHub.
+01:13:23.840 >> Yeahub.
+01:13:26.320 >> Yeah.
+01:13:26.640 >> Yeah. GitHub basically has become the
+01:13:29.280 standard for version control. In GitHub,
+01:13:33.040 you'll find since you can create private
+01:13:35.600 repositories,
+01:13:37.120 which is what projects are called inside
+01:13:39.520 of GitHub,
+01:13:41.280 a lot of companies use them. Every
+01:13:43.440 company I've worked at does GitHub, and
+01:13:46.960 we all
+01:13:49.120 push and commit our code via GitHub. So,
+01:13:52.880 everyone works locally, but it's a great
+01:13:54.880 way for a a team of people to work
+01:13:59.120 together. And why is it great for Genai?
+01:14:02.480 For version control. Since a lot of our
+01:14:05.199 job has to do with making mistakes and
+01:14:07.360 coming back, always keeping a versioning
+01:14:09.679 system allows you to go back to the
+01:14:11.440 version that was working a bit better
+01:14:14.159 since something may be broken or things
+01:14:16.880 like that. GitHub is really powerful in
+01:14:19.760 that way and it's owned by Microsoft. So
+01:14:22.560 Microsoft always does things in a simple
+01:14:25.440 way and it has the full might of their
+01:14:29.360 capabilities behind it.
+01:14:32.000 >> Right. Got it. All right. Thanks for
+01:14:34.480 answering that um Amy. So this was
+01:14:37.840 great. Uh the poll is still live. So
+01:14:40.640 about 40 of you have actually expressed
+01:14:43.440 interest. A third of you in the class
+01:14:45.840 have actually expressed interest saying
+01:14:47.840 that you'd like to be a part of our
+01:14:49.679 upcoming cohort.
+01:14:51.360 um please make sure you ask this
+01:14:53.360 question to the learning advisor about
+01:14:54.960 you know all of your cohort dates the
+01:14:56.880 enrollment options and also your
+01:14:58.880 scholarship yeah so all all this that I
+01:15:01.679 mentioned and uh since the cohort is
+01:15:04.000 just a couple of weeks away make sure
+01:15:05.760 you I mean you're taking the position
+01:15:08.080 faster um the program induction also
+01:15:11.600 happens very very soon so it's ideal for
+01:15:14.480 you to join the cohort before the
+01:15:16.320 program induction because um you know
+01:15:18.880 during the induction is and everything
+01:15:21.199 about how you can access the learning
+01:15:23.280 material, how the entire modules are
+01:15:25.920 structured, what you'll be doing in the
+01:15:27.600 course is all explained. Okay. Um so
+01:15:30.800 it's it's important that you are there
+01:15:33.120 present in the program induction for you
+01:15:35.280 to understand how you can use the course
+01:15:37.360 in the best way possible. Okay. So Kiran
+01:15:40.400 Priit in case you are interested all you
+01:15:42.400 have to do is to select a yes on the
+01:15:44.640 poll. Okay. And remember um your classes
+01:15:49.280 are going to be a two-way interaction.
+01:15:51.920 It's not going to be like a webinar
+01:15:53.360 where you posted a question, you're
+01:15:54.719 waiting for your answer. Um so all our
+01:15:57.120 class classes actually have a lot of
+01:15:59.440 interaction with the trainer um
+01:16:01.440 themselves and of course the other
+01:16:02.719 learners as well in the cohort and you
+01:16:05.199 know the cohort seats are limited. So
+01:16:07.440 that way we're not having a huge uh you
+01:16:11.520 know audience sitting in the class and
+01:16:13.520 it's unidirection. that does not happen
+01:16:16.320 which is why we take limited seats in
+01:16:18.239 every cohort that we conduct and as far
+01:16:21.679 as I know I think there are only 70
+01:16:23.280 seats for us to fill so we make sure
+01:16:25.600 that you know the best of learners who
+01:16:27.440 are keen to learn um keen to upskill are
+01:16:30.239 part of this cohort so just make sure
+01:16:32.239 you select a yes in case you are still
+01:16:34.640 interested okay um so actually let me
+01:16:38.080 see if there are any more pending
+01:16:39.520 questions uh yeah so just like co-pilot
+01:16:42.960 hy can we also use Blackbox.ai.
+01:16:46.800 What are your thoughts?
+01:16:50.239 >> I'm not really familiar with Blackbox
+01:16:53.280 AI, but if it's an an LLM that helps you
+01:16:58.560 generate or most LMS are generative by
+01:17:02.560 nature and if it helps you, go ahead. I
+01:17:06.640 see now in the website that it has an
+01:17:08.239 IDE. And like I say,
+01:17:11.600 it's my philosophy to be pretty agnostic
+01:17:14.320 when it comes to models. So use whatever
+01:17:17.199 model can help you. And if you can use a
+01:17:19.600 couple of them, they're usually trained
+01:17:21.520 in different data. And in that way, you
+01:17:23.840 can learn from different points of view.
+01:17:26.400 And it's always great to use tools that
+01:17:28.640 are at your disposal.
+01:17:31.120 >> Right.
+01:17:32.640 Got it. All right. Um so I know a lot of
+01:17:35.760 learners still have questions about
+01:17:37.360 coding but remember you know I'm just
+01:17:39.760 going to reiterate repeat myself that
+01:17:42.560 this session was about helping you
+01:17:44.640 understand how you can use GitHub GitHub
+01:17:47.360 copilot and how this really gives you
+01:17:49.679 like a quick refresher about Python as
+01:17:52.000 well. Obviously this is going to happen
+01:17:53.760 at a much larger scale when you're a
+01:17:55.440 part of the cohort. So do not worry if
+01:17:57.520 you didn't understand anything. I've
+01:17:59.120 shared the course sorry the code with
+01:18:01.600 you on the chat and uh what I'm going to
+01:18:04.560 do is actually also do that share that
+01:18:07.760 with you guys on the email that we send
+01:18:10.239 out tomorrow. Okay. So u it was I'm I'm
+01:18:14.719 just going to actually end this poll
+01:18:16.560 that is asking interest in the course in
+01:18:20.719 the next cohort. So in case you would
+01:18:23.280 like to talk to a learning advisor
+01:18:25.040 still, please make sure you drop your
+01:18:27.120 query on the course page. And what I'm
+01:18:30.000 going to do now is launch an other poll
+01:18:32.560 asking your full name. Okay. So when you
+01:18:35.199 enter your full name, we will record
+01:18:37.440 that and then you know give that enter
+01:18:40.080 that in your certificate as well. So
+01:18:42.320 this certificate along with the
+01:18:43.920 recording and the code that I mentioned
+01:18:46.000 will come to you in an email tomorrow.
+01:18:48.239 Uh some of you may have marked us spam.
+01:18:50.719 So just ensure that simply learn
+01:18:52.320 webinars is marked as important on your
+01:18:55.679 email ID so that you don't miss an
+01:18:57.040 update uh from us including the the
+01:19:00.239 certificate email. Okay. But in case you
+01:19:04.080 don't receive anything by the end of
+01:19:06.239 tomorrow, you could drop us an email
+01:19:08.960 here webinars at simply.net.
+01:19:12.080 This is after tomorrow. Do not drop an
+01:19:14.480 email now. Okay? If you have recorded
+01:19:16.880 your name, remember I I will be able to
+01:19:19.760 see your name when I download the report
+01:19:21.840 and we will add it to the certificate as
+01:19:24.560 well. So in case you don't receive it by
+01:19:26.719 the same time tomorrow, you could email
+01:19:28.560 us here. Yes. Okay. Is that clear again?
+01:19:32.640 Because uh you know we get a lot of
+01:19:34.080 emails over the weekend asking for
+01:19:36.480 webinar certificate but they marked as
+01:19:38.480 spam or they haven't really entered
+01:19:40.239 their name. either of these situations
+01:19:42.880 happen or they you know they ask us for
+01:19:46.080 recording or the code this is a problem
+01:19:48.960 that happens. So ensure that these
+01:19:51.600 factors are taken care of by you. Okay.
+01:19:56.480 And uh in the email you're also going to
+01:19:58.560 be receiving a special scholarship for
+01:20:01.840 uh enrolling into the upcoming cohort.
+01:20:04.560 So you could actually still avail that
+01:20:07.760 scholarship, you know, in the next 24
+01:20:10.239 hours after you receive the email. So if
+01:20:13.440 you're still interested, you could head
+01:20:14.800 to the course page at that time and talk
+01:20:17.760 to a learning adviser and drop in your
+01:20:19.600 details and talk to a learning advisor.
+01:20:21.840 Okay? Okay. So, in case you didn't have
+01:20:23.040 the time to give a yes on the poll or
+01:20:25.040 you want to take some more time to
+01:20:26.480 decide, you could do that when you
+01:20:28.560 receive the email and uh take a look at
+01:20:31.440 the entire course page, the details,
+01:20:33.760 download the brochure and then drop in
+01:20:36.560 your information for someone to call
+01:20:38.320 you. Okay. Yeah.
+01:20:42.880 Right. So, please drop your names only
+01:20:44.800 in the poll. If you drop it in the chat,
+01:20:46.719 I will not be able to download it. Yes.
+01:20:50.560 Again,
+01:20:52.800 I can only mark your attendance if you
+01:20:55.840 are entering your name on the poll. Just
+01:20:59.920 a quick input to a lot of learners who
+01:21:02.000 are asking about webinar certificates.
+01:21:03.520 It's great that you know you
+01:21:05.280 participated in the webinar. You're keen
+01:21:07.199 to learn and all of that. But remember,
+01:21:10.159 getting a webinar certificate shouldn't
+01:21:12.080 be your only aim of attending the
+01:21:14.080 webinar. It should obviously be learning
+01:21:16.560 from the webinar as well. Yeah. So I
+01:21:19.760 hope that was fulfilled
+01:21:24.080 because you took out the time to attend
+01:21:25.840 a webinar, listen and understand how
+01:21:28.640 this tool works and all of that. So I
+01:21:31.280 hope you got that out of today's webinar
+01:21:33.440 and it really help if you actually share
+01:21:35.760 your experience um on the chat box with
+01:21:39.920 Hy as well. So here we can also
+01:21:44.239 look at you know what you guys learned.
+01:21:53.600 Yeah,
+01:21:55.360 just let us know your thoughts on the
+01:21:57.520 chat.
+01:22:00.960 Some of you giving us reactions which is
+01:22:02.880 great but on the chat will help us. What
+01:22:06.080 did you take away?
+01:22:08.960 No, I think the learners are stuck to
+01:22:11.040 the webinar certificate. Okay,
+01:22:15.600 which is nice because they sometimes
+01:22:17.920 tag, you know, uh they might tag you as
+01:22:20.639 well. They might find you, tag you and
+01:22:23.360 share their experience, which is great.
+01:22:25.760 But, you know, that shouldn't be the
+01:22:27.760 only aim of attending webinar.
+01:22:33.040 There you go. A lot of names coming in
+01:22:34.800 on the chat. Okay, great. Thank you,
+01:22:36.800 Walter. Let's see someone else who said
+01:22:40.560 Albert thank you so much Rishab thank
+01:22:43.360 you so much Sugjata thanks
+01:22:50.480 uh how does ones qualif qualify for
+01:22:52.800 scholarship uh so it depends on your
+01:22:55.199 experience actually so the learner
+01:22:57.360 learning advisor is the best judge for
+01:22:59.040 this in case you have selected a yes you
+01:23:01.440 could talk to the learning adviser about
+01:23:03.600 your options
+01:23:06.159 okay but Um the exact details will come
+01:23:10.080 to you when you receive the email.
+01:23:16.080 Yeah. So uh Joel, how do we get into
+01:23:18.960 generative AI? Is is through this course
+01:23:21.679 that the applied geni specialization
+01:23:24.080 prepares you for that? You just saw the
+01:23:25.840 curriculum as well. So yeah. No, it's
+01:23:28.719 not fully funded. It's it's a you
+01:23:30.719 receive a you know
+01:23:33.840 a discount on on the course fee. Yes.
+01:23:41.360 Great. Yes, definitely the biggest
+01:23:43.199 takeaway is that GitHub copilot makes it
+01:23:45.440 easy for newbies. Your takeaway is that
+01:23:49.040 is great importance of GitHub and
+01:23:50.880 copilots and LMS. Nice. Thank you.
+01:23:55.698 [laughter]
+01:23:56.960 Great Sha hope to see you in more
+01:23:58.960 webinars. Nice.
+01:24:02.880 Hey, thank you so much Hy for your time
+01:24:05.120 as well. It was amazing hosting you,
+01:24:07.520 listening to you as well. Um, so if you
+01:24:09.520 can share your closing thoughts to the
+01:24:12.960 learners.
+01:24:14.480 >> Thank you all for the nice comments
+01:24:16.400 you've said. Sorry if I got nervous a
+01:24:19.040 few times. I saw like how many people
+01:24:21.120 were inside and I just got a bit
+01:24:23.840 nervous, but it's really nice. And if
+01:24:26.560 you're really looking for a career
+01:24:28.320 change or to add a new tool to your tool
+01:24:30.960 belt, I really recommend this kind of of
+01:24:34.320 specialization. It provides a lot of
+01:24:37.120 content and material that even if you're
+01:24:39.600 just curious about it, you'll understand
+01:24:42.000 way better LLMs and how they work on the
+01:24:44.960 genai. Most of my students are usually
+01:24:48.560 surprised by how an LLM works inside and
+01:24:52.560 how we can go about it step by step to
+01:24:55.440 understand fully how we can harness the
+01:24:58.560 entire power of LMS. So please let me
+01:25:01.760 know and I'm really glad to be here and
+01:25:04.320 honored to be here with all of you.
+01:25:07.120 >> Absolutely. It was actually an honor for
+01:25:09.280 the learners and me as well and it
+01:25:11.920 didn't seem as if you were getting
+01:25:13.199 nervous. You're totally fine. I think
+01:25:15.600 great thanks thanks Amy for your time
+01:25:17.600 and thank you to the learners for taking
+01:25:19.280 out the time to learn was great um yeah
+01:25:21.760 for more such webinars you could like I
+01:25:23.600 said just make sure simply learn
+01:25:24.960 webinars is not on your spam list you'll
+01:25:27.199 be able to access all of our upcoming
+01:25:29.520 sessions as well thank you so much have
+01:25:31.840 a great day ahead have a great rest of
+01:25:33.840 the evening bye

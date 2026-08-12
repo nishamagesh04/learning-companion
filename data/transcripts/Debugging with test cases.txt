@@ -1,0 +1,105 @@
+# tactiq.io free youtube transcript
+# Debugging with test cases | Intro to CS - Python | Khan Academy
+# https://www.youtube.com/watch/eNmRjbVIZ0s
+
+00:00:00.000 - [Instructor] Let's apply test cases
+00:00:01.350 to debug a racing game.
+00:00:03.180 Our game prototype has two cars
+00:00:04.830 that race on a straight track.
+00:00:06.750 Each round the cars move forwarda random number of spaces
+00:00:10.050 and whichever car passes theend of the track first wins.
+00:00:14.400 Let's take a look atthe code we have so far.
+00:00:17.010 We use a while loop to repeatrounds until the race is over.
+00:00:20.550 On each iteration we move the cars,
+00:00:22.890 we print the status of the race,
+00:00:24.690 and we display the track state.
+00:00:27.300 When I run it, it kind ofseems like this game works,
+00:00:30.420 but there does seem tomaybe be a little bug here.
+00:00:34.740 On the last round, it seems like cars
+00:00:36.600 are sometimes disappearing from the track,
+00:00:39.150 so maybe I'm missing somethingin my display function.
+00:00:42.690 I'm gonna open up the track module
+00:00:44.550 to see how this display function works.
+00:00:47.040 It takes in the positions of the two cars
+00:00:49.050 and the length of the track
+00:00:50.670 and it returns out a stringdrawing of the track state.
+00:00:54.150 Seems reasonable, butwhat's going wrong then?
+00:00:57.060 To narrow this down,
+00:00:57.990 I'm going to test the displayfunction in isolation.
+00:01:01.200 So I'll pop back over to main.py
+00:01:03.570 and run through a few test cases.
+00:01:05.820 There's the case wherethe first car is ahead.
+00:01:09.390 There's the case wherethe second car is ahead.
+00:01:12.690 There's a case where both cars I guess
+00:01:15.510 are on the same position of the track
+00:01:18.840 and then there's the end case where a car
+00:01:21.180 is beyond the end of the track.
+00:01:24.150 Okay, let's see what values we get back.
+00:01:27.270 I'm gonna comment outthis game loop for now
+00:01:29.040 because its output isa little distracting.
+00:01:31.860 It looks like a car isdisappearing in two test cases,
+00:01:36.030 so lucky us, maybe wehave two bugs to fix.
+00:01:39.870 Let's start with the last case
+00:01:41.100 where a car's position isgreater than the track length.
+00:01:44.070 What do we want to happen in this case?
+00:01:46.350 Well, I'd like to stillsee where the car is,
+00:01:49.770 so maybe we just keep drawing
+00:01:51.510 until we reach the furthest position.
+00:01:53.760 Right now our draw looponly goes up to the length
+00:01:56.220 of the track, but plus onesince range is exclusive.
+00:01:59.940 So if the track length is five
+00:02:01.560 and car one is at position seven,
+00:02:03.810 then we wanna keep drawing segments
+00:02:05.910 until we pass position seven.
+00:02:08.100 So really the end of the range should be
+00:02:09.810 whichever is greater,
+00:02:11.100 the position of car oneor the end of the track.
+00:02:14.070 But car two might also be the furthest,
+00:02:16.740 so we should really take themaximum of all three positions.
+00:02:20.910 Hmm, let's see if that fixed the problem.
+00:02:23.760 And let's double check the case
+00:02:25.380 where car two is the furthest.
+00:02:28.050 Whew.
+00:02:28.883 That's three test cases passing now.
+00:02:30.780 So let's wrap this up by fixing the case
+00:02:33.150 where the cars are at thesame position on the track.
+00:02:36.120 Right now it looks likedisplay is only showing
+00:02:39.090 the symbol for car one.
+00:02:41.460 What do we expect?
+00:02:42.960 Well, it's not all that obvious.
+00:02:45.420 One solution might be tojust draw a different symbol
+00:02:48.240 that indicates bothcars are on that space.
+00:02:51.300 I can change the symbol later,
+00:02:52.530 but for now, let's just say I draw an X.
+00:02:55.710 So let's go back to our display function
+00:02:57.690 and see what we need to modify.
+00:03:00.270 It looks like this nested function call
+00:03:02.130 controls which symbol wedraw for each segment.
+00:03:04.800 So we need to update the getsymbol for space function
+00:03:07.530 to handle that X case.
+00:03:09.690 If car one and car two'sposition are the same,
+00:03:11.880 then we return an X.
+00:03:13.980 Ooh, everything is anX now, what did we do?
+00:03:16.620 It seems like for everysegment get symbol for space
+00:03:19.500 is returning X.
+00:03:21.210 Hmm, we do need to check that car one
+00:03:22.800 and car two are at the same position,
+00:03:24.360 but we also need to checkthat that's the position
+00:03:27.300 we're currently tryingto get the symbol for.
+00:03:30.090 It doesn't matter if car one
+00:03:31.560 and car two are both at position five
+00:03:33.480 if right now we'retrying to get the symbol
+00:03:35.490 for position one.
+00:03:37.350 So to draw an X,
+00:03:38.580 all three of these valuesshould be the same,
+00:03:40.680 which we can verify bychecking that position
+00:03:42.660 equals equals car one.
+00:03:45.360 Alright, all four test cases are passing.
+00:03:47.760 I'm fairly confident that thedisplay function works now,
+00:03:50.730 so let's put the game back together.
+00:03:53.010 I'll clean up those test cases
+00:03:54.420 and uncomment out the game loop.
+00:03:57.600 The next time you encountera bug in your program,
+00:03:59.760 try narrowing it down to theindividual function level
+00:04:02.760 and hopefully you'll havean easier time debugging
+00:04:05.220 just that one unit of code.

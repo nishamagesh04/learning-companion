@@ -1,0 +1,452 @@
+# tactiq.io free youtube transcript
+# L8 Principal's Agentic Engineering Workflow
+# https://www.youtube.com/watch/iQyg-KypKAA
+
+00:00:00.160 Hi everyone, welcome to this video and this will be a full walkthrough of my agentic engineering
+00:00:05.840 workflow. My name is Kun. I was previously an L8 principal engineer worked at Meta,
+00:00:11.600 Microsoft and Atlassian on many large scale systems like the Bing search engine, Windows and
+00:00:17.440 Facebook games. In the recent couple of years, I have been building frontier coding agents at
+00:00:22.080 Atlassian and helped many engineering teams figure out how to use them effectively. And I
+00:00:27.680 have been building heavily with agents myself and shipping 40 to 50 PRs almost every day, sometimes
+00:00:33.680 more. And these are all well- tested and shipped to production, not those Minecraft demos you see
+00:00:39.200 people vibe code on social media. I have shaped my workflow to be both highly productive and
+00:00:44.400 enjoyable. Many people recently asked me what it looks like. To be honest, I did debate a lot with
+00:00:50.640 myself whether I should make this video a paid course because it does have that level of value.
+00:00:56.480 But ultimately, I decided to just share it here with everyone because I want to stay focused on
+00:01:00.960 building products as my main business. You can see this is a bit of a long video because I'm going to
+00:01:06.320 walk through many fundamental concepts of agentic engineering that not only show you how I do it,
+00:01:11.920 but also the why and how things really work under the hood. These are not gimmicks that look cool,
+00:01:17.360 but can't actually be used for real work. These are all real workflows that professionals like
+00:01:22.720 myself use to get real work done. By the end of this video, I want you to feel like a captain
+00:01:28.400 that can sail a large ship with a crew of agents working for you and do so in a stress-free and
+00:01:34.880 satisfying way. Largely speaking, we will be walking through these chapters. We'll start
+00:01:40.480 with assembling our ship where I will introduce the core setup. We will then talk through how we
+00:01:46.880 recruit and ramp up our crew mates with the right usage of memory and skills. I'll then demonstrate
+00:01:54.240 how we work with a single crew mate effectively. Then we'll upgrade to working with multiple crew
+00:01:59.920 mates all at the same time. And lastly, we will recruit a first mate that manages a lot of the
+00:02:06.400 overhead for us so we can stay focused on the big picture as a captain. The very first level is to
+00:02:12.640 gather our gears and build our ship. Now, as we get into my workflow, something that's going to be
+00:02:18.560 really hard to miss is that I do almost everything in my terminal. I know there are a lot of
+00:02:24.080 people who will tell you that the graphical user interface is better. It allows richer interactions
+00:02:29.360 and better visuals. But I think by the end of this video, I might just be able to convince you
+00:02:34.960 that terminal is not quite that yet. I use the terminal mostly for two very real reasons. One
+00:02:41.760 is to allow my hands to almost never have to leave the keyboard. This is actually a much bigger deal
+00:02:47.680 than most people think because when your hands stay on the keyboard, you stay in the flow. But
+00:02:53.520 if you have to move your hand to the mouse every couple of seconds, it breaks the flow and forces
+00:02:58.960 your brain to context switch. I know there are some GUI apps that also have great keybinds that
+00:03:04.720 allow you to do most things with the keyboard as well, but that's just not the primary interaction
+00:03:09.840 paradigm for GUI apps, and it's hard to build the discipline of hands-on keyboard when every once in
+00:03:16.240 a while you still have to use the mouse. Terminal apps, on the other hand, are all designed for the
+00:03:21.920 keyboard. So, there's no reason for your hands to move anywhere else. The other very important
+00:03:27.200 factor that drives me to use the terminal is that I can keep the exact same workflow everywhere,
+00:03:32.800 even on my phone. But if you really don't like the terminal, that's okay, too. I designed this video
+00:03:38.320 to be more about the fundamental concepts behind agentic engineering rather than the mechanics. So,
+00:03:44.480 most of the things that I talk about should be applicable to GUI based workflows as well. Now,
+00:03:50.400 since we are looking at a terminal here, let me share what it is. I'm using this beautiful,
+00:03:55.920 clean, and elegant terminal emulator you're looking at here is called Westerm. Westerm is
+00:04:02.560 a highly performance terminal emulator built by a guy named Wes. It's got 26k GitHub stars and has
+00:04:09.280 existed for many years. I like it mostly for two reasons. One is that it's truly crossplatform.
+00:04:15.920 It's pretty much the only terminal emulator I can find that can work on Windows exactly the same
+00:04:21.279 way it works on Mac and Linux. Right now, I mostly only work on Mac, but it was a big lifesaver when
+00:04:27.440 I was working for Microsoft and was forced to use Windows for work. The other reason is that it's
+00:04:33.600 highly customizable. You can write Lua scripts to configure pretty much everything here. Let me
+00:04:38.960 show you my config in my files. It's all in this file called westterm.la. It's a Lua script. So,
+00:04:45.760 it's not just static values. You can actually set conditions and write various kind of
+00:04:50.240 logic to make your config very dynamic and flexible. If I change some settings here,
+00:04:55.920 let's say I change the color scheme to chalk, you will see that it does a hot reload instantly,
+00:05:02.880 which is super handy. But I still like my rose pine moon. So, let's come back to it. I can't use
+00:05:08.560 anything else. Inside of Western, I run something called T-Max. It's short for terminal multiplexer.
+00:05:16.160 If you haven't come across this yet, it's probably easiest to just show you what this does. So, I'm
+00:05:20.800 typing this command here to start a T-Max session. Now, I'm inside of T-Max. You can see not much
+00:05:27.760 uh is different except for that there's a bar at the top showing some information. And I still get
+00:05:33.600 a shell where I can type commands. But now I can split my terminal into multiple panes, as many of
+00:05:39.920 them as I like. This is super useful because I can spin up an agent in one pane and spin up an editor
+00:05:46.960 in another uh and still have a pane to myself. So I can just run commands. I can also spin up
+00:05:53.440 multiple tabs uh and they are also called windows in T-Max. This is very useful for running multiple
+00:05:59.200 agent sessions in parallel. The other cool thing is that uh T-Max sessions are persistent in the
+00:06:05.120 T-Max server. So, if I use a keyboard shortcut here to detach from T-Max, you can see I'm back in
+00:06:12.000 the normal shell without the T-max status bar at the top. But if I type the same command to launch
+00:06:17.680 T-Max again, I get back to the exact same state I was in before. So, I can continue my work here.
+00:06:24.240 What's even more useful is that I can connect to the same session from another device like my
+00:06:29.440 laptop or my phone. That's a real gamecher that's very hard to replicate without this terminal
+00:06:35.200 centric workflow. If you just install T-Max, by default, it doesn't have the same experience
+00:06:40.880 we're showing here, uh, like the tab bar and the metadata. You'll probably need to do a bit
+00:06:46.080 of configuration and customize it. Let me show you my T-max config. Here it is. Most of these
+00:06:54.320 settings are key binds that I have been using for many years and built into my muscle memory.
+00:07:00.240 Some of these are for styling and various kind of behaviors. There are many YouTube videos that
+00:07:05.280 go into more details about T-Max configuration. So, I'm not going to go down the rabbit hole here
+00:07:10.880 for now. You just need to know that you are likely want to spend some time configuring your T-Max for
+00:07:16.720 it to look good and work well for you. This text editor here is Neo Vim. It's basically the modern
+00:07:22.560 version of Vim. It's my favorite text editor. If you are not familiar with Vim yet, it's an editor
+00:07:28.640 whose main purpose is to keep your hands on the keyboard. So, if you watch my keystrokes here,
+00:07:34.000 I can move the cursor up and down, left and right with keys. I can also scrub up uh or scroll down.
+00:07:42.000 If I have to make edits, I can go into insert mode and start to type anything I like. There are a ton
+00:07:49.120 of keyboard shortcuts for doing everything you need. For example, let's say I want to delete the
+00:07:53.840 current line. I can just type dd and it's gone. I can undo it by typing u. Oh, and if you look at
+00:08:00.080 the left hand side, I have relative line numbers. This line number 238 is the current line number.
+00:08:07.920 And the line above shows one, which means it's one line above the current line. And the lines
+00:08:13.600 below as well. So let's say I want to jump to the line that says set environment. That's 11 lines
+00:08:20.640 above the current line. So I can just type 11K and I'm here. So once you have enough muscle memory,
+00:08:27.360 you can just navigate around much more quickly than using a mouse. I also have a bunch of
+00:08:32.400 plugins that help me get around in neoim as well. Uh and I have keybinds for all of them like space
+00:08:39.200 s allows me to search or grab for the codebase. So I can just type rows and it will find all the
+00:08:45.120 occurrences of rows in the current uh codebase. I can type uh space f to find files by their names.
+00:08:52.000 Like if I type flake, I'll get to the flake file immediately. Working with Vim has a learning curve
+00:08:58.480 for sure. Um but once you get used to it, it just feels really really good. Whenever I'm in Neo Vim,
+00:09:04.560 I'm just flying like a bird and it's awesome. Okay, I have to stop here before this turns
+00:09:09.360 into a Vim tutorial. You can find a lot of great YouTube videos that will help you get started on
+00:09:14.640 Vim and become a master. Maybe one last tip from me is just how to exit. Here you go. All right,
+00:09:22.480 our ship is ready to sail, but we have no crew mates yet. We're the captain. We can't
+00:09:27.440 do everything by ourselves. We need to bring in agents as our crew mates. I use four different
+00:09:32.880 agent harnesses regularly. There is Claude, which is uh Claude Code, which is basically the only
+00:09:38.560 practical choice if you are using the subscription from Anthropic. Generally speaking though,
+00:09:43.600 it's a pretty good harness. I think it has the most sensible default experience out of the box.
+00:09:49.520 It's also got a pretty rich feature set. The downside is that sometimes it's a little bit
+00:09:54.400 buggy and it's not as customizable as some of the other options. The next one I use a lot is codeex
+00:10:01.360 CLI. It's written in Rust and you can feel it's a little bit smoother than cloud code when you use
+00:10:07.200 it. It's also open source. So if you run into some problems, you can often just have Codeex inspect
+00:10:13.200 its own source code and figure out a workaround by itself. It's a bit lacking in terms of bells and
+00:10:19.280 whistles. And it's also not very customizable. And then there's the PI coding agent and its
+00:10:26.240 whole philosophy is to be minimal and highly extensible. It's great if you don't want any
+00:10:31.360 bloat and you'd like to tinker around and kind of make it your own. And lastly, there is open code.
+00:10:38.880 I like it a lot. It's got a buttery smooth TUI and it's got good integration with pretty much
+00:10:45.200 every model you can find. It's also got a more complete out ofthe-box feature set than Pi. So,
+00:10:51.040 if you want to use an agent harness that is model agnostic and one that you can just grab
+00:10:56.160 from the shelf and just go, Open Code is a pretty good choice. For the rest of this video though,
+00:11:01.200 I'm going to use cloud code because I know many people are already familiar with it. But I have
+00:11:06.560 been very strict about making my workflow agent agnostic because the landscape is changing very
+00:11:12.000 very fast. Who knows which model or agent will be the best performing one next month,
+00:11:16.480 right? So everything I show here in the video is agent agnostic and should be applicable
+00:11:21.840 regardless of which model or harness you use. Now the problem with these crew mates is that
+00:11:27.440 they are fresh recruits and they have no idea how we run our ship or how we like to work. We need a
+00:11:33.280 proper onboarding process to ramp them up. We'll do this mostly through two ways. Memory files and
+00:11:39.280 skills. There are a few types of memory files. Global memory files and project level memory
+00:11:45.200 files. The global memory file for cloud code is at this location. And every other agent uses the
+00:11:54.080 other standard location here. So what I do is that I use this command which made clots.m MD a
+00:12:01.920 symbolic link to agents.md. So they both exist but under the hood they point to the same file. Here's
+00:12:08.800 the content of my actual global memory file. You can see it's pretty minimal. There's only 27 lines
+00:12:16.160 because everything in this file gets loaded into the system prompt of every single agent session
+00:12:21.760 across all our projects. If we have too much content in this file, it will silently use a
+00:12:27.840 lot of our tokens. I mostly write down my personal preferences here like never use mdash. Somehow AI
+00:12:35.520 models are trained to use mdash by default instead of a plain dash. So now whenever I see mdash,
+00:12:41.360 I just feel like it's robotic and I don't like that when I need the agent to write something
+00:12:46.080 for me like PR descriptions. Oh, and this is a good one. When making technical decisions,
+00:12:51.360 don't give too much weight to development cost. Here is something interesting that you may not
+00:12:56.000 know. Let me show you. If we ask a Frontier model to estimate the development cost of a project,
+00:13:03.360 let's say I want to build a 3D firsterson shooting game that I can play locally with AI enemies. How
+00:13:13.040 long do you think that will take? Let's see what Cloud will say. Okay, here it is. See,
+00:13:20.320 the estimate is in days and weeks and months. But if we ask the agent to actually build it now,
+00:13:26.560 I can guarantee it will come back with a playable version in just a few minutes because I have done
+00:13:32.080 this so many times. This mismatch is happening because the models were trained from human data
+00:13:38.720 and that is what a typical human developer would give as the estimate. AI doesn't seem
+00:13:44.320 to know it can code much faster than humans yet. So when AI is making technical decisions,
+00:13:50.160 it's implicitly assuming the development cost for some of the options are much higher than they
+00:13:55.840 actually are. This biases the model to choose cheap solutions that are often low quality,
+00:14:02.480 not scalable or hard to maintain. So I have this rule here to correct that bias.
+00:14:09.280 I also said when doing bug fixes always starts with reproducing the bug in an end- to-end
+00:14:15.680 setting as closely aligned with how an end user would experience it as possible. AI models today
+00:14:22.720 by default like to write unit tests which are often not sufficient and not really covering
+00:14:28.080 the product behaviors we want to guard. I found that leaning into end toend testing is a lot more
+00:14:33.680 reliable. Besides these preferences, I also have some interesting stuff like opinions.mmd which is
+00:14:40.000 super useful. That's a slightly different topic though, so I won't go into too much detail here,
+00:14:44.800 but I do have a blog post explaining how that works, which I'll link here in case you're
+00:14:49.280 interested. Besides the global memory file, each project can also have a project level memory file.
+00:14:54.960 Let me show you one example here by going into this project called H Highbit. This is an AI
+00:15:00.000 Twitter app I have been working on. The project level memory file is typically stored as claw.md
+00:15:05.680 or agents.md uh depending on which agent you use. I did the same thing here with a symbolic link. So
+00:15:11.920 the same file is shared for both cloud and other agents. This one we're looking at here is a little
+00:15:17.600 bit verbose I would say. I'll probably clean this up after this. But let me show you on a high level
+00:15:22.960 what I put into this file. It has some context on what this project is, how the repo is laid out,
+00:15:30.320 some terminology, how some of the most important components work, and how to do end to end testing
+00:15:38.000 uh and some conventions at the bottom. This file is a lot more verbose than the global memory file
+00:15:44.240 because this is basically the collective learning of all the agent sessions in this project. The way
+00:15:49.440 I built this file is not by writing everything by hand, but rather that every time I saw the agent
+00:15:55.200 doing something wrong, I would correct it and ask it to remember to not make the same mistake again
+00:16:00.720 by storing the learning into this memory file. So over time, our crew mates working on this project
+00:16:06.160 get smarter and more experienced. You don't need any fancy memory system to do that. This
+00:16:10.960 markdown file is all it takes. Over time, it does tend to get more and more bloated though. Um, one
+00:16:17.040 way I reduce the size of this file is by moving some conditional information that is not always
+00:16:22.400 needed into a skill. For example, the end to end testing instruction here um is only needed if the
+00:16:29.920 agent is making changes, right? So, if I just ask the agent a question, this whole section is
+00:16:36.080 totally useless and would be wasting tokens. The way to improve efficiency here is by converting
+00:16:42.480 this kind of conditionally useful information from the memory file into skills. I typically
+00:16:47.840 just ask the agent to do this. Uh here let me do it live. I would say uh let's extract the end to
+00:16:56.400 end testing instructions uh instructions in our agents.md file into a project level skill. Claude
+00:17:08.000 already knew how um to do this uh what skills mean and how to create them. But other agent harnesses
+00:17:14.160 may not understand how to do that uh out of the box. To teach your agent how to create skills, you
+00:17:20.720 can install a skill called skill creator which uh which was written by Anthropic. Uh you can do that
+00:17:26.720 by running this command. This npx skills thing uh is a CLI from Versel that is very handy. Um, it's
+00:17:35.120 basically my main tool for installing and managing skills. Uh, it supports pretty much any agent. Um,
+00:17:41.440 once this skill is installed, your agent will be able to follow the rules and create new skills
+00:17:45.920 for you moving forward. All right, Cloud has done its work. Let's look at uh what Claude created for
+00:17:51.760 us. It basically uh removed a large chunk of the content from our agents.mmd file and moved that
+00:18:02.400 into this uh this skill file. This is a good thing about skills is that it's designed for progressive
+00:18:09.200 disclosure. Which means when your agent starts, it only loads this tiny description field from your
+00:18:15.360 skills into the system prompt to know what these skills do. And only when it actually decides that
+00:18:21.520 it needs to use a certain skill, it will then read the rest of this file. This allows you to store a
+00:18:27.680 lot of the knowledge about how to do various kind of things without blowing up your system prompt
+00:18:32.480 and memory file with a ton of content that uses your tokens for every single request whether the
+00:18:38.000 request actually needs those skills or not. One thing I do want you to know about skills is that
+00:18:43.520 you should generally avoid installing random skills from the internet even the ones that
+00:18:48.560 have a lot of GitHub stars. First of all, these skills can instruct your agent to run pretty much
+00:18:54.560 anything on your machine. This is a very risky thing to do because the agent can leak your API
+00:18:59.840 keys or even credentials to your bank account to untrusted third parties without you knowing.
+00:19:05.920 And even if we put aside the security problem, some of the skills actually degrade your agents
+00:19:11.440 performance. Look at this repo here called Andre Kaparthi skills which has 177,000 GitHub stars.
+00:19:20.160 That's like massive. So, it must be really good, right? I actually evaluated the skill in this repo
+00:19:26.720 with program bench, which tests the agent's ability to build programs end to end. And the
+00:19:33.200 result shows that by using this skill, the agent will use 5% more tokens while making the results
+00:19:40.240 worse. And if you look closely, this skill is not even written by Andre Kapathy himself. I'm not
+00:19:48.000 here to criticize the author of this repo, though. Uh, and many saying that being popular is not the
+00:19:53.760 same as actually being good. A lot of the skills being widely shared today have not been rigorously
+00:20:00.080 evaluated and are typically just some random guy who found something that worked for themselves
+00:20:05.680 anecdotally and somehow got it to go viral. Their GitHub stars only tell you how popular they are
+00:20:12.080 and not whether they are actually helpful. So, as a general rule of thumb, I recommend that
+00:20:17.600 you do not install any skill from the internet that claims to magically make your agent perform
+00:20:23.200 better, but hasn't published anything rigorous that proves its claim. All right, now that we
+00:20:29.040 have memory files and skills to help ramp up crew mates, it's finally time to actually start working
+00:20:34.560 with a crew mate and set sail. The first thing about working with a crew mate is how you talk
+00:20:39.920 to them. I have pretty much completely moved to voice input now. So instead of typing I will just
+00:20:45.920 say explain this repo in a concise way and give me a recap of what the recent PRs have been working
+00:20:51.920 on. This is just so easy. There's an actual paper from Stanford that seriously compared the
+00:20:58.800 efficiency and basically talking is three times faster than typing. So this is a very big boost
+00:21:05.760 in productivity. I also want to show you something interesting here. Um, if we go to the references
+00:21:11.680 of this paper, look who's here. It's our guy Dario. What is the CEO of Anthropic doing here?
+00:21:20.240 Apparently, if we follow this link, Dario was doing some speech recognition stuff back in 2016.
+00:21:28.160 Now, we're using speech recognition technology to talk to Claude, which is also created by Dario.
+00:21:34.000 What a small world. The voice input we just did uh was actually transcribed locally using this app
+00:21:40.720 called open super whisper. It's completely free and open source which is what I think this type
+00:21:46.480 of software should be. It runs the whisper model locally on your machine and do the transcription
+00:21:52.080 and the quality is like really really good. So this is how I do most of my prompts. Now, the only
+00:21:58.080 case where I fall back to typing is when I need to give the agent a URL or a file path or something
+00:22:04.560 like that. Trust me, you don't want to speak a URL out loud, whether it's by yourself or with
+00:22:11.120 other humans around. Now, if we come back to this prompt and let the agent run, you will see that
+00:22:17.680 because we asked the agent to look at recent PRs, it will need to call GitHub to fetch the data.
+00:22:24.160 This is an important thing to pay attention to because agents rely on external tools like GitHub
+00:22:30.320 to do its tasks. The design of these external tools can greatly affect your agents performance.
+00:22:35.680 Take GitHub as an example. Many people use the GitHub MCP server for accessing GitHub. However,
+00:22:42.800 I ran this benchmark here that measured various kind of ways to access GitHub for the exact same
+00:22:49.120 tasks. Using GitHub MCP server will cost you to spend three times more on token cost and
+00:22:56.640 more than double the latency compared to using the COI. If you're using the GitHub MCP, you
+00:23:02.240 are pretty much wasting both time and money for no clear benefit. Now you can see there's this thing
+00:23:08.080 called Axi which has the lowest cost but highest success rate. So what is it? Let me show you.
+00:23:16.880 AXI is a set of design standards I authored after discovering the huge upside we can have
+00:23:22.800 by designing our tools to treat agents as a first class citizen and optimize for agent ergonomics. I
+00:23:30.480 created 10 principles for how to make a tool highly efficient for agents. For example,
+00:23:37.120 using token efficient output format can save about 40% tokens compared to using JSON. And then I
+00:23:43.760 built a few axis with them. Besides the GitHub axi I showed earlier, I also built ChromeDev
+00:23:49.120 tools axi and benchmarked it against other various browser tools. Here you can see the agent taking
+00:23:57.360 less turns and using less tokens to get the same tasks done with axi. The main point here is when
+00:24:03.920 you give tools to your agent, do some research on their efficiency because they can greatly affect
+00:24:09.520 how much mileage you get out of your agents. If you want to use the axis I mentioned earlier,
+00:24:15.360 you can just go to this site called axi.mmd and find them in this catalog. You can just
+00:24:21.200 go to their repo and find instructions for how to start using them. Speaking of this catalog,
+00:24:27.600 there is something called lavish axi here. This is a very important tool in my setup. I pretty
+00:24:34.000 much rely on this tool for planning any kind of complex work. Let's do a real feature live
+00:24:39.280 and I'll show you how it works. Let me first launch Hibbit to show you what I'm trying to
+00:24:44.080 work on here. Hibbit is an AI tutor I'm building for kids. Um I'll just create a
+00:24:50.320 test profile here. You can see here um at the top I have these two buttons what I can do and
+00:24:58.240 my progress. They are showing very similar content right now uh which is a problem.
+00:25:04.240 So um and also the UI is not very exciting or fun. So, uh, let me go back and talk to Claude.
+00:25:14.080 I'll still use, uh, voice input here. I'll just say, I'd like to consolidate,
+00:25:19.920 um, the what I can do and my progress buttons because their functionality is very similar,
+00:25:26.080 and I'd like to revamp the experience there to be something more fun and exciting, like an
+00:25:32.160 uh, an achievement system. Come up with some options, and let's discuss. Don't use lavish.
+00:25:39.280 Okay, the reason I said don't use Lavish is that I wanted to show you what the default workflow
+00:25:45.600 today looks like for many people. And then I'm going to show you the difference Lavish makes.
+00:25:50.400 Because I already have Lavish skills installed, my cloud will automatically use Lavish for this type
+00:25:56.000 of question, which is why I had to tell it not to do that right now. Okay, cloud is doing its work.
+00:26:02.960 Now cloud has come back with a response. Sometimes it will use its plan mode. um or sometimes I will
+00:26:08.880 ask you to write down the plan in the markdown file, but it's more or less the the same. It's a
+00:26:13.600 wall of text I now have to read through. It's not very easy to understand what um what each option
+00:26:20.080 uh is actually going to look like. And if I'm not happy with some parts of it, I can't very easily
+00:26:26.320 tell Claude which part I'm talking about. I can't select a piece of text in the plan and say this
+00:26:32.000 is wrong. Now, let's try the exact same prompt with Lavish. Here it goes again. I actually don't
+00:26:37.360 have to say use lavish because the agent already has the lavish skill uh that tells the agent for
+00:26:43.120 this type of planning it should use lavish but for demo purpose I just wanted to be explicit. Cloud
+00:26:49.280 would roughly do the same things to figure out the options except at the end it would not print
+00:26:54.880 out that wall of text again. It will launch the browser and show me this page. Now look at this.
+00:27:01.200 This is the lavish editor. The reason I named it lavish is that it's richer than a rich editor. I
+00:27:08.000 almost named it filthy rich editor, but um that's just not the best sounding name. Lavish editor
+00:27:13.840 basically instructed the agent to create an HTML artifact to visualize what we need to discuss. It
+00:27:20.320 always uses the same design system as the current project being worked on. So this is consistent
+00:27:25.680 with how the hybits app actually looks. This makes it very easy to review concepts and prototypes.
+00:27:32.080 see the option is laid out here. This is so much easier to understand than the huge wall of text
+00:27:37.600 we were looking at earlier in the terminal, right? I can also annotate and make comments on specific
+00:27:43.840 parts of the artifacts to give feedback to the agent. This is something that's really hard to do
+00:27:49.040 with the wall of text or a markdown file. And at the bottom, there are things for me to decide on.
+00:27:56.960 And I can just click on these options to make the decisions. and I just send this feedback back to
+00:28:02.640 the agents inside of Lavish without even having to go back to the terminal. Honestly, I can never go
+00:28:08.160 back to reading text in the terminal anymore. This is just like way too much more efficient. Now,
+00:28:12.880 the agent has made updates to the HTML and I feel happy about this. So, I'll just tell the
+00:28:17.920 agent to start building uh start building and we'll end the session. We can then go back to
+00:28:24.720 the terminal now and see the agent uh will start to work on the implementation. Because we already
+00:28:31.040 clarified all the requirements in the planning phase, I typically don't need to interfere at
+00:28:35.360 all during this implementation phase. I only come back to this when the agent has done. And when the
+00:28:40.640 agent says it's done, that's actually when things get really tricky. This is where a lot of people
+00:28:46.480 will spin up their editor and start reviewing the diff. The problem is AI writes code so fast and if
+00:28:55.520 every piece of code requires your review then you are creating a big bottleneck on yourself because
+00:29:01.280 you can only review so many diffs every day. Your velocity will be hardcapped by it. And even more
+00:29:07.440 importantly reviewing diff is just not fun. No one says I became an engineer because I love reviewing
+00:29:14.480 diffs all day. My advice here is that in order to really scale ourselves with AI, we have to think
+00:29:22.000 of ourselves more as an engineering manager or engineering director. Your directors most likely
+00:29:28.240 don't review any PRs. Yet, they can influence the quality of their team's software by creating good
+00:29:34.080 culture and processes and rely on the team to carry them out. That's what we should do with AI.
+00:29:40.960 What I do here when the agent says the work is done is not to start reviewing the diffs
+00:29:45.680 or start manually testing the changes. That's too much overhead on myself. I send the change into a
+00:29:52.240 pipeline I built called no mistakes. No mistakes is also free and open source. It orchestrates your
+00:30:01.200 agent to execute a series of steps that takes this first pass code all the way through to a clean PR.
+00:30:07.760 It would first create a branch if one doesn't exist yet and then create a commit and then take
+00:30:13.200 it through a pipeline in an isolated work tree. So nothing during the validation would affect
+00:30:18.640 your current repo. It would first understand your real intent behind the change by analyzing your
+00:30:23.680 agent session. Then rebase the change on top of the latest main branch on remote origin and
+00:30:29.600 resolve merge conflicts up front. Then starts an adversarial review in its own fresh context
+00:30:36.000 window. This is where most problems get caught and obvious problems will get self-corrected but
+00:30:42.400 ambiguous ones that have product implications will be escalated to us humans for a decision. After
+00:30:49.040 review, it also tries to test the change end to end against the original intent and this step will
+00:30:55.200 actually record evidence that proves the change is working that we can then later on look at to gain
+00:31:00.960 more confidence. It will then do a documentation pass of updating all relevant documentation to
+00:31:06.960 reflect the latest change and also finally make sure there's no linking problems before pushing
+00:31:12.400 the branch to remote and raise a PR. The no mistakes pipeline will also keep babysitting
+00:31:18.560 the PR until it's merged. Because during the PR phase, we can still have merge conflicts that come
+00:31:24.320 in or CI pipeline failures that are very annoying as well. With no mistakes during the babysitting,
+00:31:30.240 we don't have to waste our own time at all. Another way to trigger no mistakes is as a
+00:31:35.280 skill. I can just type no mistakes in the agent and it will do the same pipeline as well. This
+00:31:42.000 may seem very slow, but in practice, I never stare at this screen. I would go spin up other tasks. I
+00:31:48.160 come back only when no mistakes says all checks passed. And that's when I go to the PR and apply
+00:31:53.760 my judgment. Here's the PR from the change we just did. We can see here it summarized the original
+00:31:59.840 intent, what changed, how it's tested, and what happened during the no mistakes pipeline. We
+00:32:07.360 can click to see the evidence from its testing to know whether it's really done what we asked for.
+00:32:14.720 Depending on what the change is, the evidence could be a screenshot like this, a video demo,
+00:32:20.160 a log file, or something else. It's designed to give you the most direct way to see the change
+00:32:25.360 working as you intended. We can also see that the pipeline discovers some problems and fix
+00:32:30.400 them before raising the PR. This is a good time to audit whether these changes are actually what
+00:32:36.080 we need. If anything doesn't look right, we can go back to the agent and ask for more changes
+00:32:40.720 before merging this PR. This risk assessment here is also very useful. I basically look at this to
+00:32:46.720 decide how much time I should spend on reviewing this change in more detail. For low-risk changes,
+00:32:52.880 I don't really look at the diff at all because I have validated time and time again for low-risk
+00:32:58.400 changes. Any problem I could catch is very likely already caught by the pipeline. Only more risky
+00:33:04.160 changes are worth my time. This is how I scale up the volume of code changes I do every day
+00:33:08.800 through a large crew of agents without losing control on quality. One thing we are starting
+00:33:14.080 to see now is that the place where I spend time is towards the beginning and the end of the task.
+00:33:20.800 At the beginning, I would spend time in lavish to plan the requirements more clearly. At the end,
+00:33:26.320 I would come in and hold a bar on quality. All these parts in the middle is done by AI which
+00:33:32.560 frees me up to spin up other tasks. This is a core aspect of how I work. And you can see the
+00:33:39.440 more time I can free up in the middle, the more work I can go do in parallel. So an interesting
+00:33:44.880 question now is how do we get the agent to work for longer and longer in the middle? That depends
+00:33:51.360 on us giving them more and more complex tasks that take longer to complete. But more complex
+00:33:57.040 tasks are often not as easy for our agents to complete autonomously. An extreme version of this
+00:34:03.600 is when I go to bed, I sleep for seven to eight hours every night. How do I keep the agents busy
+00:34:09.199 for eight hours? This is where I say good night. Have fun. It's another free and open source tool
+00:34:15.760 I built specifically for longunning tasks. It's becoming quite popular. It's that simple to use.
+00:34:22.159 Just give it an objective and it will keep going until it meets some stop condition you defined.
+00:34:28.000 Let me show you a real example that I often do. This is again in the high bit repo. I'll run good
+00:34:33.280 night. Have fun and give a prompt. Pretend you are a seven-year-old kid and use the high bit app end
+00:34:40.639 to end. Don't mind the profile creation step which is designed for parents. In the rest of the app,
+00:34:46.639 try to do different things and find the first usability problem that would confuse you as a kid
+00:34:52.400 or stop you from knowing how to proceed. If you find a problem, stop and fix it. Then rinse and
+00:34:58.400 repeat. Here he goes. Good night. have fun is now running in a loop to execute on what I just asked
+00:35:05.680 for. I can monitor token usage here or how many iterations have been done. The iterations will
+00:35:11.680 be showing up as the moons in this row. And I can see how many commits have been made as well. Or I
+00:35:17.040 can just go to bed knowing the agents won't stop until there is no more problem to be found. When
+00:35:22.080 I wake up, I can review a list of commits made on this new branch and decide which ones I want.
+00:35:28.640 I typically use good night have fun for improving on some verifiable objectives or objectives where
+00:35:35.040 I trust the agent to have the reasonable judgment over like the one we just did.
+00:35:39.840 Verifiable objectives are more like um reducing page load time, improving end to end test coverage
+00:35:46.080 or like Android caps auto research um keep experimenting different hypothesis to improve
+00:35:52.000 on a metric. These are all well suited for a longunning loop to tackle. The recently introduced
+00:35:57.760 /go command in codeex and cloud code can also do something similar. But good night have fun still
+00:36:03.840 gives me a better experience because I can set a token cap or iteration cap or stop condition
+00:36:10.800 more precisely. Whereas in cloud code and codeex if I set a goal before I go to bed I might wake
+00:36:17.760 up realizing my weekly quota is all gone. Good night, have fun solved a very important problem,
+00:36:23.360 which is to keep the agents running for a long time. So, when the agents are running,
+00:36:28.080 I'm freed up to do more things. This is when we level up and start working with multiple crew
+00:36:33.840 mates in parallel. So, let's spin up another tab in T-Max and get more work started. Now,
+00:36:39.520 here's the problem. In this directory, I already have good night have fun running. So if I spin
+00:36:45.200 up another agent working in the same directory, they will step on each other's toes and cause
+00:36:50.240 conflicts. The default solution here is git work tree. For those of you who aren't familiar with
+00:36:55.920 it, uh a git work tree is basically creating a clone of your repo directory. I can create one
+00:37:01.440 by typing gork tree add and give a path here. Now we have to think about a name.
+00:37:09.600 This is when you waste five minutes and eventually give up and just say high bit two. Now we have a
+00:37:16.400 work tree and we can navigate to it. Uh so let's go find it. It's in high bit 2. This is a separate
+00:37:23.040 directory on the file system. So we can have an agent doing anything here and it won't conflict
+00:37:27.920 with goodn night have fun which is running in the original repo directory. The problem with
+00:37:32.720 work trees is that we now have something to maintain in our head. I need to remember, oh,
+00:37:38.640 I have hybrid 2 here. Next time I come into this hybrid 2 directory, I would wonder what
+00:37:44.640 was I doing in this work tree last time. Is there still an agent running or is it free? All of that
+00:37:50.400 has to exist in my head and there's no way I'm going to remember all that. So, this work tree
+00:37:56.160 basically becomes a debt. To get rid of it, I need to run this remove command. Remove.
+00:38:05.920 This is just a lot of overhead. My solution to that is another tool I built called treehouse.
+00:38:11.680 It's very simple. I just come into this repo and I run treehouse. It would drop me into a fresh work
+00:38:18.400 tree where I can start doing whatever I want. I can keep spinning up more and more of these
+00:38:23.920 work trees by running treehouse again. And if I want, I can see a list of all the work trees by
+00:38:32.560 typing treehouse status. So I can see which ones are being used versus not. When I'm done, I can
+00:38:38.480 just close this tab and treehouse knows that I'm done. So it will free up that work tree for future
+00:38:44.960 use. Next time I ask for a work tree, it will try to reuse one of the idle work trees instead
+00:38:51.040 of creating a brand new one. So let's start some real work. I have a bunch of user feedback from my
+00:38:56.640 son's last round of play testing. So let me uh use this first work tree we created and launch
+00:39:01.840 claude and I'll say I remember it's hard for the kids to realize they can press and hold the voice
+00:39:08.480 input button to talk by default they just click it and then they will see a popover. Maybe in the
+00:39:14.400 popover we add a label that tells them they can also press and hold and I'll enter. Then I'll spin
+00:39:22.080 up a new tab, treehouse claw. And this time I'll say the image attachment dropdown menu should have
+00:39:30.880 an action that takes a screenshot of the current app and use that as the attachment. All right,
+00:39:38.640 one more tab. Treehouse claw. Our agent status bar right above the chat input is not always showing
+00:39:48.640 bot activity. Look into what happened there and make sure when any bots are in progress,
+00:39:54.160 it always displays something that reflects the latest activity. Boom. We now have three sessions
+00:40:01.440 running in parallel. Now I can keep going because none of these sessions will need my attention
+00:40:06.480 anytime soon. Especially if I tell them to run no mistakes after implementation. I know whether they
+00:40:12.480 need me by looking at the top status bar and I can switch between the tabs using keyboard shortcuts
+00:40:18.480 like this. That's very important for managing a lot of parallel sessions efficiently. That said,
+00:40:24.640 after doing this for a while, you will discover that juggling between all these sessions,
+00:40:29.360 it's quite exhausting. The constant context switch and having to remind yourself what each
+00:40:35.200 session was even doing just doesn't feel like an ideal endgame experience. So, I kept pushing the
+00:40:41.440 boundary on this. And I discovered that I needed a first mate. Someone I can talk to as a captain
+00:40:48.560 that will carry out all my directions and manage all the crew mates for me so I can focus on the
+00:40:54.480 big picture stuff like where should we go next? Not playing whack-a-ole with this increasingly
+00:40:59.360 high number of crew mates. This is how I level up and truly become a captain. My first mate
+00:41:05.120 is another free and open- source project and it's very new. The way to use it is by just cloning it.
+00:41:14.560 And then I can run an agent in this repository. Now I just talk to it and ask it to work on any
+00:41:22.880 projects I like. Let's say I'd like to work on Lavish AXI, GitHub AXI and Chrome DevTools
+00:41:29.840 AXI. They are all GitHub projects I own. First M is starting up and the first time we run it,
+00:41:35.280 it will do some setup and ask for some preferences, but it's all through just
+00:41:39.280 talking to it, which is pretty easy. And you might wonder why uh is the transcription so good
+00:41:45.040 because it's recognizing these project names. Let me show you. Open super whisperer actually
+00:41:51.120 uh supports this customization through uh system prompt. So what we can do here is
+00:41:58.480 uh in this model menu uh in the transcription menu uh there is an initial prompt and we can
+00:42:03.920 put in some common vocabulary that we use into this system prompt and this prompt is
+00:42:09.040 what makes the transcription really good. First made here is asking how strict I want to be with
+00:42:14.000 uh the code changes in this repos and uh I want to select full gate to PR. Uh this is basically
+00:42:20.240 going to be using no mistakes as the pipeline to validate each change. Um, and first task,
+00:42:26.720 uh, yeah, I'll describe it. All right. Now, a real thing I want to do is for all three projects,
+00:42:33.360 I'd like to add an update command on the COI that will update their version to the latest on npm.
+00:42:41.440 And let's see what first mate does. It realizes that this is not one task, but three parallel
+00:42:47.200 tasks. And it's now spinning up these tabs in T-Max just like we would behind the scenes.
+00:42:53.200 It would also call treehouse to create work trees and then run an agent in that work tree to get
+00:42:58.720 the work done and then it will run no mistakes to validate the change and get the PRs ready
+00:43:04.000 for us to review. Now you can see it's first mate that is doing the juggling. I don't need to worry
+00:43:09.280 about any of this now. I can just keep giving it more work. Hey first mate, let's also look
+00:43:15.680 at the most recent three open issues in lavish axi repo and let's discuss which ones are actionable.
+00:43:23.840 Boom. First mate now is pulling the open issues from the repo while waiting for the
+00:43:28.880 three background agents working in parallel. All right. First mate said number 87 is cleanest.
+00:43:35.440 Uh it's very actionable. And uh let me just see what is this. Uh don't toggle in annotation mode.
+00:43:42.960 Uh okay, that's a clear bug. All right, first mate. Let's uh address number 87.
+00:43:52.400 Look now, First Mate is juggling a lot of tasks for me that I otherwise would have to manage by
+00:43:58.320 myself. Watching it context switch is actually an oddly satisfying experience because I know
+00:44:04.080 that's what I would have to do otherwise. First mate is basically all my tools coming together
+00:44:09.760 as one cohesive workflow and I have been really happy with it. It's been a pretty significant
+00:44:15.440 improvement to my overall experience working with agents. I highly recommend trying it out if you
+00:44:20.400 are still directly talking to every single agent session one by one. It will be a pretty massive
+00:44:25.360 upgrade. Something you'll start to notice after having a first mate is that because first mate
+00:44:30.640 took care of so many things for you, you start to run out of ideas for what to ask it to do.
+00:44:36.320 This is a good thing because it indicates the bottleneck is shifting. But it also means you
+00:44:41.840 as the captain needs to keep up. This requires a mindset shift of focusing more of your energy
+00:44:48.480 on understanding what matters by talking to your users, understanding the competitive landscape,
+00:44:54.640 and crafting a good treasure map that can lead your crew to a good direction. Once you started
+00:45:01.200 doing that, congratulations. You have successfully transitioned from a sailor into a great captain.
+00:45:07.840 All right, we have gone from not having a ship to being a captain that has a first mate and a
+00:45:13.760 big crew that sail together. This is a pretty good time to wrap up this video. All my tools
+00:45:19.520 can be found on my GitHub and will be linked in the description below. They are all free and open
+00:45:24.800 source. I built them because I just want to see more people learning how to do aic engineering
+00:45:29.680 effectively and doing it in an enjoyable way. And that's what I hope you can get out of this video.
+00:45:36.160 I will continue to share more of my workflow and things I find useful on my channel. So,
+00:45:40.880 don't forget to subscribe if you don't want to miss anything.

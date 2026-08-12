@@ -1,0 +1,483 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/Ua6LDIOVN1s
+
+00:00:00.000 No text
+00:00:00.080 let's level set with what are you going to learn today so I think this session is for two kinds of developers so the
+00:00:06.600 first one is for folks that are just beginning their AI Journey they might not have an application built or they
+00:00:12.360 just might be wondering like hey this AI stuff seems interesting how can I get started with postgress for you today
+00:00:17.960 what I want you to walk away from the session with is an understanding of what kind of AI applications you can build
+00:00:23.880 with postgress and you're going to learn enough to get started building straight after the session you're going to learn
+00:00:29.320 enough to build like an MVP or some sort of toy application in after this hour so
+00:00:34.840 that's what's you're going to learn and then for intermediate folks for folks who already have an AI application or
+00:00:40.440 maybe the basics maybe you already use PG vector or something like that what I want you to walk away from the session
+00:00:46.480 from is tactics and ideas for you to improve your AI application no matter if
+00:00:52.399 you're just starting off or you already have an application even in production you're going to learn from me from the
+00:00:57.600 session and it's going to be a jamack with value with that in mind let's take a look at what we're actually going to
+00:01:03.800 cover in today's session we're going to split the session into four parts the first one is going to be about
+00:01:09.439 foundations this is again for folks that are completely new we'll talk you through what kind of applications you
+00:01:15.759 can build the extensions that you should use to build AI applications with postest and we'll do a small demo
+00:01:22.479 building a rag and such application from scratch just using SQL then we're going
+00:01:27.960 to get into some of the more advanced stuff I'm going to take take you through Vector search indexes in postest we're going to look
+00:01:34.720 at the differences between them and and which one you should use and when that's always a an interesting topic and then
+00:01:40.880 number three this is for the intermediate and advanced folks improving your AI system we're going to look at things like evals driven
+00:01:47.079 development filed search Hybrid search multi- tendency texture SQL and give you
+00:01:52.880 a taste for how you can take your system to the next level and last but definitely not least we'll leave 10 15
+00:01:59.560 minutes at the end for Q&A for you to get your questions answered we can move on to the first topic which is about
+00:02:03.000 No text
+00:02:05.920 foundations for building AI systems with postgress okay so this is going to be a recap for folks who are intermediate and
+00:02:13.000 advance so just give me like five 10 minutes and then we're going to get into stuff for you but for folks who are
+00:02:18.200 beginners the main thing I want you to take away from the session is that you can build AI applications with postest
+00:02:24.480 you don't need a team of researchers in order to build suing stateof the-art and you also don't need a specialized
+00:02:30.720 database or something new if you already know and love postgress so let's unpack the statement a little bit in order to
+00:02:37.680 see what I'm talking about you when I say you can build a application with postest if you're in this live session
+00:02:43.159 you're probably one of these sorts of developers or Engineers maybe you're a software engineer maybe you're a DBA a
+00:02:49.200 data engineer an AI engineer but you're likely an application developer with
+00:02:54.480 without a specialized AI or ml background and the point of today's session is to show you with the advances
+00:03:01.280 in llms and offthe shelf technologies that you can build an a application with postest just having this background and
+00:03:08.560 that's because what I like to call the rise of the AI engineer the rise of this application developer who uses AI to
+00:03:14.879 build products rather than a a researcher or a research scientist that is actually like building the models
+00:03:21.400 themselves so this is a graph that I've taken from a great blog post from a guy called swix you can see the link over
+00:03:27.760 here but basically the idea is that you don't need to be an ml researcher a data scientist a research engineer you can
+00:03:33.360 have that background but you're more likely a fullstack engineer or a what
+00:03:38.400 I'm calling this new breed of Engineers an AI engineer someone who uses AI to build useful products that users
+00:03:44.599 actually use that's a first thing as a mindset for you to have that hey just using the skills that you have using the
+00:03:50.840 database that you know you can build an AI application you don't need a PhD and ml in order to build an a application
+00:03:58.000 No text
+00:03:58.159 the next thing that we're going to do in the foundation section is take a look at how post crets for sin starting with the
+00:04:04.239 concept of a vector database a term that you've probably heard a lot about when it comes to building applications with
+00:04:10.000 AI and and llms so what I'm about to do is a very short very non-comprehensive
+00:04:15.200 crash course on what is a vector database and if you already know this again this is going to be a review for
+00:04:20.720 you but if you're brand new this is the key things to take away you can obviously learn more by reading some of
+00:04:26.040 the articles that I'm going to recommend okay so let's start with with before we get into a vector database what is
+00:04:31.520 Vector data Vector data is essentially compressed representations of data so
+00:04:37.080 the key thing here is that you can have different kinds of data types let's say you have an image you have a document
+00:04:43.240 you have maybe even audio and what a vector is is that it is a compressed
+00:04:48.800 representation of that image or document or audio and you create vectors from
+00:04:54.000 these embedding models which take in things like images and then they output an essentially array of numbers or a a
+00:05:02.080 list of floats however you'd like to call it that represent that image or the meaning of that image or document or
+00:05:08.120 phrase in multi-dimensional like high dimensional space so that's all you have to know what is a vector it's literally
+00:05:14.240 a list of numbers that's what you need to keep in mind and they're essentially compressed representations of different
+00:05:19.880 data types that you're interested in and so a vector database simply put is just
+00:05:25.520 a system that stores and searches vectors very efficiently and the key
+00:05:30.960 idea here why is effective database useful because of the rise in llms and I know there's other applications that
+00:05:36.680 we're going to get to in a moment but you're probably here because you want to build an AI application that uses llms
+00:05:42.600 and one of the key insights that we saw after the explosion of chbt is that Vector databases allow llms to work with
+00:05:49.160 your data you can actually through a process called retrieval augmented generation or rag fetch relevant context
+00:05:55.039 from your vector database and pass it to an llm to then do reasoning and compose answers on and a lot of the key ideas is
+00:06:02.199 hey what if you could combine chat TBT with your documentation what if you could combine it with your blog post
+00:06:08.560 that your users can answer questions what if you could add it to your documents in Google Drive or something
+00:06:14.120 in order to get uh shared context across your company this is the kind of motivation for all of this again very
+00:06:19.720 simply put like way does a vector database fit in is essentially connects LMS with your data okay so now that you
+00:06:25.000 No text
+00:06:26.759 know a little bit at least what is Vector database what is Vector let's look at the types of applications that you can build using postgress what can
+00:06:35.000 you build using postgress in terms of AI system so the first one is rag you can think of rag as like I mentioned before
+00:06:42.240 chbt but with your company your customer data and examples of rag applications
+00:06:48.120 are things like you've probably seen in your Twitter feed or LinkedIn feed customer support chatbots research
+00:06:54.560 co-pilots docs chat Bots anything where you know you want to chat with some sort of specialized context in mind this is
+00:07:01.680 what's called a rag application there's also another type of application called a Search application which is uh mostly
+00:07:07.720 sematic search or image search and that is you want to search and find information not necessarily by keyword
+00:07:13.720 or tag but by meaning by kind of the underlying meaning of the artifact whether it's a image whether it's a
+00:07:19.479 sentence or something like that getting into some of the more advanced stuff you have agents so agents is essentially if
+00:07:26.720 you haven't heard of an agent before it's chat gbt that can use things like tools it can
+00:07:32.319 plan it can take autonomous actions and some of these tools might be the ability to do web search the ability to query a
+00:07:39.560 database the ability to use apis make API calls Etc and I'm sure that some
+00:07:45.560 popular examples of this the AI software engineer products out there that you might have seen things like Devon things
+00:07:51.520 like reput agents this is an example then we even get some even more advanced
+00:07:56.720 and this is a good thing about postgress the fact that it's a relational database you can do things like text to SQL where
+00:08:02.440 you can imagine it's like chbt but for your numerical structured and tabular data and so here it enables things like
+00:08:09.720 asking questions in English versus writing formula code and you'll see some examples of this out there chat with
+00:08:16.000 your data applications data and financial analysis agents these are some examples and there's also more things
+00:08:22.680 you can do I've just put four big topics that I've seen but there's also you can build recommendation systems you can
+00:08:28.199 build anomaly detection there's so many applications of vector databases and postgress in terms of building AI
+00:08:35.120 systems and for example if you're doing like time series anomal detection or you're trying to build a e-commerce
+00:08:41.000 purchase recommendations feature you can power this using the vector database functionality inside postest okay you
+00:08:49.440 now understand what you can build you understand what is a vector database let's get a bit more concrete and look
+00:08:53.000 No text
+00:08:54.920 at the uh most popular uh postest extensions for dealing with a a and Vector data to level set for folks who
+00:09:02.399 might not have heard of postest extensions but basically the power of postest is that you can use extensions
+00:09:07.480 to turn postgress into and give it like specialized capabilities without
+00:09:12.600 sacrificing its core relational database capabilities many of you here time scale
+00:09:17.839 you might have known time scale DB which is extension for time series and if you add postgress with the time scale DB
+00:09:23.480 extension you turn postgress into a Time series database and then in the same way if you add these extensions that I'm
+00:09:28.800 going to talk about PG Vector scale and PG aai you turn postgress and you give it the capabilities of a fully fledged
+00:09:35.959 all you need Vector database and so this idea of extensions is very important because that's how we actually get
+00:09:41.240 Vector capabilities into postest okay so now that we've established what extensions are let's look at the top
+00:09:47.959 three postest extensions for AI applications in postest we'll start with PG Vector this is probably the number
+00:09:53.839 one extension you need to know for building a applications with postgress PG Vector essentially gives postgress
+00:09:59.920 Vector database superpowers it has capabilities for a vector data type as
+00:10:05.079 well as distance functions so you can see there's the distance functions that are supported here cosine L1 L2 inner
+00:10:11.320 product Etc and it also has some Vector search indices built in which I'm going to take you through later in this
+00:10:16.600 presentation but there's two of them hnsw IVF flat now the cool thing is about postgress is that extensions can
+00:10:23.360 work together and so what we have is more extensions that actually build on top of PG Vector in order to augment it
+00:10:31.600 and extend it for even more capabilities so one such extension is PG Vector scale which actually speeds up PG Vector for
+00:10:38.880 large scale workloads so this is a complement to PG Vector meaning that you can use them together and it allows you
+00:10:46.040 to do things like high accuracy filtered search and it also comes with its own Vector search index that you can use
+00:10:51.639 with PG Vector data called streaming disc in in and then finally we have pgai
+00:10:57.519 which uh is a bit different in in sense that it brings AI workflows to postest it allows you to do things like
+00:11:02.560 embedding creation and do in database llm reasoning so if you want to do things like create summaries maybe do
+00:11:08.519 moderation maybe do categorization you can use it with the PGI extension and the cool thing about all of these is
+00:11:14.760 that they're open source so you can use them for free you can download them you can install them on your postgress
+00:11:19.920 database it's supported on most Cloud providers we support all three of these extensions in the time scale Cloud
+00:11:25.959 platform and now that you know what these are let's look at how you can use them and I know there's a question in
+00:11:31.320 the chat from Jean Michelle who says hey can you use these extensions at the same time not only can you use these
+00:11:36.920 extensions at the same time but they actually depend on each other so for example here's a create extension
+00:11:41.959 statement for installing these three extensions in postest but if you install
+00:11:47.040 the AI extension or the vector scale extension it actually automatically installs PG Vector because it's actually
+00:11:52.800 a dependency so these extensions really work closely together and you can and
+00:11:58.120 you should use them together okay one of the key takeaways just to wrap up this
+00:12:03.240 particular section is that postgress is all you need to create air applications this is a market map that I found online
+00:12:10.320 of 50 different uh Vector database products Vector libraries Etc and I love mem this is a Drake meme you don't
+00:12:16.680 really need any of these specialized systems to build AI applications if you already know how to use postgress if you
+00:12:22.440 already if your company already uses postgress all you need is just postgress to do this and you can see here another
+00:12:29.279 example postgress in addition to its relational database capabilities can become a high performance Vector
+00:12:36.320 database thanks to the extensions that we've talked about before we move on I wanted to give you some reasons for if
+00:12:42.079 you had to think about why postest is beneficial for AI applications there's
+00:12:47.160 kind of five reasons to think about so the first one is you can have one database for your AI application you
+00:12:53.279 don't have the complexity of managing a separate Vector database and dealing with things like data synchronization
+00:12:59.560 data duplication you just have one source of truth and that's you know super valuable especially for us who worked on more complex applications some
+00:13:06.880 of the other benefits is that you can store vectors alongside vectors and alongside metadata so you store your
+00:13:12.680 vectors alongside your metadata and your other application data even things like
+00:13:18.079 time series geospatial data and not only is it simpler but it actually facilitates more powerful user-facing
+00:13:24.560 features that we're going to see in part two and three of today's presentation in the the filtering section and then the
+00:13:31.000 third point is that uh postest can actually perform in scale as well and
+00:13:36.440 sometimes even better than a specialized Vector database this is a graph that compares post to Pine Cone and you can
+00:13:42.360 see the P95 query latency uh is a lot lower it's 62 milliseconds what that means is that 95% of queries that we ran
+00:13:50.160 on this 50 million Vector data set were below that 62 millisecond cut off and
+00:13:55.440 you're not actually going to give up any performance or any scalability by using postgress versus something more
+00:14:00.680 specialized and then you have all the good things that we know and love reliability ecosystem SQL cray language
+00:14:07.240 and one of the other cool things is that you can go beyond simple Vector search for your application so you can do
+00:14:12.959 things like hybrid search filtering texture sequel we're going to get into all of these later in the presentation
+00:14:18.360 but this is all possible with the fact that you have vectors and other kinds of data all in one SQL table or all in the
+00:14:24.880 same system okay so now that we have uh finished fin the first part of today's
+00:14:25.000 No text
+00:14:30.160 presentation we're going to take a break from the slides and we're going to look at a demo what we're going to look at in
+00:14:35.600 today's demo is an example of using PG vector and pgai for a rag use case okay
+00:14:46.120 so let me know if you can't see my screen but everyone should be able to see this this is popsicle and you can
+00:14:51.639 see here I'm connected to a postest database and so all of this while this is a UI this is not a specialized
+00:14:58.240 application all of this is happening in the database layer and you can see on the screen here I have a table so I have
+00:15:04.720 this quotes table and you can see here that it's quotes from various historical
+00:15:10.880 figures throughout history people like John F Kennedy Mark Twain Truman capot
+00:15:16.079 and they're about different cities in the USA so let's examine some of them this is Truman capot about New York City
+00:15:21.600 and you can see I have a quote I have the person and I also have this embedding column and this is the cool
+00:15:27.040 thing about using PG vector and using postes that you can store embeddings alongside your relational data but
+00:15:33.120 you'll notice there's a problem here I don't have any embeddings so the first thing that we're going to do in this demo is create some embeddings for all
+00:15:39.000 the quotes in this table so let's take a look at just so for folks who want to uh
+00:15:45.319 understand a bit more this is the create table statement for the quotes table and you can see here when I'm creating the
+00:15:50.680 table the vector is just a data type so I have this I'm naming this column embedding and I just have a vector data
+00:15:57.160 type and I specify this 153 is the dimension of the vector and this data type is coming from the PG Vector
+00:16:04.199 extension so you can see here you don't need to do anything crazy you just specify your vector column and you you
+00:16:10.360 give it the dimension that you have and you'll know the dimension from your embedding model that you're going to be using and skipping that you've seen that
+00:16:17.000 you can stall vectors alongside relational data what I'm going to do is use the PG extension in order to create
+00:16:23.519 embeddings for all of the quotes in this table what I'm going to do here is run this particular command and what's
+00:16:30.199 happening in the background is we're using open ai's text embedding 3 small model to create embeddings for all of
+00:16:36.000 the quotes in the table and this open AI embed function is part of the PGI extension which we talked about in
+00:16:42.360 earlier in the extension section of the presentation now that's run let me do a quick select star from the quotes table
+00:16:49.680 and let's see what happened so we can see here that just by running that query we've created a whole bunch of
+00:16:56.079 embeddings for the data in our table so let's take a look at one of them you can see embedding once again just a long
+00:17:01.959 list of numbers and this embedding represents this particular quote that came in and now that we have embeddings
+00:17:08.839 that allows us to do cool things like suchar and rag that I talked about so let's look at an example of that and
+00:17:15.280 once again this is a cool thing about the PG extension you can just create embeddings in SQL you don't have to run a separate data pipeline especially for
+00:17:22.160 these small to medium examples that we're looking at so let's look at an example of similarity such where
+00:17:29.400 what I'm going to do is try to find quotes in my table that are similar to
+00:17:34.840 this phrase called Empire State of Mind but again when you're doing these vectors such as in postgress it's uh the
+00:17:41.160 same select query I want the ID the quote the person who said it and I want to order by the embedding that's most
+00:17:48.600 similar to the embedding that got generated from this uh particular phrase
+00:17:54.160 over here so this is once again an easy way to create embeddings in order to do such search and then this is the only
+00:18:00.520 new thing uh when you're writing your SQL query so let's run this and see what gets generated and you can see here what
+00:18:06.960 I'm doing is I'm fetching the top three quotes that are most relevant and you can uh notice that the top quotes that I
+00:18:13.240 have are about New York city so you can see here New York even this quote also has New York even though I don't have
+00:18:19.760 New York in my query as well I query for Empire State of Mind Etc but because these two phrases are semantically
+00:18:25.520 similar this is how we get this kind of results that illustrates a value of semantic search but you can go beyond
+00:18:32.240 suchar and do things like rag which is what I'm going to show you next and then also just to note I wrote the SQL query
+00:18:39.400 just to show you guys but you can actually encapsulate these in functions and then just call the function to make
+00:18:44.799 it easier so for example let me just run this can't remember if I've done it let's just encapsulate in the function
+00:18:50.240 so we've ran this and then instead of writing that whole SQL carry out whenever you want to reference it you
+00:18:55.480 can just reference this function and you can run this function and you get the same results in a moment and it'll show
+00:19:01.600 you what the results that you've gotten okay if you want a similarity score there's a place in the PG Vector docs
+00:19:07.240 that shows you how to get that for the sake of real estate on the screen I'm not showing you today but there is a way
+00:19:12.960 to get that and you can do that in order to get the actual raw scores if you want as well okay so next what we're going to
+00:19:19.679 do is we're going to do some llm reasoning over the quotes table that we
+00:19:25.600 have so let's say for example what I've just showed you is doing a search but what if I want to have some sort of
+00:19:31.440 batch operation where I'm like hey from the quotes in this table I want to know what people say about the various cities
+00:19:37.760 so in this case I'm going to use this function called generate rag response which I'm going to take you through in a
+00:19:43.000 moment it's a function that I've made in order to do rag and what that means is fetching the most similar quotes and
+00:19:49.880 then processing it in an llm in order to figure out what does my quotes database say about these cities so let me run
+00:19:56.520 this and then while that's running let me take you through that function okay so let's take a look at this generate
+00:20:01.799 rag response function what does it do the first thing that it does is perform a similarity such in order to find the
+00:20:08.080 relevant quotes So in this case I'm just finding the top three quotes and I'm
+00:20:13.679 going to pass that to the llm in this case I'm using gbd 40 mini not CH gbt
+00:20:19.200 gbd 40 mini and what you can see here is this is the a base prompt that you can
+00:20:24.480 customize the system prompt and then you can also customize what things you're passing in this case I'm passing the
+00:20:30.720 chunks that I've just created from the similarity suchar as the context and then I'll get a response so that's
+00:20:37.000 what's happening in the background when we're doing all of this and let's see what our answers that we got are uh just
+00:20:44.720 delete this I have this stored in a table called
+00:20:50.000 summaries and here we go so we can see for each of the questions that I asked what do people say about New York San
+00:20:56.200 Francisco Chicago I now have summaries and in my particular prompt I asked it to say hey instead of just summarizing
+00:21:02.679 tell me the exact quote that people say and give me the sentiment and here's an example and you can see the exact quotes
+00:21:08.840 being displayed over here by GPD 40 now you can easily see this is such a simple
+00:21:14.000 toy example but you can easily see this can be used for things like for example building a customer call application
+00:21:20.039 building a call recording application anything where you need quotes where you need to summarize what people have said
+00:21:26.559 this is how you can do it and this is just simple example of how you can do it using the pgai extension okay hopefully
+00:21:33.400 that was interesting if folks haven't seen the PG extension in action and also haven't maybe even used PG Vector that
+00:21:39.960 was like an introduction to it okay we're going to go into the second part of this session today which is Vector
+00:21:42.000 No text
+00:21:45.559 search indexes someone asked earlier what is the drawbacks of PG Vector scale versus PG Vector this is where we're
+00:21:51.400 going to answer that question and it's really the pros and cons and when to use which we're going to learn the answers
+00:21:56.480 to that in just a moment let's take a step back and ask why do you even need a vector index in the first place maybe
+00:22:01.760 you've heard of this term before but if you haven't this is why you need a vector index really what happens is that
+00:22:08.320 when you're dealing with a lot of vectors you encounter something called The Curse of dimensionality and so what
+00:22:14.320 you do is that you then perform what's called an approximate search or approximate nearest neighbor search
+00:22:20.480 where you trade off some accuracy for faster search speeds and you use approximate algorithms in order to do
+00:22:26.320 that and the question is this sounds really cool but but like how many vectors do I need in order to use such
+00:22:31.440 indices we'd recommend from our experience somewhere around 100,000 you can actually get away with just doing
+00:22:38.200 what's known as Brute Force Canon search or exact nearest neighbor search on anything less than 100,000 vectors most
+00:22:44.400 of the time obviously if things are slow then use a vector index you don't need to use it from the start if you are
+00:22:50.440 dealing with a small number of vectors and the good news is that we have three Vector suchar indices in postgress in
+00:22:57.600 order to used and they all have different pros and cons but just to introduce them before we go into it
+00:23:03.120 there's the IVF flat index or inverted file flat that's what it stands for there's hnsw index which stands for
+00:23:09.840 hierarchical navigable small words and there's a streaming Dison index which
+00:23:15.520 that's what it stands for there's no abbreviations going in there the Ann stands for approximate nearest neighbor search but the names are ined an
+00:23:22.559 indication of the type of vectors they are so this is an inverted file Vector search Index this is is actually a graph
+00:23:29.360 based index with a multi-layered graph and then this streaming dis Ann index is also a graph based index but it's a
+00:23:36.159 single layered graph for those of you who are interested in those kinds of details but if you just want to know
+00:23:42.240 when should I use which kind of vector I don't really care how it works I just want to know when should I use which one and what are the pros and cons this is
+00:23:49.279 the slide for you this is the screenshot slide where I take you through these three kinds of indices you probably have
+00:23:54.799 questions about when do you use which of the each index and so let's start with
+00:23:59.960 IVF flat this was the first index that was introduced in PG Vector it's good at medium workloads again it's faster than
+00:24:06.720 a linear scan but and it does have the pro of low memory usage but it does have
+00:24:12.320 significant drawbacks the main one is that you have to rebuild the index every time you update the vectors in your
+00:24:19.520 table so if you have Dynamic data if you have a lot of updates or deletes or in inserts this is not a good index to use
+00:24:26.600 because you don't have to spend your time updating rebuilding the index it also has lower accuracy than other index
+00:24:32.080 types like hnsw and streaming dis andn so in general if you want to use Iva flat go ahead but we recommend using
+00:24:38.919 either hnsw or streaming dis and in index for most use cases okay next let's
+00:24:45.159 look at hnsw which is actually a very popular kind of index other Vector databases have it as well this is a good
+00:24:51.440 kind of all round index it's good enough for real-time search on what I'm calling medium workloads so 100K to a million
+00:24:58.880 vectors maybe even 10 million vectors if your if your vectors have small enough Dimension and it has a lot of good
+00:25:05.000 things about it there's a good balance between search speed and accuracy it can handle updates without having to rebuild
+00:25:11.360 the index so that solves the con in IVF flat it has options for quantization which is essentially Vector compression
+00:25:14.000 No text
+00:25:18.440 and it also has a pretty fast index build time and some index the ability to
+00:25:23.760 parallel or to parallelize the index build process if I remember correctly but it does have its cons it has known
+00:25:31.360 problems and this is something that we've seen with filtered search accuracy because of the way that the suchar
+00:25:36.760 mechanism Works some of the other drawbacks about it in addition to the filtered search accuracy is that it has
+00:25:42.440 high memory usage vectors have to stay in memory the whole time the vector index has to stay in memory the whole
+00:25:47.799 time and as a result your cost scale with your RAM and as we know Ram is pretty expensive so if you need more RAM
+00:25:54.039 you need to go to the next level in your cloud provider and that does unfortunately cost a more as you scale
+00:25:59.640 up the number of vectors that you have and then there's also scale limitations in terms of search speed and accuracy from the tests that we've done and what
+00:26:05.840 we've heard from users as you get to a large number of vectors you can have things slow down or reduce
+00:26:12.120 accuracy and that's where the streaming dis indn index comes in and this is what's in PG Vector scale what it's good
+00:26:13.000 No text
+00:26:18.760 for is once again real-time search just like hnsw but it really excels in these filtered search use cases where in a
+00:26:25.679 moment I'm going to tell you about the different kinds of filters but where you don't just want simple semantic search for when you want to filter on things
+00:26:31.640 like metadata or some other attribute and it excels at Large Scale workloads so the example that I showed you earlier
+00:26:37.399 was on 50 million vectors anything over 10 million plus I'd recommend using streaming disn that's going to give you
+00:26:43.360 the best most wi free experience some of the advantages of streaming this scn is
+00:26:49.000 the super high accuracy for filters suchar as I mentioned you can scale to more than a billion vectors it also has
+00:26:54.720 quantization on by default and it's a specific kind kind of quantization that we've built at time scale called
+00:27:00.480 statistical binary quantization but one of the cool things for those folks who are maybe thinking about production and
+00:27:06.559 thinking about costs is that the costs actually scale with your disk and your RAM and not just your RAM itself and so
+00:27:12.720 what that means is that you don't have to automatically update to the next uh
+00:27:17.760 tier of memory and even if you because of the fact the way the dis is stored
+00:27:23.080 you can leverage ssds in order to store the index without sacrificing such speed
+00:27:28.760 significantly and then another Pro is that you can handle updates without rebuild just like hnsw and that solves
+00:27:35.360 this uh problem in IVF flat the one con that we found that just to be balanced I wanted to share is that you do have
+00:27:41.440 longer build times than the hnsw index in this case usually this is only a problem when you're starting off you
+00:27:48.240 build the index once and then it will update itself as your data changes but this is something that we've noticed if
+00:27:54.159 you're trying to load a large number of vectors very quickly you're going to have to wait a little while and that is a known limitation that we do have some
+00:28:00.720 plans to address okay you can send this to your team when they ask what is the difference between all these different
+00:28:06.440 Vector indices hopefully that gives you a good overview of the different indices
+00:28:11.919 okay so how do you use Vector such indices in postgress the good news is that you use it just like all the other
+00:28:12.000 No text
+00:28:17.559 indices in postgress you just run a create index statement and this is an example of how to create all three
+00:28:23.840 indices just to note that you can't have multiple index typ Types on the same
+00:28:28.880 column so you can see over here that over here I'm creating it on the quotes column and I'm using that in all three
+00:28:34.919 examples you would just use one of these on the quotes column but you can have say for example if I had like quotes two
+00:28:41.240 and quotes three and I wanted to compare the index types I could do that in Separate Tables or in the same table but
+00:28:47.320 in the same column you can't have more than one index but this is an example of how you can create Iva flat indices and
+00:28:54.519 over here just note that you have to specify the kind of distance function and so we're using cosine here but
+00:29:00.559 there's also other ones you can see the specific distant function in EG Vector
+00:29:05.640 documentation and here's how you create the hnsw index and then last but not least the streaming dis index which is
+00:29:12.600 just uh known as disn in the code and so that's how you created two lines and
+00:29:18.840 then you're up and running after the index builds and then the good thing about PG vector and kind of postgress in
+00:29:25.480 general is that if you want to get in the weeds with things like index configurations you have full control
+00:29:31.600 over the parameters it's not like other systems where you just set it and then when things go wrong you're like okay I
+00:29:36.840 have no knobs and dials at my disposal in order to debug and try and fix these things so each kind of index type
+00:29:43.000 there's different configurations that you can use and all of this is in the PG Vector documentation the PG Vector scale
+00:29:48.399 documentation I'm not going to go through each parameter right now but just know that for the folks who are Advanced they can look at these
+00:29:54.480 different settings and if you are having trouble with the default are not working you can actually change these and
+00:30:00.720 experiment with what works well with your use case okay so where can you learn more the good news is that we have
+00:30:06.240 three blogs on the time scale blog that talk about these three different kinds of indices one about IVF flat one about
+00:30:12.519 hnsw and this one is about the streaming dis Gan index which we really compare to
+00:30:17.880 Pine Cone to show how you don't need a specialized Vector database okay we're going to get into our last and most
+00:30:22.000 No text
+00:30:24.120 advanced section in a moment about improving your AI systems and we're
+00:30:29.159 going to deal with some of the more intermediate and advanced topics so if you're someone who you're like hey I already knew all the stuff this next
+00:30:35.399 part is for you and if you're someone who found all this other stuff interesting get ready because you're about to learn a whole lot more and go
+00:30:41.720 more advanced than many people who uh maybe have even been building AI systems because you're going to learn what I've
+00:30:47.519 learned from time scale customers and other users and get a head start okay so
+00:30:52.640 part three the final part of today's presentation which is about improving your AI system what are we going to talk
+00:30:59.159 about we're going to talk about Advanced topics so this is beyond the 101 tutorials beyond the buer rag app in 10
+00:31:07.080 lines of code this is really where the useful stuff for users comes in I'm hoping you're going to get a lot of
+00:31:13.399 value from this presentation because you're going to have all these tools in your toolkit and actually build useful AI applications that make it out of the
+00:31:20.399 MVP and POC stage we're going to cover five topics the first one is about
+00:31:25.720 evaluation driven development this is a mind set and a way of developing that I think is going to help you so much build
+00:31:32.360 useful AI applications the next things we're going to look at are techniques in postgress in order to get more accurate
+00:31:39.880 results and more useful results so we're going to look at filtered search which is essentially combining Vector
+00:31:45.399 similarity search with filters or wear Clauses we'll take a look at five examples next we're going to look at
+00:31:51.000 hybrid search which is combining keyword and Vector search then we're going to uh comment a little bit on multi- tendency
+00:31:57.000 for rag application this is a superc concern and then finally we're going to look at texture SQL just touch on it a
+00:32:03.039 little bit and talk about how you can leverage it with Rag and agents with tool use and so this is really advanced
+00:32:08.960 stuff Buckle in pay attention if you're multitasking this is a good time to stop okay so evaluation driven development
+00:32:14.000 No text
+00:32:17.000 what does that mean so a lot of the times people start with AI applications like hey I might have an application in
+00:32:22.039 mind let me go and look at a tutorial and find some find some way of building it what I'd actually commend is this
+00:32:29.880 what I call evaluation D development I learned this from a friend of mine his name is Jason Lou he's a AI engineering
+00:32:36.039 consultant and basically what this is is a system for making sure that you're actually building useful applications
+00:32:41.519 and it allows you to measure is your application getting worse or better over time so the first step of this is
+00:32:47.799 actually to start with the set of questions you want to answer so don't start by writing code start by writing down 10 questions that you think your
+00:32:55.000 users are going to want to answer and put them in a file somewhere put them in a a text file or something like that
+00:33:00.639 this then becomes what's called your evaluation set this is how you measure whether your application is improving or
+00:33:05.880 declining and as I just said there getting ahead of myself as you make changes to the system you can now
+00:33:11.760 measure if your app is getting better or worse so for example what changes might you want to make maybe using a new
+00:33:17.120 embedding model maybe you upgrading from GPD 40 to 01 maybe you're transferring
+00:33:23.120 from gbd4 to Claude Sonet 3.5 you want to know the differences that it's making in your application you now have a a way
+00:33:30.080 to test and to show other people is your application getting worse or better before you hear about it from your users
+00:33:36.519 and then also the cool thing is that as your application gets more complex you can just add more things to evaluation
+00:33:42.360 set to make sure that you're picking up for these scenarios in the future so maybe you'll start off with 10 queries
+00:33:47.519 but you'll eventually grow to 20 30 40 50 questions and you'll have different sets where you can say that your
+00:33:54.159 application gets better or worse the final thing about evaluation driven development is to actually decompose the
+00:34:01.240 problem so a lot of the time in llm applications we just focus on the answers that LMS give us oh this is the
+00:34:07.360 output that I got from chbt doesn't look right the chbt must be silly AI sucks that's not the case if you decompose the
+00:34:15.040 problem into smaller steps to actually understand okay what's going on under the hood so for example here has three
+00:34:20.760 examples of how I'd apply decomposition the first one is in rag applications let's first see how we actually fetching
+00:34:27.440 the right right chunks or right documents do we have a inventory problem where users are actually asking
+00:34:32.719 questions and we don't even have the documents that are related to it so of course chbt is going to be giving bad
+00:34:38.040 answers or the Alm is going to be giving bad answers the second thing is in the agents example agents can use a lot of
+00:34:44.239 different tools uh are you actually selecting the right tools to use are you using a database query tool when the
+00:34:51.159 user asks about analytical things are you using a semantic Search tool when the user asks about things in your
+00:34:56.800 knowledge base so start with things like that just to see what's going on get a trace of what's going on in the system and then
+00:35:03.240 for example in text SQL are you actually quaring the right tables is the table that forget about the SQL syntax are you
+00:35:10.320 quaring the table that has the answers to the stuff and then you can focus on things like hey getting the right SQL
+00:35:17.240 syntax Etc there's a Blog that I'll recommend at the end called rag is more than Vector search we just put it out last week I highly recommend to read it
+00:35:24.000 you'll get a good sense of this mindset but basically I wanted to talk about this first because this is the mindset
+00:35:29.280 is going to help you build useful AI applications and stop you from wondering what's going on if you follow this
+00:35:35.119 you'll actually build useful things for your users and you'll get a promotion and you'll be a lot happier because
+00:35:40.599 you're actually building useful stuff okay so that rant out the way let's look at the first thing that you can do in
+00:35:47.280 order to improve your AI application which is bued Vector search if you're building an a application why do you
+00:35:51.000 No text
+00:35:53.680 want to add filters you want to add filters in order to get better sear results so instead of doing just like
+00:35:59.560 pure semantic search that that your that we just saw in the example earlier today
+00:36:04.720 you'd want to maybe filter on different attributes so that the search space is constrained and that your users can get
+00:36:10.200 more relevant results returned to them or that your rag has more relevant results so let's take a look at five
+00:36:15.960 examples really quickly so the first example of filtered search is a metadata filter this example so again I have
+00:36:21.400 these code examples on the screen you'll get the you'll get a file with all of these later the first example is a
+00:36:26.560 metadata filter and here you can see the use case that I thought of is hey you maybe have a documentation search system
+00:36:33.599 and you have multiple products so here you can see we're not just selecting and ordering by the cosign distance but
+00:36:39.599 we're doing a clause that like filters hey I want the CRM software product and I only want API reference docs this is
+00:36:46.520 how you can implement this from the backend perspective the key thing here is disability again keeping vectors and
+00:36:53.520 metadata in the same table and it's super easy to filter it's just a wear clause and once again this is a real
+00:36:59.359 world use case in this case like technical documentation search where you have multiple products so that's a metadata filter the next kind of filter
+00:37:07.520 is uh what I call a composite filter so this use case is an e-commerce product uh recommendation system that considers
+00:37:14.839 a bunch of things before you recommend the product so for example let's say in this case we're not just selecting the
+00:37:20.280 product and like the cosign distance to let's say the current product that the user is looking at in this case we're
+00:37:26.680 not just looking at the product the vector search but we're doing a whole bunch of filtering to say hey this
+00:37:32.280 product needs to be in electronics this product needs to be between $500 $2,000 it needs to be in stock you don't want
+00:37:38.160 to recommend things that are out of stock Etc and it needs to have a minimum rating Etc so this is again the power of
+00:37:44.040 SQL the power of postgress it's so easy to write these kinds of queries in postgress and PG vector and that's an
+00:37:50.680 example of a composite filter and then the third kind of filter is a Time based filter so this example I have a news
+00:37:56.800 article recommend ation system that retrieves semantically similar articles that are published in the last seven
+00:38:03.000 days and this makes sense you don't want to read old news it's called the news because it's new and so you want to give
+00:38:08.160 your users recent articles this is a classic example of where filtering by time makes a lot of sense and again you
+00:38:14.560 can actually combine the beauty of postgress extensions combine this with time scale DB hyper tables for those of
+00:38:20.280 you who use the time scaleb extension to get efficient time based search if you have a lot of time based data already so
+00:38:26.960 again this is is really simple we just have awar Clause once again then another example is a permissions based filter
+00:38:33.839 where this is super common in rag applications where different users especially internal apps where different
+00:38:40.480 users have different levels of permission so let's say the CEO has the most level of permission but afar who's
+00:38:46.240 just like a normal guy he has the lowest level of permission so you don't want him to access all the classified documents so this is how you can
+00:38:53.040 Implement that for example in a semantic search where you know when a certain user such as for documents it ensures
+00:38:59.599 they only use documents that match or are below the user permission level and so this is an example of how you can do
+00:39:06.119 that once again in SQL this is super simple we can easily reason just in a few lines of code how to make this
+00:39:12.040 happen and then finally once again the power of postest the fact that you can combine postest
+00:39:18.680 extensions the one of the favorite things about postest is that you can do things like geospatial filters where
+00:39:24.280 combining PG Vector with postgis you can use an example of hey maybe we had a
+00:39:29.319 location based recommendation service that only recommends things to tourists
+00:39:35.359 within a 5 kilm radius and it's ordered by your both your cosine distance in
+00:39:41.400 terms of your interest but also by your Geographic distance so that we don't so that we don't recommend things that are
+00:39:47.200 not relevant to the user or that are very far away which we people don't want to travel all the way too far okay so
+00:39:53.800 that is filters and then finally Pro tip you'll remember that the PG V the scale extension and the streaming discan index
+00:40:01.160 they it actually helps you to get higher search accuracy for filtered search this is a diagram of how it works where it
+00:40:06.720 exposes this get next function in order to ensure that you will keep looking at
+00:40:12.040 the graph in order to get results that match your filter criteria but the pro
+00:40:17.359 tip is hey if you have this filtering use case just use streaming dis in and just use PG Vector scale it's going to
+00:40:23.280 work better than the other indexes out of the box okay now that we've done filters let's power through the last few
+00:40:29.560 uh topics before we end off hybrid search so hybrid search what is hybrid search this is where you combine vector
+00:40:32.000 No text
+00:40:35.800 and keyword suchar again once again the goal is to get more accurate and useful
+00:40:42.400 information for the users and we know earlier you learned that semantic search is search by meaning but sometimes we do
+00:40:47.800 want to search by keyword so for example let's say you have a bunch of Journal articles or research articles and you
+00:40:53.880 actually want to search by keyword in the title but then do semantic search for for example in the abstract or something like that or you want to do
+00:41:00.200 both searches and combine them and see which one actually has the best results essentially that's what hybrid search is
+00:41:05.440 you're combining Vector search with full text and keyword search based methods and there's a couple ways to implement
+00:41:11.520 this in postgress you can combine PG vector and PG Vector scale with the native postgress fex such this is called
+00:41:18.640 t such or TS Vector this postgress talks about how to do this there's also further reading that I recommend
+00:41:24.760 including blogs on the time scale blog and the recent won by Jonathan cats out of AWS and this is an example of how we
+00:41:31.560 did it using what's called a ranker so this is from a company called coare where basically what we do is we take
+00:41:36.760 our documents we then do a semantic search and a keyword search so semantic
+00:41:41.800 search using coare and keywords such using postgress then both of these are all stored in postgress and then what
+00:41:48.440 happens is that we get the results from both of these searches and then we use what's called a reranking model to
+00:41:54.920 rerank them and then finally give the result results to the user so this is just one approach there's other approaches that you can use this one is
+00:42:01.359 pretty simple and we've had success with people implementing it before hybrid search example there's a Code example
+00:42:07.640 that I'll give you in this blog you can go and read it called building search and rag systems on postest using coher
+00:42:13.359 and pgai where we actually Implement a hybrid search example just in SQL all in
+00:42:18.760 one query and it takes you through doing the two searches reranking all in SQL all using the PG extension so we'll skip
+00:42:25.880 this for now we'll come you'll get the code to look at it later or you can go and look at this blog post if you're interested and then the second to last
+00:42:31.000 No text
+00:42:32.520 topic that we're going to talk about is multi-tenancy this is actually pretty important when you're dealing with rag applications
+00:42:39.319 because a lot of the times you want to have multiple users you want to ensure that the users if you're not searching
+00:42:46.200 across tenant let's say You're Building A SAS application or something like that multi-tenancy is super important to you
+00:42:52.440 if you're not familiar with multi-tenancy you can think of it like tenants in an apartment building where
+00:42:57.680 you know just like you have families in the same multiple families in an apartment you'd have multiple uh users
+00:43:04.800 in different slots in your application there's different levels you can do this at I'm not going to read everything in
+00:43:10.559 the slide but basically for certain kinds of applications you can just give each tenant its own table where let's
+00:43:17.640 say you don't have let's say it's like an internal application or something like that you'd want to give each tenant
+00:43:22.760 its own table it's simple to implement and you don't have to use multiple databas bases and stuff like that but in
+00:43:28.960 some cases it's not great for security again limited data isolation there's potential for data leaks what we found
+00:43:35.160 works well is giving tenants their own schema so this kind of works for most cases in terms of balancing isolation
+00:43:41.200 and efficiency so again you have better data isolation you can keep everything in the same database the only con here
+00:43:47.599 is that you may hit schema limits if you have like millions of tenants and you
+00:43:53.160 it's a slightly combo complex just setup some of the other methods that can do uh
+00:43:58.319 things like separating out your tenants by a logical database so you give them their own logical database this is more
+00:44:04.520 complex to manage you don't really get that much you get some like stronger data isolation but you have a lot more
+00:44:11.480 overhead here where you have to have uh High backup and maintenance complexity because you'd have to like backup and
+00:44:17.839 restore like individual postgress databases which can be tricky and then finally this is the most expensive
+00:44:23.599 approach but for clients who want the highest level of security just give then they each their own database and that's
+00:44:29.520 possible especially with infrastructure as code things like terraform and stuff like that you can provision and and
+00:44:34.880 deploy these pretty easily okay so that's an overview of multi-tenancy the final thing I'm going to talk about
+00:44:40.240 before we end up is texture SQL you know this is one of my favorite things about postgress the fact that you can store
+00:44:41.000 No text
+00:44:46.000 structured data numbers and things in SQL tables things that have relations alongside unstructured data and in terms
+00:44:53.359 of AI applications what that enables you to do is to build uh a couple of cool use cases the first one that I wanted to
+00:44:59.559 mention is enable your users to query things in structured data query structured data in natural
+00:45:05.319 language this is a lot of the like chat with your data applications and then the coolest thing
+00:45:11.920 that I wanted to show you guys a demo but we're not going to have time is an AI agent with tools to do semantic
+00:45:17.559 search and SQL quering where it can actually decide which tool to use and when we get into some of this in this
+00:45:23.440 blog post I say read this blog post it's called rag is more than Vector search there's a section on implementing textas
+00:45:28.680 SQL if you're interested there's sample code and there's also Associated GitHub repo okay and then this brings us to the
+00:45:33.000 No text
+00:45:34.640 end of the webinar I see folks are enjoying this in the chat it really means a lot to me we spend a lot of time on these presentations my thing is that
+00:45:41.319 there's so much of information out there how can we make this one hour really useful to you folks so that you don't
+00:45:46.880 feel like hey you wasted your time so again comments like yours I really do appreciate it our thing is to make sure
+00:45:52.240 that people actually learn something and can stop wasting time reading random tutorials and stuff like that okay rant
+00:45:58.720 as side resource is the next step so what can you do you learned all the stuff you're excited you're energized to build here's where you need to direct
+00:46:05.280 your attention to build go and check out the PG Vector scale GitHub give us a star check out the PGI GitHub give us a
+00:46:12.480 star there if you like it this is all again once again open source there's some documentation there's some tutorials there and then I have to
+00:46:19.559 because they pay my salary if you do want to have a managed database service you don't want to spend time managing
+00:46:25.720 your data infrastructure but rather want to spend more time building your AI application check out time scale Cloud
+00:46:32.200 it's the best postgress hosting provider out there especially for AI applications
+00:46:37.359 because it comes with all the extensions that I talked about PGI PG Vector scale and PG VOR out of the box and you can
+00:46:44.880 use them straight away and then for reading if you want to learn more there's two resources that I recommend one is this new blog that we just put
+00:46:51.400 out called rag is more than Vector search it'll take you a lot deeper and then if you want to Deep dive into any
+00:46:57.000 of the topics that we talked about go and look at the time scale blog there's a lot of tutorials guides and explainers
+00:47:02.839 for both beginners and intermediate and advanced folks I hope you learned something in today's session have a wonderful rest of your day and excited
+00:47:09.440 to see what AI applications you build with postgress

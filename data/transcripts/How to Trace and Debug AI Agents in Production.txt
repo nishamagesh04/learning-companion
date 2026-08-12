@@ -1,0 +1,436 @@
+# tactiq.io free youtube transcript
+# How to Trace and Debug AI Agents in Production
+# https://www.youtube.com/watch/FckNRUwz818
+
+00:00:00.000 We're going to be talking about tracing, observability, and AI and agentic systems
+00:00:04.720 today. I'm your host, Ed Charbeneau. I'm a principal developer here at Progress Software,
+00:00:09.600 and I am joined by Lyubo Atanasov, the senior product manager on the observability platform.
+00:00:15.840 We're going to start off by talking a little bit about the application engineering life cycle when
+00:00:21.280 we're talking about um Agentic apps. And a lot of this reminds me of um the the testing cycle
+00:00:32.080 for software development like the test-driven development cycle where you're you know you
+00:00:37.040 have your red green refactor mode. You're uh when you're working with AI apps you're going to build
+00:00:42.640 evaluate and optimize. So when you're in the build phase, you're rapid prototyping. You're writing a
+00:00:48.880 lot of prompts and then you're kind of changing those prompts to see if you can get the agent to
+00:00:54.000 do the activity that you want it to do. And it's all that natural language um type of development
+00:01:01.200 where you're, you know, you're forming that prompt and trying to get it uh to clearly do
+00:01:06.320 what you want it to do. And then you kind of step into the evaluation phase where you know you're
+00:01:12.560 trying to get that that non-deterministic behavior to kind of behave a little bit better. These large
+00:01:18.720 language models can tend to step outside of uh what their their prompts are telling them to do
+00:01:24.880 and you need to, you know, go back and adjust the prompt as needed. And you may be adding
+00:01:30.160 multiple agents to your workflow and chaining those together. and um you know things like
+00:01:36.000 retrieval augmented generation where you're off you know searching for data and pulling
+00:01:40.160 that into your agents start adding that type of behavior in and you might start to notice that
+00:01:46.560 tools are failing and uh you're not retrieving the right documents or maybe one of your agents
+00:01:51.920 in the workflow isn't responding the way you are or way you'd like it to be. Um these things
+00:01:58.000 are are kind of uh difficult to debug, but uh you know, you move on and you fine-tune those prompts,
+00:02:04.800 get them uh you might compare different models and and get things working the way you want to,
+00:02:10.000 but without some sort of uh tooling that is giving you logging and feedback on this workflow, you you
+00:02:20.160 kind of have to guess at what you're doing. That's one of the things that we're going to try to
+00:02:23.840 address today is that pain point. That's where the observability gap lies. Uh, Agentic applications
+00:02:31.920 are quickly moving into production. We saw a lot of people in the poll here say that they're
+00:02:35.840 learning, but there was also a pretty good portion of people that were actively building things and
+00:02:41.120 some had deployed to production. Uh, this number is just going to keep growing. Like all the folks
+00:02:46.640 that are learning today, I'm sure you're going to go start, you know, putting down some lines
+00:02:51.040 of code and getting things towards production. Uh so teams are having to really operate quickly
+00:02:57.680 on this stuff and traditional tools that are built for measuring success um they work here
+00:03:07.520 but they they often can give you a false sense of security. So uh things like logging in APM they
+00:03:15.040 might give you a status code that says that the service is working correctly. uh but there might
+00:03:20.480 be some underlying things that you might not see uh that those tools aren't surfacing. So things
+00:03:27.600 like the model doing internal reasoning taking extra long time to do the task uh maybe the the
+00:03:36.400 prompt is overly engineered or uh causing it to burn excessive tokens um or it's not calling the
+00:03:44.960 right tools. Those are all things that uh your APM systems might not be surfacing that you can see
+00:03:55.280 and that's where the strategy really shifts when it comes to the observability portion of
+00:04:01.440 uh AI engineering. Uh we really need to know about the behavior. Did the agent
+00:04:06.160 actually do what the prompt told it to do? Did it give us the output that
+00:04:11.120 we expected? and can we track over time that that output is consistent. Um also
+00:04:18.720 uh as I talked about on the intro the costs are changing daily here. Uh we keep seeing news from
+00:04:24.960 uh you know like claude Microsoft and the other vendors that they are increasing token prices. So,
+00:04:31.920 it's really important to see how your spending is adding up and identify places where you can
+00:04:38.960 go in and fine-tune your agents so they can continue to do the task and stay on task but
+00:04:45.120 do it at a a lesser expense. And then, you know, quality is a huge aspect of this here
+00:04:51.920 as well. Is the output what you intended the output to be? How do you evaluate those things?
+00:04:57.840 How do you run evaluations and uh what types of tools do you use to support that behavior?
+00:05:07.920 Uh Lubo, maybe you could tell us a little bit more about uh deterministic and uh agentic AI systems
+00:05:15.840 and kind of the key differences between working in these environments. Thanks. And I hope that you
+00:05:22.800 guys can see my screen already, right? Yep. Looks good. That's good. Amazing. I didn't click any API
+00:05:29.120 keys or anything yet. So, that's a good thing. So, you briefly touched upon the agent observability
+00:05:35.440 gap, but let me try and make this a little bit more concrete. On the left side of the screen,
+00:05:41.120 we have a traditional deterministic app. This is what all of us has been developing for the
+00:05:46.640 past 20 years. And so, request comes in, it hits a service, a response goes out. Same input always
+00:05:54.160 gives you the same output. The whole path is fixed. You know what could break. You know why it
+00:06:00.800 breaks. And honestly, traditional APM APM tooling is already great at detecting such failures. On
+00:06:09.120 the right side is where things get a little bit more interesting. A user request comes in,
+00:06:14.800 but now it hits the LOM and the LOM decides what to do next. Maybe it goes to retrieval. Maybe it
+00:06:22.240 calls a tool. Maybe it goes to tools. Maybe it doesn't like the answer and it tries itself.
+00:06:28.640 It can just keep whooping and whooping until the model decides it's done. That word decides is kind
+00:06:35.600 of the whole thing. The model is the one making decisions at runtime and not the code that we as
+00:06:41.760 developers wrote. If you run the same request twice, you might get two completely different
+00:06:46.960 execution paths. From the outside, this still looks like a normal API call, but inside it's
+00:06:53.680 a totally different animal. And that's the gap everything else today comes back to you figure
+00:07:00.240 out how to change slides. That's good. So, how how does this actually feels like in practice?
+00:07:08.080 And this is really the slide that I want to remain in your heads after the webinar. In a playground,
+00:07:13.840 in a demo environment, in a prototype, AI looks amazing, almost like magic. You type a prompt,
+00:07:20.240 the model gives you an answer. Job well done. Success always just looks like success. This is
+00:07:27.360 exactly the demos and prototypes vendors show to your CEO when they try to sell him an AI agent.
+00:07:34.480 But take that exact same AI agent, run it in a production environment and look what happens. So
+00:07:42.160 remember, remember remember how the model is the one which decides what to do. A request comes in,
+00:07:49.440 retrieval fires and quietly pulls a stale chunk of data. The first to search returns 200. All good.
+00:07:57.360 The second to upgrade also returns 200 except it's a silent 200. the thing didn't actually happen,
+00:08:04.880 but HTTP has no idea about that. Then the reasoning step kicks in and it drags out to 9
+00:08:12.880 seconds or 8.5 seconds or whatever. As a result, this single request cost you half a door and
+00:08:20.880 the final answer that was given back to the user drifted away from what the user actually want. If
+00:08:27.600 we were to use traditional APM software to monitor this agent, we would have all those failures and
+00:08:34.640 zero errors locked in the system. Nothing turned red. The dashboard is green. The first person
+00:08:41.360 who is going to notice something is wrong is your user, your customers. That's the problem.
+00:08:49.840 So now the fair question at this point is I already pay for for data do or for any
+00:08:56.960 other traditional APM software. Why do I need something else? Why I need to buy something
+00:09:02.080 else? And honestly those tools are excellent for what they were built for. They were just not built
+00:09:08.640 to monitor AI agents. Traditional APM was made for stateless HTTP. It is request, it is the response,
+00:09:17.760 it is your CPU, it is your memory. That's how that's however maybe only 20% of an actual agent
+00:09:25.360 run. The rest the reasoning, the two decisions, the stuff that actually broke are invisible to
+00:09:31.680 it. If you were to add some more advanced login, this gets you a little bit further.
+00:09:37.040 Call it 50%. But you will only see whatever you as a developer remember to walk. But you still don't
+00:09:45.200 get the casual chain between steps. You don't get the actual prompts, the completions. You
+00:09:50.720 don't see what each step costs. And you definitely cannot catch hallucinations. Agent observability
+00:09:58.080 platforms. This is what we built are designed for what an agent actually is a stateful graph.
+00:10:04.720 So you get the full span tree, parent and child, every prompt and completion token cost on every
+00:10:11.360 single step. evaluation scores and most platforms support even more. What you're you're what you're
+00:10:20.320 pushing 110 years old, right? So, you have been in software development for quite a while already.
+00:10:26.000 Have you been playing with APM anti- agents? Uh just just a little bit. So, um there there's some
+00:10:33.600 tools that are usually, you know, built in. Uh I'll show one of them today, Dev UI, and then
+00:10:39.120 there's things like Aspire. Um but usually those are short-lived sessions so you don't get to see
+00:10:45.920 things over a long period of time. Okay. And you know those tools are great, right? It's just that
+00:10:54.160 a observability answers a different question. Is the AI behaving correctly? Are the decisions
+00:11:01.760 good? Is the output grounded? Is it hallucinating? Is the user getting what they needed? If you're
+00:11:08.400 running agents in production today and you only have the left column traditional APM, I would
+00:11:14.720 encourage you to look closer at what your users are actually experiencing because there is a real
+00:11:20.160 chance you don't know. So I'm going to start with something called Dev UI. Dev UI is a beta tool
+00:11:28.080 from Microsoft and it is part of Microsoft agent framework. Microsoft agent framework is in full
+00:11:36.640 glo uh generally available release now and the dev UI tool is just an extra tool that you can use for
+00:11:46.960 a um short development loop. Um unfortunately it is in beta. A lot of these AI tools are very new
+00:11:55.440 and um everybody's you know learning and moving together at the same time. And if you if you
+00:12:01.200 look at the C side of the documentation here, it's pretty much coming soon. So there there's going to
+00:12:07.200 be some features that aren't quite ready, but it's a really neat uh tool and cool way to get started.
+00:12:12.160 So we're going to take a look at it. And uh Python is available as well if you're doing any Python.
+00:12:17.440 You actually have full documentation on how to get started with Dev UI and Agent Framework on
+00:12:23.680 the Python side. So we're going to dive into the C version of this today. Um, you can grab the Dev UI
+00:12:31.520 bits at Nougat. If you search for AI agents and filter by templates, you'll see this Microsoft
+00:12:38.240 agent AI templates uh, package. This is going to get you the project that I'm about to show. So,
+00:12:45.280 if you install that project template and run it, this is the application that you get. So, I I have
+00:12:53.920 scaffolded this out so we don't have to watch that happen in real time. Uh but this is essentially
+00:13:00.000 an ASP.NET application uh running on .NET 10 and it comes with Microsoft agent framework
+00:13:08.720 installed already and then it has this little bit here called dev UI and in this pipeline we are
+00:13:17.280 going to add some AI agents with Microsoft agent framework and these are called hosted agents. They
+00:13:23.600 get attached right to uh ASP.NET net with this add AI agent uh builder. So we can call add AI agent
+00:13:33.280 and this one is going to be a writer and it's responsibility is to write short stories based
+00:13:38.080 on the topic. The next agent is an editor and this editor takes a story and then edits it to improve
+00:13:47.680 the grammar and style of that story. And then I also have an add workflow um uh agent builder
+00:13:56.560 here. And this is going to give me a hosted workflow called publisher and it contains a writer
+00:14:04.720 and editor agent that hand off to each other. So the workflow is that I give it a topic, the writer
+00:14:12.240 writes about that topic and hands that written copy off to the editor. the editor makes its edits
+00:14:18.960 and then uh returns that as the output of the workflow. And all of this is just in a program CS
+00:14:28.000 file and it gets uh it gets surfaced through this map dev UI. So I'm going to run this with net run
+00:14:41.760 and when it runs I should be able to launch this application in the browser and then navigate to
+00:14:46.560 the dev UI address. So it's spinning up here and hopefully Azure works with us today. Um,
+00:14:54.080 there was some latency issues with Azure, which I'll I'll explain um in the end of the demo here,
+00:15:01.440 where we were trying to make calls in a dry run of this yesterday, and it just didn't want to
+00:15:05.840 cooperate. But we're able to capture all of that through observability uh to see those happening
+00:15:12.080 um in our traces. So, here's my uh browser within Visual Studio Code, and I'm going to say dev UI
+00:15:20.160 in the URL. Once I have Dev UI up and running, uh, essentially what happens is it takes all of
+00:15:27.280 the registered agents in the application and puts them in this user interface where I can interact
+00:15:33.120 with them. So I don't have to go out and build a chat user interface. I can just rely on DevUI to
+00:15:39.200 provide that for me and I can tinker with my agents here. So I'm going to go to the writer
+00:15:43.440 agent and I'm going to ask it um, it just needs a topic. So it's kind of like improv I suppose.
+00:15:49.600 We can just say technology and it is going to write about technology and it's going to spin on
+00:15:56.320 that for a minute. I have streaming uh responses disabled because in the current build of dev UI
+00:16:03.680 uh streaming responses um will give you uh no output on certain workflows that are surfaced
+00:16:13.760 in here. So again it is a beta. There are there are some some caveats to using this. Uh but I did
+00:16:21.120 get my response back and you can see that I have a little bit of trace information here. I have the
+00:16:26.480 event that occurred and how many tokens it used and uh the input, the output and the response
+00:16:35.280 ID. Didn't really tell me how long this took. It did give me a time stamp. Um the traces and tools
+00:16:42.480 are not enabled in this build. So, uh, those are only available in Python right now. So, we can't
+00:16:49.600 dive into too much tooling, but that's okay. I'll show you how to do that in just a moment.
+00:16:54.800 I'm also going to run the publisher workflow. So, this one has the writer uh, and the editor,
+00:17:01.040 and they will run in series with each other. So, I can add another topic here. I'll say food.
+00:17:08.480 We'll run that workflow. And this is going to go through the writer, pass it off to the editor,
+00:17:15.839 and then give me a completed work. And that might take a couple seconds to run. While it does that,
+00:17:22.560 I'm going to change up. There we go. There's our completed workflow. So again, total tokens is
+00:17:28.720 displayed. The output is here. And this gives me a nice internal loop that I can work with when I'm
+00:17:36.480 developing my agents. So I can go back and change prompts. I can reload the entire application
+00:17:42.000 uh select my um my agent and rerun some samples in here and and get an output to see uh what
+00:17:49.760 those responses look like. So I'm going to go to a different branch where I have observability added
+00:17:57.680 and we'll take a look at what this experience is like when we add observability. So same
+00:18:04.720 application I've just added some new bits here. I've added the progress observability extensions
+00:18:10.640 for AI here and I'm going to configure and set up the observability with some options. So, I've got
+00:18:22.000 a new observability options. And on the app name, I'm just going to use the application name. And on
+00:18:29.600 additional tags, I want to point this out because this is a nice feature that we can use to identify
+00:18:35.680 traces in our platform. And I'm going to set this to the environment name. So, this environment name
+00:18:42.400 is going to come back as production development or staging. And that's going to allow me to filter
+00:18:50.160 between the different traces in my system. So I can look at traces that are just in development
+00:18:56.480 or I can uh narrow that down to ones that are in production. I can also add additional tags on here
+00:19:03.600 uh maybe some versioning um or just additional things that I want to look at um or filter by.
+00:19:12.080 So I'm going to initialize that observability tracer and then I just add it into my pipeline.
+00:19:17.600 So I have my I chat client. I'm going to say go ahead and add observability using those options
+00:19:22.320 I set. And then on the any tool calls that I have. If I want to trace those, I'm just going to do the
+00:19:29.040 same thing. Say add tool observability on my tool um collection. So now I have observability set
+00:19:37.840 up. I'm going to run this application again with the new bits that are added. And what we'll see
+00:19:45.440 is in addition to dev UI, that gives me that internal quick uh response for my dev loop,
+00:19:51.600 we'll go to the uh the publisher workflow again. And we're going to say um give me one on gaming.
+00:20:00.640 Give me a story about gaming. And that's going to run. and we'll let that complete and then
+00:20:07.040 we'll jump into the browser and see what kind of responses um and and traces that we got from this
+00:20:14.960 workflow. So there's our workflow completed. Uh we can say we we spent uh 3,34 tokens and
+00:20:23.520 that's about all the information I have here. But if I go over to my observability dashboard,
+00:20:30.160 I'm going to refresh this. So I got the latest traces. This is my agent that I just ran and all
+00:20:38.160 of the information that went through that agent. So you can see I can drill down into this and
+00:20:44.960 my input here was gaming and it generated this story about gaming and set uh sent that through
+00:20:54.640 uh a tool in that pipeline and then uh it was edited by the editor and then the final output
+00:21:03.920 uh has the title and everything with the editor's um uh tweaks in in that copy. So, it went through
+00:21:13.120 the full cycle of inputs and outputs and there's four spans of activity there. And it tells me
+00:21:21.840 the tokens for all of this and also the cost for running that workflow. What's nice about this is
+00:21:30.640 this is outside of that internal dev loop. So, I can I can continue to work in here and reboot this
+00:21:38.400 um internal server as much as I want. change my prompts, change models, uh, and evaluate in here.
+00:21:45.040 And then I have an ongoing history inside of my observability platform where I can go session to
+00:21:52.800 session and compare things uh, across different spans from different runs. Uh, I can compare
+00:22:00.160 different models and I can also filter if I were to set some uh, tags up in here for different
+00:22:06.800 models or different environments. For example, I could say this is my development environment and
+00:22:16.640 I can filter on that and you're not going to see it change because these are all in
+00:22:20.160 the development mode which we can see in our tags column here. So these are all development related
+00:22:28.160 uh spans. So this gives me that external loop that I can I can dig into. So, I have my quick uh
+00:22:36.240 internal loop with Debi and my long-term storage on the observability side. And we can take this
+00:22:43.600 one more step further. And I'm going to add some additional tools to my dev UI here. So, I've got
+00:22:51.280 some new agents this time. I have one that can do some cost estimating. And I have this Playwright
+00:22:56.960 summarizing agent that's fun to use. uh it can open a browser and uh do some web scraping and
+00:23:04.640 things like that. So we'll say net run again and reboot our server with these new changes in it and
+00:23:11.680 we should see some new agents in our environment now. So I'll open this up here to deviate
+00:23:21.040 agent and the playwright agent can summarize uh web pages. So I can tell it to go to
+00:23:27.360 www.telerik.com and summarize what's going on on our web page there. And this is going to
+00:23:36.480 load a browser internally, go out to the web page, scrape the data from it, do a summary,
+00:23:42.560 and then give me a response back. And it gave me a nice summary there. I'm also going to uh
+00:23:49.920 give a new conversation here. And let's do about blank. And I'm going to do this on purpose because
+00:23:55.920 I'm giving it a web page. it essentially can't summarize and it says that the about blank page
+00:24:02.000 is typically displayed by web browsers contains no content layout or and it serves as a placeholder.
+00:24:09.120 So there's a reason I did that. I wanted to show what that looks like in observability. And we'll
+00:24:16.080 come in here and we'll look at the first iteration of this where I asked uh the agent to go to
+00:24:23.760 telerik.com and run the playwright tooling. Here I can see the tool executed and it's navigating to
+00:24:30.480 the web page and then it gave me an output of a summary of that web page. But what happened
+00:24:37.520 when I gave it the uh agent to go out to the about page? Well, I'm going to click on the final result
+00:24:45.360 here. I can see the input was about blank and the output is a summary technically and it is a
+00:24:52.800 status code of success. But is this the response that I'm looking for? So, this is something that
+00:25:01.280 uh Lubo can um expand a little bit more upon with evaluations um and evaluators where I can identify
+00:25:11.760 things that may have a status code of success, but the output really isn't the um the results that
+00:25:20.640 I'm looking for. And I could use evaluators and do evaluations to identify where agents are running.
+00:25:29.200 but they're not doing anything meaningful or they have an error state or they're just plain old
+00:25:34.880 burning out tokens for no good reason. We saw that AI agents can break but what are some realistic
+00:25:43.600 typical scenarios common scenarios that we have seen across our customers and scenarios that we
+00:25:48.880 have experienced internally. What I want to demo you today is three very common scenarios. Most
+00:25:56.560 of you have heard about prompt transactions. So I want to show you how you can observe whether your
+00:26:03.600 agents is potentially someone's trying to hack it. And I also want to show you how you can detect
+00:26:10.960 for example when your agent called the rock tool. And I want to show you how you can also detect um
+00:26:17.760 hallucinations coming from from the autoro model. While I'm showing you those demos, it's important
+00:26:24.240 to keep in to keep in the back of our hands that platforms like ours, they're not just used to
+00:26:31.040 passively passively observe the data that's coming there, but it's a tool which can help you evaluate
+00:26:36.800 the quality of the agent and just help you improve it in the next iteration. So, let me go and start
+00:26:44.160 with the actual demos. Now, I have prepared a demo agent. my demo agent. It's a support agent.
+00:26:52.480 If you have been part of the AI transformation, chances are at some point in your company, someone
+00:27:00.480 decided or started a discussion on, hey, can we kind of automate our support ticketing system,
+00:27:07.680 right? It's one of the most common scenarios that we have seen out there. Support agents are
+00:27:12.640 are great. They can help you find information for a specific user. They can, for example,
+00:27:18.720 get more information for an order that your customers made or they can search through tons of
+00:27:25.120 tickets that are stored in your internal support system. How does an agent like this one works? So,
+00:27:34.480 if I were to run this agent at the moment, and that's just a visual representation, an agent
+00:27:39.680 would receive a user question, an inquiry. it would go through the tools that it identifies as
+00:27:47.520 um necessary for the specific scenario and return a final replay to the customer to the user. So
+00:27:56.240 this thing look like something simple on screen but in the background every single one of those
+00:28:01.920 steps produced a span a trace inside our platform. If you were to go to our observability platform,
+00:28:09.920 you'll be able to see that there is a session recorded from a few seconds ago and you can see
+00:28:15.840 the whole execution trace of this agent. You can see what the input to the M was. You can see the
+00:28:22.560 final output that the agent provided and you can also see all tools that have been called during
+00:28:30.880 that agent execution. Oh, great. So the agent that I'm using is built innet using the Microsoft
+00:28:40.880 agent AI framework and Microsoft extensions AI uh Microsoft extensions AI SDK in order for me
+00:28:48.240 to start um receiving those traces inside our platform. I have also instrumented it with our
+00:28:53.360 progress observability SDK. The agent that you see on screen is voded, right? So I'm a product
+00:28:59.440 manager. I'm no longer a professional developer. So I vip code a lot. So what could go wrong when
+00:29:05.040 your product manager VIP codes a support agents and run it in production? That's what we are
+00:29:10.720 going to explore now. In order for me to show you some realistic scenarios, I have vcoded a
+00:29:19.440 control plane which executes specific scenarios to this AI agent. So for example, I'm going to mimic
+00:29:28.080 a user agent conversation which is going to lead to a prompt injection. This is the first scenario
+00:29:35.440 that I want to show you guys. So if anyone hasn't heard about prompt injections or indirect prompt
+00:29:41.760 injections, indirect prompt injections are a security vulner vulnerability where a hacker
+00:29:49.600 tries to inject a malicious payload somewhere in an external data source which is then going to
+00:29:56.080 serve as context for the watch language model to work with. So for example, we are talking about
+00:30:01.840 a support ticketing system. Maybe my one of my customers wanted to try and exploit my system and
+00:30:09.280 he added somewhere in the comments of the support ticket some malicious scripts. So for example,
+00:30:15.840 he said something like he instructed the watch language model to always include a fishing URL.
+00:30:23.520 If my agent would go to that support ticket, use that information and I couldn't pick up the prompt
+00:30:31.920 injection and prevent it. this fishing URL would end up being shown to my customer which of course
+00:30:38.320 can lead to some real issues. So let me just run this scenario and I will show you first of all
+00:30:45.280 how does this specific trace scenario looks like in our platform and hopefully it works. Hopefully
+00:30:52.800 it works. It's a live demo. Nothing is mocked and all of your demos worked. I was surprised.
+00:31:01.120 So, you got your own chaos monkey going on here. Uh, I do. What's the What's the stack here um that
+00:31:10.560 you use to build this uh this tool for running these um agents and then uh so you observe them.
+00:31:19.680 It's it's the worst stack one can get. It's vip coded with pure JavaScript and pure HTML
+00:31:26.640 and whoever knows what else did my coding agent picked up from the internet. It was let agent
+00:31:32.320 decide stack. Is that what you're telling me? Who cares about sad, right? When you can v code
+00:31:37.280 stuff and and push them in production. It all just works. It looks like your your evaluation
+00:31:42.160 ran. It looks like the whole thing run. Yes. Let's see what what it actually got recorded inside our
+00:31:49.280 observability platform. And trust me guys, our durability platform is not by coded by me. We
+00:31:55.040 actually have real engineers who know how to write code and know how to do it in secure manner. So
+00:32:00.400 the specific trace now led to um to this execution trace. So you can see again that um the input to
+00:32:10.720 the agent was something like I have a few Safari login tickets to look at pull the recent ones
+00:32:16.560 for me and summarize the top issues customers are reporting and the output looks a little bit fishy
+00:32:24.320 right so it seems that the agent is giving some information for the recent three tickets but it
+00:32:30.080 seems there is also a very urgent URL which is asking me to verify my contos Also, I hope it's
+00:32:38.160 a fictional company because it's again coming from from the web color on a specific URL. This
+00:32:45.600 screams to me as as a as a person uh this looks a little bit fishy. Maybe something went wrong. So,
+00:32:51.760 maybe you mean uh fishy with a PH, right? Uh yeah. Yeah, for sure. The other fishing is completely
+00:32:59.440 fine. Let's go for it. Um so okay what I can do as a human being is either go through every
+00:33:12.720 single one of those traces and manually walk through such outputs which look a little bit
+00:33:19.200 strange right and record them somewhere in Excel file and then say hey those are wrong. However,
+00:33:26.480 a typical support agent would receive thousands of requests every single day. I don't have the
+00:33:32.480 time to do that. That's why in our product, in our platform, we have built the concept of evaluation
+00:33:39.520 tasks and add briefly touched upon it. Evaluation tasks are something which allows you to evaluate
+00:33:48.720 the output of your agents based on predefined criterias. So for this specific example,
+00:33:56.880 I can write an evaluator which identifies potentially malicious uh outputs which might
+00:34:07.200 be coming from a prompt injection. So this evaluation task that you see on screen, we
+00:34:13.520 can either run it real time on every single trace that's coming inside our platform or we can run it
+00:34:20.800 historically on data that's already being stored in our platform. So if I wanted to, I could review
+00:34:27.679 let's say the data for the past two months and try to detect prompt injections there. If I wanted to,
+00:34:32.560 I could set up a real-time evolation task which detects such prompt injections and receive a
+00:34:40.159 notification when something was detected or not. So what was detected? Right, I run an actual trace
+00:34:48.159 which appear to have a prompt injection. If we were to go to our scores, you would see that there
+00:34:54.239 is an evaluator name called prompt injection customer support and the score compromised.
+00:35:00.240 That probably means that something went wrong. If I wanted to see what exactly was compromised,
+00:35:07.840 I could open the and sorry I'm briefing too fast the related to this specific relation span and see
+00:35:15.040 exactly what y did this um compromised result. If I were to look into the relation tab, I would see
+00:35:22.480 the score and an explanation why did the evaluator decided that this is a prompt injection or not.
+00:35:30.560 This is just very helpful for you guys to start using once you roll out those AI agents
+00:35:36.960 in production because what happens nowadays is that everyone are just trying to exploit them.
+00:35:42.080 Do we want to open one small or a large bracket here that at the moment we are trying to detect
+00:35:48.400 prompt injection um attempts but we are not preventing them. preventing prompt injections
+00:35:54.480 is a completely different um field which is usually managed with guardrails and so on.
+00:36:00.400 Even if you were to implement a guardrail which tries to actually prevent this prompt injection,
+00:36:06.480 you would still want to collect the traces and evaluate them to ensure that the guardrail you
+00:36:11.600 have implemented works as it's intended to. So that was the first demo that I wanted to show
+00:36:17.600 and I can see that we're moving a little bit fast with time. So let me just go straight to the next
+00:36:22.640 one. The next demo that I wanted to do is is a bit personal to me. So when I started building a
+00:36:30.160 AI agents right when when the whole hype happened like year and a half ago already I was trying to
+00:36:38.000 use one chain. I was building an agent with one chain and I was trying to make it call the tool
+00:36:45.280 that I wanted to call. So tools are something like what is the agent capable to do? So is the
+00:36:52.640 agent capable to retrieve more information from a database? Is the agent capable to let's let's say
+00:36:58.480 execute a function? Is the agent capable to call an API and get info from there. The issue is that
+00:37:04.720 as we already determined tend to do whatever they want to sometimes they would call the wrong tool.
+00:37:11.760 In an actual production environment, this can be really bad. And that's what I want to demo to you.
+00:37:16.720 So if I were to run this scenario, it's just again running the same Microsoft extensions AI agent
+00:37:24.720 that I showed you guys just something visual so that we have something on screen. I would
+00:37:30.400 expect that I now have a new trace from my agent. So from few seconds ago, which is just showing me
+00:37:37.280 what the agent did. I can again manually look into the agent to trace span and if I were to
+00:37:44.560 care carefully read that I would notice that a tool called find user was executed but the result
+00:37:54.960 of this tool looks a little bit odd. It seems like it's returning a response deleted through
+00:38:00.400 user ID user billing. So it's a bit odd for me as a person to see that I was looking for a user but
+00:38:06.720 something deleted. So this rings a bell for me but again I don't have the time to actually look
+00:38:12.560 through all those traces every single day all the time. So I can as well just define an evaluation
+00:38:18.000 task which tries to identify such scenario. One of the common approach to that is just write an
+00:38:25.920 evaluator prompt with criterias which are telling to the evaluator what the two contract is. So what
+00:38:35.920 is these two supposed to do and what information is it supposed to return back um to the agent? So
+00:38:44.000 when this evaluator finds a mismatch, it would swag it as potentially compromised too. So now
+00:38:51.360 if I were to look into the scores section again I would be able to see that I have some traces
+00:39:00.960 which are showing to contract integrity contract break. So contract bridge is probably a better
+00:39:07.440 English word but whatever. Um I can again relate from the negative score to the specific span that
+00:39:15.360 was evaluated in in a negative manner. I can go to the evaluations tab and I can easily see why
+00:39:22.720 did that evulation task swag this one as contract break and you would say that the the explanation
+00:39:28.640 is something like the agent called find user with whatever email whose contract specify it should
+00:39:36.080 return a user record. The response however came back with something delete through user ID user
+00:39:42.480 billing. This shape matches the contract of delete user. So now so now the simulator is giving you a
+00:39:50.720 hint that well you want you to call find user. It seems like delete user was executed which is
+00:39:58.160 kind of bad right? So when you're trying to find the user you really don't want to get this user
+00:40:02.400 delete. So this is just another practical scenario that uh you know you should start implementing. So
+00:40:12.560 my last demo scenario, let me see which one are we planning to show you. Invisible execution failure.
+00:40:20.320 So even if you haven't had the opportunity to build agents, you've probably had the work to
+00:40:26.400 interact with tools like chat GPT, Gemini or whatever, you know that those um code those
+00:40:33.440 assistants assistants would from time to time just hallucinate. They will give you information that
+00:40:39.520 is not grounded in any real data. What I want to show you today is how an agent might hallucinate
+00:40:48.480 something when the information is not grounded on anything coming from a tool call. So a tool call
+00:40:54.400 can be for example again searching in my tickets or a database call. And this is actually super
+00:41:00.720 easy to happen in an actual environment because what you will notice is that if you were to
+00:41:09.200 instruct if you were to instruct that agent in a very directive way to always give me always give
+00:41:18.720 you a response. Right? So if I were to say always give me a response no matter what the agent will
+00:41:26.000 hallucinate even if the answer is not backed up by real data. So if we were to run this scenario,
+00:41:33.360 you already know that hopefully in a second we're going to see a few traces inside the durability
+00:41:38.400 platform. And we now have our fresh trace, our was trace for the day inside the platform.
+00:41:46.960 And you would notice that there are a bunch of two calls. So the agent appears to be trying
+00:41:52.480 to search through tickets. All of them are giving empty results. from time to time you know it keeps
+00:41:58.720 trying to code tools but none of them returns any results so it's empty data it's a successful tool
+00:42:04.640 call so if you were using APM that would say 200 okay right the network worked the HP protocol work
+00:42:11.440 so no data came from the tools however you can see that you still have an output so user users report
+00:42:19.760 they cannot log in at all when using Safari many customers experience a session time out error.
+00:42:26.880 I have no idea how this agent came up with this thing, but I know it's not real. Again, I don't
+00:42:32.960 have the time to look to every single trace. So, I could create what we call a groundlessness
+00:42:40.800 evaluation task. So, a groundlessness evaluation task is something which you check if the agent
+00:42:47.760 output is grounded in real data. And that's relatively simple to do. You again write you
+00:42:53.040 instruct the evaluator by by a prompt to make sure that whatever the agent returned as a final
+00:43:00.160 response is grounded in actual data coming from those two calls. If I were to go to scores and
+00:43:07.920 check one of those groundness results, I would be able to see that something failed again. I
+00:43:13.200 would be able to see exactly what failed and the explanation about why it failed. So those
+00:43:19.760 were my demos. I run quite a few stuff. I'm just wondering it's all on my credit card. Okay. So,
+00:43:26.480 it seems that h it's not that bad. I've been generating some costs. But jokes aside, you
+00:43:33.680 already have those traces inside of our platform. So, we can just do some nice cost analytics around
+00:43:39.840 what's the most expensive app that you're running, what's the cost for your different models and so
+00:43:44.880 on. thought that if you ever doubted what would be the change in return of inved if you swap a
+00:43:50.640 model this is something that could give you a great indication and then before we get into
+00:43:56.000 key takeaways um I just I want to I want to do a little director's cut here I forgot to show this
+00:44:02.720 um share my screen real fast and I I said I would talk about this yesterday we were doing a dry run
+00:44:10.720 so again this is like director's cut like bloopers real here we had the both of us were like you know
+00:44:18.240 we're going to run this demo hit the but you know you put in the prompt hit the button and then the
+00:44:23.120 model just sat there and if you look back at our observability uh traces you could see yesterday
+00:44:31.520 look at look at these uh these times here we've got 51,000 milliseconds it's like these agents
+00:44:42.480 were just taking forever one even timed out. You can see it has errors. So, that one that one just
+00:44:48.320 completely timed out there. It still completed, but didn't complete in any meaningful way. But you
+00:44:54.000 could see the the ramp up in the the time that these were taking. This was all during our dry
+00:45:00.560 run yesterday from from 11:00 until after we were done kind of testing this out. So, uh, it's really
+00:45:07.520 just interesting to see that data there and and see it be, you know, being captured and, um, you
+00:45:14.960 could see where that could be really useful even if you're, you know, you're doing a standup, let's
+00:45:19.600 say, you know, you just did your your development sprint and you're you're doing your standup and
+00:45:24.640 then like this thing is not working and it's taking forever. You can at least go back into your
+00:45:30.240 logs here and go, you know, it was much faster yesterday. This is an isolated incident. So, sorry
+00:45:37.520 the standup didn't go well, but we'll try this again later before we put this into production. We
+00:45:43.040 might want to see why that latency does it and put some kind of uh fail safe in to go to a different
+00:45:48.880 provider or something if that's that's going to be a um an issue that can be reproduced, right?
+00:45:54.800 AI failures is it it's more than just, you know, did it pass or fail, right? Uh, is the agent doing
+00:46:04.080 the work that it is supposed to be doing? Um, I I really like your demos, Lubo, where it showed off
+00:46:10.640 um, you know, potential security uh, alerts where you can you can track things like fishing attempts
+00:46:18.640 and people trying to jailbreak your your AI prompts and evaluate that to uh, kind of throw up
+00:46:24.720 a red flag and uh, then you can take action on it. So, I thought thought that was really important.
+00:46:30.320 Um, I know cost is a big one for for everybody because that's the big unknown right now. I think
+00:46:35.680 we're we're in that subsidized mode still where a lot of the costs are uh, you know, being paid
+00:46:42.800 by the vendors hoping that you'll jump on board and then these prices are going to get ratcheted
+00:46:49.280 up in the in the future. Uh, we're seeing a little bit of that now on the coding side especially. So,
+00:46:55.520 um, that that's an interesting aspect of this. Um, you know, any any closing thoughts, Lubo, on
+00:47:03.760 uh additional takeaways here? Oh, so so what could I say? I saw a lot of you guys were still early
+00:47:10.960 in developing K agents and so on. My advice for you would be pick whatever obserability platform
+00:47:19.920 you want, but add it early in your software development life cycle. What you will notice
+00:47:28.000 is that the agent that you built in the beginning, it's never going to work 100% okay once you deploy
+00:47:37.120 in production. On the contrary, you would probably have to continuously observe, improve, evaluate,
+00:47:44.320 release a new version to your agent and it's probably going to be much more often than what
+00:47:50.080 we are typically used to and accustomed to with you know traditional deterministic applications.
+00:47:55.280 So my advice for you is add whatever tool you want even while you're still testing out stuff,
+00:48:03.200 prototyping stuff. It will save you a lot of trouble down the road. If you decide to to work
+00:48:09.520 with our platform, we have a generous suite here. You can find the product on ter.com and you can
+00:48:17.200 just start using it pretty easily. It's usually not going to take you more than five minutes to
+00:48:23.760 instrument an existing agent and receive your frustrations inside the product. Yeah. I I love
+00:48:29.200 that you can add tags to all of the data so you can you can figure out, you know, because a lot of
+00:48:34.720 times you're you're running things in, you know, development mode and you still want to have that
+00:48:40.560 traceability there. Uh because when you deploy it to production, you might get a different behavior
+00:48:45.760 for whatever reason. And then you can go back and compare like this this worked in development but
+00:48:51.440 we're having this issue in production and I can I can kind of hone in on uh what those issues are if
+00:48:57.440 I I'm able to compare uh and filter and find those things. Yeah. If you if you guys want to see some
+00:49:06.720 other typical agent failures and so on, feel free to download the the leaflet that I wrote some time
+00:49:14.960 ago. Hopefully you find it interesting. Um, it's completely for free. I think we're not even asking
+00:49:21.200 for your email. I I hope so. Yeah, that's that's it. If you want to continue talking with us,
+00:49:28.640 if you have any feedback on the product that we have created, if you have any questions
+00:49:35.120 on how to instrument your agent or what do you think you should be evaluating in your agent,
+00:49:41.440 we're quite active on discord. So, please feel free to join our discord channel, reach out to
+00:49:47.360 me or or just write in a general, I guess, and you'll be happy to have a conversation with you.
+00:49:53.520 anything else from you? That uh that QR code that we showed on all three screens goes to the
+00:49:58.320 same place. It's one one click to find it all and there's a couple resources there for you.
+00:50:03.360 Um or you can grab the white paper, find the products, uh uh grab some demos and um yeah,
+00:50:10.640 catch up with us on Discord. All right, everybody. Take care and thank you for your

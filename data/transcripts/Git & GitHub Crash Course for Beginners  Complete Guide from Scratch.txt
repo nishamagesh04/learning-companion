@@ -1,0 +1,2016 @@
+# tactiq.io free youtube transcript
+# Git & GitHub Crash Course for Beginners | Complete Guide from Scratch
+# https://www.youtube.com/watch/wNrbaAGE2PY
+
+00:00:00.160 Today we are diving into something
+00:00:01.839 really exciting. G and GitHub. But
+00:00:04.000 before we go any further, let's clear
+00:00:06.160 one thing up. G and GitHub are not the
+00:00:08.400 same thing. They are connected. Yes, but
+00:00:11.040 completely different. Think of it this
+00:00:13.120 way. G is the coffee and GitHub is the
+00:00:15.679 coffee shop where that coffee is served.
+00:00:18.080 Fun analogy, right? Don't worry. In just
+00:00:20.640 a moment you will see exactly what I
+00:00:22.720 mean.
+00:00:27.920 So let's start by understanding what Git
+00:00:30.240 actually is and how it works. Simply
+00:00:32.558 put, Git is a powerful tool that
+00:00:34.399 constantly keep track of every change
+00:00:36.320 you make to your files. And I mean
+00:00:38.239 literally all the time, day or night,
+00:00:40.559 365 days a year, G records what changed,
+00:00:43.680 when it changed, who changed it, and
+00:00:45.760 even where it happened. Now, what kind
+00:00:48.320 of files are we talking about? Almost
+00:00:50.239 any kind, not just code. It could be an
+00:00:52.800 image, a text file, JavaScript, PHP,
+00:00:55.280 Python, or even a video. No matter what
+00:00:57.840 you are working on, G tracks every
+00:00:59.840 single change, which line was edited,
+00:01:02.079 when it was done, and by whom. Pretty
+00:01:04.720 amazing, isn't it? But here's the best
+00:01:06.799 part. The magic of Git doesn't stop
+00:01:08.880 there. The coolest thing about Git is
+00:01:10.720 that it saves different versions of your
+00:01:12.479 files. Imagine you wrote some code and
+00:01:14.720 then made a few changes to it after a
+00:01:16.720 few days. Now, you want to make sure the
+00:01:18.960 old version doesn't get lost. That's
+00:01:21.119 exactly where Git comes to the rescue.
+00:01:22.960 It lets you keep multiple versions of
+00:01:24.880 the same file effortlessly and whenever
+00:01:27.119 you want, you can roll back to any
+00:01:29.119 previous version in just a moment. G is
+00:01:31.920 most commonly used in coding projects,
+00:01:33.920 but its power goes far beyond just code.
+00:01:36.960 You can use Git to keep track of changes
+00:01:38.960 and maintain different versions of
+00:01:40.479 almost any file. This means you never
+00:01:42.880 have to worry about losing a file or
+00:01:44.799 accidentally overwriting something
+00:01:46.479 important. Let's look at a real life
+00:01:48.960 example. Suppose you are working on a
+00:01:51.119 project. You have spent hours writing
+00:01:53.200 code. Your client loves it and
+00:01:55.439 everything's going great. Then a month
+00:01:57.759 later, the client asks for some new
+00:02:00.079 changes. You make the updates as
+00:02:02.079 requested. But after a few days, the
+00:02:04.399 client comes back and says, &quot;Actually,
+00:02:06.560 the old version was better. Now you are
+00:02:09.038 in trouble, right?&quot; Because you have
+00:02:10.959 already overwritten the original code.
+00:02:12.959 How do you get it back? That's exactly
+00:02:14.959 the kind of problem Kit solves. This is
+00:02:17.120 why kit is known as a version control
+00:02:19.120 system. It keeps every version of your
+00:02:21.280 files or code safely stored. So you can
+00:02:24.080 go back to any previous state whenever
+00:02:25.920 you need to without losing a thing. G
+00:02:28.800 was created by Linux, the same brilliant
+00:02:31.680 mind behind Linux. And honestly, what he
+00:02:34.480 built is nothing short of genius. Most
+00:02:37.120 tools we programmers use have a short
+00:02:39.440 lifespan. But Git is one of those rare
+00:02:41.840 ones that once you learn it, stays
+00:02:44.000 useful for the rest of your career. The
+00:02:46.080 best part, it isn't hard to learn at
+00:02:48.080 all. It's built around a few simple
+00:02:50.560 commands and concepts. Once you
+00:02:52.400 understand those, the whole system
+00:02:54.000 starts to make perfect sense. Still, for
+00:02:56.560 beginners, Git can feel a little
+00:02:58.160 confusing at first. And that's exactly
+00:03:00.160 why I made this video. Think of it not
+00:03:02.480 just a tutorial, but as a complete
+00:03:04.640 learning resource for mastering Git.
+00:03:06.800 Here we will cover all the essential
+00:03:08.720 topics you will actually use in real
+00:03:10.720 world projects. And if you want to jump
+00:03:12.720 to a specific topic, you can easily find
+00:03:14.879 it from the video timeline. So if you
+00:03:17.519 follow this video closely, I'm sure
+00:03:19.440 you'll easily understand every part of
+00:03:21.519 Git step by step. Now let's move on to
+00:03:24.400 another important topic, the difference
+00:03:26.159 between Git and GitHub. G is a tool that
+00:03:28.560 runs locally on your own computer. It
+00:03:30.879 tracks all the changes you make to your
+00:03:32.640 files and keeps everything organized.
+00:03:34.959 But imagine this, you and your teammate
+00:03:37.040 are working on the same project. You are
+00:03:38.879 coding on your own computer and your
+00:03:40.720 teammate is working from another one.
+00:03:42.799 That means you both have different
+00:03:44.400 versions of the same project, right? And
+00:03:46.720 if your team has more members, there
+00:03:48.720 will be even more versions, each saved
+00:03:51.040 separately on their own machines. That's
+00:03:53.519 exactly where GitHub comes in. When the
+00:03:55.920 project is complete, you will need to
+00:03:57.599 combine everyone's work into one single
+00:03:59.840 place to merge all those changes
+00:04:01.840 together. For that, you need a central
+00:04:04.400 hub where everyone can upload their
+00:04:06.400 updates. You push your work there, your
+00:04:08.879 teammate pushes theirs, and GitHub
+00:04:11.040 brings it all together. GitHub acts as
+00:04:13.280 that central online server where your
+00:04:15.280 team's entire project lives, making it
+00:04:17.600 easy for everyone to see, edit, and
+00:04:20.079 share updates in one single place
+00:04:22.000 without any confusion. But GitHub isn't
+00:04:24.880 the only place where you can host your
+00:04:26.320 Git repositories. There are other
+00:04:28.160 popular platforms too like GitLab and
+00:04:30.320 Bitbucket. These are also widely used
+00:04:32.639 and trusted by developers around the
+00:04:34.720 world. Still among all of them, GitHub
+00:04:37.280 remains the most popular and widely
+00:04:39.199 adopted platform. In today's discussion,
+00:04:41.520 we will focus mainly on GitHub. It's now
+00:04:43.919 owned by Microsoft and is maintained
+00:04:45.840 with great care and attention,
+00:04:47.759 especially in the programming community.
+00:04:49.600 And in the world of opensource projects,
+00:04:51.680 GitHub's contribution is truly
+00:04:53.440 remarkable. So without wasting any more
+00:04:55.840 time, let's dive in and explore how Git
+00:04:58.160 and GitHub actually work and see some
+00:05:00.479 real world use cases that will help you
+00:05:02.720 understand their power in action. Before
+00:05:05.280 you start working with GitHub, the most
+00:05:07.360 important thing is to understand its
+00:05:09.199 core concept, how it actually works and
+00:05:11.759 what its internal structure or
+00:05:13.840 architecture looks like. G is mainly
+00:05:16.160 divided into two major parts, local and
+00:05:18.639 remote. The local part refers to your
+00:05:20.880 own computer where you do all your work.
+00:05:23.680 This is where your files, code, and
+00:05:25.600 every change you make are stored. The
+00:05:27.680 remote part, on the other hand, lives in
+00:05:29.520 the cloud. It's where you push or upload
+00:05:31.919 your local work. In most cases when we
+00:05:34.560 say remote, we are usually referring to
+00:05:37.039 GitHub. Now let's start with how the
+00:05:39.520 local part works. In your computer, the
+00:05:42.080 folder where you are working on your
+00:05:43.680 project is called the working directory.
+00:05:45.840 This is where all the action happens.
+00:05:47.919 You write code, create new files, modify
+00:05:50.479 existing ones, and make changes as
+00:05:52.560 needed. And when you feel all right,
+00:05:54.800 this version looks good. I want to save
+00:05:56.560 this change. That's when you move on to
+00:05:58.800 the next stage in kids workflow. So what
+00:06:01.759 do we do next? We move our work to the
+00:06:04.319 stage. At first this word might sound a
+00:06:07.280 bit unfamiliar but once you use it a few
+00:06:10.000 times it will make perfect sense. In
+00:06:12.160 simple terms when you finish your work
+00:06:14.160 in the working directory staging means
+00:06:16.720 you are saying all right my changes are
+00:06:19.039 ready they can move to the next step.
+00:06:21.600 This staging process is the second phase
+00:06:23.759 in Git's workflow. Then comes the third
+00:06:26.800 phase where we take the staged files and
+00:06:29.520 send them to the local repository. You
+00:06:31.840 can think of the staging area as a
+00:06:33.759 middle ground, a temporary space where
+00:06:36.400 files sit between your working directory
+00:06:38.720 and the final save in the repository.
+00:06:41.120 Once you have reviewed everything and
+00:06:42.720 you are confident the work is correct,
+00:06:44.720 you commit it. Committing means
+00:06:46.880 permanently saving those changes to your
+00:06:48.800 local repository, locking them in as a
+00:06:51.120 recorded version of your project's
+00:06:52.800 history. Now you might be wondering what
+00:06:55.199 exactly is a repository? Simply put, a
+00:06:57.840 repository is a place where all the
+00:06:59.840 versions of your files and their
+00:07:01.599 complete change history are stored. In
+00:07:03.759 the case of a local repository, it's a
+00:07:05.840 specific folder on your own computer.
+00:07:07.919 For a remote repository, it lives on a
+00:07:10.000 cloud server like GitHub. You can think
+00:07:12.319 of a repository as a digital cabinet for
+00:07:14.720 your code. A secure place where Git
+00:07:17.440 neatly stores every record of your work
+00:07:19.759 and every change you have ever made.
+00:07:22.160 Inside this repository, Git
+00:07:23.840 automatically creates a few system files
+00:07:25.840 that track everything, your changes,
+00:07:28.160 history, commits and more. These files
+00:07:30.720 are managed entirely by Git itself and
+00:07:32.960 the whole system runs based on the data
+00:07:35.039 stored within them. So if we summarize
+00:07:37.840 everything we have learned so far, it
+00:07:39.440 goes like this. First, we work inside
+00:07:41.680 our local working directory. Once we are
+00:07:43.840 done, we stage our changes and then
+00:07:45.919 commit those staged files to the local
+00:07:48.000 repository. Up to this point, everything
+00:07:50.240 happens only on our own computer.
+00:07:52.720 Nothing has been sent to the cloud yet.
+00:07:55.360 We need the cloud only when we want to
+00:07:57.680 share our code with others, access it
+00:07:59.680 from another computer or keep it safely
+00:08:02.160 backed up. That's when we push our local
+00:08:04.639 repository to the remote repository. In
+00:08:07.039 other words, we upload it to GitHub.
+00:08:09.919 Think about it like this. Just as we use
+00:08:12.240 Google Drive or One Drive to store
+00:08:14.080 files, photos or documents, we could
+00:08:16.319 technically keep everything only on our
+00:08:18.479 own device, but we store them in the
+00:08:20.720 cloud so that we can access them from
+00:08:22.639 anywhere. And even if something gets
+00:08:24.639 deleted locally, it stays safe online.
+00:08:27.440 GitHub works the same way. It's our
+00:08:29.520 cloud backup for code. So you see the
+00:08:32.559 main purpose of this whole process is to
+00:08:34.479 make collaboration and remote access
+00:08:36.640 possible. Having a remote means we can
+00:08:39.039 easily send our code from the local
+00:08:40.640 repository to a cloud server and if
+00:08:42.799 needed pull that same code back to any
+00:08:45.200 other machine and that's the core idea
+00:08:47.279 of git. The foundation of the entire
+00:08:49.360 system rests on this simple concept.
+00:08:51.680 Beyond that there's nothing overly
+00:08:53.519 complex. Once you clearly understand
+00:08:55.519 this basic workflow, everything else in
+00:08:57.760 Git will feel much easier to grasp. All
+00:09:00.399 right. Now let's see how to get started
+00:09:02.399 with Git from scratch. The very first
+00:09:04.640 step before working with Git is
+00:09:06.080 installing it on your computer. To do
+00:09:08.240 that, just open Google and search for
+00:09:10.480 Git. Click on the official G website
+00:09:12.880 that appears in the search results. Then
+00:09:15.120 go to the download section. There you
+00:09:17.200 will find different versions for three
+00:09:18.880 major operating systems, Windows, Mac
+00:09:21.279 OS, and Linux. Simply choose the one
+00:09:23.519 that matches your system and you will
+00:09:25.120 get clear download instructions right
+00:09:26.800 there. Since Git is already installed on
+00:09:29.360 my machine, I won't reinstall it. But if
+00:09:31.760 you are working on Windows, click on the
+00:09:33.920 Windows option and you will see two
+00:09:35.680 download choices. One for 32-bit and
+00:09:38.160 another for 64-bit systems. Just pick
+00:09:40.480 the one that matches your setup.
+00:09:42.000 Download it and run the installer. For
+00:09:44.080 Mac users, when you select the Mac OS
+00:09:46.080 option, you will also find instructions
+00:09:47.600 on how to install Git using Homebrew.
+00:09:49.839 Just follow those steps and your
+00:09:51.440 installation will be done in no time.
+00:09:53.360 And for those using Linux or other Unix
+00:09:55.600 based systems, you can follow the
+00:09:57.120 installation guide provided on the site
+00:09:58.880 according to your distribution. The
+00:10:00.720 entire process is really simple and
+00:10:02.480 straightforward. Once the installation
+00:10:04.399 is complete, the next step is to open
+00:10:06.000 your terminal or common prompt. If you
+00:10:08.160 are using a Mac, simply open the
+00:10:09.760 terminal app. For Windows users, you can
+00:10:11.839 use either common prompt or PowerShell.
+00:10:13.839 Both will work just fine. However, after
+00:10:16.320 installing Git, you will usually get a
+00:10:18.399 separate terminal called G Bash. You can
+00:10:21.279 use that too if you prefer. Many
+00:10:23.600 developers actually like working in Git
+00:10:25.360 Bash because it feels very similar to a
+00:10:27.279 Linux terminal and makes running
+00:10:28.880 Gcommerce a lot easier and more
+00:10:30.800 intuitive. All right, I'm opening my
+00:10:33.200 terminal now. The first thing we need to
+00:10:35.200 do is make sure G is properly installed.
+00:10:37.680 To check that, we will type a simple
+00:10:39.680 command in the terminal g- version. Then
+00:10:43.680 just press enter. As soon as you do
+00:10:45.440 that, you will see an output on the
+00:10:46.959 terminal showing the version of Git
+00:10:48.560 installed on your machine. Keep in mind
+00:10:50.560 the version number might not be the same
+00:10:52.240 for everyone. It depends on when you
+00:10:54.000 installed G and which update you are
+00:10:55.680 using. If G is installed correctly, you
+00:10:57.920 will see something like this version
+00:10:59.200 output. But if it isn't installed,
+00:11:01.519 you'll get an error message instead.
+00:11:03.760 Hopefully, G is now properly set up on
+00:11:05.839 your machine too and you are ready to
+00:11:07.519 start using it. Now it's time to get our
+00:11:10.320 hands dirty to do some practical work.
+00:11:12.880 As I mentioned earlier, G can be
+00:11:14.800 implemented in any file or folder.
+00:11:16.720 Right? So first we need to create few
+00:11:19.120 files and folders to work with. Let's
+00:11:21.440 start by navigating to the desktop using
+00:11:23.200 the terminal. I'll type cd desktop and
+00:11:26.560 then press enter. Here cd is a terminal
+00:11:29.120 command that stands for change
+00:11:30.480 directory. It simply means we are moving
+00:11:32.640 from one folder to another. Hopefully
+00:11:35.040 you are already familiar with some basic
+00:11:36.720 terminal commands like cd, pwd, touch
+00:11:39.760 and mkdir. If not, no worries. You can
+00:11:42.959 easily learn them using Google or even
+00:11:44.959 charg. They are really simple to
+00:11:47.200 understand. Just remember for Windows
+00:11:49.760 users, some of these commands might be
+00:11:51.680 slightly different. And keep in mind
+00:11:53.600 commands like cd, pwd, touch, and mkdir
+00:11:56.880 are general terminal commands, not git
+00:11:59.279 commands. All right. Now that we are
+00:12:01.360 inside the desktop directory, let's
+00:12:03.120 create a new folder where we will keep
+00:12:04.720 all our project files. We will name it
+00:12:06.959 gy-en 1. So we will type in the terminal
+00:12:10.639 mkdir. That means creating a directory
+00:12:13.360 gy 1 and press enter. That's it. A new
+00:12:17.680 folder named gy-en 1 has been created
+00:12:20.320 inside the desktop directory. Now we
+00:12:22.639 will move into that folder by typing cd
+00:12:25.279 git -1 and pressing enter again.
+00:12:29.200 Perfect. We are now inside the g one
+00:12:31.440 folder. And this is where our g project
+00:12:33.600 officially begins. So now that we are
+00:12:36.000 inside the g one folder, we will create
+00:12:38.000 two files. For that, type the following
+00:12:40.000 commands in the terminal. Touch 1.xt and
+00:12:43.360 touch 2.txt. Next, we will create
+00:12:46.079 another folder named my folder. To do
+00:12:48.639 that, type mkdir my folder. Then use cd
+00:12:52.720 my folder to enter the folder. Inside
+00:12:55.040 this folder, we will create another file
+00:12:56.880 by typing touch3.txt.
+00:12:59.200 Now, let's check everything we have
+00:13:00.639 created in our file system. I will open
+00:13:02.399 the git one folder in finder on my Mac
+00:13:04.560 by typing this command in the terminal.
+00:13:06.560 Open dot. Here the dot means the current
+00:13:09.600 folder. As soon as I press enter, Finder
+00:13:12.399 opens up. Inside the G1 folder, I can
+00:13:15.120 see two files 1.xt and 2.xt and a folder
+00:13:19.519 named my folder which contains the 3.xt
+00:13:22.480 file. Now I'm going to write something
+00:13:24.480 inside each of the files. I opened 1.xt
+00:13:27.360 in a text editor, wrote one and saved
+00:13:30.560 it. Then I opened 2.xt, wrote two and
+00:13:33.839 saved that as well. Finally, I went
+00:13:36.160 inside the my folder directory, opened
+00:13:38.560 3.txt, wrote three and saved it. So now
+00:13:43.120 all three of my files contain some
+00:13:44.959 content. This g one folder is actually
+00:13:47.360 my working directory. As I mentioned
+00:13:49.440 earlier, this is the folder where I'm
+00:13:51.040 doing all my work and where all my files
+00:13:53.200 are stored. Now if I want git to start
+00:13:56.079 monitoring everything inside this git
+00:13:57.839 one folder, I have to tell git this is
+00:14:00.560 my project folder. Track all the changes
+00:14:02.639 here. For that I'll go back to the
+00:14:04.880 terminal. Make sure I am inside the g
+00:14:06.959 one folder and type g init. The word
+00:14:10.160 init means initialize. In other words,
+00:14:12.959 we are telling g to start working inside
+00:14:14.959 this folder from now on. Once I run the
+00:14:17.440 command, it shows a message initialized
+00:14:20.000 empty g repository. That means g has now
+00:14:23.120 started tracking this folder. How do you
+00:14:25.360 know that? Let me show you. Since I'm
+00:14:27.760 already inside the g folder, if I type
+00:14:30.480 ls in the terminal and press enter, I
+00:14:33.120 can see all the files and folders inside
+00:14:35.120 it. But if I type ls - la. Notice that
+00:14:40.320 now we can also see a hidden directory
+00:14:42.320 named git. The ls-la command lets us
+00:14:46.160 view hidden files and folders in the
+00:14:47.920 system. So we can see a hidden folder
+00:14:50.399 named git inside our project directory.
+00:14:53.600 But who created it? The answer is G
+00:14:56.720 itself. This dogg folder is actually the
+00:15:00.000 core of the entire project. It's where G
+00:15:03.120 keeps all its internal data such as
+00:15:05.279 which files have changed, who made the
+00:15:07.120 changes, and what the previous versions
+00:15:08.959 were. In short, everything G does is
+00:15:11.600 stored right here. From now on, G will
+00:15:14.560 be able to track every change I make in
+00:15:16.639 my work. Let's say I made some changes
+00:15:19.040 to the three files I created earlier.
+00:15:21.440 That means I now have a local
+00:15:22.959 repository. But we can also create a
+00:15:25.360 remote repository directly. I mentioned
+00:15:27.600 this earlier. So let's see how to do it.
+00:15:30.399 First I will open my browser again. Then
+00:15:32.959 I will go to the URL github.com.
+00:15:36.079 If you are new, you will need to create
+00:15:37.600 an account on GitHub first. Since I
+00:15:39.600 already have an account and I'm logged
+00:15:41.279 in, you can see my profile here. On the
+00:15:43.839 left side, you can see my repositories,
+00:15:46.240 feeds, and other details. Our goal is to
+00:15:49.120 store our local files on GitHub. For
+00:15:51.279 that we need to create a new repository.
+00:15:53.759 To do that I will check the blue new
+00:15:56.160 icon. Just like we used g in it to
+00:15:58.639 create a local repository here we can
+00:16:00.880 initialize one in the cloud. I will give
+00:16:03.440 it a name gy-en journey. And in the
+00:16:06.800 description I will write we are learning
+00:16:08.959 it and GitHub I will keep it public so
+00:16:11.360 everyone can view it. Then I will click
+00:16:13.600 the create repository button. And that's
+00:16:16.000 it. A new repository has been created on
+00:16:18.480 GitHub. Congratulations.
+00:16:20.800 Right now the repository is completely
+00:16:23.040 empty. It doesn't have any files inside
+00:16:25.360 it. I want to add some files here. So I
+00:16:28.320 will create one. I click on the create a
+00:16:30.800 new file button. Name it 1.xt and inside
+00:16:34.800 the file I write one. Then I click on
+00:16:38.079 the commit changes button. Now the term
+00:16:41.120 comet basically means save. Comeing is
+00:16:44.320 just like saving a file. Nothing
+00:16:46.160 complicated. Don't worry about this. We
+00:16:48.560 will explore comets in detail later. For
+00:16:51.279 now, there's already a default commit
+00:16:53.279 message saying so I will keep that as it
+00:16:55.680 is and click commit changes. Next, I
+00:16:58.160 create another file the same way. This
+00:17:00.720 time naming it 2.xt, writing two inside
+00:17:04.079 it and saving it as well. Now, if I
+00:17:06.959 check my GitHub repository, I can see
+00:17:08.880 two files there. 1.xt and 2.xt. At this
+00:17:12.559 point, I have two repositories. one on
+00:17:14.799 the cloud, meaning on GitHub, and
+00:17:16.880 another one locally on my computer. I
+00:17:19.520 initialized the local one myself
+00:17:21.439 earlier. But now I want to bring the
+00:17:24.160 GitHub repository down to my machine by
+00:17:26.640 cloning it. So what should I do? I will
+00:17:29.600 go back to my terminal. Right now I'm
+00:17:31.679 inside the G1 folder, but I want to
+00:17:34.160 clone the remote repository onto my
+00:17:35.919 desktop. So in the terminal, I will type
+00:17:38.400 cd dot dot slash. This command takes me
+00:17:41.600 back to the desktop just one level back.
+00:17:44.720 Now I am going to clone the remote
+00:17:46.400 repository the one I just created on
+00:17:48.640 GitHub. For that I need a link which is
+00:17:51.919 basically the repository's URL. So I
+00:17:54.720 will go back to GitHub open that
+00:17:56.559 repository and click on the code button.
+00:17:59.360 There I can see an HTTPS link. I will
+00:18:02.799 copy that link. Then in the terminal I
+00:18:05.600 typed g clone followed by the link I
+00:18:09.120 just copied and pressed enter. Now
+00:18:11.760 notice g is pulling my github repository
+00:18:14.000 down into my local machine. After a few
+00:18:16.000 moments the cloning process is complete.
+00:18:18.559 Let's verify whether the repository has
+00:18:20.480 been successfully cloned. In the
+00:18:22.320 terminal I will type ls. This command
+00:18:25.360 shows the list of folders in my current
+00:18:27.280 location. As you can see, there's now a
+00:18:29.679 new folder named gy-en journey alongside
+00:18:33.200 my previous gy-en 1 folder. Now we will
+00:18:36.480 enter the g journey folder. To do that,
+00:18:38.720 I will type cd g journey. We have now
+00:18:42.240 entered the g journey directory. If I
+00:18:44.320 type ls, I can see the contents of the
+00:18:46.480 folder and inside it there are two files
+00:18:48.960 1.xt and 2.xt. And if we want to see the
+00:18:52.160 hidden files, we'll simply type in the
+00:18:53.919 terminal ls- a. Even here you will find
+00:18:57.360 a dog folder that proves this is also a
+00:19:00.720 complete git repository cloned from the
+00:19:02.960 cloud. Earlier we saw the same thing in
+00:19:05.200 our local repository. Right? So this is
+00:19:07.840 how we can create a g repository in two
+00:19:10.160 ways. One by initializing it locally and
+00:19:12.880 the other by cloning it from GitHub or
+00:19:15.120 any other remote server. No matter which
+00:19:17.919 way we create it to start working with g
+00:19:20.480 initialization is always required. Now
+00:19:23.600 let's look at something new. Suppose I
+00:19:26.000 am currently inside the gourney folder.
+00:19:28.320 This is the repository I just cloned
+00:19:30.080 from the remote. Now if I make any
+00:19:32.640 changes to this repository, for example,
+00:19:35.039 I open the file 1.txt in a text editor.
+00:19:37.840 Inside it I keep everything as it was
+00:19:40.320 but add the number one at the end and
+00:19:42.640 save the file. Now I want to know what
+00:19:45.280 exactly changed or whether G has
+00:19:47.600 detected the modification. To check that
+00:19:50.400 I will type in the terminal g status and
+00:19:54.000 as soon as I run this command g
+00:19:56.000 immediately tells me modified 1.xt that
+00:19:59.600 means g has already detected the change
+00:20:01.600 I made in that file. Now let's say I
+00:20:04.320 make a small change in 2.xt as well just
+00:20:07.280 adding a two at the end. Then I run g
+00:20:10.799 status again. This time it shows modify
+00:20:13.760 2.xt. That means both files have been
+00:20:16.160 changed and g has detected both
+00:20:17.840 modifications. This is exactly how g
+00:20:20.320 continuously keeps an eye on every
+00:20:22.400 change we make. It's like it's always
+00:20:24.640 watching over our project. At any point,
+00:20:27.360 we can simply run the g status command
+00:20:29.360 to see which files have been modified or
+00:20:31.440 updated. In a real project, we usually
+00:20:34.159 work with multiple files at the same
+00:20:35.760 time. Right? In that case, g status give
+00:20:38.400 us a clear summary of the overall
+00:20:40.400 situation. What has changed? Which files
+00:20:42.720 are new and which ones are modified. So
+00:20:45.840 up to this point we have learned that g
+00:20:47.760 can be initialized in two ways either
+00:20:49.840 locally or from a remote repository and
+00:20:52.159 with g status we can easily check what
+00:20:54.240 changes have been made in our working
+00:20:55.760 directory. Hopefully everything is clear
+00:20:57.840 up to this point. So far we have only
+00:21:00.000 worked inside the working directory.
+00:21:01.679 That means we have created and modified
+00:21:03.600 files but we haven't yet told g to keep
+00:21:06.240 those changes. Now we are going to move
+00:21:08.480 them into the staging area. In g
+00:21:10.720 terminology, the process of moving
+00:21:12.799 changes from the working directory to
+00:21:14.400 the staging area is called adding.
+00:21:17.039 Simply put, g add means telling g I want
+00:21:20.799 to keep this change. So let's see how g
+00:21:23.919 add works. Right now inside our g
+00:21:27.120 journey folder, we have two files and
+00:21:29.280 both have been modified. Now I will
+00:21:31.679 create another folder inside g journey
+00:21:33.760 named my folder. To do that I will type
+00:21:36.400 in the terminal mkdir my folder. Then I
+00:21:39.919 will use cd to enter that folder. Inside
+00:21:42.640 my folder, I will create a new file
+00:21:44.400 called 3.txt by typing touch3.txt.
+00:21:48.320 As soon as I run this command, a new
+00:21:50.000 file named 3.txt is created. Then I open
+00:21:52.559 the 3.txt file in my text editor. Inside
+00:21:55.360 it, I write three and save the file.
+00:21:58.400 Now, we have made quite a few changes,
+00:22:00.480 haven't we? Let's see what we did. We
+00:22:03.039 created a new folder, added a new file,
+00:22:05.520 and modified some existing ones. In
+00:22:07.919 other words, our entire project has gone
+00:22:09.919 through multiple changes. So now it's
+00:22:12.480 time to move all these changes into the
+00:22:14.240 staging area. To do that, I will first
+00:22:16.320 go back to the repository's root folder.
+00:22:18.400 Meaning I will move one step up. CD dot
+00:22:21.200 dot. Now I'm back in the root directory,
+00:22:23.600 which is the gourney folder. From here,
+00:22:26.159 I'll run the g add command. But before
+00:22:29.120 adding, let's first check which files
+00:22:31.200 have actually been changed. So I will
+00:22:33.200 type g status. And look, g is showing
+00:22:36.640 that two text files have been modified
+00:22:38.400 and a new folder has been created. It is
+00:22:40.799 also saying that the old files are
+00:22:42.320 tracked while the new folder is
+00:22:44.559 unttracked. Why is that? Because the old
+00:22:47.679 files came from the remote repository we
+00:22:50.000 cloned earlier. So, G already knows
+00:22:52.480 about them. But since my folder is newly
+00:22:54.960 created, G doesn't recognize it yet. If
+00:22:57.760 I want to move everything to the staging
+00:22:59.600 area at once, I have two options. I can
+00:23:02.880 either use the command g add d- all or
+00:23:06.960 the shorter version get add- a. Both
+00:23:11.360 commands do exactly the same thing. So
+00:23:14.159 let's first try with g add d- all in the
+00:23:17.919 terminal. I type g add d- all. After
+00:23:22.720 running this command I will check the
+00:23:24.400 status again by typing g status. Now we
+00:23:28.320 will see that g has staged everything.
+00:23:31.039 In other words, all the changes we made
+00:23:33.120 are now ready to commit. We will talk
+00:23:35.600 about commits in detail a bit later. For
+00:23:38.240 now, just remember that when we use g
+00:23:40.480 add-all, g takes every change and
+00:23:43.679 prepares it for the next comet. Now,
+00:23:46.880 suppose I want to go back to the
+00:23:48.400 previous state, that is remove
+00:23:50.400 everything from the staging area and
+00:23:52.080 return them to the working directory. To
+00:23:54.400 do that, I'll type in the terminal get
+00:23:57.120 reset. As soon as I run this command,
+00:23:59.760 everything goes back to the way it was
+00:24:01.520 before. You can see in the terminal, it
+00:24:03.760 says unstaged changes after reset. Now,
+00:24:07.600 if I check the status again by typing g
+00:24:10.159 status, you will notice that everything
+00:24:12.159 is back to the earlier state just like
+00:24:14.320 before. All right. Now, let's take a
+00:24:16.240 look at how g addy- a works. Just like
+00:24:19.760 before, I will type in the terminal g
+00:24:22.400 add- capital letter a. After running
+00:24:26.159 this command, I will check the status
+00:24:27.840 again by typing g status. And you will
+00:24:30.720 see that git has tested everything just
+00:24:32.880 like before. That means all the changes
+00:24:34.799 we made are now ready to commit. So
+00:24:37.279 whether we use g add-all or g add- a do
+00:24:42.320 the same thing. G stages every change.
+00:24:44.960 You can use either one. It doesn't make
+00:24:46.880 a difference. Now I will run g reset
+00:24:50.159 again to unstage everything and bring
+00:24:52.159 all changes back to the working
+00:24:53.520 directory. Then I will check the status
+00:24:55.360 once more using get status. Everything
+00:24:58.400 looks good again back to the unstaged
+00:25:00.640 state. Now in this state if I type in
+00:25:03.440 the terminal get add dot. What happens
+00:25:07.120 then? At first glance it seems like it's
+00:25:09.600 doing the same thing as g add-all
+00:25:12.320 everything appears to be tested. But
+00:25:14.320 actually that's not the case. Here's
+00:25:16.640 where the difference lies. Let's see
+00:25:19.279 what that difference really is. I'll run
+00:25:22.159 get reset again to return everything to
+00:25:24.559 the previous state. Now all files are
+00:25:26.799 back in the working directory. Next, I
+00:25:29.039 will go inside the my folder directory
+00:25:30.640 by typing cd my folder. Now that I'm
+00:25:33.520 inside my folder, I will type g add dot.
+00:25:37.039 Then to check the status, I will type g
+00:25:39.520 status. And look, g has only staged the
+00:25:42.400 3.xt file that's inside my folder. The
+00:25:45.039 other files in the root folder are still
+00:25:47.039 unstaged. This difference is really
+00:25:49.279 important. The options d-all or - a mean
+00:25:52.559 that git will stage every single change
+00:25:54.640 across the entire project. But using the
+00:25:56.960 dot means git will only stage the
+00:25:59.360 changes within the current directory you
+00:26:01.120 are in. Also keep in mind if there were
+00:26:03.840 a subfolder inside my folder using the
+00:26:06.159 dot would still include the files inside
+00:26:08.400 that subfolder too. In simple terms the
+00:26:11.039 dot means the current directory and
+00:26:13.279 everything inside it. So now we have
+00:26:15.679 seen three variations of the g add
+00:26:17.520 command. D-all a and dot. The first two
+00:26:21.919 work exactly the same way while the dot
+00:26:24.080 version is a bit more limited in scope.
+00:26:26.159 Now I will run git reset to bring
+00:26:28.799 everything back to the previous state
+00:26:30.400 again. Next let's look at another
+00:26:32.720 important concept. I will go back to the
+00:26:34.880 root folder by typing cd dot dot. Then
+00:26:37.919 in the terminal I will type git add-all
+00:26:41.279 so that everything is staged again. Now
+00:26:43.919 we know all our files are ready for
+00:26:45.760 commit. At this point, I make some
+00:26:48.320 changes directly in the working
+00:26:49.679 directory. For example, I delete the
+00:26:51.840 file 2.txt and create a new one named
+00:26:55.200 4.xt writing four inside it. That means
+00:26:59.440 I have deleted one file and added
+00:27:01.760 another new one. Now, if I check the
+00:27:04.320 status by typing g status, what do you
+00:27:06.880 see? G shows that under changes to be
+00:27:09.279 committed, the previously st files are
+00:27:11.440 still there. But under changes not test
+00:27:14.000 for commit, it now lists 2.x txt as
+00:27:17.200 deleted and for.txt as unttracked. So if
+00:27:21.600 I now type g add star and then check
+00:27:25.600 again with git status, you'll see that g
+00:27:28.720 has st the newly created for.txt file,
+00:27:31.600 but it hasn't staged the deleted 2.xt
+00:27:34.640 file. That's why it's important to
+00:27:36.799 understand that g add star only stages
+00:27:40.080 new or modified files but not deleted
+00:27:43.200 ones. The behavior of the aesthetics is
+00:27:45.919 that it stages all visible changes
+00:27:48.480 except for deleted files. In other
+00:27:50.880 words, if a file has been deleted, it
+00:27:53.039 won't be added to the staging area.
+00:27:55.039 That's the key difference between the
+00:27:56.559 star and the dot and the d- all options.
+00:27:59.840 This is how the star works in g add. Now
+00:28:03.600 let's return to the previous state again
+00:28:05.679 by typing g reset. Then check the
+00:28:08.799 current situation with g status. Now if
+00:28:12.240 you want to stage only a specific file
+00:28:14.640 say 1.xt which has been modified you can
+00:28:17.760 do that by typing g add1.txt.
+00:28:21.360 Similarly if you want to stage a file
+00:28:23.120 inside a folder for example the file
+00:28:25.360 inside my folder you can write g add my
+00:28:29.039 folder/3.txt.
+00:28:31.760 Let's test it. I type g add2.txt.
+00:28:35.679 After running this command if we check
+00:28:37.520 the status using g status we'll see that
+00:28:40.159 only 2.xt txt has been changed. So yes,
+00:28:43.200 we can also stage individual files by
+00:28:45.120 specifying their names. Now let's go
+00:28:47.520 back again by typing get reset. This
+00:28:50.159 returns everything to the previous
+00:28:51.760 unstaged state. We can also stage files
+00:28:54.559 by their extension. For example, if we
+00:28:56.960 want to stage all txt files, we will
+00:28:59.440 write g add star.txt.
+00:29:03.039 This command stages all txt files in the
+00:29:05.600 current directory excluding deleted
+00:29:07.600 ones. Note that g only stages the
+00:29:10.159 changes it finds in the root folder. It
+00:29:12.399 won't include deleted files or files
+00:29:14.320 inside subfolders. Finally, if we want
+00:29:17.039 to stage everything at once, the best
+00:29:19.200 and simplest practice is to go to the
+00:29:21.120 root directory and type g add dot. After
+00:29:24.960 doing that, all the changes are staged
+00:29:26.960 together. If we now run g status, we'll
+00:29:30.240 see that everything has been staged
+00:29:32.080 successfully. That means all our changes
+00:29:34.559 have been moved from the working
+00:29:35.919 directory to the staging area. So far we
+00:29:38.799 have learned how to move changes from
+00:29:40.559 the working directory to the staging
+00:29:42.320 area using the git add command. Now
+00:29:45.360 let's see how we can save those changes
+00:29:47.039 from the staging area to the local
+00:29:48.799 repository. In kids language this is
+00:29:51.600 called a comet. It means we are
+00:29:54.000 confirming and saving our changes
+00:29:55.919 permanently. You can think of it like
+00:29:58.000 getting ready for a party. You don't
+00:29:59.919 just walk straight out the door. First
+00:30:01.840 you stand in front of a mirror and check
+00:30:03.840 your clothes, shoes, tie and hair. Then
+00:30:06.799 the stage where you make adjustments.
+00:30:09.039 Maybe you realize this shirt doesn't
+00:30:11.120 look good or let me change these shoes.
+00:30:13.760 That's an intermediate step. You haven't
+00:30:16.080 left for the party yet. You are just
+00:30:17.840 making sure everything is in order. If
+00:30:19.919 something's off, you can fix it right
+00:30:22.000 there. Once you are satisfied and
+00:30:23.919 everything looks perfect, that's when
+00:30:25.440 you finally leave for the party. G works
+00:30:27.760 in the same way. Instead of going
+00:30:29.600 straight from the working directory to
+00:30:31.039 the local repository, we first move our
+00:30:33.120 changes to the staging area. This is an
+00:30:35.120 intermediate step where we can review,
+00:30:37.120 adjust or even remove changes before
+00:30:39.360 saving them permanently. We don't commit
+00:30:41.760 directly from the working directory
+00:30:43.440 because the staging area gives us a
+00:30:45.360 chance to verify everything before
+00:30:47.279 finalizing. When you finally commit, it
+00:30:49.760 means you are sure everything is
+00:30:51.600 correct. No more mistakes and now the
+00:30:53.760 work can be saved permanently. That's
+00:30:55.840 why this process is called a commit. Now
+00:30:58.480 let's see how to make a comet in
+00:31:00.080 practice. First we will check our
+00:31:02.000 current state using g status. It shows
+00:31:04.960 that the staging area contains some
+00:31:06.720 changes. These are ready but not yet
+00:31:08.960 committed. To commit them we will write
+00:31:11.120 g committ / m space and a commit
+00:31:14.480 message. The /m flag lets you add a
+00:31:17.600 short message describing what you
+00:31:19.520 changed. For example, g commit/m I have
+00:31:23.360 made some changes to the files. Now
+00:31:25.360 sometimes an error may appear the first
+00:31:27.200 time you try to commit. When you install
+00:31:29.360 Git for the first time and attempt a
+00:31:31.200 comet, you might see a message like,
+00:31:33.200 &quot;Please tell me who you are. Don't
+00:31:35.039 worry, this is completely normal. It's
+00:31:37.519 just G's way of asking for your identity
+00:31:40.240 before recording a comet.&quot; G needs to
+00:31:42.960 know who is making the changes and from
+00:31:44.880 which email address. This information is
+00:31:47.360 attached to every comet in the project
+00:31:49.279 history, which later helps track who
+00:31:51.440 made which changes. Fixing this issue is
+00:31:53.760 very simple. G actually tells us exactly
+00:31:56.240 what to do. Just run the following two
+00:31:58.559 commands. gconfig-
+00:32:01.440 global user.mmail
+00:32:03.760 and pass your email address. Then get
+00:32:06.960 config- global user.name pass your name.
+00:32:11.120 By running these two commands, the
+00:32:13.039 problem is solved. The first command
+00:32:15.279 sets your email address globally and the
+00:32:17.519 second one sets your name globally. The
+00:32:20.000 d- global flag means that this
+00:32:21.919 configuration will apply to your entire
+00:32:24.000 computer. So every g commit you make
+00:32:26.320 from this machine will use the same name
+00:32:28.320 and email from now on. If you want to
+00:32:30.640 make the configuration specific to a
+00:32:32.399 single project you can use the d- local
+00:32:34.720 flag instead of d- global flag. That way
+00:32:38.000 the settings will apply only to that
+00:32:39.840 particular repository. In short when you
+00:32:42.320 use git for the first time setting up
+00:32:44.640 your user configuration is mandatory.
+00:32:47.039 It's part of the basic git setup you
+00:32:48.880 need to do before committing. Once it's
+00:32:51.039 configured, G will automatically
+00:32:52.559 recognize your identity for all your
+00:32:54.480 future commits. Since I already have Git
+00:32:57.039 configured, I don't need to set it up
+00:32:58.880 again. All right, let's go back to our
+00:33:01.360 main task. We are going to make a comet.
+00:33:04.240 We already know what to type in the
+00:33:05.919 terminal. g committ minus m. I have made
+00:33:09.840 some changes to the files. Perfect. The
+00:33:12.000 comet is done. The terminal now shows
+00:33:14.240 how many files were changed, how many
+00:33:16.240 lines were added, and how many lines
+00:33:18.240 were deleted. Let's verify everything by
+00:33:20.880 checking the status g status. As you can
+00:33:24.080 see, everything looks clean now, meaning
+00:33:26.080 all the changes have been successfully
+00:33:27.519 saved in the local repository. From now
+00:33:29.600 on, whenever you make new changes to any
+00:33:32.000 file, you'll have to stage and commit
+00:33:34.159 them again, just like before. One more
+00:33:36.320 thing about commits, you can always roll
+00:33:38.320 back to the previous state if needed. To
+00:33:40.559 do that, type in the terminal get reset
+00:33:43.919 head and a t sign. This command will
+00:33:46.880 undo the last commit and bring
+00:33:48.799 everything back to the working
+00:33:50.000 directory. Now if we type get status,
+00:33:53.200 you'll see that all the files have
+00:33:54.799 returned to the working directory ready
+00:33:56.720 to be staged again. You can now modify
+00:33:59.360 or commit them as you wish. See how
+00:34:02.320 amazing G is. You have complete control
+00:34:04.960 over your work. It's just about
+00:34:06.799 remembering the right commands. We will
+00:34:08.719 explore even more useful features soon.
+00:34:10.639 Now let's move on to the use of G
+00:34:12.800 remove. But before that, let's make a
+00:34:15.199 new commit just like the one we did
+00:34:17.199 earlier. So in the terminal, I will type
+00:34:19.839 g add dot then get commit minus m. I
+00:34:24.560 have made some changes to the files.
+00:34:26.639 Perfect. Our commit is done. Now let's
+00:34:29.599 manually delete the 1.xt file from our
+00:34:32.079 file system and then go back to the
+00:34:34.000 terminal. I'll type get status. Now you
+00:34:36.960 can see the change. It shows that our
+00:34:39.359 1.txt file has been deleted. After that
+00:34:42.320 if I type get add dot the deletion will
+00:34:45.520 also be sted right. So instead of
+00:34:48.719 deleting a file manually and then adding
+00:34:50.800 it again you can actually do both steps
+00:34:53.040 in a single command. If you want to
+00:34:55.199 delete a file and st that deletion at
+00:34:57.359 the same time just type get rm4.txt.
+00:35:02.000 Here we are taking.txt as an example.
+00:35:04.960 This means we want to delete 4.xt and
+00:35:07.839 automatically move that change to the
+00:35:09.520 staging area. Once we run this command
+00:35:12.079 and then check the status with G status.
+00:35:14.400 You will notice that for.txt has been
+00:35:16.400 deleted and at the same time staged. So
+00:35:19.359 we no longer have to perform two
+00:35:21.040 separate steps deleting and adding
+00:35:23.119 manually. We can do both at once with
+00:35:25.440 this single shortcut. If we check in
+00:35:27.760 finder we will see that 4.xt has
+00:35:30.240 disappeared. Now let's look at another
+00:35:33.040 example. But before that we'll roll back
+00:35:35.440 the deleted file. To do this we will use
+00:35:38.000 the get reset command. However, when you
+00:35:40.960 run a normal g reset, it only brings
+00:35:43.520 back the changes, not the deleted files.
+00:35:46.160 Once you execute g reset, you'll see in
+00:35:48.960 the terminal the message unstaged
+00:35:51.040 changes after reset. But if you check
+00:35:53.359 your file system, the deleted file
+00:35:55.280 hasn't returned. That's because a normal
+00:35:57.760 reset only brings back the staged
+00:35:59.920 changes, not the actual files. We can
+00:36:02.800 confirm this by running g status. You
+00:36:05.680 will notice only the changes are back.
+00:36:07.920 manually deleted files are still
+00:36:09.760 missing. If you want to restore
+00:36:11.599 everything, meaning both the changes and
+00:36:13.520 the deleted files, then you will have to
+00:36:15.520 run get reset- hard. Once you execute
+00:36:19.920 this, both your changes and the deleted
+00:36:21.920 files return to their previous state.
+00:36:24.480 Now let's explore the use of get remove
+00:36:27.040 a bit deeper. Suppose you want to remove
+00:36:29.680 a file. Now let's say we edit the
+00:36:32.240 four.txt file and write four inside it.
+00:36:36.000 That means there's now a change in the
+00:36:38.000 working directory. If I try to delete it
+00:36:40.480 directly using g rm4.txt,
+00:36:43.760 what happens? The file isn't deleted and
+00:36:46.800 g starts showing an error. The following
+00:36:49.200 file has local modifications. This means
+00:36:52.160 it isn't allowing the deletion because
+00:36:54.160 it has detected uncommitted changes in
+00:36:56.480 that file. Before you can remove it, you
+00:36:59.280 either have to commit those changes or
+00:37:01.520 confirm that you truly want to discard
+00:37:04.240 them. If you are sure you want to delete
+00:37:06.640 the file anyway, you can force it by
+00:37:08.960 using get rm/f
+00:37:12.640 4.xt.
+00:37:14.400 As soon as you run this command, the
+00:37:16.079 file is forcefully deleted. If you check
+00:37:18.560 your file explorer, you'll see that 4.xt
+00:37:21.119 is gone. Now, let's look at another
+00:37:23.680 situation. I'll run another hard reset.
+00:37:26.800 Get reset- hard. This brings everything
+00:37:30.000 back again. I'll now modify the file
+00:37:32.640 for.txt txt by writing hello inside it.
+00:37:35.920 Now if I type get rm-cached
+00:37:40.720 4.txt, this removes the file from the
+00:37:43.680 staging area but keeps it physically in
+00:37:46.640 your working directory. Let's check it
+00:37:48.960 with G status. You'll see that 4.xt has
+00:37:52.560 moved to the unttracked file section.
+00:37:54.720 It's no longer staged, but the file
+00:37:56.960 itself still exists in the system.
+00:37:59.839 That's the difference between the
+00:38:01.200 d-force and d- cache flags. The d-force
+00:38:04.960 flag completely deletes the file while
+00:38:07.040 the d-cashed flag only removes it from
+00:38:09.920 staging keeping the actual file intact
+00:38:12.560 in your working directory. Another
+00:38:15.040 useful command is get rm-r
+00:38:18.560 folder. Here the - r flag stands for
+00:38:22.000 recursive. This means if the folder
+00:38:24.720 contains other subfolders or files, all
+00:38:27.119 of them will be removed recursively. If
+00:38:29.599 you only mention the folder named
+00:38:31.359 without -ash r, then only that folder
+00:38:34.240 will be removed, not its contents. All
+00:38:37.200 right, let's try this out. But first, I
+00:38:39.599 will reset everything again by typing
+00:38:41.280 get reset- hard. Now that the reset is
+00:38:44.480 done, we'll experiment with our my
+00:38:46.320 folder. Okay, in the terminal, I'll type
+00:38:49.119 g rm- r my folder. And as you can see
+00:38:53.520 the folder has been deleted from our
+00:38:55.200 file system as well. If we now check the
+00:38:57.440 status using g status we will notice
+00:38:59.839 that my folder is listed as deleted and
+00:39:02.320 has already been staged automatically.
+00:39:04.720 Now I'll reset everything again by
+00:39:06.640 typing g reset- hard. Perfect. So far we
+00:39:10.960 have made quite a few commits. Right now
+00:39:13.760 let's learn how to view those comets.
+00:39:16.240 Basically viewing comets means checking
+00:39:18.640 the comet log and doing that is very
+00:39:21.359 simple. In the terminal just type get
+00:39:24.240 log. That's it. Instantly you will see
+00:39:27.119 the full comet history. Here we can see
+00:39:30.000 three comets. Right? Along with each one
+00:39:32.640 there are details and messages that
+00:39:34.560 clearly describe what was done in that
+00:39:36.480 comet. You will also notice some long
+00:39:39.280 random strings. Those are comet ids.
+00:39:42.240 Using these ids, we can go back to
+00:39:44.320 previous versions later on. Don't worry,
+00:39:46.800 we'll learn how to do that soon. For
+00:39:49.040 now, just remember this part. The first
+00:39:51.520 two commits were created when we made
+00:39:53.280 files while setting up our GitHub
+00:39:54.880 repository. And the last one was made
+00:39:56.880 when we modified some files recently.
+00:39:59.200 Now, if we want to view this log in a
+00:40:01.200 cleaner, more compact format, you can
+00:40:03.520 use this version of the command. Get log
+00:40:06.960 dash one line. Once you run it, you'll
+00:40:09.359 see a nice short summary of each comet
+00:40:11.760 with just the essential information. The
+00:40:14.000 unique comet ids are also shown in a
+00:40:16.240 shortened format. These shortened ids
+00:40:18.640 can also be used to return to any
+00:40:20.480 previous version later on. Now let's
+00:40:23.040 move on to one of Git's most powerful
+00:40:25.280 and important features, branching. At
+00:40:27.920 the moment, our repository has only one
+00:40:29.920 branch. A branch in Git is like a
+00:40:32.000 separate line of development where you
+00:40:34.079 can work independently. If you check the
+00:40:36.400 online repository we cloned earlier, you
+00:40:38.400 will see that the default branch is
+00:40:40.240 called main. It used to be known as the
+00:40:42.880 master branch before. This is the
+00:40:45.119 default branch where all work begins. In
+00:40:47.760 recent times, G has shifted from calling
+00:40:50.000 it master to main. But the idea remains
+00:40:52.960 the same. The main branch is your
+00:40:54.880 project central line of development. To
+00:40:57.520 understand the concept of branching more
+00:40:59.280 simply, imagine you are working in the
+00:41:01.520 kitchen of a large restaurant. The main
+00:41:04.000 branch is the main kitchen where all the
+00:41:06.079 dishes are prepared and served to
+00:41:07.920 customers. Now, if your client wants to
+00:41:10.240 try a new dish or recipe, you wouldn't
+00:41:12.560 experiment directly in that main kitchen
+00:41:14.960 because if something goes wrong, it
+00:41:16.800 could ruin everything. Instead, you
+00:41:19.040 create a separate taste kitchen where
+00:41:21.040 you can safely prepare and taste the new
+00:41:23.280 dish. Once the recipe is perfected, you
+00:41:25.839 bring it back into the main kitchen to
+00:41:27.599 serve it officially. It works exactly
+00:41:29.680 the same way. Instead of making changes
+00:41:31.680 directly in the main branch, you create
+00:41:33.440 a separate development branch where you
+00:41:35.520 test and commit all your changes. Once
+00:41:38.240 everything is stable and verified, you
+00:41:40.480 merge that branch back into the main
+00:41:42.240 branch. This ensures your main project
+00:41:44.640 stays safe while new features can be
+00:41:46.960 developed and tested without breaking
+00:41:48.880 anything. In short, branching in Git
+00:41:51.119 provides a secure and organized
+00:41:53.040 intermediate step that allows you to
+00:41:55.040 review, test, and manage changes before
+00:41:57.200 merging them into the main codebase.
+00:41:59.280 Now, since I have already mentioned the
+00:42:01.040 word merge, let's understand what it
+00:42:03.200 really means. Merge simply means
+00:42:05.200 combining the changes from two branches
+00:42:07.200 into one. It's an important concept for
+00:42:09.440 understanding how branches work. In Git,
+00:42:12.240 you can create multiple branches like
+00:42:14.560 staging, development, front end or back
+00:42:17.200 end and work on each of them separately.
+00:42:20.079 Once all the changes are finalized and
+00:42:22.079 tested, they are merged back into the
+00:42:24.079 main branch. Right now, our application
+00:42:26.160 has only one branch. To see how many
+00:42:28.400 branches we have, we can type in the
+00:42:30.000 terminal get branch. This command shows
+00:42:32.800 the list of all branches. At the moment,
+00:42:35.359 we have only one and the branch we are
+00:42:37.359 currently in has a star next to it. To
+00:42:40.000 create a new branch, we simply write get
+00:42:42.560 branch followed by the branch name. For
+00:42:44.800 example, let's type g branch
+00:42:47.040 development. Now, if we run the same
+00:42:49.680 command again, like get branch, we'll
+00:42:52.400 see two branches listed, main and
+00:42:55.200 development. That star next to main
+00:42:57.920 means we are still on the main branch.
+00:43:00.160 When a new branch is created, it takes
+00:43:02.160 the exact state of the branch you were
+00:43:04.160 on at that moment. So in this case, the
+00:43:07.040 development branch is an exact copy of
+00:43:09.280 the main branch. Remember, whenever you
+00:43:11.520 create a new branch, it inherits the
+00:43:14.000 current state of the branch you are in.
+00:43:15.920 Now that we have created a new branch,
+00:43:17.839 let's switch to it. To move to the
+00:43:19.599 development branch, type get checkout
+00:43:22.720 development. We are now inside the
+00:43:24.560 development branch. If we check the
+00:43:26.400 current status using g status, we will
+00:43:28.800 see that everything looks clean because
+00:43:30.960 the development branch has been created
+00:43:32.720 with the same content as the main branch
+00:43:34.800 and it was clean before. Now let's go to
+00:43:37.359 our file system and create a new file
+00:43:39.440 named 3.txt. Inside it, we will write
+00:43:42.400 three. Then back in the terminal, if we
+00:43:44.720 type get status, we'll see that there's
+00:43:47.280 a new file. To stage it, we type get add
+00:43:50.960 dot. And to commit it, we write get
+00:43:54.400 commit/m
+00:43:55.920 I created 3.txt and entered three there.
+00:43:59.119 Now our commit is done inside the
+00:44:01.040 development branch. Next, let's switch
+00:44:03.520 back to the main branch. To do that, we
+00:44:05.920 type get checkout main. Now we have
+00:44:08.880 moved from the development branch back
+00:44:10.720 to the main branch. If you check your
+00:44:12.560 file system now, you will notice that
+00:44:14.400 the 3.txt file is no longer there. Why?
+00:44:17.200 Because the changes made in the
+00:44:18.560 development branch exist only in that
+00:44:20.880 branch. Those changes haven't been
+00:44:22.800 merged into the main branch yet. The
+00:44:24.800 moment you switch back to the main
+00:44:26.160 branch, G automatically hides the
+00:44:28.000 changes made in development, showing you
+00:44:30.000 only what exists in that main branch.
+00:44:32.560 This demonstrates just how much control
+00:44:34.880 G has over your file system. When you
+00:44:37.440 switch branches, G instantly adjusts
+00:44:39.920 which files are visible so that you only
+00:44:42.079 see the changes relevant to that
+00:44:43.760 specific branch. There's no duplication
+00:44:46.079 or conflict in your file system. G
+00:44:48.400 manages everything seamlessly. In this
+00:44:50.720 way, you can create hundreds of
+00:44:52.400 branches, each containing its own set of
+00:44:55.040 changes and G will always show you a
+00:44:57.119 separate isolated view for each one. But
+00:44:59.839 remember, for any change to actually
+00:45:01.760 take effect, you must commit it.
+00:45:04.240 Whatever branch you are working in, the
+00:45:05.920 commit must be made there. Once
+00:45:07.760 committed, G understands that those
+00:45:09.920 changes belong exclusively to that
+00:45:12.000 specific branch. That's why when we
+00:45:14.240 switch back to the main branch, the
+00:45:15.839 changes made in the development branch
+00:45:17.599 don't appear there. Now let's say we
+00:45:19.760 make a new change to the for.txt file
+00:45:21.839 while we are on the main branch. Let's
+00:45:23.920 add a four to it. Then if we check the
+00:45:26.319 status by typing g status, we'll see the
+00:45:28.720 new change. Let's stage it using g add
+00:45:31.440 dot and commit it with g commit minus m.
+00:45:35.599 I changed four.txt and added additional
+00:45:38.880 four. Now both branches have changes.
+00:45:41.440 The main branch has this new comet and
+00:45:43.680 the development branch still has its
+00:45:45.599 previous one. Since both branches now
+00:45:48.079 contain updates, we will merge the
+00:45:49.839 changes from the development branch into
+00:45:51.440 the main branch. But first, let's start
+00:45:53.680 by merging the main branch into the
+00:45:55.440 development branch just to synchronize
+00:45:57.599 everything. So first we switch to the
+00:45:59.920 development branch by typing g checkout
+00:46:02.880 development. Now that we are inside the
+00:46:04.880 development branch, we will run get
+00:46:07.520 merge main dash mging main into
+00:46:11.920 development. After the merge, you will
+00:46:14.079 notice that the changes made in the main
+00:46:15.760 branch have now appeared inside the
+00:46:17.599 development branch as well. For example,
+00:46:19.760 the updated for.txt file is now present
+00:46:22.000 in the development branch alongside the
+00:46:24.000 previous changes. In short, updates of
+00:46:26.560 both branches have been combined and the
+00:46:28.800 development branch now reflects all the
+00:46:30.720 latest modifications. Next, let's switch
+00:46:33.359 back to the main branch by typing get
+00:46:35.520 checkout main. Once we are back on the
+00:46:38.160 main branch, we can see that the changes
+00:46:40.079 from the development branch haven't yet
+00:46:41.760 appeared here. So now from the main
+00:46:43.920 branch, we will merge everything from
+00:46:45.440 the development branch by typing gerge
+00:46:48.640 development/m
+00:46:50.640 merging on main with development.
+00:46:53.760 After running this command, you will see
+00:46:55.359 that the 3.txt file from the development
+00:46:57.440 branch has now appeared in the main
+00:46:59.359 branch as well. That means both branches
+00:47:01.839 changes have been successfully merged
+00:47:03.760 and the merge process is complete.
+00:47:05.920 However, sometimes during a merge
+00:47:08.000 conflicts may occur. A merge conflict
+00:47:10.400 happens when the same part of the same
+00:47:12.560 file has been changed differently in two
+00:47:14.880 branches. For example, if you modified
+00:47:17.440 1.txt in the main branch and someone
+00:47:20.319 else modified the exact same section of
+00:47:23.040 1.xt in the development branch, Git
+00:47:25.520 won't know which version to keep. In
+00:47:28.079 such cases, Git flags the file as having
+00:47:30.800 a conflict and you will have to resolve
+00:47:33.280 it manually by deciding which changes to
+00:47:35.760 keep or by merging both versions
+00:47:37.920 yourself. Right now we are on the main
+00:47:40.400 branch. From here we will create a new
+00:47:42.720 branch so that the main branch remains
+00:47:44.560 untouched while we simulate a conflict.
+00:47:47.599 Let's move ahead quickly. I run the
+00:47:49.839 command get branch staging to create a
+00:47:52.960 new branch named staging. This branch
+00:47:55.520 now contains all the latest updates from
+00:47:57.280 main. Then I switch to it using get
+00:48:00.800 checkout staging. While working on the
+00:48:03.359 staging branch, I open my file system
+00:48:05.760 and go to the file named 4.txt. At the
+00:48:08.880 end of this file, there was the number
+00:48:10.800 four. I add 44 at the end and save the
+00:48:14.319 file. Now the staging branch has a
+00:48:16.480 change. When I run g status, I can see
+00:48:19.760 that the change is being tracked. So I
+00:48:22.400 add and commit it by running g add dot
+00:48:26.640 and then get commit / m changed 44. The
+00:48:31.599 staging branch work is done. Next I
+00:48:34.240 switch back to the development branch by
+00:48:36.000 running g checkout development. When I
+00:48:39.359 open fortxt here I don't see 44 I added
+00:48:42.800 earlier in the staging. So I write 444
+00:48:46.400 and save the file. Then I run g add dot
+00:48:50.079 and commit it with g committ/m
+00:48:53.599 added 444 on 4.xt. That means the
+00:48:58.160 development branch now has its own
+00:49:00.160 separate change. Now while staying in
+00:49:02.720 the development branch I try to merge
+00:49:04.559 the changes from the staging branch
+00:49:06.000 using git merge staging. But g fails to
+00:49:09.280 merge automatically and shows an error.
+00:49:11.359 Automatic merge failed. Fix conflicts
+00:49:13.920 and then commit the result. This happens
+00:49:16.640 because the same line in for.txt was
+00:49:18.880 modified in both branches staging and
+00:49:21.839 development. G can't decide which
+00:49:24.400 version should take priority. So it
+00:49:26.559 leaves the decision to us. In this case
+00:49:29.359 the developer working on the development
+00:49:31.280 branch or whoever is managing it has to
+00:49:34.240 manually resolve the conflict. When you
+00:49:36.480 open for.txt txt in a text editor. Git
+00:49:39.280 marks the conflicting section clearly
+00:49:41.839 showing which part came from staging and
+00:49:44.480 which part came from development. You
+00:49:46.960 will see both the double four from
+00:49:48.720 staging and the triple four from
+00:49:50.640 development. It's now up to you to
+00:49:53.280 decide whether to keep one, remove one
+00:49:55.760 or combine both changes. While staying
+00:49:58.400 on the development branch, you decide
+00:50:00.559 which version to keep. Let's say you
+00:50:02.880 choose to keep the triple 4. You remove
+00:50:05.599 all the conflicting markers. Save the
+00:50:07.760 file and then run get add dot followed
+00:50:11.359 by get commit minus m merge conflict
+00:50:15.200 solved. The commit messages merge
+00:50:18.000 conflict solved. Now you switch back to
+00:50:20.880 the staging branch using get checkout
+00:50:23.520 staging. When you open the file system
+00:50:26.160 and check for.txt, it still shows 4,
+00:50:30.240 meaning no change has been applied yet.
+00:50:33.520 At this point, you can choose to merge
+00:50:35.680 changes either into staging or
+00:50:37.680 development since both branches are now
+00:50:39.680 in sync. Let's say we decide to resolve
+00:50:42.480 it from staging. We run the command gge
+00:50:46.000 development. This time ges everything
+00:50:48.880 smoothly without any conflict because
+00:50:50.720 both sides now contain the same content.
+00:50:53.200 When you check the status using g
+00:50:54.880 status, it shows everything is clean.
+00:50:57.599 Now if we want to bring these merged
+00:50:59.839 changes into the main branch, we switch
+00:51:02.000 to it using get checkout main. Once we
+00:51:05.760 are on the main branch and open the file
+00:51:07.920 system, we notice that for.txt doesn't
+00:51:10.559 yet have the latest update. So we merge
+00:51:13.040 the staging branch with g merge staging.
+00:51:16.480 Immediately all the latest changes flow
+00:51:18.640 into the main branch. The double four
+00:51:20.880 from staging and the triple four from
+00:51:22.880 development now combine perfectly
+00:51:25.119 resulting in the final merged version.
+00:51:27.839 And that's how the entire process of
+00:51:29.599 merging and resolving merge conflicts is
+00:51:32.160 completed. So far we have learned how
+00:51:34.720 branching works. We have already seen
+00:51:36.640 how to switch from one branch to another
+00:51:38.400 using the checkout command. Now earlier
+00:51:41.119 when we talked about git log I mentioned
+00:51:43.280 that we can also go back to a previous
+00:51:45.680 version using a comet ID. That's what we
+00:51:48.400 are going to see now. And to do that, we
+00:51:50.559 will again use the check out command.
+00:51:53.040 First, let's check our comet history. We
+00:51:55.440 can do that by running glo-
+00:51:58.640 one line. Right now, we have nine
+00:52:01.280 commits in our log. Now, let's make a
+00:52:03.760 small change. I open the 1.xt file and
+00:52:06.640 write hello inside it. Then, I stage it
+00:52:09.520 by running g add dot and commit it using
+00:52:13.359 g commit/m
+00:52:15.760 update 1.txt txt file. Next, I again run
+00:52:19.760 get log d- on one line and all the
+00:52:23.119 comets are nicely displayed. Now, I want
+00:52:25.920 to switch back to one of my previous
+00:52:27.760 comets, especially the one named merging
+00:52:30.559 main into development. To do that, I
+00:52:33.280 will simply copy the comet ID of that
+00:52:34.960 comet and type get check out that comet
+00:52:38.240 ID. Earlier when we switched to branches
+00:52:41.440 we used the branch name but this time we
+00:52:44.000 are using a comet ID instead. Remember
+00:52:46.880 your commit ID will be different from
+00:52:48.640 mine. After running this command the
+00:52:51.280 project will move from the main branch
+00:52:52.960 to the exact state it was in at that
+00:52:55.359 previous commit. However, you must
+00:52:57.599 ensure that all your changes on the main
+00:52:59.440 branch are tracked and committed before
+00:53:01.440 doing this. If there are many unttracked
+00:53:03.359 or uncommitted files, it won't allow you
+00:53:05.200 to check out to a previous version. Once
+00:53:07.520 you run the command, you'll see that in
+00:53:09.119 the terminal instead of showing main, it
+00:53:11.280 now says head detached at your comet ID.
+00:53:15.119 That means you have successfully
+00:53:16.800 switched to that particular comet. If
+00:53:19.200 you open one.txt now, you will notice
+00:53:21.280 the hello line you added earlier is no
+00:53:23.440 longer there. That confirms you have
+00:53:25.440 returned to the previous version of your
+00:53:27.040 project. But now suppose you want to go
+00:53:29.680 back to your latest date. That means
+00:53:32.160 returning to the main branch. In that
+00:53:34.480 case, you will use the same command as
+00:53:36.319 before. Get checkout main. Perfect. Now
+00:53:39.760 you have switched back to the main
+00:53:41.119 branch. Meaning you are back to the most
+00:53:43.040 recent version of your project. So we
+00:53:45.440 have seen how to switch between comets.
+00:53:47.760 How to move from one version to another.
+00:53:50.400 Now let's explore something new. How to
+00:53:53.119 compare one comet with another. If we
+00:53:55.599 want to see the differences between our
+00:53:57.280 current comet and a previous comet, what
+00:53:59.680 lines of code were added? What lines
+00:54:01.839 were deleted? We can do that easily
+00:54:04.079 using g commands. Before that, let's
+00:54:06.800 first check our commit history again by
+00:54:08.720 typing glo--
+00:54:11.280 one line. We can see that there are now
+00:54:13.680 10 commits in total. Now we'll compare
+00:54:16.480 the comet update 1.txt file with the
+00:54:19.440 previous one. That means merging main
+00:54:21.440 into development. For that, we'll need
+00:54:24.000 the comet ids of both. Since we have
+00:54:26.480 already run glog, we can just copy those
+00:54:29.200 two ids. Once we have them, we will
+00:54:31.599 write the command g doublef then the
+00:54:35.920 first comet id space then the second
+00:54:38.319 comet id. After running this command, g
+00:54:41.520 will show us the exact changes made
+00:54:43.440 between those two comets. The terminal
+00:54:45.680 will display which files were changed.
+00:54:47.920 What was removed in red and what was
+00:54:50.720 added in green. Also notice one
+00:54:53.359 important detail. In g we place the most
+00:54:56.800 recent comet ID first and the older one
+00:54:59.359 second. This means it will show
+00:55:01.440 differences from the perspective of the
+00:55:03.359 newer comet. What's newly added or
+00:55:06.160 removed compared to the older one. If
+00:55:08.559 you reverse the order, that means
+00:55:10.079 putting the older comet ID first and the
+00:55:12.160 newer one second. G will show the
+00:55:14.240 opposite perspective. Try running the
+00:55:16.559 command both ways a few times. You will
+00:55:18.559 easily understand how the comparison
+00:55:20.400 works. All right, just a quick reminder.
+00:55:23.359 Right now you can't exit the terminal
+00:55:25.680 view because you are inside the log
+00:55:27.520 window. As I mentioned before to exit
+00:55:30.079 from there simply press Q on your
+00:55:32.720 keyboard. That will close the log view
+00:55:35.280 immediately. So far everything we have
+00:55:37.280 done has been inside our local
+00:55:38.640 repository. Meaning we have staged files
+00:55:41.440 made commits and stored everything
+00:55:43.680 locally. But our real goal is to send
+00:55:45.920 those updates to the remote repository
+00:55:48.000 like GitHub. When we send local changes
+00:55:50.640 to a remote repository, that process is
+00:55:52.880 called a push. And if any changes have
+00:55:55.920 been made in the remote repository that
+00:55:57.680 we want to bring into a local
+00:55:59.119 repository, we use fetch. When you run g
+00:56:02.799 fetch, the remote changes are downloaded
+00:56:05.040 into your local repositories memory, but
+00:56:07.520 they won't appear in your working
+00:56:09.359 directory yet. To actually update your
+00:56:11.760 working directory and see those changes
+00:56:13.680 in your files, you need to run gull.
+00:56:17.040 So in short, push means sending local
+00:56:20.160 changes to the remote. Fetch means
+00:56:22.799 bringing remote changes into your local
+00:56:24.880 repository but not merging them yet. And
+00:56:27.839 pull means fetching plus merging. So
+00:56:30.640 your working directory immediately
+00:56:32.400 reflects the remote changes. In other
+00:56:34.960 words, gpool is equal to g fetch plus
+00:56:38.559 git merge. Let's see an example of how g
+00:56:41.599 push works. We have already made several
+00:56:44.000 changes in our local repository and now
+00:56:46.079 we want to push them to the remote main
+00:56:47.920 branch. Since we are currently on the
+00:56:49.920 main branch, the command will be get
+00:56:52.480 push origin main. Here origin refers to
+00:56:56.240 the remote repository and main is the
+00:56:58.559 branch we want to push to. After running
+00:57:00.880 this command, all your latest comets
+00:57:02.960 will be sent to the remote main branch.
+00:57:05.119 If you check your repository on GitHub,
+00:57:06.960 you will see that everything is updated.
+00:57:09.280 However, only the main branch is pushed.
+00:57:11.520 Other branches aren't uploaded yet. This
+00:57:14.160 means we have only pushed our main
+00:57:16.000 branch to the remote's main. Now if we
+00:57:18.559 switch to the staging branch using gout
+00:57:21.280 staging and then run g push origin
+00:57:24.480 staging, g will create a new branch
+00:57:26.799 named staging in the remote repository
+00:57:29.200 and push all your staging changes there.
+00:57:32.079 When you check GitHub again, you'll see
+00:57:33.920 that the staging branch has been created
+00:57:35.920 and updated. Similarly, if you switch to
+00:57:38.799 the development branch by running gout
+00:57:41.599 development and then g push origin
+00:57:44.799 development, the development branch will
+00:57:46.880 also be uploaded to the remote. So now
+00:57:49.440 all three branches main, staging and
+00:57:52.079 development are fully synced with the
+00:57:54.400 remote repository. Finally, I switch
+00:57:57.040 back to the main branch again using g
+00:57:59.680 checkout main. By now the concept of g
+00:58:02.960 push should be crystal clear. Now
+00:58:04.880 imagine we have already pushed our local
+00:58:06.799 changes to the remote. Let's see how
+00:58:08.960 fetch works. Suppose we make a change
+00:58:11.440 directly on GitHub. For example, we open
+00:58:13.839 the file 3.txt on GitHub. Type three and
+00:58:17.119 commit the change. Now the remote main
+00:58:19.599 branch has a new update that our local
+00:58:21.520 main branch doesn't yet have. It's
+00:58:23.680 behind the remote version. While staying
+00:58:26.079 on the local main branch, I want to
+00:58:28.079 bring in the latest changes from the
+00:58:29.680 remote. So I run the command get fetch.
+00:58:33.680 It immediately fetches the new changes
+00:58:35.680 from the remote repository, but those
+00:58:37.680 updates don't yet appear in your local
+00:58:39.599 file system. For example, you won't see
+00:58:41.920 any update in 3.txt until you merge the
+00:58:44.559 fetched changes. Once you run get merge,
+00:58:48.160 the remote changes will finally reflect
+00:58:50.079 in your local working directory as well.
+00:58:52.799 Now, let's say we edit the remote 3.txt
+00:58:55.760 file again. This time, we add 33 after
+00:58:59.440 three and commit it on GitHub. The
+00:59:02.079 remote main branch is now ahead once
+00:59:04.079 more. To bring in all those updates and
+00:59:06.480 merge them into your local main branch
+00:59:08.240 at once, we use gpool. Get pull
+00:59:11.599 automatically performs both fetch and
+00:59:13.599 merge in a single command. Which means
+00:59:15.920 all the new remote changes including the
+00:59:18.160 latest updates in 3.txt will immediately
+00:59:20.720 appear in your local files. So that's
+00:59:23.200 how gitpool helps you fetch and merge
+00:59:25.440 all remote updates into your local
+00:59:27.119 repository in one go. We have now
+00:59:29.520 learned how to push changes from local
+00:59:31.520 to remote, fetch changes from remote
+00:59:33.839 without merging and pull changes from
+00:59:35.920 remote while merging them automatically.
+00:59:38.400 These three commands push, fetch, and
+00:59:40.960 pull are among the most frequently used
+00:59:43.119 G operations and are more than enough
+00:59:45.200 for most of our daily development work.
+00:59:47.760 Now, let's move on to something new.
+00:59:50.160 Imagine you are working on a project.
+00:59:52.000 You start developing a new feature,
+00:59:53.839 writing a lot of new code, and modify
+00:59:56.079 several existing files. After some time,
+00:59:58.720 you realize that the approach you took
+01:00:00.960 isn't working at all. But by then, you
+01:00:03.520 have already made changes across 10 to
+01:00:05.440 15 different files. Some with new code,
+01:00:08.079 some heavily modified. In this
+01:00:10.079 situation, you want to discard
+01:00:11.760 everything and go back to the previous
+01:00:13.440 state. Now, think about it. Would you
+01:00:15.920 really open each of those 10 to 15 files
+01:00:18.400 manually, remove all the new lines, and
+01:00:20.880 try to restore the old code one by one?
+01:00:23.280 How accurate or even possible would that
+01:00:25.280 be? Probably not at all. In this case,
+01:00:28.160 the simplest answer is it's actually not
+01:00:30.720 possible, almost impossible. And the
+01:00:33.200 complicated answer is you could try
+01:00:35.200 doing it manually, but there's no
+01:00:37.200 guarantee everything will return to its
+01:00:39.359 exact previous state. And this is
+01:00:41.599 exactly where the magic of the get
+01:00:43.680 restore command comes in. The get
+01:00:46.319 restore command helps you revert any
+01:00:48.640 files or directory back to its previous
+01:00:50.960 state, that is to the state of the last
+01:00:53.440 comet. It's mainly used to undo local
+01:00:56.400 uncommitted changes or to remove changes
+01:00:59.119 that were added to the staging area
+01:01:00.960 using g add. Let's test it out. Suppose
+01:01:04.400 in the 1.xt file, I write new feature.
+01:01:08.240 Remember this repository already had
+01:01:10.400 some committed history. Now I'm just
+01:01:12.799 trying to develop a new feature. But
+01:01:15.040 after writing the new code, I realized
+01:01:17.119 that the change I made in 1.txt adding
+01:01:20.000 new feature was actually a mistake. The
+01:01:22.960 previous version was fine and since this
+01:01:25.200 change isn't ready to be committed, I
+01:01:27.359 want to undo it and go back to the last
+01:01:29.680 committed state. To do that, I'll simply
+01:01:32.400 run get restore 1.txt. As soon as you
+01:01:36.559 run this command, the file instantly
+01:01:38.559 reverts to its previous state, the exact
+01:01:41.280 version from the most recent commit. If
+01:01:44.000 you want to restore an entire directory
+01:01:46.079 instead of a single file, just type the
+01:01:48.319 directory name after g restore and it
+01:01:50.480 will bring everything in that folder
+01:01:51.920 back to the last committed version. And
+01:01:54.000 if you want to undo all changes across
+01:01:55.839 the entire repository, you can run g
+01:01:58.640 restore dot. This will restore every
+01:02:01.520 file to its last committed state. Now,
+01:02:04.559 if you have already staged some changes
+01:02:06.799 using g add, you can still undo them
+01:02:09.520 using the d-staged flag. For example, g
+01:02:13.520 restore d-staged file name or g restore
+01:02:18.400 d-staged dot. This removes the files
+01:02:21.280 from the staging area but keeps the
+01:02:23.119 working directory unchanged. So in
+01:02:26.000 summary, the get restore command helps
+01:02:28.079 you bring any file or directory back to
+01:02:30.400 its previous or last committed state.
+01:02:32.880 It's mainly used to undo local
+01:02:34.880 uncommitted changes before they're ever
+01:02:37.359 committed. Now let's move on and talk
+01:02:39.760 about git stash. Now imagine this. You
+01:02:42.880 are working on a new branch, developing
+01:02:44.880 a big feature. It's a long process and
+01:02:47.280 you have already finished about half of
+01:02:48.960 it, but the work isn't yet in a state to
+01:02:51.520 be committed. Suddenly, another
+01:02:53.839 developer messages you saying there's a
+01:02:56.000 new update on a different branch and you
+01:02:57.920 need to check it out and give feedback.
+01:03:00.240 Now the question is, how will you switch
+01:03:02.079 branches without losing your unfinished
+01:03:03.839 work? Are you going to throw away all
+01:03:05.839 your progress using the g restore
+01:03:07.520 command? Of course not. There's no
+01:03:10.000 reason to go through that kind of hassle
+01:03:11.760 when gives us a much smarter way to
+01:03:13.920 handle this using the g stash command.
+01:03:17.200 With g stash, you can temporarily set
+01:03:19.599 aside your unfinished work, switch to
+01:03:21.920 another branch to do something else, and
+01:03:23.839 later bring all your changes back with a
+01:03:25.839 single command. Let's see how it works
+01:03:28.000 with an example. Suppose in our 1.xt
+01:03:30.799 file, you write another feature. You are
+01:03:33.280 currently on the main branch. Now let's
+01:03:35.520 say you need to switch to the
+01:03:36.799 development branch to review a new
+01:03:38.480 feature. So you type git checkout
+01:03:41.520 development but git throws an error.
+01:03:45.119 Your local changes to the following
+01:03:46.640 files would be overwritten by checkout
+01:03:48.480 1.txt. Please commit your changes or
+01:03:50.799 stash them before you switch branches.
+01:03:53.119 Aborting. This means because G doesn't
+01:03:56.079 allow switching branches when there are
+01:03:57.920 uncommitted changes. It's protecting
+01:04:00.079 your work. But since your feature isn't
+01:04:02.240 ready to be committed, this is exactly
+01:04:04.000 when we use gash. So you can run g
+01:04:07.920 stash. The moment you execute this
+01:04:09.839 command, your uncommitted changes
+01:04:11.680 disappear from your working directory.
+01:04:13.839 But don't worry, they are not lost. It
+01:04:16.400 has safely stored them in a temporary
+01:04:18.240 area called the stash. This lets you
+01:04:20.480 freely switch branches without affecting
+01:04:22.319 your unfinished work. Now let's switch
+01:04:24.799 to the development branch. Get checkout
+01:04:27.760 development. You have now successfully
+01:04:29.839 switched branches. You can review the
+01:04:31.839 new feature, make notes, do whatever you
+01:04:34.319 need to. Once you are done, you switch
+01:04:36.559 back to your main branch again. Get
+01:04:39.039 checkout main. But now when you look
+01:04:41.839 around, you'll see that your unfinished
+01:04:43.520 feature, the one you were working on
+01:04:45.200 earlier, isn't there. Don't panic. It's
+01:04:48.000 still saved safely in the stash. To
+01:04:50.319 bring it back, you just need to pop it
+01:04:52.400 out of the stash using the command get
+01:04:54.799 stash pop. As soon as you run this, all
+01:04:58.000 your stashed changes reappear in your
+01:05:00.480 working directory. The pop command
+01:05:02.559 restores the most recently stashed work
+01:05:04.960 and simultaneously removes it from the
+01:05:07.200 stashed list. If you have stashed
+01:05:09.680 multiple times, Git keeps them all in
+01:05:12.079 order, newest on top, oldest at the
+01:05:14.720 bottom. When you pop, it brings back the
+01:05:17.280 most recent one first. But if you want
+01:05:19.680 to reapply the stashed changes without
+01:05:22.240 removing them from the stash list so
+01:05:24.160 that you can reuse them later, you can
+01:05:25.920 use the apply command instead. For
+01:05:28.240 example, get stash apply. This way your
+01:05:32.000 changes are restored but they also
+01:05:34.160 remain safely stored in the stash for
+01:05:36.319 future use. So now I run get stash again
+01:05:40.400 and then this time I type the command
+01:05:42.480 get stash apply. After running it, you
+01:05:45.599 will notice it behaves almost the same
+01:05:47.520 before. The changes come back just like
+01:05:49.839 when we used pop. All right. Now, let's
+01:05:52.160 understand the difference more clearly.
+01:05:54.160 We already know that G can store
+01:05:55.920 multiple stashes and we can even view a
+01:05:58.079 list of all those stashed changes. To
+01:06:00.559 see that list, we type get stash list.
+01:06:04.319 Once you run this command, you will see
+01:06:06.240 a list of all your saved stashes. If you
+01:06:09.280 look closely, you will notice that each
+01:06:11.520 stashed item is marked with an
+01:06:13.280 identifier like stash zero, stash 1 and
+01:06:16.720 so on. You can use these identifiers to
+01:06:19.359 apply or pop specific stashes as well.
+01:06:22.319 For example, get stash pop-0
+01:06:25.920 or get stash apply stash zero. Both
+01:06:29.280 commands will work. The only difference
+01:06:31.200 is how they handle the stash afterward.
+01:06:34.000 Let's walk through this difference step
+01:06:35.520 by step. First, I check my stash list
+01:06:38.000 using get stash list and I see there's
+01:06:41.359 just one stash in the list. Since I
+01:06:43.520 already ran g-ash apply once, the stash
+01:06:46.319 item is still there in the list. To
+01:06:48.480 understand this better, let's first
+01:06:50.160 remove that stash manually using the
+01:06:52.240 g-ashrop command. The drop command
+01:06:54.880 basically removes a specific stash from
+01:06:57.119 the stash list. All right. So, in the
+01:06:59.440 terminal, we will simply type get stash
+01:07:02.640 drop. Now if we check our stash list we
+01:07:05.760 will see that it's completely empty.
+01:07:07.920 Type in the terminal get stlist.
+01:07:11.520 See the stash list is totally empty. Now
+01:07:14.400 since we previously used g-ash apply all
+01:07:17.680 the changes are still in our working
+01:07:19.599 directory. We can confirm that by typing
+01:07:22.160 g status. Let's do that g status. And as
+01:07:26.640 you can see the changes we applied are
+01:07:28.640 still there. Now let's go ahead and
+01:07:31.200 stash those changes again by typing g
+01:07:34.079 stash. That means we have stored our
+01:07:36.640 changes back into the stash. Next let's
+01:07:39.520 check our stash list again. Type in the
+01:07:42.000 terminal get stash list. What do we have
+01:07:45.760 here? We can see there's just one stash
+01:07:48.160 entry. So now we are going to look at
+01:07:50.640 the difference between pop and apply.
+01:07:53.440 Now I run get stash pop. The stashed
+01:07:56.799 changes are successfully restored into
+01:07:58.799 my working directory. Then I check the
+01:08:00.880 list again with get stash list and this
+01:08:04.000 time the list is empty. That's because
+01:08:06.720 pop brings your changes back and removes
+01:08:09.039 them from the stash list. It's like
+01:08:11.039 taking them out permanently like cut.
+01:08:13.839 That's because pop brings your changes
+01:08:15.760 back and removes them from the stash
+01:08:17.520 list. It's like taking them out
+01:08:19.439 permanently. Now let's dash something
+01:08:22.158 again. I run gash and check the list
+01:08:25.759 once more. g-ash list. This time I see
+01:08:29.279 one stash item again. Now I run get
+01:08:32.479 stash apply. The command works
+01:08:35.120 perfectly. My files are restored just
+01:08:37.439 like before. But when I check the stash
+01:08:39.439 list again using g-ash list, boom, the
+01:08:42.960 stash is still there. It didn't
+01:08:45.120 disappear. So here's the key difference.
+01:08:48.080 G-pop restores your changes and removes
+01:08:51.120 them from the stash list while g-apply
+01:08:54.238 restores your changes but keeps them in
+01:08:56.319 the stash list for future use. That's
+01:08:58.640 exactly what I wanted to show you. I
+01:09:00.799 walked you through both commands so you
+01:09:02.799 can clearly understand how they behave
+01:09:04.640 differently. Hopefully now the concept
+01:09:06.880 is crystal clear. Now let's talk about
+01:09:09.839 get revert. The get revert command is
+01:09:13.120 used to undo the changes made in a
+01:09:14.960 previous commit. But instead of deleting
+01:09:17.439 that old comet, it creates a new one
+01:09:19.839 that reverses those changes. In other
+01:09:22.399 words, it cancels out the effects of a
+01:09:24.960 previous comet while keeping the project
+01:09:27.040 history completely clean and traceable.
+01:09:29.520 That's why it's called revert because it
+01:09:32.158 doesn't delete any comet. Rather, it
+01:09:34.238 creates a new comet that brings back the
+01:09:36.319 project to its previous correct state.
+01:09:38.799 Simply put, get revert means fixing an
+01:09:41.759 old mistake without erasing it. For
+01:09:44.560 example, imagine you accidentally added
+01:09:47.198 too much salt while cooking. Instead of
+01:09:49.920 throwing the whole dish away, you adjust
+01:09:52.319 the flavor by adding some extra
+01:09:54.080 ingredients to balance the saltiness.
+01:09:56.560 Similarly, get revert doesn't delete the
+01:09:59.040 faulty comet. It corrects it through a
+01:10:01.679 new one. Now, to revert something, you
+01:10:04.560 will need its comet ID. Let's see an
+01:10:06.800 example. Suppose in the file 3.txt, you
+01:10:09.600 added the line hello 3. Then you run g
+01:10:13.600 add dot then get commit minus m hello 3.
+01:10:18.159 Now if you check the log using g log one
+01:10:21.040 line you'll see let's say you realize
+01:10:23.440 that the hello 3 comet is introduced a
+01:10:25.520 bug and you want to remove it. Before
+01:10:28.080 that copy the comet ID of hello 3 and
+01:10:30.719 then run get revert that comet ID. After
+01:10:34.880 running the command you'll see a prompt
+01:10:36.800 asking for a commit message. You can
+01:10:38.960 either type a custom message or simply
+01:10:41.120 keep the default one and exit it by
+01:10:43.199 typing colonw that means write and quit.
+01:10:47.040 Once you do that, the changes from hello
+01:10:49.520 3 will be undone. Now if you check the
+01:10:52.320 logs again using glo one line, you will
+01:10:55.440 notice there's a new commit added
+01:10:57.280 specifically for the revert. At this
+01:10:59.679 point you might be reminded of g reset,
+01:11:02.159 right? The main difference between g
+01:11:04.000 reset and g revert lies here. Get reset
+01:11:06.800 can take you back to a specific comet
+01:11:08.640 and discard all comets after that point
+01:11:11.120 without creating any new comet. On the
+01:11:13.520 other hand, git revert removes the
+01:11:15.360 changes from a specific comet by
+01:11:17.199 creating a new one that reverses it. So
+01:11:20.239 if your project is on GitHub or any
+01:11:22.239 remote repository, other contributors
+01:11:24.239 can also see the revert commit ensuring
+01:11:26.560 clarity and preventing confusion.
+01:11:28.960 Another key point is if you check the
+01:11:30.719 logs after a reset, there will be no
+01:11:32.719 record of the removed comets. But when
+01:11:35.199 you use revert, you will clearly see an
+01:11:37.199 additional commit indicating that a
+01:11:38.960 revert took place. Crystal clear. Now
+01:11:41.760 let's talk about get rebase. Imagine you
+01:11:44.640 are starting to work on a new feature.
+01:11:46.400 So you create a new branch called
+01:11:47.840 feature by checking out from the main
+01:11:49.760 branch. You begin developing the new
+01:11:52.000 feature, making changes bit by bit and
+01:11:54.239 committing your progress as you go.
+01:11:56.159 Meanwhile, another developer adds more
+01:11:58.320 updates to the main branch for
+01:11:59.760 production. Now you also want to include
+01:12:02.320 those latest updates from the main
+01:12:03.840 branch into your feature branch. So what
+01:12:06.159 can you do? Well, there are several ways
+01:12:08.880 to handle this. As we have seen before,
+01:12:11.360 one option is to merge the main branch
+01:12:13.199 into your feature branch. If you do
+01:12:15.360 that, G will create a new merge commit
+01:12:17.760 and all the latest updates from main
+01:12:19.760 will be merged into your feature branch.
+01:12:22.320 However, note that merging always
+01:12:24.560 creates an additional commit. You can
+01:12:26.640 see it clearly if you run git log. Some
+01:12:29.679 developers find these extra merge
+01:12:31.360 commits a bit messy and if you continue
+01:12:33.840 merging multiple items, your commit
+01:12:35.840 history can look quite cluttered. In
+01:12:38.320 such cases, a better solution is to use
+01:12:40.719 git rebase. When you perform a rebase,
+01:12:43.600 the base of your feature branch changes.
+01:12:45.920 That means if you rebase onto main, all
+01:12:48.320 the new comets from main will be applied
+01:12:50.560 directly into your feature branch. Then
+01:12:53.040 all your feature branch comets will be
+01:12:54.800 reapplied on top of them. So while your
+01:12:57.360 main branches code content remains the
+01:12:59.280 same, the comet history becomes much
+01:13:01.120 cleaner and more linear. You can easily
+01:13:03.760 verify this using glo. Now let's
+01:13:06.880 understand this with an example. Let's
+01:13:08.960 say we create a new branch called
+01:13:10.560 feature from main. Get branch feature.
+01:13:14.159 Then we switch to that branch. Get
+01:13:16.719 checkout feature. Now we are inside the
+01:13:19.600 feature branch. Let's open 1.xt and add
+01:13:22.960 the line adding dark mode functionality.
+01:13:25.920 Then stage it. Get add dot and commit
+01:13:29.600 it. Get commit minus m. Adding dark mode
+01:13:33.360 functionality. Now let's switch back to
+01:13:35.760 the main branch. Get checkout main. We
+01:13:39.280 are now in the main branch. Let's create
+01:13:41.440 a new file called 2.xt and write inside
+01:13:44.080 it adding dark mode UI. Then stage and
+01:13:47.520 commit it. Get add dot get commit minus
+01:13:50.960 m adding dark mode UI. Done. That means
+01:13:54.640 our main branch now has a new feature
+01:13:56.880 dark mode UI. Now we want that same dark
+01:14:00.400 mode UI update to appear in our feature
+01:14:02.640 branch as well. So first we switch back
+01:14:05.040 to our feature branch. Get checkout
+01:14:07.760 feature. We are now inside the feature
+01:14:10.000 branch again. Our goal is to bring the
+01:14:12.000 latest updates from the main branch into
+01:14:13.760 the feature branch. But this time we
+01:14:16.159 will do it using replace. How do we do
+01:14:18.719 that? To perform a get rebase, you need
+01:14:21.280 to be on the branch you want to replace
+01:14:23.120 and then specify the branch from which
+01:14:25.199 you want to bring that changes. For
+01:14:27.520 example, if you are currently on the
+01:14:29.199 feature branch and you want to bring in
+01:14:30.960 the changes from the main branch, the
+01:14:32.719 command will be get rebase main. That's
+01:14:35.920 it. Once you run this command, the
+01:14:37.760 rebase will be completed smoothly and
+01:14:39.840 the dark mode UI update from the main
+01:14:41.679 branch will now appear in your feature
+01:14:43.360 branch. Here's what actually happens
+01:14:45.440 behind the scenes when you use rebase.
+01:14:48.239 Kit first identifies the most recent
+01:14:50.640 common comet shared between your current
+01:14:52.960 branch that means the feature branch and
+01:14:54.880 the branch you are rebasing onto that
+01:14:56.880 means the main branch. Then all the
+01:14:58.960 comets in your feature branch that come
+01:15:01.040 after that common comet are temporarily
+01:15:03.440 set aside. Next, it applies all the new
+01:15:06.320 comets from the main branch into your
+01:15:07.840 feature branch. Finally, it reapplies
+01:15:10.640 the saved comets from the feature branch
+01:15:12.560 on top of those main comets one by one.
+01:15:15.360 The result is a clean linear commit
+01:15:17.520 history much tedier than what you get
+01:15:19.679 with margin. You can easily see this
+01:15:21.920 difference by running git log. However,
+01:15:24.960 even though git rebase is very powerful,
+01:15:27.120 it's not recommended to use it on public
+01:15:29.440 repositories or branches where multiple
+01:15:31.920 developers are working together. If you
+01:15:33.920 must use it, you should always inform
+01:15:35.920 your team beforehand. Otherwise, it can
+01:15:38.480 cause serious issues. The reason is that
+01:15:40.719 rebase rewrites existing comet history.
+01:15:43.199 even the comet ids change. So if someone
+01:15:46.239 else is working on the same branch, your
+01:15:48.080 rebased comets won't match their local
+01:15:50.320 copies anymore and they won't be able to
+01:15:52.239 pull or sync normally. Therefore, before
+01:15:55.040 using rebase, make sure you fully
+01:15:57.120 understand where you are applying it and
+01:15:59.199 whether it could cause problems for your
+01:16:01.040 collaborators. It's perfectly safe to
+01:16:03.280 use rebates on your local or personal
+01:16:05.440 branches where only you are working.
+01:16:07.679 Just avoid rewriting commits that
+01:16:09.840 already exists on a shared remote
+01:16:11.920 branch. Now before we wrap up this
+01:16:14.400 tutorial, let's discuss one last
+01:16:16.480 important topic, the pull request. When
+01:16:19.679 working with G and GitHub, the term pull
+01:16:22.159 request, often shortened as PR, comes up
+01:16:25.600 frequently. A pull request is
+01:16:27.760 essentially a request you make to merge
+01:16:29.920 your changes into another branch,
+01:16:31.920 usually the main branch. It's a way of
+01:16:34.400 saying, I have made some changes in my
+01:16:36.320 branch. Please review them, and if
+01:16:38.400 everything looks good, merge them into
+01:16:40.320 the main branch. In other words, you
+01:16:42.719 can't directly make changes to someone
+01:16:44.560 else's repository. So when you finish
+01:16:47.040 your work in your own branch, you create
+01:16:48.880 a pull request to ask for permission to
+01:16:51.280 merge your code into the main
+01:16:52.640 repository. That's what we call a pull
+01:16:55.280 request. All right, let's head back to
+01:16:57.920 our Git journey repository on GitHub. By
+01:17:01.040 now, we have already pushed our main
+01:17:03.280 staging and development branches. At the
+01:17:06.159 top of the GitHub page, you will notice
+01:17:08.239 several tabs. code issues, pull
+01:17:11.120 requests, and actions. We'll now click
+01:17:13.679 on the pull requests tab. Here we'll see
+01:17:16.480 a big green button labeled new pull
+01:17:18.960 request. This is where you can see I
+01:17:21.360 want to merge the changes from this
+01:17:22.960 branch into another branch. Once you
+01:17:25.600 click new pull request, GitHub will show
+01:17:28.000 you two drop-down menus. Base the branch
+01:17:31.199 where you want to merge the changes.
+01:17:33.040 We'll select main here and compare the
+01:17:36.000 branch from which you want to bring the
+01:17:38.000 changes. we'll select development. In
+01:17:40.880 other words, we are saying I have made
+01:17:42.880 some updates in the development branch
+01:17:44.640 and now I want those updates to be
+01:17:46.640 merged into the main branch. GitHub will
+01:17:49.440 automatically show a detailed comparison
+01:17:51.920 which files have been modified, which
+01:17:53.760 lines have been added and which ones
+01:17:55.760 have been removed. Everything clearly
+01:17:58.000 visible. If everything looks good,
+01:18:00.400 scroll down and click create pull
+01:18:02.239 request. Then give your pier a title
+01:18:05.440 such as merge development updates into
+01:18:07.920 main and in the description box write
+01:18:10.400 something like this pier adds the latest
+01:18:12.960 updates and fixes from development to
+01:18:15.120 main. After that click create pull
+01:18:17.360 request to submit it. Now if you go back
+01:18:20.159 to the pull requests tab you will see
+01:18:22.320 your newly created PR development
+01:18:25.280 domain. Clicking on it you will find
+01:18:28.000 three sections. conversation where you
+01:18:30.800 and your teammates can discuss or
+01:18:32.640 comment on the changes. Commits which
+01:18:35.440 lists all the commits included in this
+01:18:37.600 PR files changed which shows exactly
+01:18:40.719 what changes were made in which files.
+01:18:43.280 If everything looks good after review,
+01:18:45.440 click the green merge pull request
+01:18:47.679 button at the top and then confirm by
+01:18:50.239 clicking confirm merge. Once it's done,
+01:18:53.440 GitHub will display a message saying
+01:18:55.360 pull request successfully merged and
+01:18:57.600 closed. That means all the updates from
+01:19:00.159 the development branch have now been
+01:19:01.760 successfully merged into main. This is
+01:19:04.000 how pull requests make code management
+01:19:06.080 so easier. Every change gets reviewed
+01:19:08.480 first and then merged into main. As a
+01:19:11.120 result, the main branch always stays
+01:19:13.040 stable and the entire team can
+01:19:14.960 collaborate safely and efficiently.
+01:19:17.360 That's how software companies use Git
+01:19:19.920 and GitHub. This was my complete
+01:19:22.480 tutorial series on Git and GitHub where
+01:19:24.480 I tried to explain all the essential
+01:19:26.480 day-to-day concepts in the most simplest
+01:19:28.480 way possible. I truly believe this
+01:19:30.239 series will be specially helpful for
+01:19:31.840 those who are just getting started. If
+01:19:34.000 you have always felt a bit intimidated
+01:19:35.920 or confused about using Git for the
+01:19:38.000 first time, these videos were made
+01:19:40.239 exactly for you. In short, we have
+01:19:42.320 learned how to create a local repository
+01:19:44.400 using Git in it from our working
+01:19:46.640 directory. how to stage files, commit
+01:19:49.040 them to update the local repository and
+01:19:51.280 finally how to push that code to a
+01:19:53.440 remote repository or clone a remote one
+01:19:56.080 to work locally. Hopefully, by the end
+01:19:58.640 of this video, you now have a clear
+01:20:00.719 understanding of how git works. And one
+01:20:03.440 more important thing on my logic based
+01:20:05.440 labs Facebook page, I have published a
+01:20:07.440 git cheat sheet which is especially
+01:20:09.360 useful for beginners. It's completely
+01:20:11.520 free. So feel free to grab your copy
+01:20:13.600 right now. The link is available in the
+01:20:15.679 video description. If you found this
+01:20:17.360 video helpful, don't forget to give it a
+01:20:19.280 like and subscribe to the channel
+01:20:20.800 because I have got plenty more valuable
+01:20:23.040 topics coming up next. And yes, if you
+01:20:25.840 have any feedback or suggestions about
+01:20:27.760 this video, please share them in the
+01:20:29.440 comment section. I read every comment
+01:20:31.520 and try my best to reply every comment
+01:20:34.000 as well. Stay well and I will see you in
+01:20:36.400 the next video.

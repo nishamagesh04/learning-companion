@@ -1,0 +1,394 @@
+# tactiq.io free youtube transcript
+# I was an AI skeptic. Then I tried plan mode
+# https://www.youtube.com/watch/WNx-s-RxVxk
+
+00:00:00.080 My interest in AI coding started when I
+00:00:03.040 tried plan mode. Before I tried plan
+00:00:04.799 mode, I was a total AI skeptic. I
+00:00:06.799 thought there's no way that AI can write
+00:00:08.800 decent code. Certainly not at the speed
+00:00:10.400 that I can. There's no way that AI can
+00:00:12.160 understand my codebase as well as I can.
+00:00:14.240 And there's no way that AI can mimic the
+00:00:16.079 instincts that I've built up over a long
+00:00:18.000 career doing this stuff. And then Claude
+00:00:19.920 Code released plan mode and I tried it
+00:00:22.240 and I've never gone back. Every piece of
+00:00:24.000 code I write now goes through this loop
+00:00:25.840 where I first plan it in plan mode with
+00:00:28.000 an AI. I then get the AI to execute the
+00:00:30.320 plan. Basically, write the code that was
+00:00:32.079 in the plan. We then test it together
+00:00:33.840 either by running unit tests or by type
+00:00:36.320 checking or by manual QA. Then we commit
+00:00:38.719 the code and the process starts again
+00:00:40.160 and we start planning the new thing. I
+00:00:41.680 believe this process is completely
+00:00:43.280 indispensable to getting decent outputs
+00:00:45.360 from an AI. And if you drop this plan
+00:00:47.440 step altogether, then you are really
+00:00:49.840 hampering yourself in terms of what you
+00:00:51.520 can do. Now, for folks who want to skip
+00:00:52.879 to the end and get the good stuff
+00:00:54.640 immediately, I've added a link below
+00:00:56.480 that shares my rules for creating really
+00:00:59.280 great plans in my claw.md file. We're
+00:01:01.600 going to be going through some of these
+00:01:02.640 and why I have them in here. But if you
+00:01:04.319 want to get them right now and start
+00:01:05.519 using them, then follow the link below.
+00:01:06.960 And if you don't want to miss out on any
+00:01:08.080 more of this stuff, then sign up to my
+00:01:09.439 newsletter there, too. But let's
+00:01:10.799 actually get talking about what plan
+00:01:12.479 mode is. First of all, when you run claw
+00:01:14.640 code or any kind of AI coding assistant
+00:01:16.640 on your computer, it can do four main
+00:01:19.200 things. It can write to the file system.
+00:01:21.520 It can read from the file system or it
+00:01:23.680 can read websites and documentation and
+00:01:25.520 go and ping URLs or it can run bash
+00:01:27.759 scripts on your local machine or if
+00:01:29.680 you're on Windows, you know, PowerShell
+00:01:31.040 or anything like that or it can use MCP
+00:01:33.119 servers that are either running locally
+00:01:34.799 or are remote and call tools on them to
+00:01:37.439 do things and find out information. The
+00:01:39.360 way the plan mode works is you
+00:01:40.799 essentially disable the write
+00:01:42.400 functionality. In plan mode, the AI
+00:01:44.400 agent isn't allowed to write files. And
+00:01:46.880 the agent has a different system prompt
+00:01:48.799 telling it to do different things to
+00:01:50.960 actually create a plan before making any
+00:01:53.119 changes. And if it tries to make
+00:01:54.479 changes, then it should actually
+00:01:55.759 encounter an error. So, it's being
+00:01:57.600 stopped from making changes. So, because
+00:01:59.520 the agent can't do any writes to the
+00:02:01.600 file system, it then goes into a mode
+00:02:03.520 where it explores your codebase, looks
+00:02:05.520 for all the information it might need,
+00:02:07.040 and puts that into a detailed plan that
+00:02:09.440 it will then go to execute on
+00:02:11.440 afterwards. You can get into plan mode
+00:02:13.040 really easily by just taking Claude code
+00:02:15.360 and just shift tabbing until you reach
+00:02:17.599 plan mode. Claude Code was the first
+00:02:19.280 place that I saw plan mode. I don't know
+00:02:21.520 about 9 months ago, let's say. But now
+00:02:23.520 other places like Cursor and VS Code
+00:02:25.760 also have plan mode. So I told you what
+00:02:27.680 it is, but I haven't really told you why
+00:02:29.520 this plan step here is so crucial. What
+00:02:32.239 happens if you don't plan and instead go
+00:02:34.879 straight into executing? Well, let's
+00:02:36.480 start off with the agent first. I want
+00:02:38.800 you to imagine for a second that you had
+00:02:40.319 a colleague who every time they made a
+00:02:42.400 commit forgot everything they'd ever
+00:02:45.040 learned about the repo. How would you
+00:02:46.879 make that colleague productive? Well,
+00:02:48.879 probably what you tell them is to
+00:02:50.480 explore the repo first before they went
+00:02:52.800 and made any changes. And that's what
+00:02:54.400 plan mode does here. It loads up the
+00:02:56.640 LLM's context with all the relevant
+00:02:58.480 info. It helps the LLM look at your code
+00:03:00.879 base to see code patterns that you're
+00:03:02.879 using. And not only that, it will often
+00:03:04.400 use a really cheap, fast model to do
+00:03:06.720 this. Claude Code often uses 4.5 Haiku
+00:03:09.760 which is really cheap and really really
+00:03:11.680 quick and launches it in a sub agent. So
+00:03:14.000 Haiku can go and ping out loads and
+00:03:16.239 loads of requests for different files
+00:03:18.000 and then it sends back a summary to the
+00:03:19.920 parent more expensive agent. If you had
+00:03:21.920 no idea what I just said, I will explore
+00:03:23.360 that in a future video. But all of this
+00:03:24.720 to say that planning helps the agent.
+00:03:27.120 Now if you don't do this then the
+00:03:28.480 context won't be loaded with relevant
+00:03:30.640 information. The LLM might make a stupid
+00:03:32.560 mistake because it just doesn't have all
+00:03:34.080 the information. It might use patterns
+00:03:36.000 or contexts that aren't actually used in
+00:03:38.239 your codebase. And so lots of the
+00:03:39.680 failure modes that you might be seeing
+00:03:41.360 while using these tools might be down to
+00:03:43.440 the fact that you're not planning. But
+00:03:44.720 let's talk about the other side of the
+00:03:46.080 coin that planning actually helps the
+00:03:48.080 developer. There's a great maxim from
+00:03:50.000 the pragmatic programmer that says no
+00:03:52.319 one ever knows what they want. When you
+00:03:54.239 start planning out a new feature or a
+00:03:55.840 new idea, you probably don't fully know
+00:03:58.560 exactly what you want. If you're
+00:04:00.080 planning a refactor, you might not fully
+00:04:02.159 understand the ramifications of your
+00:04:03.760 change. When you've got a UI thing to
+00:04:05.519 tweak, you might have three different
+00:04:06.959 options that you're considering in your
+00:04:08.319 head. The way around this for most
+00:04:09.599 developers is rubber ducking. Is
+00:04:11.439 literally talking it out with someone
+00:04:13.360 else or a rubber duck in front of you
+00:04:14.959 until you figured out the best solution
+00:04:16.880 by talking through it, considering all
+00:04:18.399 the options. And so, an actual planning
+00:04:20.720 process helps the developer by making
+00:04:23.120 sure they have a strong idea of what
+00:04:24.880 they want. And this process is
+00:04:26.479 iterative. In other words, you loop back
+00:04:28.639 and forth with the AI until you have a
+00:04:30.960 plan that you feel that you can depend
+00:04:32.400 on. And that process of the AI
+00:04:34.479 suggesting something and you saying,
+00:04:35.919 &quot;Uh, no, not quite.&quot; By the end of that,
+00:04:37.840 both you and the AI are going to have a
+00:04:39.759 clearer idea of what actually needs to
+00:04:41.440 be done. And then the doing of it is
+00:04:43.199 really simple and you can mostly let the
+00:04:44.800 AI go on autopilot. Now, if you don't do
+00:04:46.960 this, then the AI is not going to know
+00:04:49.199 what quite what you want. You in this
+00:04:51.040 situation are like a demanding client
+00:04:53.120 demanding something gets fixed, but the
+00:04:54.960 AI doesn't quite know how to implement
+00:04:57.520 it or the AI isn't sure how to please
+00:05:00.000 you. And if you don't talk out the
+00:05:01.680 requirements, you're not going to fully
+00:05:03.360 know what they are. Hashing out the
+00:05:04.880 requirements before you get to code is
+00:05:06.800 something we've been doing for 50 years
+00:05:08.479 as developers. And there's no reason why
+00:05:10.479 we should stop now. So hopefully I've
+00:05:12.080 convinced you that plan mode is really
+00:05:14.000 useful. Let's actually walk through a
+00:05:15.680 recent trace of mine so we can see it
+00:05:17.759 working. I've been working on my course
+00:05:19.120 video manager, which you've probably
+00:05:20.240 seen a few times if you've been looking
+00:05:21.840 at this channel. The first thing I did
+00:05:23.120 was I entered plan mode and I described
+00:05:25.759 a bug that was happening essentially in
+00:05:27.759 my database. I've just moved from repos
+00:05:30.160 into repo versions, but not all of the
+00:05:32.880 code had been migrated yet. So,
+00:05:34.560 something weird was happening when I
+00:05:36.240 added a repo. I didn't type this out. I
+00:05:38.000 just dictated this in. And by the way,
+00:05:39.680 if you're not using a dictation tool
+00:05:41.440 like Whisper Flow or Super Whisper, you
+00:05:43.440 absolutely have to, but that's probably
+00:05:44.960 a topic for another video. So, what it
+00:05:46.400 did is it then ran an explore sub agent
+00:05:48.960 to explore the codebase, understand the
+00:05:50.560 current schema, and how repos are
+00:05:52.000 created. Doing this, it burnt around
+00:05:53.840 40,000 tokens. But bear in mind it
+00:05:56.240 wasn't using opus 4.5 for this. It was
+00:05:58.720 using haik coup 4.5. And then it said
+00:06:01.039 now I can see the issue clearly. The
+00:06:02.639 api.reos.ad.ts
+00:06:04.240 create sections without a version. Let
+00:06:05.600 me explore how versions are created
+00:06:06.960 elsewhere. Understand that create
+00:06:08.319 sections method signature. So the
+00:06:09.680 explore sub agent just gave it a little
+00:06:11.520 hint as to what was going wrong and then
+00:06:13.199 it went and looked itself by searching
+00:06:15.199 in the repo with search create repo
+00:06:17.440 version. Let me check the exact schema
+00:06:19.440 definition and then once it had a full
+00:06:21.280 understanding it said let me write the
+00:06:23.440 plan. It saves these plans on the file
+00:06:25.600 system so that you can actually read
+00:06:26.960 them yourselves. And in fact, you can
+00:06:28.400 see in this directory I have dozens and
+00:06:30.160 dozens of plans from all of my plan mode
+00:06:32.479 usage. One thing it then did is it asked
+00:06:34.400 me some questions. It asked, should new
+00:06:36.639 repos default to v 1.0 is the initial
+00:06:38.880 version name and I said yes. So in other
+00:06:40.880 words, it was iterating with me towards
+00:06:43.039 the solution. This was a question that I
+00:06:45.039 hadn't answered in my initial like
+00:06:47.440 twoline prompt and it figured out it
+00:06:49.680 needed that information and it asked me
+00:06:51.120 the information. In other words, I was
+00:06:52.479 behaving like a crappy client, not
+00:06:54.240 providing all the information up front.
+00:06:55.680 And so I had a question from the
+00:06:57.440 developer and I answered it. So I then
+00:06:59.520 approved the plan and moved out of plan
+00:07:02.720 mode into um actual pushing mode. And
+00:07:05.520 from there, it was then able to actually
+00:07:07.280 make the changes. Funnily enough, it
+00:07:09.039 turned out that there was something that
+00:07:10.160 neither of us had considered, which was
+00:07:12.160 the sections still had a repo ID on them
+00:07:15.360 from the previous iteration. I said,
+00:07:17.280 surely they can just have a repo version
+00:07:18.880 ID and then resolve any dependencies
+00:07:20.560 through that. So for this I actually
+00:07:22.319 kicked off plan mode again. It went and
+00:07:24.720 did some more exploration here and then
+00:07:27.039 it found that it was a completely
+00:07:28.240 different task. So it updated the plan
+00:07:30.000 file with this refactor. Further down it
+00:07:32.000 then answered or I answered some more
+00:07:34.080 questions and it then went and did it
+00:07:35.919 and executed the code changes. So that's
+00:07:37.599 what the plan mode execution loop
+00:07:39.599 actually looks like. And this scales
+00:07:41.120 from small changes as we saw there to
+00:07:43.360 actually large scale architectural
+00:07:45.199 changes. One really cool thing I've seen
+00:07:46.880 people doing is taking their plans and
+00:07:48.800 putting them in GitHub issues so other
+00:07:50.720 people can comment on them. Kind of like
+00:07:52.000 a request for comment RFC proposal where
+00:07:54.240 you just put it up, people ping their
+00:07:56.080 like ideas up there and then you reach a
+00:07:58.080 shared solution together. It's even
+00:07:59.520 great to put them on GitHub PR so that
+00:08:01.599 someone reviewing your code can
+00:08:03.280 understand what the plan was when you
+00:08:05.680 made the code. But there's probably one
+00:08:07.039 question that's coming to your head
+00:08:08.400 immediately. Isn't this just like a huge
+00:08:10.479 amount of reading? Like I don't want my
+00:08:12.720 job to become just reading product
+00:08:14.479 requirement documents all day. Well, let
+00:08:16.000 me show you the single line of text that
+00:08:18.160 I added to my claw.md file that has made
+00:08:20.800 my plan so much easier to read. Here it
+00:08:23.199 is right here. Make the plan extremely
+00:08:25.039 concise. Sacrifice grammar for the sake
+00:08:26.960 of concision. Now, I've talked about
+00:08:28.160 this before, but this is an absolutely
+00:08:31.280 key part to my workflow. This takes
+00:08:33.279 plans that are like 2,000 words long and
+00:08:35.599 puts them in 400 words. It gives you a
+00:08:38.240 really detailed highlevel overview of
+00:08:40.240 the changes and actually means you can
+00:08:42.080 skip through loads of the plan really
+00:08:44.480 really fast and just scan it to see if
+00:08:46.560 anything looks wrong. And finally, I say
+00:08:48.240 at the end of each plan, give me a list
+00:08:49.839 of unresolved questions to answer if
+00:08:51.680 any. This gives the agent an extra
+00:08:53.200 little nudge just to ask me anything
+00:08:55.360 that it's confused about or not sure
+00:08:57.200 about. And it puts it in more of an
+00:08:59.040 exploratory sort of slightly worried
+00:09:01.120 paranoid mode, which is where I want it.
+00:09:02.959 I strongly recommend you take these
+00:09:05.040 literally three lines of text here, take
+00:09:07.680 them, put them in your claw.md and you
+00:09:09.360 will notice a massive difference in plan
+00:09:11.120 mode. I could make this setup longer,
+00:09:13.680 right? I could really go into detail
+00:09:15.600 here, but I don't want to overforce the
+00:09:18.080 LLM and this this core.md will be put
+00:09:20.800 into every single session I use. So, I
+00:09:22.959 find that the concision here is actually
+00:09:25.200 really essential for steering the LLM
+00:09:27.600 better. The fewer instructions you use
+00:09:29.360 inside your claw.md, the more
+00:09:31.200 instruction budget the LLM has to do
+00:09:33.600 other things. But instruction budget is
+00:09:35.120 probably the topic for another video, I
+00:09:36.560 think. Now, there's one final thing to
+00:09:37.920 cover here, which I can hear you typing
+00:09:40.720 out in the comments immediately. I got
+00:09:42.480 loads of these comments on my Clawude
+00:09:44.000 Code video as well, which covered some
+00:09:45.600 similar ground. And what you're probably
+00:09:46.959 typing is, I can do this faster myself.
+00:09:49.519 going through the whole plan mode then
+00:09:52.160 just to get the AI ready to do the work.
+00:09:54.640 I can just go into the codebase myself,
+00:09:56.640 change the files and actually just do
+00:09:58.160 it. And guess what? In some cases, you
+00:10:00.720 are absolutely right. When you know the
+00:10:02.480 codebase inside out when you know
+00:10:04.000 exactly the change that needs to be
+00:10:05.360 made, you go into the codebase with a
+00:10:07.920 massive advantage over the LLM, which is
+00:10:10.000 you have all the context already. You
+00:10:11.680 don't need to send off an explore sub
+00:10:13.200 agent or burn tokens to actually
+00:10:14.959 understand the codebase. You know it
+00:10:16.399 already. And in those cases, you should
+00:10:18.079 absolutely go through and make the
+00:10:19.519 change yourself. But here's the thing
+00:10:20.640 you should think about, which is those
+00:10:22.480 cases are going to be relatively
+00:10:24.399 limited. In a large organization, you
+00:10:26.320 only have so many repos that you
+00:10:28.399 understand deeply. Plan mode allows you
+00:10:30.480 to contribute effectively to repos you
+00:10:32.480 don't know that well because you and the
+00:10:33.760 LLM walk in with the same amount of
+00:10:35.920 context. And plan mode allows you to
+00:10:38.079 work your way through the repo, figure
+00:10:39.920 out exactly what change needs to be
+00:10:41.360 made, even if it's in a language that
+00:10:43.279 you're not quite that familiar with. And
+00:10:44.720 here's the other thing. In this
+00:10:46.399 situation where you can do it faster
+00:10:48.320 than the LLM, it's probably quite a
+00:10:50.320 simple change. If it's a big
+00:10:51.760 architectural tweak, then you probably
+00:10:54.160 still want to go through the rubber duck
+00:10:55.839 process. You can do that with a
+00:10:56.959 colleague, of course, but then you're
+00:10:58.079 taking up your colleagueu's time.
+00:10:59.360 Wouldn't it be better to rubber duck
+00:11:00.880 with an AI that can scan the codebase,
+00:11:02.880 understand what's going on, create a
+00:11:04.720 plan document, send that plan document
+00:11:06.640 to your buddy and say, &quot;I've got this
+00:11:08.079 plan. What do you think?&quot; or you might
+00:11:09.519 find with the AI that actually the
+00:11:10.959 requirements are more solid than you
+00:11:12.640 thought and you can just get the AI to
+00:11:14.160 bash it out. The final point here is
+00:11:15.920 that these tools are only going to get
+00:11:18.399 faster. It's an open question as to
+00:11:19.920 whether the tools are going to get
+00:11:21.200 smarter. I think they're going to get a
+00:11:22.880 bit smarter but not a lot smarter. But
+00:11:24.800 what's guaranteed is that they will get
+00:11:26.800 faster. And so if your only advantage
+00:11:28.560 over AI is your speed, then that
+00:11:30.800 advantage will get eroded more and more
+00:11:33.279 and more. And so for me, I'm using plan
+00:11:35.680 mode every single time because I want to
+00:11:37.680 develop familiarity with these tools. I
+00:11:39.920 want to understand how they work and
+00:11:41.600 what their weaknesses are because there
+00:11:43.040 are weird weaknesses baked into the cake
+00:11:45.360 that are not going to be removed however
+00:11:47.279 long this goes on for. And the more feel
+00:11:49.120 I can get for AI, I know the more secure
+00:11:51.680 my career is going forward. So that's
+00:11:53.279 plan mode. This loop where you plan
+00:11:55.120 before you execute and test that loads
+00:11:57.360 up the LLM with context and makes your
+00:11:59.760 requirements clearer to yourself. If I
+00:12:01.600 had one tip to give to anyone that's
+00:12:03.279 doing AI coding, it is to use plan mode.
+00:12:05.680 It is a phenomenal tool for working with
+00:12:08.160 AI and I honestly could not live without
+00:12:10.560 it. And if you want to get the most out
+00:12:11.760 of plan mode, then you got to follow the
+00:12:13.200 link below to get my agents.mmd file.
+00:12:15.600 Thanks for following along folks. I've
+00:12:16.800 been really enjoying making these AI
+00:12:18.079 coding videos. I'll see you in the next
+00:12:19.839 one.

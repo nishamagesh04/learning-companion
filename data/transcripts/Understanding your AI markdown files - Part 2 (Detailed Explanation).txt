@@ -1,0 +1,408 @@
+# tactiq.io free youtube transcript
+# Understanding your AI markdown files - Part 2 (Detailed Explanation)
+# https://www.youtube.com/watch/Hk63UqUKafY
+
+00:00:00.000 Hello friends. This video is a
+00:00:02.120 continuation to our previous one on the
+00:00:03.920 instruction files. Here we will discuss
+00:00:06.280 in detail about each category of the
+00:00:08.080 files. As a recap, we saw that the
+00:00:10.560 project might contain two very different
+00:00:12.960 kinds of files, the instruction files
+00:00:15.040 and the configurations. Uh instruction
+00:00:17.200 files again fall under two large
+00:00:18.880 categories as always loaded and on
+00:00:21.000 demand. Uh and but based on their
+00:00:23.120 purpose, we can categorize these
+00:00:24.880 instruction files into five different
+00:00:26.960 categories. The memory, rules, skills,
+00:00:30.400 commands, and subagents. We also saw
+00:00:32.800 that these files can exist in three
+00:00:34.240 different scopes like personal, project,
+00:00:36.000 and organizational, and how these work.
+00:00:38.600 Now let's look in detail about all of
+00:00:40.640 these files, and we'll start with the
+00:00:42.040 memory files. That is the cloud.md and
+00:00:44.200 agents.md file. This is the persistent
+00:00:46.400 project context that becomes a part of
+00:00:48.720 the system prompt. We literally never
+00:00:50.800 invoke it. The IDE auto loads it at the
+00:00:53.680 start of the session, drops it into the
+00:00:56.200 system prompt, and resends it with every
+00:00:59.240 single message we type. Now the modern
+00:01:01.600 IDE tools and LLMs implement prompt
+00:01:03.680 caching, uh especially with a system
+00:01:05.840 prompt, and you know, that saves a lot
+00:01:08.440 of cost, but the principle is still the
+00:01:10.480 same. It is automatic. And it is there
+00:01:13.760 on every message that is sent. Which
+00:01:16.680 means pointing the agent at the file and
+00:01:19.800 then giving a message like read cloud.md
+00:01:23.480 and follow it strictly is a complete
+00:01:25.400 waste because it's already there. It's
+00:01:27.400 already a part of the system prompt, and
+00:01:29.360 the same instructions are already passed
+00:01:30.800 to the model.
+00:01:31.920 Now what goes inside this file is the
+00:01:33.880 rules or instructions that we want AI
+00:01:35.880 model to follow across the entire
+00:01:37.680 project. These are some of the common
+00:01:40.280 commands that we run like build, test,
+00:01:42.840 deploy commands, uh the technology
+00:01:44.800 stack, versions of libraries that is
+00:01:47.080 allowed, uh any conventions, naming
+00:01:49.480 conventions, formatting guidelines,
+00:01:51.920 uh a few firm always do, never do type
+00:01:55.080 of rules, glossary of project-specific
+00:01:57.960 terms, etc. If we look at a well-written
+00:02:00.800 cloud or agent.md file, you will notice
+00:02:03.160 that it does not contain the same
+00:02:05.920 information that is already captured in
+00:02:08.639 the project's readme file, and the
+00:02:11.160 agent.md or cloud.md file is not like a
+00:02:13.959 thousand lines long
+00:02:15.760 like a readme file. So, the best
+00:02:17.600 practice to write an effective memory
+00:02:20.480 instructions file is to keep it under
+00:02:22.360 about 200 lines, and that's the ant
+00:02:24.959 topics guiding number. Longer files
+00:02:27.680 still loads completely, but how strictly
+00:02:31.600 the model tries to follow them would
+00:02:33.800 actually go down the longer the file
+00:02:36.000 gets. Another key point is to include
+00:02:39.320 instructions in this file which the
+00:02:41.800 agents could not infer on their own, the
+00:02:44.400 non-obvious decisions. So, one of the
+00:02:46.680 guideline that generally people say is
+00:02:48.880 that when you face the same type of
+00:02:50.959 problem more than twice and you want AI
+00:02:53.160 to act in a certain way, that's possibly
+00:02:55.760 a good candidate to be added to your
+00:02:57.320 memory instruction file. And the moment
+00:02:59.840 it starts creeping past 200 lines, it's
+00:03:02.560 better to split it into rules, which is
+00:03:04.280 our next category. Above all, handwrite
+00:03:06.920 it. Remember the research that
+00:03:08.560 auto-generated memory files measurably
+00:03:10.600 reduce success. And talking about size,
+00:03:13.519 if our cloud.md is about like 5,000
+00:03:16.239 tokens, for example, and if we have 100
+00:03:19.080 messages in that session, that's like
+00:03:21.000 half a million tokens just for that file
+00:03:23.560 alone, excluding the system prompt and
+00:03:26.440 excluding the response tokens and
+00:03:27.880 anything that the model has done with
+00:03:29.519 respect to tools, actions, etc. So,
+00:03:32.519 another point to notice, in these files,
+00:03:35.040 we generally don't have to give the
+00:03:37.120 agent a persona or say things like
+00:03:39.400 you're a helpful assistant, you try to
+00:03:41.200 achieve a task in a step-by-step manner,
+00:03:42.800 etc.
+00:03:44.040 Because these are generally taken care
+00:03:45.640 by the IDE itself. Most of the modern
+00:03:48.600 IDEs we use today have a well-structured
+00:03:51.080 system prompt, and the system prompt
+00:03:53.480 includes these basic instructions, and
+00:03:55.760 our memory file is added as one of the
+00:03:59.160 instructions along with the system
+00:04:00.800 prompt just to give additional
+00:04:02.960 project-specific information to AI. This
+00:04:05.640 is the core of the memory file, and this
+00:04:08.720 is same concept across different tools.
+00:04:11.640 The equivalent names are like Claude
+00:04:13.480 uses the name claude.md, Copilot uses
+00:04:15.920 copilot_instructions.md, Cursor and
+00:04:18.040 CodeX uses agent.md, Gemini uses
+00:04:20.798 gemini.md.
+00:04:22.440 Uh WinSurf has winsurf_rules, Kiro has
+00:04:24.840 like steering files, etc. And the good
+00:04:26.960 news is that almost every tool now
+00:04:29.600 follows agent.md, and it's becoming the
+00:04:32.440 one memory file that can travel
+00:04:33.960 everywhere.
+00:04:35.160 Next up, rules.
+00:04:37.040 Rules are essentially project
+00:04:38.680 instructions split into separate topic
+00:04:40.840 files that can load conditionally, and
+00:04:43.120 this is where the always loaded versus
+00:04:45.919 on-demand pays off.
+00:04:47.720 Because rules sit on both the sides, a
+00:04:49.919 rule with no condition, no path
+00:04:52.160 condition, uh loads at the session
+00:04:54.160 start, exactly like the memory, but a
+00:04:56.720 rule with a path condition stays out of
+00:04:59.160 the context until we touch a file that
+00:05:01.440 matches it.
+00:05:02.720 So, how is a rule invoked?
+00:05:05.040 It is not invoked by us, but by a
+00:05:07.600 condition. For example, when an AI agent
+00:05:10.200 edits a test file,
+00:05:11.800 our testing rule quietly appears. If we
+00:05:14.400 move to some other task, then it drops
+00:05:16.480 back out.
+00:05:17.600 That's the entire reason rules exist as
+00:05:19.640 a separate thing from memory files. We
+00:05:22.320 get to keep specialized guidance out of
+00:05:24.960 the context until the necessity appears.
+00:05:28.480 What goes into a rule file is generally
+00:05:30.640 a domain-specific instruction. If you
+00:05:32.720 look at a good example, the giveaway is
+00:05:35.680 the little block of the front matter at
+00:05:37.960 the very top that says which files this
+00:05:40.680 rule applies to, followed by a short
+00:05:43.080 description focused on the set of
+00:05:45.680 instructions underneath. And here is the
+00:05:47.840 detail to pay attention to.
+00:05:50.040 Every tool spells the scoping a little
+00:05:51.920 bit differently. In Cloud Code, the
+00:05:54.200 front matter key is paths, and we give
+00:05:56.720 it a list of globs. In GitHub Copilot,
+00:05:59.640 the same idea is called apply to.
+00:06:02.160 Cursor doesn't use these keys. It has
+00:06:04.640 like different models, such as always
+00:06:06.720 apply,
+00:06:07.960 auto attach, agent requested, etc. And
+00:06:10.560 Kiro uses an inclusion mode, like file
+00:06:13.480 match or auto.
+00:06:15.560 Same concept everywhere, four or five
+00:06:17.680 different spellings. So, if we move rule
+00:06:20.240 between tools, this front matter is the
+00:06:22.800 line we have to translate.
+00:06:25.280 How to create an effective rule? Simple,
+00:06:27.600 keep one domain per file, use the path
+00:06:30.240 conditions aggressively, and remember
+00:06:32.080 that the rules are like memory. They are
+00:06:34.760 instructions and guidance that we
+00:06:36.320 provide to the model, so they are not
+00:06:38.480 completely enforced. They're not
+00:06:39.919 guaranteed. So, if you want an
+00:06:41.320 enforcement, like a particular command
+00:06:43.160 can never run, then that does not belong
+00:06:45.880 in a rule. That belongs in a
+00:06:47.440 configuration as a permission or a hook.
+00:06:49.760 Next, skills. Now, this is one to
+00:06:52.280 understand very clearly, because this is
+00:06:54.080 the most tangible one. What is a skill?
+00:06:56.680 It's a reusable, on-demand capability.
+00:06:59.400 The structure is a small folder with a
+00:07:01.360 skill.md file, and optionally some
+00:07:03.919 scripts, reference documentation,
+00:07:06.120 templates, all of them bundled alongside
+00:07:08.440 it. And how it is invoked? Two ways. The
+00:07:11.120 agent can invoke a skill on its own when
+00:07:13.600 the task matches the skill's
+00:07:15.760 description, or we can invoke it
+00:07:17.440 explicitly by its name with a slash
+00:07:19.240 command. So, when we hit slash in our
+00:07:21.280 Cloud Code or Copilot, the menu that
+00:07:23.640 pops up is this. Some of the skills are
+00:07:26.560 vendor shipped with the IDE, and we can
+00:07:28.560 add our own custom skills, and they will
+00:07:30.200 all show up in the same list, callable
+00:07:31.960 by name. With skills, underneath, there
+00:07:34.520 is really an elegant idea called
+00:07:36.600 progressive disclosure. And it happens
+00:07:38.600 in three tiers. At rest, only the
+00:07:40.720 skill's name and the very short
+00:07:42.640 description is loaded into the context
+00:07:45.520 which is like a few dozen tokens. Now
+00:07:47.600 when the task matches then the full body
+00:07:50.840 of the skill.md is loaded and only if
+00:07:53.800 the skill actually needs then it's
+00:07:55.680 bundle describes reference files all of
+00:07:57.840 them gets pulled into the context.
+00:07:59.680 That's why we can see even if we have
+00:08:01.600 hundreds of skills installed we
+00:08:03.560 literally pay only for the description
+00:08:06.000 and the skill name that is loaded with
+00:08:08.200 every message with a system prompt and
+00:08:10.680 we pay for the skills only when a
+00:08:13.080 particular skill is activated or used.
+00:08:15.800 And this is the most token effective
+00:08:17.600 mechanism in this whole set of files. A
+00:08:20.120 few best practices when creating skills
+00:08:22.720 is to front load the description. That
+00:08:24.280 is the text the agent uses to decide
+00:08:26.480 whether to fire a skill or not should be
+00:08:29.080 at the very beginning of the skill in
+00:08:30.720 the skill.md file. Keep the main body
+00:08:33.080 tight and push the details whatever it
+00:08:35.400 requires to reference files and
+00:08:37.360 templates and example codes rather than
+00:08:39.440 describing what a good code would look
+00:08:41.400 like because agents pattern match from
+00:08:43.840 examples far more reliably. The skills
+00:08:47.040 the equivalence part is really easy
+00:08:49.040 because skills are the one category
+00:08:51.600 where the format is genuinely portable.
+00:08:53.800 Skill.md is open standard as we
+00:08:56.000 discussed a skill we write in cloud can
+00:08:58.720 be read by codex kido anti-gravity and
+00:09:02.200 and it's like write it once and it
+00:09:04.040 travels again similar to the memory file
+00:09:06.440 agents.md.
+00:09:08.240 The next category of files is the
+00:09:09.800 commands or prompts depending on the
+00:09:11.400 tool
+00:09:12.280 and these are like closely related to
+00:09:14.200 skills. So what a command is it's a
+00:09:16.360 saved prompt we trigger it by the name
+00:09:18.560 again we use the slash command to
+00:09:20.320 actually invoke it and the contents of
+00:09:22.480 this
+00:09:23.320 files enter into the model context only
+00:09:25.880 when we invoke it never before. So any
+00:09:28.680 of the commands that is created but
+00:09:30.839 never used there's no cost associated to
+00:09:33.160 it.
+00:09:34.040 And and this is the key difference
+00:09:35.320 between the prompts or commands and the
+00:09:37.360 skills. Commands and prompts are invoked
+00:09:40.960 only by us and the moment we invoke the
+00:09:43.520 entire contents is loaded into the
+00:09:45.400 context, so it's on demand.
+00:09:47.440 With skills, it is the progressive
+00:09:48.920 disclosure where the skill description
+00:09:51.240 and the title are given to the model's
+00:09:53.240 context
+00:09:54.440 and if the AI decides that it is
+00:09:57.240 required, then the skill.md is loaded
+00:09:59.080 and then the other files are loaded
+00:10:00.480 based on the need. So, that's basically
+00:10:02.440 the key difference between the both in
+00:10:04.360 terms of how it can be invoked and how
+00:10:06.680 they occupy the context. So, if you look
+00:10:08.440 at a good example of a cloud command,
+00:10:10.240 there are two things that stand out.
+00:10:11.720 There is a small front matter hint
+00:10:13.080 telling us what arguments to pass and
+00:10:15.680 there is often a line that runs an
+00:10:18.040 actual shell command and injects its
+00:10:19.920 output straight into the prompt even
+00:10:21.840 before it goes to the AI model. For
+00:10:23.840 example, pulling the text of a GitHub
+00:10:26.200 issue into a fixed issue command is is a
+00:10:29.280 good example of that. So, a command is
+00:10:31.080 not always static. It can gather live
+00:10:34.400 context the moment we fire it.
+00:10:37.320 And in Cloud Code, commands and skills
+00:10:39.520 have mechanically merged. They are in
+00:10:41.839 the same machinery now and if a skill
+00:10:43.600 and a command share the same name, the
+00:10:45.400 skill is the one that actually wins.
+00:10:47.760 The only difference left is the intent.
+00:10:50.480 A command is something that we
+00:10:51.680 deliberately decide to fire. A skill is
+00:10:54.600 something that can also be fired by its
+00:10:56.560 own by the agent when it decides it fits
+00:10:59.560 the task at hand. So, the practical rule
+00:11:02.120 is simple. If we have a deterministic
+00:11:04.400 routine that we want to trigger
+00:11:06.040 ourselves whenever we want to when
+00:11:08.600 whenever we finish a task like a deploy
+00:11:10.600 release checklist, then command or
+00:11:13.080 prompt is a perfect use of it. If we
+00:11:15.200 want the agent to automatically reach
+00:11:17.160 and do it, then we should create that as
+00:11:19.080 a skill. Now, how these files are
+00:11:20.760 defined in different tools, Cloud Code
+00:11:22.680 calls this as commands, Co-pilot calls
+00:11:24.640 these as prompt files, Wind Surfs calls
+00:11:26.760 them as workflows, Antigravity also
+00:11:29.120 calls them workflow, Kiro has some
+00:11:31.400 steering files. Different names in
+00:11:33.720 different tools, but identically the
+00:11:35.240 purpose is same. It's a saved prompt
+00:11:37.400 that is triggered by name by us. Now,
+00:11:39.880 the last set of files, the last purpose
+00:11:42.280 is sub agents. What a sub agent is, it's
+00:11:44.960 a specialized worker that the main agent
+00:11:47.720 or we can delegate an isolated job.
+00:11:51.160 So, the structure is a markdown file
+00:11:52.840 with the front matter giving it a name
+00:11:55.120 and a description, specific tools it is
+00:11:57.320 allowed to use, and optionally a one
+00:11:59.360 model that it can choose.
+00:12:01.200 Followed by the system prompt that
+00:12:02.720 defines its personality and the job. How
+00:12:05.800 it is invoked is by delegation, not by
+00:12:08.560 loading into our chat.
+00:12:10.640 So, the main agent that is handling its
+00:12:13.000 task when the description matches, it
+00:12:16.120 runs its own fresh context window. Its
+00:12:19.360 definition never clutters the main
+00:12:21.200 conversation or the main context where
+00:12:23.880 this is being invoked from. And it
+00:12:26.240 cannot either see any of the
+00:12:27.680 conversations that is there in the main
+00:12:29.840 uh chat or in the main context. That
+00:12:32.120 isolation is exactly why sub agents are
+00:12:34.640 useful. Code base exploration, running a
+00:12:36.839 test suite, a long security sweep, these
+00:12:39.920 pollute the main context a lot, and
+00:12:42.240 doing them in a sub agent keeps them out
+00:12:44.320 of the main context. So, the primary
+00:12:46.080 session stays clean and focused while
+00:12:48.520 the job gets done and the task is
+00:12:50.120 reported back to the main uh context.
+00:12:52.839 So, how to write a better agent
+00:12:54.560 description or an agent markdown file?
+00:12:56.480 Some of the best practices include
+00:12:58.120 making the description keyword rich
+00:12:59.800 because that's what drives the automatic
+00:13:01.520 delegation. Whitelist the tools
+00:13:04.120 deliberately. Like, for example, if you
+00:13:05.960 have a read-only agent, uh it should not
+00:13:08.200 be given access to tools that can
+00:13:10.240 actually edit or write any of the files.
+00:13:13.560 Uh it's recommended to pick the smallest
+00:13:15.800 model that fits the job to control the
+00:13:18.320 cost. And uh the sub agents, each of the
+00:13:21.320 sub agents should be given one clear
+00:13:23.520 job. And then we can chain them. Like,
+00:13:25.800 for example, there can be a specs agent
+00:13:28.680 and a reviewer agent and an implementer.
+00:13:31.440 All these agents can be created with one
+00:13:33.720 specific scoped task and they can
+00:13:35.880 interact with each other.
+00:13:37.880 And one note to be aware of with respect
+00:13:39.600 to cost is each sub-agent carries its
+00:13:42.320 own uh setup overhead, that is its own
+00:13:44.600 system prompt, its own tool connections,
+00:13:46.680 schemas, instructions, etc. So, a
+00:13:49.080 multi-agent is a powerful system, but it
+00:13:51.600 is not cheap. In terms of how each tool
+00:13:54.360 treats this, this is the least
+00:13:56.400 standardized of all the different
+00:13:57.800 categories we saw. Cloud code uses
+00:13:59.880 markdown files. Codex, as I said,
+00:14:02.040 introduced TOML files. Cursor has their
+00:14:04.880 own custom modes. Kiro has custom
+00:14:06.800 agents. Anti-gravity, by design, is
+00:14:09.600 agent-first and orchestrates a whole set
+00:14:11.920 of them uh internally. Unlike skills, a
+00:14:15.120 sub-agent definition cannot be ported
+00:14:17.520 between tools. So, for now, this is one
+00:14:19.640 category where we should expect to
+00:14:21.800 maintain separate version of agents per
+00:14:24.560 tool if we have a multi-tool working
+00:14:27.200 environment. To summarize, we have five
+00:14:29.960 different categories of instruction
+00:14:31.600 files and each of them serve a different
+00:14:33.960 purpose. Instructions that are always
+00:14:35.880 needed are in memory files. Instructions
+00:14:38.400 that only match a particular set of
+00:14:40.680 files will be a scoped rule.
+00:14:42.560 Instructions for specialized tasks and
+00:14:45.040 also should be something that the agent
+00:14:47.080 can reach based on a task it performs
+00:14:49.480 should be a skill. We want something to
+00:14:51.680 be triggered by us based on the name.
+00:14:54.040 Those instructions going to commands.
+00:14:56.000 And when we want something to run in
+00:14:58.080 isolation on its own context, they go
+00:15:00.600 into a sub-agent. With that, we are at
+00:15:02.640 the end of today's discussion and I hope
+00:15:04.440 you found this useful. Thank you and
+00:15:06.560 I'll see you in the next one.

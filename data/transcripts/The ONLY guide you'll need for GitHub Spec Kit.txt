@@ -1,0 +1,376 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/a9eR1xsfvHg
+
+00:00:00.080 Hey friends, I am Dan Delamarski. I'm one of the maintainers for SpecKit, the new project from GitHub. It's that
+00:00:06.799 experiment that you've been hearing all about on the YouTubes and the Tik Toks and the Instagrams and wherever else.
+00:00:13.200 But seriously, look at the numbers. Look at this.
+00:00:18.960 16.3,000 stars. I I was just celebrating yesterday that we hit 15,000 and it's
+00:00:25.680 16.3,000 already a week after release. This is wild to me. Absolutely wild.
+00:00:32.000 Thank you. Thank you to all of you who are trying this out, who are experimenting, who are filing issues,
+00:00:37.760 opening pull requests. It helps tremendously. And boy, do we have a lot of stuff in store for you more around
+00:00:44.879 specit. But actually, that's the point of the video. We're going to be talking about specit today. We're going to be talking and actually looking at how this
+00:00:53.440 works. And by the way, like I'm also one of those people that looks at these issues fairly regularly. So if you have
+00:00:59.280 any feedback, go and submit. Go and submit your feedback right here in
+00:01:04.799 GitHub. Open an issue. Uh do not open a pull request that rewrites the entire thing as an MCP server. I know I like
+00:01:11.360 MCP. I'm going to reject that request because you haven't talked to anybody
+00:01:16.479 about this. So if you have any big changes, make sure you talk about this first in the issue. And what is what is the the issues that I see sometimes are
+00:01:23.759 being open like Dr. D? What is this? I
+00:01:28.799 mean serious. Yeah, do not do not open issues. They just say DR like give me give me some context for how we can improve this. But anyway, so specit what
+00:01:36.479 it is is a toolkit that helps you get started with specri development. At Microsoft, we are very big on spectrum
+00:01:44.000 development lately. And one of the things that we decided to look at is how can we actually simplify the process of
+00:01:51.119 you using spectrum development to build real software. It's one of those important things that you don't really
+00:01:57.840 think about until you actually try it. One of the conversations that I had recently was around vibe coding, right?
+00:02:04.399 Like you hear all these people that talk about vibe coding some SAS app and
+00:02:09.440 there's a lot of this imprecision happening. You end up in these random rabbit holes where the code is not quite
+00:02:15.280 what you wanted. The implementation is not quite what you wanted. The design is not quite what you wanted. So spec
+00:02:20.400 driven development is something that can actually help you get out of that rabbit hole into a little bit more of a
+00:02:25.840 scalable solution for your software. So uh let's take a look here. It's again it's a GitHub repo. It's all open
+00:02:31.280 source. It's free. You can take a look at stuff that we have here. And uh, of
+00:02:36.319 course, one of the things that I did recently is push the specify CLI reference spec kit includes this
+00:02:42.720 wonderful thing which is called specify CLI. It actually scaffolds things for you. So if you're a developer and you're
+00:02:49.280 thinking like, wow, what do I need to get started with Spectrum Development? CLI is right there. So you there's a
+00:02:55.120 reference for it now as well. And uh I use uvx and you can install it directly from the GitHub repo because I have not
+00:03:02.720 yet published this to um the Python package repository. It's coming. I'm
+00:03:07.760 working on it. I saw that people already filed issues on this which is great. But um we're going to use it directly from
+00:03:13.680 the repo as is. So I'm just going to copy this command with UVX. Shout out to the folks at Astral. Uh this is
+00:03:19.599 fantastic. UVX. I I use UV and UVX all all the freaking time. Um, also if you
+00:03:26.560 do not want to use a CLI, that's totally fine. I understand you don't want to install things. You don't want to install UVX.
+00:03:33.280 Shout out to Astral folks. Your product is great. I love UVX. Um, this is not sponsored by them. But if you do not
+00:03:40.319 want to do that, you can go to the releases and just download the templates yourself. We support several agents. And
+00:03:46.080 just today, actually, I launched support for Cursor. So, if you're one of those people that uses Cursor, you're in luck.
+00:03:52.239 You can use one of the releases here. So we have a bunch of them. Uh there's for example for copiloud, we have them for
+00:03:57.760 PowerShell and shell scripts. There's a bunch of them that you will see shortly in our demo. Uh depending on what
+00:04:04.720 operating system you're running in. So if you're running on Linux, you might use bash scripts. If you're running on Windows, you might use PowerShell. No
+00:04:11.680 judgment here. Use whatever fits your scenario. But you can download these. We're going to say grab the zip file for
+00:04:17.199 the PowerShell script for uh our copilot and put it into downloads. and we're
+00:04:23.280 going to save it here. And let's go and take a look at it. Let's open it.
+00:04:28.720 And you'll notice that I have the specify folder that has some metadata for specify things like memory, scripts,
+00:04:34.320 and templates. And scripts are, of course, PowerShell because that's what we downloaded. These are helper scripts.
+00:04:39.759 We have some prompts in the GitHub folder that we'll get to in a second. So, you can just grab this, put it in
+00:04:46.400 your project. You do not need to use a CLI. I promise you, no installation required. But installation actually
+00:04:52.880 makes it much easier. So I do recommend using it. I just copied the command and I'm just going to go to the terminal,
+00:04:58.400 zoom it in, and we're going to paste it here. And I'm going to bootstrap a new project. Let's see what is a thing that
+00:05:05.040 we want to build today. And let's say I want to build a podcast website. I am
+00:05:10.639 big at podcasting. If you have not listened to the work item, check it out. But let's say I do not have a podcast
+00:05:16.639 website and I want to build one for myself. So naturally what I want to do is just bootstrap the spectrum process
+00:05:22.960 for the website. I'm going to call it pod site and we're going to press enter and wait for specify to launch. Now here
+00:05:31.120 is where things get interesting. So we have different options. I can choose different agents for which I am
+00:05:38.400 bootstrapping these custom commands, custom prompts. Sometimes I use copilot, sometimes I use cloud code. I'm not that
+00:05:45.280 big on Gemini CLI and cursor, but I know that other people use them. So, they're
+00:05:50.639 here. You can use them through the specify CLI. And because it runs in a terminal, you can always just, you know, navigate with your arrows, use your
+00:05:57.120 keyboard, be comfortable with your keyboard, and pick the agent that you want. I'm going to pick copilot. Now,
+00:06:04.639 I'm also picking the type of scripts that I'm going to be using for my helper
+00:06:09.840 system, right? Because when we're running a bunch of these prompts, what they're also going to do is they're going to run a bunch of scripts that are
+00:06:15.440 going to bootstrap things like get branches and make sure that the uh JSON
+00:06:21.520 content that we use to kind of link metadata is the same. And for that, the
+00:06:26.800 easiest way to do this is with scripts because it's deterministic. You don't actually have to rely on the LLM, the large language model to go in and figure
+00:06:33.199 out how to piece things together. Things just work. So it defaults smartly to the
+00:06:38.960 operating system that you're running in. In this case, I have PowerShell selected because I'm running this on a Windows
+00:06:44.319 terminal. It's Windows PowerShell, right? But if I so desire, I can switch to shell scripts. If you're running WSL
+00:06:49.919 2 or maybe you have an Ubuntu VM or a Fedora VM, you can use that there as well. And by the way, this just launched
+00:06:57.199 today. It's hot off the press. You can actually now support PowerShell. You don't need WSL 2 on Windows to run this.
+00:07:03.120 You can just run it native Windows. I'm going to select PowerShell, right? Because that's that's what we want. We want to run this on Windows as is.
+00:07:10.400 PowerShell it is. And we'll see some status changes. This is basically the specified CLI going and downloading a
+00:07:16.639 bunch of stuff and extracting the templates locally. As I mentioned before, like this is just a convenience
+00:07:24.080 layer. Like this is not something that you have to do. You can just download the zip yourself from the release for the agent and the shell script type that
+00:07:30.720 you want and extract it and put in your project. Just as easy. So now you'll notice that there are some
+00:07:36.960 instructions here for me. I can navigate to the folder. I can open in Visual Studio Code and use some slash commands.
+00:07:44.479 There are specify plan and tasks. These are going to help me to actually bootstrap my project. And I can update
+00:07:51.199 the constitution file. The constitution file is actually something that you probably have not heard about before
+00:07:57.199 because it's relatively new. the the the idea of the constitution is that it establishes a set of non-negotiable
+00:08:03.840 principles for your project. So if you have things like I always have to have
+00:08:09.039 tests. I always got to make sure that I'm running Nex.js of a specific
+00:08:14.160 version, you encode that in the constitution. That's where the stuff goes. So this is where the constitution
+00:08:19.199 comes in and it becomes super super helpful for any of your projects. Uh now
+00:08:24.800 we're going to jump back here to our terminal and I'm going to launch VS Code because I'm going to be iterating on
+00:08:30.400 this project inside VS Code of course and we'll notice that the podsite here
+00:08:35.839 and this is because I opened the wrong folder and this is how I know notice
+00:08:41.440 that I have podsite here and these are the GitHub folders. But if I go into agent mode and VS code here and if you
+00:08:48.480 see if you start typing in /specify oh I can't type slsp specify right and
+00:08:57.040 you will not see the command there that means you're in the wrong folder you are one level too high up from where you
+00:09:03.279 need to be to do this we're going to close VS go back to the terminal and
+00:09:08.320 we'll go to cd pod site that's why I put this instruction here in green that you will see here in the
+00:09:15.440 terminal. It's called cd podside. Go to the folder to be able to use these commands. So, we're going to go there,
+00:09:22.480 right? And now we're going to launch code from here. Fantastic. Now, we're in VS Code. Now,
+00:09:29.440 we see the GitHub folder and podsite is at the root, which is fantastic. That's exactly what I wanted. And now I see
+00:09:36.640 that there is the GitHub folder with a bunch of prompts. These are going to be our slash commands. And slash commands
+00:09:42.480 in VS Code is nothing other than custom prompts. That's that's all it is. It if you look at any of them, it basically
+00:09:48.720 outlines a set of instructions for the LM to follow to establish specific uh
+00:09:54.000 conventions around what we're building. So in our case, it requires running a specific script. We see some
+00:10:00.240 instructions for things to do. Use absolute paths. It's nice. Same for specify. Same for tasks. And we again
+00:10:07.200 we'll see the purpose of these commands just just in a second here. and also have the specify folder. Again, shout
+00:10:12.399 out to the community members who suggested this because before if you have like memory and a bunch of these helper scripts and the templates, they
+00:10:18.880 would just land directly in the repository route, which is not super helpful if you already have a project.
+00:10:25.279 So, these simplify things a little bit. So, you can just keep them inside this specify folder. And if you so desire,
+00:10:31.839 you can even get ignore it, which I don't know why you would do that, but you can. So
+00:10:37.360 now that we have these baseline pieces here, let's go ahead and use our slash
+00:10:42.560 commands. I'm going to maximize the chat box here. I'm going to use GPD5, but you can also use different models. You can
+00:10:48.959 actually experiment with different models that exist in Copilot or any of the agents that you're using to see what
+00:10:55.440 output is better for the things that you're building. The output will vary. So uh for example I like GPD5 and cloud
+00:11:02.240 sonnet 4 personally but depending on what you're building and the scope of things that you're building you might
+00:11:08.079 want to customize that and as I mentioned there's this constitution document so if you go to memory and
+00:11:13.200 there's constitution right now is just a blank template but what we can do is
+00:11:19.040 establish this constitution with the help of the LLM. So I'm just going to do that uh and we're going to ask the LLM
+00:11:25.279 to go in and fill this out for us. So fill the constitution
+00:11:32.320 with the bare minimum requirements
+00:11:40.320 for a static web app
+00:11:47.680 based on a template because we want to follow the template. the Constitution. If you also look at this, these principles and examples, it's all about
+00:11:56.079 making it easy for the LLM to go and fill this out for you. This can bootstrap it. It doesn't mean that you
+00:12:02.079 cannot do this manually. It's more of this bootstraps it for you and saves you some time. So, we're going to press
+00:12:08.079 enter here. Bare minimum requirements. And we'll see what it comes up. We're going to use GPD5. I GBD5 is good like
+00:12:14.320 for these kind of things. If you use things like sonnet, I see it go off the rail sometimes and it does a bunch of
+00:12:19.920 stuff and it starts editing the constitution file and then it starts creating more files it's going to refer to. That's not what we want to do here.
+00:12:25.440 So, I'm just going to rely on the constitution. It's it's fine. And it's going to look at the existing content
+00:12:32.079 and existing template and I hope that it's going to fill this out in the way that I want to because if I'm going to
+00:12:38.560 be writing this out manually here, it's going to take us half an hour of this video and nobody wants to watch me type.
+00:12:45.279 So we're going to give it another second here. Um I've also noticed that GP5 sometimes can take a little bit longer
+00:12:51.600 than sonnet. So sonnet this in the context of copout is just going to start iterating on this and just kind of you
+00:12:57.519 will see the changes go gradually into the files. GPD5 is a little bit more uh I want to say thoughtful where it's
+00:13:04.240 going to start thinking and thinking and thinking and then just spit out the whole thing for you which again can be
+00:13:10.160 nice can be not so nice depending on the scenario you're trying to tackle. So, uh, pick your battles on the models you
+00:13:16.399 want to use and try them out. The only way to find out what produces the best
+00:13:21.440 results here is through experimentation. Just like spec kit, spec kit, the spectrum development stuff that we're
+00:13:27.040 shipping here is an experiment. We are here to learn. I just want to remind you that this is not a production scenario.
+00:13:34.160 Like, there's a lot for us to learn. We want your feedback. We want your input. So if something breaks, if something
+00:13:39.839 doesn't work, if something that it produces is garbage, let us know. I want to see that garbage. I want to
+00:13:45.600 understand what worked and what did not work because that will help us make it better and by proxy improve the product
+00:13:53.040 for everyone else that might be running in similar situations as you. So it looks like GBD5 is still thinking. It's
+00:13:59.040 going to update the constitution file by updating by replacing the placeholders with concrete static site requirements.
+00:14:06.079 So, we're going to wait for it to finish this process a few moments later.
+00:14:12.240 All right, looks like it finished. So, I'm just going to keep the changes here and let's take a look at what it actually said. You know, no static first
+00:14:18.880 delivery, no serverside execution. The site ships HTML, CSS,JS, and static
+00:14:23.920 assets via CDN. That makes sense. Simplicity over tooling. Prefer vanilla
+00:14:29.199 HTML, CSS,JS. I like that. I think that makes sense. Accessibility and SEO baseline also makes sense. Performance
+00:14:36.240 budget, you know, I I I I don't necessarily care for these things as we
+00:14:42.320 are prototyping right now. For production scenarios, you absolutely should care about performance security for now. I just do not want to deal with
+00:14:50.480 that. Um, also things like requirements here, development workflow, quality gates. Um, yeah, this makes sense, but I
+00:14:58.320 think like again for for what we're trying to do right now, this a little bit a little bit too much. So, we're
+00:15:04.320 just going to remove these pieces. And I think a lot of the the three principles, the three articles of our constitution
+00:15:10.320 make sense. Static first delivery, simplicity over tooling, and accessibility, and SEO baseline, which is good, right? So, now now we have a
+00:15:17.120 constitution. Um, now I can use the specify command that I talked about to
+00:15:22.880 define the baseline specification. So let's do that. Let's use slashsp specify. And again, because I'm in the
+00:15:28.800 right folder now, I see slpspecify slash specify. And this is where I define like
+00:15:34.399 a true product manager the what and the why. We're not focusing on a technical
+00:15:40.399 requirements. We're not focusing on saying use Nex.js and this database and so on so forth. Like we we don't care
+00:15:45.519 about that at this point. This is all about making sure that we are outlining the motivation for the product and what
+00:15:52.480 actually needs to be built. This is helpful because for somebody reading this, it is going to be completely
+00:15:58.560 detached from the implementation. This is important. The benefit of the spec here is that it is completely detached
+00:16:04.240 from the implementation. So if at some point, you know, we're going to be building this with Nex.js, but at some point you switch to Hugo or any other
+00:16:11.440 static side generator. You use the same spec. The spec is written, the requirements are there. You just toss it
+00:16:17.120 into an LLM and ask it to write you three, four, five, six variants based on the same spec. So kind of neat. a side
+00:16:23.600 effect of what what this is about. So, we're going to go back here and use specify and this is where I'm going to say what my requirements are. So, I am
+00:16:31.040 building a modern podcast website
+00:16:37.759 to look sleek. We want to use the term
+00:16:42.959 sleek. I I think the youths use this term these days, sleek. I wanted to be
+00:16:48.079 sleek. I um something that would stand out
+00:16:55.680 should have a landing page with one featured episode.
+00:17:03.040 There should be an episodes page, an about page,
+00:17:10.400 and a let's see an FAQ page.
+00:17:16.319 uh should have 20 episodes
+00:17:22.240 and the data is mocked. You do not need to pull anything from any real feed,
+00:17:31.440 right? So, we're we're just establishing the requirements. We're detaching ourselves from the technical details.
+00:17:37.039 We're not thinking about any technical details. We're just saying like this is what you're building. So, I think this is good enough for me to start. Again,
+00:17:43.120 for a real production scenario, the more detailed the prompt, the better for us because we're looking at this very
+00:17:49.520 baseline context. Uh, we're just going to use this and I'm going to use specify.
+00:17:55.919 And what's going to happen here is it's actually going to go ahead and use our
+00:18:01.200 prompt file, right? Like this is going to use file instructions and specify prompt MD because that's the prompt file
+00:18:08.160 that drives the slash command, right? It's going to read the script that is referenced there. It's very important. It's going to read the spec template
+00:18:14.160 that is going to be used as a baseline because look, there's a templates folder. And it's going to ask us if it
+00:18:19.440 wants to run this PowerShell script. And uh yeah, let's actually enable auto approve yolo mode for the rescue. And
+00:18:27.280 because I'm running this inside a VM, I'm not really worried about this. I'll just say allow run this command. It's
+00:18:33.840 going to run a PowerShell script, a helper script. Great. It switched to a new branch because, as I mentioned, this
+00:18:40.160 is git based. So as you're running this in your project is going to be using these custom branches to help you
+00:18:45.760 organize your work. That way you're not damaging anything in production and you can always roll back changes that you do
+00:18:51.360 not like. Again side effect of the spectrum process the fact that it forces
+00:18:56.640 you to think about a lot of these things where as you're experimenting and as you're iterating you not want to
+00:19:03.360 interfere with the existing implementation. Right? So the spec establishes the baseline. You work through it, you experiment, and then you
+00:19:10.160 merge it into your main branch on an as needed basis. So, looks like it's reading some of the information from the
+00:19:16.320 spec file that it helpfully created in the specs folder. Uh, the file right now
+00:19:21.600 is empty because it has not yet inserted the template, but we'll see GPT5 soon
+00:19:27.440 plug in all the required information, which is going to be nice.
+00:19:38.240 Wonderful. We now have a specification. I'm going to keep it because I just trust it that much. I I really don't
+00:19:45.360 don't don't trust the LLM to do production software for you. Just check it. You have to verify it. Check the
+00:19:53.280 software statement that is being made in the spec. So, uh we're going to look at the spec here. It created things for a
+00:20:00.559 modern podcast website. Great. That's that's what I asked it to do. Um let's
+00:20:06.000 take a look here at quick guidelines which is you know again it is the guideline for the spec. We have to
+00:20:11.280 respect them. The LLM has to respect them. Focus on what users need and why. Great. Um for AI generation all the
+00:20:18.320 stuff that's again helpful baselines that we need to maintain and respect. So
+00:20:23.440 user scenarios and testing. All right. There's some user stories and this if you're a PM this will sound mighty
+00:20:29.760 familiar. We have some acceptance scenarios. We have some edge cases, right? Like it accounted for things like
+00:20:36.320 epsert ordering not specified and so on so forth. There's also a bunch of functional requirements that are also if
+00:20:43.039 you're a PM, you know, functional requirements, they go into the spec. This is, you know, it's done for you.
+00:20:48.240 Um, there's a bunch of things that are here, but also notice that there's a review and acceptance checklist. This is
+00:20:55.360 key here. I cannot emphasize this enough. If you are having a specification, if you're writing a spec,
+00:21:01.520 you got to make sure that you have an acceptance checklist and you got to make sure that the acceptance checklist is
+00:21:07.280 actually filled out. So things like no implementation details, right? Like languages, frames, APIs because that's
+00:21:12.320 not what we're focusing on. We are focusing on the what and the why, not on the how. Uh I also have details about,
+00:21:19.280 you know, nontechnical stakeholders, mandatory sections completed. One thing that is not checked is no needs
+00:21:25.600 clarification. And that is actually something that is missing here right now because if you look at there's items that needs clarification like episode
+00:21:32.000 list ordering should be reverse chronological newest first confirm order requirement. Now because we're
+00:21:38.480 prototyping and because we're experimenting with this I can ask the LLM to take a best guess. So we're just
+00:21:45.840 going to do that for things that need clarification.
+00:21:50.880 Use the best guess you think is reasonable.
+00:21:59.440 Update acceptance checklist after.
+00:22:06.480 And we're going to have the LM basically fill this out for us because I do not want you to think about this prototype.
+00:22:12.000 I just wanted to kind of vibe code, I guess, but it's not really vibe coding because I I am structuring this a little
+00:22:18.480 bit better than just vibe coding. So once the spec is established, mind you
+00:22:23.760 this is very easy to share with your team. So if somebody comes in and says how did you build this website, look at
+00:22:28.880 the spec, look at the rationale. You as a human in the loop can go in and edit
+00:22:33.919 this. People make the mistake of thinking that oh the LM produced this. I can only manage this with ALM. No, it's
+00:22:40.000 a markdown file. Go in with your hands and start typing and entering
+00:22:45.200 requirements that you feel are, you know, required for your product. So if you feel strongly that the landing page
+00:22:52.080 should have a logo centered at the very very middle and some gradient that looks
+00:22:57.919 like a rainbow, you absolutely can do just go and add another functional requirement that you can do this
+00:23:03.520 manually. You don't need to ask the LM to do this. Um again and this is especially important if you're running into you know enterprise environments or
+00:23:09.679 environments where it's more controlled where you need to actually add specific requirements. Sometimes the LLM cannot
+00:23:14.799 guess for you which it's fine. you know, manual work is still there and we as developers need to go in and do that
+00:23:21.280 from time to time. So, we're just going to wait for GBD5 here to think a little
+00:23:26.400 bit and fill out our clarification items.
+00:23:43.039 We now have the updated checklist. uh allegedly. So let's scroll back here. So
+00:23:48.720 all right, looks like we're good. No needs clarification anywhere in the code, which is our spec. It's not
+00:23:55.600 actually code. It's a markdown file. We're going to look here. It looks great. I think we're ready to go to the
+00:24:02.000 next step. The next step is we're going to be using the slash plan command. And this is where we actually specify the
+00:24:07.840 technical requirements. So I'm going to use next.js JS
+00:24:13.840 with static site configuration.
+00:24:19.120 No databases
+00:24:29.279 and what to make sure that the site is responsive
+00:24:36.320 and ready for mobile because 2025 we still have mobile phones. we need them.
+00:24:41.919 So this is good. It gives us a baseline for what to think about. So we're going to use again the plan prompt. It's going to run some helper scripts as well. So
+00:24:49.120 we do need access to the terminal here in VS Code or whatever agent you're using. If you're using cloud code, we're just going to use cloud code because
+00:24:55.360 cloud code is very good about running things directly in your terminal. So it's also going to bootstrap some
+00:25:01.279 additional content here that we'll see shortly in the repository. things like the plan, the contract and notice most
+00:25:07.360 importantly that it does consult the constitution like there is then read the spec constitution and plan template. So
+00:25:13.360 constitution is in play the the the set of non-negotiable things that we talked about earlier is still in play very
+00:25:20.159 important. So, we're going to run the script. We're going to allow it. YOLO. Not quite yolo because I still had to
+00:25:25.440 approve it for some reason. But, um, we see the JSON here, which is the output of the script because if it's JSON, it's
+00:25:32.080 very easy for the LM to parse and understand it. Notice that it read the constitution because these are
+00:25:37.200 non-negotiable principles. We got to respect them no matter what you're doing. So you have this plan step that's going to read it and then it's going to
+00:25:44.320 go ahead and fill out the actual plan and a bunch of additional metadata
+00:25:49.760 around it that's going to help us establish a good project baseline. Notice that because all the stuff also
+00:25:55.840 lives in a dedicated folder. So 001 I am building because it just picks up from
+00:26:00.880 your prompt and it generates a name for the for the feature. All the stuff is grouped here. So later on if you decide
+00:26:07.679 to rebuild the entire feature like you see what it built and you're like you know what set 5 or sorry set 4 did not
+00:26:14.240 quite do the thing that it expected to do. I want to switch to GPT5 or I want to switch to uh maybe GPT41
+00:26:20.799 and try out how this works for maybe Gemini Flash. You essentially have the spec. You have all your artifacts. You
+00:26:27.120 can just delete the source. The spec is still there and then use a different model. So you use the model switcher
+00:26:33.200 here in the chat and just reimplement it. That's that's it. You can just
+00:26:38.400 rebuild it. You can add additional requirements. If you see that the logo is generated the wrong way or it's kind of the the layout of the page is funky.
+00:26:45.120 There's no header and footer. Go and edit the spec and just rebuild the source. Once the source is created, of
+00:26:51.760 course, you can iterate on it differently. Like you can add another spec for another feature, for another
+00:26:56.799 component. you the the one spec that we have here in this what we refer to as green field project because we're
+00:27:02.400 creating a new thing is just that is just the bootstrap of the project. You
+00:27:07.600 can do this exact same thing for any other features. If you want to add support for a Spotify player for example
+00:27:14.480 in your podcast page just use specify to essentially create a new feature right
+00:27:20.159 like that's kind of it. you use plan to go and create another set of technical details for that feature because that's
+00:27:26.640 what it's going to do. It's going to create new subfolders that you can then iterate on. So here we're going to wait
+00:27:32.720 a little bit for GPD5 to go and think through. But notice that it actually started thinking about things like
+00:27:38.159 contracts because it's going to look at data contracts that exist within the pages. But uh I'm not going to disturb it. I'm going to let it think and do its
+00:27:45.520 job. And we're going to get back here once we see the actual outcome of the
+00:27:52.240 process. No. God,
+00:27:57.600 no. God, please. No. No. No.
+00:28:02.640 No. All right. We now have the plan. The
+00:28:07.840 plan is good. We can take a look here. We see plan. I'm going to keep all of the changes. It created a bunch of other
+00:28:14.159 metadata here. So we can scroll through the plan. We can minimize the terminal just a little bit. We see that it has an
+00:28:21.679 execution flow for the plan. Great. Uh technical context, language version,
+00:28:26.799 JavaScript, TypeScript, and Node.js. Great. Primary dependencies, Nex.js, static expert, SSG, right? Because we
+00:28:33.200 asked for a static site. It's great. It thinks about that. Testing Lighthouse and some other libraries. Target
+00:28:39.760 platform static hosting over CDN versify GitHub pages. Azure static web apps.
+00:28:44.799 That's that is right. I actually made some good assumptions. I did not specify this. Uh keep in mind that if I wanted
+00:28:50.960 for example to host things on say Cloudflare or Azure, I can specify that in the constitution. I can say that
+00:28:58.000 everything that you do has to be oriented for Cloudflare or Azure or anything any any other provider whatever
+00:29:04.720 you want uh or any other technical requirements by the way. So um we have the project types some constitution
+00:29:11.279 checks and there's a gate that again it must pass the constitutional check it
+00:29:16.480 must pass the requirements that we have established for things like use framework single data model avoiding
+00:29:21.600 patterns yep architecture static first dependencies minimal yep makes sense
+00:29:27.279 makes sense there's some outline for outline and research all right some research artifacts created and by the
+00:29:33.440 way copilot in this case did not do the actual research it used its training data to come up with this research.mmd
+00:29:39.600 file. Other agents like copilot, sorry, like quad code can actually go and do
+00:29:45.840 research. So this you you'd get the the freshest information from the internet. Um but it actually made some pretty good
+00:29:51.919 assumptions here. So we have the context, we have some of the outline on the phases. Uh and now look, we're
+00:29:58.960 missing the task generated. We're going to run the task command now. Uh but before we do that, let's take a look
+00:30:04.240 here. So there is a research file like I mentioned. So it looked through its training data because all this is
+00:30:09.840 generated by the LLM basically, right? Like it's all whatever is embedded in the training data. That's what it's used for its inspiration instead of actually
+00:30:15.679 going out into the web. Uh we can use something like the beast mode from our good friend Burke Holland uh to force it
+00:30:23.039 to do certain things, but I just use standard agent mode here because I did not use custom modes now which which is
+00:30:29.600 fine for our prototype. It's okay. So we have this. We have some data model outline for you know fields for an
+00:30:35.279 episode which is again great. It has the context. We're building a podcast website some details about the site some
+00:30:41.600 validation rules derived views. Um we still have our spec. We have our quick start that gives some idea of what the
+00:30:49.679 site is about and the prerequisites that are required for the site to actually run. Again super super nice to have this
+00:30:56.080 in one place. the spec and all the artifacts become that piece of executable context that you can pass to
+00:31:02.880 your team and have them work on it. But uh we have the plan u now as the plan
+00:31:08.080 says we got to jump to our task. So we can use tasks and say break this down.
+00:31:17.520 Right? So once again, it's going to run some helper scripts that are going to guide it through and it's going to break
+00:31:23.760 the work down into manageable chunks that the agent can tackle one by one because that is super nice. That is kind
+00:31:32.240 of the ability of seeing exactly what it needs to do instead of it assuming that it needs to partake in certain actions.
+00:31:39.519 Right? So if I want to build the testdriven developmentbased approach where I want to have tests first, all
+00:31:45.679 that stuff, you know, can be broken down into individual tasks. It's going to do that first. It's going to make sure the tests are passing and then jump to
+00:31:52.399 implementation of the data model and so on so forth. So uh we're going to uh have it do some more work here.
+00:32:00.240 Going to check task prerequisites. All right. So it's going to use a test template.
+00:32:05.519 Going to set things up for us. And we're going to get another tasks.md
+00:32:10.720 file, another markdown file in our folder that we can use to actually browse through the task. Right now,
+00:32:16.880 because it's all marked down, it's all available to you as a developer. You can use the LLM here in this chat view and
+00:32:22.559 just guide it through all the things that you need. Or you can just go into the markdown and start tinkering with it
+00:32:28.399 because it's so easily editable. It doesn't need a proprietary editor of any kind. You can just open this and you
+00:32:34.000 know anywhere else where you've integrated copilot you know it doesn't actually need to be VS code I just happen to use VS code right um and again
+00:32:41.519 specit and specify are compatible with many other agents and more agents are coming like I'm working right now on
+00:32:47.039 open AI codeex uh QN uh we're looking at adding that as well uh open code root
+00:32:53.120 code like all those wonderful wonderful projects from the community are going to be coming in so uh again I'm going to
+00:32:59.120 let chat uh or GPD5 five in this case. Think a little bit and create our task
+00:33:05.519 list.
+00:33:10.640 Look at that. We have our task file. So, if I go here again, we're going to keep
+00:33:15.679 all the changes as is. And we see a bunch of t Let's Let's actually reduce the size here, right? So, you can
+00:33:22.080 actually see a little bit. We're going to reduce the size of this as well. Um, and we see the the the sections here,
+00:33:28.799 right? like it it just chunk this into individual phases. We have setup initialize next.js app skeleton. Yep.
+00:33:36.320 Yep. That sounds good. Test first must fail before 33. All right. Yeah, because we do want to use test-driven
+00:33:42.000 development here. Uh, okay, that sounds good. Core implementation only after tests are failing, right? Because we're
+00:33:48.159 setting up the test first. Makes sense. About page, so on so forth. Integration
+00:33:53.600 refinement, run lighthouse. And this is where I can, you know, you can you can tweak, you can remove things you don't
+00:33:59.279 like. You know, do you want to run Lighthouse on a prototype? Maybe, maybe not. Uh, and of course, polish,
+00:34:05.120 responsive images, documentation, all good. Accessibility polish. Sounds good.
+00:34:10.560 I think we're ready. I think we're good to implement this. So, I'm just going to go ahead and switch my model to Cloud
+00:34:16.639 Sonnet 4 because I like this the most for code. GBD5 is good at setting up the the kind of the spec scaffolding for us,
+00:34:24.159 but for creative output, Sonnet 4 is still unbeatable to me. So, I'm just going to say this and say implement
+00:34:32.399 the tasks for this project and update the task list as you go.
+00:34:42.000 And now we're going to let the agent run wild and go and implement our website.
+00:34:51.210 [Music]
+00:34:58.070 [Applause]
+00:35:06.400 Heat. [Music]
+00:35:21.040 Heat. [Music]
+00:35:44.240 Heat. Heat. [Music]
+00:35:55.839 Thank you. [Music]
+00:36:06.100 [Music]
+00:36:24.960 Tada. Looks like it did it. It It finished the work. It did the things
+00:36:31.040 that it was supposed to do. Now, I have not seen the output. This is going to be a surprise. So, let's keep all the
+00:36:37.359 changes. Let's make sure that we keep it. It updated all the tasks. It failed on some Lighthouse test, but that is
+00:36:43.839 because I don't have Chrome installed. But we can actually run npm
+00:36:49.359 uh I like to run num npm run build.
+00:36:54.400 Let's build our static site and then we're going to run npm npm
+00:37:01.599 rundev to actually see it in action once it actually builds. So we'll see we'll see what it looks like.
+00:37:09.359 All right. Selecting build traces being the most timeconuming thing apparently.
+00:37:18.480 All right. And then npm run dev.
+00:37:24.160 Okay. Localhost 3000. See, let's see what our podcast site
+00:37:30.079 looks like. It's loading. This can be horribly bad. But actually,
+00:37:35.200 like look, it's it's not bad. it, you know, master the art of podcasting. Featured episode looking good. Has all
+00:37:43.040 the details. Pod side. I have my about page. If I go here, there's a nice
+00:37:48.800 description. All right. FAQ. Okay. Yeah, there's there's an FAQ.
+00:37:56.000 All right. Great. Episodes. Let's take a look here. We have individual podcast
+00:38:01.760 episodes with links to the podcast platform. And keep in mind that in this
+00:38:07.280 context, what I can also do is if I plug in MCP tools like Figma MCP, I can link
+00:38:13.599 to actual design. So I can actually get it to build things that fit the design
+00:38:18.960 system of my organization. So I don't have to randomly assume that it's going to build the right thing. So this is kind of nice. Like it did create all
+00:38:25.440 this stuff. Now you might actually ask yourselves like, well, is is this really better than vibe coding? Like I could
+00:38:31.359 have vibe coded this entire pod side, right? But the thing is is that now that I have the spec, now that I have the
+00:38:37.680 artifacts here in my spec implementation, I can easily customize it. I can now tweak it. I can add things
+00:38:44.880 like I want to make sure that the color is certain way. I want to make sure that a specific design decision is being made. And that makes it easier for me to
+00:38:51.200 then reimplement and rebuild things and additively add features in a structured way because that then can be used as
+00:38:59.359 context. So something that my colleague and friend John Lamb is working on is optimizing some of these context
+00:39:05.520 acquisition strategies. So that's going to change in the future. But you can imagine that as I have more of this
+00:39:10.640 context in the memory of the system that is being built, it actually makes it easier to build consistent software. So
+00:39:18.160 uh hopefully this is a great intro for you to see like how spectra works, what are the artifacts and how it produces
+00:39:23.760 them and how you can then tweak them. I really really hope that you go to spec
+00:39:28.800 kit. You try it out. You get it running on your box. You see what works and what doesn't, especially as you start
+00:39:34.800 compounding many many different features and bug fixes and all these things for your projects. Let me know. Go to
+00:39:41.440 github.com/github/spec-kit. Download it. Use it. Tell me what's
+00:39:48.480 wrong. And then I will see you in the next video where we're going to talk about more complex things that are also
+00:39:54.800 being accomplished with the help of specd driven development. I hope you enjoy this. I'll see you in the next

@@ -1,0 +1,419 @@
+# tactiq.io free youtube transcript
+# Understanding your AI markdown files - Part 1
+# https://www.youtube.com/watch/6QDR5xAD4TA
+
+00:00:00.000 Hello friends. Today we are going to
+00:00:02.000 talk about the different instruction
+00:00:04.040 files that we use in our IDEs.
+00:00:07.400 So when you open any code base today,
+00:00:09.520 you often see more markdown files than
+00:00:11.680 the actual source code. We see a
+00:00:13.680 cloud.md, agents.md, cursor rules,
+00:00:16.680 co-pilot instructions.
+00:00:18.640 We also see a cloud or a GitHub folder
+00:00:21.360 with skills, commands, agents, rules,
+00:00:23.760 etc. Now the natural question is, what
+00:00:26.200 are all these files and do we need all
+00:00:28.240 of them?
+00:00:29.400 Are they all saying the same thing or
+00:00:31.320 are they different? And if a project has
+00:00:33.520 multiple of these files, which one is
+00:00:35.720 actually being used? And that's exactly
+00:00:38.560 what we are going to focus today.
+00:00:40.440 By the end of this video, you will be
+00:00:42.520 able to open any repository, look at
+00:00:44.960 these files, and know precisely what
+00:00:47.320 each one of them do, when they get
+00:00:49.520 loaded, who triggers it, and whether
+00:00:51.960 it's even talking to the AI at all or
+00:00:54.240 not.
+00:00:55.200 Because some of these files are
+00:00:57.120 configurations and they're not
+00:00:59.000 instructions at all. Let's get right
+00:01:00.920 into it. Before we name a single file, I
+00:01:03.440 want to give you one mental split that
+00:01:05.600 makes all of this click.
+00:01:07.760 Because when we go online, we see a lot
+00:01:09.720 of posts like these that say, &quot;Here is
+00:01:12.600 your full AI stack. These are the
+00:01:14.280 different layers of files you need and
+00:01:16.120 once you have this, your IDE is
+00:01:18.160 complete.&quot; While it is true, there are
+00:01:20.640 two completely different kinds of files
+00:01:23.040 that live in these folders and people
+00:01:25.400 often mix them up.
+00:01:27.240 On one side, we have the instruction
+00:01:29.280 files. These are natural language text,
+00:01:32.240 nothing but our prompts.
+00:01:34.080 The model reads these as a guidance and
+00:01:36.480 they become a part of what AI sees. The
+00:01:39.400 cloud.md, agents.md, skills, rules, all
+00:01:42.800 these are instruction files.
+00:01:45.320 On the other side, we have configuration
+00:01:47.080 files and these are files that do not
+00:01:50.520 talk to the model at all. The tools read
+00:01:52.560 them and applies them directly in our
+00:01:54.760 IDE. So things like settings.json,
+00:01:57.280 mcp.json, plugin.json,
+00:01:59.720 these are just configuration files.
+00:02:01.960 And here is the key difference.
+00:02:03.720 Instructions are advice. The model can
+00:02:06.360 follow them or not, depends.
+00:02:09.399 Configurations, they're enforced. So if
+00:02:11.800 your settings.json says
+00:02:13.959 a delete command is denied,
+00:02:16.320 then the delete command will be blocked.
+00:02:17.920 That's it. Whether the model likes it or
+00:02:19.760 not, it will not be allowed. So when you
+00:02:22.040 see a plugin.json or a settings.json and
+00:02:24.000 wonder, is this going to AI?
+00:02:26.680 The answer is no.
+00:02:28.040 It's just there to control the
+00:02:29.600 permissions, register the tools, and run
+00:02:31.880 scripts. It never shows up in your
+00:02:35.080 model's context.
+00:02:36.959 Anthropic actually says this in their
+00:02:38.440 own documentation, almost word to word,
+00:02:40.959 that claude.md is a guidance that Claude
+00:02:43.360 reads while settings.json is enforced,
+00:02:46.360 whether Claude follows it or not.
+00:02:49.360 Now hold on to that split. Everything we
+00:02:51.360 discussed today is all about the
+00:02:52.959 instruction side. We'll come back to the
+00:02:54.320 configurations near But our focus is on
+00:02:57.959 the instruction files.
+00:02:59.560 Now to understand why there are so many
+00:03:01.440 of these files, it helps us to see how
+00:03:03.720 we got here.
+00:03:05.000 It happened over the past few years and
+00:03:06.720 we can roughly segment this into five
+00:03:09.000 different phases.
+00:03:10.480 In 2021-2022,
+00:03:12.200 GitHub Copilot launched as a pure auto
+00:03:14.720 complete AI tool. There was no way for
+00:03:17.120 us to give the project context at all
+00:03:18.880 and every session started blind. Then in
+00:03:21.560 2023, Cursor launched and it introduced
+00:03:24.640 the first real instructions file, the
+00:03:27.000 .cursor rules.
+00:03:28.760 A single markdown file at the root
+00:03:31.560 and it loaded into every single request.
+00:03:34.400 Around the same time, Aider took a
+00:03:36.280 different approach and just let us load
+00:03:38.840 any markdown file that we want to point
+00:03:40.760 it.
+00:03:41.800 For example, we could say read
+00:03:43.519 conventions.md and follow it and that
+00:03:46.160 markdown file is loaded into context.
+00:03:49.040 So the big idea here of this era is that
+00:03:52.080 a markdown file is loaded by the agent
+00:03:55.120 on the startup and it has the project
+00:03:56.960 context.
+00:03:58.200 Then through 2024 and early 2025
+00:04:02.680 every tool started inventing their own
+00:04:04.480 format.
+00:04:05.880 Cloud code shipped cloud.md, Copilot
+00:04:08.920 shipped copilot_instructions.md,
+00:04:10.959 Gemini came with gemini.md. Suddenly, we
+00:04:14.040 started maintaining different sets of
+00:04:15.800 files, all of them roughly the same
+00:04:17.600 thing, and they were all out of sync in
+00:04:19.760 a single project.
+00:04:21.920 So, mid to late 2025, the community gets
+00:04:25.440 really fed up and agreed upon an open
+00:04:28.080 standard, and that was agents.md.
+00:04:31.440 It was a plain markdown file, no schema,
+00:04:33.640 and any tool could support it by just
+00:04:36.440 adding one line of their code.
+00:04:38.760 And within a month, 20,000 repositories
+00:04:40.800 adopted it. And by the end of this 2025,
+00:04:43.960 more than 60,000 projects adopted it.
+00:04:47.040 In parallel, at the same time, Cloud
+00:04:48.960 code added skills and subagents. Cursor
+00:04:52.080 came with multi-agents.
+00:04:53.919 Uh Windswept added workflows.
+00:04:56.080 So,
+00:04:57.280 there were a lot of scoped instructions
+00:05:00.160 and prompt files emerging.
+00:05:02.160 Then, late 2025 into 2026, these
+00:05:05.840 standards started to get hardened.
+00:05:08.360 Agentic AI Foundation was launched under
+00:05:10.680 the Linux Foundation by platinum members
+00:05:12.680 like AWS, Anthropic, Google, Microsoft,
+00:05:15.919 OpenAI, etc.
+00:05:17.640 And they all become vendor neutral
+00:05:19.080 standards. And agents.md became the one
+00:05:22.160 standard file. Same time, Anthropic
+00:05:24.480 open-sourced skills. So, the skill.md
+00:05:26.919 format, which solved a completely
+00:05:28.600 different problem, became an open
+00:05:30.960 standard, and within days, Codex, Gemini
+00:05:34.080 CLI, Copilot, Cursor, everybody adopted
+00:05:36.520 it.
+00:05:37.440 So, now, while these instructions are
+00:05:39.360 getting standardized,
+00:05:41.080 OpenAI to this year launched Codex
+00:05:43.600 subagents with TOML files, while Cloud
+00:05:45.960 code, Gemini still use markdown files.
+00:05:49.120 So, there is still something that is
+00:05:50.600 missing. Like we don't have a standard
+00:05:52.600 sub agent format. We don't have
+00:05:54.720 standards for plugins and marketplace
+00:05:57.000 and drops.
+00:05:58.240 Hopefully, we'll get there. But
+00:06:00.480 at least the instruction files are
+00:06:01.880 getting more and more standardized these
+00:06:03.360 days. And there is one quite important
+00:06:06.400 detail that was found during this whole
+00:06:09.520 evolution.
+00:06:10.880 Researchers started measuring whether
+00:06:12.960 these files actually helped. And the
+00:06:15.000 finding was that handwritten short
+00:06:17.880 instruction files improved the task
+00:06:20.160 success.
+00:06:21.440 But auto-generated ones, where we ask AI
+00:06:24.320 to write its own cloud.md,
+00:06:27.120 actually made things worse and raised
+00:06:29.520 the cost by like 20%.
+00:06:32.640 So, this lesson sticks throughout the
+00:06:34.320 video that short handwritten
+00:06:37.360 instructions beat long auto-generated
+00:06:40.080 ones every time.
+00:06:41.880 Now, back to our instruction files.
+00:06:44.000 All of these files serve different
+00:06:45.680 purposes. And people often
+00:06:48.240 classify them into two large groups. One
+00:06:51.280 that is always loaded, and the second
+00:06:53.800 one is loaded on demand.
+00:06:56.760 This separation matters. And
+00:07:00.040 especially the ones that load on demand
+00:07:02.080 saves a lot of money in tokens, keeps
+00:07:04.520 the context clean from polluting or
+00:07:06.440 overloading, and an always loaded file
+00:07:09.480 is paid for every single message.
+00:07:12.760 The on-demand one is paid only when it
+00:07:14.919 is actually needed. So, this difference
+00:07:17.080 is crucial.
+00:07:18.600 We'll keep this grouping at the back of
+00:07:20.160 our mind the whole time.
+00:07:22.160 But to really understand these files,
+00:07:25.360 we'll classify them based on their
+00:07:27.200 purposes. So, at a high level, we can
+00:07:29.919 categorize them into four or five
+00:07:32.040 groups.
+00:07:33.800 Number one is memory.
+00:07:35.960 The purpose of this file is it says what
+00:07:39.400 AI should be always aware of
+00:07:42.680 about the project. So, the examples of
+00:07:45.560 these files are the cloud.md or
+00:07:47.240 agents.md file. This is an ambient
+00:07:49.600 context and it is always there. Number
+00:07:51.840 two is rules. The purpose of these files
+00:07:54.920 is
+00:07:56.000 what constraints apply when and these
+00:07:58.880 are more like guardrails and are ideally
+00:08:00.920 scoped to a set of files or domains. So,
+00:08:04.080 for example, a testing rule is applied
+00:08:07.240 only when the AI tries to edit some
+00:08:09.920 files in the test folders.
+00:08:12.040 Number three are skills.
+00:08:13.880 The purpose of this file is how do we
+00:08:16.040 perform a specialized task? So, these
+00:08:18.840 are like instruction manuals that the
+00:08:20.640 agent can just grab out of the shelf and
+00:08:23.800 use it whenever the task calls for it.
+00:08:26.880 Number four are commands or prompts.
+00:08:29.919 The purpose of this file is just like a
+00:08:32.240 saved prompt that we want to trigger by
+00:08:34.559 name.
+00:08:35.640 Uh so, these are like special
+00:08:37.960 instructions that we invoke whenever we
+00:08:40.799 want to perform certain task.
+00:08:43.400 Number five are subagents. The purpose
+00:08:45.800 of this is
+00:08:47.600 who do we hand an isolated job to? A
+00:08:50.680 specialist who will take the job, go to
+00:08:53.040 their own world, get it done, and report
+00:08:55.280 back the result.
+00:08:57.360 So, if you want to have a mental map of
+00:08:59.839 all these different files, we ask this
+00:09:02.920 uh two questions in addition to
+00:09:05.320 on demand and always loaded. Right? The
+00:09:07.680 first question is who triggers it? Is it
+00:09:09.680 the agent or us?
+00:09:11.600 And the second one is does it share the
+00:09:13.280 context?
+00:09:14.640 So, this will give us a mental map or an
+00:09:17.360 access idea to see which files fall
+00:09:19.760 under which category.
+00:09:21.400 Now, before we move on, there is one
+00:09:22.920 more concept to see here and that is
+00:09:25.360 called scopes.
+00:09:26.880 So, every one of these files can live at
+00:09:29.200 more than one scope level. So, there is
+00:09:31.360 a personal scope where these
+00:09:32.920 instructions with the same name, the
+00:09:34.560 same cloud.md or same skills.files are
+00:09:37.280 written in a file that is usually within
+00:09:40.440 the .cloud or .github folder in the
+00:09:42.960 user's home directory. So, this is at
+00:09:45.240 the user level and the next one is at
+00:09:47.640 the project scope where the instruction
+00:09:49.920 files are written and stored in the
+00:09:52.000 project's directory. They are committed
+00:09:53.680 to the repository and shared by the
+00:09:55.040 whole team.
+00:09:56.240 And some tools also have enterprise or
+00:09:58.480 manager level scope where the
+00:09:59.840 instructions are set by the organization
+00:10:02.480 and sits above
+00:10:04.400 both of the scopes and it cannot be
+00:10:06.320 overridden.
+00:10:08.520 So, the rule of thumb on when to use
+00:10:10.400 which scope is intuitive.
+00:10:12.560 Any personal preferences, say for
+00:10:14.200 example, if I want the model to respond
+00:10:16.160 in a particular way, if I say the
+00:10:17.920 model's response to be crisp all the
+00:10:19.920 time.
+00:10:21.240 Any personal editor habits or
+00:10:22.960 personalized expectation instructions,
+00:10:25.840 they go into the user level scopes. Team
+00:10:29.440 conventions, build commands,
+00:10:31.240 architecture, vocabularies, or any of
+00:10:33.160 the project's level details should go
+00:10:35.320 into the project scope. And any hard
+00:10:37.840 organizational policy goes into the
+00:10:39.760 manager scope or the enterprise scope.
+00:10:42.080 So, one key thing to internalize is how
+00:10:44.160 these levels combine.
+00:10:45.920 When more than one scope level files are
+00:10:48.880 found, most of the tools do not pick one
+00:10:51.640 and discard the rest.
+00:10:53.360 For example, Cloud Code will stitch them
+00:10:55.280 all together and send the whole thing to
+00:10:57.440 the model.
+00:10:58.560 So, there is no strict rule or
+00:11:00.480 standardized rule on the precedence on
+00:11:02.560 which file will be used when more than
+00:11:04.920 one scope level files are found. Now,
+00:11:08.160 let's talk what happens if there is a
+00:11:10.360 repetition of the same instruction
+00:11:12.120 across different files.
+00:11:14.320 We know a project can have all of these
+00:11:16.240 five category of files and each of them
+00:11:17.920 can be at different scopes.
+00:11:20.440 So, is it okay for us to repeat
+00:11:21.880 ourselves? Is it okay to have
+00:11:23.040 duplicates?
+00:11:24.520 First of all, we do not want to repeat
+00:11:26.400 any instructions across the files
+00:11:27.960 serving different purposes. For
+00:11:29.520 instance, we have specific deployment
+00:11:31.160 process to be followed.
+00:11:32.760 Having those instructions in both the
+00:11:34.240 cloud.md and a skill is a true waste
+00:11:37.200 because we are paying for the
+00:11:38.560 instruction tokens in every single
+00:11:40.160 request while it will be used as a skill
+00:11:42.840 only occasionally.
+00:11:45.040 Similarly, across scopes, as we just
+00:11:47.360 said, our personal file and the project
+00:11:49.480 file often get stitched together and
+00:11:51.680 they are not deduplicated. So, putting
+00:11:53.400 the same instructions in both of them is
+00:11:55.840 pure waste.
+00:11:57.800 And if they ever disagree, the behavior
+00:12:00.040 is going to be unpredictable.
+00:12:02.040 And this is how most of the tools work.
+00:12:04.800 The documentations will say the more
+00:12:06.920 specific file wins, but it's only a
+00:12:09.120 guideline. GitHub literally says that
+00:12:12.160 the choice between conflicting
+00:12:13.560 instructions is non-deterministic. There
+00:12:15.600 are only a couple of places where
+00:12:17.200 ordering is actually defined, like the
+00:12:19.320 agents.md file where documentation says
+00:12:22.240 the closest agents.md to the file we are
+00:12:24.640 editing wins over the ones that are
+00:12:26.600 further up the tree.
+00:12:28.320 A project-level rule generally beats a
+00:12:30.520 personal one, but again, these are
+00:12:33.040 exceptions, not something to lean on.
+00:12:36.000 So, the reliable strategy isn't not to
+00:12:39.120 memorize these precedence tables, but it
+00:12:41.880 is
+00:12:42.800 to make sure that we don't create
+00:12:44.680 conflicts in the first place.
+00:12:46.800 So, don't overlap and if we absolutely
+00:12:49.680 must override something,
+00:12:51.520 then we can call it out explicitly, like
+00:12:53.600 in a file that says, &quot;Regardless of the
+00:12:55.560 personal settings, this project uses
+00:12:58.080 two space indentation.&quot;
+00:12:59.920 So, that reads as a deliberate rather
+00:13:01.760 than accidental overriding.
+00:13:04.080 And the most important point again is
+00:13:07.080 even if there is an accidental
+00:13:08.440 repetition, we need to watch out that
+00:13:10.320 they are not contradicting because once
+00:13:12.800 we have a contradicting instructions
+00:13:14.880 going into the model,
+00:13:16.560 then that leads to undeterministic
+00:13:18.600 behavior. The one place where some
+00:13:20.920 repeated instruction is okay is across
+00:13:22.640 tools. If our teams use different
+00:13:25.000 editors, we cannot fully avoid it since
+00:13:27.680 some tools some of the instructions are
+00:13:30.280 not fully standardized.
+00:13:32.160 So, let's bring it home. We open a
+00:13:34.400 project and there are a dozen of files
+00:13:36.040 and here's how to read it in about 30
+00:13:37.680 seconds. First, which tool are we using?
+00:13:40.720 Only our tool files matter plus the
+00:13:43.640 agents.md or any other standard files.
+00:13:47.240 A cursor rules file is irrelevant if you
+00:13:50.080 are running on cloud code.
+00:13:51.840 Second, set aside the configurations.
+00:13:54.040 The settings file MCP configuration
+00:13:56.160 plugin manifest
+00:13:57.800 they are not guidance, they're just
+00:13:59.240 plumbing files and we don't read it as
+00:14:02.440 instructions to AI.
+00:14:04.320 Third, sort out what's going into each
+00:14:06.920 of these five buckets, the memory,
+00:14:08.920 rules, skills, commands, and sub agents.
+00:14:11.880 Fourth, predict what's actually going
+00:14:14.040 into the context right now. Memory is
+00:14:15.880 always there. A scoped rule is only if
+00:14:18.880 we are touching the relevant files.
+00:14:20.920 A skill is only if it is fired. A
+00:14:23.600 command is only when we fire it and a
+00:14:25.880 sub agent it's almost never in the
+00:14:27.440 context at all because it spins off in
+00:14:29.560 its own context.
+00:14:32.080 And fifth, we don't guess, we verify.
+00:14:34.520 Every tool can show us what is loaded
+00:14:37.440 into the context. In cloud code, we type
+00:14:40.080 {slash} memory. In Gemini, {slash}
+00:14:41.800 memory show.
+00:14:43.200 So, there is some
+00:14:45.480 debugging tools that we can use to see
+00:14:47.680 what exactly is loaded in the memory and
+00:14:49.720 we can confirm it instead of just
+00:14:51.320 assuming it.
+00:14:52.600 And that's the whole map. Five purposes,
+00:14:55.040 memory, rules, skills, commands, and sub
+00:14:56.960 agents. One hard line between
+00:14:58.920 instructions and configurations.
+00:15:01.160 Open standards for agents.md and
+00:15:03.240 skill.md.
+00:15:05.160 And one principle that keeps coming back
+00:15:08.400 is short hand written
+00:15:10.960 files beats the long auto generated
+00:15:13.760 ones.
+00:15:14.720 Now, if this helped you to make sense of
+00:15:16.720 all the different files in your project
+00:15:18.440 repository, then that was the whole
+00:15:20.480 goal. And thank you so much for
+00:15:22.320 watching. See you in the next one.

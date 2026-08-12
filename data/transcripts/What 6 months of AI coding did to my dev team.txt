@@ -1,0 +1,382 @@
+# tactiq.io free youtube transcript
+# What 6 months of AI coding did to my dev team
+# https://www.youtube.com/watch/h0hdaHPKDdI
+
+00:00:00.000 If you're building software in your
+00:00:01.439 business, your dev team is changing
+00:00:03.360 faster than you realize. Not the people,
+00:00:05.680 but the work itself. I'm running a 20
+00:00:08.000 person software team at Wu. And over the
+00:00:10.480 last 6 months, I've watched something
+00:00:12.240 strange happen. The bottleneck in
+00:00:14.000 software development has changed. It's
+00:00:15.599 not where it used to be. It's moved. And
+00:00:17.359 if you're hiring developers right now or
+00:00:19.119 you're trying to figure out why your
+00:00:20.240 team isn't shipping faster, you need to
+00:00:22.400 watch this.
+00:00:25.680 Here's how software development used to
+00:00:27.359 work. You hired a team of developers to
+00:00:29.599 write code. You measured their output in
+00:00:32.000 lines committed in tickets closed in
+00:00:34.320 features shipped. The craft was in the
+00:00:36.480 code itself. When I started building Wu,
+00:00:38.719 that's exactly how we operated. We hired
+00:00:40.559 people who could turn tickets into work
+00:00:42.480 in features. Code review was the quality
+00:00:44.719 gate. If it passed code review, it
+00:00:46.320 shipped. But something fundamental has
+00:00:48.239 shifted. We started using AI coding
+00:00:50.239 tools, clawed code, cursor, and the
+00:00:52.879 entire rhythm broke. The code started
+00:00:55.120 arriving faster than we could process
+00:00:56.800 it. So the job actually changed
+00:01:01.440 three months ago. One of our senior
+00:01:02.879 engineers came to me visibly frustrated.
+00:01:05.119 He'd spent like 3 days reviewing pull
+00:01:07.119 requests from an engineer, a junior
+00:01:08.720 engineer that had used clawed code.
+00:01:10.400 There was like thousands of lines of
+00:01:11.760 code, but the application worked. But he
+00:01:13.760 looked at me and he said, &quot;I didn't
+00:01:15.360 actually read all the code. I couldn't
+00:01:16.880 read all the code. There was too much of
+00:01:18.240 it. What do I do now?&quot; And that question
+00:01:19.920 made me think cuz I'd been feeling the
+00:01:21.520 same thing, but I just couldn't name it.
+00:01:22.960 Around the same time, I came across some
+00:01:24.799 findings from a retreat called Thought
+00:01:27.040 Works, which is basically senior
+00:01:28.960 engineers from the world's biggest tech
+00:01:30.720 companies brought together to find out
+00:01:32.720 what happens when AI writes the code.
+00:01:35.200 And they didn't leave with answers from
+00:01:36.960 this retreat. They're left with a map of
+00:01:38.640 fault lines, places where traditional
+00:01:40.799 software development is cracking right
+00:01:42.720 now. And reading through it felt like
+00:01:44.240 reading my own history from building Wu.
+00:01:46.240 You've got the cheating agent problem
+00:01:48.240 where AI writes broken code and then it
+00:01:51.280 writes broken tests to validate the
+00:01:53.840 broken code. You got the productivity
+00:01:56.159 experience paradox where your developers
+00:01:58.399 are more productive but more miserable.
+00:02:00.320 I actually seen this in our team. The
+00:02:01.840 migration of code review from code
+00:02:03.920 review to specifications. We' actually
+00:02:05.840 started writing more more stricter
+00:02:07.520 specification dogs without even
+00:02:08.878 realizing why. And now we know what I'm
+00:02:10.800 seeing and what we're struggling with in
+00:02:12.160 our in our own teams. looks like it's
+00:02:13.760 something that's happening also in the
+00:02:15.120 biggest tech companies in the world. The
+00:02:16.640 work is migrating. The skills that
+00:02:18.560 matter are changing. And if you're
+00:02:20.239 hiring developers or you're managing a
+00:02:21.760 tech team and you don't see where the
+00:02:23.360 work is going, you'll end up with the
+00:02:24.959 wrong people doing the wrong things. So,
+00:02:27.120 let me show you what's actually
+00:02:28.319 happening.
+00:02:31.680 Here's what nobody tells you about AI
+00:02:33.519 writing code. The engineering quality
+00:02:35.760 doesn't vanish. It just moves upstream.
+00:02:37.760 Think about a normal user story. I want
+00:02:40.160 to upload a photo. Your developers will
+00:02:42.000 know what that means. you know, JPEG or
+00:02:43.599 PNG uploaded to a site and you got a
+00:02:45.680 progress bar, you know, cuz cultural
+00:02:47.599 context fills in the gaps. But an AI
+00:02:49.920 doesn't have that context. You need to
+00:02:51.440 be really specific. I read a story
+00:02:52.959 recently of a developer asking an AI to
+00:02:55.120 write a notification system of some
+00:02:57.120 kind. You know, simple request, it
+00:02:59.120 worked beautifully in testing when it
+00:03:00.560 was built and then it went into
+00:03:01.760 production and started sending like
+00:03:03.120 50,000 emails in a few minutes. Turns
+00:03:05.280 out that there was no rate limiting set
+00:03:07.040 up in in the specs. See, the engineering
+00:03:08.879 rigor that we used to apply after the
+00:03:10.720 code was written now needs to apply
+00:03:12.879 before in the specs, before a single
+00:03:14.959 line of code has been written. We've
+00:03:16.400 gone back to techniques that felt dead.
+00:03:18.480 Now we need to go back to structured
+00:03:20.000 requirements, state machines, decision
+00:03:22.319 tables, extremely detailed PRDs. It's
+00:03:25.200 the kind of formal documentation that
+00:03:27.280 agile was supposed to kill. But here's
+00:03:28.959 the thing, all that documentation makes
+00:03:31.519 AI incredibly effective at writing code.
+00:03:33.920 When we feed an agent a state machine
+00:03:35.599 that displays and shows exactly what
+00:03:37.360 states are possible within the
+00:03:38.560 application, the code it generates is
+00:03:40.239 almost always correct. It's crazy
+00:03:41.760 because the specification became the
+00:03:44.480 product. The code is dispensable. Think
+00:03:47.040 about it. If you've got a perfect test
+00:03:48.560 suite and you decide to rewrite your
+00:03:50.480 backend from NodeJS to Rust, all you got
+00:03:52.799 to do is ask it. You just feed the tests
+00:03:55.200 into the agent and you say, &quot;Do the
+00:03:57.439 rewrite from Node.js to Rust and make
+00:04:00.000 sure that these tests pass.&quot; and the AI
+00:04:02.400 will get to work and make sure that it
+00:04:03.760 tests itself on the work using the
+00:04:05.519 tests. So then the output will always
+00:04:08.000 work. This is a complete inversion. So
+00:04:10.480 if you're hiring developers right now,
+00:04:11.920 the question is isn't can they write
+00:04:14.239 clean code. The question is can they
+00:04:16.639 write a specification clean enough that
+00:04:19.279 an AI can't misinterpret it. Can they
+00:04:22.079 write a set of tests for a test suite
+00:04:24.080 that catches hallucinations before
+00:04:25.840 production? You see, those are different
+00:04:27.360 skills and most developers don't have
+00:04:28.960 them yet.
+00:04:32.160 There is a layer of work in my team that
+00:04:34.240 doesn't quite have a name yet. It sits
+00:04:36.000 between writing code and shipping to
+00:04:37.919 production. I call it supervisory work.
+00:04:40.400 Basically breaking down problems into
+00:04:42.479 agentsized chunks. Knowing when to let
+00:04:44.720 the agent run and when to step in,
+00:04:46.880 fixing the output not by actually
+00:04:48.400 rewriting the code, but by rewriting the
+00:04:50.400 prompt. Here's what surprised me. My
+00:04:52.240 team is currently split into two groups
+00:04:54.400 primarily. Group one is the more senior
+00:04:56.400 people who understand the whole system
+00:04:58.320 architecturally and they're drowning
+00:05:00.320 because they're spending the majority of
+00:05:01.440 their time doing code reviews. And then
+00:05:03.040 you got group two, the more junior ones
+00:05:05.520 that are spending their time writing
+00:05:07.120 code using clawed code and other AI
+00:05:09.520 tools at 10x the speed that they were
+00:05:11.360 doing it before. Basically generating a
+00:05:13.120 lot more code. But that code doesn't
+00:05:14.960 ship itself. It needs architectural
+00:05:16.960 review. It needs to fit into our
+00:05:18.560 structure. It basically needs check-in
+00:05:20.240 before it can be deployed. So the most
+00:05:21.759 senior engineers we have have become
+00:05:23.520 traffic controllers too busy reviewing
+00:05:25.840 AI code and other people's code to
+00:05:28.479 actually build anything themselves. The
+00:05:30.560 more junior developers, they're
+00:05:31.759 thriving. No muscle memory telling them
+00:05:33.440 to write code in a specific way. So
+00:05:35.199 they're using AI tools like a teammate,
+00:05:37.680 not a threat to their identity. In the
+00:05:39.440 early days used to hire a junior and
+00:05:41.039 they used to take 6 months or so of
+00:05:42.880 draining the rest of the team for that
+00:05:44.479 junior to become productive. Now a
+00:05:46.639 junior can get they can be writing
+00:05:49.600 useful code into production within a
+00:05:51.440 week. But I think there's this this
+00:05:52.720 there's this danger level of midlevel
+00:05:55.039 developers. The guys that have a few
+00:05:56.560 years of experience, they're used to
+00:05:57.840 writing code in the way that they
+00:05:59.120 normally write code before AI existed.
+00:06:01.520 and retraining them to use AI in an
+00:06:03.919 effective way is extremely difficult
+00:06:05.840 because they need to change their
+00:06:07.360 mindset around instead of focusing on
+00:06:09.759 the syntax and the code that they're
+00:06:11.199 writing around a detailed implementation
+00:06:14.080 request on how they talk to the model to
+00:06:16.240 achieve the result that they need. So
+00:06:17.759 here's what I'm learning as a CEO hiring
+00:06:19.840 developers and running a development
+00:06:21.280 team. The job description has changed.
+00:06:23.280 If you're looking for people that can
+00:06:24.800 write code fast, you're looking at the
+00:06:26.880 wrong skill. You need to look for people
+00:06:28.319 that can architect systems, write
+00:06:30.720 unambiguous specs, and supervise AI
+00:06:34.240 agents. And that's a completely
+00:06:36.000 different person to the old school
+00:06:37.520 developer that we hired a few years ago.
+00:06:41.759 Let me tell you a story. Last month at
+00:06:44.000 around 2:00 a.m., one of our servers
+00:06:46.160 broke. It was spitting out error 503.
+00:06:48.720 Service unavailable. our own call
+00:06:50.240 engineer at the time, you know, a guy
+00:06:51.759 pretty sharp and uh really really
+00:06:53.600 capable. He put this into AI to see what
+00:06:56.400 he needed to do. The AI tool looked at
+00:06:58.319 the error, read the documentation and
+00:07:00.160 said restart the server. So our engineer
+00:07:02.319 restarted the server. Uh and then a few
+00:07:04.160 minutes later after restarting it
+00:07:05.440 crashed again. So then he repeated the
+00:07:06.800 process and AI said restart the server.
+00:07:08.800 So he restarted the server again and
+00:07:10.560 then he repeated the process again and
+00:07:12.319 AI said restart the server. By the time
+00:07:14.400 he'd escalated to a senior engineer,
+00:07:16.400 he'd restarted the server six times. The
+00:07:18.639 senior engineer looked at the logs for
+00:07:20.560 about 30 seconds and knew exactly what
+00:07:22.400 the problem was. Turns out the database
+00:07:24.080 connection pool was full because of some
+00:07:25.919 batch cron job that was running in the
+00:07:27.759 background. You see, that's not
+00:07:29.120 documented anywhere. That's tribal
+00:07:31.599 knowledge. That's lived experience. And
+00:07:34.240 an AI doesn't have that, or at least
+00:07:36.080 ours didn't. It sees 503, it reads the
+00:07:38.800 manual, restart the server. Typically,
+00:07:40.800 that's what you would do. But without
+00:07:42.080 that other knowledge, without the other
+00:07:43.919 bit of information, you're just in that
+00:07:45.840 cycle of restart the server, it goes up,
+00:07:47.759 it crashes, restart the server, it comes
+00:07:49.360 up, and it crashes again. This is why I
+00:07:51.039 think all this hype about self-healing
+00:07:53.039 systems is rubbish right now. Unless you
+00:07:55.280 really got all the knowledge in the AIS
+00:07:59.039 context. All the knowledge that a human
+00:08:00.720 would have, all the knowledge that a
+00:08:02.000 senior human would have. To make an AI
+00:08:03.919 agent effective during an outage, you
+00:08:05.919 need to build what the Thought Works
+00:08:07.520 Retreat called an agent subconscious.
+00:08:10.479 basically a knowledge graph of every
+00:08:12.560 incident, every weird edge case, every
+00:08:15.120 bit of undocumented institutional
+00:08:17.280 knowledge that lives in your senior
+00:08:18.960 engineer's heads. We're starting to
+00:08:20.560 build this at Wu. Every time something
+00:08:22.720 breaks, we document not just what
+00:08:24.879 happened, but how we fixed it and what
+00:08:27.360 would be in a senior's engineer's head
+00:08:29.599 when fixing it. You know, that bit of
+00:08:31.120 information that is just known by the
+00:08:32.559 human. We document that. But then
+00:08:34.320 there's a valid point here is that
+00:08:36.080 there's another problem and that's that
+00:08:37.519 AI agents are trained to be helpful.
+00:08:40.080 They are yesmen or or woman you decide.
+00:08:42.479 And the thing is during an outage you
+00:08:44.560 don't want a yes man. You want somebody
+00:08:46.720 to challenge your assumptions. One
+00:08:48.720 engineer at the retreat said that we
+00:08:50.399 need something called angry agents. Ones
+00:08:52.959 that are specifically prompted to poke
+00:08:54.880 holes in your theory because otherwise
+00:08:56.880 the human and the agent will just agree
+00:08:58.640 with each other while the server burns.
+00:09:00.240 And here's the point. If you're running
+00:09:01.519 a tech company and betting on AI to make
+00:09:03.760 your team faster, you need the pre-
+00:09:06.000 requirements first. you know,
+00:09:07.440 documentation that captures how things
+00:09:09.200 work. Seniors who can architect, not
+00:09:11.360 just code, and a system for architecting
+00:09:13.760 institutional knowledge before makes
+00:09:15.920 people forget how things work.
+00:09:19.680 So, here's what I've learned from
+00:09:20.800 running a dev team in the age of AI
+00:09:22.959 agents. The work isn't disappearing.
+00:09:24.959 It's moving from execution to
+00:09:26.399 supervision. The bottleneck used to be
+00:09:28.160 typing code into a file. That bottleneck
+00:09:30.480 is now gone away. Now it's decision-m
+00:09:33.200 verification and starting off by
+00:09:35.360 specifying clear intent. Think about
+00:09:37.839 graphics programming. In 1992, engineers
+00:09:40.720 hardcoded the maths to draw a single
+00:09:43.200 polygon, calculating the exact pixel
+00:09:45.680 positions. By 1994, the GPU arrived and
+00:09:48.640 the hardware did the polygons
+00:09:50.640 automatically. If you insisted in
+00:09:52.320 handcoding polygons in 1995, you weren't
+00:09:56.000 a specialist. You were obsolete. And the
+00:09:57.839 graphics engineers from those days
+00:09:59.600 transitioned to lighting engineers,
+00:10:01.760 animators or physics programmers. They
+00:10:03.920 stopped telling the computer how to draw
+00:10:05.600 a triangle and moved on to telling it
+00:10:07.760 how light reflects off a street, for
+00:10:09.760 example. Nobody handcodes polygons
+00:10:12.320 anymore. We all work in game engines. I
+00:10:14.640 think software engineering is hitting
+00:10:16.079 that exact point right now. So, if
+00:10:17.839 you're hiring developers or you've got a
+00:10:19.120 team of developers, here's what to look
+00:10:20.560 out for. Don't look for people that can
+00:10:21.920 write code. Look for architectural
+00:10:23.839 thinking. Can they write an a spec that
+00:10:26.320 is not open to interpretation? Can they
+00:10:29.040 write tests and design a test suite that
+00:10:30.959 actually becomes the product? And can
+00:10:32.480 they debug a system that they didn't
+00:10:34.240 write? At Wu, that's what we hire for
+00:10:36.320 now. But here's what keeps me up at
+00:10:37.920 night. In the past, code reviewing
+00:10:39.680 wasn't just about catching bugs. It was
+00:10:42.000 also about how developers learned the
+00:10:44.000 system. So, if agents write all the code
+00:10:46.959 and your team stops reading it, then
+00:10:49.120 they become strangers in your own
+00:10:50.800 system, strangers in your own code base.
+00:10:52.880 When something breaks at 3:00 a.m.,
+00:10:54.399 they're staring at code that was written
+00:10:56.560 by a machine, trying to reverse engineer
+00:10:58.720 the logic while your customers are
+00:11:00.160 screaming. I think the solution is to
+00:11:01.680 force AI to lay out all the
+00:11:03.600 architectural decisions that it makes
+00:11:05.040 when it writes the code and then arrange
+00:11:06.959 for meetings with your senior engineers
+00:11:10.160 to review these decisions that the AI is
+00:11:12.560 making essentially. So there's like a
+00:11:14.240 symbiosis between the architectural
+00:11:16.399 decisions that the AI is making and your
+00:11:18.320 team. So your team is fully aware of
+00:11:20.079 those decisions. And all this has to
+00:11:21.839 happen before the agents write the code
+00:11:24.399 because you've got to schedule time to
+00:11:26.079 understand your own software now. It
+00:11:27.600 won't happen automatically. The speed of
+00:11:29.360 AI demands this. And if you're running a
+00:11:31.279 tech company or you're employing
+00:11:32.560 developers, that's the shift that you
+00:11:34.480 need to see coming.
+00:11:37.760 So look, if you're running a software
+00:11:39.040 team or you're thinking about building
+00:11:40.240 one, the ground is shifting. Senior
+00:11:42.880 engineers are drowning in code reviews.
+00:11:44.959 Junior engineers are smashing out code
+00:11:46.880 at a 10x speed at a rate that the
+00:11:48.800 seniors can't keep up with. And the
+00:11:50.320 mid-level guys are trying to get their
+00:11:52.399 head around starting to write code with
+00:11:54.000 AI. I think the companies that will win
+00:11:55.519 are the ones that will manage to retrain
+00:11:57.519 before it's too late. I am documenting
+00:11:59.200 everything I'm learning building Wii U.
+00:12:00.959 The systems we're putting in place, the
+00:12:02.480 mistakes we're making, the changes we're
+00:12:04.399 making, what works for us, what doesn't
+00:12:06.160 work. If this is for you, hit subscribe
+00:12:08.320 and head over to axelmiss.com
+00:12:11.200 and join my newsletter where you'll get
+00:12:13.600 weekly content like this. And if you're
+00:12:15.760 building software right now in this
+00:12:17.440 exact moment of transition, trying to
+00:12:19.440 figure out what to do with your dev
+00:12:20.880 team, you're not alone. The best tech
+00:12:23.360 companies aren't panicking, they're
+00:12:25.440 adapting. Be one of them. See you in the
+00:12:28.560 next one.

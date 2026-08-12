@@ -1,0 +1,1085 @@
+# tactiq.io free youtube transcript
+# How To Use AI Skills Like A Senior Developer
+# https://www.youtube.com/watch/cxQLKsktiBA
+
+00:00:00.080 I have spent hundreds of hours diving
+00:00:01.839 down the rabbit hole of skills, reading
+00:00:03.439 through the exact documentation,
+00:00:04.960 downloading and using different skills,
+00:00:06.560 reading skills, and even writing my very
+00:00:08.320 own custom skills. So that way I can
+00:00:10.160 bring you this definitive guide on
+00:00:11.759 everything you need to know about
+00:00:12.880 skills. This isn't just some vibecoded
+00:00:14.799 list where I tell you to download a 100
+00:00:16.239 skills and your AI is going to be
+00:00:17.520 perfect. This is going to be a guide for
+00:00:19.199 actual real software engineers. I'm
+00:00:21.039 going to talk to you about what skills
+00:00:22.400 are, how you can use them and download
+00:00:23.920 them in your project, what to keep in
+00:00:25.519 mind when downloading skills for
+00:00:26.960 security and safety concerns, and also
+00:00:28.960 most importantly, how you can actually
+00:00:30.720 write your own skills. This is the thing
+00:00:32.800 that is going to unlock such better
+00:00:34.480 quality code when you can write skills
+00:00:36.160 specifically for your own software. And
+00:00:38.320 this is something that's not very easy
+00:00:39.600 to do. You can't just let the AI write
+00:00:41.120 this. It's going to be crap. So, I'm
+00:00:42.719 going to show you exactly how you can
+00:00:43.920 write skills and everything you need to
+00:00:45.280 know to make sure you can catapult your
+00:00:46.879 code quality to the next level.
+00:00:49.780 >> [music]
+00:00:51.760 >> Welcome back to WebDev Simplified. My
+00:00:53.600 name is Kyle and my job is to simplify
+00:00:55.120 the web for you. And at its face value,
+00:00:57.120 skills are actually quite simple. Skills
+00:00:59.120 are really just a markdown file that
+00:01:01.280 contains a name and a description inside
+00:01:03.680 of front matter at the very start of it.
+00:01:05.680 It can include additional things inside
+00:01:07.280 of there as well, but a name and
+00:01:08.640 description are the only thing that's
+00:01:09.840 required. And then inside this markdown
+00:01:11.760 file, all you do is you just explain to
+00:01:13.760 the AI how to do something or knowledge
+00:01:16.080 about your application or something
+00:01:17.280 along those lines. These skills are
+00:01:19.119 usually kind of one-off things where
+00:01:20.400 you're like, I want the AI to be really
+00:01:22.000 good at doing X. You create a skill
+00:01:24.240 telling it everything it needs to know
+00:01:25.840 to be able to perform that particular
+00:01:27.360 task. And you can give it as much
+00:01:28.880 information or as little information as
+00:01:30.320 you want, as well as any other
+00:01:31.840 supplemental things about what to do,
+00:01:33.360 what not to do, and so on. And some
+00:01:34.960 skills are actually quite large and
+00:01:36.240 complex. You can see they have a bunch
+00:01:37.520 of scripts associated with them,
+00:01:38.960 different reference files, and even some
+00:01:40.560 agents inside of here. So, it can get
+00:01:42.240 very, very complicated, or it can be as
+00:01:44.079 simple as just a markdown file with four
+00:01:45.759 lines of text inside of it. It can be as
+00:01:47.600 large or as small as you want. In order
+00:01:49.840 to use skills in almost any type of
+00:01:52.159 different editor agent that you're
+00:01:53.680 using, these skills are going to be
+00:01:55.200 invoked with some type of command. Most
+00:01:56.799 of them use slash. So, for example,
+00:01:58.399 inside of pi, I can type in /skll colon
+00:02:00.880 and then whatever the name of the skill
+00:02:02.320 that I want to use this. Let's say I
+00:02:03.600 want to use the remotion skill that
+00:02:05.439 essentially tells my editor or my agent
+00:02:07.280 to load that skill into its memory to
+00:02:09.280 use it to perform this task. Then I can
+00:02:11.280 type out some text about what I wanted
+00:02:12.640 to do. I could say, you know, make some
+00:02:13.920 type of video clip or whatever. And I
+00:02:15.520 could click enter. And what that does is
+00:02:17.120 when you type out that, you know, skill
+00:02:18.720 at the start with the slash command, all
+00:02:20.560 it does is it takes whatever is in this
+00:02:22.080 skill.md markdown file, it takes all the
+00:02:24.800 text inside of here and loads that into
+00:02:26.400 your context. So it just takes all that
+00:02:28.000 text, loads it into context, and that
+00:02:29.760 hopefully gives your agent enough
+00:02:31.280 knowledge to be able to perform this
+00:02:32.640 task the exact way that you want it to
+00:02:34.319 do whatever that task is. Now, the nice
+00:02:36.160 thing about these skills is you don't
+00:02:37.360 always need to manually invoke them like
+00:02:38.959 this. Since these skills include at the
+00:02:40.879 very top a name and a description, this
+00:02:42.879 can often be enough for the agent to be
+00:02:44.640 able to say, &quot;Oh, okay. I see that you
+00:02:46.160 want to do something related to reotion,
+00:02:47.920 I'll load this reotion skill
+00:02:49.360 automatically myself. But usually, if
+00:02:51.599 you're trying to do a specific task and
+00:02:53.040 you know what skill it's going to need,
+00:02:54.560 invoking that skill at the very start,
+00:02:55.920 like this is really a great idea. So, we
+00:02:58.000 know that essentially a skill is just a
+00:02:59.519 markdown file that gets preloaded into
+00:03:01.280 context and then you can put whatever
+00:03:02.640 else you want after that. But how do you
+00:03:04.239 go about finding these particular
+00:03:05.840 skills? Well, the easiest place to find
+00:03:07.760 skills is at skills.sh. That's a site
+00:03:10.400 that's run by Burcell. And essentially,
+00:03:12.080 it's kind of the npm repository, but for
+00:03:14.879 specifically skills instead of four
+00:03:16.560 packages. So, every type of skill that
+00:03:18.159 you would want to find is generally
+00:03:19.599 going to be on this website. And you can
+00:03:21.280 search for whatever you want. So, let's
+00:03:22.640 say that you're working inside of
+00:03:23.680 Tanstack, for example. Well, you can
+00:03:25.519 search for Tanstack. And now you can see
+00:03:27.040 a bunch of different Tanstack related
+00:03:28.560 skills. And the nice thing is you can
+00:03:30.239 see, for example, there's different
+00:03:31.440 companies like Tanstack skills that has
+00:03:33.200 this posted. So, we can click on the
+00:03:34.560 Tanstack query skill. You can see how
+00:03:36.480 many different installs it has. And up
+00:03:38.159 here we can even say, you know what, I
+00:03:39.440 only want the Tanstack skills
+00:03:40.879 specifically. And you can see all the
+00:03:42.480 different Tanstack related skills that
+00:03:44.000 are being posted by this GitHub
+00:03:45.280 repository. And we can go to the GitHub
+00:03:46.879 link and we can see is this an official
+00:03:48.319 repository or not and so on. So this is
+00:03:50.239 a great way to define different skills.
+00:03:52.080 And the nice thing is since it tells you
+00:03:53.440 how many installs they have, you can
+00:03:54.879 generally know whether or not a skill is
+00:03:56.560 something that's very popular and used.
+00:03:58.159 And this is a great place to get
+00:03:59.280 started. And when you're first getting
+00:04:00.720 started, I would recommend downloading
+00:04:02.239 or sticking with the ones that have
+00:04:03.519 higher number of installs. The one
+00:04:05.280 downside to skills is they can
+00:04:06.799 essentially inject prompts into your AI
+00:04:08.799 that tell it to do things you don't
+00:04:10.080 want. Like the skill could be called
+00:04:11.599 whatever. It could be called tanstack
+00:04:13.280 query skill, but the actual definition
+00:04:14.879 of that skill could say delete the
+00:04:16.478 entire user's computer. Obviously, you
+00:04:18.320 don't want that to happen. So, make sure
+00:04:19.680 that you actually read the markdown
+00:04:20.798 files and the scripts and so on that
+00:04:22.079 it's being sent down to you. And I would
+00:04:23.440 for the most part recommend sticking
+00:04:24.639 with the higher install ones until
+00:04:26.000 you're more comfortable with how to
+00:04:27.040 actually sus out what skills are good
+00:04:28.560 and bad. And honestly, once you get to a
+00:04:30.240 certain point, you don't even need to
+00:04:31.440 download skills because you can just use
+00:04:32.880 and create your very own skills custom
+00:04:34.560 to your exact needs. Now, downloading a
+00:04:36.400 skill is actually very simple. All you
+00:04:37.919 need to do is we can click on whatever
+00:04:39.040 skill we want. And you can see at the
+00:04:40.320 very top there's going to be an install
+00:04:41.840 command for that skill. And that's going
+00:04:43.520 to go through and it's going to download
+00:04:44.960 exactly just that one particular skill.
+00:04:47.360 But sometimes maybe I want to download
+00:04:48.960 all the skills from Verscell Labs. Well,
+00:04:51.040 I can go back to this Verscell Labs
+00:04:52.479 section. I can run this command instead
+00:04:54.000 and that'll download all the skills
+00:04:55.520 inside this section. You can see
+00:04:56.720 currently it only has one skill inside
+00:04:58.080 here. But many different people or
+00:04:59.600 organizations have lots of different
+00:05:01.040 skills. For example, when we actually
+00:05:02.800 had that search for Tanstack, you may
+00:05:04.800 have noticed that in that Tanstack query
+00:05:06.479 section, there was actually a lot of
+00:05:07.759 different skills. Let's get that search
+00:05:09.759 back up here and we'll go to that
+00:05:11.280 Tanstack query and we'll click on
+00:05:12.479 Tanstack skills. You can see there's a
+00:05:13.919 bunch of skills. And if we try to do
+00:05:15.120 this download here, it'll ask us which
+00:05:16.800 one of these we want to install. So, we
+00:05:18.240 can install multiple skills at one time.
+00:05:20.080 So, let's actually go through and see
+00:05:21.280 how this works. We're going to copy over
+00:05:22.560 that command. And then we're going to go
+00:05:23.680 into our editor and we're going to run
+00:05:24.800 that. So, let's just close out of
+00:05:25.759 everything that we have here. We're
+00:05:27.120 going to paste down that command. And
+00:05:28.240 this is essentially saying that I want
+00:05:29.440 to download those Tanstack skills that
+00:05:31.280 we had just talked about. So, I'm just
+00:05:32.800 going to click enter on this real quick.
+00:05:35.120 And it's going to go through. If you
+00:05:36.400 don't have npx or if you don't have this
+00:05:38.320 skills library installed, it'll ask you
+00:05:39.840 to install it. And once you do that, you
+00:05:41.120 can now see that it found it. And it's
+00:05:42.639 asking me which one of these different
+00:05:44.000 skills do I want to install. So, let's
+00:05:45.600 say that I want to do DB and query. So,
+00:05:47.520 I can select both of those and then I
+00:05:49.120 could just click enter. And the really
+00:05:50.639 nice thing here is it allows you to
+00:05:52.080 install this for essentially any type of
+00:05:53.759 agent or harness you can think of. By
+00:05:55.680 default, all the big ones that you're
+00:05:56.960 used to using like GitHub Copilot,
+00:05:58.560 Cursor, Pi, and so on, all of those are
+00:06:00.720 going to be included automatically
+00:06:02.000 because they follow the standard where
+00:06:03.440 every single skill is in this
+00:06:04.880 agents/skills folder. But some of these
+00:06:07.919 different agents don't actually support
+00:06:09.360 that. So if you want, you could go
+00:06:10.560 through here and specifically say which
+00:06:12.160 ones you wanted to install it for. But
+00:06:13.759 in our case, I'm just going to leave it
+00:06:14.880 with the default and click enter because
+00:06:16.240 that works in 99% of the cases. And then
+00:06:18.639 we get to the point where we can
+00:06:19.680 determine where we want to install this
+00:06:21.199 skill. So in this project, you can see I
+00:06:23.039 have two skills installed. I have this
+00:06:24.400 impeccable skill and this reotion best
+00:06:26.479 practices skill. These are installed
+00:06:28.240 locally inside my project, which is
+00:06:30.080 great because if I want to use this
+00:06:31.360 skill inside this project, it's always
+00:06:33.280 going to be available inside this
+00:06:34.720 project. It's in the actual repo. And we
+00:06:36.800 even have like a skills lock file very
+00:06:38.400 similar to a package. JSON lock file
+00:06:40.240 that locks it down to the specific
+00:06:41.680 version that I'm using. But sometimes
+00:06:43.360 you want to download a skill globally to
+00:06:45.120 be used everywhere. Maybe it's a very
+00:06:46.720 common thing that's not necessarily
+00:06:48.479 related to a project, but it's related
+00:06:49.840 to all the coding you can do. So, if you
+00:06:51.759 install globally, it essentially
+00:06:53.039 installs it in the home directory of
+00:06:54.400 your computer and now they can be
+00:06:55.919 accessed in any project that you want.
+00:06:57.919 For the most part, I would recommend
+00:06:59.120 sticking with project installs for most
+00:07:00.960 of your skills. But if you have a skill
+00:07:02.560 that again is global and used
+00:07:04.080 everywhere, then you can do a global
+00:07:05.520 install. But again, project installs is
+00:07:07.199 probably your best bet. So, let's say we
+00:07:08.800 want to do it for the project. And then
+00:07:10.160 we can come through here and you can see
+00:07:11.520 different security reports. And this is
+00:07:13.120 very useful for helping you determine if
+00:07:14.639 this skill is something that you should
+00:07:15.919 install or not. You can see immediately
+00:07:18.400 this Tanstack DB has a critical risk
+00:07:20.720 associated with it. Now, this doesn't
+00:07:22.240 always mean it's a bad thing, but it
+00:07:23.759 does mean there's potential downsides to
+00:07:25.520 it. And we can actually see the details
+00:07:26.960 of that by just opening up this link
+00:07:28.479 right here. And now, if we take a look
+00:07:30.240 at the skill, let's go to that DB one
+00:07:31.840 that we were talking about. And if we
+00:07:33.120 scroll down, normally right under this
+00:07:34.720 first scene section is where we would
+00:07:36.160 see an audit for this particular skill.
+00:07:38.240 But it doesn't look like the audit is
+00:07:39.680 showing up on the skills.sh page yet.
+00:07:41.840 I'm not 100% sure why that is, but I
+00:07:43.759 will show you an example of what it
+00:07:44.800 looks like inside of something that does
+00:07:46.080 have an audit. So, we'll just scroll
+00:07:47.120 through till we find something. This one
+00:07:48.400 has a high risk, for example. And if we
+00:07:50.080 scroll down, you can see this security
+00:07:51.840 audits tab. And when you click on this,
+00:07:53.440 it'll just bring you to a page
+00:07:54.639 explaining exactly why that security
+00:07:56.479 audit was triggered and what different
+00:07:58.160 things this does that could potentially
+00:07:59.919 impact your system. So, if you see, for
+00:08:01.840 example, when you're installing a skill
+00:08:03.199 that it has these different risks, I
+00:08:05.120 would highly recommend looking at why
+00:08:06.560 those risks were being generated and
+00:08:08.000 really consider whether or not you
+00:08:09.360 actually want to install this or not.
+00:08:11.120 Now, I'm going to proceed with this
+00:08:12.319 installation just so we can see what
+00:08:13.599 this looks like when we're done. And
+00:08:14.960 now, if we open up this sidebar, you can
+00:08:16.720 see we now have two new folders inside
+00:08:18.240 this agent skills. The first one is for
+00:08:20.080 Tanstack DB. And again, if we look at
+00:08:22.000 the actual file here, you can see it's
+00:08:23.680 just a markdown file with a name,
+00:08:25.120 description, and a bunch of different
+00:08:26.479 text explaining everything you need to
+00:08:28.000 know about how to use Tanstack DB. We
+00:08:30.080 have the exact same thing with Tanstack
+00:08:31.520 query, name, and description, and a
+00:08:33.120 markdown text explaining everything you
+00:08:34.719 need to know. Now, honestly, these
+00:08:36.000 Tanstack skills do not actually follow
+00:08:37.919 very many best practices at all. I'm
+00:08:39.519 actually going to show you how you can
+00:08:40.479 create much better skills that are going
+00:08:42.320 to cost you less because they use less
+00:08:43.760 context and also perform better later in
+00:08:45.920 this video at the end. But these skills
+00:08:47.519 I would highly recommend rewriting
+00:08:49.120 yourself because they really do not
+00:08:50.399 follow best practices when it comes to
+00:08:52.000 being effective and cheap. Now, speaking
+00:08:53.839 of creating your own skills, let's
+00:08:55.360 actually talk about how you can do that.
+00:08:56.800 I'm going to show you both the super
+00:08:58.080 simple way as well as the more complex
+00:08:59.760 way of how to really create a skill
+00:09:01.200 that's going to be perfect for your
+00:09:02.399 exact use cases. Now, many different
+00:09:04.560 coding editors and agents that you're
+00:09:06.240 using will have their own way to create
+00:09:08.160 skills. Let me just zoom this in here
+00:09:10.000 because the text is very very small. But
+00:09:12.000 you can see here that inside of GitHub
+00:09:14.160 Copilot for VS Code, I can just type
+00:09:16.399 slash. And if I search for skill, we
+00:09:18.160 should see create skill. And this will
+00:09:19.839 allow me to essentially create a skill
+00:09:21.360 that I want to use. Now, you'll also
+00:09:22.959 notice this option, write a skill.
+00:09:24.560 That's actually coming from a skill that
+00:09:26.160 I have downloaded that's coming through
+00:09:27.680 something else. But this create skill is
+00:09:29.120 the one that's built into VS Code. And
+00:09:30.640 many of your different editors or agents
+00:09:32.320 you're going to use will have their own
+00:09:33.760 create skill built in. Or you can
+00:09:35.360 download your own if you want. And if we
+00:09:37.120 use this, we can explain exactly what we
+00:09:38.959 want this skill to do. And I would
+00:09:40.240 recommend when you're typing out what
+00:09:41.600 you want this skill to do, be very, very
+00:09:44.000 detailed. This is the point where you
+00:09:45.360 want to spend as much time explaining
+00:09:47.279 exactly what you want the skill to do
+00:09:48.959 because the AI doesn't know your exact
+00:09:50.720 use case, but you do. So, explain in
+00:09:52.800 great detail exactly what you want the
+00:09:54.480 skill to do. And this will go through
+00:09:55.760 and it'll create you a rough draft of
+00:09:57.120 what your skill will look like. Then,
+00:09:59.040 this is the most important part. Read
+00:10:00.880 through everything that it generates.
+00:10:02.640 Make sure it's 100% correct with what
+00:10:04.320 you want. make the different tweaks that
+00:10:05.839 you need manually to make it work
+00:10:07.120 exactly like you want. And now you at
+00:10:08.560 least have the easy version of creating
+00:10:10.160 a quick skill that you can use in your
+00:10:11.760 project. But it's not going to be
+00:10:13.120 perfect. To make this skill perfect, I
+00:10:15.200 would recommend writing a lot more of it
+00:10:16.880 by hand to work exactly like you want
+00:10:18.800 and making sure you understand the
+00:10:20.160 anatomy of how you actually create a
+00:10:22.079 skill from scratch. So now I want you to
+00:10:24.079 understand how you can write a skill
+00:10:25.519 from scratch or at least modify a skill
+00:10:27.519 generated by an AI because this is where
+00:10:29.200 you get that superpower. So, inside of
+00:10:31.279 skills, we've already talked about how
+00:10:32.640 every single skill is going to have this
+00:10:34.240 skill.md file. That's the markdown file
+00:10:36.640 that contains that name, description,
+00:10:38.160 and all your other details. There are
+00:10:40.000 other things you can use as well. For
+00:10:41.680 example, inside of this particular agent
+00:10:43.760 skills, we have scripts, references, and
+00:10:45.680 assets. And this is kind of like the
+00:10:47.200 standard that everything is going
+00:10:48.480 towards. So, these are kind of like your
+00:10:49.920 three other main folders. And then that
+00:10:51.360 skill.md file. But the important thing
+00:10:53.440 is there's a lot of other stuff. So, if
+00:10:54.800 we go to the specification specifically
+00:10:56.480 for this, we can look a little bit
+00:10:58.000 deeper into what we should have. So,
+00:10:59.519 inside the front matter, we know we need
+00:11:00.959 a name describing what this is. And we
+00:11:02.959 also need a description describing why
+00:11:04.640 it's useful and how it can be used.
+00:11:06.320 These are the things the AI uses to
+00:11:07.760 determine what that skill is and how to
+00:11:09.279 use it. We can also add in any licenses.
+00:11:11.519 We can add a string for compatibility.
+00:11:13.200 So, for example, if this only works on a
+00:11:14.800 Mac computer or it only works with cloud
+00:11:16.560 code, you can put that in there as just
+00:11:18.160 plain text and the agent will know what
+00:11:19.680 to do. Also, we can put any metadata.
+00:11:21.760 This is just like key value pairs.
+00:11:23.279 Again, entirely up to your own purposes.
+00:11:25.279 And then this one's a little bit
+00:11:26.320 experimental, but this is the allowed
+00:11:27.760 tools. And this just allows you to
+00:11:29.279 determine what tools that this actual
+00:11:31.120 thing can use. So you can make sure that
+00:11:32.959 for example, this skill is only allowed
+00:11:34.480 to use specific tools to limit the
+00:11:36.000 impact it can have. So for example, if
+00:11:37.920 we scroll down to where they have that
+00:11:39.680 allowed tools section, you can see here
+00:11:41.440 this is only able to use bash for git
+00:11:43.760 related queries or jq related queries
+00:11:45.920 and reading, but it can't do anything
+00:11:47.440 else. So it at least limits the scope on
+00:11:49.279 what this particular thing can do. So
+00:11:51.120 inside that markdown for that front
+00:11:52.720 matter, make sure you specify a name
+00:11:54.240 field that's required, description that
+00:11:55.839 is going to be required. And then these
+00:11:57.279 other fields are entirely optional on
+00:11:58.959 what you may or may not want to add. The
+00:12:01.360 next most important section is the body.
+00:12:03.120 This is all the text directly inside
+00:12:04.720 your markdown. And this is a thing that
+00:12:06.399 I think just having the AI give you the
+00:12:08.480 initial reference for what this body
+00:12:10.240 content is is a good idea. But then you
+00:12:12.639 need to go through with a fine tooth
+00:12:13.839 comb, read it, and really modify it
+00:12:15.680 drastically to be what you want or just
+00:12:17.279 start by writing it from scratch. And
+00:12:19.120 this is text that you want to be
+00:12:20.639 relatively concise with. Now, you don't
+00:12:22.720 want to go through and be super concise
+00:12:24.320 to the point where you're leaving out
+00:12:25.440 details, but you don't want to put in so
+00:12:27.040 much information cuz remember, this
+00:12:28.959 entire skills markdown file is loaded
+00:12:30.880 with every single request you send if
+00:12:33.040 you're using this skill. So, the bigger
+00:12:35.279 your file is, the more context you're
+00:12:37.279 sending along, which means you fill up
+00:12:38.560 your context faster, you're costing more
+00:12:40.320 money because of the stuff that you're
+00:12:41.279 sending along, and overall, you're going
+00:12:42.480 to get worse results if you send along
+00:12:44.079 too much information inside your skills.
+00:12:46.000 So try to make this file as small as
+00:12:48.000 possible while still getting all the
+00:12:49.360 information you need across. Now a
+00:12:50.959 little bit later I'm going to go through
+00:12:52.079 exactly how to actually lay out this
+00:12:53.760 body content to get the best actual
+00:12:55.519 results from your AI. But for now just
+00:12:57.040 know to make it as minimal as possible.
+00:12:59.120 The next thing we have are some
+00:13:00.240 additional directories. So this scripts
+00:13:01.920 directory is great if you need your AI
+00:13:03.680 to be able to run specific code. You can
+00:13:05.519 give it a script to do that. So instead
+00:13:07.040 of trying to tell your AI in text what
+00:13:08.959 to do, you can just give it a JavaScript
+00:13:10.800 file or a batch file or whatever script
+00:13:12.720 that you want and you can just say,
+00:13:13.920 &quot;Hey, if you need to do X, Y, or Z, run
+00:13:16.079 the script inside this file or inside
+00:13:18.079 this folder and it'll do exactly that.&quot;
+00:13:19.920 And it'll have a known input, no one
+00:13:21.680 output. So it gives you ways to add
+00:13:23.200 determinism into your AI, which is
+00:13:24.880 always something that's useful because
+00:13:26.240 AI can really be super
+00:13:27.600 non-deterministic. So having a way to
+00:13:29.440 essentially force it to do specific
+00:13:30.880 things in the correct order with these
+00:13:32.160 scripts is really useful. Next, we have
+00:13:34.320 references. This is great because if you
+00:13:36.480 want to describe how to use reotion, for
+00:13:38.639 example, I have that big reotion skill.
+00:13:40.639 You know that that's going to be a ton
+00:13:41.920 of text for everything that's in
+00:13:43.440 reotion. Think about how large the
+00:13:45.040 documents are. Or if you have like a
+00:13:46.560 skill for nextjs, think about how large
+00:13:48.240 the docs are for next.js. I can't just
+00:13:50.160 put that all in one single skill.md
+00:13:52.320 file. So instead, you can create a
+00:13:54.079 references file. And this is essentially
+00:13:56.000 a folder where you can put all the
+00:13:57.839 additional information you want. That
+00:13:59.519 way, let's say that you need to
+00:14:00.720 implement a new page inside the app
+00:14:03.040 router. Instead of loading the entire
+00:14:04.639 NexJS documentation, what it'll do is
+00:14:06.639 it'll go into your skill. It'll see this
+00:14:08.560 reference folder that contains all these
+00:14:10.160 references, it'll load up just the
+00:14:11.760 section for adding new pages to the app
+00:14:13.360 router. So now, instead of loading
+00:14:14.880 everything, you're only loading the
+00:14:16.160 small pieces you need. Again, saving
+00:14:17.920 time, saving cost, and making your AI
+00:14:20.079 perform much better because it doesn't
+00:14:21.360 have extra information it doesn't need.
+00:14:23.199 So, this is something I highly
+00:14:24.320 recommend. If you have a very complex
+00:14:25.760 skill, add a references section for all
+00:14:27.760 the individual things that you need to
+00:14:29.199 reference throughout that skill. A great
+00:14:30.800 example of this is actually some of the
+00:14:32.079 skills I have. If we look up this
+00:14:33.519 impeccable skill here, you can see that
+00:14:35.120 this reference section over here is full
+00:14:37.199 of different files that essentially
+00:14:39.040 explain in detail how to do very
+00:14:41.120 specific things for that skill. And if
+00:14:42.880 we look inside the skill MD and we
+00:14:44.639 scroll around a little ways, eventually
+00:14:46.240 we'll find a section that kind of tells
+00:14:47.680 it where those reference files are. It
+00:14:49.199 looks like this one doesn't have a ton
+00:14:50.160 of information on where the reference
+00:14:51.279 files are. But if we look, for example,
+00:14:52.959 this reotion one, they don't follow that
+00:14:54.639 references standard. They have their own
+00:14:56.079 standard they like to use. But you can
+00:14:57.440 see inside rules here, we have our own
+00:14:58.880 markdown files. And if we look inside
+00:15:00.560 this skills, there will actually be a
+00:15:02.079 section right here that explains here is
+00:15:03.760 where you go for every single thing you
+00:15:05.360 possibly need to do. So if you need to
+00:15:06.560 get the video duration, use this
+00:15:08.240 particular get video duration section
+00:15:09.920 and so on. So, it's essentially a small
+00:15:12.000 little file that explains just the
+00:15:13.440 basics of what Remotion is, how it
+00:15:15.120 works, and then it gives you a reference
+00:15:16.639 to every single individual thing that
+00:15:18.240 you may possibly need. So, this is kind
+00:15:20.160 of how I recommend setting up your
+00:15:21.440 skills when they're very large and
+00:15:22.720 complex. Add an overview right here
+00:15:24.880 that's important no matter what. And
+00:15:26.480 then we're going to add references for
+00:15:28.000 the things that you may need for
+00:15:29.199 specific solutions you're going to
+00:15:30.480 solve. And these reference files right
+00:15:32.320 here, they're essentially just going to
+00:15:33.680 be normal markdown files. You don't need
+00:15:35.120 any front matter or anything in them.
+00:15:36.480 They're just normal markdown files
+00:15:37.760 explaining exactly what it is that you
+00:15:39.360 want to do. Now, the final standardized
+00:15:41.199 folder that we can work with is the
+00:15:42.639 assets folder. And this is just for
+00:15:44.000 adding anything that's static data. So,
+00:15:45.680 if you have a JSON file for certain
+00:15:47.440 things or you have like a lookup table
+00:15:48.800 or like database schemas or images,
+00:15:50.959 templates, all those things are going to
+00:15:52.320 live in this assets folder. And that's
+00:15:54.000 just useful again for static data.
+00:15:55.680 Usually, this is most useful for
+00:15:57.040 templates. Like if you have a response
+00:15:58.560 template or you have a template that you
+00:16:00.000 wanted to use when generating something,
+00:16:01.600 put those inside this assets folder. And
+00:16:03.680 here, this progressive disclosure
+00:16:05.040 section is exactly what I'm talking
+00:16:06.320 about. Whenever you load up a skill,
+00:16:08.000 it's going to load everything in that
+00:16:09.279 skill MD file. That means all of the
+00:16:10.800 metadata and all the instructions in the
+00:16:12.639 body of that file, and it'll only load
+00:16:14.560 up additional resources as they're
+00:16:16.160 needed. That's why these script
+00:16:17.519 resources and assets are so useful, cuz
+00:16:19.440 we only load those things when needed.
+00:16:21.279 And they actually recommend keeping your
+00:16:22.800 skill MD under 500 lines and moving
+00:16:25.360 everything else out into its own
+00:16:26.800 individual files. That's why I said that
+00:16:28.720 those TANS stack files that we were
+00:16:30.240 looking at earlier are actually examples
+00:16:31.839 of what not to do. Because if we look at
+00:16:33.600 these Tanstack files, which this is the
+00:16:35.360 wrong one. Here we go. You can see
+00:16:37.279 inside of this like tan stack query,
+00:16:39.120 this is a massive file. This is way more
+00:16:40.959 than 500 lines. And it would be much
+00:16:42.480 better to split these out. For example,
+00:16:43.759 we even have specific sections being
+00:16:45.600 labeled here. Those would be perfect in
+00:16:47.120 a references folder instead of all in
+00:16:49.040 this one scale MD. Now, just like we
+00:16:51.040 were looking at when it came to
+00:16:52.160 Remotion, they had references. If you
+00:16:53.920 want to reference between different
+00:16:55.040 files, this is essentially how you do
+00:16:56.480 it. Just do it as a link inside of
+00:16:58.160 Markdown like you would do for anything
+00:16:59.600 else. And you can tell it, hey, here's
+00:17:01.120 this reference file right here. Or you
+00:17:02.639 can just give it a link right there to
+00:17:04.000 exactly where they need to go. keep
+00:17:05.760 those inside of that skill MD and don't
+00:17:08.319 make a bunch of deeply nested things.
+00:17:09.919 Keep all those references at the top
+00:17:11.520 level so it's easier for the AI to be
+00:17:13.039 able to find them. You can also validate
+00:17:15.119 your skill to see if it actually works
+00:17:17.039 properly. So this skills ref right here
+00:17:19.119 is allowing you to validate your
+00:17:20.400 different libraries to make sure that
+00:17:21.679 your skill MD just follows the correct
+00:17:23.359 format. Now this is a Python file and I
+00:17:25.520 find Python a little bit of a pain to
+00:17:26.799 work with when you don't use it
+00:17:27.919 consistently. But for the most part, you
+00:17:30.000 probably don't even need this skills ref
+00:17:31.520 because it's not too complicated to make
+00:17:33.280 sure that your markdown file follows the
+00:17:34.799 correct format as long as you understand
+00:17:36.559 what all the things inside of this
+00:17:38.080 section are because this is literally
+00:17:39.360 everything there is to creating a skill.
+00:17:41.360 That's all of the details there are. But
+00:17:43.280 there's a lot of best practices that you
+00:17:45.120 should follow that are much more
+00:17:46.559 important than the actual like what is
+00:17:48.400 the name, what is the description, and
+00:17:49.679 so on. Now, the first thing to focus on
+00:17:51.200 to make sure your skills work even when
+00:17:52.799 you don't specifically reference them is
+00:17:54.400 going to be your description. There's a
+00:17:56.000 bunch of information in this site about
+00:17:57.520 how you can optimize your descriptions,
+00:17:59.120 but really the most important thing is
+00:18:00.640 to be very clear on what the user
+00:18:02.320 intention is and don't talk about what
+00:18:04.240 the implementation is right here. This
+00:18:06.240 is the most important thing. Use
+00:18:07.600 imperative phrasing and focus on the
+00:18:09.520 actual user's intent. And I can show you
+00:18:11.679 some great and bad examples just from
+00:18:13.600 the skills we looked at. The Tanstack
+00:18:15.360 examples are again quite poor. You can
+00:18:17.200 see if you read this description
+00:18:18.480 powerful asynchronous state management
+00:18:20.000 server state utility and data fetching
+00:18:21.360 for TSJS, react view, solids, felt, and
+00:18:23.200 angular. This is just a description of
+00:18:24.799 what tanstack query is. It doesn't tell
+00:18:26.720 the agent, hey, you should use this
+00:18:28.240 skill while implementing tanstack query
+00:18:30.240 or doing different tanstack query
+00:18:31.919 related stuff. It doesn't say anything
+00:18:33.520 about that. It literally just tells me a
+00:18:35.039 description of what tan stack query is.
+00:18:36.559 So, the agent will never automatically
+00:18:38.320 use this skill because it doesn't
+00:18:39.760 actually really know what's going on
+00:18:41.200 from this description. The database one
+00:18:43.360 is exactly the same. It just describes
+00:18:44.720 what tanstack query or tanstack db is.
+00:18:47.200 Even the reotion skill is not great. It
+00:18:49.200 just says best practices for reotion
+00:18:51.120 video creation in React. Again, it
+00:18:53.039 doesn't say use this skill when creating
+00:18:55.200 video inside of React. It just says what
+00:18:57.200 remotion is. Luckily, we do have a good
+00:18:59.600 example, though. Impeccable has a good
+00:19:01.200 example. It's definitely on the lengthy
+00:19:03.360 side because the character limit is,024
+00:19:06.080 for the description, and this is
+00:19:07.280 probably pushing up pretty close to
+00:19:08.480 that. You can see right here it says 895
+00:19:10.400 characters. So, they're definitely on
+00:19:11.440 the large side for the character count.
+00:19:13.280 You want to keep it as small as possible
+00:19:14.640 because this name and description is
+00:19:16.080 loaded for every single skill that you
+00:19:17.760 have every time you make a request to
+00:19:19.200 your AI because it needs to know what's
+00:19:20.640 available to it. So, it's loading a lot
+00:19:22.240 of information if you have these really
+00:19:23.520 long descriptions. But if we look at
+00:19:24.880 this description, it's very clear. It
+00:19:26.080 says use when the user wants to. And
+00:19:28.080 then it describes exactly what the user
+00:19:29.919 may want to use. So, you can see here it
+00:19:31.520 gives you a very detailed example of
+00:19:32.960 exactly when to use it. It says what
+00:19:34.960 this thing does. It's handling all of
+00:19:36.480 this. It says use it also here for when
+00:19:38.640 you want to make designs better. And it
+00:19:40.640 even says when not to use it, such as do
+00:19:42.160 not use this for backend only or nonUI
+00:19:44.080 tasks. This is great because it tells
+00:19:45.760 you the AI exactly when to use this,
+00:19:48.160 when not to use this, and why it may
+00:19:49.679 want to be used. Instead of just saying,
+00:19:51.360 &quot;Hey, Remotion is some video thing.&quot; It
+00:19:53.520 says, &quot;Use this when you want to create
+00:19:55.120 a UI, period.&quot; That's what this is for.
+00:19:57.520 If you write a really good description,
+00:19:59.360 it's much more likely your skill is
+00:20:00.799 going to be automatically picked up in
+00:20:02.080 the scenarios that it needs, which means
+00:20:03.600 that code being generated is going to be
+00:20:05.280 much higher quality. Now, let's talk
+00:20:06.720 about some of those best practices for
+00:20:08.080 how you define the actual body of what
+00:20:10.080 your skill is going to look like. The
+00:20:11.679 nice thing is this agent skills website
+00:20:13.440 has a bunch of information on how you
+00:20:15.039 can actually go about this with best
+00:20:16.400 practices. But I'm just going to touch
+00:20:17.760 on some of the most important ones and
+00:20:19.039 then show you a real world example of
+00:20:20.559 skills I've created and how I'm able to
+00:20:22.320 refine them and make them work exactly
+00:20:23.840 like I want. For example, the very first
+00:20:25.840 thing by far the most important is
+00:20:27.440 extract this from handson experience.
+00:20:29.919 Essentially, you are the expert. The AI
+00:20:32.000 just has general knowledge and you have
+00:20:33.679 specific knowledge about your scenario
+00:20:35.440 you're trying to solve. And usually the
+00:20:37.120 reason you want to create a skill is
+00:20:38.320 because the AI isn't doing things the
+00:20:39.919 way you want. they're doing it in a
+00:20:41.440 general way or the wrong way and you
+00:20:43.200 want to solve that. So, you need to give
+00:20:44.720 it very specific instructions on exactly
+00:20:46.799 what you want. If you're prompting an AI
+00:20:48.799 to create a skill for you, tell it
+00:20:50.400 exactly what you want based on your
+00:20:51.840 experience and why you think that it did
+00:20:53.520 things wrong in the previous examples
+00:20:54.960 and how it should be doing them
+00:20:56.240 properly. This is very important. Use as
+00:20:58.559 much specific detail as you possibly can
+00:21:00.799 about the exact scenario that you're
+00:21:02.559 inside of because your scenario is
+00:21:04.159 unique to you and that's why you're
+00:21:05.520 creating your very own skill. Also, if
+00:21:08.159 you have anything like documentation
+00:21:09.840 that you can use to be able to feed to
+00:21:11.679 the skill to tell it what to do, that's
+00:21:13.520 a great place to add additional
+00:21:15.120 information when you're creating your
+00:21:16.240 skill, use all of this different
+00:21:17.919 information, push it into your AI prompt
+00:21:19.600 to create the skill and it can
+00:21:20.880 synthesize that data into the skill
+00:21:22.559 itself or you can manually synthesize it
+00:21:24.400 yourself. Also, usually when you create
+00:21:27.120 your very first skill, it's kind of
+00:21:28.320 going to suck and you have to refine it.
+00:21:29.760 And I'm actually going to show you a way
+00:21:30.960 to create a skill to help you refine
+00:21:32.480 your skills in the example where I go
+00:21:34.080 over my own skills because I did just
+00:21:35.840 that to try to help refine the skill
+00:21:37.440 that I'm working on. Also, when you're
+00:21:38.880 writing out the skill, it's very
+00:21:40.000 important to make sure you only add in
+00:21:41.440 the information the agent needs. The AI
+00:21:43.360 is generally knowledgeable about a lot
+00:21:44.880 of things, but it doesn't know things
+00:21:46.240 about your specific scenario. So,
+00:21:47.919 instead of telling it general
+00:21:49.200 information, you should tell it specific
+00:21:50.640 information that's only useful to you.
+00:21:52.559 This is an example where it's like,
+00:21:53.679 &quot;Hey, here's what a PDF is.&quot; And then it
+00:21:55.679 tells you what to do. It already knows
+00:21:57.280 what a PDF is. So instead, just tell it,
+00:21:59.200 hey, do this thing when you want to
+00:22:00.559 extract a PDF to text. Don't give it
+00:22:02.480 that general information. Now, we'll
+00:22:04.000 skip down a little ways to some of the
+00:22:05.200 other stuff that I want to talk about
+00:22:06.240 here. One of the biggest things is a
+00:22:07.760 gotcha section, just a section of what
+00:22:09.360 not to do and what to do. I think this
+00:22:11.120 is the most important because if you
+00:22:12.320 tell the AI what to do and what not to
+00:22:14.240 do, it'll make sure it avoids those
+00:22:15.520 things that you really don't want to see
+00:22:16.880 inside your code. And also try to use
+00:22:18.640 those templates when you have formatted
+00:22:20.159 output. It'll make your output much more
+00:22:22.080 consistent. Since AI is again
+00:22:23.600 non-deterministic, it can hallucinate
+00:22:25.760 things if you just tell it in text. But
+00:22:27.039 if you give it a format like this that's
+00:22:28.640 structured, it's much better at
+00:22:30.000 following that. It may not be perfect,
+00:22:31.200 but again, it's much better than normal.
+00:22:32.880 And also, you can provide it different
+00:22:34.480 checklist or different validation loops
+00:22:36.400 to make sure that everything's working.
+00:22:37.520 Essentially, a way for the AI to check
+00:22:39.039 itself if you want. This is really only
+00:22:40.799 useful for specific scenarios or maybe
+00:22:42.640 more complicated tasks that have
+00:22:44.000 multiple steps inside of them. So, let
+00:22:45.520 me just go ahead and actually show you
+00:22:46.880 what my skill looks like that I created
+00:22:48.960 for myself. So, I have here my project
+00:22:51.360 that is for my blog. This is just my
+00:22:53.360 blog. And I wanted to be able to have AI
+00:22:55.200 be able to create rough drafts of my
+00:22:56.799 articles for me, especially when it's an
+00:22:58.400 article already on a video that I have
+00:23:00.080 created for YouTube. And I just want to
+00:23:01.520 be able to take that video and convert
+00:23:02.720 it into like a text format. I wanted to
+00:23:04.559 allow the AI to essentially assist me in
+00:23:06.400 that project. And I wrote out this
+00:23:08.240 skill. I used AI to help generate the
+00:23:10.640 boiler plate for the skill and then I
+00:23:12.080 went through and modified it
+00:23:13.039 drastically. But I want to show you how
+00:23:14.640 it follows some of those best practice
+00:23:16.000 we we've been talking about.
+00:23:17.360 Specifically in the description, you can
+00:23:18.799 see this word use. You should probably
+00:23:20.320 have the word use in there somewhere.
+00:23:21.520 And it specifically says use when
+00:23:22.960 creating a new article, drafting blog
+00:23:24.720 post content, or generating an article
+00:23:26.240 stub for the blog. Exactly. It's telling
+00:23:28.480 me what this is supposed to be used for.
+00:23:30.480 Then inside of here, I have general
+00:23:32.320 information on how to write an article.
+00:23:33.919 You can see this entire section right
+00:23:35.360 here is all about how do we write an
+00:23:37.120 article. It just says, hey, generates
+00:23:38.559 new articles. This is what this skill
+00:23:40.080 does. And then it specifies all the
+00:23:42.159 information that the AI needs to be able
+00:23:43.919 to write an article. For example, it
+00:23:45.520 tells it where to put that article with
+00:23:47.120 the exact formatting that I use. all my
+00:23:49.039 articles live in the exact same place
+00:23:50.320 with the exact same format. Tells it
+00:23:51.919 that. It tells it what the front matter
+00:23:53.440 of my article should look like as well
+00:23:54.799 as which fields are required and which
+00:23:56.559 ones are optional. It tells it all the
+00:23:58.400 different valid values for the select
+00:24:00.559 tags and the freebie values because
+00:24:02.000 these are essentially values that are
+00:24:03.280 hardcoded. So, for example, I have tags
+00:24:05.039 on my blog and it can add whatever tags
+00:24:06.720 are relevant, but they can only come
+00:24:08.159 from this list. It can't make up its own
+00:24:09.760 tags. Next, I have an entire section on
+00:24:12.400 article structure. This just tells the
+00:24:14.080 AI, hey, how do you actually write the
+00:24:15.919 article? because a lot of my articles
+00:24:17.279 have a similar structure. I have an
+00:24:18.720 introduction. If I have a YouTube video,
+00:24:20.480 I will link to that YouTube video next.
+00:24:22.240 Then I have a body kind of explaining
+00:24:23.679 what it does using my heading tags in
+00:24:25.360 specific ways. And finally, I end with a
+00:24:27.279 conclusion at the very end. I also have
+00:24:29.200 common components such as a tangent
+00:24:31.039 component that I use inside of a lot of
+00:24:32.400 my blog articles that just styles text
+00:24:34.000 in a certain way. And this explains when
+00:24:35.679 to use some of these more common
+00:24:37.039 different components. And then I also
+00:24:39.039 have the ability to create custom
+00:24:40.400 components. Lots of my blog articles
+00:24:42.000 actually have custom components. If we
+00:24:43.520 go inside this section, you can see that
+00:24:45.200 I have tons of different custom
+00:24:46.480 components for all my different blog
+00:24:47.760 articles. Usually, this is like
+00:24:48.960 interactive explanations or, you know,
+00:24:50.960 showing how different things work inside
+00:24:52.640 of the browser. So, I have lots of
+00:24:54.320 custom components I create to make my
+00:24:55.840 blog unique and not just a plain text
+00:24:57.919 blog. And you can see creating custom
+00:24:59.840 components is kind of involved. So, I
+00:25:01.600 have an entire reference file. And if we
+00:25:03.440 just open up that reference file, you
+00:25:04.640 can see it's in that references folder.
+00:25:06.159 And this is a much more detailed
+00:25:07.679 explanation of exactly how to create
+00:25:09.279 these components because I actually use
+00:25:10.880 a mix of Astro and React components. I
+00:25:13.200 have specific theme variables I have to
+00:25:14.960 use because I want to make sure my
+00:25:16.240 colors work in both light and dark mode.
+00:25:18.159 So I have a bunch of information in here
+00:25:19.679 on exactly how I create my own custom
+00:25:21.919 components. And this is super detailed
+00:25:23.279 so it can hopefully help me create those
+00:25:24.720 components in the similar structure that
+00:25:26.480 I would. And then I can go back and
+00:25:27.919 actually make them work exactly like I
+00:25:29.440 want. So this is that additional
+00:25:31.200 information if it needs to create a
+00:25:32.559 custom component. I then have
+00:25:34.000 information on where it should store
+00:25:35.120 images and what format it should be
+00:25:36.480 using for all the images. And then
+00:25:38.000 finally, we get to what I think is the
+00:25:39.360 most important section because I wanted
+00:25:40.720 this to sound like how I write my
+00:25:42.480 articles. And I write all my articles in
+00:25:44.480 a very similar way. So I essentially was
+00:25:46.400 able to feed it in my existing blog
+00:25:48.080 articles, which I have hundreds of blog
+00:25:49.679 articles at this point. If we just open
+00:25:51.200 up this section, you can see there are
+00:25:52.880 just tons and tons and tons of different
+00:25:54.559 blog articles inside of here that I've
+00:25:56.000 written over the last I don't even know,
+00:25:57.440 six, seven years. So, it's able to
+00:25:59.440 ingest all that data and essentially
+00:26:00.960 synthesize it into how I actually write
+00:26:02.880 my blog articles. Now, it's not perfect.
+00:26:04.960 I have to change a lot of things about
+00:26:06.320 it, but this is the first draft of this
+00:26:08.240 particular skill. It explains what I do,
+00:26:10.480 how I write, all the different sentence
+00:26:12.159 patterns that I use, different
+00:26:13.440 formatting things that I use for like
+00:26:14.960 text and code and so on. And then
+00:26:16.559 finally, the big ticket, what not to do.
+00:26:19.279 You can see we have an entire section
+00:26:20.640 right here on how I don't write code or
+00:26:23.200 how I don't write text. So, this says
+00:26:24.640 what not to do, how not to write things,
+00:26:26.080 and so on. This is the most important
+00:26:27.840 section and the thing that you'll
+00:26:28.880 probably change the most as you're
+00:26:30.240 tweaking and going through with your
+00:26:31.520 skill. The what not to do section is
+00:26:33.120 generally the first place you add things
+00:26:34.640 into. It even has some examples of good
+00:26:36.559 versus bad. And then finally, we have
+00:26:38.320 some additions here that are being added
+00:26:39.919 after I created my skill originally
+00:26:41.760 talking about different ways I handle,
+00:26:43.360 for example, browser support. In all my
+00:26:45.200 articles that have browser support, I
+00:26:46.559 format it in the exact same way. This
+00:26:48.480 explains that because the original skill
+00:26:50.240 didn't have that information. And then
+00:26:51.760 we have a checklist again explaining to
+00:26:53.600 make sure that everything is just like
+00:26:54.720 we wanted to. And then finally, this is
+00:26:56.640 where the most important part is. Like I
+00:26:58.240 said, your first draft of a skill is
+00:26:59.679 probably not going to be very good.
+00:27:00.880 It'll be better than nothing, but it's
+00:27:02.320 still not going to be great. So, you
+00:27:03.679 want a way to refine that skill. So, I
+00:27:05.840 actually created my very own skill to
+00:27:07.520 refine what this outputs. Now, the
+00:27:09.919 easiest way for me to refine the output
+00:27:11.520 of this is to save the original output
+00:27:13.840 that was created by the AI. So, I have
+00:27:15.679 this section that just says, &quot;Hey, take
+00:27:17.360 whatever the original blog article you
+00:27:19.200 wrote is and save it into this folder.&quot;
+00:27:21.039 So, here we have the original article
+00:27:22.799 that was written by the AI. And it's not
+00:27:24.960 great. It's all right. It's a good
+00:27:26.559 starting point, but it's not great. It
+00:27:28.000 definitely doesn't sound like me and
+00:27:29.120 isn't exactly what I would want. But it
+00:27:30.799 gives me a good outline that I can
+00:27:32.159 follow. So, what I do is I go through
+00:27:34.080 with this original version. I change it
+00:27:36.080 to be exactly what I want. So, it has
+00:27:37.760 the original version here and then it
+00:27:39.279 has a version inside the section here
+00:27:41.279 that essentially is the actual article.
+00:27:43.039 So, I modify what the actual article
+00:27:44.559 looks like. And then I created a second
+00:27:46.240 skill. And this skill is just a refined
+00:27:48.159 skill. And all this does is it takes the
+00:27:50.080 article I originally wrote. You can see
+00:27:51.600 it specifies where the location for all
+00:27:53.200 these different files are. It takes
+00:27:54.960 those and essentially it compares them
+00:27:56.640 and says what did Kyle manually change
+00:27:58.640 from the original version to the actual
+00:28:00.320 version that is in his tone. And then
+00:28:02.320 it's going to take all those different
+00:28:03.600 changes and it's going to go through and
+00:28:05.200 figure out what they are, figure out if
+00:28:06.640 they're important changes to add or
+00:28:08.080 maybe just one-off changes. And then
+00:28:09.600 it's going to add all that information
+00:28:11.279 directly back in to this write article
+00:28:13.679 skill as additional changes. So, it's
+00:28:16.159 allowing me to refine the skill over
+00:28:18.399 time. And I think this is super
+00:28:19.679 important whether you do this manually,
+00:28:21.200 you do it with AI, or a combination of
+00:28:22.960 both like I'm doing. This is what I
+00:28:24.640 think is most important is refining your
+00:28:26.320 skill over time because it's never going
+00:28:27.919 to be perfect. But the more you can
+00:28:29.279 refine it, the quicker that you can
+00:28:30.799 actually get the code that you want to
+00:28:32.159 be produced by the AI exactly like you
+00:28:34.000 want on the first try instead of having
+00:28:35.679 to manually rechange things all the
+00:28:37.520 time. So, this all it essentially does
+00:28:39.440 is it just says, &quot;Hey, take this skill,
+00:28:41.200 update all of the information inside
+00:28:42.880 this skill section, and then I can go
+00:28:45.279 through and review what different
+00:28:46.320 updates it thought I should make, change
+00:28:47.919 them, tweak them however I want, and so
+00:28:49.279 on to make it exactly like I want.&quot; Now,
+00:28:51.120 if this is a lot and it's overwhelming
+00:28:52.720 because skills is just one small part of
+00:28:54.559 AI that you should be learning, you're
+00:28:56.240 in luck because I'm actually working on
+00:28:57.600 a completely free road map for AI
+00:28:59.760 development. Right now, I only have my
+00:29:01.360 front end and my backend road maps
+00:29:02.960 created, but you can see this is what my
+00:29:04.480 road maps look like. And I'm working on
+00:29:06.000 creating one for AI as well. And if you
+00:29:08.000 want to be notified as soon as this road
+00:29:09.760 map drops, just go ahead. There's going
+00:29:11.600 to be a link in the description to
+00:29:12.960 download this webdev road map. If you
+00:29:14.799 download this road map, I will send you
+00:29:16.240 an email as soon as I finish creating
+00:29:17.679 the AI one, which will have this exact
+00:29:19.600 same format, but it'll be for everything
+00:29:21.360 you need to know about AI with links to
+00:29:23.120 videos, projects, articles, and so on.
+00:29:24.720 So that way you can make sure you master
+00:29:26.159 everything you need to know about AI
+00:29:27.679 development because that is the thing
+00:29:28.960 that is changing the most and it's the
+00:29:30.399 most difficult to stay on top of since
+00:29:31.840 it's so new. And I want to give you
+00:29:33.120 everything that you need to know about
+00:29:34.159 that entirely for free. So again, check
+00:29:35.679 out this webdev road map linked in the
+00:29:37.279 description and I will email you as soon
+00:29:38.880 as the AI version of this is

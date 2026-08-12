@@ -1,0 +1,393 @@
+# tactiq.io free youtube transcript
+# AI-Generated Code Is Creating a New Kind of Technical Debt
+# https://www.youtube.com/watch/S5kQRgJ-iug
+
+00:00:05.000 66% of developers say their number one
+00:00:07.280 frustration with AI coding tools is code
+00:00:09.360 that's almost right, but not quite. And
+00:00:11.440 here's the thing that nobody's saying
+00:00:12.480 out loud. Almost right is more expensive
+00:00:14.480 than completely wrong. Completely wrong
+00:00:16.200 gets caught, test fail, build breaks,
+00:00:18.480 someone says this doesn't work, and you
+00:00:20.120 throw it away. Almost right Almost right
+00:00:22.640 passes code review. Almost right ships
+00:00:24.400 to production. Almost right sits in your
+00:00:26.280 code base for 6 months before anyone
+00:00:28.200 realizes it's wrong. And by then, the
+00:00:30.480 cost to fix has compounded into
+00:00:31.880 something nobody budgeted for.
+00:00:33.960 We manage multiple client code bases
+00:00:35.640 right now. Every single one of them is
+00:00:37.280 generating this debt. I've been shipping
+00:00:39.160 production systems for 15 years. This is
+00:00:41.520 a new pattern, and it's everywhere.
+00:00:43.200 Today, I'm going to show you the five
+00:00:44.360 specific patterns of AI-generated debt,
+00:00:46.440 why they're harder to catch than
+00:00:47.520 traditional debt, and the three-question
+00:00:49.280 code review framework we use on every
+00:00:51.480 AI-generated PR. We got five patterns,
+00:00:53.920 one principle, one framework. Let's go.
+00:00:58.880 Let me tell you about a PR I reviewed 3
+00:01:01.240 months ago. It was a client project,
+00:01:03.080 mid-size startup. They've had great
+00:01:04.440 engineers, and they adopted AI coding
+00:01:06.440 tools across the team. Cloud Code,
+00:01:08.240 Co-Pilot, Cursor, the works. Their
+00:01:10.000 velocity was up, their PRs were flowing,
+00:01:11.680 and everybody was happy. I opened the
+00:01:13.480 pull request. It was clean code, tests
+00:01:15.040 were passing, TypeScript,
+00:01:16.080 well-structured, everything looked
+00:01:17.240 great. And then I started reading the
+00:01:18.800 actual lines.
+00:01:20.240 ESLint disable next line no explicit
+00:01:22.520 any. Then another one, ESLint disable
+00:01:24.800 next line is no unused vars. Then
+00:01:26.400 another one, 11 ESLint disable comments
+00:01:29.560 in one file.
+00:01:31.240 And this wasn't an outlier. I searched
+00:01:32.760 the rest of the code base, and there was
+00:01:34.040 over 200 ESLint disable comments across
+00:01:36.520 the project. Most added in the last 3
+00:01:38.680 months since the team started using AI
+00:01:40.560 tools.
+00:01:41.640 The AI hadn't fixed the TypeScript
+00:01:42.960 errors it was finding along the way, it
+00:01:44.400 had suppressed them. Every single one,
+00:01:46.160 the type system was screaming, &quot;This is
+00:01:47.960 wrong,&quot; and the AI's solution was to put
+00:01:49.720 tape over the warning light and hold it
+00:01:51.360 hostage. And here's the brutal part.
+00:01:53.040 This PR had been approved by a human. A
+00:01:55.080 senior engineer looked at this, saw
+00:01:56.640 green checks, and hit merge. Not because
+00:01:58.480 they were lazy, because the code looked
+00:01:59.920 right and it passed every automated
+00:02:01.360 gate, as it should. And the suppressions
+00:02:03.880 were hidden in plain sight.
+00:02:06.000 Two weeks later, a production bug traced
+00:02:07.800 back to one of those suppressed type
+00:02:09.000 errors. The type system tried to warn
+00:02:10.639 us. We told it to shut up. That's the
+00:02:12.920 new techno debt. It doesn't look like
+00:02:14.320 debt, it looks like working code.
+00:02:19.120 And here's where it gets really
+00:02:20.480 interesting. I started cataloging the
+00:02:22.400 patterns, and there are five. And once
+00:02:23.920 you see them, you can't unsee them. So,
+00:02:25.680 pattern one, broken flows that just
+00:02:27.600 nobody can debug. This is a true story.
+00:02:29.760 A client of mine had an OAuth PKCE
+00:02:31.880 authentication flow. For anyone who
+00:02:33.240 doesn't know, PKCE is how your app
+00:02:34.959 securely proves it's allowed to log in
+00:02:36.480 users. Multi-step handshake between your
+00:02:38.240 app and the auth provider. The AI
+00:02:39.959 generated the entire flow. It looked
+00:02:41.560 correct, maybe variable names made
+00:02:43.520 sense, steps were in the right order, it
+00:02:45.120 even had comments explaining what each
+00:02:46.440 step did. Now, there was one problem.
+00:02:48.080 The token exchange assumed local storage
+00:02:49.840 would always be available for the code
+00:02:50.959 verifier. Works in Chrome, works in
+00:02:52.640 Firefox, fails silently in Safari
+00:02:54.560 private browsing, which is how 20% of
+00:02:56.680 their users logged in, interestingly
+00:02:58.120 enough. The AI generated a common
+00:02:59.519 pattern that happens to break in one
+00:03:01.000 specific and very common scenario. And
+00:03:03.360 it took us two days to reproduce the bug
+00:03:05.000 and two hours to fix it. And yes, a
+00:03:06.840 thorough code review should have caught
+00:03:08.360 this, and that's the point. The AI
+00:03:10.160 generated code was good enough to pass
+00:03:11.640 the review that existed, which means
+00:03:13.560 your review process needs to be
+00:03:14.720 different for AI generated code. Now,
+00:03:16.560 why two days? Because nobody on the team
+00:03:18.200 understood the PKCE flow well enough to
+00:03:20.200 debug it. The AI wrote it, the AI
+00:03:21.640 explained it, nobody had to think about
+00:03:23.160 it until it broke. When AI writes code
+00:03:25.320 nobody understands, you haven't saved
+00:03:26.840 time, you've borrowed it with interest.
+00:03:28.840 And here's the uncomfortable truth. Some
+00:03:30.480 code is too critical for AI generation.
+00:03:32.400 You've got auth flows, payment
+00:03:33.320 processing, data migrations, and some
+00:03:35.519 code needs to be written by someone who
+00:03:36.920 understands it, not generated and
+00:03:38.920 reviewed, written. Then we got pattern
+00:03:41.000 two. We have suppressed errors instead
+00:03:42.680 of fixed errors. This is that ESLint
+00:03:44.760 disable pattern from the story I just
+00:03:46.160 told you. The AI encountered a
+00:03:47.560 TypeScript error. The correct fix
+00:03:49.000 required understanding the type system,
+00:03:50.760 the data flow, why that type exists, but
+00:03:52.560 the fast fix that AI went was to
+00:03:54.080 suppress the warning. It thought,
+00:03:55.520 problem gone, warning gone. However, the
+00:03:57.800 error was still there hidden behind a
+00:03:59.280 comment. And I've seen files with 15, 20
+00:04:01.080 suppressed comments. Each one is a lie,
+00:04:02.760 and each one says this is fine when the
+00:04:04.240 type system is saying this is wrong, and
+00:04:06.320 an AI added it, not a human. Now, these
+00:04:09.400 compound, and the next AI generated code
+00:04:11.760 references the broken types, suppresses
+00:04:13.920 the new errors, too, layer on layer
+00:04:15.480 until the type system is meaningless.
+00:04:17.238 Your type system is your immune system,
+00:04:18.720 and AI is teaching your code base to
+00:04:20.279 suppress its immune system.
+00:04:24.200 Then you got pattern tree, phantom code.
+00:04:26.400 This is where you have duplicate and
+00:04:27.440 dead exports. Your code base has a
+00:04:28.960 utility function, format dates, used in
+00:04:31.440 47 places, handles edge cases, is
+00:04:33.400 tested, you know it works.
+00:04:35.120 However, sometimes when you have these
+00:04:36.280 kind of functions, AI may not know it
+00:04:37.720 exists. So, when a developer asks AI to
+00:04:39.600 build a new feature that needs date
+00:04:40.880 formatting, the AI writes a new date
+00:04:42.520 formatting function, different name,
+00:04:44.160 slightly different implementation, and
+00:04:45.520 same purpose. But now you have two. And
+00:04:47.520 then the next AI system review might add
+00:04:49.240 a third, and then you might have five,
+00:04:50.480 and it might grow. And this is also the
+00:04:52.320 same with type definitions. Your code
+00:04:54.160 base has a user type. The AI creates
+00:04:55.760 user data, then user info, then user
+00:04:58.000 response. Four different types all doing
+00:05:01.080 the same thing. And then it generates
+00:05:03.040 exports nobody calls, functions nobody
+00:05:05.400 references, constants nobody imports.
+00:05:07.360 Why? Because AI generates complete
+00:05:09.360 modules based on training data, not
+00:05:11.120 based on your code base. So, if a new
+00:05:12.640 engineer joins the team, they see these
+00:05:14.360 exports, and they're going to think
+00:05:15.760 they're used somewhere. They're afraid
+00:05:17.240 to remove them, they build around them,
+00:05:18.880 and now the dead code is alive and
+00:05:20.200 entangled. Your code base is growing
+00:05:21.800 horizontally, not because you're adding
+00:05:23.320 features, but because you've added
+00:05:24.400 redundancy. I rebuild many projects like
+00:05:27.160 this. And you know when the founder
+00:05:28.760 called me? When the next feature costs
+00:05:30.560 three times what it should, when a
+00:05:32.080 simple change takes two weeks instead of
+00:05:33.520 two days. That's the compounded interest
+00:05:35.240 on code nobody needed in the first
+00:05:37.080 place.
+00:05:38.040 And unused code isn't harmless, it's
+00:05:39.520 confusing, and confusion is the root of
+00:05:41.440 all technical debt. Now, here's the one
+00:05:43.080 that keeps me up at night. Pattern four,
+00:05:45.280 code that works but doesn't follow your
+00:05:47.120 conventions. Every good team has
+00:05:48.960 conventions. How you name things, where
+00:05:50.640 state lives, how errors are handled, how
+00:05:52.360 files are structured. There's no right
+00:05:53.680 or wrong way of doing this, it's just
+00:05:54.920 opinions. However, AI doesn't know your
+00:05:56.880 conventions. It knows the internet's
+00:05:58.400 conventions, and the internet has a lot
+00:06:00.240 of opinions. And we had a client code
+00:06:01.800 base where half the files use PascalCase
+00:06:03.440 for components and half use camelCase.
+00:06:05.000 Not a big deal, but then we also had
+00:06:06.480 three different error handling patterns.
+00:06:08.040 The AI had generated each file using
+00:06:09.560 whatever convention it felt like on the
+00:06:10.840 day and never adhered to what we already
+00:06:12.440 had that existed. And yes, newer tools
+00:06:14.680 like Copilot with code base
+00:06:15.720 understanding are getting better at
+00:06:17.280 reading your context, but better isn't
+00:06:19.040 always reliable. And the question is
+00:06:20.760 still the same. Did the output actually
+00:06:22.360 follow your conventions or did it
+00:06:23.560 approximate them? One file that doesn't
+00:06:25.200 match is a quirk, however, 10 files that
+00:06:27.040 don't match is a code base losing its
+00:06:28.760 identity.
+00:06:32.000 Now, these five patterns have the same
+00:06:34.000 root cause every time. The AI generates
+00:06:36.800 plausible code but not correct code, and
+00:06:38.960 plausible is the most dangerous word in
+00:06:41.120 software engineering. And here's the
+00:06:42.520 principle. This is a thing I want you to
+00:06:44.080 walk away with. The most expensive code
+00:06:45.720 your AI writes is the code that almost
+00:06:47.360 works. Completely wrong code is cheap.
+00:06:49.200 It fails fast, test catch it, you throw
+00:06:51.000 it away, and it costs you minutes.
+00:06:52.720 Almost right code is devastating. It
+00:06:54.440 passes test, it ships, it sits in
+00:06:56.280 production, and the other code gets
+00:06:57.880 built on top of it. Dependencies will
+00:06:59.640 form, teams will adjust their mental
+00:07:01.040 model around it, and then it breaks. Not
+00:07:02.720 today, not next week, but three months
+00:07:04.840 from now, under load, in an edge case,
+00:07:06.840 during a critical demo. And the cost
+00:07:08.880 isn't fixing one file, it's untangling
+00:07:10.600 three months of code built on a flawed
+00:07:12.200 foundation. Only 29% of developers trust
+00:07:15.120 AI-generated code. This was down from
+00:07:17.200 40% the year before. Trust is dropping
+00:07:19.600 because the teams are learning this the
+00:07:20.960 hard way. Technical debt is financial
+00:07:22.800 debt. You're paying interest whether you
+00:07:24.320 see the invoice or not. And every
+00:07:26.120 feature that takes longer than it
+00:07:27.200 should, that's interest. Every bug that
+00:07:29.440 keeps appearing, that's interest. Every
+00:07:31.760 senior engineer who says, &quot;I don't
+00:07:33.720 understand this code base anymore,&quot;
+00:07:35.080 that's the interest. You're paying it
+00:07:36.960 whether you see the invoice or not.
+00:07:41.240 So, what do you do about it? You don't
+00:07:42.880 stop using AI because that's not the
+00:07:44.520 answer. And here's a military term for
+00:07:46.200 you, force multiplier. Night vision
+00:07:48.440 goggles don't give you more soldiers,
+00:07:49.840 they make the soldiers you have more
+00:07:50.960 effective, but only if those soldiers
+00:07:52.600 know how to fight. Night vision goggles
+00:07:54.720 on someone who never held a weapon is
+00:07:56.880 useless and dangerous. AI is the same.
+00:07:59.600 It's a force multiplier, but you need
+00:08:01.120 the discipline to aim at. The answer is
+00:08:03.160 reviewing AI code the way you'd review
+00:08:05.320 code from a talented and brand new
+00:08:07.040 contractor who's never seen your code
+00:08:08.360 base before. Because that's exactly what
+00:08:10.160 AI is. And we built a three question
+00:08:12.200 framework for every AI generated PR.
+00:08:14.600 Three questions, it takes 30 seconds and
+00:08:16.200 catches most of the patterns I just
+00:08:17.640 showed you. So, question one, does it
+00:08:19.640 reuse? Before this code was written, did
+00:08:21.960 something already exist in our code
+00:08:23.360 base? Is there an existing utility, type
+00:08:25.480 definition, or pattern that does the
+00:08:26.919 same thing? If yes, delete the new code
+00:08:29.360 and use the existing or modify the
+00:08:31.120 existing to facilitate the new pattern.
+00:08:33.599 This catches phantom code. One question,
+00:08:36.120 duplicates are dead, and exports are
+00:08:38.360 gone. And question two, does it follow
+00:08:40.440 conventions? Does the naming match? Does
+00:08:42.599 the file structure match? Does the error
+00:08:44.080 handling match? Does this code look like
+00:08:46.160 it belongs in the code base, or does it
+00:08:47.520 look like it was dropped in from a
+00:08:48.760 different project? If it doesn't match,
+00:08:51.040 refactor it before it ships. This
+00:08:53.000 catches convention violations. And in
+00:08:54.839 question three, can the developer
+00:08:56.240 explain it without reading the AI's
+00:08:58.040 comments? Not does it work, not can they
+00:09:00.320 read the AI's explanation back to me,
+00:09:02.240 but can the developer who submitted this
+00:09:03.720 PR walk through the logic line by line
+00:09:05.520 with the AI's comments deleted? And if
+00:09:07.280 they're reading documentation, that's
+00:09:08.960 not understanding. If they can't explain
+00:09:10.760 why PKC flow works the way it works
+00:09:12.760 without, you know, the AI's annotations,
+00:09:14.880 the code isn't ready. Send it back. Now,
+00:09:16.760 this is going to catch broken workflows
+00:09:18.720 and suppress errors. If the developer
+00:09:20.320 can't explain it, then they can't
+00:09:21.680 maintain it. Unmaintainable code is
+00:09:23.800 debt. Let me show you how fast this is.
+00:09:25.880 Last week, we had AI generated PR that
+00:09:27.760 landed. The question one was, does it
+00:09:29.440 reuse? I searched the code base and we
+00:09:30.800 already have a date formatter. So, we
+00:09:32.080 delete the new one. Question two, does
+00:09:33.960 it follow conventions? Error handling
+00:09:35.480 doesn't match our patterns, so we're
+00:09:36.520 going to refactor. And in question
+00:09:38.080 three, can the dev walk me through it?
+00:09:39.680 Yes, he walked me through, explained
+00:09:41.200 everything, so we could ship it in 3
+00:09:42.920 minutes, and we're done. These are three
+00:09:44.480 questions, and there's four patterns
+00:09:45.720 caught, and that was it.
+00:09:49.200 Now, here's what happens when you
+00:09:50.400 install this. Review times don't go up,
+00:09:52.920 they go down, because our viewers aren't
+00:09:54.800 reading every line trying to find
+00:09:56.200 something wrong. They're asking three
+00:09:57.760 specific questions with clear pass fall
+00:10:00.560 criteria. Each client team went from a
+00:10:02.800 three-day review to around the same day.
+00:10:04.680 Not because they reviewed less, because
+00:10:06.320 they knew exactly what to look for. New
+00:10:07.880 engineers onboard faster, because the
+00:10:09.320 code base has one way of doing things,
+00:10:11.160 not five, and debugging goes from days
+00:10:13.440 to hours, because the code is written by
+00:10:15.160 someone who understood it, not generated
+00:10:17.120 by a model that approximated it. And if
+00:10:19.280 you're the founder or executive hiring a
+00:10:21.320 dev team, this affects you, too. You
+00:10:23.440 should ask your engineers to show me the
+00:10:24.640 last five PRs where AI generated the
+00:10:26.320 code, and can you explain each one? If
+00:10:28.240 they can't, you're accumulating debt
+00:10:29.880 that you can't see on any dashboard. The
+00:10:32.240 teams that shipped fastest at places
+00:10:33.680 like Shopify and Brex weren't the ones
+00:10:35.120 who wrote the most code, they were the
+00:10:36.360 ones whose code was most consistent, the
+00:10:38.560 most predictable, the most maintainable,
+00:10:40.560 every single time. AI makes disciplined
+00:10:42.600 teams unstoppable. AI makes
+00:10:44.120 undisciplined teams dangerous. Same
+00:10:45.880 tool, different foundations.
+00:10:49.960 So, there's four patterns, one
+00:10:51.440 principle, three questions. Phantom
+00:10:53.400 code, suppressed errors, broken
+00:10:55.240 workflows nobody can debug. Convention
+00:10:57.480 violations, the principle, the most
+00:10:59.560 expensive code is the code that almost
+00:11:01.200 works. The framework doesn't reuse,
+00:11:03.240 doesn't follow convention. Can the
+00:11:04.960 developer explain it without AI's help?
+00:11:07.120 If your team is using AI coding tools,
+00:11:09.040 and they are, pick 10 recent PRs, ask
+00:11:11.440 those three questions. What you find
+00:11:13.120 will tell you exactly where the debt is
+00:11:14.320 hiding. And if you want help diagnosing
+00:11:16.400 what's already accumulated in your code
+00:11:17.880 base, that's what a strategy session is
+00:11:19.560 for. We'll go through it, identify where
+00:11:21.800 the debt is hiding, and give you a plan
+00:11:23.160 to stop the compound interest. The link
+00:11:25.200 to get started is in the description,
+00:11:26.760 but even if you never talk to me and my
+00:11:28.200 team, take those three questions into
+00:11:30.240 your next code review. The AI tools
+00:11:31.880 aren't going away, the debt doesn't have
+00:11:34.040 to be inevitable. Your Your next PR
+00:11:35.440 review is what, a few hours away? These
+00:11:37.320 are just three questions, use them.
+00:11:39.360 That's all it takes. And if you want to
+00:11:40.920 understand the mindset that creates this
+00:11:42.240 debt in the first place, I made a whole
+00:11:44.280 video on Vib Coding, and that video is
+00:11:45.600 about the mindset. This one is about the
+00:11:47.160 code base. Same problem, different
+00:11:48.960 layer. Watch it next.

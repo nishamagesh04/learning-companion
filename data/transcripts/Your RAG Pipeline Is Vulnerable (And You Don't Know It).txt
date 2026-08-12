@@ -1,0 +1,196 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/KlPbO22Ks8M
+
+00:00:00.000 No text
+00:00:00.000 So building rack based applications or
+00:00:02.159 AI agents is becoming easier and easier
+00:00:04.319 every day. But the problem is when you
+00:00:06.400 use these rag based applications on
+00:00:08.639 sensitive data. That is where if you do
+00:00:11.040 not keep a security first architecture
+00:00:13.040 in mind, it could become a potentially
+00:00:15.519 big data risk. To see this in action,
+00:00:17.000 No text
+00:00:18.080 let's look at a simple application that
+00:00:20.160 I've built leveraging RAND. So I'm going
+00:00:22.640 to be uploading this particular really
+00:00:24.400 confidential data which is about
+00:00:26.400 employee data verification which has
+00:00:28.240 information about few employees.
+00:00:29.679 Obviously it is fake but you can see
+00:00:31.439 that there is email, phone number,
+00:00:32.880 social security, driver's license,
+00:00:34.320 credit card and all of these things. So
+00:00:35.680 this is like an audit which generally
+00:00:37.520 companies would do. So if I were to
+00:00:39.280 actually upload this and if I didn't
+00:00:42.320 have the security protection in mind so
+00:00:44.239 if I'm going to ask this question so
+00:00:46.000 this was who was this? This was John
+00:00:47.760 Quincy. So I'm going to ask hi can you
+00:00:49.840 give me John Quincy's phone number and
+00:00:51.920 right now this is unprotected right so
+00:00:54.160 that means the LLM is going to go look
+00:00:56.480 into this and the whole ragbased
+00:00:58.000 architecture and then come back with an
+00:01:00.399 answer but while answering it it is
+00:01:03.120 going to expose the PII information of
+00:01:05.438 John which is unacceptable in today's
+00:01:08.080 scenario. So you can see that it is
+00:01:09.000 No text
+00:01:09.920 listing directly John Quincy's number.
+00:01:12.320 Now on the log itself you can see that
+00:01:14.080 this was bypassed which was the data
+00:01:15.600 loss prevention. Now, in order to make
+00:01:17.759 it secured, I'm going to click on this
+00:01:19.600 active protection. And this is where I'm
+00:01:22.159 going to use Google Cloud's data loss
+00:01:24.159 prevention API in order to secure this.
+00:01:27.200 So here I'm securing email address,
+00:01:29.119 phone number, social security, all of
+00:01:30.400 these. And now if I run exactly the same
+00:01:32.159 query, you see that it has scanned the
+00:01:34.720 entire information. It has made a call
+00:01:37.360 to the API. And here you will also see
+00:01:39.200 that it has detected two different phone
+00:01:40.960 numbers and it has redacted that. Right?
+00:01:43.439 So the LM actually worked. But then it
+00:01:46.399 provided the answer without exposing the
+00:01:48.640 PII. And this is something which is
+00:01:50.960 super super critical when you're
+00:01:52.880 building rack based applications which
+00:01:55.119 have very sensitive data. So in the next
+00:01:57.360 few minutes I'm going to take you
+00:01:58.560 through how you could think of an
+00:02:00.320 architecture like this and what are the
+00:02:01.840 options available out there for you to
+00:02:03.840 protect your sensitive information and
+00:02:05.000 No text
+00:02:05.840 we'll go through step by step and
+00:02:07.200 hopefully you'll be able to create a
+00:02:08.800 secured rag application. All right. So
+00:02:10.878 let's get into it. So in order to
+00:02:11.000 No text
+00:02:12.319 understand this, let's look at the
+00:02:13.840 architecture. In the center, we have our
+00:02:15.920 application. This is the UI we just saw.
+00:02:18.400 The first step is really where the user
+00:02:20.319 sends a request. What is John's social
+00:02:22.560 security number? Our application
+00:02:24.480 receives this and pulls the user's
+00:02:26.800 information via the rag architecture. At
+00:02:29.280 this exact moment, the application is
+00:02:31.520 holding the raw sensitive PII in its
+00:02:34.080 memory. And then that is where the step
+00:02:36.000 two kicks in, which is inspection. This
+00:02:37.519 is where the toggle, the privacy toggle
+00:02:39.599 comes into play. Instead of sending that
+00:02:41.760 raw data straight to the AI, the
+00:02:43.840 application takes a text and detours it
+00:02:46.239 to the Google cloud data loss prevention
+00:02:48.239 API. Now we are at step three which is
+00:02:50.640 the redaction step. So the DLP API spots
+00:02:53.599 the SSN pattern, masks it with axis and
+00:02:57.120 then sends the redacted text back to our
+00:02:59.760 application. Now step four will be our
+00:03:02.879 application constructs the prompt using
+00:03:05.120 that sanitized text and then sends it to
+00:03:07.599 the LLM. And finally, the result would
+00:03:09.760 be the LLM sees a prompt that says the
+00:03:12.159 user's SSN is asterric asterric 1 2 3 4.
+00:03:15.200 Right? It never sees the real number.
+00:03:17.440 Even if the model hallucinates or is
+00:03:19.280 jailbroken, it cannot leak what it
+00:03:21.920 doesn't know. This is privacy by design.
+00:03:24.000 No text
+00:03:24.959 All right? So that's enough theory. Now
+00:03:26.319 let's just set this up. So in order for
+00:03:28.080 you to do that, you need to come to the
+00:03:29.680 Google Cloud console and then select the
+00:03:32.000 right project where you want to run this
+00:03:33.840 and then just go search for sensitive
+00:03:35.920 data protection DLP. Right? So then you
+00:03:38.319 click on this and this should take you
+00:03:40.080 directly to the API. I already have
+00:03:42.400 enabled it. That's why it is giving me
+00:03:44.239 an option to manage. But then you need
+00:03:46.080 to go ahead and click on enable. Right.
+00:03:48.560 Once you're done with that, then the
+00:03:49.840 next thing that you need to do is you
+00:03:51.360 need to also have an API credential. So
+00:03:53.840 if you go here and then click on create
+00:03:56.159 credentials, this is where you can go
+00:03:58.000 ahead and click on the API key and it
+00:03:59.599 will immediately generate the API key
+00:04:01.280 for you. Once it has done that you need
+00:04:03.200 to get into the API key and then ensure
+00:04:06.080 that you're restricting the key to the
+00:04:08.000 data loss prevention API only right so
+00:04:10.720 you select this and that way you're
+00:04:12.640 making sure that your API key is not
+00:04:15.360 leveraged by all different types of
+00:04:16.959 application right so something worth
+00:04:18.238 noting and then you can copy the key
+00:04:20.478 from here and keep it for your records
+00:04:22.560 and then you can provide this key back
+00:04:24.320 into the application that you have built
+00:04:26.080 all right so that is one of the key
+00:04:27.680 steps from a setting up perspective on
+00:04:29.840 and on activating this and ensure uring
+00:04:31.919 that this key is available for you to
+00:04:33.919 give to your application in order to
+00:04:35.680 protect that. So to make this real, I
+00:04:36.000 No text
+00:04:37.680 want to run this on my Google cloud
+00:04:40.560 shell and I'm going to share this this
+00:04:42.720 command with you guys as well. So this
+00:04:44.160 is the command that I'm going to run
+00:04:45.759 which is where the initial value is my
+00:04:48.160 email is this and phone number is this
+00:04:49.840 and I'm calling this particular DLP API
+00:04:52.320 in my particular project and then we
+00:04:54.560 will see the output right. So what it
+00:04:56.320 should do is it should redact my email
+00:04:58.560 and it should redact my phone number and
+00:05:00.560 this is because it was able to call this
+00:05:02.560 particular API live. Right? Just wanted
+00:05:05.040 to show the specific example here from
+00:05:07.039 an IDE perspective. Now if you go back
+00:05:09.280 to this particular this particular
+00:05:10.960 application, right? So what I really did
+00:05:11.000 No text
+00:05:12.800 was I asked AI studio to build an
+00:05:14.960 application where it could directly get
+00:05:17.759 connected to the DLP API and in the code
+00:05:20.560 this is where there is this particular
+00:05:22.560 service where I have provided the DLP
+00:05:24.800 API key and the API URL. Right? So here
+00:05:27.600 I'm going to use this as my project and
+00:05:29.520 then this is my particular API key which
+00:05:31.600 I'm going to delete after this demo. But
+00:05:33.680 this is the idea right once you have
+00:05:35.199 this unactivated then it is going to run
+00:05:37.520 without calling this particular API. And
+00:05:40.000 once you have activated this then it is
+00:05:42.000 going to run after calling this
+00:05:43.280 particular API. And that's the idea. So
+00:05:45.000 No text
+00:05:45.919 by adding this one particular API step
+00:05:48.479 you can actually move your agent from a
+00:05:50.400 fun prototype to an enterprisegrade
+00:05:52.720 compliant application right you can go
+00:05:54.639 tell your clients or your boss that yes
+00:05:57.360 you can use rag on internal
+00:05:59.440 documentations or secure or sensitive
+00:06:01.440 documentation and no your AI will not
+00:06:04.560 leak your secrets. So that was all that
+00:06:07.039 I wanted to cover today. I hope this
+00:06:08.800 video was valuable to you guys. If you
+00:06:10.880 have any questions or comments, please
+00:06:12.560 let me know on the comment section. If
+00:06:14.319 you enjoyed the video, please do hit
+00:06:16.240 that like button and please do
+00:06:17.600 subscribe. It helps me a lot. Thank you
+00:06:19.840 once again for your time and I will see
+00:06:21.520 you in the next one.

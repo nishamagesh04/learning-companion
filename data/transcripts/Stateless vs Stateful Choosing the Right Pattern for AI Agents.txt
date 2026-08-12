@@ -1,0 +1,136 @@
+# tactiq.io free youtube transcript
+# Stateless vs Stateful: Choosing the Right Pattern for AI Agents
+# https://www.youtube.com/watch/9Dh1dIfOvac
+
+00:00:02.960 Hey, welcome to module five. Karen's RAG
+00:00:06.000 API is working well for single queries,
+00:00:08.480 but there's a problem. Every request is
+00:00:10.440 completely independent. Ask a follow-up
+00:00:12.560 question and the API has no idea what
+00:00:14.480 you asked before. Real users expect a
+00:00:16.520 conversation, context that carries
+00:00:18.520 across multiple turns. In this module,
+00:00:20.600 we tackle state persistence and
+00:00:22.400 long-running work. We start with the
+00:00:24.160 foundational question, what should the
+00:00:26.080 API layer own and what belongs in
+00:00:28.000 storage? Let's get into it. Look at the
+00:00:30.120 conversation on screen. The user asks,
+00:00:32.598 &quot;What did the guest say about AI
+00:00:34.040 safety?&quot; The API answers correctly. Then
+00:00:36.520 the user sends a follow-up, &quot;Can you
+00:00:38.320 expand on that?&quot; Look at what happens.
+00:00:40.640 The API has no idea what that refers to,
+00:00:43.280 no memory of the previous question, no
+00:00:45.240 memory of the previous answer. It
+00:00:47.080 receives this as a completely new
+00:00:48.760 independent request. That's the
+00:00:50.560 stateless problem, and it's not just
+00:00:52.560 about follow-up questions. It's about
+00:00:54.520 user sessions, conversation history,
+00:00:56.360 personalization, and agent memory. The
+00:00:58.600 callout at the bottom says it. Real
+00:01:00.600 conversational AI needs context across
+00:01:02.880 turns. Solving this cleanly requires
+00:01:05.080 understanding what the API layer should
+00:01:06.920 own versus what belongs in storage. As
+00:01:09.440 shown in the diagram, three separate
+00:01:11.400 requests, three separate users, three
+00:01:13.280 separate API server instances, three
+00:01:15.400 independent responses. Request one, user
+00:01:18.360 A does a get on /users, gets a 200 back.
+00:01:21.360 Request two, user B does a post to
+00:01:23.480 /orders, gets a 201. Request three, user
+00:01:27.120 C deletes an item, gets a 204. Each
+00:01:30.000 request hits the server, gets processed,
+00:01:32.160 gets a response, and the server
+00:01:33.600 immediately forgets everything. No
+00:01:35.400 shared context, no memory between them.
+00:01:37.680 The benefits of it are as follows.
+00:01:39.840 Simple to scale because any server
+00:01:41.640 instance can handle any request. Easy to
+00:01:44.120 test because there's no shared state to
+00:01:45.960 set up or clean up. Predictable because
+00:01:48.280 the same input always produces the same
+00:01:50.280 output. HTTP itself is stateless by
+00:01:53.240 design. These are real advantages, but
+00:01:55.720 the limitation is clear. If you need to
+00:01:57.760 remember something across requests, the
+00:01:59.400 server can't help you. That state has to
+00:02:01.560 live somewhere external. Now, look at
+00:02:03.680 this diagram. Same three requests
+00:02:05.560 coming, but now there's a single API
+00:02:07.720 layer in the middle coordinating all of
+00:02:09.479 them and a shared state layer on the
+00:02:11.400 right. Look at what's stored there. Chat
+00:02:13.800 history, previous turns in a
+00:02:15.360 conversation, user sessions, who is
+00:02:17.880 logged in and what they've done,
+00:02:19.600 ingested documents, what a user has
+00:02:21.680 uploaded to their knowledge base, agent
+00:02:23.840 memory, what steps an agent has
+00:02:25.760 completed in a workflow. The API layer
+00:02:28.200 coordinates requests and reads and
+00:02:29.880 writes to that shared state. That's the
+00:02:31.800 keyword, coordinates. It doesn't store
+00:02:33.959 anything itself. When Karen/ask endpoint
+00:02:36.720 handles a query, it reads the
+00:02:38.320 conversation history from the database,
+00:02:40.480 adds it to the prompt context, calls the
+00:02:42.800 LLM, then writes the new exchange back.
+00:02:45.400 Fast API is the middleman. The state
+00:02:47.760 lives in storage, not in the server.
+00:02:49.920 Here's the clean boundary. Fast API's
+00:02:52.080 job is to receive requests, validate
+00:02:54.240 them, authenticate the caller,
+00:02:56.000 orchestrate the retrieval and generation
+00:02:57.840 pipeline, and return a formatted
+00:02:59.760 response. That's it. The storage layer's
+00:03:02.120 job is to remember everything. Chat
+00:03:04.120 history, user sessions, ingested
+00:03:05.760 documents, agent state. When Karen/ask
+00:03:08.480 endpoint handles a query, it reads the
+00:03:10.440 conversation history from the database,
+00:03:12.519 adds it to the prompt context, calls the
+00:03:14.600 LLM, then writes the new exchange back
+00:03:16.920 to the database. Fast API is the
+00:03:19.000 coordinator in the middle. It never
+00:03:20.800 holds state itself. This separation is
+00:03:23.120 what makes the system scalable. You can
+00:03:25.080 run 10 Fast API instances and they all
+00:03:27.239 read and write to the same shared
+00:03:28.600 storage. Five types of state, what each
+00:03:31.000 one is and where it lives. Chat history
+00:03:33.200 is structured, ordered, and queried by
+00:03:35.040 user and session. That's relational
+00:03:37.040 data. PostgreSQL is the right home.
+00:03:39.600 Document knowledge base is ingested and
+00:03:41.680 chunked documents that need similarity
+00:03:43.600 search. That goes in a vector store like
+00:03:45.680 Qdrant. Agent state, steps completed,
+00:03:48.080 and tools called needs to survive
+00:03:49.880 between turns, but is often short-lived.
+00:03:52.160 Database or Redis, depending on how long
+00:03:54.480 it needs to persist. User preferences,
+00:03:56.520 per user settings, and model config are
+00:03:58.560 relational. Relational database, again.
+00:04:01.040 Cached responses for frequent queries
+00:04:03.040 with reusable answers, go in Redis for
+00:04:05.280 speed. Each type of state has a natural
+00:04:07.520 home. Match the state to the right
+00:04:09.240 storage system, and you avoid a lot of
+00:04:11.160 performance and scaling problems later.
+00:04:13.480 Quick recap. Stateless means each
+00:04:15.440 request is independent. Simple to scale,
+00:04:17.600 but no memory. Stateful behavior means
+00:04:19.839 the system remembers across request, and
+00:04:22.000 that memory lives in storage, not in
+00:04:24.080 FastAPI itself. FastAPI's job is to
+00:04:26.800 coordinate. Read from storage, process,
+00:04:29.120 write back. Keep that boundary clean,
+00:04:31.080 and your system stays scalable and
+00:04:32.600 testable. In the next video, we get
+00:04:34.520 practical, building the chat history
+00:04:36.480 layer with a relational database.
+00:04:38.320 Karan's API will finally be able to have
+00:04:40.360 a real conversation. See you there.

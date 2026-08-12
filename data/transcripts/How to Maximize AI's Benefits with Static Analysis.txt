@@ -1,0 +1,819 @@
+# tactiq.io free youtube transcript
+# From Faster Code to Safer Code: Maximizing AI's Benefits with Static Analysis
+# https://www.youtube.com/watch/qG0AeblOt8w
+
+00:00:02.879 Hello everyone and thank you for
+00:00:04.160 attending today's webinar from faster
+00:00:06.720 code to safer code maximizing AI's
+00:00:09.440 benefits with static analysis. My name
+00:00:12.000 is Sarah Gag and I'm the marketing
+00:00:13.679 program manager for Perforce QAC and
+00:00:16.079 Clockwork. Before we begin, I'd like to
+00:00:18.560 cover a couple of housekeeping items for
+00:00:20.960 our viewers. First, at the bottom of
+00:00:23.199 your audience console, you'll find a few
+00:00:24.960 widgets for questions and additional
+00:00:26.720 resources. When you have questions for
+00:00:29.119 the presenter during the webinar, click
+00:00:30.720 on the Q&amp;A widget and submit your submit
+00:00:32.960 your question. We will answer as many
+00:00:35.120 questions as possible at the end of the
+00:00:36.880 presentation. And if we run out of time,
+00:00:38.960 we'll get back to you via email. If you
+00:00:41.360 need any tech support during the
+00:00:42.960 webinar, please use the help option. And
+00:00:46.000 finally, a copy of today's slide deck is
+00:00:48.160 available upon request. Please drop your
+00:00:50.640 email in the chat box or reach out to
+00:00:52.480 the team if you'd like to receive a copy
+00:00:54.160 of the deck. We will also email you a
+00:00:56.480 link to the recording of this webinar
+00:00:58.000 within the next few hours. With that,
+00:01:00.480 I'll introduce our presenters for today.
+00:01:02.960 Steve Howard, director of product
+00:01:04.720 management, and Gil Ryol, senior product
+00:01:07.760 manager, both with Perforce QAC and
+00:01:10.000 Clockwork. Steve Gil, thank you for
+00:01:12.159 joining us on today's webinar. You may
+00:01:14.000 take it from here.
+00:01:16.720 >> Thank you, Sarah, and hello everyone.
+00:01:20.400 So we're going to start by talking about
+00:01:22.479 AI adoption generally in the market and
+00:01:24.880 also uh with regards to our trust in
+00:01:27.840 what AI can produce.
+00:01:32.960 So first of all it's obvious that we're
+00:01:35.439 all using AI more and AI is writing more
+00:01:38.799 code than ever. Of course we're seeing
+00:01:41.439 AI assisted development now as kind of a
+00:01:44.000 mainstream behavior. We we see that
+00:01:46.079 certainly within our own organization.
+00:01:48.079 the teams are starting to harness more
+00:01:49.840 and more AI in their in their
+00:01:51.520 development processes and practices. And
+00:01:53.200 of course in coding code volume and
+00:01:56.720 velocity are accelerating uh thanks to
+00:01:59.360 AI. We're using it to help us produce
+00:02:01.439 more code. And so it's important then
+00:02:04.240 that our safety and security practices
+00:02:06.960 also scale accordingly with that new AI
+00:02:10.720 velocity and and and uh volume.
+00:02:17.520 First of all, a recent study produced by
+00:02:20.000 Stack Overflow last year, it was a
+00:02:22.239 developer survey with regards to AI
+00:02:25.840 found that roughly 84% or so of
+00:02:30.000 developers now either use or plan to use
+00:02:33.040 AI tools as part of their daily
+00:02:35.200 workflows.
+00:02:37.360 And uh currently professional developers
+00:02:40.239 in fact of that group uh are actually
+00:02:42.720 using at least 51% of them now are
+00:02:45.040 actually using AI daily. And that was
+00:02:46.480 the the data from 2025. So it's probably
+00:02:49.120 increased even further as we've gone
+00:02:50.879 into 2026.
+00:02:53.360 So it's obviously very well adopted in
+00:02:55.840 the mainstream.
+00:02:57.599 But can we really trust what AI
+00:03:01.440 produces? And of course part of this
+00:03:03.040 comes down to how we prompt the AI of
+00:03:05.599 course. Um but you can see very simply
+00:03:08.159 here you know an example of salmon
+00:03:10.159 jumping in a river in the river sorry
+00:03:12.720 and the kind of things that we've seen
+00:03:14.480 produced by AI uh image generation for
+00:03:17.680 example and obviously that doesn't give
+00:03:19.840 a great deal of feeling of trust what we
+00:03:21.760 wanted was what's on the left what we
+00:03:23.680 got was actually what's on the right
+00:03:25.760 salmon fillets jumping in the river and
+00:03:28.400 my favorite example of this is in the
+00:03:32.400 case of a running nose or runny nose
+00:03:35.760 the AI generated obviously a running
+00:03:37.840 nose or runny nose rather than someone
+00:03:40.239 with a cold or flu symptoms. That was
+00:03:43.599 actually where we were intending things
+00:03:45.040 to go. But these are obvious mistakes
+00:03:46.640 perhaps based on the lack of context
+00:03:49.280 with the uh prompt that was given to the
+00:03:51.360 AI in the first place. So you can't
+00:03:52.640 really blame it entirely for generating
+00:03:54.879 the wrong things, but it's of course a
+00:03:57.040 key indicator of the kind of trust
+00:03:58.720 issues that we may have with what's
+00:04:01.040 produced.
+00:04:05.920 So again going back to our stack
+00:04:08.080 overflow survey another question that
+00:04:10.080 was asked was with regards to developers
+00:04:12.480 and how much they trust uh the AI output
+00:04:15.920 and in fact a greater than 50%
+00:04:18.238 proportion uh had mistrust of the AI
+00:04:22.479 output rather than the trust in the AI
+00:04:24.800 output. So obviously developers are
+00:04:26.639 skeptical when asked the question do you
+00:04:28.880 trust AI and for good reason and in fact
+00:04:32.479 only 3% roughly actually had high trust
+00:04:35.840 in AI generated code. So again uh there
+00:04:39.360 is definitely a a healthy amount of
+00:04:41.759 skepticism about the accuracy of what's
+00:04:44.160 coming out.
+00:04:47.759 So the key question here really is if AI
+00:04:51.120 is writing more code, what does that
+00:04:53.919 mean for the safety and security risk
+00:04:57.520 associated with that code? And that's
+00:04:59.199 very important when we're obviously
+00:05:00.479 dealing with systems in mission critical
+00:05:03.040 environments where we have a very strict
+00:05:05.520 requirement for safety andor security.
+00:05:12.240 So what we're going to look at in our
+00:05:13.759 second section having introduced that is
+00:05:15.919 really how AI uh statistically actually
+00:05:19.360 increases the risks of uh safety or
+00:05:23.039 security uh vulnerabilities.
+00:05:26.800 Now first of all
+00:05:29.039 um
+00:05:30.800 we we know that AI can increase risk and
+00:05:33.199 and how is it going to do that? Well,
+00:05:34.560 first of all through training the actual
+00:05:36.160 training data that AI starts with. So AI
+00:05:39.280 models learn from real world code. C
+00:05:41.600 code that's already been produced and uh
+00:05:44.800 is out there for it to learn from. And
+00:05:47.280 of course, real world code already
+00:05:48.960 includes
+00:05:50.479 insecurities and safety issues. And so
+00:05:54.240 it's been trained, the AI models have
+00:05:56.720 been trained in fact on code that isn't
+00:05:59.360 necessarily perfect in the first place.
+00:06:01.759 So inevitably it will have learned from
+00:06:03.919 that and will have that kind of built
+00:06:06.400 into the to the uh actual AI model. So
+00:06:11.039 AI doesn't invent its own
+00:06:12.400 vulnerabilities, but it does reproduce
+00:06:14.479 what's already out there. And of course
+00:06:16.560 the point here is that it's doing that
+00:06:17.919 faster and faster. So we're reproducing
+00:06:20.240 insecure code potentially even quicker
+00:06:22.560 than ever.
+00:06:29.280 And then there is the human factor. So
+00:06:33.520 AI assisted developers are writing less
+00:06:36.800 uh secure code. That's something else
+00:06:38.319 that was found uh from the surveys that
+00:06:40.960 were produced uh as part of that Stack
+00:06:43.199 Overflow survey last year. And also that
+00:06:47.440 the developers themselves in terms of
+00:06:48.880 the human factor actually overestimate
+00:06:51.680 the security of the AI code that's being
+00:06:54.240 produced. Now this is an interesting
+00:06:56.080 factor. So what's actually happening
+00:06:57.600 here is that um the developers are
+00:07:02.000 starting to fall into that classic trap
+00:07:03.840 of of automation bias as it's called
+00:07:07.360 where the trust actually increases
+00:07:10.560 as the developers start to use it and is
+00:07:12.880 in the automation process and they get
+00:07:15.520 this automation bias towards trust uh
+00:07:19.360 which isn't present interestingly if
+00:07:21.759 they are simply asked the question do
+00:07:23.280 you trust AI
+00:07:25.280 you know as we showed in a previous
+00:07:26.639 slide that that's where the developers
+00:07:28.639 generally don't trust the AI and they
+00:07:31.039 sort of more than 50% said that that's
+00:07:32.720 that's an issue but when they start to
+00:07:35.280 use the AI to write the code and they
+00:07:37.840 see that it's working initially and so
+00:07:39.280 on and so forth there is this building
+00:07:40.800 up of automation bias that they trust
+00:07:42.639 that each time it's going to be okay
+00:07:44.639 even though you know potentially at some
+00:07:47.599 point it won't be.
+00:07:49.840 So this was um something that was part
+00:07:51.759 of that survey as well. Uh and
+00:07:54.800 developers do start to trust when
+00:07:56.879 perhaps they shouldn't.
+00:08:02.160 And then there's the scale. So in
+00:08:04.639 another study, this is um by uh H Pierce
+00:08:08.960 Etal from Cornell University
+00:08:11.919 and was originally started as a study
+00:08:14.560 back in 2021.
+00:08:17.759 uh what they actually did was they used
+00:08:19.680 co-pilot
+00:08:21.599 in CWE relevant scenarios and there was
+00:08:25.280 about uh 89 or so different scenarios
+00:08:28.000 that they they used uh for copilot to
+00:08:31.360 try and create code uh that linked to
+00:08:34.799 particular types of issues that had a
+00:08:36.958 CWE reference
+00:08:39.679 and of those what they actually found
+00:08:43.519 was around 40% of the generated code
+00:08:46.720 examples examples from copilot did
+00:08:49.279 include the vulnerability that they were
+00:08:51.519 hopefully explicitly trying to avoid
+00:08:53.279 from the CWE reference that was related.
+00:08:57.360 So in other words, code was being
+00:09:00.160 produced that did have those
+00:09:01.519 vulnerabilities at a rate of roughly 40%
+00:09:04.399 in that initial study.
+00:09:06.959 Now, further studies since then have
+00:09:09.760 obviously showed that the AI's models
+00:09:11.519 are actually getting better and this is
+00:09:12.880 less likely now in more recent uh
+00:09:16.399 incarnations of that same behavior
+00:09:18.720 check. Um but the point is that even if
+00:09:21.200 we have very very low probabilities even
+00:09:23.760 if it's a lot less than 40% because we
+00:09:26.320 have such scale now with AI generated
+00:09:28.560 code then these percentages are still
+00:09:31.360 quite meaningful in terms of what's
+00:09:33.120 being generated.
+00:09:38.880 Finally, there is this new code problem.
+00:09:42.720 Essentially, um our code volume is
+00:09:45.519 increasing thanks to AI. Code changes
+00:09:48.959 are happening faster and unfortunately
+00:09:52.240 our review processes often in some way
+00:09:56.160 involving humans are not scaling
+00:09:59.200 linearly with that. So we are losing
+00:10:02.240 pace essentially against what's being
+00:10:04.160 generated in terms of our reviews and
+00:10:06.320 our our processes to deal with that new
+00:10:09.600 code being uh created.
+00:10:13.120 So this is just simply a problem of
+00:10:15.839 speed. We can't keep up with what's
+00:10:18.399 happening in the AI generated code.
+00:10:22.399 We're therefore losing losing a little
+00:10:24.480 bit of uh capability in our review
+00:10:26.720 process. So there are standards now that
+00:10:29.920 are being developed specifically to help
+00:10:31.760 us with this. There is the NIS secure AI
+00:10:35.440 development uh SP800218
+00:10:38.959 um which actually explicitly extends the
+00:10:41.519 sort of secure development guidance to
+00:10:44.240 incorporate the idea of generative AI
+00:10:46.399 and what code is produced by AI. So
+00:10:48.720 these standards are starting to evolve.
+00:10:51.279 We've also recently had the OASP um
+00:10:55.920 the security standard OASP top 10 uh
+00:11:00.240 which has been produced as a a second
+00:11:03.360 carnation incarnation of that
+00:11:04.880 effectively for uh AI generated
+00:11:07.760 applications. So this again is starting
+00:11:09.440 to formalize the AI specific risk
+00:11:12.480 categories that they see from from the
+00:11:15.120 uh OAS project.
+00:11:17.920 And then there are also the functional
+00:11:20.079 safety standards uh both TR5469
+00:11:24.399 and also the ISO pass 8800
+00:11:28.160 um which have recently come to those
+00:11:31.920 regulated industries to actually improve
+00:11:35.680 the functional safety and reliability of
+00:11:38.320 of AI systems or art artificially
+00:11:41.600 intelligent systems and code being
+00:11:44.240 developed using AI systems for those
+00:11:46.880 projects and systems.
+00:11:48.959 So that's really, you know, starting to
+00:11:50.720 evolve now. We're starting to see the
+00:11:52.000 regulation come in, which of course is a
+00:11:53.760 a natural effect of of any problem as
+00:11:57.120 we've identified here.
+00:12:03.760 So is AI generated code really a
+00:12:06.880 security or safety risk? And the answer
+00:12:09.200 is well, yes. We know that AI coding
+00:12:12.639 tools are now used daily by at least 51%
+00:12:15.760 of professional developers.
+00:12:17.760 And studies have showed that the AI
+00:12:20.480 tools do indeed generate vulnerabilities
+00:12:24.000 at meaningful rates. So this is a
+00:12:25.680 problem if we're using it for more than
+00:12:27.279 50% of our development.
+00:12:29.680 We know that developers using AI
+00:12:31.360 assistants tend to uh write less secure
+00:12:35.279 code because of this and also uh
+00:12:37.519 overestimate the security again from
+00:12:39.680 those studies produced last year and the
+00:12:42.480 standards bodies are working on helping
+00:12:44.880 us likes of NIST and OASP to improve
+00:12:47.839 this but it's something that's trying to
+00:12:49.680 play catchup.
+00:12:52.000 So overall, we know there's a risk here
+00:12:54.240 and we need to do something about it.
+00:12:55.920 And at that point, I'm going to hand
+00:12:58.399 over to Gil who's going to talk about
+00:13:00.800 what we can do to assist and mitigate
+00:13:03.519 these issues.
+00:13:06.160 >> Great. Thank you, Steve.
+00:13:08.480 All right. So, let's start to look at
+00:13:10.320 So, we understand there's a problem
+00:13:11.920 here. Um there's some good things
+00:13:14.480 obviously happening in AI but there's a
+00:13:16.480 problem that we really need to take care
+00:13:18.240 of here which is um being able to handle
+00:13:23.680 uh safety and security uh issues within
+00:13:27.200 the code that's being generated through
+00:13:29.040 AI. So we're going to take a look at how
+00:13:32.240 static analysis can help you in that
+00:13:34.079 area.
+00:13:36.639 So first off,
+00:13:39.040 Steve touched on this already a bit, but
+00:13:41.519 really the calculation has changed,
+00:13:44.079 right? So AI we've gone over it's
+00:13:46.720 dramatically increased the both the
+00:13:49.360 volume and speed at which code is
+00:13:52.000 created, right? So even rare defects
+00:13:56.720 can become much more common at scale.
+00:14:01.199 and that manual review process that we
+00:14:04.000 talked about earlier, it can't keep up,
+00:14:06.000 right? There's a lot more code and if
+00:14:08.240 we're asking the same group of people to
+00:14:10.160 review all this code, um it it just
+00:14:13.120 doesn't scale properly. So, we need to
+00:14:15.199 we need to look at how we can address
+00:14:16.880 that.
+00:14:21.680 So, why static analysis matters even
+00:14:24.959 more now? Well, uh, we we have to look
+00:14:28.399 at, um, what static analysis does versus
+00:14:31.760 what AI does, right? So, AI models
+00:14:34.720 generate code based on probabilities
+00:14:37.519 learned from all of the data that it's
+00:14:40.320 learned from. Um, but because it's
+00:14:43.760 probabilities, it means that the output
+00:14:45.600 is going to vary and isn't always
+00:14:47.920 predictable or correct.
+00:14:50.720 So SA can help you to provide some sort
+00:14:54.639 of deterministic verification that yes,
+00:14:57.199 this code that has been generated does
+00:14:59.440 in fact pass these strict rules that
+00:15:01.839 we've put in place for the code that
+00:15:04.240 we're generating.
+00:15:06.160 So it enforces those known secure
+00:15:08.240 patterns. It can find entire classes of
+00:15:11.199 vulnerabilities that otherwise may just
+00:15:14.079 go undetected.
+00:15:17.120 Uh and the nice thing is that it's not
+00:15:19.279 just focus on AI, right? Static analysis
+00:15:22.560 is going to equally put on a level field
+00:15:25.680 human generated code as well as AI
+00:15:28.160 written code. So there's no bias there.
+00:15:30.240 Uh there's no probabilities that come
+00:15:32.399 into it. It's all very deterministic.
+00:15:36.240 And the nice thing about using static
+00:15:37.920 analysis as well is that it does scale
+00:15:40.240 with the automation uh and it scales
+00:15:43.279 with your CI/CD. So you can use it um uh
+00:15:47.120 in multiple places and we'll touch on
+00:15:49.120 that in a little bit here.
+00:15:54.880 So that's fine. So now we've got static
+00:15:58.240 analysis that's allowing us to go in and
+00:16:02.240 potentially uncover issues that are
+00:16:04.480 otherwise going to go undetected because
+00:16:07.120 AI has generated them. The code compiles
+00:16:09.440 fine. It runs fine, but we've got these
+00:16:11.440 other issues that are that are kind of
+00:16:13.440 hidden that static analysis is able to
+00:16:16.399 uncover. So, it finds those, but now we
+00:16:18.800 have to fix them. And so, because we're
+00:16:22.320 generating much more issues, we have
+00:16:24.639 many more issues to fix. And that can be
+00:16:26.959 timeconuming.
+00:16:28.560 So, how do we what are we going to do
+00:16:30.320 about that?
+00:16:32.800 And that's where AI assisted code
+00:16:34.880 remediation comes in. So, we've been
+00:16:37.519 talking about the dangers. well, quote
+00:16:39.519 unquote dangers of AI and the risks that
+00:16:42.079 are associated with it. Um, but what
+00:16:45.440 we're gonna what we're going to show you
+00:16:46.959 here is that it's not all it's not all
+00:16:49.839 bad, right? AI is doing some good stuff
+00:16:52.079 and it can it can really help you, but
+00:16:54.800 you have to have guard rails in place.
+00:16:56.800 You can't just because it's it's
+00:16:59.040 non-deterministic.
+00:17:00.800 Um, it can go off and do things that you
+00:17:03.279 don't expect it to do. So, you really
+00:17:04.959 want to run it with guard rails.
+00:17:07.599 So at Perforce, we've introduced
+00:17:10.400 Perforce, we've introduced an AI
+00:17:12.880 assisted remediation tool that
+00:17:16.079 integrates in with your IDE and helps
+00:17:18.480 you to go through all of the issues that
+00:17:21.919 have been identified and use AI to
+00:17:24.319 remediate them in a in a um controlled
+00:17:27.919 manner.
+00:17:30.000 Um, and what makes our AI remediation
+00:17:34.000 safe is that it's grounded in static
+00:17:36.160 analysis results. So, we talked a little
+00:17:38.960 bit earlier about how important it is to
+00:17:41.919 get your quote unquote prompt into the
+00:17:44.880 AI correct, right? You got to give it
+00:17:46.720 the proper information to be able to
+00:17:48.480 solve the problem. We don't want a nose
+00:17:51.039 with legs running down the street. So
+00:17:54.080 you've got to give it the proper
+00:17:56.799 information to be able to um uh fix the
+00:18:00.640 problems.
+00:18:02.559 So what we do is we not only just
+00:18:04.880 provide the issue, but we provide all of
+00:18:08.160 the deep analysis results that have been
+00:18:10.480 generated for that issue. uh any trace
+00:18:13.840 information that's required, detailed
+00:18:16.320 documentation on what that issue is and
+00:18:19.440 what it means and examples of good and
+00:18:22.400 bad uh code that would represent that
+00:18:25.840 issue. Uh as well as a detailed set of
+00:18:29.600 fix instructions which are really the
+00:18:31.440 guardrails that we're talking about to
+00:18:33.440 make sure that the AI is staying in its
+00:18:35.919 lane effectively. Don't go outside of
+00:18:38.080 what we're asking you to do here. Focus
+00:18:39.840 on the issue. use the documentation
+00:18:41.840 we've provided, use the analysis results
+00:18:44.400 we've provided, and give us a proposed
+00:18:47.600 solution.
+00:18:49.600 Uh, and so that's what it will do. It'll
+00:18:51.280 give you that proposed solution, and
+00:18:53.280 then it's up to the developer to approve
+00:18:55.840 that. So, we always want to have the
+00:18:58.000 human approval in there. Uh, because
+00:19:01.520 we've seen even with all these
+00:19:03.200 guardrails, it is possible that the AI
+00:19:05.280 is making mistakes. So you want to have
+00:19:06.799 you don't want it going in there
+00:19:08.080 especially in safety or security
+00:19:10.400 critical code. You don't want a going in
+00:19:13.200 AI going in there and making changes
+00:19:15.360 that you're unaware of. So it's always
+00:19:18.240 requiring that human approval.
+00:19:20.960 And then we we do an automatic
+00:19:22.720 reanalysis or a differential analysis
+00:19:25.520 that confirms the correctness. So making
+00:19:27.679 sure that number one it fixes the issue
+00:19:29.600 you've identified as well as not
+00:19:32.480 introducing any additional issues that
+00:19:34.720 that potentially uh uh could happen with
+00:19:37.760 the code. So you get this kind of closed
+00:19:40.320 loop uh thing happening here with the uh
+00:19:43.840 AI remediation.
+00:19:46.799 The nice thing is is it does integrate
+00:19:48.960 in with your existing workflows. So it
+00:19:52.080 integrates with your idees and CI/CD
+00:19:54.720 pipelines. uh there's no disruption to
+00:19:58.240 the established workflows. So if you're
+00:20:00.559 used to working in your IDE uh and I'll
+00:20:03.280 show you a couple of screenshots in a
+00:20:05.120 bit here, but um if you're used to
+00:20:07.360 working in your IDE, it is very easy to
+00:20:09.760 invoke and and utilize the AI
+00:20:12.080 remediation capabilities.
+00:20:14.960 Uh so it's designed with developer
+00:20:18.160 adoption in mind
+00:20:24.160 and as I said it closes the loop
+00:20:25.919 automatically. So so it'll generate the
+00:20:28.880 fix. It'll apply the fix. It'll rerun
+00:20:31.520 the static analysis to verify that the
+00:20:33.679 fix in fact does resolve the issue that
+00:20:36.559 was identified. and it will um make sure
+00:20:40.880 that there's no new issues uh that have
+00:20:43.840 been introduced. And so by doing that,
+00:20:46.799 you can verify that your quality gates
+00:20:50.240 um are going to be met before you even
+00:20:53.039 merge the code. So you don't have to
+00:20:54.640 wait until you merge and run then run
+00:20:56.799 and then find that there's issues,
+00:20:58.400 right? You're you're moving
+00:21:00.960 uh moving the problem left. And I'm
+00:21:02.880 going to talk about that in a little
+00:21:04.480 bit. But um we're fixing the problems
+00:21:07.120 earlier.
+00:21:10.640 So that's we we call that shift left.
+00:21:13.120 And uh when you shift left, uh you're
+00:21:16.880 really freeing your team to innovate,
+00:21:20.000 right? You're fixing the issues earlier
+00:21:21.919 in the software development life cycle,
+00:21:23.679 which means that the ideas or the code
+00:21:27.280 is fresh in your mind. You're being
+00:21:29.440 informed of the issues as you develop.
+00:21:31.919 So, it's not like there's no contact
+00:21:33.679 switching later on where you've
+00:21:35.440 submitted the code and then you come
+00:21:36.960 back a day later, but you've worked on
+00:21:38.880 five other things since then and you've
+00:21:40.640 got to get back in that frame of mind of
+00:21:43.039 okay, what was I doing over there? None
+00:21:45.280 of that, right? So, it's it's happening
+00:21:46.960 in real time. It's providing you the
+00:21:48.960 feedback that you need right on the
+00:21:50.640 desktop.
+00:21:52.320 Um, all of that will help you to reduce
+00:21:54.880 cost and friction of late defects.
+00:21:58.080 So, when you when you've got defects
+00:22:00.000 that are coming in late, uh that can not
+00:22:02.960 only cause issues with with cost of to
+00:22:06.640 to fix them, but also with delivery
+00:22:09.280 deadlines. Um, and you don't have that
+00:22:12.080 confidence going into uh later stages of
+00:22:15.200 your development cycle that you've got
+00:22:17.440 everything covered off if you're waiting
+00:22:19.120 until the end to identify these issues.
+00:22:21.120 Right? So there's this concept of
+00:22:23.520 confidence now that we we talk about
+00:22:25.760 where uh you don't have to wait until
+00:22:28.240 all the coding is complete and then
+00:22:29.840 cross your fingers and hope that the uh
+00:22:32.559 the tests all progress through the
+00:22:34.159 various testing gates. Um you've tried
+00:22:37.360 to head off a lot of those issues early
+00:22:39.679 on.
+00:22:42.720 So what does that shift left look like?
+00:22:45.679 So there's a couple of charts I'm going
+00:22:47.840 to show you here that are representative
+00:22:50.080 of some work that was done by Caper
+00:22:52.240 Jones to identify when are defects
+00:22:55.280 typically injected into the life cycle
+00:22:57.919 the software development life cycle uh
+00:23:00.640 when are they found and then what is the
+00:23:03.360 cost to fix those defects if they're
+00:23:05.919 found at the various stages. So the blue
+00:23:08.159 line is really this is obviously most of
+00:23:10.640 the defects are introduced in coding uh
+00:23:13.760 from a matter of when are they found. So
+00:23:16.080 traditionally they're found in unit test
+00:23:18.720 or functional test or system test or
+00:23:20.880 even after release. Right? So there's a
+00:23:23.840 uh um a a kind of a staggered view of
+00:23:26.880 when traditionally defects are found.
+00:23:30.320 And then the red line is how much is it
+00:23:32.559 actually going to cost the organization
+00:23:35.039 to fix these defects at the var when
+00:23:37.520 they're found at the various stages. So
+00:23:40.559 if we use coding as a baseline. So if
+00:23:42.720 you fix the defect as it's identified
+00:23:45.200 that's a 1x. If you wait till unit test
+00:23:48.000 it can go up to four times the cost
+00:23:50.320 because you're having to redo coding
+00:23:51.919 redo testing there. There's things that
+00:23:54.400 have to be replicated. Uh functional
+00:23:57.679 test it goes up to 10x. system test is
+00:24:00.559 40x and after release you know it's you
+00:24:04.720 don't want to wait that long so the
+00:24:07.120 costs go way up right so uh so we talk
+00:24:12.320 about shift left and so what that means
+00:24:14.960 is that we're going to try and identify
+00:24:16.640 those defects earlier so if we put our
+00:24:18.960 static analysis tool for instance into
+00:24:21.279 your CI pipelines uh it can start to to
+00:24:25.279 evaluate the code prior to
+00:24:29.200 uh hitting some of these later stages
+00:24:31.120 and you can start to shift the defect
+00:24:34.080 found curve further to the left which is
+00:24:36.720 going to reduce the overall cost that
+00:24:39.039 you're spending.
+00:24:40.799 So when we talk about AI remediation,
+00:24:43.279 you're actually working at the desktop
+00:24:45.440 and so that's what we call the optimal
+00:24:47.200 shift left. So you've you're not fixing
+00:24:49.279 it in your CI pipeline, you're actually
+00:24:51.200 fixing it before you even check the code
+00:24:53.279 back into your developer branch. So now
+00:24:55.760 you're pulling this this orange line way
+00:24:58.480 back, right? So you're you're
+00:25:01.120 identifying the the defects way back in
+00:25:04.400 the coding stage and the cost to fix
+00:25:06.240 them at that point is much less than if
+00:25:08.159 you wait till these outer uh areas. So
+00:25:11.279 that's really why we we push for the the
+00:25:14.400 focus on uh shifting left and doing the
+00:25:18.400 doing as much as you can at the desktop
+00:25:20.960 prior to submitting your code. And
+00:25:22.640 that's where AI remediation at the
+00:25:24.400 desktop really comes in to help.
+00:25:27.520 And this is really just a a a graphic of
+00:25:30.720 showing up the various points at which
+00:25:32.640 you could uh do your desktops or sorry
+00:25:36.880 do your um static analysis scans. So
+00:25:39.760 obviously you're going to do a full
+00:25:41.200 baseline scan on your master branch um
+00:25:44.480 all the time to make sure that problems
+00:25:46.080 aren't going out. But this is this is
+00:25:48.640 waiting a while, right? We talked a
+00:25:50.240 little bit about shifting left and doing
+00:25:51.919 the work in your CI delta scans. So that
+00:25:54.320 can certainly help to to reduce the
+00:25:57.279 overall cost and and uh issues that
+00:26:00.000 you're having. And then there's the
+00:26:01.520 desktop scans which is where we're
+00:26:03.200 talking about doing the the AI
+00:26:05.360 remediation as well at the desktop which
+00:26:07.520 is really uh the optimal solution.
+00:26:14.080 So here's here's some examples of how
+00:26:16.400 the AI remediation would look in VS Code
+00:26:18.880 as an example. So here we've got a
+00:26:21.279 project that's been loaded. Uh there's
+00:26:23.600 some issues that have been identified
+00:26:25.520 through the static analysis tool and
+00:26:28.159 we've got C-Pilot chat running. Um and
+00:26:32.000 so we can uh and and our tools will
+00:26:35.520 integrate in with C-Pilot chat. So, we
+00:26:37.840 can just rightclick on a problem and say
+00:26:39.919 fix this problem using the Clockwork or
+00:26:42.000 QAC tools and it's going to gather up
+00:26:45.840 not just the line item here that says
+00:26:48.080 there's a problem, but it's going to
+00:26:49.520 gather up all of the associated
+00:26:51.120 documentation with it. It's going to
+00:26:53.039 grab all the trace information of where,
+00:26:55.919 you know, the path analysis of where did
+00:26:57.760 this code how did we get here and what
+00:27:00.400 what caused this problem. um as well as
+00:27:03.600 some detailed fix instructions or those
+00:27:05.440 guardrails I talked about to make sure
+00:27:07.200 that the AI understands exactly what
+00:27:09.440 we're trying to fix here and what we're
+00:27:10.799 not trying to fix. So it passes all that
+00:27:13.279 information off to the AI and it's that
+00:27:16.240 richness that gives us the the
+00:27:18.480 confidence that uh the solutions coming
+00:27:20.880 back are accurate. Uh and when they come
+00:27:23.360 back you get full detailed descriptions
+00:27:25.360 of what it was that it fixed. Uh and
+00:27:28.400 also it can give you a view in the
+00:27:30.799 coding window here of exactly what was
+00:27:33.520 changed and you have the option then to
+00:27:35.520 either keep or or uh undo that that
+00:27:39.279 change. So again it's developerdriven.
+00:27:41.840 Um it's not going to automatically
+00:27:43.760 submit any of these changes. you have to
+00:27:45.679 go through and and specifically say,
+00:27:47.840 &quot;Okay, I understand this and I and I
+00:27:50.559 accept it or I I you can interact with
+00:27:53.039 it and say, can you change it in XYZ?&quot;
+00:27:56.000 And it'll do that as well. So, you've
+00:27:57.840 got all of that capability, but it is up
+00:28:00.080 to the developer to do all that.
+00:28:04.000 Okay. So, final takeaways here. Um, so
+00:28:08.720 AI isn't going anywhere. That's kind of
+00:28:10.480 the point, right? is AI is it's
+00:28:13.279 accelerating our development. It's
+00:28:15.200 providing a whole bunch more code out
+00:28:17.039 there. Uh and that's great. Things are
+00:28:19.440 getting done quicker. Uh but we don't
+00:28:22.480 want to just accelerate development. We
+00:28:24.799 want to make sure that we are
+00:28:26.559 accelerating
+00:28:28.240 secure development. We don't want to
+00:28:32.399 exas exacerbate the issue by replicating
+00:28:36.159 issues and creating more and more code
+00:28:38.559 that have those issues. Right? We want
+00:28:40.159 to be able to scan that code and make
+00:28:42.399 sure that it doesn't continue to to
+00:28:45.279 propagate issues that uh the models have
+00:28:48.080 been trained with and and all that means
+00:28:52.000 you know it's like it's like Spider-Man
+00:28:54.720 with great what is it great power
+00:28:58.080 requires great responsibility right so
+00:29:01.679 uh AI remediation is powerful and AI is
+00:29:05.520 powerful but you have to use it
+00:29:06.880 responsibly and so utilizing some tools
+00:29:09.440 tools like our static analysis tools can
+00:29:11.919 help you to certainly uh curtail any
+00:29:15.200 issues that are going to be propagated
+00:29:16.960 through the uh through the solutions.
+00:29:22.399 So, and I think that's it. That's the
+00:29:24.559 end of what we wanted to talk about. So,
+00:29:27.440 I think we've got time for questions if
+00:29:30.000 anybody has any questions.
+00:29:32.960 >> Yeah, thank you both. Um the first
+00:29:36.000 question that we have is isn't AI
+00:29:38.559 getting better at writing secure code.
+00:29:43.919 >> Yeah. Yeah. So it is absolutely there's
+00:29:46.399 lots of improvements. I mean AI changes
+00:29:48.960 so quickly, right?
+00:29:51.039 >> Um every week you hear that uh you know
+00:29:54.640 Google is better and now Anthropic is
+00:29:57.360 better and then somebody else is better
+00:29:59.440 and it it's getting better and better
+00:30:00.960 for sure. Um but even with those
+00:30:05.039 improvements, we're talking about the
+00:30:07.120 scale here, right? So if there's any
+00:30:10.480 issues that that are still being um
+00:30:13.840 included in the training data, for
+00:30:15.520 example, those can still show up in a
+00:30:18.880 meaningful way at scale. So you still
+00:30:21.600 have to make sure that you're scanning
+00:30:23.120 your code and and making sure that those
+00:30:25.840 things aren't getting uh into your code,
+00:30:28.559 those issues.
+00:30:31.520 Thank you. We have um next question.
+00:30:35.760 Why not just rely on co-pilot or chat
+00:30:38.640 GBT to fix security issues?
+00:30:42.399 >> Oh yes, that's a that's a common
+00:30:44.720 question actually. Um and it makes
+00:30:46.399 sense, you know, it makes sense to to
+00:30:48.159 have to have that question. Why not use
+00:30:49.679 the AI to do the reviewing and and
+00:30:52.320 fixing automatically, I guess. Uh so
+00:30:54.799 there's a couple of reasons. First of
+00:30:56.000 first of all, um there's a performance
+00:30:58.080 issue. It's a lot of, you know, when
+00:30:59.919 we're dealing with such large amounts of
+00:31:01.600 code and speed and the throughput of
+00:31:03.760 that code, it is it is a lot for the AI
+00:31:06.720 to to do. Of course, uh it's also
+00:31:08.720 expensive in terms of AI tokens. And
+00:31:12.159 perhaps um where we're kind of going
+00:31:15.120 with with what we're suggesting here is
+00:31:16.799 if you use static analysis first to give
+00:31:18.480 you the the information just like you
+00:31:20.240 would for humans, the AI can then review
+00:31:22.640 the output of that and make suggestions
+00:31:25.360 and so on just like you would have an
+00:31:26.640 assisted code review for a human by
+00:31:28.720 producing static analysis results in the
+00:31:30.320 same way. So it kind of leads them to
+00:31:32.000 the the sort of the the points where
+00:31:34.320 whether it be AI or whether it be a
+00:31:35.679 human it actually takes you to the
+00:31:37.039 points where there's a potential problem
+00:31:39.279 and focuses you know the search there I
+00:31:41.200 guess is is a good way of putting it. If
+00:31:43.360 we're talking about specifically why not
+00:31:44.799 use them in terms of the remediation
+00:31:47.039 because of course you can you can simply
+00:31:50.559 rightclick anyway inside Visual Studio
+00:31:52.880 Code for example as as Gil showed and
+00:31:55.360 use C-pilot to to fix or suggest a fix
+00:31:58.000 for an issue. But of course in that case
+00:32:00.480 with the generic kind of built-in
+00:32:02.640 co-pilot capability it is only taking
+00:32:05.200 the problem information itself at the
+00:32:06.960 high level. So it's just saying okay
+00:32:08.240 well this this is an issue and from some
+00:32:11.360 research done by Cariegi Melon
+00:32:13.519 University and the ILE E over the last
+00:32:16.559 uh couple of years I think it started in
+00:32:19.200 2020 end of 2024 and then was was um
+00:32:22.480 revisited by Carnegie Melon during last
+00:32:24.799 year. What what they found was um that
+00:32:28.240 when you just take that basic problem
+00:32:30.080 information, the accuracy of the fix is
+00:32:32.320 somewhere between 40 to 60%
+00:32:35.919 um in terms of fixing the actual problem
+00:32:38.399 and not introducing a new problem.
+00:32:41.279 Whereas once we give just like the
+00:32:43.360 running nose uh once the context of what
+00:32:46.320 you're asking for is provided in in more
+00:32:48.320 detail. So that's with all of the static
+00:32:50.159 analysis kind of background context that
+00:32:52.000 we've we've managed to to gather during
+00:32:54.480 the the detection of the problem. Once
+00:32:56.720 we pass that into the into the co-pilot
+00:32:59.279 uh prompt as well to to be able to fix
+00:33:01.120 the issue, then it's highly it's much
+00:33:03.279 more accurate and and in fact in those
+00:33:05.360 studies they found it was then between
+00:33:07.200 72 and 90% accurate. And that was back
+00:33:09.679 in 2024. And obviously things are always
+00:33:12.080 improving.
+00:33:13.200 It's probably in the 90% now fairly
+00:33:15.200 regularly in terms of those fix
+00:33:17.279 proposals. And of course, as Gil said,
+00:33:20.720 benefit is the analysis will then
+00:33:22.559 automatically rerun on those changes. So
+00:33:24.399 we also get to verify that in fact the
+00:33:26.799 fix has been made. Was it was there
+00:33:28.240 anything else there Gil you'd like to
+00:33:29.600 add?
+00:33:30.159 >> No, no, that's
+00:33:33.279 >> I think we have time for one more. Um,
+00:33:36.559 how does this work in safety critical
+00:33:38.480 environments?
+00:33:44.399 uh you want to see or you want me to
+00:33:46.640 >> I don't mind I can I can say that if you
+00:33:48.240 like. So from the safety critical side
+00:33:50.559 of things, obviously a lot of what we
+00:33:53.200 will need to do will be governed by the
+00:33:54.640 standards and there are limits to what
+00:33:56.720 at the moment is uh allowed from an AI
+00:34:00.240 perspective because obviously AI is by
+00:34:02.159 by design non-deterministic and and
+00:34:04.480 obviously a lot of those standards out
+00:34:05.679 there at the moment in fact as far as I
+00:34:07.279 know all of them require on
+00:34:08.879 deterministic behavior and repetition of
+00:34:11.040 results and so on and so forth in terms
+00:34:12.719 of detection of of problems. So, um,
+00:34:15.520 building the safety case is obviously a
+00:34:17.280 lot easier at the moment, uh, with those
+00:34:20.079 traditional methods. Uh, and that's
+00:34:21.918 something that AI obviously can't do at
+00:34:23.599 the moment. Uh, but possibly things will
+00:34:26.719 evolve and we do see, you know, those
+00:34:28.320 standards may evolve over the next few
+00:34:29.839 years.
+00:34:31.839 >> Thank you very much, Steven Gil. If we
+00:34:33.599 didn't get to your question, we'll reach
+00:34:34.879 out to you via email. Thank you to our
+00:34:36.960 audience for your attendance and
+00:34:38.320 participation today. And of course,
+00:34:40.000 thank you to Stephen Gil again. We hope
+00:34:41.839 to see you next time.
+00:34:44.320 All right. Thank you. Bye-bye.

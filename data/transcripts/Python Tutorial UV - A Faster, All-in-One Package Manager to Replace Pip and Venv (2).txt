@@ -1,0 +1,644 @@
+# tactiq.io free youtube transcript
+# Python Tutorial: UV - A Faster, All-in-One Package Manager to Replace Pip and Venv
+# https://www.youtube.com/watch/AMdG7IjgSPM
+
+00:00:00.080 Hey there. How's it going everybody? In
+00:00:01.920 this video, we're going to be learning
+00:00:03.120 about UV, which is a new package manager
+00:00:05.680 for Python that's growing pretty quickly
+00:00:07.440 in popularity. Now, the goal with UV is
+00:00:10.000 pretty ambitious. They want it to be a
+00:00:11.920 single tool that can replace pip for
+00:00:14.320 installing packages, venv or virtual env
+00:00:17.760 for creating and managing virtual
+00:00:19.680 environments. Uh, pip tools for
+00:00:21.760 generating lock files, and even pip x
+00:00:24.480 for installing and running Python tools.
+00:00:27.199 UV combines all of these tools into one.
+00:00:30.320 And also, it's quite a bit faster than
+00:00:32.238 those other options since it's written
+00:00:34.079 in Rust. It's created and maintained by
+00:00:37.120 Astral, which is the same team behind
+00:00:38.960 the Roughliner that's also becoming very
+00:00:41.520 popular. And we're going to look at
+00:00:42.960 Rough in an upcoming tutorial as well.
+00:00:45.280 But in this video, we'll compare how a
+00:00:47.680 UV workflow compares to a standard
+00:00:50.000 workflow with PIP and Venv and try to
+00:00:53.280 get a sense of why so many people are
+00:00:54.879 switching over to using this as their
+00:00:56.879 default. So, with that said, let's go
+00:00:58.719 ahead and get started. All right, so
+00:01:00.239 first let's get UV installed on our
+00:01:02.079 system. There are a few different ways
+00:01:03.680 to install this, and I'll show you the
+00:01:05.600 one that I'm going to use, but also
+00:01:07.840 mention some alternatives. Uh, I'm on a
+00:01:10.159 Mac and I like using Homebrew. So,
+00:01:12.479 that's the method that I'm going to use
+00:01:13.840 here and it's probably the easiest way
+00:01:16.400 if you already have Homebrew set up, but
+00:01:18.640 I'm also going to leave a link to this
+00:01:20.400 installation page in the description
+00:01:22.000 section below so that you can see the
+00:01:23.920 other ways that we can install this
+00:01:25.360 here. So, for example, you can see that
+00:01:27.280 they have a standalone installer with uh
+00:01:29.680 just using a curl command on Mac or uh
+00:01:32.560 Linux. On Windows, you can run a
+00:01:35.439 PowerShell command and then they have a
+00:01:37.680 bunch of different options here as well.
+00:01:40.079 Um, but like I said, I'm going to be
+00:01:41.920 using the homebrew option. So, let me go
+00:01:44.720 back to my terminal here and I'm going
+00:01:46.640 to install this uh using homebrew. And
+00:01:49.200 I'll just say brew install
+00:01:51.799 UV. And once it says that's installed, I
+00:01:54.720 should be able to test this just by
+00:01:56.240 running uv. And we can see there that uh
+00:02:00.479 we get a list of all the commands that
+00:02:02.799 we can use with this. So that is
+00:02:05.040 installed and it's working. So now that
+00:02:07.119 we have UV installed, let's take a look
+00:02:09.119 at how it's used compared to the
+00:02:10.959 traditional tools that we might be more
+00:02:12.800 familiar with. So if I were to start
+00:02:14.959 working on a new Python project, here's
+00:02:17.680 basically what I normally would have
+00:02:19.840 done. So I would create a directory for
+00:02:22.560 my project. So I'm going to create a
+00:02:24.640 directory here and I'll just call this
+00:02:26.319 old way. and then I will cd into that
+00:02:29.760 directory. And then probably one of the
+00:02:31.760 first things that you'd want to do is
+00:02:33.280 create a new virtual environment. So I
+00:02:36.239 would do something like Python 3 and I
+00:02:39.040 would use venv here. I'll just create a
+00:02:42.000 virtual environment called veenv. Uh now
+00:02:45.680 if you've not if you're not familiar
+00:02:47.519 with virtual environments, don't worry
+00:02:49.120 about it. I'm just showing you the old
+00:02:50.720 way for now and we'll look at the uh UV
+00:02:53.120 way which is a lot simpler here in just
+00:02:55.360 a second. So, I'm going to create this
+00:02:58.160 virtual environment here. And then we'd
+00:03:00.080 want to activate that virtual
+00:03:01.360 environment. So, uh I'm on a Mac, so I
+00:03:04.480 would say I would source that. And that
+00:03:07.120 is going to be in the bin directory.
+00:03:09.840 Activate. And we can see I have my
+00:03:11.680 terminal set up here to show me when I'm
+00:03:13.280 within a virtual environment. So, we can
+00:03:15.120 see that that is active. And then, uh
+00:03:18.319 normally we would uh just use pip to
+00:03:20.480 install whatever packages that we wanted
+00:03:22.319 on this new project. So let's say that I
+00:03:24.959 wanted to use flask and request. So I
+00:03:27.760 would say pip install flask request and
+00:03:32.720 then we would go about it that way. And
+00:03:34.720 we can see that just took a couple of
+00:03:36.640 seconds there. And then after we had
+00:03:38.560 whatever packages we wanted installed,
+00:03:40.799 then we would create the project
+00:03:42.239 structure for this new project. Uh so
+00:03:44.480 for now, let's just create a simple
+00:03:46.560 main. py file. So let me go ahead and
+00:03:50.159 clear my screen here. I'll just do a uh
+00:03:53.120 touch main. py which just creates a
+00:03:56.080 blank main. py file. And now let me uh
+00:03:59.360 list everything off in my directory
+00:04:01.519 here. So we can see that we have our
+00:04:03.280 virtual environment here.
+00:04:05.799 Envy file. And after I worked on my
+00:04:10.080 script here for a bit, I'd likely want
+00:04:12.159 to create a requirements file so that I
+00:04:15.040 can reproduce this project and share it
+00:04:17.279 with other people. Uh so to do that uh
+00:04:20.720 using the old way using pip uh I would
+00:04:23.440 say pip freeze and then I would redirect
+00:04:25.840 this to a uh
+00:04:27.960 requirements.txt file. And if we look at
+00:04:31.199 this file so I will just cat that out.
+00:04:34.479 Then we can see that it lists all of our
+00:04:36.240 dependencies here of the packages that
+00:04:38.240 we installed. And we only installed
+00:04:40.320 flask and request but both of those uh
+00:04:42.880 depend on other packages of their own.
+00:04:45.360 So that's why we're seeing additional
+00:04:47.120 dependencies listed here. Uh so then if
+00:04:50.320 I pass this off to someone else, then
+00:04:52.479 they could recreate my project by
+00:04:54.960 creating and activating their own
+00:04:56.639 virtual environment and then installing
+00:04:59.120 the dependencies uh from this
+00:05:01.880 requirements.txt file that I have here.
+00:05:04.639 So that is a lot of steps and it's not
+00:05:08.560 exactly the most intuitive process
+00:05:10.800 especially for newcomers. So now let's
+00:05:14.160 see how this compares to using UV. So
+00:05:17.520 I'm going to go up one directory here
+00:05:19.680 back to my desktop and we can see that
+00:05:23.199 we just have that old way project there.
+00:05:26.800 And now let's create a new project using
+00:05:29.360 UV. So instead of creating a new
+00:05:31.680 directory from scratch like I did
+00:05:33.360 before, I can instead let UV do that for
+00:05:36.639 me just by saying UV and we'll call this
+00:05:41.120 new app. So I'll run that, we can see
+00:05:43.840 that it initialized a project. And now
+00:05:46.880 if I cd into this new application here.
+00:05:50.400 And just a quick side note, if you
+00:05:51.919 already had a project directory but
+00:05:54.000 didn't create it using uv, then you
+00:05:56.479 could also cd into that directory and
+00:05:58.960 just run
+00:06:00.440 uvit uh without the directory name and
+00:06:03.199 it will set up the directory you're
+00:06:05.199 currently using as a new application.
+00:06:08.800 And I didn't add any additional options
+00:06:11.680 to it when I created this, but UV does
+00:06:14.720 have a few different project types to
+00:06:16.560 choose from when initializing a project.
+00:06:19.680 So first there is the app option and app
+00:06:23.840 is the default. So this is what was run
+00:06:26.160 when I just created uh my new project
+00:06:29.759 here. And like I said, this is the
+00:06:31.520 default. This is what I use most often.
+00:06:33.759 It creates a simple project structure
+00:06:35.759 for applications, scripts, uh web
+00:06:38.560 servers and things like that. Uh but
+00:06:40.800 there is also lib and lib creates a
+00:06:44.240 project that is designed to be built and
+00:06:46.240 distributed as a Python package. Uh I'd
+00:06:48.960 say most of us will be using the app
+00:06:51.360 default. Uh but the option to create
+00:06:53.680 distributable Python packages is there
+00:06:56.319 if you're curious. So let me clear this
+00:06:58.720 out. Okay. Okay, so now let's look at
+00:07:00.319 what UV created for us with the default
+00:07:02.800 init for an application. So if I list
+00:07:05.680 all the files here, so first we have a
+00:07:08.000 git directory and a git ignore file. So
+00:07:11.199 UV automatically initializes a git
+00:07:13.759 repository for us, which is nice because
+00:07:16.240 most of us will want to track our code
+00:07:18.160 within version control anyway. Uh the
+00:07:20.479 git ignore file has some common uh
+00:07:22.880 python specific files that we typically
+00:07:25.440 don't want to track in git uh like cache
+00:07:28.160 files and the virtual environment.
+00:07:30.240 There's also a python version file which
+00:07:33.360 contains the python version this project
+00:07:35.599 is configured to use. UV uses this to
+00:07:38.400 ensure that we're working with a
+00:07:40.080 consistent Python version as we're
+00:07:42.000 building this application. Uh right now
+00:07:44.160 it probably contains the version of
+00:07:45.840 Python that we have installed on our
+00:07:48.240 system. Uh but we can change this if
+00:07:50.319 needed. And then we have a readme file
+00:07:53.039 uh which is currently empty. Uh but this
+00:07:55.680 is where you'd typically add
+00:07:56.879 documentation about your project. And
+00:07:59.199 then this main.py file here is a simple
+00:08:02.000 starter Python file for our application.
+00:08:04.879 Uh UV creates this as a placeholder
+00:08:07.680 where we can begin writing our code. And
+00:08:10.639 finally we have the pi project.totml
+00:08:13.680 file uh which is a modern way to
+00:08:16.000 configure Python projects. So let's take
+00:08:18.319 a quick look at that. Uh I'm just going
+00:08:20.400 to go ahead and open up this entire
+00:08:22.319 project within VS Code. Okay. And now
+00:08:25.680 let me open up that pi project.l file
+00:08:28.560 that we saw before. So this has some
+00:08:31.039 basic information about our application.
+00:08:33.760 And at the bottom we can see it's
+00:08:35.599 listing our dependencies. Right now it's
+00:08:38.080 an empty list because we haven't added
+00:08:40.320 any packages uh that we're going to use
+00:08:42.320 for this application yet. Now, this is
+00:08:44.959 normally where we'd create and activate
+00:08:47.360 our virtual environment, but we don't
+00:08:49.279 need to do that here. Uh, UV will handle
+00:08:51.680 that for us automatically the first time
+00:08:53.920 that we run a command that actually
+00:08:55.839 needs it. Uh, so let's add those
+00:08:58.640 packages in uh that we used in our last
+00:09:01.519 example. So, I'm going to go back to the
+00:09:03.519 terminal here. So, now I'm going to
+00:09:05.279 install flash and request like we did
+00:09:07.600 before, but instead of pip, I'm going to
+00:09:10.240 use uv. So I'll say uv add flask and
+00:09:16.519 request. And if I run that then we can
+00:09:20.080 see that finishes up. It was a bit
+00:09:21.680 quicker than the pip installation was.
+00:09:23.920 And also if I look towards the top here
+00:09:26.720 we can see that it tells us the Python
+00:09:28.880 interpreter that it's using and also
+00:09:31.360 detected that we need a virtual
+00:09:33.279 environment. So it created this.v VNV
+00:09:36.480 directory here uh right here for us in
+00:09:38.959 our project and then it installs flask
+00:09:41.680 and request into that environment and
+00:09:44.320 there are a couple other things that it
+00:09:46.320 did here as well. Uh if I open that
+00:09:49.279 project back up then we can see that it
+00:09:51.839 also updated our piprototl file here to
+00:09:55.360 list flask and request as dependencies.
+00:09:58.320 Uh another thing is that it created this
+00:10:01.959 uv.lock file for us. So let me open this
+00:10:05.040 up. And this lock file records the exact
+00:10:07.920 versions of all the packages installed
+00:10:10.399 including subd dependencies. Uh so this
+00:10:12.959 ensures that your environment is
+00:10:14.720 perfectly reproducible and it does all
+00:10:17.360 of that without us creating or
+00:10:19.680 activating any virtual environments. So
+00:10:22.160 basically it helps to uh prevent the
+00:10:24.480 classic problem of it working on one
+00:10:26.560 machine and not working on another
+00:10:29.040 because of some small discrepancy
+00:10:31.040 somewhere. And UV also has this uh nice
+00:10:34.240 feature here for visualizing and
+00:10:36.720 understanding our dependencies. So if I
+00:10:39.440 wanted to see a tree of my dependencies
+00:10:43.040 to see what relies on what, then I could
+00:10:45.839 just run UV tree here within my project.
+00:10:49.120 And we can see that our two main ones
+00:10:50.800 here are Flask and request. And within
+00:10:53.680 Flask, these are the subd dependencies
+00:10:55.440 here. And with request, these are the
+00:10:57.760 subd dependencies here. Okay. So now
+00:11:00.160 let's say that we work on our
+00:11:01.519 application for a while and now we want
+00:11:03.680 to run it. How would we do that from the
+00:11:05.839 command line if that virtual environment
+00:11:07.839 isn't activated? So from an IDE, this
+00:11:11.040 should be fairly simple. Uh for example,
+00:11:13.680 let me open up that main.py file here
+00:11:16.959 within VS Code. So I'll open this up. So
+00:11:20.959 within most IDE, you should have an easy
+00:11:23.600 way to find virtual environments within
+00:11:25.920 your current project. Mine automatically
+00:11:28.399 selects virtual environments inside of
+00:11:30.240 my projects if they exist. Uh, but we
+00:11:33.040 actually open this project before that
+00:11:35.040 environment was created. So to select
+00:11:37.279 it, I just have to navigate down here to
+00:11:39.600 the bottom right. And we can see that
+00:11:41.680 it's using this uh
+00:11:44.120 3.13 here. And I'm just going to have it
+00:11:46.800 select this virtual environment here
+00:11:48.880 within my directory. And just to make
+00:11:51.360 sure that this works, uh, let's print
+00:11:53.200 out the Python executable that's
+00:11:55.360 executing our script. Uh, that way we
+00:11:58.000 can be sure that it's using the correct
+00:11:59.760 environment. So to do this, I'll just
+00:12:01.839 import CIS. And then where we are
+00:12:05.519 printing out here, I will print out uh
+00:12:10.040 CIS.executable. So now if I save this
+00:12:12.480 and run it within VS code, then we can
+00:12:15.680 see here that it is using that correct
+00:12:18.160 uh Python virtual environment. So, we're
+00:12:20.639 within our new app and our virtual
+00:12:22.720 environment here. So, we're able to run
+00:12:24.959 this easily from an IDE. But now, let's
+00:12:27.760 go back to our terminal and see how we
+00:12:29.760 would run it from there. So, let me
+00:12:31.600 clear out my terminal here. And
+00:12:33.200 actually, I never deactivated this
+00:12:35.200 virtual environment from before. Uh,
+00:12:37.760 glad that didn't screw anything up. Let
+00:12:39.839 me go ahead and deactivate that really
+00:12:41.360 quick. Okay. So, now with UV, we're not
+00:12:44.240 in that same paradigm of having our
+00:12:46.800 environment active at all times.
+00:12:49.040 Instead, we're going to let UV handle
+00:12:51.279 that for us. So, instead of doing
+00:12:53.760 something like uh Python main. py, uh
+00:12:58.480 we're going to instead say uv run main.
+00:13:03.920 py. And if I run this, then we can see
+00:13:06.959 that we don't have any virtual
+00:13:08.240 environments active right now. Uh but uv
+00:13:11.760 runs the code and automatically uses
+00:13:14.320 that virtual environment that it created
+00:13:16.480 earlier. Uh but now let me show you
+00:13:18.880 something that's pretty impressive. So
+00:13:20.959 let's say that the virtual environment
+00:13:23.360 gets removed or deleted. So I'll go
+00:13:26.160 ahead and just delete that completely
+00:13:28.160 from my project. So I will uh
+00:13:32.440 say remove that virtual environment. And
+00:13:36.600 now we can see that there is no virtual
+00:13:39.600 environment here. And normally this
+00:13:41.839 would screw us up. Uh we'd have to go in
+00:13:44.160 and create this environment again.
+00:13:46.480 activate it and then install the
+00:13:48.480 packages to run our code and then
+00:13:50.880 finally be able to run our code. But all
+00:13:53.519 of the information that we need to run
+00:13:55.200 this code is in our PI project and lock
+00:13:58.959 files. So with UV, if I just try to run
+00:14:02.079 this again with UV run main. py, if I
+00:14:06.480 run this, then we can see that it runs
+00:14:08.399 that just fine. And what it did was it
+00:14:11.040 saw that we didn't have a virtual
+00:14:12.720 environment. So it created that for us.
+00:14:15.680 Then it installed all of those packages
+00:14:18.320 very quickly. And then it ran the code
+00:14:20.959 for us, all with one command. And not
+00:14:24.079 only that, but it was extremely fast as
+00:14:26.800 well. Much faster than if we'd done this
+00:14:29.199 with pip and VNV. And we don't even need
+00:14:31.920 to run that main. py file to get it to
+00:14:35.440 create our environment and install those
+00:14:37.600 dependencies. Uh, so if I were to pass
+00:14:39.760 this off to someone and they wanted to
+00:14:42.560 get their environment ready without
+00:14:44.240 running the application, then they could
+00:14:46.639 simply use UV sync. And I'll show how
+00:14:49.360 this works. So first, let me delete that
+00:14:51.839 virtual environment again. So it's not
+00:14:54.720 within our project. And now if I pass
+00:14:57.279 this off to someone and they have this
+00:14:59.199 on their machine, then they can simply
+00:15:01.440 run UV sync. And when they run that, we
+00:15:05.360 can see that it recreated the exact same
+00:15:07.839 environment using the UV lock file. And
+00:15:11.120 now if we wanted to remove a dependency,
+00:15:14.079 then I could just say UV remove flask.
+00:15:18.560 And if I run that, it takes that off.
+00:15:20.959 And that would remove that package and
+00:15:23.120 update the PI project and lock file. And
+00:15:27.000 then they could simply send that back to
+00:15:29.680 me without their virtual environment.
+00:15:32.079 and I could run UV sync and get synced
+00:15:35.199 up with those dependencies. So, I find
+00:15:38.160 all of this a lot easier, especially for
+00:15:40.639 beginners. Uh, instead of running five
+00:15:42.880 to six different commands and having to
+00:15:44.800 understand virtual environments, uh,
+00:15:46.720 we've got a much more streamlined
+00:15:48.880 process that does all the complexity be
+00:15:51.680 behind the scenes. And one of the
+00:15:53.600 biggest advantages that you'll notice
+00:15:55.120 with UV, especially over time, is its
+00:15:58.720 smart global caching system. Uh so this
+00:16:02.320 means that if we have 10 different
+00:16:04.560 projects that all use the same version
+00:16:06.639 of Flask, uh UV only stores that Flask
+00:16:09.680 version and its dependencies once on our
+00:16:12.639 disk, which saves a lot of space. So
+00:16:15.600 your environments still remain
+00:16:17.360 completely isolated from each other. So
+00:16:19.600 there's no risk of conflicts there. Uh
+00:16:22.160 but you get the dispace savings and
+00:16:24.639 major speed improvements when installing
+00:16:26.720 packages that you've used before. And
+00:16:29.120 that's especially noticeable when
+00:16:30.959 recreating environments or setting up
+00:16:33.279 new projects with familiar dependencies
+00:16:35.600 because with pip and venv different
+00:16:38.079 virtual environments for different
+00:16:39.600 projects might contain duplicate copies
+00:16:41.920 of the same packages. Uh so not only do
+00:16:44.480 you save disc space but you also save on
+00:16:47.279 download times and what used to take
+00:16:49.600 minutes with pip can be almost
+00:16:51.600 instantaneous with UV. And I know that
+00:16:54.160 there's a lot of new tools out there and
+00:16:56.160 it can get a bit overwhelming. So, some
+00:16:58.399 of you may be thinking, "Okay, this
+00:17:00.079 looks cool, but I'm used to pip and I
+00:17:02.560 don't feel like learning a new tool
+00:17:04.000 right now." Uh, well, the good thing
+00:17:06.000 about this is that UV provides a UV pip
+00:17:09.839 subcommand that acts as a direct faster
+00:17:12.959 replacement for pip itself. So, you can
+00:17:15.439 actually just keep using familiar
+00:17:17.359 commands if you want to transition
+00:17:19.280 gradually. So, let me show you what I
+00:17:21.599 mean by that. Uh so let's say that we go
+00:17:23.839 back to our previous project where we
+00:17:25.760 used pip and install another package. So
+00:17:29.039 let me switch over to that old way
+00:17:32.960 project that we created before. So in
+00:17:35.679 here we haven't set this up with UV. If
+00:17:39.120 I look at the files in this directory
+00:17:41.760 then we should only have our Python
+00:17:43.600 script and our
+00:17:45.080 requirements.txt file. So if I wanted to
+00:17:47.520 work on this, uh, we could activate the
+00:17:50.640 environment and then use pip to install
+00:17:52.799 a package using pip. But UV has a pip
+00:17:56.480 command that behaves the same as pip.
+00:17:59.039 And if you have a virtual environment in
+00:18:00.960 your project already, then it will find
+00:18:03.280 that for you. So if I wanted to add uh,
+00:18:05.919 numpy for example, then I could say uv
+00:18:09.440 and then pip install numpy. And if I run
+00:18:14.080 that then we can see that that
+00:18:15.679 installed. And now if I say uv pip list
+00:18:20.400 then we can see that now we have flask
+00:18:23.919 request and we also have numpy there. So
+00:18:27.679 this uh pip subcomand here is nice for
+00:18:30.480 transitioning over to UV. Uh but you do
+00:18:33.440 miss out on a lot of the functionality
+00:18:35.919 that makes UV so useful. So for example,
+00:18:39.440 uh since it's just doing what pip would
+00:18:41.600 do, it's not creating that pi project or
+00:18:44.720 lock file in the background. So if I
+00:18:48.320 look in this directory, then we can see
+00:18:50.480 that we still only have the same files
+00:18:52.480 as before. So if I wanted this
+00:18:55.160 requirements.txt file uh to be up to
+00:18:57.840 date with the packages that we just
+00:18:59.360 installed, then we'd have to do a uv pip
+00:19:02.640 freeze uh to overwrite that. So, the
+00:19:05.840 option to use pip commands is there if
+00:19:07.840 you want it, but I'd really recommend
+00:19:09.840 just getting started with using UV uh
+00:19:12.240 with its own commands. And I think
+00:19:14.240 you'll find it fairly easy to learn and
+00:19:16.480 use. Now, if I wanted to migrate this
+00:19:20.640 project here over to using UV's workflow
+00:19:24.320 instead of pips, then I could just say
+00:19:27.799 UVIT and run this. And that will create
+00:19:31.600 the project structure that we saw
+00:19:33.520 before. And then I'd have to add those
+00:19:35.919 packages from the requirements.txt file.
+00:19:39.200 So first let me show that it created
+00:19:42.000 this project structure that we saw
+00:19:44.039 before. And now I want to add those
+00:19:49.760 packages from the requirements.txt file.
+00:19:52.559 To do that I can just say uv add- r
+00:19:58.440 requirements.txt. And if I run that it
+00:20:01.120 will install all of those. And if I look
+00:20:04.720 at the pi projectl file then we can see
+00:20:07.440 that now all of those are listed in our
+00:20:10.120 dependencies. So at that point if you
+00:20:12.400 wanted to move forward only using uv
+00:20:15.280 then you could delete that
+00:20:16.840 requirements.txt file and rely solely on
+00:20:19.840 your pi project and lock files. Okay. So
+00:20:22.559 now let me switch back over to uh the
+00:20:25.440 other directory that I created before in
+00:20:28.080 this new app. Now, another really cool
+00:20:30.320 feature of UV is that it can replace pip
+00:20:33.360 X for installing Pythonbased command
+00:20:36.159 line tools. Now, if you don't know what
+00:20:37.840 Pip X does, it basically allows you to
+00:20:40.400 install Python command line tools that
+00:20:42.880 you can use anywhere on your system and
+00:20:44.960 not just in a specific project. Uh, so
+00:20:47.919 llinters, formatterers, things like
+00:20:50.159 that. Uh those are things that you'll
+00:20:52.240 likely just want to install once and use
+00:20:55.360 across multiple different projects as
+00:20:57.520 opposed to installing them in every
+00:20:59.200 project individually. And we can also do
+00:21:01.600 this with UV. So for example, let's say
+00:21:03.760 that we wanted to install Rough, which
+00:21:06.159 is a popular Python litter that's also
+00:21:08.880 made by Astral. So normally, uh you
+00:21:11.840 might install this with pip X, but we
+00:21:14.559 can use UV instead. And this is a tool.
+00:21:18.240 So I can say UV tool install
+00:21:23.400 rough. And what this does is it installs
+00:21:26.320 rough in an isolated environment but
+00:21:28.720 makes it available on your path. So
+00:21:31.520 let's confirm that that's installed and
+00:21:33.440 accessible from anywhere. Uh I'm on a
+00:21:36.159 Mac so I can do that by saying which
+00:21:38.880 rough. And we can see that it did
+00:21:40.880 install it here in my uh local bin
+00:21:44.400 directory of my home folder. So that
+00:21:46.720 should be available anywhere on the
+00:21:48.640 system. And rough is a llinter. So with
+00:21:50.880 that installed, I can check my Python
+00:21:53.200 code. So if I wanted to check this
+00:21:55.600 project, I could say rough check. It
+00:21:58.400 says that all checks pass there. And if
+00:22:00.799 I had a more strict rough configuration,
+00:22:03.600 then that might come back with some
+00:22:05.440 improvements uh to change my code in
+00:22:08.159 ways that I want. And I'll be doing a
+00:22:11.280 rough tutorial in the near future also.
+00:22:13.760 Uh, so be sure that you're subscribed if
+00:22:15.679 you'd like to be notified when that's
+00:22:17.520 released. Okay. So, it's just as easy to
+00:22:20.880 remove a tool. So, let me clear my
+00:22:23.280 terminal here. So, to remove a tool, I
+00:22:26.000 can say UV tool uninstall rough. And
+00:22:30.400 now, if I check my system again for that
+00:22:33.200 rough command, we can see that it's not
+00:22:35.520 found. Now, one really cool thing about
+00:22:37.600 UV is that we don't even need to install
+00:22:40.640 these tools permanently on our system.
+00:22:43.280 in order to use them. Uh so if you just
+00:22:46.080 want to test out a tool or use it a few
+00:22:48.720 times for a specific task without
+00:22:50.960 permanently installing it, then we can
+00:22:53.280 do that by saying UV tool run. So let me
+00:22:58.240 clear this out. UV tool run. So if I
+00:23:01.760 wanted to run that same rough check
+00:23:03.840 command, then I could say rough check.
+00:23:07.440 And we can see that that works just like
+00:23:09.200 it did before. But if I search for rough
+00:23:12.320 on my system, then we can see that it's
+00:23:14.880 not installed. So that UV tool run
+00:23:18.080 command installs it in a temporary
+00:23:20.400 environment, runs it, and then cleans it
+00:23:22.720 up afterwards, which is super useful,
+00:23:24.640 and it does it all very quickly. And
+00:23:27.280 running different tools like this is
+00:23:29.360 very popular in UV. Uh, so they've
+00:23:32.720 actually made a shortcut for UV tool
+00:23:35.679 run, and that is UVX. So I can do the
+00:23:40.000 same thing just by saying uvx rough
+00:23:43.600 check and that is the same thing as this
+00:23:46.240 uv tool run rough check. So if I run
+00:23:49.840 that we can see we get the same thing.
+00:23:52.159 If I search for rough it's still not
+00:23:55.120 installed. So that is super useful for
+00:23:58.159 running tools without installing them.
+00:24:00.320 Uh but I use rough a lot. So I'm
+00:24:03.039 actually going to go ahead and install
+00:24:04.480 that permanently. So I'll just go ahead
+00:24:07.600 and do that. and keep that installed.
+00:24:09.919 And we can check the tools that we have
+00:24:11.600 installed by saying UV tool list. And we
+00:24:15.360 can see here that right now we only have
+00:24:17.440 rough. And we can upgrade those
+00:24:20.080 individually if you want, but most
+00:24:22.080 likely uh you'd probably want to update
+00:24:23.840 them all at once. Uh to do this, I could
+00:24:26.720 say UV tool upgrade and then we could
+00:24:30.480 just do a d-all here. If I run that, we
+00:24:33.760 can see that there's nothing to upgrade
+00:24:35.279 since we just installed that. So, I
+00:24:37.520 really like UV's tool integration here.
+00:24:40.159 Uh, it's taking all of these things that
+00:24:42.240 used to be separate tools like pip, pip
+00:24:45.200 x, and virtual environments and making
+00:24:47.679 them feel naturally like they belonged
+00:24:50.240 as a single tool to begin with. And
+00:24:52.720 there's even more that UV can do that we
+00:24:54.720 haven't covered. So, it has ways of
+00:24:56.960 managing different Python versions, has
+00:24:59.200 commands for building and uploading your
+00:25:01.279 own Python packages to Pippi, uh, and
+00:25:04.320 even has some features designed to help,
+00:25:06.799 uh, build optimized Docker containers.
+00:25:09.120 But those are things that we could cover
+00:25:10.799 in a more advanced tutorial if anyone is
+00:25:13.440 interested in that. But I think what we
+00:25:15.279 went over here covers the majority of
+00:25:17.279 what most of you will use UV for. Uh,
+00:25:20.240 I've been using it myself for some time
+00:25:22.080 now and really don't see myself going
+00:25:24.480 back to using PIP or virtual
+00:25:26.240 environments the way that I was before.
+00:25:28.880 Uh, it's also uh what I'm going to be
+00:25:31.840 using in future videos. So, I wanted to
+00:25:34.799 make this quick tutorial that I could
+00:25:36.799 point people towards if they see me
+00:25:39.200 using UV in a future video and have
+00:25:41.440 questions about that or why I'm using
+00:25:43.679 that over PIP. But with that said, I
+00:25:46.000 think that's going to do it for this
+00:25:47.120 video. Hopefully now you feel like you
+00:25:48.960 have a good idea of how UV works and how
+00:25:51.520 it can simplify your Python package
+00:25:54.000 management. Uh we've seen how it
+00:25:56.080 replaces multiple tools with a single
+00:25:58.159 interface and how it can be dramatically
+00:26:00.640 faster than those traditional tools. Now
+00:26:03.120 in a future video I'm going to be
+00:26:04.640 covering Rough which is a llinter built
+00:26:07.360 by the same team and that's another tool
+00:26:09.600 that I've migrated over to using in my
+00:26:11.600 daily workflow. So, big props to the
+00:26:14.640 team at Astral because they've
+00:26:16.480 definitely put out some great tools
+00:26:17.840 lately uh that have become super popular
+00:26:20.159 in the Python community. But if anyone
+00:26:22.320 has any questions about what we covered
+00:26:23.840 in this video, then feel free to ask in
+00:26:25.840 the comment section below and I'll do my
+00:26:27.440 best to answer those. And if you enjoy
+00:26:29.039 these tutorials and would like to
+00:26:30.400 support them, then there are several
+00:26:31.840 ways you can do that. The easiest way is
+00:26:33.679 to simply like the video and give it a
+00:26:35.279 thumbs up. Also, it's a huge help to
+00:26:37.039 share these videos with anyone who you
+00:26:38.559 think would find them useful. And if you
+00:26:40.159 have the means, you can contribute
+00:26:41.440 through Patreon or YouTube. And there
+00:26:43.279 are links to those pages in the
+00:26:44.720 description section below. Be sure to
+00:26:46.480 subscribe for future videos. And thank
+00:26:48.000 you all for watching.

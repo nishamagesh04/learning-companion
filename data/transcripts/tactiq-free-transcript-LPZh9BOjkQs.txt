@@ -1,0 +1,135 @@
+# tactiq.io free youtube transcript
+# Large Language Models explained briefly
+# https://www.youtube.com/watch/LPZh9BOjkQs
+
+00:00:00.000 Earlier this year, I was contacted by the Computer History Museum, 
+00:00:03.086 asking if I could help make a short explainer video for this exhibit they're doing about 
+00:00:07.186 large language models.
+00:00:08.600 If you're a regular viewer, you'll know that I was also 
+00:00:11.136 making a fair bit of material to visualize this topic anyway.
+00:00:14.220 More importantly, this is a museum that I really love, so this was a very easy yes.
+00:00:18.480 At first, I thought this was just going to be an abridged version of the 
+00:00:21.736 more detailed explainers that I was already making, 
+00:00:24.055 but ultimately it proved to be a really satisfying outlet for emphasizing 
+00:00:27.356 some of the more important ideas that those more technical explainers 
+00:00:30.478 may have glossed over.
+00:00:31.900 I'm very curious in the comments if you think this is useful as 
+00:00:35.040 a lightweight intro to share with others in your life curious 
+00:00:38.083 about large language models, but without further ado, let's dive in.
+00:00:43.560 Imagine you happen across a short movie script that 
+00:00:46.396 describes a scene between a person and their AI assistant.
+00:00:49.900 The script has what the person asks the AI, but the AI's response has been torn off.
+00:00:55.480 Suppose you also have this powerful magical machine that can take 
+00:00:59.400 any text and provide a sensible prediction of what word comes next.
+00:01:03.920 You could then finish the script by feeding in what you have to the machine, 
+00:01:07.926 seeing what it would predict to start the AI's answer, 
+00:01:10.788 and then repeating this over and over with a growing script completing the dialogue.
+00:01:15.800 When you interact with a chatbot, this is exactly what's happening.
+00:01:19.440 A large language model is a sophisticated mathematical function 
+00:01:23.121 that predicts what word comes next for any piece of text.
+00:01:26.800 Instead of predicting one word with certainty, though, 
+00:01:29.822 what it does is assign a probability to all possible next words.
+00:01:34.040 To build a chatbot, you lay out some text that describes an interaction between a user 
+00:01:39.220 and a hypothetical AI assistant, add on whatever the user types in as the first part of 
+00:01:44.460 the interaction, and then have the model repeatedly predict the next word that such a 
+00:01:49.580 hypothetical AI assistant would say in response, and that's what's presented to the user.
+00:01:55.500 In doing this, the output tends to look a lot more natural if 
+00:01:58.634 you allow it to select less likely words along the way at random.
+00:02:02.560 So what this means is even though the model itself is deterministic, 
+00:02:06.040 a given prompt typically gives a different answer each time it's run.
+00:02:10.460 Models learn how to make these predictions by processing an enormous amount of text, 
+00:02:14.752 typically pulled from the internet.
+00:02:16.520 For a standard human to read the amount of text that was used to train GPT-3, 
+00:02:21.891 for example, if they read non-stop 24-7, it would take over 2600 years.
+00:02:27.140 Larger models since then train on much, much more.
+00:02:30.620 You can think of training a little bit like tuning the dials on a big machine.
+00:02:34.700 The way that a language model behaves is entirely determined by these 
+00:02:38.721 many different continuous values, usually called parameters or weights.
+00:02:43.440 Changing those parameters will change the probabilities 
+00:02:46.519 that the model gives for the next word on a given input.
+00:02:50.280 What puts the large in large language model is how 
+00:02:53.147 they can have hundreds of billions of these parameters.
+00:02:57.620 No human ever deliberately sets those parameters.
+00:03:00.860 Instead, they begin at random, meaning the model just outputs gibberish, 
+00:03:05.063 but they're repeatedly refined based on many example pieces of text.
+00:03:09.560 One of these training examples could be just a handful of words, 
+00:03:13.076 or it could be thousands, but in either case, the way this works is to 
+00:03:16.916 pass in all but the last word from that example into the model and 
+00:03:20.540 compare the prediction that it makes with the true last word from the example.
+00:03:25.680 An algorithm called backpropagation is used to tweak all of the parameters 
+00:03:29.813 in such a way that it makes the model a little more likely to choose 
+00:03:33.616 the true last word and a little less likely to choose all the others.
+00:03:38.160 When you do this for many, many trillions of examples, 
+00:03:41.170 not only does the model start to give more accurate predictions on the training data, 
+00:03:45.878 but it also starts to make more reasonable predictions on text that it's never 
+00:03:50.203 seen before.
+00:03:51.840 Given the huge number of parameters and the enormous amount of training data, 
+00:03:56.339 the scale of computation involved in training a large language model is mind-boggling.
+00:04:02.020 To illustrate, imagine that you could perform one 
+00:04:04.705 billion additions and multiplications every single second.
+00:04:08.480 How long do you think it would take for you to do all of the 
+00:04:11.746 operations involved in training the largest language models?
+00:04:15.880 Do you think it would take a year?
+00:04:18.459 Maybe something like 10,000 years?
+00:04:21.440 The answer is actually much more than that.
+00:04:23.540 It's well over 100 million years.
+00:04:27.940 This is only part of the story, though.
+00:04:29.960 This whole process is called pre-training.
+00:04:31.920 The goal of auto-completing a random passage of text from the 
+00:04:35.066 internet is very different from the goal of being a good AI assistant.
+00:04:39.300 To address this, chatbots undergo another type of training, 
+00:04:42.500 just as important, called reinforcement learning with human feedback.
+00:04:46.900 Workers flag unhelpful or problematic predictions, 
+00:04:49.918 and their corrections further change the model's parameters, 
+00:04:53.529 making them more likely to give predictions that users prefer.
+00:04:57.200 Looking back at the pre-training, though, this staggering amount of 
+00:05:01.280 computation is only made possible by using special computer chips that 
+00:05:05.540 are optimized for running many operations in parallel, known as GPUs.
+00:05:10.540 However, not all language models can be easily parallelized.
+00:05:14.500 Prior to 2017, most language models would process text one word at a time, 
+00:05:19.237 but then a team of researchers at Google introduced a new model known as the transformer.
+00:05:25.720 Transformers don't read text from the start to the finish, 
+00:05:29.165 they soak it all in at once, in parallel.
+00:05:32.320 The very first step inside a transformer, and most other language models for that matter, 
+00:05:37.020 is to associate each word with a long list of numbers.
+00:05:40.280 The reason for this is that the training process only works with continuous values, 
+00:05:44.816 so you have to somehow encode language using numbers, 
+00:05:47.732 and each of these lists of numbers may somehow encode the meaning of the 
+00:05:51.674 corresponding word.
+00:05:52.700 What makes transformers unique is their reliance 
+00:05:55.780 on a special operation known as attention.
+00:05:59.400 This operation gives all of these lists of numbers a chance to talk to one another 
+00:06:04.104 and refine the meanings they encode based on the context around, all done in parallel.
+00:06:09.820 For example, the numbers encoding the word bank might be changed based on the 
+00:06:14.127 context surrounding it to somehow encode the more specific notion of a riverbank.
+00:06:19.700 Transformers typically also include a second type of operation known 
+00:06:23.449 as a feed-forward neural network, and this gives the model extra 
+00:06:26.981 capacity to store more patterns about language learned during training.
+00:06:31.700 All of this data repeatedly flows through many different iterations of 
+00:06:35.821 these two fundamental operations, and as it does so, 
+00:06:38.898 the hope is that each list of numbers is enriched to encode whatever 
+00:06:42.904 information might be needed to make an accurate prediction of what word 
+00:06:47.084 follows in the passage.
+00:06:49.420 At the end, one final function is performed on the last vector in this sequence, 
+00:06:53.954 which now has had a chance to be influenced by all the other context from the input text, 
+00:06:58.993 as well as everything the model learned during training, 
+00:07:02.184 to produce a prediction of the next word.
+00:07:04.900 Again, the model's prediction looks like a probability for every possible next word.
+00:07:10.980 Although researchers design the framework for how each of these steps work, 
+00:07:15.214 it's important to understand that the specific behavior is an emergent phenomenon 
+00:07:19.782 based on how those hundreds of billions of parameters are tuned during training.
+00:07:24.900 This makes it incredibly challenging to determine 
+00:07:27.490 why the model makes the exact predictions that it does.
+00:07:30.860 What you can see is that when you use large language model predictions to autocomplete 
+00:07:36.198 a prompt, the words that it generates are uncannily fluent, fascinating, and even useful.
+00:07:48.580 If you happen to be in the Bay Area, I think you would enjoy stopping 
+00:07:51.907 by the Computer History Museum to see the exhibit this was made for.
+00:07:55.440 If you're a new viewer and you're curious about more details on how 
+00:07:58.547 transformers and attention work, boy do I have some material for you.
+00:08:02.120 One option is to jump into a series I made about deep learning, 
+00:08:05.801 where we visualize and motivate the details of attention and all the other steps 
+00:08:10.461 in a transformer.
+00:08:11.820 Also, on my second channel I just posted a talk I gave a couple 
+00:08:15.250 months ago about this topic for the company TNG in Munich.
+00:08:18.800 Sometimes I actually prefer the content I make as a casual talk rather than a produced 
+00:08:22.822 video, but I leave it up to you which one of these feels like the better follow-on.

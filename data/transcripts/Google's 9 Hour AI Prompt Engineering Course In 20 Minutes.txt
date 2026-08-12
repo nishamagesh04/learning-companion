@@ -1,0 +1,641 @@
+# tactiq.io free youtube transcript
+# Google's 9 Hour AI Prompt Engineering Course In 20 Minutes
+# https://www.youtube.com/watch/p09yRj47kNM
+
+00:00:00.040 I took Google's prompt engineering
+00:00:01.360 course for you so here's the cliffnotes
+00:00:03.560 version to save you to 9 hours but it's
+00:00:05.799 not enough just to listen to me talk
+00:00:07.399 about stuff so I've also included a
+00:00:09.360 little assessment at the end of the
+00:00:10.719 video to help you remember everything
+00:00:12.480 that you learned because research shows
+00:00:14.400 that immediately reviewing information
+00:00:15.920 after you learn it is the best way of
+00:00:17.760 retaining that information all right
+00:00:19.880 let's go let's first go over the
+00:00:21.560 structure of this course prompting
+00:00:22.880 Essentials has four modules module one
+00:00:25.160 is start writing prompts like a pro this
+00:00:26.800 is where they introduce some really
+00:00:27.960 helpful Frameworks for how to craft
+00:00:29.560 prompts module two is design proms for
+00:00:31.599 everyday work task this will include
+00:00:33.160 proms for emailing brainstorming
+00:00:35.079 building tables and summarizing
+00:00:36.800 documents module 3 specifically focused
+00:00:39.040 on using AI for data analysis and for
+00:00:41.200 building PowerPoint presentations and
+00:00:43.039 finally module four use AI as a creative
+00:00:45.120 or expert partner this is where Google
+00:00:47.160 really packs it in like I am genuinely
+00:00:49.719 super impressed by this module we talk
+00:00:51.320 about Advanced prompting techniques like
+00:00:52.879 prompt chaining Chain of Thought tree of
+00:00:54.920 thought and a framework for creating
+00:00:56.600 agents all right module one let's do the
+00:00:58.559 fundamentals let's first the prompting
+00:01:00.960 prompting is the process of providing
+00:01:02.680 Specific Instructions through gen tool
+00:01:04.640 to receive new information or to achieve
+00:01:06.640 a desired outcome on a task this could
+00:01:08.880 be text images video sound or even code
+00:01:11.840 the course provides a five-step
+00:01:13.360 framework for how to design a prompt
+00:01:15.640 task context references evaluate and
+00:01:18.360 iterate the task is what you want the AI
+00:01:20.560 to do for example if your friend's
+00:01:22.439 birthday is coming up and they're really
+00:01:23.759 into anime you can say suggest the gift
+00:01:25.600 related to anime for my friend's
+00:01:27.040 birthday now that prompt in itself is
+00:01:28.960 okay but but you can Elevate this and
+00:01:31.400 get a result that's more unique and
+00:01:32.920 specific by incorporating two additional
+00:01:35.079 things the first one is a Persona which
+00:01:37.000 is a role that you want the AI to embody
+00:01:39.040 for example you can update the prompt to
+00:01:41.159 act as an anime expert to suggest an
+00:01:43.640 anime gift for my friend's birthday you
+00:01:45.399 notice that the results are a lot more
+00:01:46.840 specific and it's actually split into
+00:01:48.399 different genres the second thing you
+00:01:50.040 can add is the format of the output the
+00:01:52.159 default here is just the list and bullet
+00:01:53.719 points but maybe you want something
+00:01:55.600 that's more structured so you can say
+00:01:57.560 organize that data into a table the
+00:01:59.600 second component of the framework is
+00:02:01.520 context the general rule of thumb is
+00:02:03.479 that the more context you can provide
+00:02:05.280 the better the output will be in your
+00:02:07.360 birthday gift example you can specify
+00:02:09.280 something like your friend is turning 29
+00:02:11.280 years old her favorite animes are
+00:02:13.360 shangula Frontier solo leveling and
+00:02:15.720 Naruto etc etc you'll see that the
+00:02:17.800 output is much more targeted third part
+00:02:19.720 of the framework is references this is
+00:02:21.480 where you can provide examples to the AI
+00:02:23.480 sometimes when you're trying to explain
+00:02:24.480 what you want it's kind of hard to
+00:02:26.599 describe it in words but providing
+00:02:28.440 examples can really clear things up and
+00:02:30.120 AI is especially good at incorporating
+00:02:31.959 examples maybe you can provide past
+00:02:33.760 birthday presents that this person has
+00:02:35.560 enjoyed step number four is evaluate
+00:02:37.680 this is after you get the output just
+00:02:39.120 ask yourself is this output what I want
+00:02:41.120 it to be and if it's not exactly what
+00:02:42.920 you wanted to be then last upep is
+00:02:44.840 iterate prompting is rarely a oneandone
+00:02:47.080 kind of thing it's much more of a
+00:02:48.480 circular process in which you're
+00:02:49.959 refining the prompt to get the results
+00:02:51.680 that you want just like what we did
+00:02:53.040 earlier often times you might just start
+00:02:54.440 with a simple task like suggestions for
+00:02:56.400 a birthday present then you want to get
+00:02:58.360 better results and you start iterating
+00:03:00.040 on that and adding things like a Persona
+00:03:02.200 context and references to finally get to
+00:03:04.239 a result that you're happy with as the
+00:03:05.879 course calls it ABI always be iterating
+00:03:08.319 speaking of pneumonics the course does
+00:03:10.120 have one for this five-step framework
+00:03:12.159 which I actually find really difficult
+00:03:14.120 to remember um I think it's thoughtfully
+00:03:16.840 craft really excellent I don't know what
+00:03:19.040 the ey stands for I'll I'll put it on
+00:03:20.760 screen but I do have one that I made
+00:03:22.560 which I can remember a lot better so I
+00:03:24.000 don't know maybe this will help you as
+00:03:25.440 well uh which is Tiny crabs ride
+00:03:27.760 enormous iguanas a lot more memorable in
+00:03:30.000 my opinion anyways whatever it is that
+00:03:32.120 you need to do uh just figure out some
+00:03:33.959 way to remember this framework because
+00:03:35.879 everything else in the course is based
+00:03:37.400 on this the rest of module one which
+00:03:40.400 also includes interviewing different
+00:03:41.799 people I think is interesting but not
+00:03:44.000 super necessary the only other really
+00:03:46.080 useful important thing that they
+00:03:47.519 presented is the four iteration methods
+00:03:49.879 so by following date I'm just going to
+00:03:51.239 call it tiny crabs writing enormous
+00:03:53.280 iguanas framework um will get you like
+00:03:55.480 80% of the weight but sometimes you're
+00:03:57.079 just not quite there so to iterate and
+00:03:59.280 get the 20% there are four different
+00:04:01.720 methods that you can try the first one
+00:04:03.280 is just to revisit the prompting
+00:04:04.640 framework maybe you can give more
+00:04:06.280 references more examples provide more
+00:04:08.640 context or you know add a Persona if you
+00:04:10.799 haven't already number two is to
+00:04:12.560 separate your prompt into shorter
+00:04:14.120 sentences it's helpful to think about AI
+00:04:16.199 like how you would talk to a normal
+00:04:17.600 person like if you just word vomit to
+00:04:19.399 someone about whatever it is that you
+00:04:21.199 want they'll probably be like
+00:04:22.680 overwhelmed and there's just like a lot
+00:04:24.080 of stuff going on right so the same
+00:04:25.759 thing can happen for AI and an easy
+00:04:27.520 solution for this is just to break your
+00:04:29.720 prompt into simpler sentences and
+00:04:31.639 feeding it to the AI slowly so it's less
+00:04:33.960 like blah blah blah blah blah blah blah
+00:04:35.280 I'm more like blah blah and blah much
+00:04:38.600 more organized number three is trying
+00:04:40.840 different phrasing or switching to an
+00:04:42.400 analogous task say you want the AI to
+00:04:44.479 help you write a marketing plan but the
+00:04:46.520 results are just kind of like boring and
+00:04:48.400 Bland what you can do is that marketing
+00:04:50.680 is really just telling a compelling
+00:04:52.360 story so instead you can ask it to write
+00:04:54.520 a story about how this product fits into
+00:04:56.560 the lives of our Target customer
+00:04:58.080 demographics this is an analog task but
+00:05:00.479 the results are much more lively and
+00:05:02.520 interesting and the fourth iteration
+00:05:04.120 method is to introduce constraints just
+00:05:06.479 like when you tell someone that they can
+00:05:07.759 do anything or like if you ask people
+00:05:09.720 what does everybody want to eat for
+00:05:11.080 lunch and they're just like oh anything
+00:05:13.120 this actually makes it a lot harder for
+00:05:14.960 you to get a result that you're happy
+00:05:17.039 with so instead you can introduce
+00:05:18.600 constraints to narrow the focus down say
+00:05:20.800 you want to generate a playlist for a
+00:05:22.639 road trip and the AI generat your
+00:05:24.479 playlist but it's just like not very
+00:05:26.240 interesting you can add different
+00:05:27.680 constraints like only specific to a
+00:05:29.280 certain region only at this specific
+00:05:31.560 Tempo or only songs about
+00:05:38.639 heartbreak Deion for example I don't
+00:05:41.280 know maybe you like feeling sad so with
+00:05:43.240 these four iteration methods um with the
+00:05:45.680 help of AI I also came up with a
+00:05:47.400 pneumonic to remember it better which is
+00:05:49.720 rahen saves tragic idiots so let's talk
+00:05:53.240 about multimodo prompting the most
+00:05:55.280 classical way of interacting with a
+00:05:56.800 large language model is just by like
+00:05:58.639 typing stuff I like having a
+00:05:59.840 conversation but you can actually
+00:06:01.600 interact with many AI models like Gemini
+00:06:04.560 um with different modalities as well
+00:06:06.479 including pictures audio video and even
+00:06:08.800 code it's able to take different types
+00:06:10.479 of modalities as the input and is able
+00:06:12.880 to Output using different modalities as
+00:06:14.919 well this doesn't change anything in
+00:06:16.240 terms of how you think about prompt it's
+00:06:17.880 still going to be tiny crabs writing
+00:06:20.160 enormous iguanas but you just might need
+00:06:22.479 to be a little bit more careful about
+00:06:24.240 specifying what kind of input or output
+00:06:26.080 you're looking for and the kind of
+00:06:27.720 context that you're providing for
+00:06:29.160 example if you designed a new nail
+00:06:30.919 artart collection and you want to Market
+00:06:32.199 it on social media you could input
+00:06:33.800 something like write a social media post
+00:06:35.440 featuring this image and then attach
+00:06:36.880 your nail art collection as a reference
+00:06:39.000 the post should be fun short and focus
+00:06:40.680 on the fact that's a collection of new
+00:06:42.080 designs I'm selling some other examples
+00:06:44.160 of multimodality usage would be asking a
+00:06:46.880 gen tool to suggest recipes based on the
+00:06:48.880 photo of the ingredients in your fridge
+00:06:50.680 inputting your Brand's logos and colors
+00:06:52.720 and then creating a digital teaser to
+00:06:54.440 promote an event or if you're working on
+00:06:56.000 a short story and you get really
+00:06:57.479 inspired by a musical piece you try
+00:06:59.840 inputting that music piece and tell it
+00:07:01.560 to kind of follow those vibes for the
+00:07:03.800 atmosphere and details of the story
+00:07:05.840 regardless of the modality that you're
+00:07:07.199 prompting in there are two major issues
+00:07:09.919 with using AI tools the first one is
+00:07:12.160 hallucinations a Hallucination is when a
+00:07:14.520 gen AI tool provides outputs that are
+00:07:16.240 inconsistent incorrect or even
+00:07:17.759 nonsensical a really famous example is
+00:07:19.919 that if you ask an Ella um how many RS
+00:07:21.680 are in Strawberry it tells you that
+00:07:23.360 there's two hours in Strawberry the
+00:07:24.960 second is biases unfortunately L's being
+00:07:28.039 trained on human content also
+00:07:31.080 incorporates human biases things like
+00:07:33.240 gender and Race So to minimize these
+00:07:35.160 sorts of problems the course recommends
+00:07:36.800 that we take a human in the loop
+00:07:38.280 approach which is making sure that
+00:07:39.599 you're always checking your outputs and
+00:07:41.360 verifying whatever it is that the Gen
+00:07:43.479 tool gives you in the end it is your
+00:07:45.319 responsibility of making sure that
+00:07:46.919 whatever is being produced is in fact
+00:07:49.319 accurate here is a checklist feel free
+00:07:51.400 just to take a screenshot for some
+00:07:53.280 considerations when you're thinking
+00:07:55.039 about using AI responsibly you know
+00:07:57.080 compared to other Google courses I've
+00:07:58.479 taken especially the AI Essentials
+00:08:00.360 course which you can check out over here
+00:08:02.560 um this course is a lot more dense which
+00:08:04.759 is a lot better bang for your bug so pay
+00:08:06.520 attention moving on to module 2 module 2
+00:08:10.000 is called design prompts for everyday
+00:08:11.599 work task it's essentially just
+00:08:13.159 providing examples of use cases based on
+00:08:15.319 the tiny crabs writing enormous iguanas
+00:08:17.680 framework and the ramen saves tragic
+00:08:19.759 idiots framework too that's why I'm
+00:08:21.280 going to go through this module
+00:08:22.159 relatively quickly I'll highlight some
+00:08:24.000 of the examples that I think are really
+00:08:25.960 important and for the rest of them I'll
+00:08:28.159 actually just put on screen so you can
+00:08:30.039 take screenshots of it if you want and
+00:08:32.080 build out your own prompt Library where
+00:08:33.919 you can kind of like store the prompts
+00:08:35.519 that you want to use one of the biggest
+00:08:36.919 use case that most people have when
+00:08:38.200 using gen tools is by using it to
+00:08:40.399 produce content for example like writing
+00:08:42.240 emails here's an example of a situation
+00:08:44.519 um when you want to write an email to
+00:08:46.279 your staff about a new schedule change
+00:08:48.480 for your gym I'm a gym manager and we
+00:08:50.720 have a new gym schedule write an email
+00:08:52.600 informing our staff the new schedule
+00:08:54.399 highlight the fact that the MWF Monday
+00:08:56.600 Wednesday Friday Cardio Blast class
+00:08:58.360 changed from 7:00 a.m. to 6:00 a.m. make
+00:09:00.640 the email professional and friendly and
+00:09:02.399 short so that the reader can skim it
+00:09:04.040 quickly here's the new schedule and you
+00:09:05.839 can actually attach the link that
+00:09:07.200 contains the new schedule this sort of
+00:09:08.600 email probably take you like 10 minutes
+00:09:09.920 to write but by using a gen tool you can
+00:09:11.880 do it in like a minute most of us do
+00:09:13.600 send quite a lot of little emails here
+00:09:15.240 and there throughout the week um so the
+00:09:17.440 time savings do add up for this kind of
+00:09:19.320 email you probably aren't super picky
+00:09:21.399 but what happens if you need to write
+00:09:22.760 email that is a lot more important or
+00:09:25.519 you're writing other things like an
+00:09:26.680 essay an article or a newsletter you
+00:09:28.800 would care a lot more about the tone and
+00:09:30.920 the word choice that's being used
+00:09:32.480 instead of using general terms like
+00:09:34.000 write a casual summary try to use more
+00:09:36.360 specific phrases like write a summary in
+00:09:38.760 a friendly easy to understand tone like
+00:09:41.079 explaining to a curious friend you can
+00:09:42.959 also provide references for context
+00:09:45.120 other emails or articles or whatever
+00:09:47.320 that you've written in the past and tell
+00:09:48.839 to AI to match the tone I'm going to now
+00:09:50.880 include a few other prompts on screen
+00:09:52.519 related to generating text or content
+00:09:55.120 which you can take a screenshot to add
+00:09:56.680 to your prompt Library if you want if
+00:09:58.920 you're current in University thinking
+00:10:00.800 about going to University or going back
+00:10:02.839 to University to maybe get an additional
+00:10:04.760 degree you should check out straighter
+00:10:06.440 line straighter line is a credible
+00:10:08.360 online education platform where you can
+00:10:10.399 take highquality online courses designed
+00:10:12.519 by academics from leading universities
+00:10:14.760 and recommended by accredited
+00:10:16.360 educational institutions you can
+00:10:18.079 basically take a course at a fraction of
+00:10:19.640 the cost and still transfer the credit
+00:10:21.720 to your college or university more than
+00:10:23.920 3,000 colleges and universities have
+00:10:25.920 accepted credit from straighterline
+00:10:27.320 courses so not only are StraightLine
+00:10:29.079 courses is much more affordable they
+00:10:30.760 also come with a flexibility of being
+00:10:32.160 able to take a class when you want and
+00:10:33.839 at your own pace they even have a
+00:10:35.240 variety of Support Services like tutors
+00:10:37.480 and resources to help you succeed if
+00:10:39.160 you're still on the fence just check out
+00:10:40.560 their course catalog and you can start a
+00:10:42.200 free trial today at this link over here
+00:10:44.440 also linked in description thank you
+00:10:45.920 straighter line for sponsoring this
+00:10:47.440 portion of the video now back to the
+00:10:49.200 video module 3 is pretty similar to
+00:10:50.680 module 2 it's just more example use
+00:10:52.519 cases very helpful example use cases
+00:10:54.320 though specifically data analysis and
+00:10:56.600 presentations the big word of caution
+00:10:58.880 here is is that be careful about what
+00:11:00.920 data that you're inputting into your AI
+00:11:02.680 model uh if you're working for you know
+00:11:04.959 a company you do not want to be
+00:11:06.480 violating any privacy policies and you
+00:11:08.399 probably don't want to be putting some
+00:11:10.399 sensitive data into some large language
+00:11:12.600 model as well the example from a course
+00:11:14.320 if save you have a data set for a
+00:11:16.079 grocery store chain with information
+00:11:17.639 about the store the area items that they
+00:11:20.079 have available the daily customer
+00:11:22.040 account and store sales if you're not
+00:11:24.160 very good at Google Sheets or Excel you
+00:11:26.560 might input a prompt like this attached
+00:11:28.600 is a Google sheet of store data how can
+00:11:30.760 I create a new column in sheets that
+00:11:32.560 calculates the average sales per
+00:11:34.200 customer for each store it can help
+00:11:35.680 teach you specific things like this um
+00:11:37.680 and it can actually do more say if
+00:11:39.240 you're interested in the trends in the
+00:11:40.800 data set you could then add on to give
+00:11:42.720 me insights into the relationship
+00:11:44.440 between daily customer count items
+00:11:46.760 available and sales based on the given
+00:11:48.519 data Gemini is able to show some
+00:11:50.040 interesting Trends including the fact
+00:11:51.680 that there's no clear correlation
+00:11:53.120 between items available and store sales
+00:11:55.399 if you find this interesting you can
+00:11:56.560 continue prompting it digging into this
+00:11:58.600 and maybe coming coming up with ways to
+00:12:00.000 figure out why that's the case I'm going
+00:12:01.639 to put on screen now a couple other
+00:12:03.040 prompts related to spreadsheets and data
+00:12:05.360 analysis that you might find helpful the
+00:12:07.560 second part of the module is about
+00:12:08.880 building presentations and I'm going to
+00:12:10.399 put on screen out a couple prompts
+00:12:11.959 related to presentations that could be
+00:12:14.560 helpful and finally we are at module 4
+00:12:17.639 we're almost done guys module 4 is
+00:12:19.800 titled use AI as a creative or expert
+00:12:22.279 partner this is an extremely important
+00:12:24.399 module and what made me very impressed
+00:12:26.920 about this course so first we're going
+00:12:28.279 to cover some advanced prompting
+00:12:29.680 techniques starting off with prompt
+00:12:31.440 chaining prompt chaining is a way to
+00:12:33.160 guide gen tools through a series of
+00:12:35.440 interconnected prompts adding new layers
+00:12:37.680 of complexity along the way for example
+00:12:39.720 you're an author and you wrote a
+00:12:41.160 wonderful novel and now you want to
+00:12:42.920 Market and sell your novel so you need
+00:12:45.360 to come up with a marketing plan the
+00:12:47.040 course recommends you use Google AI
+00:12:48.519 studio for this because it has much
+00:12:49.959 longer context window because you're
+00:12:51.600 going to be attaching your entire
+00:12:53.079 manuscript the first thing you might
+00:12:54.480 want to do is to generate some summaries
+00:12:56.240 of your manuscript generate three
+00:12:58.040 options for a one sentence summary of
+00:12:59.800 this novel manuscript the summary should
+00:13:01.800 be similar in voice and tone to the
+00:13:03.600 manuscript but more catchy and engaging
+00:13:05.839 so Jeb was able to give some decent
+00:13:07.680 options but you want to focus on a more
+00:13:09.880 specific theme that's where the prompt
+00:13:11.680 chaining comes in taking the output from
+00:13:13.560 the previous prompt and then asking
+00:13:15.959 create a tagline that is a combination
+00:13:17.839 of the previous three options with a
+00:13:19.880 special focus on the exciting plot twist
+00:13:21.959 and mystery of the book find the
+00:13:23.839 catchiest and most impactful combination
+00:13:26.199 the tagline should be concise and leave
+00:13:27.959 the reader hooked and wanting to read
+00:13:29.519 more and great it comes up with the
+00:13:31.360 desert whisper secret a young Weaver
+00:13:33.639 seeks a city of singing stones but the
+00:13:36.120 greatest Journey unfolds into Whispers
+00:13:38.000 of her own
+00:13:39.880 heart anyways you can keep refining
+00:13:42.000 things if you want and finally maybe
+00:13:43.800 even asking Gemini to generate a six-
+00:13:46.079 week promotional plan for the book tour
+00:13:48.519 including the locations and the channels
+00:13:51.040 to promote each stop on the tour so that
+00:13:52.800 was prom chainy there's two other
+00:13:54.399 Advanced Techniques in this module Chain
+00:13:56.199 of Thought prompting and tree of thought
+00:13:58.000 prompting as a no a lot of these Ai
+00:13:59.800 terminologies and techniques sound like
+00:14:01.440 super fancy but they're actually not
+00:14:04.279 like Chain of Thought prompting is about
+00:14:06.199 asking the AI to explain his reasoning
+00:14:09.240 as a step-by-step process it's similar
+00:14:11.160 to how your math teacher might ask you
+00:14:12.560 to explain your work so he or she is
+00:14:14.519 able to identify like the steps that
+00:14:16.480 you're taking and where you could be
+00:14:17.680 going wrong all you have to do
+00:14:18.759 throughout your prompting sequence is to
+00:14:20.240 tag on the line explain your thought
+00:14:21.759 process this helps you understand the
+00:14:23.600 ai's reasoning for things and you can
+00:14:25.680 help improve his decision making tree of
+00:14:27.880 thought prompting as his name suggest is
+00:14:30.040 sort of like a tree it allows you to
+00:14:31.920 explore multiple reasoning paths where
+00:14:33.560 like branches simultaneously this is
+00:14:35.800 really helpful for abstract or complex
+00:14:37.880 problems like developing novel plots
+00:14:40.440 with new characters or creating outlines
+00:14:42.480 and drafting sections for lengthy
+00:14:44.399 documents you can work with the AI tool
+00:14:46.560 to explore different options and
+00:14:48.320 evaluate them to finally come up with
+00:14:49.920 the best output as an example maybe
+00:14:51.759 you're creating an online course and you
+00:14:53.440 want to create a cool image on the
+00:14:55.079 landing page you can use tree of thought
+00:14:56.959 prompting to brainstorm different
+00:14:58.560 options a potential prompt may be
+00:15:00.720 imagine three different designers are
+00:15:02.279 pitching their designs to me all
+00:15:04.120 designers will write down one step of
+00:15:05.839 their thinking then share it with the
+00:15:07.199 group then all experts Will Go On To The
+00:15:09.560 Next Step Etc if any expert realizes
+00:15:12.000 they're wrong at any point then they
+00:15:13.560 leave the question is generate an image
+00:15:15.800 that's visually energetic and features
+00:15:17.639 images of art supplies in computers show
+00:15:20.040 me three suggestions in very different
+00:15:22.040 styles from simple to detailed and
+00:15:23.800 complex and here's the output Gemini
+00:15:26.199 came up with now looking at this output
+00:15:27.880 you might be like m I kind of like The
+00:15:29.880 Vibes of one where one could be going so
+00:15:32.680 you can tell the AI that you like the
+00:15:34.120 first one and you'll like to expand the
+00:15:36.079 idea a little bit more and perhaps
+00:15:37.880 generate three different color schemes
+00:15:39.440 for that concept and you can just keep
+00:15:41.279 doing that until you end up with
+00:15:42.720 something that you like a pro tip is
+00:15:44.560 that you can combine Chain of Thought
+00:15:46.319 and tree of thought prompting by asking
+00:15:48.279 the AI to explain his reasoning at each
+00:15:50.199 iteration so you can provide feedback
+00:15:52.160 another Pro tip as you're prompting
+00:15:53.759 along is if you ever get stuck and you
+00:15:55.959 don't really know what prompt to use you
+00:15:58.040 can actually use use AI to help you come
+00:16:00.480 up with a prompt this is called meta
+00:16:02.680 prompting all right the last section of
+00:16:04.680 the course is on agents and I have
+00:16:06.279 actually not seen a single course be
+00:16:07.800 able to cover agents as well as this one
+00:16:10.240 so first definitions what is an AI agent
+00:16:12.440 an AI agent is like an expert designed
+00:16:14.279 to help with task and answer questions
+00:16:16.199 you can have all sorts of Agents you can
+00:16:18.120 have coding agents that help you with
+00:16:19.639 coding uh marketing agents that come up
+00:16:21.600 with marketing plans with you a golf
+00:16:23.240 agent that can correct you on your golf
+00:16:24.680 swings or maybe just a friend agent that
+00:16:27.399 can be your friend the course cover
+00:16:28.920 covers two types of Agents the first one
+00:16:30.680 is a simulation agent called Agent Sim
+00:16:33.240 agent SIM can simulate scenarios with
+00:16:35.319 you like conduct interviews or do role
+00:16:37.560 playing for example if you work in a HR
+00:16:39.240 department you might be tasked with
+00:16:40.759 coming up with a training program to
+00:16:42.319 help interns improve their interviewing
+00:16:44.000 skills for that final job assessment for
+00:16:46.240 AI agents you want to focus a lot on the
+00:16:48.399 Persona and the context the Persona here
+00:16:50.959 is act as a career development training
+00:16:53.279 Simulator the task is your task is to
+00:16:56.160 help interns Master interview skills and
+00:16:58.199 conduct convers ation with potential
+00:16:59.959 managers then you have the context you
+00:17:02.079 need to support the following types of
+00:17:03.600 conversations articulating strengths and
+00:17:05.559 skills communicating professionally and
+00:17:07.599 confidently And discussing future career
+00:17:09.559 development goals once an intern has
+00:17:11.400 picked a conversation topic provide
+00:17:13.359 details about the situation in the
+00:17:15.119 interviewer's role then act as the
+00:17:16.839 interviewer and allow the intern to
+00:17:18.520 participate as the employee make sure to
+00:17:20.720 guide a conversation in a way that will
+00:17:22.319 allow the intern to exercise their
+00:17:23.919 interview skills finally you want to
+00:17:25.439 include a stop role where you can tell
+00:17:27.640 the agent that you're done with the
+00:17:29.039 simulation continue to roleplay until
+00:17:30.880 the intern replies with jazz hands after
+00:17:33.200 the intern gives the stop rule jazz
+00:17:35.000 hands provide them with key takeaways
+00:17:36.880 from the simulation and skills they can
+00:17:38.520 work on now that is set up you can start
+00:17:40.360 doing a simulation maybe by inputting
+00:17:42.600 the chart analysis that I did for my
+00:17:44.360 intern project agent Sim will ask you
+00:17:46.120 more questions about the analysis and
+00:17:47.760 you keep responding to them and at the
+00:17:49.600 end you can insert jazz hands and then
+00:17:51.640 agent Sim will provide feedback for you
+00:17:53.880 the second kind of agent is an agent for
+00:17:55.880 expert feedback Called Agent X Agent X
+00:17:58.880 is able to give you feedback on any
+00:18:00.600 topic of your choosing sort of like a
+00:18:02.080 personalized tutor or consultant here's
+00:18:04.360 an example prompt to create an agent X
+00:18:06.679 that can provide you feedback about a
+00:18:08.360 pitch for a potential client first the
+00:18:10.280 Persona you're my potential client the
+00:18:12.360 VP of advertising at a world famous
+00:18:14.360 sports car company known for its
+00:18:16.000 Innovation performance and Engineering
+00:18:17.799 Excellence now the context you're
+00:18:19.799 considering hiring a creative agency to
+00:18:21.760 develop a new campaign that will attract
+00:18:23.559 a younger generation of buyers you're in
+00:18:25.720 a meeting with me the design director of
+00:18:27.840 a creative agency that's pitching a new
+00:18:29.720 campaign for your company and now the
+00:18:31.640 task act as my potential client when I
+00:18:33.720 provide answers critique the answers if
+00:18:35.960 needed ask follow-up questions continue
+00:18:38.000 the conversation until I give the stop
+00:18:39.679 roll break then give me a summary of the
+00:18:41.440 whole conversation highlighting ways I
+00:18:43.120 can improve my pitch you also want to
+00:18:45.000 include additional material references
+00:18:47.000 for your agent I've included the brief
+00:18:48.880 the car company provided me that has all
+00:18:50.640 the relevant information for this
+00:18:52.200 project use the information from this
+00:18:54.080 brief to inform your answers AI agents
+00:18:56.200 can be super powerful if you can design
+00:18:58.120 them correctly and these are only two
+00:19:00.280 examples I really like how the course
+00:19:02.120 also provides a guideline for how to
+00:19:03.840 create any AI agent first you need to
+00:19:06.080 assign a Persona that you want the AI
+00:19:07.799 agent to take on for example act like a
+00:19:09.799 successful personal fitness trainer and
+00:19:11.600 talented nutritionist step two is that
+00:19:13.600 you want to give as much context and
+00:19:15.039 detail as you can about the scenario and
+00:19:17.200 the conversation for example I'm looking
+00:19:19.159 to improve my overall Fitness and adopt
+00:19:20.880 a healthier lifestyle step three is to
+00:19:22.760 specify the type of conversations or the
+00:19:24.440 kind of interactions that you want to
+00:19:25.880 have with the AI agent you might also
+00:19:27.440 want to set some rules to follow like
+00:19:28.760 like ask me about my workout routines
+00:19:30.480 and meal planning and give me feedback
+00:19:32.120 step four is to provide a stop phrase in
+00:19:33.840 order to stop the conversation this can
+00:19:35.520 literally be anything you want so go
+00:19:37.320 wild an example they give is no pain no
+00:19:40.000 gain and finally step five as a tool to
+00:19:42.520 provide feedback or areas of improvement
+00:19:44.480 after the conversation EDS at the end of
+00:19:46.400 our conversation provide a summary of
+00:19:48.039 the advice you provided and that is it
+00:19:50.080 my friends you have now completed the
+00:19:51.919 Google prompting Essentials course and
+00:19:53.760 saved 9 hours of your time but as
+00:19:56.200 promised to make sure that you actually
+00:19:58.000 have retained this information I will
+00:19:59.559 now put on screen the questions for the
+00:20:01.480 little assessment please answer these
+00:20:03.360 questions to actually retain the
+00:20:04.799 information you've just learned you can
+00:20:06.440 like say it in your head you can say it
+00:20:07.640 to your friend your dog your cat
+00:20:08.840 whatever but for proof you should write
+00:20:10.440 it in the comments thank you all so much
+00:20:12.080 for watching and I will see you guys in
+00:20:14.039 the next video we live stream

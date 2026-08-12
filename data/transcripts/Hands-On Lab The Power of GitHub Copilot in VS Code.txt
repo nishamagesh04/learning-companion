@@ -1,0 +1,1347 @@
+# tactiq.io free youtube transcript
+# Hands-On Lab: The Power of GitHub Copilot in VS Code
+# https://www.youtube.com/watch/dxDqelvVc2U
+
+00:00:05.200 Hello everybody and welcome to the
+00:00:06.879 Mountain View living room here on
+00:00:08.320 campus. We going to dive a bit deeper
+00:00:10.719 into everything you saw today from
+00:00:12.559 background agents and custom agents and
+00:00:15.360 cloud agents and all the new
+00:00:16.960 customizations that just shipped
+00:00:18.960 yesterday. So it's hot of the press. So
+00:00:21.359 this is a follow along lab. So um the
+00:00:25.680 cool part is I have a few people in the
+00:00:27.119 audience. So I going to look to
+00:00:28.080 everybody in the audience how close you
+00:00:29.760 are in following along and then
+00:00:31.760 hopefully people uh remotely will do the
+00:00:34.480 same. So the lab's called sock ops
+00:00:36.800 social ops and it's connected to after
+00:00:39.680 this session here in the office we're
+00:00:41.280 actually going to have a little happy
+00:00:43.120 hour. So the goal of today and
+00:00:46.559 especially for people here in the
+00:00:47.680 audience to get this whole thing
+00:00:49.760 building and in the end you should have
+00:00:51.840 your own little personalized social
+00:00:54.079 bingo app that you can bring to the
+00:00:56.239 happy hour, make friends and bring the
+00:00:59.120 good vibes. So what what I want you to
+00:01:01.920 do now uh here and everybody listening
+00:01:04.559 in is check out the latest VS Code. Make
+00:01:07.760 sure you have no updates pending because
+00:01:10.080 the team just shipped a new one
+00:01:11.760 yesterday. Then make sure you're signed
+00:01:14.080 in with GitHub. If you're on copilot
+00:01:16.080 free, you won't get to the cloud agent.
+00:01:17.840 So make sure you got pro or your
+00:01:19.840 enterprise subscription.
+00:01:21.920 Uh you got git and node installed in
+00:01:23.840 your development envir environment. So
+00:01:25.600 everything is open and ready for action.
+00:01:28.479 So the repo we're going to use is if you
+00:01:31.840 run it, it looks like this. So it runs
+00:01:33.600 as a GitHub page once you got it set up.
+00:01:36.560 Um, and it's a little game where you can
+00:01:38.880 then find people that have interesting,
+00:01:41.680 in this case, attributes like love spicy
+00:01:44.000 food, does yoga, and has garden. And
+00:01:45.600 then you got the bingo. So, uh,
+00:01:47.680 beautiful app to to get a conversation
+00:01:49.680 started and get to know people, um,
+00:01:52.079 around you. So, the repository itself,
+00:01:56.159 uh, I have a link here. Going to make
+00:01:58.159 this bigger. So it's github.comicrosoft
+00:02:01.680 vsscode- aent-labs
+00:02:05.439 sock ops. So get that opened. That's the
+00:02:08.479 first step.
+00:02:11.200 I guess leave it up for a moment.
+00:02:15.280 And then there's a button on the page in
+00:02:17.280 the top right for use this template
+00:02:21.440 and create new repository.
+00:02:29.120 While people type this in, I'm going to
+00:02:30.720 have it open here as well. So, we're
+00:02:32.239 going to up here, use this template and
+00:02:34.959 create new repository.
+00:02:37.760 Will bring you to a page
+00:02:40.480 that looks like this.
+00:02:42.879 Create new repository. You want to the
+00:02:45.040 templates up here and then you can
+00:02:46.640 choose yourself as an owner and then you
+00:02:51.280 my awesome sock ops. Uh I guess bingo my
+00:02:55.920 awesome bingo that this will be your
+00:02:58.080 name. You can pick whatever you like. Uh
+00:02:59.599 you don't have to give it a description.
+00:03:01.760 You have to make it public though.
+00:03:03.360 That's otherwise you need to have
+00:03:05.840 special access to make it a pages work.
+00:03:09.680 And then you hit create repository.
+00:03:14.400 Raise your hand if you got that far.
+00:03:18.720 Okay.
+00:03:21.599 Beautiful.
+00:03:23.120 Yes. link again.
+00:03:25.280 It's also
+00:03:32.640 zoom in. Okay. So, what this repository
+00:03:35.760 comes with is basically it's a simple um
+00:03:39.760 v react with tl.
+00:03:47.519 This one
+00:03:52.959 I can't hear the question.
+00:03:55.280 The URL
+00:03:57.040 it's github.com/microsoft
+00:03:59.200 vscode.
+00:04:00.720 Is it showing there? Okay. Wonderful. So
+00:04:03.760 what is um repository has as you get
+00:04:07.280 this cloned. We're going to take a look
+00:04:09.680 at it. So now open up VS code um and
+00:04:13.200 then you going to do the get clone from
+00:04:15.920 GitHub.
+00:04:17.440 I'm going to do that in the other window
+00:04:18.959 I already have open. So I have an empty
+00:04:21.519 VSS code here.
+00:04:24.560 I can go right into the source control
+00:04:26.880 view and click clone repository.
+00:04:30.160 And
+00:04:32.400 from my
+00:04:35.520 page that I did, which is up here, my
+00:04:38.400 awesome bingo, I can copy out the
+00:04:43.199 local link.
+00:04:48.880 Okay. How many people got the
+00:04:51.919 template for it and ready?
+00:05:04.240 There we go.
+00:05:06.160 Few.
+00:05:08.000 You got it. Raise your hand. Okay. Got
+00:05:11.199 critical mass to continue editing. So in
+00:05:14.560 VS Code, everybody got VS Code open the
+00:05:17.840 if you want to use the command, there's
+00:05:19.600 also a command for clone. Get clone. You
+00:05:22.639 go in here, get clone the command pallet
+00:05:26.080 and
+00:05:27.680 enter that URL that you just uh copied
+00:05:30.240 out of GitHub, which in this case is
+00:05:32.000 github.com/digitaraldmy
+00:05:34.320 awesomebingo.git.
+00:05:37.759 Um, hit enter and it will ask you where
+00:05:40.560 to save it. I have a developer folder
+00:05:43.120 that I put stuff in. if you want to put
+00:05:45.280 it on WSL or your Ubuntu or whatever you
+00:05:49.440 want to put it wherever you usually put
+00:05:51.440 your code
+00:05:53.360 and then it's already cloned and I can
+00:05:55.120 open it in the same window
+00:06:00.720 and I get this.
+00:06:09.680 So if you got that far again raise your
+00:06:12.800 hand. You're my audience to see how far
+00:06:15.680 people get.
+00:06:28.160 If you get stuck, ask people to raise
+00:06:31.199 ask people to raise their hand to see if
+00:06:33.039 they can get you on SL.
+00:06:41.840 The reasons might be failing that you
+00:06:43.280 don't have git installed or any of the
+00:06:45.039 other dependencies, but otherwise it
+00:06:47.360 should be pretty smooth.
+00:06:54.720 Okay, once you have it open, you can
+00:06:56.479 start poking around at the codebase.
+00:06:58.240 Most importantly, there's a lab folder
+00:07:00.960 with a guide MD which will be our
+00:07:06.560 guide for this lab.
+00:07:10.960 and the thing you have looked at before.
+00:07:20.080 Big raise of hands how far people are
+00:07:21.520 at. Do people see this in front of them?
+00:07:28.720 Yeah.
+00:07:30.400 If you don't, it's all documented in the
+00:07:32.160 guide. So, if you get to it later, you
+00:07:33.599 can also follow along in your own time
+00:07:35.360 later. So, don't don't get worried. What
+00:07:37.759 you can do with this guide because this
+00:07:39.440 will be where you copy out prompts and
+00:07:41.360 everything else as along the way. I
+00:07:43.199 actually going to pin it. If I right
+00:07:44.720 click this tab and click pin, it's not
+00:07:47.599 going to close as I clean up my tabs and
+00:07:50.479 open other stuff. Uh in this case, my my
+00:07:52.960 pinning makes it collapse. Your pinning
+00:07:54.800 might look different.
+00:07:56.960 But yeah, let's talk about learning
+00:07:58.000 objectives. So as people get ready with
+00:08:01.919 their cloning and finish up and talk
+00:08:04.400 about so when you're done with this lab
+00:08:07.039 uh you understand how to bring AI into
+00:08:09.199 your codebase how to onboard it with
+00:08:11.520 context engineering that brings
+00:08:13.440 instructions and everything else. So AI
+00:08:15.280 out of the box works better and
+00:08:17.120 understands your code base um much
+00:08:19.759 better and deeper. Next up is the
+00:08:22.400 understanding understanding of agentic
+00:08:24.160 primitives. So you can build your AI
+00:08:27.440 first workflows because the out of the
+00:08:29.759 box stuff we bring helps the 80% of
+00:08:33.120 tasks but many cases you want to
+00:08:35.360 customize copilot further to your
+00:08:38.000 workflows and the way your team works
+00:08:40.399 with these agentic primitives.
+00:08:42.958 There's a lot of um abundance that can
+00:08:45.600 be unlocked with these agentic systems
+00:08:47.360 when you use them to run more things in
+00:08:50.160 parallel and which can scale exploration
+00:08:53.839 and the speed of learning for yourself
+00:08:56.240 or your team. So that's something we're
+00:08:58.480 going to explore later. And lastly, you
+00:09:01.040 hopefully at the end felt the vibes of a
+00:09:03.519 cozy Wednesday afternoon session vip
+00:09:07.120 coding and you have an app ready that
+00:09:10.160 you designed and built that you can run
+00:09:12.800 um and show to your friends and make
+00:09:15.600 friends using. So, quick check of hands.
+00:09:20.240 Who's got the VS Code
+00:09:23.200 working like I look at it now?
+00:09:26.000 Yeah.
+00:09:30.320 few
+00:09:36.480 because we need to build a better custom
+00:09:38.000 agent that just gets your thing ready
+00:09:40.000 and cloned. I did add one piece of AI
+00:09:43.760 here to get you set up which is a
+00:09:47.839 welcome prompt.
+00:09:49.760 So once you have it installed and ready
+00:09:52.959 and
+00:09:54.959 you can open the chat on the side either
+00:09:56.959 with this icon on top
+00:09:59.440 or with the sidebar and then you do
+00:10:02.000 slash
+00:10:03.760 setup again slash setup
+00:10:07.600 and that little prompt we can take a
+00:10:10.000 look at it
+00:10:12.000 so you can just run it. I'll run it. I
+00:10:14.240 have nothing to set up. But it's
+00:10:16.560 basically it's a little helper
+00:10:19.600 that takes all the effort off your plate
+00:10:21.920 to understand what things to install,
+00:10:24.640 what dependencies might be missing. It
+00:10:27.120 will basically run everything for you.
+00:10:30.720 In this case, it will check uh npm
+00:10:32.880 install. It will run linting. It will
+00:10:35.279 run builds.
+00:10:38.079 move this down
+00:10:41.760 and run the dev server in the end. And
+00:10:44.880 all of these are these are just promed
+00:10:46.959 into your goal is to successfully build
+00:10:49.200 and run the workspace and giving a
+00:10:51.519 checklist of tasks to achieve. So then
+00:10:54.640 to give it step by step what it needs to
+00:10:56.640 do, but it understands how to install
+00:10:58.720 dependencies. It understands all these
+00:11:00.320 things as a conceptual thing. I just
+00:11:02.640 need to give it a checklist like I want
+00:11:04.399 these things to happen.
+00:11:06.959 In this case, dev server open the
+00:11:09.360 browser preview which you're going to
+00:11:10.640 see here. My game is running. Wonderful.
+00:11:15.040 And now it's giving me a quick tour.
+00:11:22.800 Nope. Oh no, it wants to create a
+00:11:24.560 welcome to a component. And we don't
+00:11:25.760 want that. We don't explain. Maybe they
+00:11:27.440 shouldn't should um explain.
+00:11:32.880 No, if it starts creating files, it it
+00:11:35.519 it went too far.
+00:11:37.920 It also doesn't know how to create files
+00:11:39.680 because it didn't give it an edit tool.
+00:11:41.440 So, it prints them out as a code block.
+00:11:46.880 Oh, uh
+00:11:49.360 quick check on the guide. So if you if
+00:11:51.360 you just joined um this is the repo
+00:11:54.240 Microsoft vscode agent lab sock ops
+00:11:58.720 otherwise ask the person next to you
+00:12:02.320 uh or check the recording.
+00:12:05.040 Uh everything on the walkthrough is is
+00:12:06.480 is in here. Okay we are 15 minutes in.
+00:12:10.560 So we're going to get started. So, we if
+00:12:13.040 you check this out, if you ran the setup
+00:12:15.440 prompt, you should have a working
+00:12:17.040 version in front of you with the guide
+00:12:19.279 pinned and the browser showing you the
+00:12:22.480 game in a working order. The free space
+00:12:25.519 that's free and then I can just play the
+00:12:27.200 game.
+00:12:29.328 [clears throat] So, what else is in
+00:12:30.240 here? So, we have the um it actually
+00:12:33.440 added some MCPS for later. So, if your
+00:12:36.480 code folder has an MSP.json, JSON. I
+00:12:38.800 added some of the settings we just
+00:12:40.480 shipped to make sure you're using all
+00:12:43.040 the latest features we just enabled. Uh
+00:12:46.240 yeah.
+00:12:52.000 Yes. Yeah. If if you if you are late if
+00:12:54.320 you have the repo checked out then in in
+00:12:56.560 the guide you can follow along.
+00:13:00.560 >> Yes.
+00:13:05.920 There you go.
+00:13:08.160 Okay, once it's checked out, uh you you
+00:13:10.079 can follow
+00:13:15.040 back to gut.
+00:13:19.839 Okay, so first step, uh this repository
+00:13:22.639 has a bunch of stuff already, but what
+00:13:24.320 it doesn't have is copied instructions.
+00:13:26.320 And the agent actually tells us in this
+00:13:28.639 beginning screen that I should generate
+00:13:30.800 some a instructions. If you haven't seen
+00:13:32.959 them, let's create them and see what
+00:13:34.399 they look like.
+00:13:36.240 But what it's basically does, what
+00:13:37.920 instructions look like is they want to
+00:13:39.600 have a succinct mini map and intro to
+00:13:42.560 the repository that the agent is always
+00:13:44.800 aware of. So most of the time you want
+00:13:46.800 to give it some basic understanding of
+00:13:49.279 what the repo is about kind of what is
+00:13:50.880 the product uh you're working on and
+00:13:53.279 then give it a brief overview about
+00:13:55.680 where different artifacts of the repo
+00:13:58.079 are, which folders uh logic is in and
+00:14:00.880 what the general rules to contribute are
+00:14:03.040 to the repo. Most often times you end up
+00:14:05.440 with a file like this. When you
+00:14:07.760 autogenerate it, you can copilot will
+00:14:10.079 look at different files and understand
+00:14:11.440 what's happening and it will basically
+00:14:14.399 look at those files, look at some more
+00:14:15.760 files [clears throat]
+00:14:17.760 and it will start to document what is
+00:14:20.000 happening in the repository. So if you
+00:14:22.399 haven't done it yet, first is the
+00:14:24.320 generate chat instructions is also in
+00:14:25.839 the menu up here. So you can trigger it
+00:14:27.680 from the agent window or trigger it from
+00:14:30.000 the menu or command.
+00:14:33.199 Once you have that, it was pretty fast.
+00:14:35.040 We also because we're using Haiku, uh,
+00:14:37.440 which is a sneaky little fast model. We
+00:14:41.120 can now actually go down and maybe
+00:14:44.079 if it's too long, let's copy out this
+00:14:46.000 prompt from the guide because this is
+00:14:48.560 still a lot of stuff around like what
+00:14:51.279 what the features are. There's some
+00:14:52.800 extra examples of local storage API. We
+00:14:55.040 don't necessarily need all of that to
+00:14:57.440 have the agent understand how this thing
+00:14:59.279 works because it can just look it up
+00:15:01.120 eventually. So we can tell you compress
+00:15:03.279 it down by half. We want to have this
+00:15:05.279 very succinct very small because all of
+00:15:07.440 these instructions will be in every
+00:15:09.040 quest. It's a the more we can optimize
+00:15:11.279 these tokens and compress them down and
+00:15:13.120 still keep the meaning the better. And
+00:15:15.440 what I also want we just learned about
+00:15:17.040 checklists from the setup prompt. So
+00:15:19.760 this can help a ton with making sure
+00:15:22.480 that every time we change anything big
+00:15:25.040 that linting and building and testing is
+00:15:26.880 happening. We want to give the agent
+00:15:28.560 another checklist because agents love
+00:15:30.480 checklists.
+00:15:33.199 So, we're going to ask it to compress on
+00:15:35.440 behalf and add the checklist into the
+00:15:37.519 instructions as a follow-up. So, always
+00:15:40.480 treat these autogenerate instructions as
+00:15:42.399 a draft. You want to make sure they
+00:15:44.560 they're correct and you keep working on
+00:15:46.399 them.
+00:15:51.680 Okay, that's done the edit. Now, we have
+00:15:53.680 a checklist on front. We have the
+00:15:55.120 architecture a little bit pointed out,
+00:15:57.360 much shorter. Let's talk about styling
+00:16:00.160 with tailwind
+00:16:01.920 and some common tasks like adding to the
+00:16:04.399 question ts. So that's a bit first step.
+00:16:07.120 I haven't even looked at the code yet
+00:16:08.320 for the codebase and you don't have to
+00:16:09.759 necessarily because the agent just has
+00:16:12.240 documented it for itself and for later
+00:16:14.399 purposes.
+00:16:19.120 So we can actually
+00:16:22.480 uh one recommendation I put up in the
+00:16:23.920 guide is every time we have a working
+00:16:25.360 state let's commit
+00:16:28.079 and we can auto jer commit autogenerate
+00:16:30.880 and commit.
+00:16:34.240 Okay who created instructions already?
+00:16:39.120 Yeah none of these things is blocking
+00:16:41.279 the next step. So if if you fall behind
+00:16:43.600 on one step want to jump to the next
+00:16:45.199 task we can just do that.
+00:16:51.680 So let's try a background agent. So in
+00:16:54.240 VS Code, we just shipped a method for
+00:16:56.639 actually running things in the
+00:16:58.000 background in parallel. So why this
+00:17:00.000 could have finished, I could have
+00:17:01.040 already started going to a big plus menu
+00:17:03.759 up here and the drop down and hit
+00:17:05.520 background agent and these background
+00:17:08.160 run agents run an isolated git work
+00:17:11.439 trees. So all the changes they do won't
+00:17:14.000 conflict with whatever the agent has
+00:17:16.079 been doing on on the main agent, but you
+00:17:19.919 can actually pull them in once they're
+00:17:21.359 done and merge them back. So one thing
+00:17:23.839 that's really important for agents and
+00:17:25.679 for humans when they work on the
+00:17:27.760 codebase is having good linting rules.
+00:17:30.559 But the one thing we're going to add,
+00:17:31.840 we're going to add some slightly
+00:17:33.039 stricter linting rules for things like
+00:17:35.039 unused variables and awake uses because
+00:17:37.840 one thing that you notice when you use
+00:17:39.440 AI is that agents are good at adding new
+00:17:41.840 features but really bad at cleaning up
+00:17:43.760 after themselves. And just checking for
+00:17:46.080 unused bars is a good hint to the agent
+00:17:48.720 that it it probably added some new
+00:17:50.720 features somewhere or refactored
+00:17:52.160 something else, but it might have
+00:17:53.280 forgotten some code that's still idling
+00:17:55.600 around and it's not actually being used.
+00:17:59.440 And what's cool because this agent runs
+00:18:01.360 in VS Code, any lynching rules that you
+00:18:03.679 any red squiggles that you get in VS
+00:18:05.679 Code, the agent also sees automatically
+00:18:08.559 once they add funds.
+00:18:12.559 So you see now it created an isolated
+00:18:14.480 work tree and how this looks like
+00:18:21.840 doesn't look like
+00:18:24.240 we now edit it.
+00:18:29.440 You see this up here now. So we have a
+00:18:32.320 work tree the lexical whippbit where
+00:18:35.840 changes are coming in
+00:18:38.799 where it runs the llinter uh actually
+00:18:41.280 has to npm install because it's a new
+00:18:43.280 work. It's a new check out it doesn't
+00:18:44.640 have the dependencies yet and then it
+00:18:47.200 can make the changes and we don't
+00:18:48.799 actually need to watch that. We can just
+00:18:50.559 put it to the side
+00:18:53.280 and keep it working. And that's a new
+00:18:55.280 concept in VS Code that you can actually
+00:18:57.039 just open up a new agent and the old
+00:18:59.520 agents will continue in the background.
+00:19:01.840 That's new. That's a that's something
+00:19:04.080 think mentally I had to switch my own
+00:19:07.360 working style around to not just stare
+00:19:09.280 at the agent doing stuff. So now you can
+00:19:11.840 think about what else can I do? Can I do
+00:19:15.039 the next planning step? In this case, I
+00:19:17.120 can scroll down. I could now um also do
+00:19:20.000 read me is kind of boring. So let's
+00:19:21.120 actually open the cloud agent. um new
+00:19:23.440 cloud agent and send it the prompt to
+00:19:26.799 make the read me more engaging, which is
+00:19:28.640 always a good thing for a project. We
+00:19:30.160 want to adopt some new contributors to
+00:19:33.360 the project as we have this new social
+00:19:36.080 ops bingo experience.
+00:19:39.600 In this case, the cloud agent won't work
+00:19:41.440 in workree, but actually will create a
+00:19:44.400 PR in the repository
+00:19:47.440 and it will show up here. So now we have
+00:19:49.919 this background agent that changes
+00:19:53.280 uh the cloud agent started making
+00:19:55.840 changes and we have this completed. So
+00:19:58.480 we have already multiple agents we
+00:20:00.160 invoked in different parts. The cloud
+00:20:02.320 agents will work in the PR and we see an
+00:20:04.960 update here once it made the changes and
+00:20:06.799 we can accept the PR or bring it back
+00:20:08.880 in. The background agent worked in a
+00:20:11.520 work tree and we can bring these changes
+00:20:13.600 in with a simple keep and apply.
+00:20:20.240 And we got the ESLin config now back in
+00:20:22.080 our main branch. So this is a change
+00:20:24.000 that happened in the work tree. And now
+00:20:26.720 this change is now back in in our
+00:20:31.120 in our work tree. So it fixed it all.
+00:20:34.320 Let's make sure. Did it actually run?
+00:20:39.200 It did run the linting.
+00:20:41.520 Everything passed.
+00:20:44.159 That's good. And that's how you can now
+00:20:46.159 much better understand that the agent
+00:20:47.600 did a good job to actually create
+00:20:49.840 working code and not something that
+00:20:51.360 fails out of the box that ran the
+00:20:53.200 linting and the build out of the step.
+00:20:57.440 Okay, let's commit that. That's the
+00:20:58.880 working
+00:21:01.039 the background agent we just merged. We
+00:21:04.720 can
+00:21:06.799 archive that. That's done. That's done.
+00:21:09.600 And that's done.
+00:21:14.640 Okay, the cloud agent, we can check it
+00:21:16.799 later. We don't have to do it now. Okay,
+00:21:18.640 back to the guide. Anybody who hasn't
+00:21:21.679 gotten to the custom instruction step
+00:21:23.760 yet or past that
+00:21:26.559 everybody still caught up.
+00:21:35.360 So we were kind of used to have
+00:21:38.400 everything done in the visual studio but
+00:21:42.880 um when you're running in a background
+00:21:44.799 agent or cloud agent like things like
+00:21:47.440 for example like a state of Azure CLI
+00:21:50.640 status login or some
+00:21:53.600 uh secrets that you might have in your
+00:21:55.760 repo that you work with locally. What's
+00:21:58.720 the best practices around that?
+00:22:01.600 >> That's a good question. the the coding
+00:22:03.440 agent has access to the secrets on your
+00:22:06.799 GitHub actions. So we'll be able to run
+00:22:09.200 everything that you run in GitHub
+00:22:10.320 actions. The coding agent can also run
+00:22:12.799 there. Um locally um it's whatever kind
+00:22:16.320 of local environment you have to to
+00:22:19.039 manage those. Okay, one more and then
+00:22:21.520 I'll continue.
+00:22:25.760 Um I see you um call this agent by plus
+00:22:29.600 and then you select the agent you want
+00:22:31.440 to call out. Is it possible that you
+00:22:34.240 give a task he selects the agent
+00:22:36.480 automatically for you?
+00:22:38.000 >> Yes. Um
+00:22:40.400 automatically way. So there's multiple
+00:22:42.159 ways to trigger them. Let's let's walk
+00:22:43.919 through the next one. So just two things
+00:22:46.799 I want to highlight that you can uh
+00:22:48.400 check out later as well to understand
+00:22:50.000 instructions better. I have two
+00:22:51.840 instructions already in the project that
+00:22:53.760 are domain specific. So one is the
+00:22:56.960 front-end design instructions. We
+00:22:59.039 actually just copied from the block f
+00:23:02.799 from that that the cloud folks did and
+00:23:05.840 it's kind of how how do you get clawed
+00:23:08.159 out of making purple gradients is kind
+00:23:10.320 of the the main effect of this
+00:23:11.840 instruction. You ever seen vipcoded
+00:23:14.080 websites? uh you usually can see that
+00:23:16.240 the B code website by it being filled
+00:23:18.159 with like large types of the same font
+00:23:21.039 and purple gradients. So what it usually
+00:23:23.520 tells it like don't use o overused
+00:23:26.159 generic fonts um pick a good aesthetic
+00:23:30.559 and then avoid overused font families.
+00:23:33.360 Don't use cliche color themes,
+00:23:35.520 predictable layouts. So it's trying to
+00:23:37.360 nudge it out of its comfort zone with
+00:23:39.679 the safe design themes it picked by
+00:23:42.240 default and that really does wonders. So
+00:23:44.320 that's a great problem to have if you
+00:23:45.679 work in front end, but also think about
+00:23:48.240 where else you want to nudge AI out of
+00:23:50.240 its defaults. Another one is tailwind
+00:23:53.520 CSV before and that's a big pain point I
+00:23:56.159 have as soon as I go into VIP coding and
+00:23:57.840 use the latest stacks is that there's
+00:24:00.240 just a slight missing knowledge of these
+00:24:03.679 latest stacks in the in the agent. So it
+00:24:06.240 does understand Tailwind CSS3 by
+00:24:08.320 default. anytimes I ask it to make
+00:24:09.679 tailwind, it will default to whatever is
+00:24:12.159 like the majority in its training data.
+00:24:14.559 So I actually there's a prompt down here
+00:24:16.480 that you can check that this is what I
+00:24:18.880 used to fill in this this instruction. I
+00:24:21.200 gave it a web search tool part of GitHub
+00:24:23.600 MCP and ask it for a one pager on that's
+00:24:28.080 minimal uh minimal pros and compact to
+00:24:30.960 explain Tailwind v4 specific development
+00:24:33.679 essentials to a front-end developer. So
+00:24:35.919 it doesn't have to go into like how to
+00:24:37.440 install it like why it matters. I just
+00:24:39.360 want the best practices that I would
+00:24:41.440 tell a front- end dev like my agent. And
+00:24:44.960 this is what I end up with really on
+00:24:47.360 point of just like this these are the
+00:24:50.880 the new theing primitives that are new
+00:24:53.120 in V4. Anything that's kind of outside
+00:24:55.360 of the training data layer it on top. So
+00:24:58.640 really great practice to to write
+00:25:00.880 instructions for parts of your codebase.
+00:25:04.080 And you if you want to try it out just
+00:25:05.600 basically nuke the file and uh try it
+00:25:08.240 out from scratch. So these are the
+00:25:09.840 Tailwind 4 instructions and the front
+00:25:12.000 end instructions.
+00:25:14.720 So um anybody who has this setup running
+00:25:17.360 can now join join more fun stuff. Uh
+00:25:20.640 otherwise you can also try it out uh at
+00:25:23.760 home alone and
+00:25:26.720 have more time experimenting.
+00:25:29.520 So next one is design first front
+00:25:32.000 inviting. So we've context engineered
+00:25:34.240 repo. We can get creative. Now we're
+00:25:36.559 going to use plan mode. Who has been
+00:25:38.240 using plan mode in VS Code Copilot? So
+00:25:42.880 not enough people.
+00:25:45.679 So you could you open up a new agent and
+00:25:48.480 you go down to the plan in your agent
+00:25:52.320 dropdown
+00:25:53.840 and we're going to put in
+00:25:56.320 this prom. Let's do a full redesign.
+00:26:00.799 and we just gave it really good
+00:26:02.320 front-end instructions to get more
+00:26:04.080 creative. So, I expect excellence
+00:26:07.760 and I gave you some ideas of like what
+00:26:09.840 could this redesign be and that's where
+00:26:11.600 you can pick your own adventure.
+00:26:15.039 Um, I usually went with vaporware wave
+00:26:18.320 in my sunset which always looks great.
+00:26:21.120 Um, great kind of 70s vibes. I'm going
+00:26:24.240 to do cozy coffee shop because that's
+00:26:26.400 where we are at. So, let's see how that
+00:26:28.480 looks like. Um,
+00:26:31.360 I definitely am excited to see what
+00:26:33.360 you're coming up with. Feel free to pick
+00:26:35.520 your own design here as well.
+00:26:38.080 Skorphic stickers is probably something
+00:26:39.760 I would try out if I didn't have just
+00:26:42.320 one option. Okay, let's do a full
+00:26:44.720 redesign. We're in plan mode. So, what
+00:26:46.640 happens now is the agent by default will
+00:26:49.520 think much deeper around how to apply
+00:26:52.080 what you're asking to the codebase. And
+00:26:54.640 right now that what I ask it is a very
+00:26:56.960 broad request. So it has a lot of room
+00:26:59.840 to explore what this actually means like
+00:27:01.760 what does a redesign to cozy coffee shop
+00:27:05.120 actually mean in terms of like what what
+00:27:07.200 the design is.
+00:27:10.080 So it it's reading a bunch of files.
+00:27:11.919 It's doing all this work as you can tell
+00:27:15.039 in its own little container somehow. So
+00:27:18.240 all these things are under research
+00:27:19.840 current design and that is what we call
+00:27:21.919 a sub agent. It's isolated in its own
+00:27:24.960 context and it just brings back the
+00:27:27.679 research. So it looks at a ton of files.
+00:27:30.080 It looks at multiple files and it just
+00:27:32.159 thinks about these files and to solve
+00:27:34.720 basically to give an answer back to the
+00:27:36.400 research question it got which in this
+00:27:38.720 case is please make a plan.
+00:27:43.200 Yeah. What ways you have a question?
+00:27:44.799 Yeah, we can do it.
+00:27:52.240 There you go.
+00:27:54.000 It's a very basic question. The
+00:27:55.760 difference between the plan mode and
+00:27:57.919 then the agent mode. If I do things in
+00:28:00.240 the agent mode, will it automatically
+00:28:02.399 make the changes to the file that I'm
+00:28:04.720 working on? And the plan mode is still
+00:28:06.640 thinking and it doesn't commit or make
+00:28:08.559 changes to the file. Is that right? Or
+00:28:10.960 why should we do the plan mode versus
+00:28:13.279 agent mode?
+00:28:14.320 >> Yes. So that's a it's like a I didn't
+00:28:18.240 miss I missed to talk about why plan
+00:28:19.840 mode a little bit more. So the big big
+00:28:22.399 parts of plan mode from a kind of trust
+00:28:25.919 and confidence perspective is that plan
+00:28:28.080 mode allows you a much easier review
+00:28:30.159 than the final code. So anytime you have
+00:28:32.480 a larger code change even though your
+00:28:34.720 request might have more ambiguity. So
+00:28:36.720 that's often where things fall apart in
+00:28:39.679 agentive conversations as the agent
+00:28:41.360 makes assumptions of what you're asking.
+00:28:43.200 So the plan mode pulls those assumptions
+00:28:45.120 out. So you can see now in the plan mode
+00:28:47.120 we have uh the like what it wants to
+00:28:50.159 change. It picked the color palette
+00:28:51.520 already did some other stuff but then it
+00:28:53.440 asked about like what actually what
+00:28:55.279 would be the typography because we
+00:28:56.720 didn't define it. So it pulls out
+00:28:58.559 anything that you might had not have
+00:29:00.559 specifically answered in that original
+00:29:02.240 request and really pulls it out in a way
+00:29:05.760 you can quickly answer. So it already
+00:29:07.520 gives you some defaults and some
+00:29:09.440 suggestions in those questions as well.
+00:29:11.200 So that's one and it's much easier to
+00:29:13.200 iterate on that versus once you have
+00:29:15.360 code already written giving feedback on
+00:29:17.600 that it gets a lot harder because it
+00:29:19.279 then has to iterate across the whole
+00:29:20.720 code again and potentially revise very
+00:29:23.360 basic assumptions that it had while
+00:29:25.679 writing the code and it's also easier to
+00:29:28.320 read once you have a plan that looks
+00:29:29.919 really sound and doesn't have any like
+00:29:32.399 big breaking considerations still open
+00:29:35.120 any assumptions then you got you have a
+00:29:37.440 much higher confidence that the
+00:29:39.120 resulting code follows everything you
+00:29:41.440 just said versus a broad kind of prom
+00:29:44.559 crafting approach where you iterate
+00:29:46.640 through smaller changes.
+00:29:50.000 Okay, so we got this going. Um the guide
+00:29:54.000 says we should review this and
+00:29:58.960 it's up here. Review plan and start
+00:30:01.120 implementation. Let's do that
+00:30:02.000 implementation and start. We have the
+00:30:04.640 browser open so we can actually follow
+00:30:05.919 along.
+00:30:11.360 So cozy coffee shop. Let's see what it
+00:30:13.120 looks like. Uh any guesses? Guess like
+00:30:15.600 brown tones like cozy vibes.
+00:30:20.880 Let's see it looks like. So uh a few
+00:30:23.200 things we just shipped. So one um to-dos
+00:30:26.000 has been shipping for a while but has
+00:30:27.840 been polished since the last before that
+00:30:30.640 actually now put them down here so you
+00:30:32.559 can follow along what the agent is
+00:30:34.000 working on. this case needs to update
+00:30:35.360 the index, put a color palette, redesign
+00:30:38.000 the start screen with oh warm cream and
+00:30:39.919 coffee tones. Perfect. And the bingo
+00:30:42.480 square will get cappuccino color which
+00:30:44.159 definitely sounds coffee. And the view
+00:30:47.440 resell will be all warm coffee the so
+00:30:51.440 that looks perfect.
+00:31:02.880 Once it's done still thinking so now
+00:31:05.520 actually you see more of these thinking
+00:31:06.960 squares we now have thinking enabled for
+00:31:09.120 clock models and GPD5 so a lot of the
+00:31:11.840 work if you use cop in the past will now
+00:31:13.919 be happening in these thinking blocks as
+00:31:16.000 well yeah
+00:31:19.679 >> sorry another question for the plan mode
+00:31:22.000 is there any way you can essentially
+00:31:24.080 make it a task list and it just follows
+00:31:26.159 along and maybe like you have certain
+00:31:28.880 tasks done by the background agents
+00:31:32.480 Yes. Yeah, you can do it. We'll try it
+00:31:34.799 out in a moment as well. Yeah.
+00:31:45.679 >> Sorry, too quiet.
+00:31:49.039 >> Apologies. Sorry about that. Um, I was
+00:31:51.360 just wondering is there no way to review
+00:31:54.159 like a before and after a visual
+00:31:56.480 representation of what it would look
+00:31:58.640 like before we implement
+00:32:01.039 >> before you do changes. So having a
+00:32:02.559 before after screenshot
+00:32:04.559 >> I think that's where PRs work better
+00:32:07.440 >> kind of you want to see um but yeah I
+00:32:09.919 actually had this question today as well
+00:32:11.200 from somebody of like just want to
+00:32:12.640 toggle the changes on and off. It's a
+00:32:14.240 cool feature quest I think because
+00:32:16.000 sometimes you just want to see right
+00:32:17.840 visually. But now actually I could
+00:32:19.840 follow along. This is this looks like
+00:32:21.279 this is my warm coffee color. Uh change
+00:32:24.559 the font. Let's see how this looks like
+00:32:27.440 when it's completed. Ah cozy coffee
+00:32:31.200 house. Um but yeah in this case I
+00:32:33.279 couldn't I could actually if I had done
+00:32:35.200 this in a in a work tree with a
+00:32:37.039 background agent I could actually toggle
+00:32:38.720 between the two uh easier. So that's I
+00:32:41.200 think we're also background agents or
+00:32:42.640 using the the cloud agents helps as
+00:32:46.000 well.
+00:32:47.919 Yeah.
+00:32:50.240 Okay. Now we made a design change and
+00:32:52.159 actually we have a design system. We
+00:32:53.840 went with this bold cozy coffee house um
+00:32:58.240 that really makes for interesting
+00:33:00.159 engaging bingo.
+00:33:02.159 So what we're going to do, we're gonna
+00:33:03.440 add the design guide because we have all
+00:33:05.919 this conversation. This conversation is
+00:33:07.279 now filled with design decisions that we
+00:33:09.840 want to reflect in any later changes
+00:33:12.159 otherwise next edit we make is going to
+00:33:14.080 go back to our kind of boring out of the
+00:33:16.240 box tailwind for design. So what we ask
+00:33:19.279 it we're going to add the design section
+00:33:20.880 to copy instructions.
+00:33:23.600 We can keep the prior changes.
+00:33:26.880 Cozy coffee house is here to stay like
+00:33:29.440 it.
+00:33:31.919 And we can also I think I already push
+00:33:33.679 maybe. So we get an updated page.
+00:33:41.200 Coffee.
+00:33:42.799 I love commit messages. It's very
+00:33:44.720 important. Coffee push. There we go.
+00:33:49.519 And now we have update instructions too.
+00:33:54.720 Okay, see what it actually changed. It
+00:33:56.880 did the
+00:33:58.720 documented the color palette which color
+00:34:00.799 accent and brown accent which are there.
+00:34:02.960 So Copilot can make better use of the of
+00:34:05.200 the color palette that's we defined
+00:34:07.519 defined the font family George or Sarif
+00:34:11.199 and oh a coffee cup emoji for branding.
+00:34:13.839 Um always a good fallback otherwise do
+00:34:17.520 yeah so very succinct design rules. So
+00:34:20.079 any anything we do now on will reflect
+00:34:23.359 that design. Yeah. Question.
+00:34:25.520 >> Uh with the plan mode, do we have like a
+00:34:28.399 questionnaire where we can customize
+00:34:30.639 what we want rather than just go with
+00:34:33.119 what it gives us like what color palette
+00:34:36.560 or what font do we have the choice? Pick
+00:34:39.760 them out.
+00:34:40.159 >> Yeah. What what it didn't do in my plan
+00:34:42.079 mode, it actually asked me like what
+00:34:44.800 which topography would you choose and
+00:34:47.679 which um which which colors. So I could
+00:34:52.000 anytime go in because it actually
+00:34:54.000 pointed out which colors it wants to
+00:34:55.520 use. So you can go in and adjust it and
+00:34:58.240 reply back to plan mode. These are the
+00:35:00.320 color palettes. I don't want an emoji. I
+00:35:04.160 have a real logo here. So you can keep
+00:35:06.880 that's my recommendation for plan mode.
+00:35:08.480 at least iterating at least once. We're
+00:35:10.640 we're going from plan directly to
+00:35:12.320 implementation because it's it's a
+00:35:14.240 workshop. We don't have time. But
+00:35:15.680 otherwise, I would spend more time in
+00:35:17.280 plan mode than any other thing later on
+00:35:20.160 because that that leads to
+00:35:21.920 >> would be much easier to have a
+00:35:24.079 questionnaire where we pick the most
+00:35:26.640 basic uh criteria or I think that would
+00:35:31.359 help us out.
+00:35:32.640 >> Yes. Yeah. Yeah, I think we're we're
+00:35:34.079 definitely looking at like what is this
+00:35:35.680 section down here the further
+00:35:37.040 consideration to make it kind of more of
+00:35:39.040 like do you want to pick this and that.
+00:35:40.560 Uh now it's very natural language focus.
+00:35:42.800 So I I like to just go into
+00:35:45.520 dictation mode and kind of read through
+00:35:48.240 the spec and say yes no oh maybe we can
+00:35:50.960 do this and then just send it back. So
+00:35:52.720 using inputs like dictation actually
+00:35:55.040 makes it a lot easier as well.
+00:35:57.440 >> Thanks. Yeah.
+00:36:02.720 Okay, we're more than halfway through.
+00:36:04.560 Uh, let's do a a lot bigger redesign and
+00:36:07.599 using the power of the cloud. That's why
+00:36:09.599 I talked about abundance in the past.
+00:36:12.560 So, we're going to open a new chat and
+00:36:15.440 then we ask it for redesigning the start
+00:36:19.440 screen because you look at the start
+00:36:20.880 screen right now.
+00:36:22.960 Uh, keep playing. Go back here. It's
+00:36:26.240 not. Yeah, the logo is cool, but we need
+00:36:29.040 we need more. Okay, so redesign the
+00:36:32.640 start screen again. We go into plan
+00:36:34.000 mode. It's probably going to have a ton
+00:36:35.599 of questions because I gave didn't give
+00:36:37.280 it any details on what this is meant to
+00:36:39.839 do.
+00:36:44.320 But it's interesting with these kind of
+00:36:45.680 tasks is like sometimes I don't have a
+00:36:48.000 good sense. Like there's a lot of tasks
+00:36:49.760 we work on where we have a general
+00:36:51.760 direction of where we want to go, but
+00:36:54.480 there's a lot of ambiguity where we
+00:36:56.800 actually want to go and how we get
+00:36:58.720 there. And plan mode can help pull out
+00:37:01.440 some of these things like it will make
+00:37:03.280 some assumptions which might be wrong
+00:37:04.960 like the colors it it assume like what
+00:37:07.119 does color warm coffee house colors
+00:37:10.240 mean. It made some good assumptions but
+00:37:12.400 we can still steer it like to a specific
+00:37:14.880 color p we might want. In this case, we
+00:37:17.599 see it reads the front end design
+00:37:19.200 instructions, which is good. So
+00:37:20.480 hopefully we get some very bold
+00:37:21.760 aesthetics
+00:37:23.920 and looked at all the other components.
+00:37:27.760 And then the next prompt we'll execute,
+00:37:30.000 we'll look at that because that one does
+00:37:33.040 the heavy lifting, is the cloud
+00:37:36.079 explorer.
+00:37:39.040 Oh no, sounds fun. I'm using a
+00:37:41.920 experimental TypeScript extension here.
+00:37:43.839 So,
+00:37:47.359 oh good still running the plan. So,
+00:37:50.480 cloud explorer is um is using the GitHub
+00:37:53.200 MCP. Who has been using MCPs? Just get a
+00:37:55.920 sense. So, MCPS are these little
+00:37:59.200 protocol server allow you to connect
+00:38:01.040 your agent to different servers and
+00:38:02.800 infrastructure and to other agents. So,
+00:38:04.960 it's just a communication protocol. And
+00:38:06.800 you shouldn't even think about MCP. I
+00:38:08.240 just install basically GitHub into my
+00:38:09.920 copilot and it now speaks GitHub. In
+00:38:12.480 this case, it speaks it can actually
+00:38:14.480 create new pull requests and assign them
+00:38:16.960 to the coding agent which is a really
+00:38:18.800 powerful way to just say here's a task
+00:38:22.160 hand it off to the cloud. I don't want
+00:38:23.680 to think about it for a while and then
+00:38:24.960 you come back once you do it. So best
+00:38:27.440 pattern that I think we pointed out
+00:38:29.200 throughout the day a deaf day is at the
+00:38:32.320 end of your day figure out what you want
+00:38:34.560 to do first the next day and just send
+00:38:36.720 all these tasks as coding agent PRs and
+00:38:39.599 then the next day you come back and you
+00:38:41.040 have some ideas and drafts of where to
+00:38:44.000 start your day.
+00:38:46.480 So in this case now we have a plan. Um
+00:38:48.800 it came out with
+00:38:51.200 a layered atmosphere geometric coffee
+00:38:54.160 inspired patterns. That sounds great.
+00:38:56.400 Um, I have no idea what it means. So,
+00:38:57.920 we're going to look at that. Uh,
+00:39:00.560 stronger call to action. Do you want to
+00:39:02.880 elevate topography? I think it sounds
+00:39:04.640 really bold. It sounds Let's do it. But
+00:39:06.800 what I want to do is I use the cloud
+00:39:08.480 explorer now. So, I'm going to use this
+00:39:10.560 HQ and cloud explorer will look at the
+00:39:14.480 plan and figure out three variations to
+00:39:17.839 run and then create a PR for each of
+00:39:20.960 them. So, we have a plan. And we have a
+00:39:22.960 lot of ambiguity in the plan. Um like
+00:39:25.760 what is image complexity background
+00:39:27.200 approach but I want it to explore design
+00:39:31.040 variations
+00:39:33.680 and just hit enter. So this will switch
+00:39:35.839 to agent mode because that's defined in
+00:39:37.839 the prompt.
+00:39:40.320 It will now look at the plan and figure
+00:39:42.880 out like what is the what are the
+00:39:44.400 expirations. Let's look at what the
+00:39:45.760 thinking is. So minimalist,
+00:39:48.560 playful and atmospheric immersive
+00:39:53.359 any depending on what you design what
+00:39:56.800 your design is that you applied you will
+00:39:59.200 see different variations. So
+00:40:02.480 and everybody who comes back with a
+00:40:04.079 working app in the end gets a pin. Three
+00:40:07.040 people three people get a should never
+00:40:09.200 promise. Yeah. Okay. Uh the MCP gets
+00:40:13.359 called. This is the the agent being
+00:40:16.960 called. It's the um run task perform the
+00:40:21.280 coding agent has a problem statement
+00:40:23.440 blah blah blah blah blah super long text
+00:40:25.040 hello
+00:40:27.760 we trust it because it's my repo. Um the
+00:40:30.160 PRs run in sandboxes
+00:40:33.119 and I can actually the next request I
+00:40:35.040 can allow for this session.
+00:40:41.920 Okay. The other way I could have done
+00:40:43.359 this if I had the same plan. Let's copy
+00:40:46.079 the plan
+00:40:48.320 and I could just gone into the cloud
+00:40:50.160 agent with a good plan and send it to
+00:40:51.920 the cloud agent or I could have opened
+00:40:54.480 this chat and then click down here for
+00:40:58.079 continue it. So there's a lot of
+00:40:59.920 entryways into delegating things to
+00:41:02.400 agents within these flows. Sometimes you
+00:41:05.280 already have a plan. You want to spend
+00:41:06.480 some time planning locally in a quick
+00:41:08.560 iterative way and then a continuing
+00:41:11.040 allows you to then hand off the final
+00:41:13.680 result to the cloud agent with more
+00:41:15.520 confidence.
+00:41:18.720 Okay, it's really cool that I can now
+00:41:20.240 just switch to a new agent and the rest
+00:41:21.920 is just continuing on. So the this one
+00:41:25.839 is handing off. And what do we got here?
+00:41:28.079 So we got a final summary. We have three
+00:41:31.200 versions. is minimalist, playful,
+00:41:32.640 atmospheric.
+00:41:34.160 Uh, apparently atmospheric is the most
+00:41:36.160 complex.
+00:41:37.680 Performance-wise, we probably got some
+00:41:39.520 problems with patterns and layers. So,
+00:41:41.599 it's a really nice way to have the agent
+00:41:44.240 explore problem space. In this case,
+00:41:46.000 it's about design. I could have also
+00:41:48.079 given it different implementations or
+00:41:49.920 the way the call to action works, maybe
+00:41:51.839 different kind of growth hacks of
+00:41:53.599 engaging people in bingo games. But
+00:41:57.040 there's all these um all these places
+00:41:59.680 where we as engineers or product manager
+00:42:02.400 are exploring a space with high
+00:42:03.760 ambiguity where handing things to the
+00:42:06.960 agent and just giving us markups or
+00:42:10.400 working architectural diagram that can
+00:42:12.880 really help us to explore faster.
+00:42:18.400 This
+00:42:22.560 did one, two,
+00:42:25.680 we did just one this time. Let's go. We
+00:42:28.560 have one. Okay. So, this is now running.
+00:42:30.640 You can also click on it and see it
+00:42:33.280 running. So, and you can do the same in
+00:42:36.480 here.
+00:42:40.560 You can filter.cloud. That's why
+00:42:43.680 you can filter on here. What you
+00:42:45.040 actually want to see. So this is the now
+00:42:47.599 the cloud agent working and I can follow
+00:42:50.000 along in VS code.
+00:42:52.960 I can also open
+00:42:56.319 and browser. So it's still planning on
+00:42:58.160 what it's doing. So this will take a
+00:43:00.400 while. So cloud agent usually takes a
+00:43:02.160 few minutes to half an hour even longer
+00:43:04.240 depending on the task because it's it's
+00:43:06.400 really a long trajectory complex task.
+00:43:09.119 So, it's a really good idea for you to
+00:43:11.119 figure out like what it's good at so you
+00:43:13.920 can so you can hand off these items from
+00:43:15.839 VS Code and then work on what you want
+00:43:19.119 to actually take more control about or
+00:43:20.800 keep iterating on hands on.
+00:43:24.079 Okay, that was a redesign. Um, going to
+00:43:27.280 review those later
+00:43:29.359 because it will time. Okay, let's let's
+00:43:31.119 try out a custom agent to actually make
+00:43:34.880 some better quizzes because right now we
+00:43:36.560 have kind of boring like love spicy food
+00:43:39.119 is cool and cooking but it's kind of
+00:43:40.720 it's too easy. So we could figure out a
+00:43:44.800 problem like come up with super creative
+00:43:47.280 quizzes and um do like what is a good
+00:43:52.400 quiz like what are the rules around
+00:43:53.839 quizzes that make a bingo game
+00:43:55.760 interesting? And actually I have a
+00:43:57.599 custom agent, a quiz master that has
+00:44:00.160 exactly that thought process. So its
+00:44:03.680 only goal is to curate icebreaker bingo
+00:44:06.480 questions
+00:44:08.079 given a theme. Uh if there's no theme,
+00:44:10.880 ask about the theme. And then there's a
+00:44:12.880 good mix. Uh I wrote this all with AI.
+00:44:16.000 Thank you. [laughter] But like what what
+00:44:18.400 are good icebreaker uh questions? it's
+00:44:20.880 balanced like easy, medium, uh, bolder
+00:44:23.839 to really encourage the mingling at
+00:44:26.079 different priorities. Um, making sure
+00:44:28.800 they're inclusive. Make sure they're
+00:44:30.560 interesting conversations. They're not
+00:44:32.079 kind of boring like, &quot;Oh, you like
+00:44:33.440 cooking too? That's that's cool.&quot; Um, so
+00:44:36.319 let's let's try this out. So custom
+00:44:38.400 agents, this one is in the repo. It's in
+00:44:42.079 GitHub agents quizmaster.
+00:44:45.359 We're going to run this right now in
+00:44:46.960 agent mode. So, we can pick it from the
+00:44:50.720 custom dropdown and say what theme
+00:44:52.960 should we do? Um,
+00:44:56.160 tea or coffee tea. I guess let's do
+00:45:02.400 Oh, wait. I actually have some ice
+00:45:04.160 breakers here. So, we have to scroll
+00:45:05.680 down. You don't have to think too hard.
+00:45:07.920 So, uh, travel bingo sounds fun.
+00:45:10.640 Creative bingo. I do creative bingo. Uh,
+00:45:13.599 create a theme.
+00:45:16.560 And I lost my agent.
+00:45:20.319 This is in a weird state. It's going to
+00:45:21.680 refresh quickly.
+00:45:25.040 There you go. Okay. New agent.
+00:45:30.720 New agent and quizmaster and creative
+00:45:34.480 theme.
+00:45:37.119 Let's copy the whole thing.
+00:45:41.599 So quiz quizmaster will basically be the
+00:45:44.160 agent that handles the request. So all
+00:45:45.680 at once is a theme and it will go off
+00:45:48.319 and make me new questions. So think
+00:45:50.400 about what other jobs to be done or you
+00:45:53.760 have in your daily life where you just
+00:45:55.520 want to hand off like this is a
+00:45:58.560 reoccurring task. I'm going to just give
+00:46:00.160 you some extra context and then
+00:46:01.760 reoccurring task can be solved by a
+00:46:03.440 custom agent
+00:46:05.839 and that's the way we do it with
+00:46:07.440 locally. So it already went in uh the
+00:46:10.720 question is going to be awesome favorite
+00:46:12.319 design error. Wow, that's great. He uses
+00:46:14.640 creative software. That's creative.
+00:46:16.720 Attended a concert. Love it. Color
+00:46:18.800 palette has a color palette to love. Who
+00:46:20.800 loves a color palette? Anybody? My new
+00:46:23.200 favorite color palette is Cozy Coffee
+00:46:25.040 House.
+00:46:26.720 Yeah. [snorts] Creative floppies. Uh,
+00:46:30.000 yes. Okay, let's go. Um, we did this
+00:46:34.079 right now locally. VS Code has custom
+00:46:36.480 agent support. It was previously called
+00:46:38.160 chat modes, but we can actually do this
+00:46:40.079 in the background as well. So I can
+00:46:42.000 actually open a background agent and it
+00:46:44.000 supports the same quiz masteraster
+00:46:47.359 um agent and even the cloud agent has
+00:46:51.680 the same quiz master agent. So these
+00:46:55.040 agents are available in the cloud in the
+00:46:57.520 background in the foreground. So I don't
+00:46:59.440 want to care about maybe my quiz master
+00:47:01.760 updates as much. So I can also send it
+00:47:05.119 to a cloud. This is now the cloud one.
+00:47:07.040 Maybe I do another one because I wasn't
+00:47:08.800 sure like creative is stuff but also
+00:47:11.599 like
+00:47:13.200 um oh maybe deep chat bingo let's or
+00:47:16.560 office humor yes it is
+00:47:20.240 theme
+00:47:22.000 office bingo so let's also send it to
+00:47:24.000 the cloud and this will be handled in
+00:47:25.280 the PR again and I can look at the
+00:47:26.880 questions later
+00:47:30.560 in this case it will ask actually
+00:47:31.760 because we have a few changes pending it
+00:47:33.200 will ask if I should include the changes
+00:47:34.880 or not in this case I don't need them
+00:47:37.440 because they're my prior questions that
+00:47:39.280 I already did. So, let's also submit our
+00:47:42.480 questions. So, we had the questions
+00:47:44.160 pending. The questions are updated. I
+00:47:46.800 figured out it's a creative theme.
+00:47:49.280 Success.
+00:47:51.599 Okay. Got 10 more minutes. Who has
+00:47:54.319 updated their questions? Anybody got so
+00:47:56.800 far? Cool.
+00:48:02.240 There we go. So, next up,
+00:48:05.920 is there a question? Yeah.
+00:48:09.040 >> Um, I had a question which was um, you
+00:48:11.920 know, we've seen custom prompts and
+00:48:14.319 we've seen instruction files and we've
+00:48:17.200 now seen this agent that you've built.
+00:48:19.839 How do you decide which one you're going
+00:48:22.000 to use for different tasks that you
+00:48:24.400 have?
+00:48:25.599 >> Yes. Uh, there was a chart earlier today
+00:48:28.160 which I can recommend um by me. Um, but
+00:48:32.000 the the general rule is I usually start
+00:48:34.400 with prompts just to get a basic idea of
+00:48:36.559 the workflow. If it's like a a single
+00:48:38.480 shot problem where we just just ask the
+00:48:41.040 agent do something. So this could have
+00:48:42.480 been a prompt. Basically the new answer
+00:48:44.720 to everything like this could have been
+00:48:46.640 an email is this could have been a
+00:48:47.920 problem. But then once it gets more
+00:48:49.920 complex and multi-shot and you you're
+00:48:52.160 working with the agent or the agent is
+00:48:54.160 supposed to pause which this one does
+00:48:56.079 now. I gave it if there's no theme
+00:48:59.119 propose a few themes to the user. If you
+00:49:01.119 look at the custom agent, so that makes
+00:49:03.440 it multi-shot and that makes it it has
+00:49:05.599 to reason over a longer time and stay on
+00:49:08.160 focus. And that's where you want to have
+00:49:10.079 the a custom agent. And then
+00:49:12.480 instructions are really more about how
+00:49:15.599 every every agent should work in a
+00:49:17.520 codebase. Either the code review agent,
+00:49:19.920 is it a codew writing agent, is it a
+00:49:21.440 planning agent? All of these kind of
+00:49:23.920 knowledge and context bits, those would
+00:49:26.720 be instructions.
+00:49:28.559 Um but yeah it's an evolving field. I
+00:49:31.440 think there it's ever changing.
+00:49:36.480 >> Um I also have a question about here you
+00:49:39.440 show the custom agent and then before
+00:49:42.079 you show the background agent. Um are
+00:49:45.599 they different or you just defined your
+00:49:49.359 uh custom agent for the previous one
+00:49:51.359 like the background agent you just demo?
+00:49:53.599 >> Yeah it's a good question. uh our
+00:49:57.119 our terminology is strong there. Um we
+00:49:59.599 have so cloud and background agents just
+00:50:04.160 define where these agents run basically.
+00:50:07.599 So cloud agent will run in a GitHub
+00:50:09.520 action and create its work in a PR.
+00:50:12.640 Background agent will work in a work
+00:50:14.480 tree. So it's it's less isolated in a
+00:50:16.800 way because a work tree can still
+00:50:18.720 potentially conflict with other things
+00:50:20.400 you run on your machine. So it's a but
+00:50:23.280 they they still run locally and in a
+00:50:25.680 faster feedback loop. So but custom
+00:50:28.000 agents are really just a file you saw.
+00:50:30.160 It's just um a prompt a selection of
+00:50:33.520 tools that defines a very spe specific
+00:50:37.280 workflow that can be used by all the
+00:50:40.079 agents. So you basically you it's a
+00:50:42.559 different hats each of these agents can
+00:50:44.400 put on to to apply more specific
+00:50:47.599 thinking other than I I can see your
+00:50:50.880 codebase and you can ask me anything.
+00:50:53.040 Right.
+00:50:56.960 Okay. Seems like we should be close
+00:50:58.800 getting there question.
+00:51:01.599 >> Can custom agents be run of cloud
+00:51:04.160 agents?
+00:51:06.960 >> Cloud. Yes. Yeah. The same agents I have
+00:51:10.079 here will actually show up on GitHub as
+00:51:11.839 well. So if I go into my repo um
+00:51:18.800 agents
+00:51:22.000 I should go to my repo
+00:51:26.800 show it.
+00:51:28.960 I don't know how to get my repo here.
+00:51:30.400 Let's go back. Okay, here we go. Um I
+00:51:33.359 mean in my awesome bingo reboot which is
+00:51:35.040 the the template one and I can go up
+00:51:37.119 here into the agents panel and up here I
+00:51:40.559 can also
+00:51:42.480 pick my agent. So quizmaster is defined
+00:51:45.839 in the repo coding agent which which is
+00:51:49.119 the agent in in github.com is called
+00:51:51.440 will also pick it up. So I could also
+00:51:53.520 update my my themes here. Yeah
+00:51:59.440 questions. So,
+00:52:02.319 another PR and a quiz master will handle
+00:52:06.000 handle it.
+00:52:08.400 Okay. Um, we got a few more minutes
+00:52:10.640 left. More like five and then we got to
+00:52:14.960 see what James did in the studio with
+00:52:17.280 this template. I'm really excited. He's
+00:52:19.599 probably now he's he has really high
+00:52:21.040 vibes. So, his his his bingo is going to
+00:52:23.599 be amazing.
+00:52:25.839 Okay. Scavenger run mode. Let's do uh
+00:52:28.000 this will take longer. So the multi-
+00:52:29.520 aent multi-bingo section maybe you want
+00:52:31.599 to bring this to your desk uh do it home
+00:52:34.480 with the weekend to this will be
+00:52:36.319 breaking it down in a test driven
+00:52:38.160 development flow which means you go from
+00:52:40.720 failing tests to passing tests to
+00:52:43.040 actually implementing it but we want to
+00:52:45.200 try out some something more visual in
+00:52:46.720 the end. Uh we're going to do the cart
+00:52:48.480 deck shuffle.
+00:52:50.480 So uh open an EU agent. Let's make some
+00:52:53.040 space.
+00:52:55.200 And we're gonna do a new mode, new game
+00:52:57.680 mode where we want to see card deck
+00:53:00.800 shuffling. So just show one one
+00:53:03.920 icebreaker and you have to find that
+00:53:05.839 person that matches um not multiples.
+00:53:10.400 And we're going to pick the pixel jam.
+00:53:12.400 It's another agent. And this one is
+00:53:14.079 actually more iteration focused. So this
+00:53:17.359 one targets just VS code. So to your
+00:53:19.440 question like where do these things show
+00:53:20.880 up? I can actually say that this one
+00:53:22.880 should be VS code only.
+00:53:25.200 Pixam asks what should we design today
+00:53:27.440 and it designs interfaces quickly and
+00:53:29.119 iteratively encode meanwhile while it
+00:53:31.920 iteratively designs applies the design
+00:53:34.480 it actually keep notes of feedback and
+00:53:36.640 decisions I make along the way so when
+00:53:39.119 I'm done designing I'm not just ending
+00:53:40.880 up with a vcoded design but also with a
+00:53:43.760 document that can then guide how we
+00:53:46.800 actually want to implement the design
+00:53:48.720 that's less vcoded so bring into a
+00:53:51.280 meeting like this is the design I made
+00:53:53.440 these are the decision decisions we made
+00:53:54.720 along the way. So let's see how this
+00:53:57.040 looks like. Going to do solid and then
+00:53:59.280 just run it. Meanwhile going to look at
+00:54:02.000 the output.
+00:54:08.160 Move that here so we can see it. And
+00:54:10.400 then pixel jam just walks through it a
+00:54:12.160 bit. So the other thing that has access
+00:54:14.000 to
+00:54:16.240 so it's going to focus on UI only. And
+00:54:18.480 that's a typical problem you have with
+00:54:20.640 AI. Like even in software development in
+00:54:23.440 general, what is the most critical
+00:54:25.520 aspect of your plan? In this case, it's
+00:54:27.760 like I have no idea how a card shuffle
+00:54:30.079 deck should look like. I have some
+00:54:31.359 ideas. There's probably swiping involved
+00:54:33.599 and it should look like a card. But
+00:54:35.520 otherwise, there could be a lot of
+00:54:36.720 assumption just in this single line
+00:54:38.640 statement. So I want to pull out all the
+00:54:41.119 assumptions from this initial step until
+00:54:42.960 I move on to actually implementing it
+00:54:44.559 fully.
+00:54:49.200 And this is what what these help. So I
+00:54:51.040 could also make one for architectural
+00:54:52.480 design like help me figure out three
+00:54:54.960 different ways to implement this in the
+00:54:57.280 back end and think more about all the
+00:54:59.520 other decisions I have to make while
+00:55:00.960 implementing this.
+00:55:08.800 Okay, get the designs back and we should
+00:55:11.280 get some visual changes soon.
+00:55:16.880 What's also interesting with this agent,
+00:55:18.960 I want to give it eyes to actually look
+00:55:21.119 at the design. Uh, we already have a
+00:55:23.839 simple browser built into VS Code. So,
+00:55:27.280 it already has some some eyes on what
+00:55:28.880 it's supposed to do.
+00:55:31.359 Um, and access to logs if something
+00:55:33.200 fails. There we go. Cartic just popped
+00:55:36.160 in at this draw screen. And that's
+00:55:38.480 that's how I bias this pixel jam.
+00:55:40.640 supposed to build the entry points first
+00:55:42.559 so I can follow along as it builds
+00:55:44.240 stuff.
+00:55:48.720 So who has been using playright before?
+00:55:51.520 Who says playright? Yeah. So the team is
+00:55:54.160 there's some people from the team also
+00:55:55.520 here non goods you meet them uh saying
+00:55:58.079 thank you. It's an awesome tool. It's
+00:56:00.240 basically it can automate your browser.
+00:56:02.880 So if you think about agents and browser
+00:56:04.880 use it's the tool you want to use for
+00:56:06.799 that. Um, it can open a website in a in
+00:56:10.559 this case it's a headless browser and it
+00:56:13.520 will look at the website, find what it
+00:56:15.280 can click. Um, it's really a good
+00:56:17.920 functional way to bring everything
+00:56:20.240 together.
+00:56:22.640 >> Two minutes.
+00:56:23.920 >> Two minutes. We're going to keep an eye
+00:56:25.599 out here the other things. So, let's
+00:56:27.599 look few things you can still do
+00:56:30.559 >> um with more time.
+00:56:33.599 So, everything is documented in the
+00:56:35.760 guide. in the in the repository. If you
+00:56:37.760 didn't get it to work, try it out. If
+00:56:40.000 you didn't get the repo to work locally,
+00:56:41.839 another way I recommend is using a dev
+00:56:44.319 container or WSL on Windows. That might
+00:56:47.599 give you more luck. And then what's we
+00:56:50.559 did front instructions, we did make it
+00:56:52.480 yours. We went through most of it. The
+00:56:54.799 most exciting one takes actually longer.
+00:56:56.960 It's the UX video agent. And I can
+00:56:59.040 highly recommend trying that out later.
+00:57:04.480 So see it looks like uh just we get the
+00:57:07.280 get the card deck. We got the card deck.
+00:57:09.040 Beautiful. Okay. Review the question
+00:57:12.640 has to a go to creative watches designer
+00:57:16.799 art tutorials. Perfect. Okay. This is my
+00:57:19.599 app. We're going to push it right now.
+00:57:21.520 We we can play during the happy hour.
+00:57:24.480 Hopefully I can play yours as well and
+00:57:26.000 you finished. And otherwise follow the
+00:57:29.839 guide uh in your own time. file any
+00:57:32.720 questions you have. You can file issues
+00:57:34.400 on the repo. Uh this is now Playright
+00:57:36.799 actually playing the game. You can
+00:57:38.000 follow along here as well as playright
+00:57:39.920 tries to be social. Uh but otherwise
+00:57:43.680 there's an end credits here as well. So
+00:57:46.319 thank you for me. Thank you from the VS
+00:57:47.920 Code team and a few links on where you
+00:57:49.839 can watch our other content.

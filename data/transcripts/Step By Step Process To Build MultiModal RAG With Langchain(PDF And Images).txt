@@ -1,0 +1,427 @@
+# tactiq.io free youtube transcript
+# No title found
+# https://www.youtube.com/watch/BV0YUeam4y8
+
+00:00:00.160 Hello guys, welcome to this new amazing module on understanding about multimodel
+00:00:05.520 rag. So guys till now specifically if I talk about you know we have discussed
+00:00:12.400 about creating different kind of rag applications and in that rag let's say
+00:00:17.680 that there are two main important components you know so let's say that I
+00:00:22.800 have my vector store and you know in this vector store how do we go ahead and
+00:00:28.560 store our data okay so let's say that we initially have some kind of data
+00:00:35.200 this data can be a PDF file, it can be a word doc
+00:00:40.399 file, it can be a database file, it can be any kind of files. Right? So
+00:00:47.440 usually for this particular data we convert this into chunks.
+00:00:53.360 Then further we use some kind of embedding models
+00:00:59.920 embedding models and we convert this into some kind of vector representation
+00:01:06.799 and we store everything inside our vector store. Right?
+00:01:13.040 Then what we do once we have everything in the vector store from this particular vector store we create a retriever.
+00:01:20.799 Why do we create a retriever? Because whenever we have any kind of new query
+00:01:25.840 that comes in, any type of new query that comes in, we
+00:01:30.960 will em we will perform an embedding on this particular query. And this query
+00:01:36.720 from the retriever can retrieve similar kind of results from the vector store.
+00:01:41.840 Okay. Then from this we get the top k documents.
+00:01:48.159 top k documents and we give it to the LLM model. The LLM model will finally be
+00:01:54.799 able to generate the output based on the prompt that we have given. So these are the two main fundamental
+00:02:03.040 modules that we specifically work on a rack pipeline. Yes, there are techniques like reanker, you can combine different
+00:02:10.160 different strategies like sparse and dense matrix. uh how to probably go ahead and do the
+00:02:15.680 retrieval how to apply filtering keywords and all we have discussed about this right but let's consider one
+00:02:22.640 specific use case in this particular data okay so let's say that I have a PDF file so this is my what my PDF file
+00:02:29.760 looks like okay in my PDF file I'll just go ahead and consider there are some kind of text data
+00:02:37.680 but let's say that I go ahead and add some more information over here in the form of images So here I have some kind
+00:02:45.040 of images. Let's say this particular image is a revenue of a company. Okay.
+00:02:51.120 So it is a kind of a revenue of a company. You have some textual information. Again you have some kind of
+00:02:56.959 images over here. Again you have text, right? Whenever we talk about multimodel
+00:03:03.200 rag in short multimodel is nothing but we are going to go ahead and use two
+00:03:09.599 important things. one is text plus images.
+00:03:14.959 So let's say that if in your data you have both text and images.
+00:03:20.560 Can you also take this particular image and do some kind of similar search you know let's say that I'll go ahead and
+00:03:26.400 ask hey tell me from the diagram in the page one can you talk about the findings
+00:03:32.640 or can you provide the summary right so from this particular document you know
+00:03:38.480 we should be able to retrieve this particular information based on this particular image and we should be able to generate the output
+00:03:45.200 so whenever we talk about multimodel whenever we talk about this kind of scenario Here we are working with both
+00:03:51.840 text and image data. Now we need to find out a way that how do we go ahead and store the text and
+00:03:59.040 the image data in the vector store. Obviously for storing the text data we know that we have applied different kind
+00:04:05.680 of embeddings but till now we have never seen that for images what kind of embeddings we can go
+00:04:12.720 ahead and apply right what kind of embeddings we can go ahead and apply so that we store this in
+00:04:18.320 a vector store and at the end of the day when we give a specific query how it is going to go ahead and do a search with
+00:04:25.199 respect to text and with respect to the images right and that all things we will specifically go ahead and discuss in
+00:04:31.759 this multimodel rag. Okay. And when I say multimodel, multimodel is very simple. Text plus images. When I talk
+00:04:38.560 about rag, I'm talking about creating this entire pipeline.
+00:04:43.600 So we will discuss about this. I will also probably go ahead and show you the
+00:04:48.720 entire step-by-step flow diagram how we are going to go ahead and implement this. Okay.
+00:04:54.000 Let's say that we have a PDF. In this PDF, we have some kind of text and images.
+00:04:59.040 The first thing that you actually require is a multimodel LLM.
+00:05:05.360 Okay, multimodel LLM. Now what does this basically mean? So till now
+00:05:11.600 you have worked with different different LLMs but those are specifically if I
+00:05:17.280 talk about a normal LLM like let's say GPD 3.5 GPD4
+00:05:23.039 these LLMs are very specific to text generation means they are good at text
+00:05:29.520 generation okay when we talk about multimodel LLM these
+00:05:36.080 LLMs will are trained on both text and images.
+00:05:42.800 Okay, that basically means if you if you give a image parameter, let's say if you
+00:05:49.280 give image parameter to this LLM, this LLM will also be able to talk about like what is there in the images itself. If
+00:05:55.840 you ask anything related to text, then also they will be able to provide you some kind of responses. So whenever I
+00:06:01.280 talk about multimodel LLM, that basically means they have been trained in both text and images. So this kind of
+00:06:08.400 models we are going to use it. Okay. If I like to name some of the model in open
+00:06:13.520 AI if I take there are multiple there are many models that are available which are
+00:06:19.759 multimodel but we will do an application with GPT4.
+00:06:24.880 GPT4. Let me just go ahead and check in my code file so that you know you should
+00:06:32.160 um see again there are different different models which you can use right in our examples what we are going to
+00:06:38.720 specifically do is that we are going to use GPT4 model right so here specifically if I talk about it is
+00:06:44.240 nothing but GPT 4.1 I was just checking in my code like what model we have specifically used you can also use any
+00:06:51.280 other kind of model itself if you go in the openai documentation you'll be able to See this if I take one more example
+00:06:58.160 there is Google Germany model right if you go ahead and see Google Germany flash model specifically 2.5 version
+00:07:06.000 right so these is also a multimodel LM model okay that basically means it will
+00:07:11.440 be able to work in both text and images so we will consider these kind of models and we'll develop a entire rack pipeline
+00:07:18.319 okay now the most important thing is that
+00:07:23.680 what will be the steps that we really need to follow in order to solve this problem. So let's go ahead and discuss
+00:07:30.160 about the steps. Let's say the first thing is that I have a PDF document. So
+00:07:37.840 I'll go ahead and write this. So this is my PDF document. Okay. And in order to
+00:07:44.319 draw the steps I will just go ahead and write it in a much more clear way so that you should be able to see this.
+00:07:52.639 Okay. I will take this. Okay. Okay. So let's
+00:07:58.560 say this is my entire cycle that I'm actually the entire steps that I'm going to write it over here. So the first step
+00:08:05.280 let's say that I have my data source over here. Okay. So this is my PDF
+00:08:10.560 document. Let's say inside this PDF document you have both text and images.
+00:08:18.240 So from this PDF document the first step will be that I will go ahead and extract
+00:08:24.960 the text and images. Okay, first of all I will go ahead and extract text and
+00:08:31.520 images. So here let me go ahead and write it down for you. Extract
+00:08:38.719 text and images. Now the question rises for
+00:08:44.000 this how we are going to go ahead and extract text and images if we just use like some library should be there right
+00:08:51.279 because at the end of the day we have to read this PDF document and while reading the PDF document we should be able to
+00:08:57.279 distinguish which are the text and which are the images. So for this I'll be showing you that which library we'll be
+00:09:03.440 using. Okay. So this is my first step. Now in the second step is that let's say
+00:09:10.000 I go ahead and get this I I have completed this step. Okay. Then the
+00:09:15.920 second step is second and third. Let's let's consider this second and third. Okay. So the
+00:09:23.600 second step is that what I will do
+00:09:29.120 from this text we will convert this into chunks
+00:09:36.800 and from this we are going to perform embeddings because for text there will be different
+00:09:43.040 kind of embeddings right. Similarly over here for images
+00:09:48.800 we are going to go ahead and take this and we are going to perform the embeddings.
+00:09:57.120 Now the question arises crush how we are going to go ahead and do this.
+00:10:02.399 Do we use different model to probably different embedding model to handle the
+00:10:08.080 text and images separately or should we just use one model? The best idea is that we try to use a single model. Now
+00:10:16.560 for this which model we'll be using there is a model called as clip model. Right? So this clip I'll talk about the
+00:10:23.440 full form what exactly clip is you know. So this clip model
+00:10:29.600 is provided by open AI. Now how this model is basically trained this model is trained with images and text mapping.
+00:10:37.600 Okay. So there are like 400 million images. I think this model is basically trained with where we can and it is open
+00:10:44.399 source. Okay. So it is available in hugging face. We will try to use this specific model and what we are going to
+00:10:51.120 do is that based on the text we will try to convert that into embedding and based on images we'll also try to convert that
+00:10:57.360 into embedding. The reason of using one model is that because this model is already trained with images text mapped
+00:11:06.480 uh data set. You can consider in that way right. So there is a huge data set which is in already trained with. So
+00:11:13.920 this will actually go ahead and create a similar kind of vectors based on the text and the images. Okay.
+00:11:20.480 Then the next step over here what we are basically going to do from this once we
+00:11:26.320 are able to do this the next step will be that we will store this images in the
+00:11:31.680 base 64 format because that is the format that is actually required. Okay. will store this
+00:11:38.720 particular images as base 64. Okay. Now the next thing is that once we perform this particular embedding
+00:11:45.839 then we take both this embeddings and we store it in some kind of vector
+00:11:52.959 store. So let's say that I will go ahead and use a fs vector store where I'm
+00:11:58.160 going to go ahead and store this entire embeddings. This is my next step. Okay. So now I
+00:12:05.120 have my vector store ready. All I have to do is that I have to take a new query. So let's say that I go ahead and
+00:12:11.760 take a new query and from this particular query I will again use this clip clip model. Why I'll
+00:12:20.880 be using this clip model? So that I will be able to convert this
+00:12:26.320 query into a embedding. Right? So here I will just go ahead and
+00:12:31.519 write clip embed. Okay. So that basically means this clip model will be used to convert the query into an
+00:12:37.200 embedding embedding vectors. Okay. So once we do this the next step is that we will do a
+00:12:45.440 vector search from here. Vector search from here. So this will basically be my retriever.
+00:12:54.079 Once we do the retriever here we are going to get the top K documents and
+00:13:00.240 this top K documents will be specifically text plus image information
+00:13:07.440 text as image information then before sending it to the LLM model as I said
+00:13:15.360 here let's say that I'm using my multimodel LLM model that is open AI GPT
+00:13:22.560 4 4.1 let's say if I'm using this specific model okay before I give this
+00:13:30.240 text and images it should be on a specific format so here we are going to
+00:13:35.600 convert this into a specific format and this format will be passed to the LLM
+00:13:40.720 model and finally we are going to get the multimodel answer
+00:13:48.800 multimodel answer so These are the steps that we are going
+00:13:54.800 to specifically follow. Okay, we are going to specifically follow in order to implement this entire
+00:14:02.560 multimodel rag. So this is my rag. The the format is necessary because models
+00:14:10.320 which are multimodel rag multimodel lm they require in some specific format
+00:14:16.000 from the retriever then only they will be able to provide you the answer. Okay. So this is the steps. So here you can
+00:14:23.040 see initially we took this PDF document. We'll read this document. We'll extract the text and images. Then we'll take the
+00:14:29.360 text convert that into chunk then convert into embeddings. Similarly images convert that into embedding.
+00:14:35.120 We'll use this clip uh model and it is from OpenAI. Uh the
+00:14:40.639 best part is that this is already trained with images to images to
+00:14:45.760 sentence uh mappings. Okay. Then we going to store this into a vector store. Then whenever we get a new query we'll
+00:14:52.399 be embedding this. Then from the retriever we'll hit the ve files vector and we'll get the information of text and images. Then we'll format it give it
+00:14:59.519 to the LLM model and finally we'll get the multimodel answer. Okay.
+00:15:04.959 So this is what we are specifically going to go ahead and do this. Okay. And
+00:15:10.880 the best part will be that when we are doing this right, you'll be able to see how efficient this is and how
+00:15:17.839 how easily you should be able to see this entire thing. Okay? Okay. And one
+00:15:23.360 more thing uh which I missed about whenever I talk about clip right. So the
+00:15:28.560 clip full form is clip full form is nothing but
+00:15:35.199 contrastive contrastive
+00:15:41.199 language image
+00:15:46.639 image pre- training.
+00:15:53.759 We are going to specifically go ahead and use this. Okay. So I hope you you have understood this
+00:16:01.680 entire flow. But you can just see that this clip will be very very handy because it can process both text and
+00:16:08.959 images also. That's the best part about it. Okay. And usually in case of images
+00:16:14.480 it uses something called as vision transformer. In case of text it uses uh
+00:16:19.519 text encoder. Okay. I mean transformers. So if I see right since this clip if you
+00:16:25.279 see the architecture of this this has the combination of vision transformer
+00:16:32.560 plus transformer transformer is basically for images uh for text and vision
+00:16:39.519 transformer is for images right so I hope you like this particular video related to multimodel rag uh in the next
+00:16:46.880 video we are going to go ahead and do the practical implementation thank you so guys now Let's go ahead and implement
+00:16:53.680 the multimodel rag wherein let's say that our data source that we are going to probably go ahead and consider is PDF
+00:16:59.759 with images. Now if you remember this entire flow the first thing is that we
+00:17:05.280 will be considering the PDF document and then we will extract the text and
+00:17:10.319 images. Okay. So for this the example we have we are going to consider this
+00:17:15.599 specific PDF. Okay. And this PDF here you can see it's a very simple PDF just
+00:17:21.280 to show you one basic example I'm using this here in this particular PDF here
+00:17:26.959 you can see some important information is there like document summarizes the revenue trend across Q1 Q2 Q3 as
+00:17:34.320 illustrated in the chart below revenues grew steadily with the highest growth record in Q3 and here you have this all
+00:17:41.120 three charts okay I've not even mentioned Q1 Q2 Q3 but I've just given some text also Okay now considering this
+00:17:48.799 we will go ahead and try to ask some query and we'll see that whether it'll be able to whether my rag will be able
+00:17:54.720 to do this or not so I'm going to use that particular data set itself okay now
+00:18:01.760 coming back to our simple diagram over here right and from this you can see
+00:18:08.559 that the first step is very simple that is reading the PDF document and
+00:18:14.960 extracting the text and images. Okay. So, how do we go ahead and do this? So,
+00:18:20.400 for this we will be using this library which is called as pi mu PDF. Okay. Now,
+00:18:25.600 py mu pdf inside this there is a library called at fids. The best part about this
+00:18:30.960 library is that it is very good at text extraction, image extraction, speed and memory usage. So, we will go ahead and
+00:18:37.919 use this. If you see other libraries like pi PDF, PDF plumber, PDM minor, they're not that good. Okay. So how do
+00:18:46.000 we go ahead and do this? So first of all what we are going to go ahead and do is that I will import some of the
+00:18:51.280 libraries. Okay. So let me go ahead and import all the specific libraries which
+00:18:56.400 we are going to use it. Okay. So here you can see that we are
+00:19:02.160 importing libraries like fids. We are using library like document. I've
+00:19:08.000 already told you why we will be using clip. So for this we will be importing two important libraries from transformer
+00:19:14.799 clip processor and clip model. I'll discuss more about this. Then we are importing from pil import image so that
+00:19:21.520 we can play with the images. Along with this we import torch. Then we have langen.hat models importing
+00:19:28.640 it chat model prompt template human message cosign similarity. Then along
+00:19:34.320 with that you also have import base 64. I'm using recursive character text splitter for text and this is fires.
+00:19:41.120 This is the library that will be used in order to read the PDF. Okay. So now let
+00:19:46.960 me quickly go ahead and execute this. So once we execute this it'll take some amount of time but again it'll get
+00:19:52.640 executed. There are so many different libraries that we are importing. Okay. The next thing is that
+00:19:59.200 you know that I will be requiring as I said I will be requiring what clip
+00:20:04.240 model. Okay. And I've already told you what this clip model is. It is nothing but contrastive language image
+00:20:10.720 pre-training. Right? The main aim of this particular clip model is that
+00:20:15.840 after extracting the text and the image, you know, we will be using text, converting that into chunks and
+00:20:22.160 converting that into embedding. Similarly, if you have the images, we'll be converting that into embedding. And for that, we will be using this clip
+00:20:29.039 model itself. Okay. And this is again an open source model from OpenAI. So let me quickly go ahead and set up
+00:20:35.760 two important things. So first of all here we are going to load the clip models. Okay. So for clip model we
+00:20:42.960 require if you want to go ahead and load the clip model two things is basically required. One is
+00:20:48.559 processor and the other one is model. I will talk about it. Why do we require the processor also but before that I
+00:20:54.080 will go ahead and quickly import OS from env. I'm going to go ahead and import
+00:21:00.320 load_.env. I'll go ahead and initialize load env.
+00:21:05.360 Let's set up the environment. So set up the environment. Okay. Now for setting
+00:21:12.000 up the environment, I'll write OS dot environ.
+00:21:17.280 And here I'm going to go ahead and write open AI API key. And here I will just go
+00:21:23.039 ahead and write OS.get env. Now you may be thinking do am I doing
+00:21:28.880 this for the clip model? No, I'll be using the OpenAI multimodel LLM. Right.
+00:21:34.960 So for that, I'm just going and setting up this particular environment. Okay, now let's go ahead and initialize
+00:21:41.840 the clip model for unified embeddings.
+00:21:48.080 Okay, unified embeddings quickly. Let's do that. Okay, so first thing is that I
+00:21:54.720 will be going to hugging face. So let me just open the browser quickly for you.
+00:22:02.640 So here and here I will search for clip model
+00:22:09.120 hugging face. Okay. So here you can see instantiate all the information is
+00:22:14.400 probably over here. Okay. Clip is a multimodel vision and language model motivated by overcoming the fixed number
+00:22:19.919 of categories. All these things you can find all the clip checkpoints under openi organization. All these things are
+00:22:25.200 there right? You can read more about it and we are going to use this. Now for initializing the clip model two
+00:22:33.600 things is basically required over here. Okay. One I will give I will go ahead
+00:22:39.840 and create a variable called as clip model. And here I'm going to go ahead and write clip model dot from
+00:22:46.320 pre-trained. So I'm going to go ahead and directly call the model. And the model name again you can go to the
+00:22:51.600 hugging face and you can probably go ahead and check it. It is nothing but it is open clip vit base patch 32. Okay. So
+00:23:00.640 this is the model that we are going to specifically use and this is the model name which will be responsible in
+00:23:06.880 converting both the text into embeddings and images into embeddings. Okay. And
+00:23:12.720 along with this since we need to go ahead and use this particular model I will also go ahead and create clip
+00:23:18.080 processor. And here let me go ahead and write clip processor dot from from
+00:23:23.200 pre-trained. And here we are going to go ahead and write open AAI slash and for this the same model
+00:23:32.320 because we need and what is this what is this processor see for giving input to
+00:23:38.720 any of the model this processor this clip processor is making sure that whatever format is basically required
+00:23:44.960 over here right it'll try to convert in that particular format. Okay. So for the clip model you need to import these two
+00:23:51.440 things. One is the pre-processor and one is the model. Now what you can do is that I can just go ahead and write do
+00:23:56.960 eval. So just to see the entire clip model evaluation. Okay. So this is going
+00:24:02.960 to take some amount of time. Again it depends on system to system. So here you can see over here clip model is nothing
+00:24:08.480 but it is using a uh clip text transformer embeddings position encoding
+00:24:13.679 all these things and it is trying to convert this into 512 dimensions. Then you have this clip encoder. All this
+00:24:19.440 information you'll be able to see with respect to this particular model. Okay.
+00:24:24.480 So in the second step which I have already told you for this we are going to use this clip model from the open AI
+00:24:30.640 which will be able to do that and we have loaded it. Okay. Now coming to the next important step. We need to find out
+00:24:38.159 a way of embedding the images. Right? How do we go ahead and embed the images?
+00:24:44.480 basically take the image part and convert that into image vectors or image embeddings. Right? So for that we will
+00:24:51.120 go ahead and create two embedding functions embedding function where we are going to specifically use this clip
+00:24:56.880 models. Right? One is definition embeddage. Here we have to give our image data.
+00:25:05.279 Okay. and then we will go ahead and embed
+00:25:11.200 embed image using clip. Okay.
+00:25:16.720 Now whenever we have this image data how this image data will come I will talk about it in the later stages. Okay. Now
+00:25:23.520 first of all what we will do we will just go ahead and check
+00:25:28.960 whether this image if if is instance image data str if it
+00:25:35.039 is a path okay if I'm providing this image data in the form of path then we will open this image particularly with
+00:25:41.840 the help of this image library otherwise if it is an image let's say if you give directly the base 64 data then this will
+00:25:49.120 be just considered as the image data okay now once Once we have this image data since we need to convert this image
+00:25:57.360 into embedding vectors for this we are going to go ahead and use clip processor
+00:26:02.960 clip processor and inside this I'm going to go ahead and give my images is equal to image. Okay. And we are going to go
+00:26:10.080 ahead and return this in this particular format. Okay. So this
+00:26:15.600 is basically saying that hey you need to return the tensors in the form of a pyarch tensors itself. Okay. And this is
+00:26:22.559 actually available if you have some understanding with respect to deep learning and all. So what it does is
+00:26:28.159 that it is trying to convert the entire format into tensors. Right? Now the next thing is that we will also perform
+00:26:34.880 normalization. See once we get this right this will be my inputs that needs to be given to my clip model. Right? So
+00:26:43.120 here now I will write with torch.nd here we are going to take the image features.
+00:26:48.720 There's a function inside the clip model saying that clip model get image features this particular features based
+00:26:55.679 on this particular input I will be able to get it. This two line of code is basically normalizing the embeddings to
+00:27:02.240 unit vector okay to unit vector. This is what it is basically done
+00:27:07.760 because see every image dimensions will be different right. If we really want to convert that into a unit vector, we can
+00:27:14.159 basically go ahead and use this wherein we are taking the features and we are dividing it with by normalization by
+00:27:20.080 keeping the dimension as minus one and then finally we convert this into a numpy array. Okay. So this is how
+00:27:26.240 embedding with respect to images happen. Now you know that this clip model is
+00:27:31.440 also very good at converting the text into embeddings. So here you can see embed text using clip.
+00:27:38.799 So I've used the same clip processor. Here we are giving text return ter padding is equal to true, truncation is equal to true and maximum length we are
+00:27:44.960 given as 77 and again we are trying to normalize this. Here you can see instead of using get image feature we are given
+00:27:51.520 get text features. Okay. Now this text features will be very important so that it'll be able to convert the text into
+00:27:58.000 features. So for this particular function we give text for this part we give image data. But at the end of the
+00:28:03.919 day we are using both clip model and clip processor. Okay. So here also we are using clip model and clip processor.
+00:28:09.760 Perfect. So these two are the functions. One is embed text and one is embed image.
+00:28:15.200 Now you know that see we have completed this function. You have completed this
+00:28:20.320 function. Now let's go ahead and read this PDF document and extract the images. Okay. So first of all let me
+00:28:27.919 go ahead and give the process PDF. I give my PDF path. So let's say my PDF
+00:28:33.600 path is multi-model sample PDF. Okay, multimodel. So this is
+00:28:42.159 the PDF name, the same PDF which I have actually shown. Now I'll go ahead and write doc is equal to
+00:28:48.559 fits dot open and I'll give this PDF path. Okay,
+00:28:54.240 whatever the PDF path is. Okay. Now, initially what we'll do, we will try to
+00:29:01.360 create some variables. Okay. We will try to create some variable wherein we'll
+00:29:06.399 store all documents and embeddings. So, this is my all docs, all embeddings and image data store. Okay. So, we are
+00:29:11.679 creating this particular variable. Next step is that we will go ahead and use some kind of text splitter. So, text
+00:29:17.440 splitter is also required for images, right? So, here you can see I've used recursive character text. Okay, this see
+00:29:23.600 I'm copying and pasting those things which you already know. Okay, so that is the reason why I'm doing this. Okay, so
+00:29:30.480 now I have my doc. Okay, now with respect to the doc, see if I just go
+00:29:35.600 ahead and execute this and if I see what is my doc right here you can see
+00:29:41.679 doc fits open if I'm actually doing here you can actually see that this is what is my doc like it's a document of
+00:29:47.760 multimodel sample.pdf PDF guys. Now once I have this variable dog, now what I'm actually
+00:29:54.720 going to do is that I will iterate through all the documents that are available inside this and then I will
+00:30:01.840 first of all get my text data, convert it into a text chunks and then convert it into embeddings. Similarly for the
+00:30:08.559 image data, I will get all the images and probably convert that into image vectors. Okay, so that is what we are
+00:30:15.279 basically going to do. So I will write for I in sorry for I comm, page in I
+00:30:24.559 will use an enumerate function go inside my doc. Okay then I will first of all
+00:30:30.080 process the text. This is my first step. Then my second step is process the
+00:30:36.399 images. Okay. Now for processing the text first of all I will just go ahead and write text is equal to page dot page
+00:30:44.720 dot get text okay so we are going to go ahead and use this particular function
+00:30:51.279 once we go ahead and write this with this you are going to get all the text so I will write if text dot strip
+00:30:58.799 right we are just removing all the empty spaces dot strip not trip okay strip
+00:31:07.039 here we are going to go ahead and create a temporary document for splitting. Okay.
+00:31:15.840 So let me go ahead and do this and I will keep this in the form of a document data structure. Okay. So here this is my
+00:31:23.279 first step and we have done this. See temp doc document data structure page content is equal to text and metadata
+00:31:29.760 some of the information and remember for all the text data you need to keep the metadata as type is equal to text. Okay,
+00:31:35.919 this is really important. And then we are going and using the split documents for this. Okay. Now after this we will
+00:31:43.679 embed each chunk. See after this step we are going to go ahead and get the chunks. Right. So now I'm going to go
+00:31:49.679 ahead and embed each chunks using clip. So for chunk and text chunk we have used
+00:31:55.360 this embed function. Then I am combining all the embeddings over here inside this
+00:32:00.559 particular variable and all docs.append. If you remember what is embed text? Embed text is nothing but it is a
+00:32:06.480 function which is basically getting the text features right and it is
+00:32:11.519 normalizing and giving you back all those particular features right so that is what we have basically done over here
+00:32:17.760 right so guys now similarly for the images we need to follow this three
+00:32:22.799 important steps okay so I will just go ahead and quickly comment this for you
+00:32:28.559 so that there are a lot of code to be written so I really want I'm trying my best to probably teach you in a way so
+00:32:35.200 that you should be able to understand. Okay. So like for images I hope everybody has understood what we did
+00:32:41.200 right now for processing images we need to perform three important action. One is convert PDF image to PL format store
+00:32:48.080 as B 64 for my GPT uh for mean uh like
+00:32:53.200 my computer vision uh GPD model uh specifically and multimodel itself
+00:32:58.399 create clear embeddings for retrieval. Okay like how we did it for the text. Now we in this particular loop right we
+00:33:05.200 are already having this particular page. Now similarly what we will do I will go ahead and copy some code for you and
+00:33:12.000 tell you that what we will be doing. Okay. So here in the same loop we will
+00:33:17.760 go ahead and write like this. See I'm enumerating through every pages and there is a function called as get image.
+00:33:25.200 So this will actually get all the image information. As I said we need to convert the PDF image to PDL format. So
+00:33:31.679 this is what we are basically doing. Okay. Here you can see we are converting this into PILM image. Okay. And before
+00:33:38.480 that we need to convert our image information that we are getting into image bytes. Then we create a unique
+00:33:45.120 identifier just to name that particular image. So here you can see based on the index that particular image and image
+00:33:51.440 index we'll be getting this. Then we are storing the image as B 64 for later use for the GPT model whichever model we are
+00:33:58.559 specifically giving. And this pile image is getting saved with the format of PNG.
+00:34:05.360 Then I have B 64 image in encoded format. So this is basically storing the image as B 64. And finally we go ahead
+00:34:12.079 and embed using clip wherein I have to give the PIL image. Then I will get the embeddings and the variable that we have
+00:34:18.399 created right all embeddings inside this we will put that specific embedding also
+00:34:24.079 right. So all embeddings do append of embedding. Finally we go ahead and create the document for the image. Remember here you need to go ahead and
+00:34:30.719 put the metadata as type image and this will basically be your image id and this we get the all all documents itself. So
+00:34:38.159 this is what we are basically doing. This is nothing but processing the text. This is nothing but processing the image
+00:34:43.760 and step by step we have written it what you are doing it right. Please have a look onto the code step by step if
+00:34:49.679 you'll be able to understand all the code itself. Right? Here I have also written proper comment so that you
+00:34:55.040 should be able to understand it. So now once you go ahead and execute this, this has got executed successfully which
+00:35:02.480 looks good. Now uh if you go ahead and see like how many embeddings has got
+00:35:07.920 created and how many documents has got created you can go ahead and write just go ahead and execute it over here. All
+00:35:14.160 embeddings. This is how my all embedding looks like. Right. Similarly if you want
+00:35:19.520 to also go ahead and see some other embeddings you can also see this. Okay. So all embedding is there and there is
+00:35:24.800 also one variable called as all docs. So how many docs are basically there
+00:35:31.680 here you can see there are two docs which is absolutely good and with respect to this particular docs here you
+00:35:37.280 can see right image image id information image right and this is my text. So this
+00:35:43.680 is my type image this is my type text right so here we are able to get this.
+00:35:49.040 So this is perfect. Now the next step will be that we need to go ahead and create a vector store. So for creating a
+00:35:54.320 vector store I will just go ahead and create a unified files vector store. So I'm using that all embeddings over here
+00:36:01.680 right you can see over here I'm using that same all embeddings with inside this embedding arrays and then file dot
+00:36:09.040 from embeddings right from embeddings and there was also something called as from documents another function here we
+00:36:15.280 are going to use from embeddings wherein we are directly giving the embeddings itself right so here text embeddings is
+00:36:21.599 basically there uh I'm iterating through all documents and embedding array see if I just go ahead and see what is my
+00:36:28.880 embedding array also. You should be able to see this. Okay. So let's print this embedding array.
+00:36:36.880 So this is what is my embedding array for two sentences. Right? For two sentences. So I'm taking all the docs
+00:36:43.920 and I'm taking all the embedding arrays combining them in a zip and taking the page content. See if I do zip what will
+00:36:51.119 happen? See if I do zip of or if I just combine this all docs
+00:36:59.280 all docs comma embedding array right so
+00:37:05.200 here you can see that this is my page information this is my image information and for this this is my vector and for
+00:37:11.760 my second record this is my vector right and it is of 512 dimension which I've already told so we are iterating through
+00:37:18.160 we are getting the page content and we are putting it inside my text embeddings here embedding will be none because we
+00:37:23.359 have already done that embedding. So that is the reason we have used this function from embedding. So this becomes my vector store. So here is my vector
+00:37:30.560 store. Now from this particular vector store you can do anything. You can create a retriever. You can do whatever
+00:37:35.920 things you like. Right now quickly let's go ahead and initialize my LLA model. So for this we are going to use GPT 4.1. It
+00:37:43.200 is a multimodel and uh with the help of this particular model you can go ahead and implement uh you can implement a
+00:37:49.200 rack pipeline with multimodel rack. Okay. So this will be able to understand the text and this one. Right now this is
+00:37:56.160 done my entire uh this vector store is ready. Right now I can go ahead and use it in
+00:38:01.839 creating a ra pipeline. But before creating a ra pipeline I have to convert this vector store and probably show you
+00:38:09.040 how a search will basically happen. Okay. So here you can see uh with
+00:38:14.079 respect to this particular search here we have created a function called as retrieve model unified retrieval using
+00:38:19.839 clip embedding for both text and images because here is my vector store. So this will basically be my retrieval model
+00:38:25.359 right retrieval sorry. So whenever I give a query first of all we embed the text with this query we get the query
+00:38:31.599 embedding and then we search it in the vector store and here we are going to
+00:38:36.960 use say let me go ahead and write this particular code. Okay. So here what we need to do, we need to search based on
+00:38:44.880 the query embeddings, right? But now I already have this query embeddings. So I
+00:38:51.200 can directly what I can do I can go ahead and use I will create a variable results is equal to vector store dot
+00:38:59.920 there is a lot of method I told right similarity search by vector right there is similarity search relevant score. So
+00:39:06.079 here I can go ahead and directly do it with vector because I already have that query embedding. So here I will go ahead
+00:39:11.440 and write my embeddings is equal to query embedding
+00:39:18.320 query embedding double equal to I've written
+00:39:25.119 it okay single equal to query embedding whatever k value is k is equal to k
+00:39:32.320 right and if you remember what k is the value that we have given k is equal to 5 it should be small k okay query
+00:39:38.880 embedding why This uh is wrong. Let me check.
+00:39:46.880 Similarity search by vectors query embeddings. I think I have made some
+00:39:52.000 mistake in the spelling. Just a second. Okay. So here, oh there was an
+00:39:58.320 indentation issue. Okay. So query embedding similarity search by vector and then we are returning the results.
+00:40:03.520 Perfect. So here you can see that I will be able to retrieve the results from here. Okay.
+00:40:10.160 Now uh this retrieval model is just like a retriever right here you can see that
+00:40:16.960 from this retriever I am able to get some text on images right the top k element but we need to convert this into
+00:40:23.119 a format before we give it to our llm. So for that format we will go ahead and define one more function. Okay and now I
+00:40:30.960 will give you one assignment for this. Please go ahead and just check this function. Okay. So this function is
+00:40:37.680 called as create multimodel message. Create a message with both text and images for GPT4V. Okay. So here I've
+00:40:45.040 created a content content.append type is equal to text question and context. It's just like one template of information. I
+00:40:52.960 will separate the text and image document from the retrieve docs. Right? So retrieve docs is basically going to
+00:40:58.720 come from where? From this particular function. Right? We will go ahead and separate for text and images. Then if we
+00:41:04.800 have text docs we will create a separate text context for this. If there is an
+00:41:09.920 images we create separate image context for this. Here we give image URL because image URL is basically required along
+00:41:16.480 with the image data. Okay. So the GPT4 version that we are
+00:41:21.680 specifically using. And then finally we have this content. Okay we basically go ahead and return this human message. Now
+00:41:28.800 just go ahead and see this. Okay, just go ahead and see this how this message is basically created. There's a specific
+00:41:34.560 format that is required for GPT4 V.1 right and for that we use it over here
+00:41:42.880 the main fundamental is that whatever retrieve documents we are basically getting we are separating it with respect to text docs and image docs.
+00:41:49.280 Okay, now it's time that we go ahead and integrate this into a rag pipeline. So
+00:41:57.359 here inside this function you can see context docs I'm calling retrieval multi-doc based on the query then we are
+00:42:03.920 creating this multimodel message how the message the llm wants and finally we
+00:42:09.760 whatever docs context docs we are basically getting see from this particular message we are just invoking
+00:42:15.200 with the llm llm.invoke invoke and this is basically for printing the entire information. Okay, that's it, right?
+00:42:23.119 Context docs is nothing but we are printing all the information over here. If you want to see the response uh you
+00:42:29.839 can also go ahead and return the response.content over here, right? And this is basically printing all the
+00:42:35.200 relevant context that you have got from the retriever. Very simple, right? Two
+00:42:40.480 to three functions and uh you should be able to do this. Okay, then let's the exciting part is that we'll go ahead and
+00:42:45.839 check this out how things are working over here. Okay. So I will ask four different question if
+00:42:52.400 name is equal to underscore main first is how does the chart on page one. Let's go ahead and see this. How does the
+00:42:59.920 chart on page one show about revenue trends? Summarize the main findings on the document. What visual elements are
+00:43:05.599 present in the document? So this is the three question. I will print the query. We'll call this multimodel rack pipeline
+00:43:10.960 and we'll display it. So guys finally let's go ahead and execute this. And uh here I have given three questions which
+00:43:17.040 you can see what does the chart on page one shows about revenue trend summarize the findings from the document and all are there here we are basically calling
+00:43:23.599 the multi-ro multimodel rag pipeline and then we can see the answer. Okay. So
+00:43:28.720 what does the chart on page one show about revenue trends? So retrieve documents two documents text from page
+00:43:34.240 zero annual revenue this document this image from page zero um this information
+00:43:40.319 is basically getting displayed uh the chart on the page one shows the revenue steadily increase over three quarters Q1
+00:43:47.359 had the lowest revenue blue bar see it is able to determine the blue bar right
+00:43:52.640 then summarize the main findings from the document text from zero this this is there main findings here you can see uh
+00:43:58.400 study revenue growth the document shows that revenue go Over the three quarters, the height of the bar increased from
+00:44:03.760 left to right, visually representing growth across three quarters. Right? And this visual elements align with the
+00:44:10.319 context provided in the text. So I hope you are able to see this amazing answers. But if you are following this,
+00:44:17.920 I think you should be able to see that how we created a retriever. Then how we created this particular format for the
+00:44:23.920 LLM and finally we are able to get the mod model answer for this. uh the main
+00:44:29.359 thing is that how do you generate this multimodel message and for this you need to see the documentation for the open
+00:44:35.359 AAI uh multimodel LLM models like how this specific message is basically
+00:44:40.800 required how the input is or how the format is required in order to call this LLM right so I hope you like this
+00:44:47.280 particular video now you can go ahead and play with any kind of PDFs and try to use this and see what all things you
+00:44:53.520 are able to get so I hope you like this particular video I will see you all in the next video thank you take Okay, bye-bye.

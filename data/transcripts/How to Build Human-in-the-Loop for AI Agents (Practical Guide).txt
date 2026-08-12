@@ -1,0 +1,656 @@
+# tactiq.io free youtube transcript
+# How to Build Human-in-the-Loop for AI Agents (Practical Guide)
+# https://www.youtube.com/watch/7GOxUgVTz3s
+
+00:00:00.000 So, with the current state of AI, human
+00:00:02.640 in the loop is something a lot of
+00:00:04.400 agentic applications can benefit from.
+00:00:07.200 So, with strategic point where you halt
+00:00:09.920 the process and either wait for specific
+00:00:12.400 approval or feedback from a human before
+00:00:15.840 continuing the flow of operations. So,
+00:00:18.920 in the example of a banking agent that
+00:00:21.160 can, for example, check your balance,
+00:00:22.880 which is totally safe. We can do that.
+00:00:24.280 We can do the deposit, totally fine, but
+00:00:26.120 we can also transfer money. And then,
+00:00:27.960 especially when it comes to higher
+00:00:29.320 amounts, this is something where, in
+00:00:31.920 most cases, you want human approval
+00:00:33.880 before the agent just goes off and
+00:00:36.680 processes the transaction, right? So,
+00:00:38.920 this is just one example, but in almost
+00:00:41.880 any serious
+00:00:43.840 LLM-based applications that grow in
+00:00:45.960 scale, you'll find that there are some
+00:00:49.360 areas of the application, so some branch
+00:00:52.640 or route or sub-class, where human in
+00:00:56.400 the loop can be very helpful, either to
+00:00:59.560 go to production to go live quicker,
+00:01:02.160 knowing that the LLM can handle, let's
+00:01:05.080 say, 50% of the cases fully automated,
+00:01:08.480 but the other 50% of the cases that can
+00:01:11.280 clearly be classified is still tricky.
+00:01:14.120 And that's where the humans need to be
+00:01:15.360 involved. So, going to production faster
+00:01:18.720 with your LLM-based applications and
+00:01:20.320 making them more reliable by
+00:01:23.520 figuring out what the edge cases are is
+00:01:25.440 something that is very helpful to do,
+00:01:27.520 but a lot of people still find it tricky
+00:01:30.240 to implement it in practice, and that is
+00:01:32.320 because beyond just what you need to
+00:01:35.840 include in your back-end code. So, let's
+00:01:37.760 say you're working with Python. So, you
+00:01:40.080 could create flows, which I will go
+00:01:42.200 through in this video. I'll show you
+00:01:43.480 some simple Python-based examples of how
+00:01:45.680 you can strategically halt a process and
+00:01:48.120 then continue with it. While that is
+00:01:50.240 generally relatively straightforward,
+00:01:52.600 where it gets more tricky, if you get to
+00:01:55.480 the production patterns, which I will
+00:01:57.080 also go through in this video, where we
+00:01:59.320 really need to view the entire
+00:02:01.600 application flow as a whole and
+00:02:03.120 understand, &quot;Look, we are dealing with a
+00:02:05.000 user. There's potentially a front-end
+00:02:06.720 and an API and our agent, which is our
+00:02:08.360 back-end, and there's a database.&quot; And
+00:02:10.639 when you implement human in the loop
+00:02:12.360 correctly, all these components need to
+00:02:15.520 talk to each other. So, that is usually
+00:02:17.240 where it gets tricky. So, in this video,
+00:02:18.920 I want to give you a quick overview of
+00:02:22.000 two examples, two ways to implement it
+00:02:23.800 in your back-end, and then the
+00:02:25.080 production patterns to tie all of this
+00:02:27.600 together. So, let's start with the two
+00:02:30.000 Python-based approaches. And what I am
+00:02:32.480 primarily referring to is
+00:02:35.480 two different ways that you can control
+00:02:37.280 the flow of your application. So, one
+00:02:40.360 way to go about this, which you're
+00:02:41.680 probably familiar with if you're
+00:02:42.800 watching this video, is you use
+00:02:44.680 structured output and you use LLMs as as
+00:02:47.440 a router, let's say. So, you have your
+00:02:50.280 application, you have a workflow, and
+00:02:51.720 you go through different steps. You
+00:02:53.120 maybe classify something, and then
+00:02:55.120 depending on what label it gets or what
+00:02:57.720 category it is, you can execute to a
+00:03:00.160 certain function or you can go into a
+00:03:02.120 particular node. So, you end up within a
+00:03:05.280 point within your application where now
+00:03:07.960 you need the approval. Now, the other
+00:03:09.760 way to do it is through tool calling.
+00:03:12.360 So, this is more, quote unquote,
+00:03:14.200 agentic, where you pretty much have an
+00:03:16.320 LLM, you give the LLM the tools and a
+00:03:18.840 prompt, and now the LLM decides, &quot;Look,
+00:03:22.040 do I need to get the balance and execute
+00:03:24.400 that function? Do I need to deposit
+00:03:25.840 money or do I need to transfer the
+00:03:27.240 money?&quot; Now, I want to start with these
+00:03:29.400 two examples because the way you halt
+00:03:32.160 the process is a little bit different.
+00:03:34.680 Because when you are using the, let's
+00:03:37.040 say, like workflow or graph-based
+00:03:39.360 approach, you just want to check it
+00:03:42.760 based on the output of your LLMs. And in
+00:03:47.040 the tool calling approach, it's also
+00:03:49.240 based on your LLM's output, but you need
+00:03:51.440 to capture and look specifically for
+00:03:53.360 certain tool calls. So, I want to show
+00:03:56.000 you that first because that's the
+00:03:57.640 starting point. That's how you halt your
+00:04:00.280 agentic processes. And then, like I
+00:04:03.520 said, in the next step, I'll show you
+00:04:05.080 how to bring that together in two
+00:04:06.760 production patterns. But first, let's
+00:04:09.080 start with the first approach, and that
+00:04:11.800 is by using an LLM as a router. So, I'm
+00:04:15.000 going through this code example over
+00:04:16.600 here.
+00:04:17.519 Everything will be available in the
+00:04:18.839 GitHub repository that I will link
+00:04:20.798 below. So, I'm going to quickly walk you
+00:04:23.320 through the process over here of the
+00:04:25.800 banking agent that I just introduced to
+00:04:28.080 you. So, let's say we start with a
+00:04:30.320 balance of 1,000, and we have three
+00:04:33.040 simple functions. We can get the
+00:04:34.360 balance, we can transfer the money, and
+00:04:36.040 we can deposit the money. This is what
+00:04:38.400 our agent is going to be working with.
+00:04:41.160 Now, then, instead of doing the
+00:04:43.520 tool-based approach, what we're doing
+00:04:45.160 right now is, in the first step within
+00:04:48.200 our application, whenever the user
+00:04:49.680 question comes in, we um we first of all
+00:04:52.440 define an action model. So, this is a a
+00:04:55.040 Pydantic model that has an action type,
+00:04:57.080 which is a literal, which pretty much
+00:04:58.760 determines, &quot;Look, we can check the
+00:05:00.200 balance, we can transfer, we can
+00:05:01.360 deposit.&quot; So, instead of relying on tool
+00:05:04.000 calls, we first specifically let the LLM
+00:05:06.760 decide the actions that it needs to
+00:05:09.040 take. And it can also decide it needs
+00:05:11.720 multiple because we're going to take
+00:05:13.800 that action and we're going to put it
+00:05:15.760 into an action plan, which is a list of
+00:05:18.080 the actions. So, this is just a
+00:05:20.480 definition using the Pydantic library.
+00:05:22.920 So, I'm assuming you are familiar with
+00:05:24.800 that while I'm going through this
+00:05:26.400 example. What we also do in here is,
+00:05:28.680 instead of relying on the LLM itself to
+00:05:32.280 figure out the hard rules for when it
+00:05:34.600 requires approval, I'm actually using a
+00:05:36.880 model validator in here, where I'm going
+00:05:39.000 to enforce a confirmation whenever the
+00:05:42.400 transfer amount is higher than 100. I'll
+00:05:45.680 show you what that means. If I now
+00:05:47.920 create a Pydantic model over here, where
+00:05:50.800 we say, &quot;Look, this is an action where
+00:05:52.920 we need to do a transfer. Let's do it to
+00:05:54.480 Alice.&quot; And we set the amount to 500,
+00:05:56.840 which would be over 100, which would
+00:05:58.960 require a confirmation in our example,
+00:06:01.840 right? But we set it to false. Now, this
+00:06:05.080 is normally what the LLM would do, but
+00:06:07.400 I'll give you an example over here. So,
+00:06:09.160 we make the mistake over here by setting
+00:06:11.080 this to false. Through the enforcement
+00:06:13.600 over here, this would not be possible,
+00:06:15.240 meaning that if if I print this Pydantic
+00:06:17.680 model, which you can see over here,
+00:06:19.600 we still set the requires confirmation
+00:06:21.960 to true. So, here you can see how we are
+00:06:24.360 already offloading some of the
+00:06:26.120 decision-making logic and taking that
+00:06:28.400 more towards our back-end rather than
+00:06:31.360 specifically relying on the tool calls
+00:06:33.400 and the LLM for the LLM to decide that.
+00:06:36.360 So, that's why I want to give you kind
+00:06:37.880 of like these two perspectives. So, with
+00:06:40.520 that Pydantic model in place, what we
+00:06:42.440 can now do is we can create a simple
+00:06:45.000 agent over here, which is literally just
+00:06:47.560 using the OpenAI client. We're using the
+00:06:49.400 responses API. We have some simple
+00:06:51.440 instructions, and we use the text format
+00:06:54.080 to force structured output and force the
+00:06:57.080 LLM to come back with an action plan.
+00:06:59.600 So, when we bring all of that together
+00:07:01.400 in the run with confirmation, which
+00:07:03.720 function, which just take the user input
+00:07:05.640 as a as a string, you can see we first
+00:07:09.560 run the model, then we get the output,
+00:07:11.880 we get the plan, and then we're going to
+00:07:14.000 execute everything. Because right now,
+00:07:16.960 first it just creates the action plan,
+00:07:18.680 and then here within our code, we can
+00:07:20.320 pretty much filter for all of the
+00:07:22.800 functions or plans that needs to be
+00:07:24.680 executed and implement the approval step
+00:07:27.680 over here. So, we're using simple
+00:07:30.720 if-else logic in order to perform
+00:07:32.920 various checks. This is just the
+00:07:34.680 foundation of how to get to human in the
+00:07:36.880 loop, and that's also why I said
+00:07:38.320 implementing this within Python in your
+00:07:40.080 back-end is generally not that
+00:07:42.240 difficult. You'll figure it out once you
+00:07:44.480 start to build your application. You
+00:07:46.000 just need to test it a couple of times,
+00:07:47.600 and then you get to it. So, when
+00:07:49.840 I
+00:07:51.160 put all of this into memory over here,
+00:07:52.840 and I'm going to give the demo, where
+00:07:54.360 we're going to say, &quot;Look, first, if we
+00:07:55.800 just run this, and we're going to ask it
+00:07:58.840 to check my balance and transfer $50.&quot;
+00:08:01.800 Right? So, this is what we're going to
+00:08:03.200 do first. Let's
+00:08:05.560 run this, and I'm going to use the
+00:08:06.760 interactive session over here, so we'll
+00:08:08.240 see everything show up. So, when we ask
+00:08:10.560 it to to make the small transfer, you'll
+00:08:12.480 see that the LLM will come up with the
+00:08:14.880 action plan. So, first, it's going to
+00:08:16.400 check the balance to see if we actually
+00:08:19.040 have enough money to be able to make the
+00:08:21.320 transfer, and then the other action is
+00:08:23.880 actually doing the transfer,
+00:08:25.800 which we can do because it doesn't
+00:08:27.200 require a confirmation. And then, here
+00:08:29.560 you can see the final result. So, we
+00:08:31.840 transferred the 50 bucks to Alice, and
+00:08:34.000 the new balance is now 950. Okay, so
+00:08:36.039 that would be
+00:08:37.400 a simple agentic loop, right? Users ask
+00:08:40.159 something to the system, and we process
+00:08:42.320 it. Now, we can also do a deposit, which
+00:08:45.520 also is totally fine to run.
+00:08:48.040 So, let's run that over here. You can
+00:08:49.440 see the action plan of deposit, also
+00:08:51.200 requires confirmation is false, and we
+00:08:53.680 have topped up our balance. But now we
+00:08:56.480 get to the large transfer, which does
+00:08:59.040 require the approval. So, now what we
+00:09:01.920 see over here is the process gets
+00:09:03.800 halted. And here, since I'm running this
+00:09:05.840 in the interactive terminal, you see
+00:09:07.560 this window pop up over here, simply
+00:09:10.080 asking me for confirmation. So, I can do
+00:09:12.480 either a Y or an N for no. So, let's
+00:09:15.520 confirm that, and we'll run it. So, now
+00:09:18.760 you can see we have transferred that
+00:09:20.760 successfully. But if I run this one more
+00:09:23.120 time and get the approval step once more
+00:09:25.880 and hit the N button, it will now be
+00:09:28.200 canceled. So, that's a very simple way
+00:09:30.360 to go through this, and all we pretty
+00:09:31.880 much did is filter for the transfer
+00:09:34.240 amount and then check whether it
+00:09:36.440 requires a confirmation. So, we do if
+00:09:38.480 action requires confirmation, which is a
+00:09:40.480 Boolean, so this is true or false. We do
+00:09:43.280 some print statements, and then we wait
+00:09:45.160 for the input. So, this is where we use
+00:09:47.480 Python's native input feature in order
+00:09:50.200 to halt the application.
+00:09:52.120 But while this is great for this demo
+00:09:54.600 right now that I'm giving to you, this
+00:09:56.080 is not something you would do in a
+00:09:58.520 production environment. So, that's where
+00:10:00.680 it gets a little bit tricky. So, that's
+00:10:02.960 why in the next phase or second half of
+00:10:05.080 this video, I'm going to show you how we
+00:10:06.720 can actually do that in a production
+00:10:08.320 environment. But, I wanted to start here
+00:10:10.160 to help you understand how we can halt
+00:10:13.360 our application flow. So, that's the
+00:10:16.520 first step over here. We're using an LLM
+00:10:18.640 as a router to decide which action to
+00:10:20.720 take. We can check for that. And then we
+00:10:23.400 either just like let it run or manually
+00:10:26.080 approve it. Now, if we now look into
+00:10:29.800 like what that would look like when we
+00:10:31.480 do it with tools, the process is almost
+00:10:33.920 exactly the same with a little nuance.
+00:10:35.920 So, let me go to the other file over
+00:10:37.800 here and see what we're dealing with
+00:10:40.240 over here. So, first of all, we have a
+00:10:42.440 tool schema definition. So, this is what
+00:10:45.920 we make available to the model in order
+00:10:48.040 to decide what functions to use and what
+00:10:50.320 parameters to plug into those functions.
+00:10:52.800 This is pretty much the same setup, but
+00:10:55.000 now we use a while loop instead of
+00:10:58.560 first getting all the structured output
+00:11:00.680 back and then filtering for that. But,
+00:11:02.800 pretty much if I scroll down over here,
+00:11:04.880 what you'll find is that right now we
+00:11:07.960 are halting the process whenever we find
+00:11:10.720 that there is a tool call in here. So,
+00:11:13.080 if the tool call is not present, meaning
+00:11:15.360 the LLM did not decide to use a tool, we
+00:11:18.080 simply just like return the text output.
+00:11:20.240 So, this is when, let's say in the
+00:11:21.480 context of an agent, you ask a question,
+00:11:23.640 the agent will immediately reply back to
+00:11:25.839 you. But, when there is a tool call
+00:11:27.680 present, that's where we get into this
+00:11:29.680 nested for loop where we perform the
+00:11:32.000 various checks. So, we can check our
+00:11:33.880 balance, which will all be good. Your
+00:11:35.960 current balance is the following. Then
+00:11:37.640 we deposit money, which should also be
+00:11:40.520 not an issue at all. And then we
+00:11:43.280 transfer the amount.
+00:11:45.160 So, there you can see we get the pop-up
+00:11:47.800 window again and we can confirm it
+00:11:50.600 manually and then we will transfer the
+00:11:53.200 money, which is now, as you can see,
+00:11:55.360 successful. So, coming back to our
+00:11:57.880 examples, two different ways where you
+00:11:59.880 can look at the process you're
+00:12:01.520 automating, figure out what kind of
+00:12:03.440 architecture am I using, and how can I
+00:12:06.560 identify when I need to halt the
+00:12:09.240 process.
+00:12:10.440 That's the starting point. So, these
+00:12:11.680 should be some cool little playground
+00:12:13.880 files for you to start experimenting
+00:12:16.520 with whenever you want to implement this
+00:12:18.960 within your own applications. And now,
+00:12:21.440 let's continue to the production
+00:12:23.880 patterns to explain, okay, look,
+00:12:26.600 whenever I do this within my back-end,
+00:12:28.600 how do I now integrate this and make
+00:12:31.080 sure it works across the entire
+00:12:33.080 application stack? And I'm going to
+00:12:34.640 cover two common production patterns
+00:12:37.080 that you can use. So, the one would be
+00:12:38.880 SSC streaming, which is useful for
+00:12:41.760 real-time chat applications, assistance,
+00:12:44.480 pretty much where the user is actively
+00:12:47.360 engaged in the process. That's where
+00:12:49.880 this pattern is really useful. The other
+00:12:52.080 one that we're going to cover is an
+00:12:54.200 async process. So, this could either be
+00:12:57.160 an event-driven architecture or just an
+00:12:59.800 asynchronous API endpoint, for example.
+00:13:02.480 But, this generally works better for any
+00:13:04.839 kind of like back-end workflow where no
+00:13:07.240 user is actively waiting. So, let's
+00:13:10.520 start with pattern number one, SSC
+00:13:13.040 streaming, and how you would implement
+00:13:15.040 that. So, this is a big diagram. It's
+00:13:17.040 going to be a little bit technical, but
+00:13:18.320 I'm going to walk you through this step
+00:13:20.280 by step. Pretty much all we need to do
+00:13:21.640 is just like follow the lines. So, what
+00:13:23.920 I just showed you is pretty much only
+00:13:27.720 human in the loop from an agent layer,
+00:13:30.240 meaning we have some type of LLM model.
+00:13:33.040 We give it a system prompt. We want it
+00:13:34.960 to do something and at some point we
+00:13:36.640 determine, look, for example, the amount
+00:13:39.120 is 150, which is higher than 100, so it
+00:13:41.839 requires approval.
+00:13:43.560 But, that's only, like I said, a very
+00:13:45.280 tiny part of the equation.
+00:13:47.920 Because if we then zoom out
+00:13:50.080 and we understand how, first of all, the
+00:13:55.240 information got to that point where the
+00:13:58.360 agent decides that, then we can start to
+00:14:00.320 reverse engineer the whole system.
+00:14:01.800 Because in the example that I just gave,
+00:14:03.880 it's just like me hardcoding all of the
+00:14:06.000 examples and running the code. But, of
+00:14:07.600 course, in a real application, it would
+00:14:09.040 start with the user. So, the user would
+00:14:11.480 ask, &quot;Hey, can we transfer 150 to
+00:14:13.560 Alice?&quot; This is generally done via some
+00:14:15.839 type of front-end application, the chat
+00:14:18.000 window. So, think about, for example,
+00:14:20.079 using ChatGPT and executing a query
+00:14:21.959 there or some kind of like web
+00:14:23.400 application. That application then does
+00:14:25.959 a post request to your endpoint that
+00:14:28.839 hits an API. And again, it doesn't
+00:14:30.520 matter what language or API or web
+00:14:33.240 framework you're using, but the
+00:14:35.079 front-end needs to communicate this to
+00:14:37.240 the API,
+00:14:38.600 which is then generally sent to the
+00:14:40.160 agent to process it, right? So, there
+00:14:43.320 you get to the level that I just showed
+00:14:45.360 you where,
+00:14:46.560 in the context of Python, we have our
+00:14:48.440 Python back-end, our code base, and we
+00:14:50.480 figure out, okay, we need approval. But,
+00:14:53.120 instead of require it or using the our
+00:14:55.800 Python's input function, which would
+00:14:58.640 just like halt the process at the
+00:15:00.839 back-end level, but it wouldn't
+00:15:02.320 communicate anything back to the user.
+00:15:05.280 So, that wouldn't work. So, what you
+00:15:07.760 generally want to do, whenever you
+00:15:09.760 encounter a scenario where this is the
+00:15:11.920 case, you first of all want to use some
+00:15:13.839 kind of state store or simply a database
+00:15:17.079 where we can save the state of the
+00:15:19.920 current system, meaning what's the state
+00:15:22.800 of the agent and depending tool call.
+00:15:25.640 So, this is where we say, look, we got
+00:15:27.440 the following message from the user.
+00:15:29.959 We determined this is the action we need
+00:15:32.160 to take. That can be captured in, let's
+00:15:34.200 say, a JSON schema, a database model. It
+00:15:36.600 doesn't really matter, but we need to be
+00:15:38.000 able to store that state. So, when we do
+00:15:40.680 that and we offload it, our agent then
+00:15:43.920 pretty much signals back via our API,
+00:15:46.959 look, there's a tool call pending, but
+00:15:48.880 it requires approval. So, it it flows
+00:15:51.720 back in the other direction
+00:15:54.280 from the agent to the API, back to the
+00:15:56.839 front-end, and it says, look, there is
+00:15:59.280 approval required. So, the front-end
+00:16:02.320 then shows the user in this case, if we
+00:16:04.480 go all the way down over here, it
+00:16:06.240 requires approval. So, now you can, in
+00:16:08.079 your front-end application, you could,
+00:16:09.360 for example, when it's a chat, you could
+00:16:11.720 simply visualize a button, yes or no. Do
+00:16:14.320 you accept? Do you want to approve this?
+00:16:16.240 But, what's important to understand is
+00:16:18.120 that when you're using this SSC this
+00:16:20.600 this setup over here via streaming is
+00:16:23.240 that over here the connection also
+00:16:25.520 closes. And that's possible because we
+00:16:29.079 have saved the state. So, that's why you
+00:16:31.640 want to do that. Because it could take
+00:16:33.600 some time, for example, for the user to
+00:16:36.320 hit approve. Like, whenever the user
+00:16:38.240 asked the question, they may go off,
+00:16:39.880 grab a coffee, or do whatever, or never
+00:16:41.680 come back. So, you don't want to leave
+00:16:43.240 this connection open because then if
+00:16:45.720 there's latency, a network issue, some
+00:16:47.880 type of error, everything is lost. And
+00:16:50.440 you cannot retrieve the state of the
+00:16:52.400 agent and the user would have to ask the
+00:16:54.200 question pretty much again. So, that's
+00:16:56.360 how you end up at the approval step. So,
+00:17:00.040 what the user will then do, if it
+00:17:01.880 continues to process, right? The user
+00:17:03.959 can, for example, click approve. So,
+00:17:06.199 yes, I'm I'm okay, we can transfer the
+00:17:09.000 150. So, now what we do is we do another
+00:17:11.720 post request that you can see over here
+00:17:13.679 to our API endpoint, but we now do not
+00:17:17.119 hit the, let's say, the chat endpoint to
+00:17:19.880 ask a question, but since we're hitting
+00:17:22.199 a button, we're calling a different
+00:17:24.119 endpoint. Let's say you call that the
+00:17:26.000 execute endpoint with the parameters
+00:17:28.119 approved is true.
+00:17:29.840 You would put false if the user clicked
+00:17:31.880 denied or disapproved or whatever. So,
+00:17:35.160 then we end up
+00:17:37.560 at our API layer again, which is our
+00:17:40.320 back-end. And let's stick with the
+00:17:42.240 context of Python. So, now you are
+00:17:44.040 within your Python application again,
+00:17:45.800 also where your agent lives. But, we all
+00:17:48.760 all we know right now is that there is
+00:17:50.200 an approval, but we don't know really
+00:17:53.080 what the state was when this message
+00:17:55.800 comes in. So, that's why we need to load
+00:17:58.120 the state. So, you would need to pass
+00:18:00.679 pass along some type of ID in order to
+00:18:03.360 retrieve the state from the database.
+00:18:05.560 And again, remember, right? The state
+00:18:06.920 simply means what did the user ask? What
+00:18:09.120 was the context? What What were the
+00:18:10.560 prompts? What What What was there to
+00:18:12.679 approve to now understand what we need
+00:18:14.720 to execute, right? So, we load that same
+00:18:17.520 state into memory again and we resume
+00:18:20.560 with the approval. We execute the
+00:18:22.520 action, which is
+00:18:24.440 what our agent will then do, simply
+00:18:26.240 executing a Python function. So, now in
+00:18:28.320 this case the transaction actually
+00:18:30.159 happens.
+00:18:31.360 And then scrolling down, we can stream
+00:18:33.520 that response back, pretty much saying
+00:18:35.640 transfer is complete, and then we will
+00:18:37.640 show that again in our front-end
+00:18:40.159 application to the user, and the loop is
+00:18:43.280 finished. So, I hope that you are still
+00:18:46.120 with me going through this diagram. I
+00:18:48.120 tried to make it as simple as possible,
+00:18:49.919 but it's always tricky when there are
+00:18:51.600 multiple full components working
+00:18:53.640 together. And I know that for a lot of
+00:18:56.200 you watching, the agent layer and the
+00:18:59.120 API layer is something that we're
+00:19:01.120 comfortable with. If you watch my
+00:19:02.640 channel and go through all my YouTube
+00:19:04.120 tutorials, this is usually where we are
+00:19:06.240 working. But, you need to understand the
+00:19:08.520 broader context in order to effectively
+00:19:11.120 implement human in the loop. That's why
+00:19:12.640 I think this is an important video.
+00:19:14.720 So, now with this in mind, let's scroll
+00:19:17.159 to the second pattern, which is the
+00:19:19.679 async process, where we can also apply
+00:19:22.360 this. So, this is either something
+00:19:23.760 triggered by an API, web hook or queue,
+00:19:25.919 back-end workflow, event-driven
+00:19:27.440 architectures, it all pretty much works
+00:19:29.679 the same. And the primary difference
+00:19:32.040 that you'll find in this example is that
+00:19:35.600 there's going to be some type of
+00:19:36.840 notification layer or service that you
+00:19:39.320 need because this is a back-end process,
+00:19:41.919 meaning there is no human in the loop,
+00:19:44.640 there is no one waiting. So, we need
+00:19:46.480 another system in order to facilitate
+00:19:48.840 that. Now, there are infinite ways that
+00:19:50.440 you could possibly do this, but here I
+00:19:52.760 used a very simple example of using
+00:19:55.360 sending an email or Slack notification,
+00:19:57.480 right? So, imagine a back-end process.
+00:19:59.560 Let's say an invoice comes in and the
+00:20:02.240 system will automatically process that.
+00:20:04.960 So, that can happen anytime of the day
+00:20:07.960 and whenever that happens and it's above
+00:20:10.800 a certain threshold, for example, you
+00:20:13.120 could ping a Slack channel and pretty
+00:20:15.440 much put two buttons there. Hey, this is
+00:20:17.640 what we're about to do. We're going to
+00:20:19.080 just transfer 500 USD to this account.
+00:20:22.160 Approve, deny. That is something that
+00:20:24.080 you could then do. But other than that,
+00:20:26.000 the flow is similar, but we're starting
+00:20:28.520 from the API layer, not from the user in
+00:20:31.320 the front-end layer. So, a process gets
+00:20:33.840 started, then a worker picks that up and
+00:20:36.080 executed it executes that, whether
+00:20:38.360 that's event-based and you're using
+00:20:40.200 multiple workers or this is just your,
+00:20:42.520 let's say, fast API worker that's uh is
+00:20:45.240 picking this up. That doesn't really
+00:20:46.400 matter. We then get again to the agent
+00:20:48.720 layer, which is exactly the same. And
+00:20:51.000 now, instead of streaming something back
+00:20:54.360 to the front-end application, you hit
+00:20:57.760 usually via an API, you hit the
+00:20:59.600 notification surface. So, email or Slack
+00:21:02.800 notification. Now, get that gets sent to
+00:21:05.280 the user and when that is completed, we
+00:21:08.360 do the exact same thing. We use our
+00:21:10.000 state store or database, like however
+00:21:12.360 you want to store the state, and you
+00:21:15.160 save that and now the the the process
+00:21:18.040 just stops.
+00:21:19.400 This is simply it. So, in that sense,
+00:21:20.960 it's a little bit simpler because there
+00:21:22.880 is no direct front-end communication
+00:21:25.360 that we have in here. We simply store
+00:21:27.040 the store the state and give the
+00:21:28.520 notification.
+00:21:29.800 Now, that then comes back to the user a
+00:21:32.520 user and the user, let's say, it clicks
+00:21:34.560 the approval button within Slack. So, we
+00:21:37.040 go all the way over here and via this
+00:21:39.040 this line over here, we go back to our
+00:21:41.640 API uh endpoint over here. And now, we
+00:21:44.480 simply resume the workflow. So, instead
+00:21:47.640 of just starting a workflow, again, we
+00:21:49.080 have another API endpoint that we can
+00:21:50.760 just call. We load our state, we get the
+00:21:53.360 agent state and pending actions in
+00:21:55.240 memory and we resume with approval. We
+00:21:58.240 execute everything and then, for
+00:22:00.040 example, we could do one more
+00:22:01.679 notification, again, to Slack to send
+00:22:04.040 that the um the the completion notice,
+00:22:06.480 for example, so the money is transferred
+00:22:08.480 in this case. And then, the transfer is
+00:22:10.000 complete, which the user will see over
+00:22:12.480 here. So, the same setup, but just a
+00:22:14.960 different way of getting the information
+00:22:17.800 to the end user. Now, to wrap this up,
+00:22:21.720 the key concepts that you need to
+00:22:23.920 understand, regardless of what you're
+00:22:26.080 working on, you want to enable some kind
+00:22:28.960 of deferred execution. So, when approval
+00:22:31.480 is needed, you want to save the state
+00:22:33.679 instead of executing it. This is the
+00:22:35.880 important lesson number one. Save the
+00:22:37.679 state instead of executing.
+00:22:39.840 Then, you want state serialization. So,
+00:22:42.160 you want to persist agent context,
+00:22:44.080 message history, and pending actions.
+00:22:46.480 Everything that you need to send to the
+00:22:48.520 agent in the follow-up run, all the
+00:22:50.920 messages, all the actions, all the
+00:22:52.960 parameters that need to be put into the
+00:22:54.760 functions is something that you want to
+00:22:57.400 be able to store and retrieve easily.
+00:23:00.600 And a stateless resume. So, you want to
+00:23:03.200 load everything from storage and you
+00:23:05.040 want to you don't want to hold anything
+00:23:07.200 in memory because this ensures that
+00:23:11.200 whenever there is a timeout, whenever
+00:23:13.360 the user, I don't know, takes days to
+00:23:15.800 hit the approval button, everything
+00:23:17.480 still works. And even if it's, let's
+00:23:19.480 say, like a week after that the user
+00:23:21.280 hits approve, everything is still in the
+00:23:24.320 database and the previous connection was
+00:23:26.640 already and and process was already
+00:23:28.920 closed down. So, nothing is waiting from
+00:23:32.880 an execution point of view. So, those
+00:23:36.200 are the most important concepts to
+00:23:38.360 understand when you are building
+00:23:41.240 human-in-the-loop systems. So, in this
+00:23:43.760 video, we started with a simple example
+00:23:45.560 to understand how it works.
+00:23:48.400 Then, I gave you two examples of how to
+00:23:50.760 halt the process, either using a router
+00:23:53.480 or capturing the tool calls before
+00:23:56.080 execution. And then, I showed you two
+00:23:58.600 production patterns, one the SSC
+00:24:00.679 streaming, which is useful for real-time
+00:24:02.760 chat applications and assistant-like
+00:24:05.040 apps, and the async process, which works
+00:24:08.840 better for back-end workflows,
+00:24:10.800 event-driven architectures, all of that
+00:24:13.080 good stuff. So, I hope that you found
+00:24:15.320 this video helpful. If you did, please
+00:24:17.800 leave a like and consider subscribing.
+00:24:20.320 And if you want to learn more about
+00:24:21.960 building AI agents and specifically
+00:24:24.120 agents that make it to a production, I
+00:24:26.320 have a whole playlist here on YouTube
+00:24:28.160 that I will link over here. It starts
+00:24:30.000 off with a 5-hour free Python for AI
+00:24:32.520 course, but then it quickly quickly
+00:24:34.320 builds up in complexity. So, depending
+00:24:36.320 on where you are at in your AI
+00:24:38.600 engineering journey, you can kind of
+00:24:39.920 like start where you feel you'll get the
+00:24:42.720 most out of it. So, make sure to check
+00:24:45.360 that out next and then, I'll see you in
+00:24:47.040 the next one.

@@ -1,0 +1,56 @@
+def find_similar_chunks(
+        self,
+        query_embedding: List[float],
+        top_k: int = 3,
+        resource_id: Optional[int] = None,
+        min_score: float = 0.0
+    ) -> List[tuple]:
+        """
+        Computes Cosine Similarity between query_embedding and all persisted chunk embeddings.
+        Returns a list of (ContentChunk, similarity_score) tuples sorted descending by score.
+        """
+        import math
+
+        # 1. Fetch chunks that have a valid vector embedding stored in the DB
+        query = self.db.query(ContentChunk).filter(ContentChunk.embedding.isnot(None))
+        
+        # 2. Apply optional resource filter if resource_id is specified
+        if resource_id is not None:
+            query = query.filter(ContentChunk.resource_id == resource_id)
+
+        chunks = query.all()
+        if not chunks or not query_embedding:
+            return []
+
+        # 3. Compute magnitude (L2-norm) of the query vector: ||Q|| = sqrt( sum(q_i ^ 2) )
+        q_norm = math.sqrt(sum(x * x for x in query_embedding))
+        if q_norm == 0:
+            return []
+
+        scored_chunks = []
+        for chunk in chunks:
+            emb = chunk.embedding
+            # Guard clause: Skip empty or dimensionally mismatched embeddings
+            if not emb or len(emb) != len(query_embedding):
+                continue
+
+            # 4. Compute magnitude (L2-norm) of chunk vector: ||C|| = sqrt( sum(c_i ^ 2) )
+            c_norm = math.sqrt(sum(y * y for y in emb))
+            if c_norm == 0:
+                continue
+
+            # 5. Compute Dot Product: Q . C = sum(q_i * c_i)
+            dot_product = sum(x * y for x, y in zip(query_embedding, emb))
+            
+            # 6. Cosine Similarity Formula: CosineSim = (Q . C) / (||Q|| * ||C||)
+            similarity = dot_product / (q_norm * c_norm)
+
+            # 7. Keep chunk if score meets or exceeds min_score threshold
+            if similarity >= min_score:
+                scored_chunks.append((chunk, float(similarity)))
+
+        # 8. Sort chunks descending by similarity score (highest match first)
+        scored_chunks.sort(key=lambda item: item[1], reverse=True)
+        
+        # 9. Return top_k highest matching chunks
+        return scored_chunks[:top_k]

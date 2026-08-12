@@ -1,0 +1,247 @@
+# tactiq.io free youtube transcript
+# Debugging Python with Visual Studio Code (VSCode)
+# https://www.youtube.com/watch/b4p-SBjHh28
+
+00:00:00.060 now let me add a very simple python
+00:00:02.940 script here which have two numbers and
+00:00:05.819 I'm just comparing them using if
+00:00:08.820 statement so once you have your script
+00:00:11.099 you have multiple options to run your
+00:00:13.679 script so you can right click on the
+00:00:16.680 same editor in which you are writing
+00:00:18.359 your code and then you can see you have
+00:00:21.960 this option to run a python file in the
+00:00:24.480 terminal you also have the Run current
+00:00:27.539 file in the interactive window so you
+00:00:30.060 have all these options here also you
+00:00:32.940 have this run button which is which is
+00:00:35.399 going to run your python file or if you
+00:00:38.100 are a fan of command prompt or terminal
+00:00:40.379 then you can directly type your command
+00:00:43.620 for example Python and then the name of
+00:00:46.440 the file which is going to run your
+00:00:48.980 python script in this terminal so let's
+00:00:52.379 say I'm going to choose this option to
+00:00:54.180 run my python script I'm going to press
+00:00:56.640 this button you can see my python script
+00:00:59.039 is execute muted and the result is here
+00:01:03.420 right so it's going to just select the
+00:01:07.040 interpreter from here and then the
+00:01:09.720 complete path of the file and it's going
+00:01:12.000 to run this file and then give you the
+00:01:15.360 out let's say I want to just run this
+00:01:17.700 script using terminal I can just type
+00:01:20.040 python here and then the name of the
+00:01:22.920 file which is test Dot py and it's going
+00:01:25.439 to give me the output which is lot
+00:01:27.780 cleaner than using this terminal because
+00:01:31.560 it's going to show you all the complete
+00:01:34.740 parts of the Python executable and your
+00:01:37.740 file right so whatever option seems to
+00:01:40.320 be useful for you you can use that
+00:01:42.420 option now let's say you ran your python
+00:01:44.700 script and let's say you want to debug
+00:01:46.920 your python script so you can just go to
+00:01:51.000 your script and then at the break point
+00:01:53.960 on your python script using these red
+00:01:58.259 dots right so you can just hover over
+00:02:00.420 the line on which you want to set the
+00:02:02.820 breakpoint and then just click there and
+00:02:05.700 you will see this kind of Red Dot here
+00:02:09.119 that means the breakpoint is set on the
+00:02:11.760 third line
+00:02:13.200 now on the left hand side you have this
+00:02:16.379 debug and run Icon here so you can click
+00:02:19.680 on debug and run
+00:02:21.480 and here at the bottom you will be able
+00:02:24.239 to see all break points you have set so
+00:02:27.540 right now I only have one breakpoint I
+00:02:30.180 can set multiple breakpoints here and I
+00:02:32.340 will be able to see the list of all the
+00:02:34.560 breakpoints here
+00:02:35.940 from here I can disable all the
+00:02:38.040 breakpoints by just clicking on this
+00:02:40.440 icon which means all the breakpoints are
+00:02:43.260 there but they are disabled right if I
+00:02:46.260 want to remove all the breakpoints I can
+00:02:48.360 click on the remove all breakpoints icon
+00:02:51.720 here and it's going to remove all the
+00:02:53.700 breakpoints so let me add the breakpoint
+00:02:55.860 once again
+00:02:57.780 now for the first time when you are
+00:03:00.599 debugging your python script when you
+00:03:04.379 click on the debug
+00:03:06.739 icon gear you will see this run and
+00:03:09.780 debug button here and also you will see
+00:03:12.659 uh this option which says to customize
+00:03:14.940 run and debug you can create a launch
+00:03:19.040 dot Json file so here you will be able
+00:03:22.379 to customize your debug file for example
+00:03:25.800 which debugger you want to use for your
+00:03:28.800 debugging which python interpreter you
+00:03:31.860 want to use which file you want to
+00:03:34.760 use for debugging so all these options
+00:03:37.800 you can give in the launch.json file let
+00:03:42.299 me just click on run and debug option
+00:03:44.580 which is going to give me all these
+00:03:47.159 options I want to choose the first
+00:03:48.540 option which is python file
+00:03:51.000 and once I click on that I will be able
+00:03:54.420 to see that my debugger is running
+00:03:57.599 and my program execution will stop at
+00:04:01.260 the break point here so you can see
+00:04:03.799 my execution is stopped at the break
+00:04:06.360 point I can see all the debugging
+00:04:09.480 related options here so when I click on
+00:04:11.760 this continue button my program will run
+00:04:15.239 normally
+00:04:16.380 I can just
+00:04:18.478 step over I can step into a function I
+00:04:22.199 can come out of the function and I can
+00:04:24.780 rerun my debugger using this option and
+00:04:27.479 I can stop this debugger using this icon
+00:04:30.600 here right
+00:04:31.979 when you see this pink kind of bar here
+00:04:36.600 that means your debugger is running
+00:04:38.820 right if you stop it
+00:04:41.580 you will see that this pink bar is gone
+00:04:45.660 right so this is kind of a trick to
+00:04:50.280 observe when your debugger is running or
+00:04:53.160 not right so let me rerun it once again
+00:04:56.340 you can see the debugger is running
+00:04:59.759 program execution is stopped at this
+00:05:02.340 breakpoint
+00:05:03.479 I will be able to see the list of all
+00:05:05.520 the local variables on the left hand
+00:05:07.919 side I can watch some variables let's
+00:05:10.740 say I want to watch a variable B I can
+00:05:13.680 just type B and then press enter and
+00:05:15.780 it's going to give me the value of the
+00:05:18.419 variable which I want to watch here
+00:05:22.680 I can also see the globals here so you
+00:05:25.919 can see all the global variable values
+00:05:28.320 are here
+00:05:29.639 and I can just tap over right so I can
+00:05:34.440 just go to the next execution point and
+00:05:38.520 see what's happening in my script
+00:05:40.800 so this is how you can debug your script
+00:05:43.440 let me just stop the debugger I can once
+00:05:47.100 again go to my folder Explorer now once
+00:05:49.740 you have added the python extension you
+00:05:52.919 will be able to see that the python
+00:05:56.660 intellisense is also there so when you
+00:05:59.460 type some letters of a method let's say
+00:06:03.120 it's going to show you all the methods
+00:06:06.660 which you can use related to what you
+00:06:10.020 have typed in your editor so when I type
+00:06:13.979 PRI it's going to show me all the print
+00:06:16.560 related options right I can also when I
+00:06:20.100 just write one parenthesis it's going to
+00:06:23.639 complete that I can print the value of
+00:06:27.180 let's say B right so all the
+00:06:29.880 intellisense options are available for
+00:06:32.639 me once I have installed my python
+00:06:36.780 extension I can just save my script by
+00:06:39.240 just pressing Ctrl s which is going to
+00:06:41.940 save my script now let's say you are an
+00:06:44.160 advanced user and you want to use a
+00:06:46.319 python virtual and in your project right
+00:06:49.880 so normally let's say whenever you want
+00:06:52.860 to install a python pip package you can
+00:06:55.740 do it directly but if you want to create
+00:06:57.600 a virtual end for your project you can
+00:07:00.720 also do it easily in Visual Studio code
+00:07:03.960 so let me create a new test file let me
+00:07:06.780 name it as test2 Dot py and here in my
+00:07:10.639 test2.py I have this very simple
+00:07:14.180 python script which uses a package
+00:07:17.580 called bcrypt right right now you can
+00:07:21.120 see this yellow squiggly a line here
+00:07:24.660 which says import bcrypt could not be
+00:07:27.419 resolved because we haven't installed
+00:07:30.360 this package using pip on our
+00:07:33.680 project so let me just close all these
+00:07:36.900 terminals I just want to use one
+00:07:39.180 terminal which is the command prompt and
+00:07:41.220 let me clear this command prompt here
+00:07:44.340 right so in order to create a new
+00:07:46.500 virtual environment you can type this
+00:07:49.080 command so python hyphen M then v n and
+00:07:55.319 then n and then press enter which is
+00:07:58.860 going to create a new virtual end for us
+00:08:01.800 and you will be able to see this warning
+00:08:03.900 which says we noticed a new virtual
+00:08:06.900 environment has been created do you want
+00:08:09.720 to select it for the workspace folder
+00:08:12.960 so when I choose yes here see what
+00:08:15.960 happens when I choose yes you will be
+00:08:18.479 able to see this virtual end is listed
+00:08:21.960 here so with my python interpreter this
+00:08:24.960 end is also visible you can see and we
+00:08:29.160 end right so now I can choose between
+00:08:32.700 the virtual and also from this
+00:08:35.820 interpreter list okay so you can choose
+00:08:38.820 your virtual and also so to activate
+00:08:41.219 this virtual and I can give this command
+00:08:43.860 and then press enter which is going to
+00:08:46.500 activate my virtual amp and you will be
+00:08:50.100 able to recognize using this so if you
+00:08:52.800 see the name end here then you have
+00:08:57.000 activated the virtual end so if you see
+00:08:59.940 the name of your virtual environment
+00:09:01.500 that means it's activated and then we
+00:09:04.920 can just install this package here so I
+00:09:08.880 can just write pip space hyphen Q
+00:09:11.279 install bcrypt which is my package Edge
+00:09:13.320 which I want to install and once I have
+00:09:15.779 installed this package you can see the
+00:09:18.720 squiggly line is gone that means I can
+00:09:21.600 just use this B crypto package in my
+00:09:25.320 script easily now right so now I can
+00:09:28.320 just type python command and then the
+00:09:31.500 name of the file which is test2 dot Piva
+00:09:35.160 py right so that is test2 Dot py and
+00:09:38.940 then press enter which is going to run
+00:09:41.040 this script and it runs successfully
+00:09:43.760 also when you are done you can just type
+00:09:46.700 deactivate which is going to deactivate
+00:09:49.080 your virtual environment so I can type
+00:09:51.360 deactivate and then press enter and now
+00:09:54.180 I'm in my normal command prompt also
+00:09:56.940 once you have created the virtual
+00:09:59.040 environment you will be able to see this
+00:10:01.260 directory here and right so all the
+00:10:04.260 configuration you will be able to see
+00:10:06.360 here and of course you will have the
+00:10:08.459 track of your files in your Version
+00:10:10.380 Control inside your Visual Studio code
+00:10:12.899 editor using the source control option
+00:10:14.940 so if you have installed git it's going
+00:10:17.700 to show you what changes you have made
+00:10:19.820 and it's going to help you to commit
+00:10:22.380 your code push your code pull your code
+00:10:24.779 from GitHub or any other repository
+00:10:26.940 easily inside the visual studio code
+00:10:30.660 the last option which I want to show
+00:10:32.399 here is let's say you don't want to just
+00:10:34.740 run and debug you want to create a
+00:10:36.959 launch dot Json file for debugging you
+00:10:39.899 can click on the Creator launch.json
+00:10:42.300 file and then click on python file and
+00:10:46.019 it's going to create this launch.json
+00:10:48.360 file so as I said so as I said you have
+00:10:51.120 the information about the console here
+00:10:54.120 the program which you want to run
+00:10:56.399 and then the request is here the type is
+00:11:00.320 python the name will be python current
+00:11:03.839 file and if you have created multiple
+00:11:06.959 debug files you will be able to choose
+00:11:10.260 those files or configurations using this
+00:11:14.700 list right and when you go to the
+00:11:17.760 Explorer you will be able to see this
+00:11:20.959 launch.json file which is created under
+00:11:23.519 dot vs code
+00:11:25.820 folder so this is a hidden directory and
+00:11:28.980 you will be able to change the content
+00:11:31.380 inside it using this launch dot Json
+00:11:34.920 file

@@ -1,0 +1,1743 @@
+# tactiq.io free youtube transcript
+# LangGraph Tutorial for Beginners: Build Your First AI Agent
+# https://www.youtube.com/watch/UklCxmEvz2w
+
+00:00:00.240 What's up everybody? Adele here. Today
+00:00:02.480 we're going to get our hands dirty with
+00:00:04.080 Lang Graph, a framework that lets you
+00:00:06.000 define AI agents as graphs and nodes.
+00:00:08.960 We're going to learn how to build AI
+00:00:10.639 agents that can think, reason, and act
+00:00:13.120 with tools. Our instructor, VBA, will
+00:00:15.440 walk you exactly how to build your AI
+00:00:17.199 agents using Langraph. So, make sure to
+00:00:19.119 stay tuned for that. Now, if you want to
+00:00:21.119 jump directly to the coding section,
+00:00:22.720 make sure to check out the timestamp
+00:00:24.160 below. And make sure to check out the
+00:00:26.000 data lab notebook that's accompanied in
+00:00:28.160 the description so you can code along
+00:00:30.000 with the video. If you want to take your
+00:00:32.159 skills to the next level and learn how
+00:00:33.920 to build multi- aent systems using
+00:00:35.920 Langraph, make sure to check out the
+00:00:37.840 course that you can see in the
+00:00:38.960 description here and learn how to build
+00:00:41.120 an AI agent that can take data from
+00:00:43.440 Wikipedia, analyze stock data, and
+00:00:46.079 provide you with sound analysis on the
+00:00:48.320 performance of a particular stock. Now
+00:00:50.079 with that said, let's get started. Hey
+00:00:53.440 guys, welcome to data cam. In this
+00:00:56.000 tutorial, I'm going to be teaching you
+00:00:57.680 about the fundamentals of Langraph. Now
+00:00:59.920 this is a beginner level tutorial. So I
+00:01:02.239 assume you know little to no knowledge
+00:01:03.920 in langraph. From this tutorial, we're
+00:01:06.080 going to go right from the basics and
+00:01:07.680 build ourselves up so that by the end of
+00:01:09.760 it, you can build almost any AI agent
+00:01:12.720 out there. Now, if that sounds good to
+00:01:14.320 you, let's begin with this tutorial. So
+00:01:16.960 I'm going to ask you two simple
+00:01:18.400 questions. What is the difference
+00:01:20.320 between an LLM and an AI agent? You can
+00:01:23.280 think of an LLM as a model that
+00:01:26.159 understands and generates humanlike text
+00:01:28.720 based on the patterns it received in its
+00:01:30.799 training data. An AI agent, on the other
+00:01:32.880 hand, it uses this LLM to reason, plan,
+00:01:36.720 and use tools and overall take the best
+00:01:39.600 respective actions over time. Now, I've
+00:01:41.680 put the word tools in bold yet because
+00:01:43.680 it will be coming up quite often soon.
+00:01:46.240 My next question is this. What even is
+00:01:48.880 Langraph? Langraph is a framework that
+00:01:51.840 lets us build AI agents as graphs where
+00:01:54.799 each node does a task and edges decide
+00:01:57.520 what happens next. Now, don't worry if
+00:01:59.439 you don't know what a node and an edge
+00:02:00.880 is. We will discuss them shortly. You
+00:02:03.439 can think of it like having a flowchart
+00:02:05.119 which I've shown here. This flowchart
+00:02:07.040 basically represents an AI agent and it
+00:02:09.840 shows how it thinks, how it acts, and
+00:02:12.239 all of the internal decision-m. For
+00:02:14.239 example, it has the start and the end
+00:02:16.239 point here and then you have the input
+00:02:18.239 query. So the input query could be from
+00:02:20.720 me and I can say give me this this this
+00:02:24.319 and then it gets passed to the tool
+00:02:26.080 selector part. Its job is to be able to
+00:02:28.160 select well the correct tool. For
+00:02:30.160 example, if I ask it to do a very simple
+00:02:32.560 query like what is 2 + 3? It should be
+00:02:35.440 able to pick the maths tool not the web
+00:02:37.360 search tool because well why would you
+00:02:39.840 search what the answer for 2 plus 3 is
+00:02:41.760 right? So the tool selector is quite an
+00:02:43.840 important part of an AI agent. Then
+00:02:46.080 based on whatever tool it picks, it then
+00:02:48.959 outputs the result and then well the
+00:02:50.959 query finishes, right? Hopefully that
+00:02:52.959 flowchart analogy helps you to
+00:02:54.800 understand what an AI agent is. What is
+00:02:56.879 this tutorial's overall aim? It really
+00:02:59.280 is to be able to understand and master
+00:03:02.239 the architecture of Langraph. If you can
+00:03:04.879 understand and master the architecture,
+00:03:06.640 well, you can build any AI agent in from
+00:03:09.040 Langraph, right? So let's begin by pip
+00:03:12.239 installing all of the libraries we'll
+00:03:13.920 need. So for this tutorial you need to
+00:03:16.239 install lang graph langchain core lang
+00:03:19.200 openai duck go search lang chain
+00:03:22.000 community and you also will need to
+00:03:23.599 install models. The ammo models I will
+00:03:26.400 discuss in the end of the tutorial. For
+00:03:28.400 the majority of this tutorial I'm going
+00:03:29.920 to be using openAI and you can get its
+00:03:32.080 openi API key through their website.
+00:03:34.640 It's very very cheap. So don't worry it
+00:03:36.959 will be in the matter of pennies or
+00:03:38.799 cents. So the price is very cheap. So
+00:03:41.440 don't worry about that. So let's go
+00:03:43.599 ahead and pip install all of this. And
+00:03:46.959 perfect. Let's get started with coding
+00:03:49.440 right away. I want to build this very
+00:03:51.599 simple agent. Agent one. The aim of this
+00:03:54.080 very simple agent is this. I want to be
+00:03:56.879 able to teach you what states, edges,
+00:04:00.879 nodes, graph, and state graph is. I also
+00:04:03.760 want to teach you about type dictionary.
+00:04:06.319 Now that's a type annotation which we're
+00:04:08.319 going to uh learn about very shortly.
+00:04:10.480 Third thing is how do we even integrate
+00:04:12.400 an LLM using langraph specifically again
+00:04:15.200 the open AAI model. Now please note you
+00:04:17.440 can use any model you want. You can use
+00:04:19.040 the Gemini model, you can use anthropics
+00:04:21.120 model. I personally use OpenAI model
+00:04:23.600 because I've seen their performance is
+00:04:25.520 quite good and also because well they're
+00:04:28.240 quite cheap as well. Obviously they're
+00:04:30.080 not free completely. That's why I've
+00:04:32.000 also used Olama at the end of this
+00:04:33.759 tutorial. But all in all, OpenAI is a
+00:04:36.320 good choice. Now, I also want to teach
+00:04:38.800 you about the basic syntax of Langraph.
+00:04:41.360 Let's build our intuition on the
+00:04:43.520 fundamental building blocks in Langraph.
+00:04:45.919 And I'm going to be using a game analogy
+00:04:48.000 for this. So, let's start off with the
+00:04:50.080 first fundamental building block, which
+00:04:52.080 is the state. Now think of the state as
+00:04:55.120 a data structure that is shared and it
+00:04:58.000 holds the current information or context
+00:05:00.639 of the entire application. So in terms
+00:05:04.080 of a game analogy you can think of it as
+00:05:06.560 a file in a game which saves everything
+00:05:09.120 which you have in the game such as your
+00:05:10.960 health, your score, your weapons, you
+00:05:13.759 get the point. So it basically stores
+00:05:15.919 everything the game needs to remember.
+00:05:17.919 Hence this uh asset which I've drawn
+00:05:20.400 that is where state is. Now let's move
+00:05:22.639 to a node. A node is a self-contained
+00:05:26.320 function or a step and it carries out
+00:05:29.520 really specific tasks within the graph.
+00:05:32.240 For example, in a game analogy, it could
+00:05:34.639 be a particular task or a particular
+00:05:36.479 scene like a battle scene or a puzzle
+00:05:39.280 scene or a cutscene that happens when
+00:05:41.840 you reach a particular point on the map.
+00:05:44.479 Hence this puzzle piece. Now an edge
+00:05:47.039 remember edge and node was something we
+00:05:49.440 just briefly talked about and mentioned
+00:05:51.360 here. But an edge it's defined as the
+00:05:54.960 how the process moves from one node to
+00:05:57.759 another. Remember in a graph you have
+00:06:00.080 nodes and to connect these nodes you
+00:06:02.240 have edges. You have edges and
+00:06:03.919 conditional edges. Conditional edges are
+00:06:05.840 something we will be covering later. But
+00:06:08.240 remember you need something to connect
+00:06:10.000 these nodes or functions together right
+00:06:12.000 and that is what an edge is and it
+00:06:14.319 controls the direction and logic of
+00:06:16.400 execution. You can think of these as a
+00:06:18.800 door or a road or choices that connect
+00:06:22.000 scenes. Essentially they decide where
+00:06:24.160 the game goes next based on what has
+00:06:26.240 already happened. The next thing is well
+00:06:28.720 graph lang graph the most probably the
+00:06:31.919 most important uh fundamental building
+00:06:34.080 block in langraph. So, it's the main
+00:06:36.319 structure that defines how tasks aka
+00:06:38.800 nodes are linked together and carried
+00:06:41.360 out. Like I just said, edges and nodes
+00:06:43.919 make up a graph. The game analogy for
+00:06:46.560 this is the complete overall design
+00:06:49.600 showing all the levels, all the possible
+00:06:51.840 paths, and all the decision points. Kind
+00:06:54.319 of like how a full map of how a game
+00:06:57.360 unfolds. The last thing is a state
+00:06:59.840 graph. Now a state graph essentially
+00:07:02.080 think of it as merging the state and
+00:07:04.560 merging the graph together. So it builds
+00:07:07.599 and manages the entire graph. It uh has
+00:07:10.560 the nodes, it has the edges, it has the
+00:07:12.960 shared state and its main job is to
+00:07:15.599 ensure the smooth data flow and
+00:07:18.080 coordinated execution. In terms of the
+00:07:20.240 game analogy again, it's like the
+00:07:22.720 current live game you're playing. It's
+00:07:25.120 keeping track of your location, your
+00:07:26.800 inventory, your choices, and progress on
+00:07:29.120 the map. Remember, it is very, very
+00:07:31.440 similar to state and graph. It's like
+00:07:33.440 the fusion. Now, if you didn't
+00:07:35.440 understand this, don't worry. We will
+00:07:37.440 consolidate this using code. Let's start
+00:07:39.680 off with this. So, this is all of the
+00:07:42.240 imports we will need for creating our
+00:07:44.400 very first AI agent, the simple agent.
+00:07:47.520 So, you can see I've done from typing
+00:07:49.759 import type dictionary. And this is the
+00:07:52.000 add data annotation which we're about to
+00:07:54.000 cover. Then we have lang chain code on
+00:07:56.479 messages import human message. And a
+00:07:58.639 human message is a message type which
+00:08:01.599 represents the input from a user. So
+00:08:05.199 back into the flowchart analogy where I
+00:08:08.319 said input query. The input is again a
+00:08:11.120 human message. Now there's loads of
+00:08:13.360 types of uh messages in LN graph. For
+00:08:15.840 example, there is an AI message, human
+00:08:18.479 message, tool message. We will cover
+00:08:20.479 them all shortly. Don't worry. Back to
+00:08:22.400 the imports though. We have lang chain
+00:08:24.639 openai, import chat openai. And well,
+00:08:27.440 you've guessed it. This is to import the
+00:08:29.840 LLM or use the LLM. And the last point
+00:08:33.519 is from langraph.graph import state
+00:08:35.839 graph start and end. Essentially, this
+00:08:37.760 will help us build the overall graph
+00:08:39.839 structure. So, this is obviously quite
+00:08:41.679 important. Now, back to this type
+00:08:43.519 dictionary. If you don't know what a
+00:08:44.720 type dictionary, it's essentially a data
+00:08:46.480 annotation. And it's like a dictionary
+00:08:49.200 but type the data type is quite
+00:08:52.080 important to define a type dictionary in
+00:08:53.920 Python. You use it like this. So you
+00:08:56.720 define a class and then obviously the
+00:08:59.120 name of the class and then you assign
+00:09:01.519 type dictionary as a superass. Now
+00:09:04.160 within this type dictionary I have three
+00:09:06.000 keys. I have the name, the age and if
+00:09:09.440 this person is a student or not. So for
+00:09:12.320 the name well it can't be an integer
+00:09:14.320 right? How many people do you know who's
+00:09:16.399 called like one or two for example they
+00:09:18.880 are a string for example the age also
+00:09:21.920 needs to be an integer and in if it's is
+00:09:24.959 student it can either be true or false
+00:09:26.880 right it can't be something in between
+00:09:28.959 to create our own type dictionary or an
+00:09:31.200 instance of this type dictionary we use
+00:09:33.360 this syntax we use curly brackets we
+00:09:36.480 define the key with the respective value
+00:09:39.519 but because we've used a type dictionary
+00:09:41.519 Python will automatically throw an error
+00:09:43.760 if it's the wrong data type. Now, we
+00:09:45.920 could have obviously used a simple
+00:09:47.519 dictionary and that's fine, but in
+00:09:49.760 industry or in very very large
+00:09:51.920 applications, type annotations are quite
+00:09:54.800 a huge problem. Data types in general
+00:09:58.080 because well, data types cause a lot of
+00:10:00.160 logic errors. And to evade all of those
+00:10:03.360 logic errors, that's why type
+00:10:04.640 dictionaries are used. It just makes
+00:10:06.160 everything more robust. And in Langraph,
+00:10:08.880 robustness is everything. So, that's why
+00:10:10.720 we use type dictionary here. So now that
+00:10:12.959 you know what a type dictionary is, oh
+00:10:14.560 and we've also printed the person and
+00:10:16.399 you can see the printed statement is
+00:10:18.240 exactly what we had uh initialized here
+00:10:20.480 instantiated. We're now going to define
+00:10:22.480 the state of our agent. So to define a
+00:10:25.760 state you use again the type dictionary
+00:10:28.160 what we just used here and we use the
+00:10:32.079 same syntax. So we define a class the
+00:10:34.640 name of the state. Now the name of the
+00:10:36.399 state can be absolutely anything. I've
+00:10:38.720 just kept it as agent state here because
+00:10:40.720 well it's easier to follow that's why
+00:10:43.120 but you could name it whatever you want
+00:10:44.800 you can name it state you could name it
+00:10:47.360 Bob whatever you want and then obviously
+00:10:50.000 you pass in type dictionary because it
+00:10:51.600 acts as the superass now for this agent
+00:10:54.079 what did we want let's go back to the
+00:10:56.000 aims so the aim was here how to
+00:10:58.959 integrate an LLM and understand the
+00:11:00.640 basic syntax of langraph so essentially
+00:11:02.480 what I want is I want to be able to say
+00:11:04.320 something and our AI agent should be
+00:11:06.640 able to reply it
+00:11:08.000 So realistically the only thing which I
+00:11:10.000 need to store is my my own input
+00:11:13.440 message. And what will the input message
+00:11:15.600 be? Well, we just spoke about that it
+00:11:18.079 will be in the form of a human message
+00:11:20.560 and that's why we have created a key
+00:11:23.680 which is user message and it will be the
+00:11:26.320 type human message. Remember human
+00:11:28.560 message, AI message, all of these
+00:11:30.079 message types in langraph are data types
+00:11:32.800 and that's why I referred to it as human
+00:11:34.880 message like this syntax.
+00:11:37.440 So remember this is quite a very very
+00:11:39.680 basic AI agent that's why I only have
+00:11:41.600 one key but later on we will have
+00:11:43.440 multiple keys. So now we define an LLM
+00:11:46.000 in langraph and we use chat openai. Now
+00:11:49.600 if you know lang chain or know a little
+00:11:51.760 bit about lang chain this is exactly how
+00:11:53.600 you define an LLM in lang chain as well.
+00:11:56.320 Remember langraph is built on lang
+00:11:58.480 chain. They're built by the same sort of
+00:12:00.480 developers. So a lot of the tools and
+00:12:02.880 everything which we uh use in lang chain
+00:12:05.760 have also been implemented in langraph.
+00:12:07.920 It just makes things much more
+00:12:09.279 compatible and easier. Right? So for
+00:12:11.920 this example I'm going to be using the
+00:12:13.760 GPT40 mini. You can use any open AI
+00:12:17.040 model. You can use any LLM model if you
+00:12:19.680 want. You just need to change this. You
+00:12:21.600 can have chat gemini chat perplexity
+00:12:24.639 chat anthropic whatever. You can refer
+00:12:26.800 to the lang chain langraph documentation
+00:12:29.120 and lang chain documentation. We will
+00:12:31.040 talk about the documentation in a bit.
+00:12:32.880 But going back to this example, I've
+00:12:34.720 also set this attribute here which is
+00:12:36.639 temperature. Now temperature is an
+00:12:38.959 attribute which controls the creativity
+00:12:41.279 of our AI agent. So it's between 0 and
+00:12:43.839 one for open AI models. If it's towards
+00:12:46.160 one, it means the LLM will be more
+00:12:48.480 creative. And if it's towards zero,
+00:12:50.720 well, it would be more it will be less
+00:12:52.639 stochastic. So I've kept it at 0.7
+00:12:55.200 because I want a little bit more
+00:12:56.880 creativity than 0.5. So this is
+00:12:59.600 arbitrary. You can set whatever you
+00:13:01.519 want. Uh but that's not really
+00:13:03.120 important. I've just kept it here just
+00:13:04.720 to show you that chat open AAI has a lot
+00:13:06.880 of attributes which we can tweak. It can
+00:13:08.880 you can change the top K parameters, top
+00:13:10.720 P parameters. If you don't know what
+00:13:12.160 that is, that is completely fine. The
+00:13:14.000 most important thing which you need to
+00:13:15.200 know is that this you need to set the
+00:13:17.279 model here. In terms of the API key, by
+00:13:20.480 the way, I've set it as an environment
+00:13:22.079 variable. If you using this locally, you
+00:13:25.440 can store it in av file and then you can
+00:13:28.399 uh import it using the from.env load.env
+00:13:32.160 uh syntax. I'm using data lab and it
+00:13:34.320 just makes things easier because
+00:13:35.600 everything's in the environment. So that
+00:13:37.760 is how you create the agent state and
+00:13:40.720 how you initialize a large language
+00:13:42.399 model. Now I'm going to be creating a
+00:13:44.240 node. So the purpose of this node is to
+00:13:46.480 pass the user's message to the LLM. So
+00:13:49.279 to be able to do this I define a
+00:13:50.880 function. So it will take in the state
+00:13:53.680 which will be agent state which is the
+00:13:55.839 state of our agent which we just uh
+00:13:58.079 created and it will output the exact
+00:14:00.320 same agent state. Remember a node has to
+00:14:03.839 be able to in uh has to be able to
+00:14:05.760 intake a state and then output the
+00:14:08.320 updated state. The state in any graph is
+00:14:12.000 the most important thing in there. If
+00:14:14.800 you don't have the state well your
+00:14:16.480 entire robustness completely falls
+00:14:18.480 apart. So remember a rule of thumb is
+00:14:20.959 always always always always output the
+00:14:23.680 agent state. Now this is Python 3 uh
+00:14:26.639 syntax but this really just shows the
+00:14:30.240 reader that you're inputting an agent
+00:14:32.399 state and you're outputting the same
+00:14:34.000 state or the updated state. So within
+00:14:36.480 this function you can see that I have
+00:14:37.920 this line of code. It's saying it's
+00:14:40.480 using llm.invoke state user message. Now
+00:14:43.680 what does this line even mean? Well
+00:14:45.680 llm.invoke Invoke is a really fancy way
+00:14:48.320 of just saying of you of running this
+00:14:50.959 LLM. So whatever I pass here, it will
+00:14:53.760 get passed to this LLM or the chat open
+00:14:56.560 AI model which we uh defined the state
+00:14:59.600 user message this will contain our
+00:15:01.760 query. Now I haven't passed any query
+00:15:04.320 yet but overall this line is essentially
+00:15:06.639 saying that whatever I have that gets
+00:15:09.199 passed to the lm using this invoke
+00:15:11.760 method and the invoke method is an
+00:15:13.600 inbuilt method. And then this is just me
+00:15:16.079 printing what the response is. Now the
+00:15:18.880 reason I haven't just printed response
+00:15:20.720 by itself and I've used response.content
+00:15:23.199 is because if you play around with this
+00:15:25.600 and you just print response, well what
+00:15:27.839 happens is you get a lot of unnecessary
+00:15:30.560 metadata. For example, you get the
+00:15:32.800 number of input tokens, the number of
+00:15:34.399 output tokens, you get a lot of
+00:15:36.160 unnecessary stuff. So if you just want
+00:15:38.320 the clean AI output result, you can just
+00:15:41.279 use response.content. And finally, I'm
+00:15:43.839 returning the state because that is what
+00:15:45.680 my function uh wants. I want to return
+00:15:47.839 the updated state. In this case, I'm not
+00:15:49.839 updating the state at all. But overall,
+00:15:52.399 this node is really just to pass the
+00:15:54.480 user's message to the LLM. It's really
+00:15:57.360 dead simple, but it shows you how we
+00:16:00.000 create the underlying function behind a
+00:16:02.160 node. So, now that we've covered the the
+00:16:05.839 stuff, let's actually build the graph
+00:16:08.160 itself. So, how do we do this? Well, you
+00:16:11.120 start off by saying graph is equal to
+00:16:13.120 state graph agent state. And this state
+00:16:15.440 graph was remember we just covered it
+00:16:17.759 previously here. It builds and manages
+00:16:20.639 the entire graph. We have to pass in
+00:16:23.199 what the shared state is. In this case,
+00:16:26.000 the shared state is this the agent state
+00:16:28.800 which we had just defined. Remember the
+00:16:31.680 state is really just it's a shared data
+00:16:34.480 structure which holds record of
+00:16:36.480 everything you want. In this case, it's
+00:16:38.480 just uh storing the human message. But
+00:16:41.360 in more complicated AI agents which
+00:16:42.959 we're going to build, it will store a
+00:16:44.480 lot more stuff. Now, how do we create a
+00:16:46.720 node and an edge? This is the underlying
+00:16:49.199 function of the node. So, if I go to
+00:16:51.920 this line, it says graph.add node. And I
+00:16:54.959 have two parameters here. Node one and
+00:16:57.279 first node. So, this part is the name of
+00:17:00.720 the node of the graph. And then the
+00:17:02.959 other part is the name of the underlying
+00:17:05.119 function aka action. This is the
+00:17:07.679 underlying function and this overall now
+00:17:10.640 is the node along with its name. Then we
+00:17:13.599 also to create an edge we use graph.add
+00:17:16.400 edge and we use the start and the end
+00:17:18.720 point. Start and end point well they're
+00:17:20.480 quite self-explanatory right but an edge
+00:17:23.439 has a start point and an endpoint
+00:17:25.599 itself. So we want our graph to look
+00:17:28.640 something like this. We want it to
+00:17:30.880 start. We want it to be passed to our
+00:17:32.880 node which was uh this. And then we want
+00:17:36.000 it to end. Uh these two lines of code is
+00:17:38.960 an in-built function in langraph where
+00:17:41.360 you can uh where you're able to
+00:17:43.039 visualize your uh graphs quite well. You
+00:17:46.559 don't need to use any external Python
+00:17:48.559 libraries. You can just use this using
+00:17:50.480 ipython. So it's really a great
+00:17:52.720 visualization tool in case you're messed
+00:17:55.280 up somewhere. Uh a rule of thumb here
+00:17:57.360 though is this. If the graph does
+00:17:59.760 compile fully and you get a result and
+00:18:02.559 it's uh it looks all fine, chances are
+00:18:05.120 you might have messed up internally and
+00:18:07.120 it doesn't always show you the internal
+00:18:08.640 mechanics. So that's just a heads up.
+00:18:10.320 Now going back to here, I created
+00:18:12.799 another edge which is this edge here. Uh
+00:18:15.600 it goes from node one and it ends. So to
+00:18:18.480 summarize everything again, we create
+00:18:20.720 the add node which is this node. This
+00:18:23.280 node's underlying function is this.
+00:18:27.840 And the this edge is from this start
+00:18:31.039 point to node one. And this edge is from
+00:18:34.480 node one to end point. Lastly, I just
+00:18:37.919 compile the entire graph and I store it
+00:18:40.240 in an agent variable. Now, another heads
+00:18:42.559 up is this. Notice how I written
+00:18:45.919 agent.getgraphth dot draw mermaid png so
+00:18:49.280 on and I've not written graph. The
+00:18:52.240 reason I've done agent instead of graph
+00:18:54.559 is because if I did graph, it wouldn't
+00:18:56.640 work. Why wouldn't it work is because
+00:18:59.600 graph isn't compiled yet. I need to be
+00:19:02.240 able to send to this function the
+00:19:04.080 compiled version of the graph and the
+00:19:06.240 compiled version of the graph is well
+00:19:08.080 Asian. That's why we did graph to
+00:19:09.760 compile. So that's how you define uh a
+00:19:14.240 very very simple graph. Now let's
+00:19:16.400 actually test it. So let me just make
+00:19:18.160 sure everything is running. 2 3 Perfect.
+00:19:22.240 Now let's run this. Okay. So this
+00:19:26.160 function is an infinite loop where I
+00:19:29.039 input something it um unless if it's
+00:19:32.400 exit it just keeps going. So I can say
+00:19:34.799 hi there.
+00:19:37.360 There you go. The AI responds how can I
+00:19:39.440 assist you today. Now if you don't
+00:19:41.360 believe me uh I can write something like
+00:19:43.760 who made you and it should say something
+00:19:46.080 like open AI. Right there we go. I was
+00:19:48.320 created by OpenAI an AI research
+00:19:50.480 organization.
+00:19:52.000 Now notice and I can also obviously exit
+00:19:55.120 but I'm now about to do something here.
+00:19:57.280 So I'm going to say uh my name is Vav.
+00:20:03.520 So nice to meet you Vav. How can I
+00:20:05.280 assist you today? So where's the
+00:20:07.120 problem? The problem is this. What is my
+00:20:11.280 name? Do you think you will be able to
+00:20:14.000 recall my name?
+00:20:16.720 I'm sorry but I don't have access to
+00:20:18.320 personal information blah blah blah. So
+00:20:21.039 let me just exit. Perfect. That's
+00:20:23.120 exited. So now you can clearly see what
+00:20:25.120 the problem is, right? It doesn't recall
+00:20:27.679 the previous messages. Why? Well, it's
+00:20:31.840 because we never created our state that
+00:20:34.240 way. All we did in our state was to
+00:20:38.000 store the human message. And the human
+00:20:40.240 message, for example, was hi there or uh
+00:20:44.480 who made you or my name is Vav or what
+00:20:47.440 is my name? These queries were the human
+00:20:49.760 messages. I send these messages. That's
+00:20:51.919 why they're human messages. Right? So
+00:20:54.320 this is quite a big problem, right? So
+00:20:57.280 how can we fix this? Well, let's move to
+00:20:59.679 the next section which is this. So we
+00:21:02.159 have a problem. Our agent doesn't have
+00:21:04.640 any recollection of what the previous
+00:21:06.559 message was. I.e. it doesn't have a
+00:21:08.960 context. Context is written in bold here
+00:21:11.679 because that's the fancy way of saying
+00:21:13.200 that it doesn't have any prior
+00:21:14.720 knowledge. This is because each time
+00:21:16.799 we're running the this program, it's a
+00:21:19.520 separate API call. So what happens is
+00:21:22.559 when I send a request the AI model or
+00:21:25.600 the open air from the open AI server, it
+00:21:27.679 gives me the request back. But that's
+00:21:29.679 it. Then I ask it again. If I go back to
+00:21:32.080 here, I say hi there, it sends a
+00:21:35.039 response which is hello, how can I
+00:21:36.240 assist you today? That's the end of the
+00:21:37.840 conversation. If I ask who made you,
+00:21:40.240 that's a new API request. it doesn't
+00:21:42.640 recall anything uh from previously. So
+00:21:46.000 we need to somehow integrate memory into
+00:21:48.159 this. Now luckily there is a lot of
+00:21:50.159 different ways to be able to integrate
+00:21:51.760 memory into Langraph agents. And these
+00:21:54.000 are some of the multiple ways you can do
+00:21:55.600 it. For example, you can combine with
+00:21:58.720 the current request with previous
+00:22:00.559 context. You can save it in a text file
+00:22:03.120 or in any external file. It could be a
+00:22:04.720 CSV, a JSON, whatever. You can use
+00:22:06.880 inbuilt lang chain memory tools like
+00:22:09.200 checkpointter memory for example. You
+00:22:11.520 can use rag for larger data storage or
+00:22:14.080 you can use external memory tools such
+00:22:15.840 as mem zero. These tools are also
+00:22:18.080 getting quite popular but you'll need to
+00:22:20.000 understand the basic documentation of uh
+00:22:23.360 different libraries. Mem is a different
+00:22:25.600 library. There's multiple different uh
+00:22:27.520 such libraries. The same goes for rag.
+00:22:29.760 You can use for example pine cone chroma
+00:22:32.640 database. There's many but you need to
+00:22:34.240 understand slight fundamentals of it. If
+00:22:36.720 you just want to stick to langraph you
+00:22:38.240 can use checkpoint memory. These are all
+00:22:40.240 slightly beyond the scope of this
+00:22:41.760 tutorial. I'm going to still integrate
+00:22:43.919 memory somehow and that is using the
+00:22:45.520 first option. The second option is also
+00:22:47.679 quite easy. You can just use a simple
+00:22:49.520 text file but the first one is the
+00:22:51.120 easiest and this moves uh this brings us
+00:22:54.240 to the next part which is agent 2. And
+00:22:57.440 this agent will essentially be our
+00:23:00.400 simple agent but infused with context.
+00:23:03.600 So agent with context feeding. So it
+00:23:05.840 will have some form of basic memory. Now
+00:23:08.080 the aim of this agent is to understand
+00:23:10.640 the different messages in lang. Remember
+00:23:13.360 I told you there were loads of different
+00:23:15.039 messages not just human message there's
+00:23:17.039 AI message tool message system message
+00:23:19.600 lot of different messages coming up.
+00:23:21.200 Then we're also going to understand the
+00:23:22.799 union type annotation and we're also
+00:23:24.960 going to feed context back into the LLM
+00:23:27.039 aka the whole overall aim of this agent.
+00:23:30.320 These are all the imports we're going to
+00:23:31.919 need this time around. We're going to
+00:23:34.159 import OS. We're going to from the
+00:23:36.240 typing library import type dictionary,
+00:23:38.480 list and union. We've covered what a
+00:23:40.400 type dictionary is. We know what a list
+00:23:42.400 is. We don't know what a union is. Uh
+00:23:44.960 before I explain that, there's also this
+00:23:47.600 these two uh imports which we've already
+00:23:49.919 covered and this new one. We've we
+00:23:52.480 already know what a human message, but
+00:23:53.919 what is an AI message and a system
+00:23:55.840 message? Well, an AI message is well the
+00:23:58.720 response of the AI model. In this case,
+00:24:02.320 the AI message was this. Now, why didn't
+00:24:05.679 I use AI message in the state before?
+00:24:08.400 Well, because we didn't need to store
+00:24:10.080 it. We never stored it. We just wanted
+00:24:11.840 to store the human message and that's
+00:24:13.440 it. But now, we're going to also store
+00:24:15.279 the AI message. And then there's also
+00:24:17.200 this system message. This one, the
+00:24:19.120 system message is essentially telling
+00:24:21.039 our large language model to be able to
+00:24:23.440 it it gives instructions to it. If you
+00:24:26.240 don't want to give instructions via the
+00:24:28.320 human message and you just want it to be
+00:24:30.480 infused, uh we use a system message. Uh
+00:24:33.120 don't worry if you didn't understand
+00:24:34.240 that, it will make much more sense when
+00:24:36.240 we actually code this up. But back to
+00:24:38.400 this union type annotation. So union is
+00:24:41.679 a type annotation that allows for a
+00:24:44.000 variable to be more than one data type.
+00:24:46.799 For example, in this very very uh dead
+00:24:49.440 simple function which I created, it uses
+00:24:52.400 a a variable called value and I used a
+00:24:55.520 union type annotation and it allows this
+00:24:58.720 variable value to be either an integer
+00:25:00.960 or a float. So like I said, uh this
+00:25:04.480 variable value can only be an integer or
+00:25:07.039 float. So it can't be anything like a
+00:25:09.279 string or a boolean or any custom data
+00:25:11.840 type I make only these two. So hopefully
+00:25:14.960 you now understand what a union is. So
+00:25:17.760 if we go back to uh our code, we create
+00:25:21.679 a new state class agent state type
+00:25:24.159 dictionary again and we again only have
+00:25:27.360 one single key messages. Last time we
+00:25:30.640 had user message but this time we're
+00:25:32.640 storing every single message. We've
+00:25:34.400 stored this as a union. This could be
+00:25:36.159 human message, AI message, and system
+00:25:37.919 message. These are the three message
+00:25:39.440 types we'll be covering in this agent.
+00:25:41.600 And we're going to be storing this in a
+00:25:43.520 list format. So again, I've used the
+00:25:45.840 same LLM and defined it here. Uh we've
+00:25:48.960 mentioned what uh model is. We've
+00:25:50.960 mentioned what a temperature is. And now
+00:25:52.880 I'm going to be I'm going to be creating
+00:25:54.320 this variable. And this is called a
+00:25:56.159 conversation history. So this is where
+00:25:59.120 the system message comes in. So it says
+00:26:01.679 you are an AI assistant that speaks like
+00:26:03.600 a pirate. Answer all of my questions
+00:26:05.679 properly. Now the reason I've said speak
+00:26:08.799 like a pirate is really to show you the
+00:26:10.960 value of system message. The system
+00:26:12.799 message is slightly different to the
+00:26:14.640 human message in the sense that the
+00:26:16.240 system message is purely just
+00:26:18.000 instructions which the uh AI agent has
+00:26:21.360 to follow every single time. But whereas
+00:26:23.520 a human message well that's dependent on
+00:26:25.440 me right in this case I want the AI
+00:26:28.320 agent to be able to speak like a pirate
+00:26:30.480 every single time it answers back. So it
+00:26:34.000 will craft its AI message in that way in
+00:26:37.520 this case like a pirate. So we're now
+00:26:40.480 going to uh define another node in this
+00:26:42.720 case our processing node. So this node
+00:26:45.679 uh this underlying function uh of the
+00:26:47.520 node is slightly more complicated in the
+00:26:50.559 sense that although we've uh sent the
+00:26:52.799 response again this time we're not uh
+00:26:55.120 sending just the human message we're
+00:26:57.760 sending the uh her message the system
+00:26:59.919 message the AI message everything. Why?
+00:27:02.240 because well in our state we've defined
+00:27:04.159 it like that. We've defined it as a list
+00:27:06.159 of either human message, AI message or
+00:27:08.080 system message, right? All of that is
+00:27:10.240 going to get passed into our LLM. Now we
+00:27:13.679 update this uh state and this is where
+00:27:17.039 the context or the memory comes in
+00:27:19.600 because of this line. It appends this
+00:27:22.320 state and that allows for the AI agent
+00:27:25.600 to essentially recall what's happened in
+00:27:27.520 the previous queries in the
+00:27:28.960 conversation. So although we're still
+00:27:31.039 sending separate API requests, it kind
+00:27:33.440 of it will act like it know it's like a
+00:27:36.240 flowing conversation. Now obviously
+00:27:37.840 there are pros and cons to this which
+00:27:39.279 we'll discuss in just a bit. But going
+00:27:41.360 back to the code this again I print the
+00:27:43.919 response or content and I finally return
+00:27:46.000 the updated state. Now this time
+00:27:47.760 remember we've also updated the state
+00:27:49.360 because of this line because we've
+00:27:50.880 appended it and that's why I had also
+00:27:53.600 created this as a list to be able to
+00:27:55.279 append our new uh new state. If we go to
+00:27:58.960 this line now again it's the exact same
+00:28:02.399 syntax which was in the simple agent.
+00:28:04.320 The overall graph structure hasn't
+00:28:06.159 changed at all. You can see that we have
+00:28:08.399 the same start point. We have an end
+00:28:10.159 point. I have changed the name of the
+00:28:12.080 function to help you get familiar with
+00:28:14.640 uh the syntax. The add note I can save
+00:28:17.279 this as whatever I want. I can name this
+00:28:19.520 as another new node or something. And
+00:28:22.480 this is the underlying function which is
+00:28:24.559 our processing node. Right? And again we
+00:28:26.399 have the start and end point. But a very
+00:28:28.640 very common mistake is this in a lang
+00:28:31.279 graph which is we mess up the names of
+00:28:34.480 our nodes. So that's why I like to keep
+00:28:36.960 these nodes quite simple and intuitive.
+00:28:39.600 Don't try to name it something like
+00:28:42.080 completely out of the blue. Try to name
+00:28:43.919 it like um something intuitive something
+00:28:46.320 easy to remember and something which
+00:28:47.919 makes sense. In this case LLM node does
+00:28:50.480 make sense. So that's why I've kept it.
+00:28:52.240 And let's now run this. So we can run
+00:28:56.080 this, run that,
+00:29:00.240 that. And we're back. Perfect. So let's
+00:29:04.000 try this simple agent. So now I ask it,
+00:29:06.559 hi, who are you?
+00:29:10.720 So what do you think it will output this
+00:29:13.200 time? Think about it.
+00:29:17.360 Okay. So, obviously you're not going to
+00:29:19.120 guess it uh word by word, but I hope you
+00:29:22.000 said something like it will uh give us
+00:29:24.480 an answer in a pirate themed manner. And
+00:29:27.200 again, it does because we set the system
+00:29:29.760 message or instructions here.
+00:29:33.279 If we go here, it says, &quot;Ahoy matey, I
+00:29:36.559 be your trusty AI assistant here to help
+00:29:39.200 you.&quot; Whatever, whatever. Okay. Now let
+00:29:41.600 me remove this break line and let's run
+00:29:44.960 this again. So I'll again ask it hi.
+00:29:49.360 Perfect. Now I'm going to ask say my
+00:29:51.679 name again. So my
+00:29:54.480 name is Okay. Perfect. Still all good.
+00:29:57.760 And now let me ask it what is my
+00:30:02.080 name? If I can spell.
+00:30:05.840 Perfect. Ye be called Va Savvi. It still
+00:30:08.960 speaks in a pythine manner and it still
+00:30:11.520 is able to remember what I just asked
+00:30:13.600 him. Why? Because every single time in
+00:30:16.960 our node we are appending the uh update.
+00:30:20.320 We're appending the new state. So we're
+00:30:22.240 getting an updated state. I can also
+00:30:24.480 print the current how the current state
+00:30:26.799 looks like to be able to give you a
+00:30:28.799 better intuition. So if I stop this.
+00:30:32.960 Okay, that's just a keyboard interrupt.
+00:30:34.640 Don't worry about that. Let's run this
+00:30:36.559 again. Let me actually break this so it
+00:30:39.520 keeps everything simple.
+00:30:42.159 Actually, let's do this.
+00:30:46.559 Stop and run. Okay, now look at how the
+00:30:50.799 state gets updated. So again, I'm going
+00:30:52.720 to write hi
+00:30:54.640 ao mi whatever. But our current state
+00:30:57.440 looks like this. This new print
+00:30:59.200 statement was what I've just added here.
+00:31:02.000 And this is again to show you how the
+00:31:03.760 state changes. So if you look here uh it
+00:31:07.200 says uh the system message which is you
+00:31:10.960 are an AI assistant then the human
+00:31:13.039 message which is hi and then it also
+00:31:15.600 says the AI message. And why does it
+00:31:18.320 store all of these three message types?
+00:31:20.320 Well it's because we had defined them
+00:31:21.840 here. Okay. So hopefully everything is
+00:31:25.120 like piecing together now. And now look
+00:31:28.240 at how we change the how the state gets
+00:31:31.120 updated. So again I'll write uh I can
+00:31:33.919 write something like who are you?
+00:31:37.600 Okay it's now given me the new response
+00:31:39.840 but now look at how the current state is
+00:31:42.240 the state is content you are an AI
+00:31:44.399 assistant that stays the same. Then we
+00:31:46.559 have the human message which is hi which
+00:31:49.039 was the first message we we've ever
+00:31:51.120 written. And then we have the its
+00:31:54.240 respective uh AI message which is here
+00:31:58.559 and then we have the human message again
+00:32:00.799 the new human message which is who are
+00:32:03.279 you which I just asked it and then this
+00:32:05.840 new AI response is right here. And also
+00:32:09.200 one more thing remember uh earlier I had
+00:32:11.679 said we do response.content content is
+00:32:14.159 because look at all this unnecessary
+00:32:16.159 metadata. For example, this additional
+00:32:18.480 keyword arguments, response metadata. It
+00:32:21.360 can also sometimes output the input
+00:32:23.440 tokens, output tokens, which we just
+00:32:24.880 don't want. We want a clean content and
+00:32:27.120 that's why we just use the content uh
+00:32:30.159 method response.content. Hopefully, you
+00:32:33.039 started to understand how this state
+00:32:35.840 works and why it gets updated like this.
+00:32:37.919 to summarize it stores in this case it
+00:32:40.720 stores the human message the AI message
+00:32:43.039 and the system message and every time
+00:32:45.600 we've run it again or we ask a query it
+00:32:48.320 gets appended why it it gets appended
+00:32:51.120 because we uh wrote append right and it
+00:32:54.080 gets stored in a list format and it can
+00:32:56.000 take either a human message AI message
+00:32:57.519 or system message and that's why because
+00:33:00.320 we're appending it it gets sent to the
+00:33:03.440 uh back of the list so we can now stop
+00:33:06.399 But cool. That's a keyword argument.
+00:33:09.679 Perfect. But but I had said there are
+00:33:12.880 pros and cons to this agent. So we have
+00:33:16.399 a problem. As our conversation increases
+00:33:18.960 in size, we will use more input tokens.
+00:33:22.000 And because we are using a paid model,
+00:33:24.559 an open AI model, it means more cost per
+00:33:27.279 API call gradually. So for example,
+00:33:30.399 right now we are working in like tenth
+00:33:33.120 of a cent but gradually as a
+00:33:35.440 conversation builds builds builds we
+00:33:37.519 might be at the point where we're
+00:33:39.120 sending thousands and thousands and
+00:33:40.880 thousands of tokens every single API
+00:33:43.200 call and that keeps getting appended
+00:33:45.279 because we haven't set any hard limit.
+00:33:47.679 So the simplest simplest way to reduce
+00:33:50.000 the cost if you're using this memory uh
+00:33:52.640 this way of memory is to set a
+00:33:55.600 restriction of the number of messages
+00:33:57.440 you store. So you could limit it to the
+00:34:00.320 last five messages. The reason I've said
+00:34:02.480 last five messages is because of recency
+00:34:04.480 bias because you're more likely to be
+00:34:07.279 sending new or the more relevant
+00:34:09.839 important information in the previous
+00:34:12.159 end number of messages. The number five
+00:34:14.639 I've just set it as arbitrary. You can
+00:34:16.639 set it as seven. You can set it as 10.
+00:34:18.560 You can set whatever you want if you go
+00:34:20.159 with this technique. But yeah, this is a
+00:34:22.560 very very very easy way of being able to
+00:34:25.199 create uh a form of memory for your AI
+00:34:28.800 agent with very very limited number of
+00:34:31.359 code lines. That's the second agent
+00:34:33.440 done. So well done. We're making good
+00:34:35.199 progress. But now it's time to take our
+00:34:37.918 AI agents to a whole new level. Remember
+00:34:40.879 at the start where I asked you the two
+00:34:42.800 questions here,
+00:34:44.800 I had put tools as uh in bold. Now we
+00:34:48.399 actually talk about it. Agent three is
+00:34:51.040 agent with inbuilt tools. Now there's
+00:34:53.199 two types of tools in Langraph. There's
+00:34:54.960 the in-built tools and there are your
+00:34:57.040 own custom tools. For this agent, we
+00:34:59.040 will be using the in-built tools and I
+00:35:01.040 want to talk about them because they are
+00:35:02.640 important and they can save you a lot of
+00:35:04.560 time as well. So until now what we've
+00:35:07.440 built is really just the LLM, right?
+00:35:09.920 There's no clear distinction between an
+00:35:11.599 LLM and an AI agent. Everything which
+00:35:14.000 we've done so far, well, you could have
+00:35:15.920 just asked an LLM simply to do without
+00:35:18.640 needing the overall the overhanging
+00:35:21.040 Langro code, right? But now, here's
+00:35:23.440 where Langroth gets really like useful.
+00:35:26.079 But so now we're going to upgrade. So
+00:35:28.000 we're going to be creating an AI agent,
+00:35:30.160 a true AI agent this time, which has
+00:35:32.240 access to different tools. So the aim is
+00:35:35.119 to be able to understand what tools and
+00:35:37.119 conditional edges are to be able to
+00:35:38.960 understand what the base message is to
+00:35:41.119 be able to understand the annotated type
+00:35:43.040 annotation a new type annotation which
+00:35:44.960 we're going to learn and also how to
+00:35:47.760 access inbuilt tools in langraph. Okay,
+00:35:50.880 so let's get started with what tools and
+00:35:52.880 conditional edges are. And these are the
+00:35:54.720 last two fundamental building blocks
+00:35:56.400 which you'll need. And if you master
+00:35:58.800 these five uh building blocks here,
+00:36:02.240 state, nodes, edges, graph, state graph,
+00:36:05.280 and then these last two which are tools
+00:36:08.000 and conditional edge. You can really
+00:36:10.400 build any robust AI agent out there.
+00:36:13.119 Almost any AI agent out there using
+00:36:14.880 Langraph only if you are able to master
+00:36:17.280 these uh certain tools uh certain
+00:36:19.200 fundamental building blocks. Okay. So
+00:36:21.440 what is a tool? Think of a tool as a
+00:36:24.240 specialized function that the agent can
+00:36:26.640 utilize to perform specific tasks. It
+00:36:29.920 could be to fetch data from an API. For
+00:36:32.240 example, from a weather API, it can uh
+00:36:35.599 get the weather and that would be your
+00:36:37.920 weather tool. So going back to the game
+00:36:40.480 analogy, it could be something the
+00:36:42.320 player aka our agent can use like a
+00:36:45.520 weapon or a healing potion which I've
+00:36:47.680 created here to perform a specific
+00:36:50.160 action. This is very important. The aim
+00:36:53.119 of a tool is to be able to allow our LLM
+00:36:56.400 to be able to perform a specific action.
+00:36:58.800 So what is a conditional edge? So these
+00:37:01.440 are specialized connections that decide
+00:37:03.599 the next node to execute based on the
+00:37:06.320 specific conditions or logic applied to
+00:37:08.320 the current state. Damn, that's a
+00:37:09.760 mouthful, right? So a good analogy for
+00:37:12.560 this is going back to a video game
+00:37:14.079 analogy and it's thinking of like a path
+00:37:16.640 that only opens if a condition is met.
+00:37:19.200 Kind of like an if else statement. We're
+00:37:21.760 going to understand these two in more
+00:37:24.000 depth right here. So these are all the
+00:37:26.480 imports which we're going to need. And
+00:37:28.079 it's a lot more import than last time,
+00:37:30.000 right? Really, we've only added this
+00:37:32.320 this line which is annotated. Then we've
+00:37:35.040 used from langching.cord on messages.
+00:37:37.119 And we've imported all of these new
+00:37:38.960 stuff, particularly base message. We're
+00:37:41.440 going to talk about what a base message
+00:37:42.880 is soon. But going to the imports, we
+00:37:45.920 already know chat openai. And then
+00:37:47.920 there's this new line of code from
+00:37:50.000 langro.graph message import add
+00:37:52.160 messages. So this is called a reducer
+00:37:55.680 function. You don't need to know what a
+00:37:57.440 reducer function is in depth, but think
+00:38:00.320 of a reducer function as basically being
+00:38:02.560 able to add your messages without them
+00:38:04.720 being overwritten. That's a very very
+00:38:07.119 simple way to put what add messages
+00:38:09.200 reducer function does. We will code this
+00:38:11.359 up in just a bit. But there's also these
+00:38:14.160 two. So the duck go search run is a
+00:38:18.400 inbuilt tool uh which lang chain has.
+00:38:21.599 We're going to be talking about where
+00:38:22.800 you can get access to these tools. And
+00:38:24.640 then there's this tool node which is
+00:38:26.640 essentially just the fusion of a tool
+00:38:28.640 and a node. Kind of like how the state
+00:38:30.880 graph was the fusion of the state and
+00:38:33.599 the graph. So the annotated is a type
+00:38:37.119 annotation. So it allows for a variable
+00:38:40.079 to be more than one data type. Now it's
+00:38:42.880 very similar to what a union was right.
+00:38:45.920 So it allows for uh for in example in
+00:38:49.359 this case it's an integer and an age
+00:38:52.560 which which is x. and I've set it to as
+00:38:54.720 20. So it basically allows us to provide
+00:38:57.440 extra information about the type of
+00:38:59.520 value. In this case, we're providing age
+00:39:02.000 as extra information about the variable
+00:39:04.079 x. Now sequence is another type
+00:39:06.560 annotation which allows a variable to be
+00:39:08.880 any ordered collection. So it could be
+00:39:10.960 like a list or a pupil or a string or
+00:39:13.680 whatever. There's a slight difference
+00:39:15.599 between what a list and a sequence is.
+00:39:17.440 You don't need to know about this in
+00:39:19.200 depth. The reason I've included sequence
+00:39:21.280 here is because we've used that in the
+00:39:22.960 code. So if we go to here from typing
+00:39:25.599 import sequence, uh it's really similar
+00:39:28.160 to what a list is. Uh but there's a
+00:39:30.640 slight difference which is a sequence is
+00:39:32.800 a read only access to any order data
+00:39:35.359 type. But a list is a mutable ordered
+00:39:37.760 collection. So a sequence is only used
+00:39:40.240 when you only need to read the data, not
+00:39:42.480 modify it. And a list is you can add,
+00:39:45.200 remove or change items in it. That's why
+00:39:46.960 we've used a reducer function for the
+00:39:48.720 sequence which you're going to see in a
+00:39:50.160 minute. Now, what is a base message?
+00:39:52.800 Remember, we just imported what what the
+00:39:55.359 base message was uh right here. So, what
+00:39:58.720 exactly is it? Think of the base message
+00:40:01.440 as the parent class of all of the
+00:40:04.000 different types of messages such as the
+00:40:06.400 human message, AI message, system
+00:40:08.320 message. Now there's so many different
+00:40:10.880 message types in langraph and lang chain
+00:40:13.440 that it could be quite cumbersome to
+00:40:15.520 write all of them and to make sure we've
+00:40:17.440 got all of them. So we can just simply
+00:40:19.359 put base message. So again think of base
+00:40:22.160 message as the parent class and human
+00:40:24.480 message AI message as the children
+00:40:26.400 classes which inherit all the properties
+00:40:28.960 of the base message and also have their
+00:40:31.119 own uh properties respectively. Right?
+00:40:33.920 So that is what a base message is. Now
+00:40:36.560 going back to the inbuilt tools in
+00:40:39.040 Langra and Langraph have a lot of
+00:40:40.880 inbuilt tools. So this is where the
+00:40:43.359 documentation is. So if I follow the
+00:40:45.280 link, we come to this. Now this is a
+00:40:48.400 really well-written documentation and
+00:40:50.400 they have a lot of tools um inbuilt
+00:40:53.200 already. For example, there's searches,
+00:40:55.440 there's for code interpreters, there's
+00:40:57.440 for productivity, web browsing,
+00:41:00.000 databases, etc., etc. You get the point.
+00:41:03.200 There's a lot of stuff here. So you can
+00:41:06.079 even click on anything. For example, if
+00:41:07.680 we go to search and duck.go, which is
+00:41:09.760 what we're going to be using for this
+00:41:11.040 agent, you can see all of the uh
+00:41:13.440 documentation and it's very very very
+00:41:15.440 well organized. So going back to this,
+00:41:18.319 we I want to show you how we can use
+00:41:20.640 this duck.go search run. So for example,
+00:41:24.000 I've asked it a query who won the
+00:41:26.240 Champions League final 2025, which
+00:41:28.480 recently happened. our AI agent. Well, I
+00:41:31.680 can show you here
+00:41:33.760 if I run this.
+00:41:36.400 Okay, so I've printed two different
+00:41:38.319 types here. I've printed the AI response
+00:41:40.720 and I've printed the duck.go search runs
+00:41:43.280 uh response aka the search tools. You
+00:41:45.760 can see that GPD40 minis says I'm sorry,
+00:41:49.520 but I don't have information on events
+00:41:51.440 that occurred after October 2021. Why?
+00:41:54.240 Because these models, well, their
+00:41:56.000 training data was up to this set date.
+00:41:58.640 So obviously it won't have access to um
+00:42:02.319 uh 2025 Champions League final, right?
+00:42:05.520 It we're lucky that it was able to say
+00:42:07.920 that it didn't because a lot of the
+00:42:10.000 times the model can um it can
+00:42:11.920 hallucinate and obviously that's quite
+00:42:13.920 bad. If you don't know what
+00:42:15.040 hallucination is, hallucination is
+00:42:16.960 essentially when an AI model just spits
+00:42:19.520 out garbage because it just needs to
+00:42:21.839 spit out something, right? Uh so that's
+00:42:24.160 what hallucination is. So it could have
+00:42:26.000 said something like uh the winners of
+00:42:28.800 Champions League final was like Real
+00:42:30.720 Madrid or or some something which is
+00:42:32.560 completely wrong or uh infactual. But
+00:42:35.680 look at what the search tool print did.
+00:42:37.440 It said PSG and Inter Milan locked horns
+00:42:39.839 in the final of the UFA Champions League
+00:42:41.680 in 2025 and it eventually says that PSG
+00:42:44.800 achieved a historic milestone by
+00:42:46.720 winning. So it was able to uh show us
+00:42:50.079 all of the details fully. It showed when
+00:42:52.960 the date was, what the time was, who
+00:42:54.800 won, who it was between, what date it
+00:42:57.200 was, everything. And you can now see if
+00:43:00.079 we were able to connect the tool and an
+00:43:03.520 AI agent together, sorry, a tool or an
+00:43:06.160 LLM together, it could be quite
+00:43:08.079 powerful, right? So that is the whole
+00:43:10.400 point of AI agents. And that's exactly
+00:43:12.960 what we're about to do right now. If we
+00:43:14.640 go and define our class agent state
+00:43:16.720 here, it's the same way how we've been
+00:43:18.480 defining the state in our previous
+00:43:20.480 agents. But this time the messages key
+00:43:23.359 is slightly different. We've used
+00:43:26.000 annotated which we just talked about
+00:43:28.079 which is over here. It allows us to
+00:43:31.280 provide extra information about the type
+00:43:33.040 of value. In this case, we're providing
+00:43:35.040 age as extra information about the
+00:43:36.800 variable X. So that's what annotated
+00:43:39.359 does. It literally is just a way to be
+00:43:41.520 able to provide extra information. And
+00:43:44.079 over here that's what we've done. So
+00:43:47.280 this essentially says this part is what
+00:43:49.839 data type the um your uh message is. So
+00:43:53.839 it could be either a tool message, an AI
+00:43:57.200 message, etc. And this all stems from
+00:43:59.040 the base message. Remember what is the
+00:44:00.880 base message? The base message is the
+00:44:03.280 parent class of all of the different
+00:44:04.720 types of messages. So and this add
+00:44:07.520 messages is the reducer function. And
+00:44:09.599 I've written in comments here. It
+00:44:11.359 essentially allows for the addition of
+00:44:12.720 messages without getting deleted. So
+00:44:14.960 that's all you need to know for this.
+00:44:17.280 Now a tip is you can use this line of
+00:44:20.640 these two lines of code in almost any AI
+00:44:23.520 agent where you just want to store the
+00:44:25.040 messages. It will work completely fine
+00:44:27.119 because you're storing the messages
+00:44:29.040 without any overwriting and you don't
+00:44:30.960 need to work uh you don't need to worry
+00:44:32.400 about the different message types like
+00:44:34.400 uh human message, AI message and all
+00:44:36.319 that. It covers everything. So there you
+00:44:38.720 go. Now we create a list of tools which
+00:44:40.640 we have. In this case, I will only give
+00:44:42.960 our AI agent the access to the doctor go
+00:44:45.440 search run tool. So you can have as many
+00:44:47.839 tools as you want. You can write
+00:44:49.359 something like whatever tool you want.
+00:44:51.520 But obviously make sure it's a proper
+00:44:53.200 tool. But because we're only using
+00:44:54.880 inbuilt tools and I want to keep this
+00:44:56.480 very simple. I'm only going for Dr. Go
+00:44:59.040 searchron tool. So now we go with the
+00:45:01.520 model uh definition here. I've upgraded
+00:45:04.240 to GPT40 here because I personally feel
+00:45:07.200 like GBT40 is the best LLM uh which is
+00:45:10.640 also reasonable in pricing uh for tool
+00:45:13.200 calling from the OpenAI uh services and
+00:45:16.480 it's also fast. I could have also used a
+00:45:18.079 reasoning model but obviously that would
+00:45:19.440 have taken more time to uh give an
+00:45:21.359 answer right. So how am I able to
+00:45:24.400 connect my LLM to uh these tools? So the
+00:45:29.040 way to do it is through this dobbind
+00:45:31.520 tools. So this is really how to give our
+00:45:35.200 LLM knowledge about these tools. Gives
+00:45:37.760 basically the access for uh it gives the
+00:45:40.240 LLM uh knowledge about the existence of
+00:45:43.040 these tools. So if I run this perfect uh
+00:45:48.079 now I've defined another node and this
+00:45:50.079 is model call. So essentially this is
+00:45:53.200 quite similar to what we've been doing
+00:45:54.960 previously. We just use uh we create
+00:45:58.800 system message and I'm no more pirate
+00:46:01.440 stuff. I have just kept it very simple
+00:46:03.119 saying you are my AI assistant please
+00:46:05.119 answer my query to the best of your
+00:46:06.640 ability. So it should there's no pirate
+00:46:09.839 stuff there's nothing just a clearcut
+00:46:11.760 answer to my request and then I invoke
+00:46:15.040 the model and now I pass the system
+00:46:18.000 prompt which is the system message here
+00:46:20.319 as well as all of the state um which we
+00:46:23.280 had before and then we just return the
+00:46:25.280 messages the response of the messages.
+00:46:28.800 Perfect. Okay, now here's where it gets
+00:46:32.319 slightly tricky. And um so pay attention
+00:46:35.680 here because now we're going to be
+00:46:36.880 defining the conditional edge. So if I
+00:46:39.680 quickly run this, okay, and run this.
+00:46:44.960 Okay, so let's go with this function. So
+00:46:48.560 this should continue function is the
+00:46:50.640 underlying action behind the conditional
+00:46:53.119 edge. The conditional edge is a decision
+00:46:56.240 element at the end of the day. So it in
+00:46:58.800 this line of uh in this function what
+00:47:00.640 we've done is we take the messages. So
+00:47:03.520 we copy the latest state into the
+00:47:05.359 messages variable and then we look at
+00:47:07.599 the last message. Now there's a reason
+00:47:09.760 we look at the last message and it's
+00:47:11.920 mainly to look for if there's any
+00:47:14.000 further tool calling. Why? Because if
+00:47:17.359 there's no further tool calling required
+00:47:19.280 in the last message, well we can just
+00:47:21.200 end. That's what this line of code says.
+00:47:23.200 If not last message tool cause. So if it
+00:47:26.400 doesn't need any more tools, it just
+00:47:28.640 ends the thing. Else we return and uh
+00:47:31.119 else we return continue. So continue is
+00:47:34.079 an edge and end is an edge as well. And
+00:47:36.960 this will make a lot more sense in just
+00:47:38.880 a minute. Just bear with me. I want to
+00:47:41.200 create the graph itself first. So we
+00:47:44.079 again use state graph agent state. We
+00:47:47.119 use the add node method which we've done
+00:47:49.119 to uh add this node which is the model
+00:47:51.520 calling which is very very similar to
+00:47:53.440 our previous two AI agents. And then we
+00:47:55.520 create a tool node. Now a tool node is
+00:47:58.400 essentially just a node that neatly
+00:48:00.960 contains all of the tools we want our
+00:48:02.720 agent to have. So it basically is one
+00:48:05.359 single node which will have all of these
+00:48:07.520 tools neatly arranged. So we don't need
+00:48:09.200 to worry about all of the internal
+00:48:11.119 mechanics. So that's what this line of
+00:48:13.359 code does. And then we add this node as
+00:48:15.760 tools in our graph. So visually speaking
+00:48:18.640 we have created this this tool node
+00:48:21.119 here. Here's the uh the obviously the
+00:48:23.040 set entry point is our agent. So this is
+00:48:25.680 another way you can define a start and
+00:48:28.480 an end point in uh langraph. You can
+00:48:31.280 either use end or end start or you can
+00:48:33.920 use dot set entry point and dot set
+00:48:36.000 finish point or dot set end point in
+00:48:38.160 langraph. There's multiple ways. I don't
+00:48:40.319 personally have a preference but you can
+00:48:41.839 use both ways. So that's why I've
+00:48:43.280 written it like this. At the end of the
+00:48:45.599 day, you need to define your start and
+00:48:48.000 your end point somehow. And there's
+00:48:49.760 multiple ways to do it. That said, but
+00:48:52.480 how do we create this conditional edge?
+00:48:54.480 If we go to this uh line of code, it
+00:48:56.400 says graph.add conditional edges. So
+00:48:58.720 this internal method essentially creates
+00:49:01.040 the conditional edge for us. Now you can
+00:49:03.599 have many many many conditional edges
+00:49:05.520 within your uh langraph or within your
+00:49:07.839 graph, but in this case, we're just
+00:49:10.079 sticking with one. So for this method
+00:49:13.200 the add conditional edges we have the
+00:49:16.000 first parameter needs to be the origin
+00:49:18.000 and this is our agent. Now what is our
+00:49:20.400 agent? Our agent is the node which we
+00:49:22.880 just created. This is where all the
+00:49:24.640 model calling gets passed. Then we have
+00:49:26.640 the underlying action. So similar to how
+00:49:29.440 the node needed the name of the node and
+00:49:32.319 the underlying action aka the function
+00:49:34.640 behind this node which in this case was
+00:49:36.559 a model call. Similarly, our underlying
+00:49:39.599 action is should continue which is this
+00:49:42.079 function or this underlying logic. It
+00:49:45.040 returns two parts. It returns either an
+00:49:47.200 end or it returns a continue. So if it
+00:49:50.559 returns end, we go to the end part. Then
+00:49:53.359 you can see this dotted edge line here
+00:49:55.760 that it returns end. It goes to the end
+00:49:58.480 point. But if our underlying function,
+00:50:00.960 the should continue function return
+00:50:03.040 continue. Well, that means it still
+00:50:04.800 needs to run some more tools and that's
+00:50:06.800 why it goes back to the tool node. So
+00:50:09.680 from this it goes our agent continue and
+00:50:12.800 this goes to the end if there's no more
+00:50:14.559 tool calling left. But the graph would
+00:50:17.520 still not be complete if we had left it
+00:50:19.760 by this point because if you go to your
+00:50:22.000 tools there's no way to go back to your
+00:50:24.400 agent and that's where you create this
+00:50:27.119 new edge as well. And this this edge
+00:50:29.440 goes from tools to our agent. Uh the
+00:50:32.319 direction is from the start point tools
+00:50:34.400 and the end point our agent. Now that
+00:50:36.720 was quite a lot. So I'm going to
+00:50:38.240 summarize it one more time which is this
+00:50:40.880 the it starts with the start point with
+00:50:42.960 this set entry point. Then we define our
+00:50:45.520 node our agent which we've been doing
+00:50:47.119 for the past uh three AI agents now and
+00:50:50.000 that was through this. Then we created
+00:50:53.200 our conditional edge which was either
+00:50:55.200 continue
+00:50:56.720 or end. Uh and the underlying function
+00:50:59.520 behind that was this should continue
+00:51:01.520 function. And lastly we needed to create
+00:51:04.480 an edge which goes from tools to our
+00:51:06.960 agent which was through this. And then
+00:51:09.359 we compile the graph and then we send
+00:51:11.359 this to uh visualize it. So let's just
+00:51:13.920 run this to make sure everything is
+00:51:15.440 working. And now let's actually try
+00:51:17.760 this. So this fancy piece of code which
+00:51:20.720 I've written here is really just a way
+00:51:23.599 of making the print statements or the
+00:51:26.559 output look better. So all it says is
+00:51:28.880 basically u if it's a human message you
+00:51:31.599 write human message. If it's an AI
+00:51:33.040 message write a AI message. If it's a
+00:51:34.640 tool message write a tool message. You
+00:51:36.079 get the point. It's just a way to neatly
+00:51:38.480 organize it. So you can steal this piece
+00:51:40.480 of code if you uh want to um uh
+00:51:43.680 visualize your uh outputs in a much
+00:51:46.319 neater way. So now I pass in the query
+00:51:49.280 who won the Champions League final in
+00:51:51.359 2025. Uh the same query I had passed
+00:51:54.319 before. And notice the tool message
+00:51:57.839 which was this massive piece of um
+00:52:00.480 output and then the AI message the final
+00:52:03.200 AI message which was PSG won in 2025
+00:52:06.240 defeating Inter Milan with a final
+00:52:07.920 victory at this display this place. What
+00:52:10.160 exactly happened here? Let's go through
+00:52:12.000 the workflow. So we passed in a query
+00:52:14.640 which was at the start and then we
+00:52:16.400 passed it to our agent. Then AI agent
+00:52:19.680 decided okay the user wants to do a
+00:52:23.280 searching. How did it decide that? Well,
+00:52:25.520 the an internal LLM GPD40 decided okay
+00:52:28.960 the user wants to search. So it used
+00:52:31.599 tool calling search aka this over here.
+00:52:35.520 It used the duck.go search here uh with
+00:52:38.240 it uh with his respective call ID and
+00:52:40.559 with the respective query and the query
+00:52:42.960 which was passed to the actual duck.go
+00:52:45.119 search was Champions League final 2025
+00:52:48.240 winner. It's slightly different with the
+00:52:50.720 human message. So you can see that the
+00:52:53.280 AI the LLM in the background decided
+00:52:56.400 what to pass or what the argument to
+00:52:58.880 pass to this Dr. Go search was and the
+00:53:02.720 Dr. Go search returned the tool uh
+00:53:04.880 returned this output. How did it uh
+00:53:07.280 return it? It went through this edge
+00:53:09.440 over here and passed all of the output
+00:53:12.319 aka all of this output back to our
+00:53:15.040 agent. Then our agent decided whether we
+00:53:18.079 need any further tool calling because we
+00:53:20.720 only asked for one thing. We don't need
+00:53:22.800 any further more further tool calling
+00:53:25.119 right. Uh and because of this logic
+00:53:27.200 which we defined in this we just return
+00:53:29.920 end. So it goes to the endpoint and it
+00:53:32.640 outputs the result which was PSG won the
+00:53:34.960 Champions League final in 2025. So that
+00:53:38.400 was how we can create a robust AI agent
+00:53:42.319 by connecting an LLM with a tool. So
+00:53:45.520 great job so far. That was quite a lot.
+00:53:48.480 But remember, practice makes perfect. So
+00:53:50.480 try to create your own AI tools. Try to
+00:53:52.960 go to this documentation and try to
+00:53:55.440 create uh try to pick up any of these
+00:53:57.760 tools and just build. There are also
+00:54:00.000 free and paid. So be mindful of that. I
+00:54:02.240 used a free tool, but there's a lot of
+00:54:04.640 uh there's a lot of options. So feel
+00:54:07.119 free have at it. Now I'm going to
+00:54:08.960 introduce you to a new piece of
+00:54:10.960 terminology which is a react agent. So a
+00:54:15.440 react agent stands for reasoning and
+00:54:17.680 acting agent. Uh they look like this in
+00:54:20.559 a nutshell. So you have your start and
+00:54:22.640 your uh endpoint. Then you have your
+00:54:24.880 agent in the middle and then you have a
+00:54:26.960 loop which uses uh which keeps going
+00:54:30.079 with the tools and back and forth. But
+00:54:32.720 hold on. Doesn't this look a bit
+00:54:34.559 familiar? If you if you scroll slightly
+00:54:36.720 up, if I hide this output, you can see
+00:54:38.960 that this is almost exactly, if not
+00:54:41.520 exactly the same as this, the these
+00:54:44.000 graphs are isomeorphic. So, they're just
+00:54:45.760 translated differently. The tools in the
+00:54:47.359 endpoint have switched uh positions, but
+00:54:49.440 you can see that this and this are
+00:54:51.839 exactly the same. So, what we just did
+00:54:54.800 was create a React agent. And React
+00:54:57.440 agents are really, really, really common
+00:55:00.000 in industry and in personal projects.
+00:55:02.559 Now because they are so common and they
+00:55:05.599 first of all they're common because
+00:55:06.800 they're quite robust. Because they're so
+00:55:08.800 common, Langraph implemented its own
+00:55:11.280 custom method uh within its library. Now
+00:55:14.079 this will make things a lot easier.
+00:55:16.240 After this you will have one question
+00:55:18.480 which is why did I go through all of
+00:55:20.880 this line of code and it was really to
+00:55:23.839 be able to teach you about conditional
+00:55:25.680 edges and tools. So if you've mastered
+00:55:28.800 that uh you can now create the same
+00:55:32.720 react agent the exact same react agent
+00:55:34.880 in very few lines of code and this is
+00:55:36.800 how you do it. So agent 4 react agent
+00:55:39.920 the easy way to create these agents. So
+00:55:43.040 the aim of this is really how to create
+00:55:45.359 react agents fast. So these are all of
+00:55:48.480 the new libraries uh the meth all the
+00:55:50.960 imports you need to make and there's
+00:55:52.480 only one new input which you need to
+00:55:53.920 make which is create react agent. This
+00:55:56.079 will be the uh method in the inbuilt
+00:55:58.640 method which will be able to create
+00:56:00.559 these react agents for us. So we again
+00:56:04.160 define the list of tools and we have our
+00:56:07.040 LLM chat openai and again we're using
+00:56:10.000 GPT40 shock and this is how we create
+00:56:14.000 the exact same react agent through very
+00:56:17.119 few lines of code. So we use the inbuilt
+00:56:20.720 method. We pass whatever model we want.
+00:56:23.040 In this case, we're going to be using
+00:56:24.160 chat GBD40 from OpenAI. We are going to
+00:56:26.960 pass in the list of tools. We're going
+00:56:28.960 to name our agent search agent because
+00:56:31.280 it's spitting, right? It only has access
+00:56:33.119 to the doctor go search run tool and our
+00:56:36.079 prompt aka our system message. Uh so you
+00:56:38.960 are my AM you are my AI system is the
+00:56:41.280 exact same thing. You don't need to
+00:56:42.880 specify that this is a system message
+00:56:44.960 because uh the internal mechanics
+00:56:46.559 handles that for you. So if I run this
+00:56:49.440 and this perfect, it should work. Okay,
+00:56:52.480 awesome. And if I print this again,
+00:56:56.000 you can see the almost the exact same
+00:56:58.720 thing was outputed in very few lines of
+00:57:01.520 code. The tool calling we did was
+00:57:03.839 duck.go search with the uh this query
+00:57:06.880 and the final answer was this. So in
+00:57:09.839 what few like three or four lines of
+00:57:12.079 code, we were able to completely
+00:57:13.920 replicate what we had done in the
+00:57:15.200 previous AI agents. So if you need to
+00:57:17.839 create React agents files or just create
+00:57:19.680 React AI agents in general after you've
+00:57:22.400 mastered what a conditional edge and a
+00:57:24.400 tool is, you can just create this uh you
+00:57:26.160 can just use this inbuilt method. It
+00:57:27.760 makes things so much easier. Yeah. So
+00:57:29.599 we've achieved the same result in much
+00:57:31.040 fewer lines. But now we go to agent 5.
+00:57:34.319 And your question might be this. How do
+00:57:36.720 we is there a way to create our agents
+00:57:39.599 using our own tools? And the short
+00:57:42.000 answer is yes, obviously. So what if we
+00:57:45.839 want to make our own tools? After all,
+00:57:47.440 Langro would have all the inbuilt tools
+00:57:49.200 we want, right? So that's the aim of
+00:57:51.520 this agent. Also, please note that we're
+00:57:53.359 going to be using the inbuilt method to
+00:57:55.200 create these React agents from now on.
+00:57:57.280 Uh the reason is well, if I write all of
+00:58:00.000 this unnecessary code again, it will
+00:58:01.839 just get messy and it will just be
+00:58:04.000 unreadable. If we import this, oh that's
+00:58:06.960 agent 4. If we import this, perfect. So
+00:58:10.640 this is the new line of code and this
+00:58:12.960 line of code essentially tells langraph
+00:58:15.119 that this function is a tool or a
+00:58:18.640 specialized function. So how do we
+00:58:20.720 actually define a tool in langraph our
+00:58:23.839 own tool. So you use at tool which is a
+00:58:26.559 decorator and this decorator basically
+00:58:29.119 tells langraph that this is a special
+00:58:30.640 function aka in this case it's a tool
+00:58:33.359 and in this case I have just created a
+00:58:35.200 very very dead simple tool which is the
+00:58:37.359 weather tool. So it basically gives the
+00:58:39.680 weather in a given city. So the two most
+00:58:42.640 important things which you need to know
+00:58:44.720 uh which you need to be mindful of when
+00:58:46.559 creating your own tools is using this
+00:58:49.280 decorator and also this dock string.
+00:58:51.839 Possibly the most important thing if you
+00:58:54.319 don't have a dock string your entire
+00:58:56.079 graph will not compile. And the reason
+00:58:58.640 for this dock string is it tells our
+00:59:00.640 agent what the tool is form. In the next
+00:59:03.200 agent, I will tell you how to structure
+00:59:05.200 the docs training in a better manner.
+00:59:07.359 But for now, to keep it very simple,
+00:59:09.200 I've just said it gets the weather in a
+00:59:11.040 given city. So our underlying LLM will
+00:59:13.599 know, okay, this tool, this weather tool
+00:59:16.400 uh has is for getting the weather in a
+00:59:18.640 given city. Now your question could be
+00:59:20.640 the previous doctor go search tool.
+00:59:22.799 Where's the dock string in that? There
+00:59:24.400 is a dock string. If you go within the
+00:59:26.240 documentation, all of the dock strings
+00:59:28.000 are uh written by the Langraph team. So
+00:59:30.880 that's why you didn't need to write any
+00:59:32.240 dock strings for that. So let's run this
+00:59:34.400 as well.
+00:59:37.119 And again we create the same list of
+00:59:38.799 tools and we use the create react agent.
+00:59:41.839 And in this case I've named it weather
+00:59:43.680 agent. Why? Because well we're using the
+00:59:45.839 weather tool our own custom tool.
+00:59:48.799 Perfect. And now let's just run this. So
+00:59:51.440 we are invoking the tool by setting the
+00:59:54.480 messages uh as what is the weather in
+00:59:57.520 London. So the hard-coded message is the
+01:00:01.040 weather in this city is sunny. And if
+01:00:03.599 you look, the weather in London is
+01:00:05.680 currently sunny. You can see that it
+01:00:07.839 works completely as if we were using an
+01:00:10.240 inbuilt tool. It uses the weather tool.
+01:00:12.480 It sets the arguments and everything
+01:00:14.319 works flawlessly. Now what if we wanted
+01:00:16.400 in multiple tools? Well, you can do that
+01:00:18.960 as well in Langraph. You can. In this
+01:00:21.520 case, I have set the uh another created
+01:00:24.960 another tool which is the social media
+01:00:26.880 follower account. So you pass in the
+01:00:29.839 social media as obviously as a string
+01:00:31.839 and this is how you write dock strings.
+01:00:34.319 So you have the explanation, you have
+01:00:37.280 your arguments, you have what's returned
+01:00:40.160 and you also provide an example. All of
+01:00:42.640 this dock string is passed into the LLM.
+01:00:45.440 So obviously the more stuff you have
+01:00:47.280 here, the better the LLM will
+01:00:49.920 understand. Okay, what this person or
+01:00:52.000 what this tool needs me to pass in as
+01:00:54.240 arguments. The very simple return
+01:00:56.400 statement is you have 9876 followers on
+01:00:59.440 social media. Something random I
+01:01:01.119 completely make made up. But this is how
+01:01:04.160 you create another tool. And now look at
+01:01:07.359 how we've created our tools list. It's
+01:01:09.680 increased by one because now we're
+01:01:11.280 giving our AI agent our AI agent uh more
+01:01:15.839 tools. So again, we're using the GPT40
+01:01:18.640 tool, a GPD40 LN, and we're giving it
+01:01:21.520 access to the tools. And now I've set it
+01:01:23.599 as a different name, aka the general
+01:01:25.359 agent. The same prompt though, and let's
+01:01:28.559 invoke this.
+01:01:30.799 So this time I've asked what is the
+01:01:32.720 weather in London and how many followers
+01:01:34.720 do I have on Instagram? And then what
+01:01:36.640 about Twitter? So there's quite a lot of
+01:01:39.119 uh tool calling which will be necessary.
+01:01:41.680 But look at why Langro is so robust and
+01:01:44.400 it's the number one upcoming AI agent
+01:01:46.559 framework now. It's because in very few
+01:01:49.440 lines of code I was able to call the
+01:01:51.760 weather the social media follow account
+01:01:53.920 twice. One for Instagram and one for
+01:01:56.480 Twitter. And look at the final response.
+01:01:58.640 The weather in London is sunny which is
+01:02:00.559 true. And you have 9876 followers on
+01:02:03.359 Instagram and on Twitter as well. So in
+01:02:06.240 very very very few lines of code I was
+01:02:08.880 able to create a very robust AI agent
+01:02:12.079 and I can even increase by asking what
+01:02:14.559 about on Facebook or what about on
+01:02:16.960 Snapchat. You get the point. I could
+01:02:18.880 have also asked what is the weather in
+01:02:20.880 front uh what's the weather in Paris and
+01:02:22.640 it would have still worked flawlessly as
+01:02:24.240 well. So that is why AI agents in
+01:02:27.040 langraph are so robust because of that
+01:02:29.200 graph structure and this create react
+01:02:31.760 agent is why is also why it's so
+01:02:34.640 commonly used in industry and in uh
+01:02:37.359 personal projects. I made a promise at
+01:02:39.280 the start of this course that I will be
+01:02:40.960 using models as well and this is where
+01:02:43.839 it comes in models our sixth and final
+01:02:47.359 agent for this course. For this agent
+01:02:49.440 we're going to explore models. So we're
+01:02:52.000 going to integrate Olama models into
+01:02:53.680 langraph and discuss the pros and cons
+01:02:56.160 of Olama models. So for running these
+01:02:59.119 Olama models, I will run these locally,
+01:03:01.040 not in this data lab file, but in my own
+01:03:03.200 local file. So let's jump into that.
+01:03:06.400 Okay people. So now I'm on VS Code and
+01:03:08.720 I'm going to be running my Olabo models
+01:03:10.400 through here. In particular, I'm going
+01:03:12.160 to be using Quen 2.5. I personally like
+01:03:14.960 the Quen model series. I think they're
+01:03:16.640 great, but you can use any model. You
+01:03:18.319 can download any models. You can
+01:03:19.599 download Deep Seeks. you can download
+01:03:21.599 llama etc. In this particular case, I
+01:03:24.640 want to compare the performance of
+01:03:26.480 OpenAI and O Lama models and really show
+01:03:29.119 you this comparison and also show you
+01:03:31.920 why I used OpenAI models throughout this
+01:03:35.280 tutorial rather than Olama. So the only
+01:03:37.440 difference of imports is this one line
+01:03:39.440 of code and it's quite self-explanatory.
+01:03:41.680 It's just chat oama very similar to
+01:03:43.599 OpenAI. It just allows us to use Olama
+01:03:45.920 models. In terms of the tool, this is
+01:03:47.839 our own custom tool which we've already
+01:03:49.440 created before. It's the weather tool
+01:03:51.520 and this is the duck.go search run uh
+01:03:53.839 tool which is the inbuilt tool and now
+01:03:56.559 we pass this to the uh both open AAI
+01:03:59.920 agent uh and the OAMA agent which is
+01:04:03.039 over here.
+01:04:05.119 Uh in terms of the prompt I have set the
+01:04:08.000 exact same prompt in um for both in this
+01:04:11.440 case it will be you are my AI assistant
+01:04:13.280 that has access to certain tools uh use
+01:04:15.680 the tools to help me with my task.
+01:04:17.280 That's the uh prompt, the system
+01:04:18.880 message. And in terms of my query, I've
+01:04:21.680 also said it the same. So I've asked
+01:04:24.000 both uh LLMs or both AI agents, what is
+01:04:26.960 the weather in San Francisco and tell me
+01:04:29.119 the latest news about the stock of Apple
+01:04:30.960 of today and the date today please date.
+01:04:34.319 I've also asked it one more thing which
+01:04:36.240 we haven't actually asked before which
+01:04:38.319 is also tell me a list of tools you have
+01:04:40.559 please. So the correct answer should be
+01:04:43.440 uh that it has access to these two
+01:04:45.680 tools, right? Okay, so let's see how
+01:04:47.920 they perform. So again, it's the same
+01:04:51.200 create react agent. I'm just going to
+01:04:52.960 show you the uh the comparison between
+01:04:54.799 the performance of Olama and OpenAI. So
+01:04:57.520 I've already ran this code once and
+01:04:59.680 here's what the results are. So this was
+01:05:01.839 OpenAI Asians results. It used the
+01:05:04.559 following tools with this respective
+01:05:06.160 arguments and the final answer was the
+01:05:08.559 weather in San Francisco was sunny. Uh
+01:05:10.799 the latest news about Apple stock is
+01:05:12.480 this is this and it gives detail
+01:05:14.720 regarding the date. Today is June 12th
+01:05:16.559 which we also asked for. Remember we
+01:05:18.640 asked for what the date is uh here. Uh
+01:05:22.880 and the date today please.
+01:05:25.839 And if we go back and it also said as
+01:05:28.559 for the list of tools I have they
+01:05:30.319 include functions weather to get the
+01:05:32.720 weather in a given city and duck.go
+01:05:34.720 search to perform a search query using
+01:05:36.160 duck.go. Uh and that is on obviously
+01:05:40.000 like fully correct right. I don't really
+01:05:41.760 have any problem with it. It used the
+01:05:43.200 right number of tools. It answered every
+01:05:45.200 single aspect of my query properly. Now
+01:05:47.839 look at the Olama uh result. So if I
+01:05:51.440 press enter a few times here, perfect.
+01:05:53.599 You should be able to see that. Okay.
+01:05:55.440 Over here it's used the weather tool
+01:05:57.920 which is correct. It said latest news
+01:05:59.920 about uh stock today which is 12th of
+01:06:02.000 June 2025 which is also correct. But
+01:06:04.240 then it started looking for date today
+01:06:06.559 please 12th June which doesn't actually
+01:06:08.880 make any sense. And then if we look at
+01:06:11.359 the final answer, it says the latest
+01:06:13.760 news in the latest with the weather in
+01:06:15.680 San Francisco is sunny. The latest news
+01:06:18.079 is this. And then look here, it says the
+01:06:21.039 today's date is Tuesday, June 10th,
+01:06:23.760 2025,
+01:06:25.599 which is wrong even though it correctly
+01:06:28.640 uh mentioned uh what the actual date is
+01:06:31.440 12th June correctly several times
+01:06:33.200 before, but it did say uh it did
+01:06:35.920 correctly give the list of tools uh
+01:06:38.400 properly. It said weather inductor go
+01:06:40.240 search. So there's obviously clear flaws
+01:06:43.359 with the Olama model specifically quen
+01:06:45.440 2.5. In particular I want to show you
+01:06:47.920 this piece of uh leaderboard. So this
+01:06:50.720 leaderboard is essentially in a nutshell
+01:06:53.760 a way to classify how good a particular
+01:06:56.960 model is when it comes to tool calling.
+01:07:00.000 So if you can see that GPD 40 ranks
+01:07:02.480 quite high. All of the GPD models rank
+01:07:05.119 quite relatively quite high. If I search
+01:07:07.359 up for quen 2.5 quen 2.5
+01:07:12.240 you can see they place this is the 72
+01:07:14.480 billion one 32 billion one 72 billion 32
+01:07:17.760 14 14 77 73 so in my case I was using
+01:07:22.240 either the 3B the 7B or the 3B one of
+01:07:25.200 these two but you can see look at the
+01:07:27.200 ranks 66 and 81st compared to GPT's one
+01:07:31.200 which was quite highly ranked uh this is
+01:07:34.319 this is also in the data lab file if you
+01:07:36.640 access to this. This is the URL as well.
+01:07:39.359 But let's go back to the uh model uh
+01:07:43.599 model results. The point I'm trying to
+01:07:45.599 say state is this. I would personally
+01:07:49.039 use OpenAI models or Gemini models or uh
+01:07:52.400 these APIs even though they are paid. If
+01:07:55.359 you want some robust tool calling, I
+01:07:57.760 would highly recommend those unless if
+01:08:00.319 privacy is an issue. If privacy is an
+01:08:02.720 issue, then obviously you need to go for
+01:08:04.640 models, right? You could also make a
+01:08:06.160 counterargument here that you can't
+01:08:08.799 really compare GPT40 which I used here
+01:08:12.400 versus quen 2.5 which is like in few
+01:08:15.520 billion of parameters versus a trillion
+01:08:17.679 parameter model and that is fair but the
+01:08:20.399 counterargument for that is that your uh
+01:08:23.920 models are dependent on your computer
+01:08:25.839 specification right if you could run
+01:08:28.080 very very large model like deepsek 650
+01:08:30.799 billion parameter model then obviously
+01:08:32.719 the performance would be quite similar
+01:08:34.319 but to be able to run those you need so
+01:08:36.880 much compute and at that rate if you if
+01:08:39.679 privacy isn't a concern and you want
+01:08:41.839 something which is relatively
+01:08:43.040 inexpensive and still robust I would
+01:08:45.520 highly recommend um either OpenAI models
+01:08:48.080 Gemini models um these sort of models uh
+01:08:51.520 cuz you can see from the results they
+01:08:53.759 are quite a lot more robust and that
+01:08:56.238 brings us to the end of this tutorial
+01:08:58.560 and well done for completing this
+01:09:00.000 tutorial we've learned so much in 1 hour
+01:09:02.880 uh to quickly summarize what we've
+01:09:04.238 learned We learned how to create our own
+01:09:06.479 custom tools. We learned what React
+01:09:08.238 agents are. We learned how to use uh
+01:09:10.319 inbuilt tools. We learned how to uh
+01:09:13.040 create React agents. We learned what all
+01:09:15.198 the different type annotations are, the
+01:09:17.439 different types of messages are, the
+01:09:19.359 different types of uh fundamental
+01:09:21.120 building blocks are such as conditional
+01:09:22.719 edges, tools, etc. We built six agents
+01:09:25.600 in together. We showed how to visualize
+01:09:28.319 uh agents. Uh we we showed how to
+01:09:30.319 visualize graphs. We learned a ton of
+01:09:32.560 stuff. So massive massive
+01:09:34.399 congratulations for completing this. But
+01:09:36.319 remember practice makes perfect. So now
+01:09:38.799 go ahead and actually build these AI
+01:09:40.880 agents and graphs by yourself. Uh try to
+01:09:43.600 build any AI agent. Try to solve your
+01:09:45.359 own problem because remember practicing
+01:09:47.920 is how you're going to actually solidify
+01:09:50.238 your fundamentals and understanding. If
+01:09:52.399 you have any further questions or want
+01:09:54.400 to state your opinion or anything, you
+01:09:56.320 can write them in the comments in uh
+01:09:58.000 under this video. With that being said,
+01:10:00.239 that brings us to the end of this
+01:10:01.440 tutorial and I'll see you in another
+01:10:03.360 tutorial. Goodbye.

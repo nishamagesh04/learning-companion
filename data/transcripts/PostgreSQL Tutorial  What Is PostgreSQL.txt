@@ -1,0 +1,508 @@
+# tactiq.io free youtube transcript
+# PostgreSQL Tutorial | What Is PostgreSQL? | PostgreSQL Tutorial For Beginners | Simplilearn
+# https://www.youtube.com/watch/evJuky1ZtD8
+
+00:00:03.030 [Music]
+00:00:05.920 Hello everyone and welcome to this
+00:00:07.919 comprehensive tutorial on Postgress.
+00:00:10.880 Whether you are a beginner or looking to
+00:00:12.719 learn database fundamentals especially
+00:00:15.200 in Postgress SQL then this is a right
+00:00:17.920 video. Postgress is known for its rich
+00:00:20.960 set of features including support for
+00:00:22.960 advanced data types, high concurrency
+00:00:25.680 and strong compliance with SQL. It's a
+00:00:28.720 robust open-source database used by a
+00:00:31.439 variety of organizations ranging from
+00:00:33.600 startups to large enterprises due to its
+00:00:36.160 readability and flexibility. In this
+00:00:38.160 tutorial, we'll walk through essential
+00:00:40.000 Postgress SQL commands and operations
+00:00:42.719 starting with basic setup and
+00:00:44.399 installation then moving on to database
+00:00:46.480 management, querying and data
+00:00:48.320 manipulation. So guys, if you are
+00:00:50.559 interested then watch this video till
+00:00:52.879 the end. Now here's the agenda of our
+00:00:55.039 today's session. First we are going to
+00:00:56.960 start with introduction to Postgress
+00:00:58.640 SQL. Then we're going to do installation
+00:01:00.960 and setup. Moving ahead we are going to
+00:01:03.600 understand some of the basic Postgress
+00:01:05.280 SQL commands. Then we are going to work
+00:01:07.439 with database for example like creating
+00:01:09.680 and managing table data manipulation
+00:01:12.560 like update and delete and many more.
+00:01:15.360 Then we will move forward with joins and
+00:01:17.759 then we will understand about
+00:01:19.600 transaction and finally conclude our
+00:01:22.240 session with understanding about backup
+00:01:24.560 and restore.
+00:01:26.159 Now before we move ahead just a quick
+00:01:28.400 info guys simply learn has got data
+00:01:30.880 analyst course. This is a data analyst
+00:01:33.280 masters program. In this course you're
+00:01:35.360 going to receive Microsoft
+00:01:36.479 certifications upon completion of this
+00:01:38.560 course. You're also going to get
+00:01:40.320 hands-on experience with the latest
+00:01:41.920 tools and also work on real world
+00:01:44.159 project. This course is in collaboration
+00:01:46.479 with Microsoft Azure. So guys hurry up
+00:01:49.040 now and join the course. The course link
+00:01:50.960 is mentioned in the description box. Now
+00:01:53.680 here is a short quiz to test your
+00:01:55.520 knowledge. Which of the following
+00:01:56.960 commands is used to list all the
+00:01:59.040 database in Postgrris SQL? Your options
+00:02:01.360 are list/L,
+00:02:04.079 show databases or select start from
+00:02:06.320 databases. Please mention your answers
+00:02:08.239 in the comment section below. Now before
+00:02:10.160 we start the session, I request you guys
+00:02:12.160 that do not forget to hit the subscribe
+00:02:13.840 button and click the notification bell
+00:02:15.760 icon so that you don't miss out any
+00:02:18.080 update from our end. So let's get
+00:02:20.560 started.
+00:02:22.080 Now first let us try to understand what
+00:02:24.480 exactly is posgress SQL. Postgress is a
+00:02:27.360 powerful open-source object relational
+00:02:29.520 database management system that uses and
+00:02:32.640 extends the SQL language to provide
+00:02:34.800 highly customizable and robust database
+00:02:37.040 environment. It was first developed in
+00:02:39.280 1986 at the University of California
+00:02:42.640 which was in Berkeley and uh as a part
+00:02:45.120 of the Postgress project and it has
+00:02:46.959 evolved into one of the most popular
+00:02:48.800 databases today. Postgress SQL is
+00:02:51.519 designed to handle wide range of
+00:02:53.680 workloads from small to single machine
+00:02:56.239 application to large scale and
+00:02:58.160 multi-warehouse applications. Unlike
+00:03:00.160 traditional relational databases,
+00:03:02.000 Postgrids adds a support for advanced
+00:03:04.560 data types such as JSON, XML and edto
+00:03:08.239 allowing for flexible data storage. It's
+00:03:10.720 an ASIT compliant meaning atomicity,
+00:03:13.360 consistency, isolation and durability.
+00:03:15.840 So this property makes it a safe choice
+00:03:18.239 for transaction heavy systems. Now there
+00:03:20.480 are some key features of posgress like
+00:03:22.720 it's kind of open source which means it
+00:03:25.519 is openly available for everyone. It is
+00:03:28.159 acid compliant. So posgress supports
+00:03:30.400 acid properties ensuring a database
+00:03:32.560 transactions are processed reliably that
+00:03:35.680 data integrity is also maintained even
+00:03:38.480 during the power failures. Then it also
+00:03:41.200 supports advanced data types that's
+00:03:43.280 amazing part of it like JSON JSON B
+00:03:46.159 which allows for storage of
+00:03:47.360 semistructured data and also allows us
+00:03:50.159 for efficient quering of the data. Then
+00:03:52.799 it has array storing arrays of values in
+00:03:55.440 the column and also it provides XML. So
+00:03:57.920 there is a native support for storing
+00:03:59.599 and quering XML data. And one of the
+00:04:01.519 most important features which I like is
+00:04:03.599 its concurrency control. Postgress
+00:04:05.760 employs multi-verion concurrency control
+00:04:08.400 which ensures that each transaction sees
+00:04:11.040 a consistent snapshot of the database.
+00:04:13.599 So this allows for better concurrency
+00:04:15.519 without sacrificing the data integrity.
+00:04:17.600 Now let us try to compare between
+00:04:20.000 Postgress SQL and MySQL. Since most of
+00:04:23.280 you have already studied MySQL, so it
+00:04:25.520 will be relatively easy to understand
+00:04:27.280 the Postgress. So first of all, let's
+00:04:29.680 talk about data types. So it supports
+00:04:31.520 advanced types of data like JSONB,
+00:04:33.600 arrays, UID where MySQL has basic data
+00:04:37.040 types. Then if we talk about concurrency
+00:04:40.000 guys, your posgress uses MVCC for better
+00:04:43.680 multiple users writing at once. Now if I
+00:04:46.160 talk about concurrency, then here
+00:04:48.000 Postgress shines. It is very much
+00:04:50.560 efficient for multiple users writing at
+00:04:52.880 once. And if I talk about extensions
+00:04:56.960 then you have lot of things here in
+00:05:00.000 Postgress. If I talk about use cases
+00:05:02.560 like for example complex app analytics,
+00:05:04.800 advanced data models, web apps then you
+00:05:07.840 can go ahead with you know posgress. And
+00:05:10.479 if you're writing very simple
+00:05:11.680 application for smallcale based
+00:05:13.600 applications then there you can use
+00:05:16.720 MySQL.
+00:05:18.240 Now let us proceed for installation. So
+00:05:20.960 guys go to the official website of
+00:05:22.800 Postgress and there you can see a
+00:05:24.560 download section. Click on download.
+00:05:27.360 Then choose your operating system like
+00:05:29.919 there will be a installer that you have
+00:05:31.440 to download. So for example in this case
+00:05:34.400 you can have Linux, Mac OS, Windows, BSD
+00:05:38.320 or Solaris. Since our operating system
+00:05:40.560 is Windows you just click on Windows and
+00:05:43.840 uh then it is going to ask you to
+00:05:46.639 download the installer. So the first
+00:05:48.560 line that you see just click it all over
+00:05:50.479 here and you can see there are multiple
+00:05:52.639 versions of Postgress like for example
+00:05:54.880 17.6.10
+00:05:57.039 15.14 and so on and so forth. So always
+00:06:01.520 download the latest version. So choose
+00:06:04.000 your operating system. If you are at Mac
+00:06:06.160 operating system you can click here. If
+00:06:07.919 you are using Linux you can use here. So
+00:06:10.240 these are your ARM architecture. So if
+00:06:12.720 you are 64-bit you can go all over here.
+00:06:15.120 Similarly, you know, 32 bits are not
+00:06:17.840 supported at all for Postgress. So, we
+00:06:19.759 will proceed for 64-bit. Just click all
+00:06:21.919 over here. And you can see the
+00:06:24.240 installation will proceed.
+00:06:27.280 So, you can see it has started
+00:06:28.639 downloading. Since I've already
+00:06:30.080 installed Postgress, so I won't do it.
+00:06:34.240 Now, after that, when you download a
+00:06:36.800 given file, so you're going to see
+00:06:38.720 something like this. So, you can see you
+00:06:41.520 are going to see a stack builder. Okay?
+00:06:43.840 So if you click on next so you are going
+00:06:47.280 to see the other things that needs to be
+00:06:49.840 installed just it's a very simple
+00:06:51.759 process all you have to do is just click
+00:06:53.759 on next and next and then at final stage
+00:06:56.479 it is going to ask you to set up your
+00:06:58.800 given database similarly you would have
+00:07:00.960 also done for my SQL so similar steps
+00:07:03.520 are there and if you feel any problem in
+00:07:05.919 installation you can refer our video on
+00:07:08.800 our channel on posgress installation and
+00:07:11.039 also you can comment on the comment
+00:07:13.360 section below and our team of experts
+00:07:15.280 will get back to you. So at the final
+00:07:17.039 stage it is going to ask you about host
+00:07:19.120 username, password and port number just
+00:07:21.360 add and um after that what you need to
+00:07:24.160 do is just click on next and just
+00:07:26.160 complete it. So this is a basic setup of
+00:07:29.120 posgress. I hope so you would have got
+00:07:31.840 the brief idea regarding this. Now let
+00:07:34.319 us try to understand bit about posgress
+00:07:37.039 syntax and what you can do like
+00:07:39.440 basically creating a table doing the
+00:07:41.919 manipulation aspect and a lot more. Now
+00:07:44.479 guys if you are someone who is facing
+00:07:46.080 system issues and your software is not
+00:07:48.800 working properly. So I have another
+00:07:50.560 alternative so that you can learn the
+00:07:52.160 important syntax of the postgress you
+00:07:54.639 can go on one compiler.com
+00:07:57.120 and/postgress. So it is the online
+00:07:59.360 compiler for psql and it's very friendly
+00:08:02.639 and you can try all those commands and
+00:08:05.360 create table. So for this demonstration
+00:08:07.599 I'm going to use this given online tool.
+00:08:10.720 So let us start with the given thing.
+00:08:12.879 Now we moving ahead let me discuss
+00:08:14.960 something about schema. So a schema is a
+00:08:18.160 collection of database objects such as
+00:08:19.840 tables that belongs to a particular user
+00:08:22.800 and with that perspective you will be
+00:08:26.080 able to describe a table structure. So
+00:08:29.360 there are a lot of thing that you can do
+00:08:31.199 all over here. So let us start with a
+00:08:33.360 very simple example of creating a table
+00:08:36.000 and putting up the values. Now let's say
+00:08:38.559 you're working on an e-commerce project
+00:08:40.640 and you require a database and for that
+00:08:43.760 you choose posgress because of different
+00:08:46.240 reasons or the different data types that
+00:08:48.720 you'll be using throughout the project.
+00:08:50.800 Now if you want to create a database the
+00:08:53.519 command is very simple just type create
+00:08:56.640 database and here is our database name.
+00:08:59.680 Now you can see we have given our name
+00:09:01.519 as e-commerce db. So this create command
+00:09:06.080 is used to basically create a new
+00:09:08.080 database. So guys after typing this your
+00:09:10.959 given database will be created in PG my
+00:09:14.160 admin. Now let us move ahead. Now let us
+00:09:18.720 create a table. So for creating a table
+00:09:21.600 also we are going to use the same
+00:09:23.519 keyword. So you can see all over here I
+00:09:25.920 have used the same keyword create but I
+00:09:28.480 have also added another keyword that is
+00:09:30.399 table. And let's say we have a table
+00:09:32.720 called users and we have ID, email,
+00:09:36.160 password, what is the signup time, what
+00:09:38.399 are the preferences and what are the
+00:09:40.800 tags and the unique ID. Now let us try
+00:09:43.920 to understand all these parameters. What
+00:09:46.160 are the new things that we are seeing
+00:09:47.760 all over here. So if I see all over here
+00:09:51.360 then ID is your given primary key
+00:09:54.240 basically and if I talk about serial
+00:09:56.240 then serial is a specialized keyword in
+00:09:58.320 Postgress. Now this makes this column an
+00:10:01.279 auto increment. So suppose you start
+00:10:04.080 adding the users. So it is going to
+00:10:05.920 automatically add the id like 1 2 and
+00:10:08.640 three and so forth. Now you can see the
+00:10:11.440 next keyword as text. So text means that
+00:10:14.720 this type is used for storing long
+00:10:16.959 strings for example emails and all. Then
+00:10:20.079 we have the next keyword as unique. Now
+00:10:22.959 if I talk about unique, so unique makes
+00:10:26.160 that no two users can have the same
+00:10:28.399 email address. Then you can see I've
+00:10:31.120 also added not null means this ensures
+00:10:33.680 that this field does not go empty. Then
+00:10:36.240 you can see password and this is a
+00:10:38.320 string. So we have used vcar and also we
+00:10:40.640 have specified that it should not be
+00:10:42.880 null. Then you can see we have another
+00:10:44.800 field called signup time. Now signup
+00:10:48.000 time is using timestamps and default.n.
+00:10:51.440 So what it's going to do? So guys,
+00:10:53.360 timestamps stands for time stamp with
+00:10:56.160 the zone. It stores both date and time
+00:10:58.640 along with the time zone information.
+00:11:02.000 And default now will automatically fill
+00:11:04.399 this column with the current time stamp
+00:11:06.480 when the user is added.
+00:11:09.040 Now you can see for preferences I have
+00:11:11.279 used JSON B. So JSON B stands for JSON
+00:11:14.399 binary. Basically it is used for storing
+00:11:16.640 data in a structured JSON format. And
+00:11:19.120 this is useful for storing key and value
+00:11:21.040 pairs like you would have seen in
+00:11:23.279 dictionary which is used in Python. Now
+00:11:27.040 you can see we have another field called
+00:11:29.120 tags and we have something called text.
+00:11:31.440 So text is an array of text values. It
+00:11:33.680 allows you to store a list of values in
+00:11:35.839 a single column. So for example, you can
+00:11:38.079 store multiple values all over here. For
+00:11:40.320 example, you can put posgress, you can
+00:11:42.320 put developer, you can put as a backend
+00:11:44.800 developer. So all these things you can
+00:11:47.200 add it up. Then finally we have this
+00:11:50.079 very unique thing which is uyu ID which
+00:11:53.200 is universally unique identifier. It's a
+00:11:55.839 long random string that is guaranteed to
+00:11:58.480 be unique across the system and we have
+00:12:01.360 used default gen random UU ID. So
+00:12:04.640 basically what this is doing is that it
+00:12:07.279 is automatically generating a new unique
+00:12:10.079 UU ID when a new user is inserted into
+00:12:13.120 the table.
+00:12:14.880 So this is how we create the given
+00:12:17.279 table. Now guys, you can see all over
+00:12:19.839 here that based on our given uh data
+00:12:22.880 types that we have added, I have
+00:12:24.639 inserted the given values and the syntax
+00:12:26.800 is pretty similar to what you actually
+00:12:28.720 do in MySQL. So you type insert into
+00:12:31.279 let's say the table name is employee.
+00:12:33.200 These are the given things like email,
+00:12:35.440 password, preferences and tags. So you
+00:12:38.000 can give something like Alice, secure
+00:12:40.079 password. Then you could also add you
+00:12:43.040 know like for example theme dark. So
+00:12:45.279 this is JSON B notifications true. Then
+00:12:47.839 you can see you have also added a array
+00:12:50.399 of items. So for the given array of
+00:12:53.360 items it could be admin and active. So
+00:12:55.839 I've added these values for now and um
+00:12:59.440 this is the way how we actually you know
+00:13:02.480 try to put up the value. So if you have
+00:13:04.480 different different data types that you
+00:13:05.839 have used all over here based on you can
+00:13:08.160 also do. So it's pretty simple. Now
+00:13:11.120 let's move ahead. Now after that you
+00:13:14.079 have to click on run. And you can see we
+00:13:16.240 have this very nice table with email,
+00:13:18.320 password, signup time, preferences, tags
+00:13:20.959 and UU ID column. So this is how we
+00:13:24.480 actually store the given value. Now let
+00:13:27.279 me also show you some other
+00:13:28.480 manipulation. Now let's say there is
+00:13:31.920 another table called users and you are
+00:13:34.079 trying to add ID and email and then you
+00:13:36.480 put values. You put the given ID and
+00:13:38.880 give the email name. Now you can see a
+00:13:40.959 new keyword that we have that is on
+00:13:43.120 conflict ID and then do update set email
+00:13:46.639 equals to excluded email. Now this is
+00:13:49.120 pretty interesting syntax. Now what does
+00:13:52.000 on conflict mean here guys? So this is a
+00:13:54.800 keyword which handles a conflict when
+00:13:57.040 you try to insert a duplicate value in a
+00:13:59.519 column that is supposed to be unique
+00:14:01.839 like ID in this case. And you can see do
+00:14:04.240 update is a conflict and you can see
+00:14:07.440 there is a do update. Uh it means that
+00:14:10.240 if a conflict occurs for example the id
+00:14:12.959 already exists then posgress SQL will
+00:14:15.040 update the existing row instead of
+00:14:17.040 inserting a new one. And you can see we
+00:14:19.600 have done something like excluded email.
+00:14:22.720 Now this is referring to the value that
+00:14:24.880 we are excluding from inserting due to
+00:14:27.440 the conflict. So let's say if the
+00:14:30.639 particular user has the same id like one
+00:14:34.000 and he had some xyzmail.com
+00:14:36.480 then another person is also adding the
+00:14:38.560 same ID. Now this is going to prevent us
+00:14:41.199 and he will not be able to add the given
+00:14:43.279 mail. So guys this is a pretty
+00:14:45.199 interesting scenario and this is how we
+00:14:48.000 actually do the you know create a table
+00:14:51.040 and insert the values. So I hope so you
+00:14:54.079 would have got the brief idea. So this
+00:14:56.240 aspects covers our data definition
+00:14:58.639 language. Let us explore a bit about
+00:15:00.480 join operation. So joins allow you to
+00:15:03.600 combine data from multiple tables and
+00:15:06.000 you can get your desired result. So
+00:15:08.160 there are basically three types of join.
+00:15:10.079 Inner join, left join and right join. So
+00:15:13.120 if I talk about inner join. So let's say
+00:15:15.120 there are two tables. Okay. And you want
+00:15:18.000 to get the values which is common to
+00:15:20.399 both of the table. So on that purpose
+00:15:22.399 you are going to use the inner join.
+00:15:24.240 Then the next one you have the left
+00:15:26.000 join. Imagine on both of the tables
+00:15:28.720 let's say you want the data from the
+00:15:31.199 left of the table plus the matching
+00:15:33.680 which is to the right of the table. So
+00:15:35.600 the entire uh you know column of the
+00:15:37.839 left table plus the matching part of the
+00:15:40.480 right table to the left table is going
+00:15:42.480 to get into the output. Similarly the
+00:15:45.120 right join means all the entire right
+00:15:47.920 table plus the matching part of the left
+00:15:50.000 table. So in this way we can do the
+00:15:53.360 joins. Now if you would have done this
+00:15:56.000 in MySQL so the syntax is pretty
+00:15:58.320 similar. So let's say we are selecting
+00:16:00.880 employees.name departments do department
+00:16:03.440 name from the employees table. Then
+00:16:05.440 let's say we are performing the inner
+00:16:06.800 join. So to get the matching values from
+00:16:09.040 both of the column then we can just give
+00:16:12.079 the given condition that what are the
+00:16:14.079 respective you know values which is
+00:16:16.480 present all over here in the employee
+00:16:18.079 table. It is similar to the department's
+00:16:20.560 table. So this is the given conditional
+00:16:22.880 which it should hold true. So then only
+00:16:26.399 it is going to print the intersection of
+00:16:29.040 the both of the table the common values
+00:16:32.000 all over there. So you have to put
+00:16:33.839 condition like this. So in similarly in
+00:16:36.079 the left join also you can see we have
+00:16:38.160 put this similar condition because there
+00:16:40.399 should be an intersection of the values
+00:16:42.240 from both of the table. So the syntax is
+00:16:44.880 pretty similar. Let's say you are trying
+00:16:47.279 to get name from the employees table and
+00:16:49.759 department name from the department
+00:16:51.120 table and let's say you want to do the
+00:16:53.040 left join. So just you have to use these
+00:16:54.959 keyword rest you can keep it as same.
+00:16:58.079 Now let us move ahead and try to
+00:17:00.160 understand bit about transactions. Now
+00:17:02.320 guys transaction in posgress SQL is a
+00:17:05.280 group of SQL operation that are executed
+00:17:07.599 together as a single unit. You can think
+00:17:10.240 of it like a to-do list that all the
+00:17:12.400 items like the queries on the list or
+00:17:14.640 either it should be completed
+00:17:16.000 successfully or none at all. In typical
+00:17:18.079 scenarios, a transaction ensures that if
+00:17:20.880 one query falls, the entire set of
+00:17:23.119 queries is undone like nothing ever
+00:17:25.280 happened. So this maintains our data
+00:17:27.599 integrity. Now if I talk about
+00:17:30.320 transactions, we had three key
+00:17:32.400 transaction commands in Postgress.
+00:17:34.480 Begin, commit and roll back. Now let us
+00:17:37.200 dive into each one of them. If I talk
+00:17:39.200 about begin guys, so this is starting
+00:17:41.360 the transaction. Begin command is used
+00:17:43.679 to start a transaction. So it doesn't
+00:17:46.080 change anything in the database. It's
+00:17:47.840 just like setting up the stage to make
+00:17:49.360 sure everything happens together. Then
+00:17:51.360 you have the commit stage which means
+00:17:52.799 that finalizing the given transaction.
+00:17:55.120 So commit happens like once you have
+00:17:57.360 updated all the values since uh for
+00:18:00.080 example you can think something like
+00:18:01.679 this. Let's say you are confirming your
+00:18:03.280 shopping cart. you have added your items
+00:18:05.120 to the card and made changes once you
+00:18:07.280 have done it. So after that you have
+00:18:09.679 made the final changes you can do
+00:18:12.640 commit. Now if the actions are
+00:18:14.960 successful then only you do it. Now
+00:18:17.120 let's say in in a given uh scenario
+00:18:19.679 let's say you did some mistakes or you
+00:18:21.679 realize that something went wrong
+00:18:23.440 through the way and you don't want to
+00:18:25.200 save any changes. So you can do the roll
+00:18:29.200 back all over here. So these are the key
+00:18:32.480 aspects of the given uh you know
+00:18:34.720 transaction. So we have taken one key
+00:18:36.880 scenario. Let's say you're updating your
+00:18:38.880 given bank account. So you have the
+00:18:40.799 accounts table. Let's say update
+00:18:42.240 account. Let's say you're setting up the
+00:18:44.000 balance. Balance minus 100. Let's say
+00:18:45.919 where account ID is something like A.
+00:18:48.160 Now let's say you have added the money
+00:18:50.960 to account B. Set balance balance plus
+00:18:53.120 100 where account ID is equals to B. Now
+00:18:55.760 if the money has been deducted from here
+00:18:57.840 and money has been added to all over
+00:18:59.520 here you can put commit since both of
+00:19:02.400 the actions are successful and you can
+00:19:04.480 save it. Now let's say in a given
+00:19:06.160 scenario if something happens wrong by
+00:19:08.160 chance so what you can do so you can
+00:19:11.520 deduct the money from account A and you
+00:19:14.320 can put the roll back so it just goes
+00:19:16.640 one step back. Now let us move to the
+00:19:19.360 most important part that is backup and
+00:19:21.280 store. So guys, if you want to do a
+00:19:23.200 backup, let's say you are creating any
+00:19:24.640 backup database. So let's say you have
+00:19:26.400 given name DDB name backup.SQL. So you
+00:19:29.360 can use pg dum command and you posgress
+00:19:32.960 you can give the DB name all over here.
+00:19:35.200 So this command will be very much
+00:19:37.039 helpful for you to do the backup and
+00:19:40.160 let's say you want to restore anything
+00:19:42.160 some database which you have you know
+00:19:44.240 dropped it up. So what you could do is
+00:19:46.320 you could type psql u posgress give the
+00:19:48.960 db name and here you add the given file
+00:19:51.600 name. So guys this is a very simple
+00:19:53.440 command which is actually very useful
+00:19:55.600 for you. So guys that was all for
+00:19:58.000 today's video. I hope so you would have
+00:20:00.320 enjoyed our today's tutorial on
+00:20:02.880 Postgress and if you like these kind of
+00:20:05.440 videos then do not forget to hit the
+00:20:07.679 subscribe button and click the
+00:20:09.440 notification bell icon so that you don't
+00:20:11.919 miss out any video. Thank you guys for
+00:20:14.160 watching this.

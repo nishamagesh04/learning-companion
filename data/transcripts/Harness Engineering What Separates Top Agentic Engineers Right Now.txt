@@ -1,0 +1,512 @@
+# tactiq.io free youtube transcript
+# Harness Engineering: What Separates Top Agentic Engineers Right Now
+# https://www.youtube.com/watch/ulNsa0sD8N0
+
+00:00:00.080 A term that's popping up more and more
+00:00:01.760 in the AI space right now is harness
+00:00:04.000 engineering. It's the next big thing for
+00:00:06.400 this year, just like context engineering
+00:00:08.480 was for last year, and it is really
+00:00:11.200 important. But just like context
+00:00:13.280 engineering, it's starting to turn into
+00:00:15.120 this buzzword that people are throwing
+00:00:16.800 around without really knowing what it
+00:00:18.800 means. And so that begs the question, is
+00:00:20.880 this skill or even mindset, like I'll
+00:00:23.199 get into in a little bit, worth learning
+00:00:25.439 or adopting? And the answer is yes. And
+00:00:28.400 so I want to get into that with you
+00:00:29.760 today, helping you understand what
+00:00:31.519 harness engineering is. There are a
+00:00:33.680 couple of layers to it that are really
+00:00:35.600 worth knowing. And so I'm going to break
+00:00:37.040 this down nice and simple for you in
+00:00:39.280 less than 15 minutes. And of course,
+00:00:41.120 like usual, I've got some examples and
+00:00:43.600 demos to really make it concrete. All
+00:00:45.520 right, so let's get right into it.
+00:00:47.039 Harness engineering is all about
+00:00:48.559 building the wrapper around the model.
+00:00:50.719 So any agent is the combination of the
+00:00:53.199 underlying large language model like GPT
+00:00:55.440 or claude and then the wrapper around it
+00:00:58.160 that gives it the context and defines
+00:01:00.399 your processes. And so I'm mostly going
+00:01:03.039 to be focusing on AI coding assistance
+00:01:05.280 for this video. But really this idea of
+00:01:07.520 harness engineering can be extrapolated
+00:01:09.360 out to any agent that you build for
+00:01:11.119 anything. And there are really two parts
+00:01:13.840 of harness engineering. we have within
+00:01:16.320 an individual AI coding assistant
+00:01:18.400 session. And then we have really the
+00:01:20.799 real evolution here that I'm more
+00:01:22.640 focused on right now. This is combining
+00:01:25.280 multiple coding agent sessions in a
+00:01:27.119 larger workflow to handle a larger task.
+00:01:29.920 And so we'll get there, but I want to
+00:01:31.680 start more foundational here. And one
+00:01:34.079 really important thing to understand is
+00:01:35.520 that this first idea of harness
+00:01:37.759 engineering within a single session, a
+00:01:39.920 lot of the ideas here are very similar
+00:01:42.079 to context engineering. This is a direct
+00:01:45.040 evolution of context engineering. How do
+00:01:47.200 we give the right ecosystem of context
+00:01:49.840 to our coding agent? But there are some
+00:01:52.399 important differences here that I want
+00:01:53.920 to key in on. But first of all, I think
+00:01:55.920 this diagram explains it really well. We
+00:01:57.680 start with the underlying large language
+00:01:59.920 model. This is the reasoning for our
+00:02:02.240 agent. And then the first wrapper around
+00:02:04.799 it is not something you build yourself.
+00:02:06.560 It's actually the tool that you use, the
+00:02:08.639 coding agent that you choose. And so
+00:02:10.959 Claude Code, Codeex, Pi, you name the
+00:02:13.599 millions of coding agents out there. All
+00:02:15.599 of them are actually harnesses that a
+00:02:18.000 company has engineered around their
+00:02:19.599 model. And so this might not feel like
+00:02:22.239 harness engineering because you're not
+00:02:23.599 defining anything, but you're picking
+00:02:25.520 the harness when you choose the tool.
+00:02:27.520 Some people think Claude Code is the
+00:02:29.040 best harness for coding. Some people
+00:02:30.800 think Codeex is. There's a lot of debate
+00:02:32.800 right now. But what's even more
+00:02:34.800 important than the coding agent you pick
+00:02:36.800 is the AI layer. This is the ultimate
+00:02:39.599 wrapper around any coding agent session.
+00:02:42.160 And this is what you get to actually
+00:02:44.319 build. And so when we think about what
+00:02:46.319 goes into the AI layer, it's really
+00:02:48.160 defining all of our context and
+00:02:50.959 processes for our coding agents. So our
+00:02:53.519 global rules, our skills and MCP
+00:02:55.840 servers, all the capabilities we give,
+00:02:57.840 codebased searching like LSP or
+00:02:59.760 knowledge graphs, our hooks, and our sub
+00:03:02.239 aents. really like these six components
+00:03:04.640 that are pretty much built into every
+00:03:06.879 single AI coding assistant now makes up
+00:03:09.280 your AI layer. So no matter how you want
+00:03:11.280 to inject your process or your rules,
+00:03:13.920 you're going to do it through one of
+00:03:15.440 these six things. So there are a couple
+00:03:17.519 of articles I really want to lean into
+00:03:19.360 here to help you understand harness
+00:03:21.040 engineering. I'll link to them in the
+00:03:22.480 description. This first one has an
+00:03:24.319 analogy that I want to zoom in on here.
+00:03:26.000 I love this. So on the left hand side we
+00:03:28.400 have a representation of what the model
+00:03:30.159 can do by itself like claude or GPT. And
+00:03:33.120 spoiler it's not that much. We take for
+00:03:35.920 granted all of the capabilities that AI
+00:03:38.319 coding assistants like cloud code and
+00:03:40.000 codecs give to the model out of the box.
+00:03:42.400 An LLM by itself. It doesn't have any
+00:03:44.239 way to access a file system or get or
+00:03:46.239 run any commands. That's everything that
+00:03:48.239 comes with that first harness layer
+00:03:50.480 built into the tools that we download
+00:03:52.159 and use out of the box. And so that's
+00:03:54.560 what these top bridges represent here.
+00:03:56.480 It's all of the capabilities that these
+00:03:58.159 tools give to the model to make it so it
+00:04:00.480 can really act as an AI coding
+00:04:02.000 assistant. Right? It's the capabilities
+00:04:03.680 plus the system prompt built into these
+00:04:06.159 tools. And then as we get to the lower
+00:04:08.480 bridges here, this is where we start to
+00:04:10.480 get into that higher level AI layer
+00:04:12.959 where we get to define things like the
+00:04:14.879 MCP servers we use, the skills that we
+00:04:17.600 build or incorporate, rules, things like
+00:04:19.759 that. even going down to Ralph loops
+00:04:22.079 like we'll talk about towards the end of
+00:04:23.759 this video when we get into stringing
+00:04:25.759 multiple coding agent sessions together.
+00:04:27.919 The ultimate kind of harness
+00:04:29.520 engineering. So stay tuned for that. But
+00:04:31.040 the point here is that each of these
+00:04:32.479 bridges are tools that allow the large
+00:04:35.120 language model to function and act as an
+00:04:37.520 AI coding assistant. All right, cool. So
+00:04:39.440 with that definition, I now want to
+00:04:41.199 address the elephant in the room. The
+00:04:42.960 question you might be asking yourself
+00:04:44.560 is, Cole, isn't a lot of this here just
+00:04:47.600 context engineering? like I thought we
+00:04:49.440 were covering this in 2025 and the
+00:04:52.080 answer is actually yes to an extent and
+00:04:54.800 that's why I think that harness
+00:04:56.560 engineering is becoming such a buzzword
+00:04:58.320 right now most people don't really
+00:05:00.000 understand how this is truly an
+00:05:02.400 evolution from context engineering
+00:05:04.320 that's what I want to argue with you
+00:05:05.520 right now and so there are two important
+00:05:08.080 distinctions so first of all most of the
+00:05:11.680 harness around the model like this
+00:05:13.360 article outlines it is just context
+00:05:15.600 engineering your context injection your
+00:05:17.520 actions through tools and MCPs,
+00:05:19.199 persistence, observability. The one
+00:05:21.280 thing that really is different is
+00:05:23.039 control. Like Ralph loops, orchestrating
+00:05:25.840 different coding agent sessions and sub
+00:05:27.840 aents. I think that is a true evolution
+00:05:29.919 from sub agents. And so we'll talk about
+00:05:32.320 that next. But the other really
+00:05:34.160 important distinction that this article
+00:05:35.680 outlines is the skill issue reframe. So
+00:05:39.360 I alluded to at the start of the video
+00:05:41.120 the fact that hardness engineering is
+00:05:43.120 not just a skill, it's also sort of a a
+00:05:45.759 mindset, right? A a reframe. So, the
+00:05:48.320 author here says, &quot;There's a pattern I
+00:05:50.000 watch engineers fall into. The agent
+00:05:51.919 does something dumb, the engineer blames
+00:05:53.840 the model, and the blame gets filed
+00:05:55.759 under wait for the next version.&quot; As in,
+00:05:58.400 you know, Claude screws up here. Well,
+00:05:59.919 we better wait for Opus 5 or GPT messes
+00:06:02.400 up. Let's wait for GPT6. And, you know,
+00:06:04.960 personally, I see this all the time as
+00:06:06.479 well. I'm also tempted to think this
+00:06:08.479 myself, and you probably are as well.
+00:06:10.800 But the harness engineering mindset
+00:06:13.120 rejects that default. And by the way, I
+00:06:15.919 call this system evolution. It's very in
+00:06:18.479 line with something that I've been
+00:06:19.680 focusing on a lot recently. So here's
+00:06:21.440 what he says. The failure is usually
+00:06:23.120 legible. The agent didn't know about a
+00:06:25.280 convention, so you add it to agents.mmd.
+00:06:27.600 Or the agent ran a destructive command,
+00:06:29.360 so you add a hook that blocks it.
+00:06:31.199 Basically, the idea here is every
+00:06:33.520 mistake becomes a rule. Or the way I
+00:06:35.600 like to put it is every mistake becomes
+00:06:38.400 an opportunity to improve your harness.
+00:06:40.960 improving the security through your
+00:06:42.240 hooks, your processes through updating
+00:06:44.400 your skills, anything in your harness so
+00:06:47.360 that the next coding agent session that
+00:06:49.280 issue you encountered is less likely to
+00:06:51.520 come up. And that is super powerful.
+00:06:53.039 That system evolution means that you are
+00:06:55.759 taking ownership and improving the
+00:06:58.160 performance of your coding agent over
+00:06:59.840 time with the AI layer that you control
+00:07:02.560 over the coding assistant that you
+00:07:04.479 chose. And so really harness engineering
+00:07:06.479 is all about claiming that agency,
+00:07:08.400 taking ownership of your system so that
+00:07:10.880 when something goes wrong, you're not
+00:07:12.080 just blaming your AI coding assistant
+00:07:13.680 and feeling helpless because things will
+00:07:16.400 come up just like working with human
+00:07:18.080 developers. There are going to be
+00:07:19.360 issues. But we need to make sure that we
+00:07:21.440 have a way to learn from that and not
+00:07:23.680 just be at the mercies of the next
+00:07:25.520 session not encountering that problem
+00:07:27.280 again. We want to be the human steering
+00:07:29.520 the system feeding forward. So the
+00:07:31.919 initial generation we have our
+00:07:33.360 principles and other kinds of context we
+00:07:35.280 feed in and then we have our sensors for
+00:07:37.520 feedback our hooks our review agents the
+00:07:40.560 skills that we give it for that
+00:07:42.400 selfcorrection evolving our AI layer
+00:07:44.960 over time the sponsor of today's video
+00:07:47.360 is Google Cloud specifically their new
+00:07:49.759 agent CLI and I'm excited for this
+00:07:52.000 because nowadays it's optimal to build
+00:07:54.400 your agents with other agents right
+00:07:56.639 using your AI coding assistants like
+00:07:58.479 cloud code and codeex now the easy part
+00:08:01.360 is getting the idea for an agent, but
+00:08:03.919 actually building it out and deploying
+00:08:05.599 it to production, that is a different
+00:08:07.440 beast. But Google has made this so
+00:08:09.520 incredibly easy now with their agent
+00:08:11.599 CLI. It's a collection of skills that I
+00:08:14.000 can bring into my coding agent that give
+00:08:16.479 it full clear instructions on how to
+00:08:18.720 build agents with the Google agent SDK
+00:08:21.120 and even deploy them to production and
+00:08:23.039 monitor them. And so right here in my
+00:08:24.479 cloud code, for example, I can say use
+00:08:26.800 the agent CLI to build a research agent
+00:08:29.440 that searches the web. Obviously a
+00:08:31.280 simple example, but it's going to use
+00:08:33.200 the instructions really help you build
+00:08:34.559 any agent that you want. Then with the
+00:08:36.640 help of the skills, your coding agent
+00:08:38.000 will create all of the code. It's
+00:08:39.519 oneshotted a lot of different tests that
+00:08:41.519 I've given it here. And then we also
+00:08:43.120 have our local development environment.
+00:08:45.279 We can spin up the agent here so that we
+00:08:47.200 can test everything locally with a full
+00:08:48.959 chat application before we deploy our
+00:08:50.959 agent. And then when you're ready to
+00:08:52.480 take your agent to production, it is a
+00:08:54.480 single command to deploy your Google
+00:08:56.720 agent SDK agent to the Google Cloud.
+00:08:59.680 super easy and your agent gets its own
+00:09:01.839 identity in the cloud. You have the
+00:09:03.360 playground here to test it live and you
+00:09:05.040 have traces full observability. So
+00:09:07.040 everything you need for a production
+00:09:08.240 deployment, but it's not extremely
+00:09:10.080 difficult to get all this set up like it
+00:09:12.000 used to be. And the best part is the
+00:09:13.839 agent CLI is free and open- source. You
+00:09:16.320 can take these skills, bring it into any
+00:09:18.000 coding agent, and see how easy it is
+00:09:19.920 right now to build any AI agent. I'll
+00:09:22.640 have a link in the description. I'd
+00:09:24.000 highly recommend checking it out. So I
+00:09:26.160 also have this companion repo for our
+00:09:28.160 video giving you a super concrete idea
+00:09:30.160 of what an AI layer can look like. And
+00:09:32.399 this is a really good representation
+00:09:34.720 everything here of the AI layer that
+00:09:36.320 I'll bring into and evolve in each of my
+00:09:38.320 code bases. So I want to cover this
+00:09:39.839 quick before we get into the last
+00:09:42.080 evolution of harness engineering the
+00:09:43.760 really powerful stuff building workflows
+00:09:45.600 where we are bringing together and
+00:09:47.040 orchestrating many coding agent sessions
+00:09:49.360 and I have examples for that like with
+00:09:51.360 the Ralph loop in this repo as well. And
+00:09:54.240 so I did promise that this video is
+00:09:56.000 going to be shorter. So I'm not going to
+00:09:57.120 dive extremely deep into each one of the
+00:09:59.120 components of the AI layer, but I do
+00:10:01.279 have a video that I'll link to right
+00:10:02.800 here where I cover in more detail the
+00:10:05.040 rules and skills and LSP and hooks, each
+00:10:07.440 one of the components. I want to stay
+00:10:09.440 just really high level, give you some
+00:10:10.720 golden nuggets here, and then you can of
+00:10:12.160 course just give this repo to your
+00:10:13.600 coding agent and have it help you
+00:10:15.279 implement things and understand
+00:10:16.720 everything here. So really the
+00:10:18.399 foundation of your AI layer is all of
+00:10:20.880 the rules, the constraints and
+00:10:23.040 conventions that you want your coding
+00:10:24.800 agent to follow, your patterns. And so
+00:10:26.720 that's your global rules and any other
+00:10:28.800 kinds of on demand context that you have
+00:10:30.480 as markdown confluence documents, that
+00:10:32.640 kind of thing. And then your skills,
+00:10:34.560 these are the workflows that you have
+00:10:36.240 for your coding agent. Like here's how
+00:10:37.519 you wanted to plan, implement, and
+00:10:39.440 validate. And I have a separate skill
+00:10:41.600 for each because what I really want to
+00:10:43.440 do and I highly highly recommend this is
+00:10:45.600 you want to do your planning,
+00:10:47.040 implementation, and validation all in
+00:10:49.120 separate coding agent sessions to keep
+00:10:51.120 each one of them token efficient and
+00:10:53.279 focused. And so each one of these skills
+00:10:56.079 is going to output some kind of artifact
+00:10:58.560 so you can use it as a handoff to the
+00:11:00.480 next session. And so this is kind of
+00:11:03.200 getting into stringing coding agent
+00:11:04.720 sessions together, but we're still
+00:11:06.320 talking about doing this manually,
+00:11:07.839 right? like you'll run the plan and
+00:11:09.519 you'll create the plan with the coding
+00:11:10.880 agent with one skill and then you'll
+00:11:13.040 take this markdown and then you'll give
+00:11:14.720 it to the next coding agent session for
+00:11:16.480 the implement skill, right? You go
+00:11:18.000 through that systematically yourself.
+00:11:20.160 And so we'll talk about in a little bit
+00:11:21.519 how we can really bring all that
+00:11:22.880 together. And then as far as hooks go,
+00:11:25.200 these are honestly pretty underused. I
+00:11:27.680 love using hooks for a few different
+00:11:29.680 things. First of all, for security. So a
+00:11:31.920 pre-tool use hook. Basically, this is a
+00:11:34.160 piece of code that's going to trigger
+00:11:35.839 before the coding agent executes any
+00:11:38.079 tool call like writing out to a file,
+00:11:40.320 running any kind of command. And so,
+00:11:41.760 this is where we can build in security
+00:11:43.200 things like not reading files because we
+00:11:46.000 really don't want that in the LLM's
+00:11:47.440 context or removing directories in a
+00:11:50.160 very destructive way, for example. I
+00:11:52.160 also like having some kind of stop
+00:11:54.560 validation hook. So when the coding
+00:11:56.160 agent says it's done with the
+00:11:57.920 implementation, I want to
+00:11:59.680 deterministically run a set of tests
+00:12:02.160 like are the unit tests, the linting,
+00:12:03.839 the type checking, is all that really
+00:12:05.519 passing? Cuz if it's not, I want to
+00:12:07.360 force the coding agent to iterate on it
+00:12:10.000 until it is. And that's what this hook
+00:12:11.760 does. And then last but not least, just
+00:12:13.440 running a quick lint after every single
+00:12:15.279 file edit is really good just to keep
+00:12:17.200 your code base nice and clean, which
+00:12:19.279 also helps make your coding agents more
+00:12:21.040 reliable in the future. So there you go.
+00:12:22.959 Just a couple of golden nuggets for the
+00:12:24.480 AI layer that we have here. And I even
+00:12:26.240 have instructions in the readme for just
+00:12:28.079 running a super basic pit. This is the
+00:12:30.240 foundational approach to agentic
+00:12:32.399 engineering. So you plan with the plan
+00:12:33.920 skill just sending in the feature that
+00:12:35.440 you want. You iterate on the plan. You
+00:12:37.279 produce that markdown document that you
+00:12:38.880 then hand off to the implement skill in
+00:12:40.880 a separate coding agent session. You
+00:12:42.720 also have your validation strategy for
+00:12:44.959 the agent to check its own work in the
+00:12:46.720 markdown as well. So feel free to try
+00:12:49.040 that out for yourself. But now finally I
+00:12:51.760 want to get to the peak evolution of
+00:12:54.079 harness engineering. So I'm going to
+00:12:55.440 jump back to the diagram here. Let's
+00:12:57.440 talk about orchestrating coding agent
+00:12:59.440 sessions. This is when we can really
+00:13:01.200 scale the amount of work that we get
+00:13:03.120 done with coding agents. So the main
+00:13:05.360 idea here is you don't just want to take
+00:13:07.519 a massive task or PRD and hand it to a
+00:13:10.800 single coding agent session. It's not
+00:13:12.800 going to be token efficient and the
+00:13:14.480 underlying large language model in the
+00:13:16.240 harness is going to be completely
+00:13:18.079 overwhelmed. It does not matter how good
+00:13:20.800 the AI layer is that you created here
+00:13:23.279 with things like your skills and rules.
+00:13:25.600 If you send too much into the LLM at
+00:13:27.600 once, it is going to fall flat on its
+00:13:29.760 face. And so what we're doing here,
+00:13:31.519 orchestrating many coding agent sessions
+00:13:33.519 together, is we're giving each coding
+00:13:35.760 agent a very focused task. And so these
+00:13:38.880 can be sub agents as well, but like
+00:13:40.639 you'll see in the real loop, it's actual
+00:13:42.240 coding agent sessions that are handing
+00:13:43.839 things off to each other. So we can
+00:13:45.839 explore the implementation that comes in
+00:13:47.760 from a user requirement. Have one agent
+00:13:49.920 that writes the plan. Send that plan
+00:13:52.320 artifact into an implementation. And
+00:13:54.480 then for example, this is just an
+00:13:56.079 example harness, but we could have many
+00:13:58.320 code review agents running in parallel.
+00:14:00.079 This one focuses on security. This one
+00:14:02.079 correctness of the implementation. And
+00:14:03.920 this one making sure it's as simple as
+00:14:05.680 it can be. And then if everything
+00:14:07.040 passes, you create the pull request.
+00:14:08.880 Otherwise, you would iterate and keep
+00:14:10.720 working on the implementation. And you
+00:14:12.959 can do all this manually like I was
+00:14:14.480 talking about earlier. We can go to
+00:14:15.920 cloud code once and create the plan and
+00:14:17.920 then open up another cloud code and do
+00:14:19.680 the implementation. But the real power
+00:14:21.680 with harness engineering here is we can
+00:14:23.839 automate all of this. We can create a
+00:14:26.880 system that automatically hooks together
+00:14:29.279 all these coding agent sessions with the
+00:14:31.040 handoff documents and creating the poll
+00:14:33.279 requests and everything like that. And
+00:14:35.040 that's what the RA loop does. So let's
+00:14:36.959 go back to our example repo here. I want
+00:14:38.800 to show you what this actually looks
+00:14:40.399 like. So the Ralph loop is just one
+00:14:42.320 example of an agent harness. But Jeffrey
+00:14:44.720 Huntley, the creator of Ralph, he really
+00:14:46.880 is one of the pioneers here. This is one
+00:14:49.040 of the first examples showing in a very
+00:14:51.199 basic sense how we can automate
+00:14:53.440 stringing together many instances of
+00:14:55.519 cloud code, codecs. I mean you could do
+00:14:57.279 this with any coding assistant because
+00:14:59.199 basically all it is, I'm not going to
+00:15:00.560 get too technical here, but I just want
+00:15:01.920 to show you a little bit is we have a
+00:15:03.760 simple script. This can be a Python
+00:15:05.360 script, it can be a bash script. I'm not
+00:15:07.279 going to go into the code here, but
+00:15:09.199 essentially you give it a larger scope
+00:15:11.120 of work, like a massive PRD, and it's
+00:15:13.120 going to be responsible for splitting
+00:15:14.720 that up into individual tasks and then
+00:15:17.279 running coding agent sessions to handle
+00:15:19.120 them one at a time until everything is
+00:15:21.519 done. And so you give it a prompt. This
+00:15:23.760 is the user input here, like these are
+00:15:25.680 the different items that I want to build
+00:15:27.199 in the spec. And then it's going to
+00:15:29.279 produce a plan here. This is the fix
+00:15:31.040 plan. So like this is what it's going to
+00:15:32.240 do in iteration one of the loop,
+00:15:34.000 iteration two, iteration three. It's
+00:15:35.839 going to keep working and kind of like
+00:15:37.040 build up a log as the different cloud
+00:15:39.120 code sessions here are running. And then
+00:15:41.440 when it decides it's done, it's going to
+00:15:43.360 produce some kind of indicator of that.
+00:15:45.440 Like here I'm using a done.ext. And so
+00:15:47.760 this is where it decides like all right,
+00:15:49.440 all eight spec items from the original
+00:15:51.120 prompt are done. We are satisfied. We
+00:15:53.040 can now exit the loop. And that's the
+00:15:54.800 only condition. The only way that we can
+00:15:56.880 exit the main while loop here is if we
+00:16:00.399 have this done.ext text and the coding
+00:16:02.000 agent is confident that the
+00:16:03.360 implementation is done and all the
+00:16:04.880 validation is there. And so just trying
+00:16:07.120 to show you real loop to give you one
+00:16:08.959 example of a harness. But you can see
+00:16:11.040 the idea here of we are using many
+00:16:14.399 coding agent sessions to keep each one
+00:16:16.399 very very focused but also we're
+00:16:18.000 automating it so we don't have to
+00:16:19.759 babysit our coding agent as we're
+00:16:21.440 handling these longer tasks. This really
+00:16:23.279 is the future of agentic engineering.
+00:16:25.839 Building these harnesses to handle
+00:16:28.079 larger scopes of work as the models and
+00:16:31.199 the underlying tools are getting more
+00:16:32.800 powerful. Like this is the way. And so
+00:16:35.120 lean into this here. I mean there's so
+00:16:36.639 many resources out there for harness
+00:16:38.240 engineering. And then there's Archon, my
+00:16:40.240 open-source harness builder. Free to
+00:16:42.320 use. This is the easiest way to get
+00:16:44.240 started with Agentic Engineering.
+00:16:46.079 Building your own harnesses like the Ral
+00:16:47.839 Flute, but more custom to you, your
+00:16:49.600 exact process and software development
+00:16:51.680 life cycle. So, I'd highly recommend
+00:16:53.440 checking this out. Otherwise, I hope
+00:16:54.959 this video was helpful for you in
+00:16:56.399 general, just understanding what is
+00:16:58.079 harness engineering, what's the fluff,
+00:17:00.160 what's really worth knowing. If you
+00:17:01.920 found this useful in any way, I would
+00:17:03.440 really appreciate a like and a
+00:17:05.039 subscribe. And with that, I will see you
+00:17:06.959 in the next

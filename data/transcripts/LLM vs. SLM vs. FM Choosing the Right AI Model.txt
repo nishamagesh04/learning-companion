@@ -1,0 +1,124 @@
+# tactiq.io free youtube transcript
+# LLM vs. SLM vs. FM: Choosing the Right AI Model
+# https://www.youtube.com/watch/AVQzG2MY858
+
+00:00:00.080 When it comes to AI, I think there's one term everyone is pretty familiar with,
+00:00:05.200 LLM, large language model. But you'll also hear some other terms like SLM,
+00:00:13.680 that's small language model, and FM, that's frontier model. So, what's the difference? Well,
+00:00:23.280 they're not really three separate categories. LLM, it's really the umbrella term, but we can
+00:00:30.800 think of SLMs as kind of the efficient specialists and we can think of frontier models as more of the
+00:00:38.960 cutting edge. They're all language models, but we label them differently because we use them
+00:00:44.800 differently. So, let's define what each term means and then talk about some use cases that
+00:00:50.640 are well suited for each model. And we're going to start with LLMs, large language models. Now,
+00:00:56.160 large language models are what most people think of when they hear AI. And we're talking
+00:01:01.360 about models that are pretty big. They have tens of billions of parameters. And parameters here
+00:01:11.120 means the weights that are learned during training that determine the model's capabilities. and more
+00:01:17.120 parameters generally means a bit more knowledge, a bit more nuance, a bit more reasoning. Now, LLMs,
+00:01:23.520 we can really think of these as being generalists. And what I mean by that is that they have broad
+00:01:30.240 knowledge across many domains and they can handle sophisticated back and forth conversations. Now,
+00:01:35.920 there are a lot of different LLMs. Uh, many of them are kind of open source models in this kind
+00:01:43.280 of parameter range and they typically run in the cloud or in SaaS environments because they need
+00:01:50.320 large amounts of GPU memory and processing power. So that's LLM. What about SLM? Well, small. Yeah,
+00:01:58.880 they have fewer parameters. So we might be talking about a model that has less than 10 billion
+00:02:07.040 parameters. So, SLM's just kind of worse version of LLMs. Well, I think rather than worse, it's
+00:02:15.920 probably better to think of these guys as not so much generalists, but more as specialists. Today,
+00:02:24.160 well-tuned SLMs, they can often match or even beat these bigger models at focused tasks. So, document
+00:02:30.960 classification or code routing or summarization, an SLM can often do it faster and cheaper.
+00:02:37.040 Some examples of that, well, IBM's Granite models, including the recently released Granite 4.0,
+00:02:45.200 that is an SLM. And then we've got some smaller open-source options as well,
+00:02:51.680 like certain models that have come from Mistral. And then we've got FMs, Frontier models. Now,
+00:03:01.120 these are often hundreds of billions of parameters and quite a bit more. And they also have deep tool
+00:03:10.480 integration. But it isn't just the size and the tools because actually plenty of smaller models,
+00:03:16.000 they can use tools now as well. What makes frontier models frontier is that they are the
+00:03:23.200 most capable type of model that we have today. They have the best reasoning. They're best at
+00:03:31.040 complex tasks. So, we can think of models uh that fall into this category as like Claude Sonnet and
+00:03:38.480 Opus would definitely fit into here. GPT5 from Open AI we could put in here and Gemini Pro from
+00:03:48.080 Google. These would all be considered Frontier models. Now, you might be thinking, all right,
+00:03:54.560 Frontier models are the most capable. Why don't I just use Frontier models for everything? I mean,
+00:03:59.440 that's a fair question, but here's where the strategy comes in. The choice of AI model is
+00:04:05.840 use case specific. So, let's look at three use cases, and we're going to pick one that fits
+00:04:11.520 well with each of the types of models. And let's start with small language models. So, the use case
+00:04:17.600 I'm going to use here is document classification and routing. So, here's the scenario. We've got
+00:04:23.440 a company and it receives thousands of documents every day. So there's a whole bunch of documents
+00:04:31.200 coming in. There might be support tickets or insurance claims, whatever. And each one of
+00:04:35.920 those needs to get routed to the right department and then tagged appropriately. So the documents,
+00:04:42.560 they come into our system. And when they get into our system, they hit what we're going
+00:04:48.160 to call the classification service. that is going to process these documents and the classification
+00:04:56.960 service that is running on top of a small language model. So the service reads the documents and then
+00:05:06.720 it does some classification. So it figures out what the category of each document is.
+00:05:13.520 It figures out what the metadata of each document is. And once it's done all that,
+00:05:21.040 then these messages can be routed. So they get routed to whatever the appropriate queue is to
+00:05:29.440 process these messages. A pretty straightforward pipeline. And implementing the classification
+00:05:36.080 service is really a perfect job for a small language model. Let me give you some some reasons
+00:05:42.880 why. One reason really comes down to to speed. So an SLM with let's say 3 billion parameters
+00:05:51.920 instead of a bigger model with maybe like 70 billion that has simply less computation per
+00:05:58.080 inference. So document classification is a pretty straightforward pattern matching exercise and you
+00:06:03.760 don't need massive scale to achieve high accuracy. Uh another good reason comes down to cost. Fewer
+00:06:11.840 parameters also means less computational cost per inference. You're doing fewer calculations
+00:06:16.720 which uses less memory which requires less GPU resources and then we've also got the advantage of
+00:06:25.120 governance. Now it turns out that these documents here they contain sensitive data and running an
+00:06:32.320 SLM on premise means that the data never leaves that environment. There's no external API calls.
+00:06:37.840 There's no questions about compliance. And for regulated industries like finance and healthcare,
+00:06:43.280 that's often non-negotiable. So that's why SLMs work for document classification. There's
+00:06:48.800 fast inference from fewer parameters. There's predictable infrastructure costs and the data
+00:06:54.800 stays in house. All right. Next up, large language models. We're going to go with customer support
+00:07:00.720 as the use case here where a customer contacts support with an issue. So maybe their billing
+00:07:05.760 doesn't match what they expected and it's tied to a a service configuration change and there's
+00:07:10.560 also a history of previous tickets about related issues just like basically some complicated stuff.
+00:07:15.680 So what can we do here? Well basically we will start with a query. Now the query comes in and
+00:07:22.960 it's going to hit the element that we're going to build here which is our basic support system to
+00:07:30.880 process this query. And yes, the support system is running on top of a large language model. Now
+00:07:41.280 the LLM, it needs to pull information from a bunch of sources. So maybe it needs to pull
+00:07:48.720 information from a billing database as part of this processing. Maybe we also need some of the
+00:07:56.640 the technical configuration data that needs to be provided as well to the system. And perhaps we'll
+00:08:04.160 also include the ticket history of that particular customer who has submitted the query. And that's
+00:08:12.160 all received into the support system. So it synthesizes all of that data. And it's going
+00:08:17.520 to need to understand the relationships between all of these different pieces of information. And
+00:08:22.080 ultimately what we want it to do is to generate a solution at the end. So this is a much more
+00:08:29.600 complex pipeline than simple classification. So, why is it a good fit for LLMs? Well, a few
+00:08:37.200 reasons. One of the reasons really comes down just down to the breadth of this solution and what an
+00:08:44.159 LLM can do. Now, LLMs are likely pre-trained on broader and more diverse data sets than SLMs can
+00:08:52.880 store in their weights. So, that corpus might span technical docs and customer service interactions
+00:08:58.240 and basically all of the domains that this task touches. And during pre-training, the model
+00:09:03.680 learns patterns and relationships across these different areas where whereas a SLM train with a
+00:09:09.600 specific task in mind like document classification that might not have the same level of breadth in
+00:09:15.360 its training. And I think the other reason really comes down to generalization. And what I mean by
+00:09:24.720 generalization is that customer support queries have a pretty high variability. So different
+00:09:31.600 customers describe the same problems in just like completely different ways. There are a whole
+00:09:36.240 bunch of edge cases and an LLM can generalize to scenarios it hasn't explicitly seen before because
+00:09:44.480 of its broader training has exposed it to more patterns and more variations. So it can do levels
+00:09:50.320 of nuanced reasoning about how concepts relate even when the specific combination is new. So
+00:09:56.640 that's why LLMs work for complex customer support. There's broad pre-training across multiple domains
+00:10:02.960 and there's the ability to generalize across scenarios with nuanced reasoning. All right.
+00:10:08.640 Then finally, frontier models. So the use case I'm going to go here with is autonomous incident
+00:10:14.480 response. So we've got a critical system alert that has come in at 2:00 a.m. in the morning.
+00:10:22.240 Don't they always seem to come in then? At least in these videos they do. It's never 2 p.m. on a
+00:10:27.680 Tuesday when you're caffeinated and ready. always 2:00 a.m. So, so the application servers, they're
+00:10:33.120 maybe timing out and the users can't access the servers. And that normally would wake up
+00:10:37.920 an on call engineer who would investigate and fix it. But what if an AI system could handle it? So,
+00:10:45.840 let's figure that out. We've got an alert that has come in and it has triggered our system,
+00:10:52.560 our incident response system that is now going to process and work on that alert. And the
+00:11:01.680 incident response system is of course running on a frontier model. Now the frontier model needs
+00:11:09.360 to query a bunch of things. So it might query into a monitoring system and it might need to
+00:11:18.160 check some logs in order to be able to process what is going on across multiple services. Then
+00:11:25.920 it's going to need to be able to identify the root cause of what's going on. That would be important.
+00:11:34.640 It needs to determine the appropriate fixes that need to be applied. And then it needs to execute
+00:11:41.520 that fix by calling out to a series of APIs, maybe restarting services and and rolling back
+00:11:50.000 a deployment, something like that. So this is multi-step investigation and execution,
+00:11:56.720 and that's the wheelhouse of agentic systems. Now, to to ground this in a dose of reality,
+00:12:02.880 most teams today aren't running fully autonomous agents yet. what they're running are frontier
+00:12:10.080 models as more AI co-pilots with some guardrails built in and human signoff. So there is also
+00:12:16.240 probably a human in the loop here at least today. But the underlying capability that lives in the
+00:12:24.880 frontier scale model. So frontier models they have very strong agentic capabilities. They're
+00:12:35.440 trained to plan multi-step workflows and then to execute them. They can break down a complex task
+00:12:40.880 into steps. They can call the appropriate APIs and they can evaluate their results. Based on that,
+00:12:45.760 they can adjust their approach for the next step. So, agentic capabilities. There's also
+00:12:50.800 a built-in reasoning chain into this whole flow as well. So system failures like this alert,
+00:13:01.280 they require multi-step investigation where each step kind of builds on what you learned before.
+00:13:05.600 And the chain can be pretty long and complex and and frontier models, they can maintain coherent
+00:13:11.680 reasoning across these extended chains, keeping track of what they've learned, how it connects,
+00:13:16.800 and then what to investigate next. So look, when it all comes down to it, SLM, LLM, and FM,
+00:13:28.000 they are all language models and the choice comes down to matching capability to need. So you might
+00:13:35.280 use an SLM when you need speed and low cost or on-prem control. You might use an LLM when you
+00:13:45.040 need broad knowledge and nuance reasoning. And you might use a frontier model when you need
+00:13:50.320 the absolute best complex reasoning for complex problems. Essentially match the model to the task.

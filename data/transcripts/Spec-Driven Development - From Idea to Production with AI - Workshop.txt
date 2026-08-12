@@ -1,0 +1,2910 @@
+# tactiq.io free youtube transcript
+# Spec-Driven Development - From Idea to Production with AI - Workshop
+# https://www.youtube.com/watch/inKOU-ltbFc
+
+00:00:04.360 Hello everyone.
+00:00:07.560 Um, just before I'm just going to give
+00:00:09.760 everyone a couple of minutes just to
+00:00:10.960 join. Well, 30 seconds to a minute to
+00:00:12.960 join. If you
+00:00:15.000 can hear me super clearly,
+00:00:17.960 uh, I'm going to share my screen as well
+00:00:19.320 in a second. And if you can see my
+00:00:21.000 screen, please could you just pop in a
+00:00:23.640 wave,
+00:00:25.360 um, or something in the chat or a yes, I
+00:00:27.240 can hear you.
+00:00:29.360 Anything like that would be brilliant.
+00:00:37.280 And then we'll just give it a few more
+00:00:39.440 seconds for some other people to join
+00:00:42.280 and we'll get started.
+00:00:49.760 Cool.
+00:00:52.880 Great. Looks like everyone can hear me.
+00:00:54.760 Perfect.
+00:00:58.440 Okay. Um, yeah, let's get started. Um,
+00:01:02.560 and we'll let uh, anyone else that needs
+00:01:04.160 to join will join sort of as we're going
+00:01:05.800 through the agenda.
+00:01:07.440 So, first of all, thank you so much for
+00:01:09.360 joining the workshop. We really, really
+00:01:11.080 appreciate your time today. Um, and
+00:01:13.360 today we're going to talk about
+00:01:14.760 spec-driven development, um, and how you
+00:01:17.240 can go from a vague idea to production
+00:01:20.560 in using AI. Um, so really, really quick
+00:01:23.720 introduction. My name's Alex. I'm
+00:01:25.640 technical education lead at
+00:01:26.760 BetterBrains.
+00:01:28.040 Um, I previously ran a tech education
+00:01:30.240 company which was acquired late last
+00:01:32.440 year and I'm lucky enough to join the
+00:01:34.160 amazing team at BetterBrains.
+00:01:36.400 We have been working on the Unlearn
+00:01:38.920 platform which some of you may know
+00:01:41.040 about. Some of you have probably already
+00:01:43.000 have inside access, which is amazing.
+00:01:45.200 I'll talk a little bit about that in a
+00:01:46.440 moment as well.
+00:01:47.760 Um, but for those of you who don't know,
+00:01:51.200 I'm just going to give you a really
+00:01:52.720 brief talk about Unlearn. So, we
+00:01:54.720 launched Unlearn,
+00:01:56.520 um, because we realized that in the, um,
+00:01:59.320 I think my screen's unshared itself.
+00:02:01.240 Sorry, just give me 1 second.
+00:02:03.480 Uh, share screen.
+00:02:08.720 Okay. So, we we we launched Unlearn
+00:02:10.880 because we realized that, um,
+00:02:12.480 traditional developer education is
+00:02:14.200 changing and we wanted to create a hub
+00:02:17.280 for developers
+00:02:18.840 to come and keep up to date with, um,
+00:02:21.080 not just AI, but whatever happens in the
+00:02:23.200 future. So, our promise for Unlearn is
+00:02:25.600 to be that developer hub to give you the
+00:02:27.840 edge, um, regardless of what happens.
+00:02:30.920 Um, you know, things change so, so
+00:02:32.920 quickly,
+00:02:34.000 um, and we all know that. Massive
+00:02:36.320 disruption. So, we're going to be here
+00:02:38.160 to help you out. We we we've kicked off,
+00:02:41.120 um, early access, which we have seats
+00:02:43.640 full at the moment. So, um,
+00:02:45.760 we were lucky enough to get over 1,000,
+00:02:47.600 uh, people already inside and going
+00:02:50.360 through what we offer in Unlearn.
+00:02:52.280 Um, but our plans are much bigger for
+00:02:54.480 the future. So, we start with workflows
+00:02:56.960 and and teaching you workflows. We've
+00:02:58.520 got some courses in there. Um, you may
+00:03:01.000 have already joined. You may have joined
+00:03:02.760 the last workshop I did where I spoke
+00:03:04.960 about the vision for Unlearn. And we,
+00:03:07.400 yeah, we want to make this a an amazing
+00:03:09.160 place for developers to come and
+00:03:12.280 keep up to date, you know, with with
+00:03:14.320 this changing environment. So, um, we're
+00:03:16.440 going to have a huge amount within here.
+00:03:18.640 Um,
+00:03:19.840 but let's go and get into the
+00:03:22.840 presentation and I'm just really going
+00:03:24.680 to quickly go through the agenda. We'll
+00:03:25.880 come back to Unlearn later. So, the
+00:03:27.920 first thing we're going to talk about
+00:03:29.200 today is why spec-driven development
+00:03:31.600 matters, why it's different from
+00:03:32.920 prompt-driven development or vibe
+00:03:34.960 coding. Um, we're then going to go into
+00:03:37.480 a practical on my end where I'm going to
+00:03:39.440 create out a product, a small product,
+00:03:42.160 but a
+00:03:43.040 a product nonetheless, using a spec
+00:03:46.360 without going back and forward with AI.
+00:03:48.440 So, without sort of you watching me just
+00:03:50.280 prompt things and fix things. We're
+00:03:52.240 going to have, uh, proper spec, uh,
+00:03:54.680 built out. Um, then we'll go in and and
+00:03:57.280 show you how to apply this spec to
+00:03:59.960 actually build the product and fingers
+00:04:01.920 crossed that goes well cuz we know that
+00:04:03.320 with AI this could take like 20 minutes,
+00:04:05.280 it could take 5 minutes. Um, and then
+00:04:07.560 we're going to go into, um, a hands-on
+00:04:09.840 activity where, uh, you may have
+00:04:12.040 already, uh, set stuff up on your end,
+00:04:14.880 but we're going to be, um,
+00:04:18.120 you're going to be adding a feature to
+00:04:19.839 the project I build live, um, and, uh,
+00:04:23.040 spec spec it, build it, and then review
+00:04:24.840 it, and then wrap everything up. So,
+00:04:28.600 we will be doing a Q&amp;A at the end, which
+00:04:31.160 is going to be a a great opportunity for
+00:04:33.080 you to ask any questions. If you miss
+00:04:35.160 anything, if you're not sure about
+00:04:37.000 anything, or if you have any sort of
+00:04:38.280 broader questions, I'm happy to answer
+00:04:39.960 them. Please go ahead and and put them
+00:04:42.080 in the chat. I'm keeping an eye on this
+00:04:44.520 and the team behind the scenes are
+00:04:45.840 amazing. They're keeping uh, an eye on
+00:04:47.880 this as well. Um, okay. So, um,
+00:04:52.040 let's go through a quick intro here.
+00:04:54.760 So,
+00:04:56.160 spec-driven development, you may or may
+00:04:58.120 not have come across it, but why does
+00:04:59.920 this matter? Why do we not just jump
+00:05:02.560 into our editor or our, um, terminal,
+00:05:06.800 boot up Claude, and, you know, just
+00:05:08.800 start to prompt away? Why does this
+00:05:10.400 stuff matter?
+00:05:11.880 Well, without a spec, um, requirements
+00:05:15.120 for a product live in your head, other
+00:05:17.280 people's head, or in like scroll back
+00:05:20.240 either in like your terminal or
+00:05:21.840 something like that. So, it's really
+00:05:23.360 difficult to piece together what changes
+00:05:26.760 you want to make in a product without
+00:05:28.440 having a written spec. Um,
+00:05:31.440 every prompt that you make, obviously
+00:05:33.840 when, particularly when you finish up
+00:05:37.080 with your session for the day and you
+00:05:38.480 come back,
+00:05:39.880 it feels a little bit like a fresh
+00:05:41.440 start. There's no history to it. You
+00:05:43.040 don't quite know what you did the the
+00:05:45.560 previous day, what tasks you have.
+00:05:48.320 There's context that's lacking. And this
+00:05:51.360 actually gets even worse when you bring
+00:05:53.200 other people into a team onto the same
+00:05:55.840 project. So, the context is just
+00:05:57.840 completely lost with within a team.
+00:06:00.680 Um, your agent tends to fill gaps, um,
+00:06:03.960 in your idea of what you think you want.
+00:06:07.040 And I say what you think you want
+00:06:08.520 because as we'll see later, sometimes
+00:06:10.640 what you think you want, uh, doesn't
+00:06:12.720 quite cut it, um, with guesses. So, some
+00:06:16.440 are great, you know, agents are really
+00:06:18.200 capable, but some are just really awful.
+00:06:20.360 And we all have been in this place
+00:06:22.400 before. We build a product, we then have
+00:06:24.800 to go back again,
+00:06:26.800 um, and we have to fix stuff up. And
+00:06:29.920 then we get into this cycle where we're
+00:06:31.680 like prompting, fixing, prompting,
+00:06:33.520 fixing, and it doesn't feel right.
+00:06:36.120 Um, you only discover the bad stuff
+00:06:38.760 after the code is written. So, you
+00:06:40.240 basically, after you've paid essentially
+00:06:42.840 in time and money, you then discover,
+00:06:45.800 you know, that something's gone wrong.
+00:06:47.080 You have to go back and fix it.
+00:06:48.960 Now, with a spec, um,
+00:06:51.280 intent, so what you want to do is
+00:06:53.360 written down and it's reviewable by you,
+00:06:55.840 your agent, and anyone else on your
+00:06:58.320 team,
+00:06:59.400 uh, before um, any code runs. I put but
+00:07:01.960 you know what I mean, before any code is
+00:07:03.640 written.
+00:07:05.080 And it's one source of truth for
+00:07:06.880 everyone. So, there's no ambiguity. You
+00:07:09.480 know, you read what you want and your
+00:07:12.040 agent should understand what you want
+00:07:13.720 and, of course, your team as well. And
+00:07:15.560 because of this, bad decisions that are
+00:07:17.400 potentially about to get made, and we'll
+00:07:19.240 see these, uh, shortly, get caught on
+00:07:21.800 paper, obviously digitally, where
+00:07:24.000 they're really cheap and easy to fix
+00:07:25.840 within a markdown document or something
+00:07:27.480 like that. You don't have to go back and
+00:07:28.880 fix it. Um, and the spec outlives the
+00:07:31.400 chat as well. So, we're going to be
+00:07:32.920 talking about proposals today, which
+00:07:34.600 we're going to be putting into a spec.
+00:07:36.560 And for some reason my screen is not
+00:07:38.200 sharing again. I don't know why. Let's
+00:07:40.160 just bring that back up.
+00:07:42.600 Um, yeah, so the, the spec outlives the
+00:07:45.120 chat. So, um,
+00:07:46.840 when you do have a spec, um, and you
+00:07:49.280 have a living spec that grows with your
+00:07:51.200 project, your agent always always has
+00:07:53.440 context of the decisions that has been
+00:07:56.520 that has been made in the past, and
+00:07:59.240 you'll tend find the next session move
+00:08:02.400 forward [clears throat] with more
+00:08:03.040 success. And that compounds. It's like a
+00:08:04.960 snowball effect.
+00:08:06.800 Um, so, the shift here is just
+00:08:11.640 stop prompting or prompt or stop
+00:08:14.120 steering your agent prompt by prompt.
+00:08:15.760 Like
+00:08:16.640 It's really nice to have this upfront
+00:08:18.840 time to agree on what you're building
+00:08:20.560 and then just let your agent build it.
+00:08:22.800 I saw this
+00:08:24.280 I saw this post on on X recently. You
+00:08:26.760 probably seen it. I'm going to try and
+00:08:28.760 mute this in time. Um, it's,
+00:08:31.640 uh, yeah, it's make no errors, do not
+00:08:33.840 hallucinate, you're an expert software
+00:08:35.240 engineer. We've probably all been here
+00:08:36.760 before. I love this because it's so
+00:08:38.120 true. When, you know, my agent, I use
+00:08:41.080 Claude code, starts to not do what I
+00:08:43.479 want to do, my caps locks key goes on.
+00:08:45.640 I'm like shouting at it. Um, and this
+00:08:48.680 spec-driven, uh, spec-driven development
+00:08:50.880 in general is just a lot of a is a much
+00:08:53.560 calmer approach to software engineering.
+00:08:56.480 Um, really the goal here is obviously to
+00:09:00.800 be quicker and, uh, and not have to
+00:09:03.680 battle this. Otherwise, there's no point
+00:09:05.360 using AI.
+00:09:06.840 So, what are we doing today? Well, we're
+00:09:09.360 going to build a poll creator app. So, a
+00:09:11.760 small enough app that I can fit into
+00:09:13.480 this workshop, um, but it's going to be
+00:09:15.400 a working product and we're going to
+00:09:17.000 build this using spec-driven
+00:09:18.400 development. And we're going to be using
+00:09:20.520 Open Spec. Some of you may may have used
+00:09:23.000 Open Spec before.
+00:09:24.840 Some of you may not. There are
+00:09:25.920 alternatives to this as well, which
+00:09:27.400 we'll talk about later, but that's what
+00:09:28.720 we're going to be doing here today.
+00:09:30.440 So, I'm going to go through very quickly
+00:09:32.040 what Open Spec is for those of you who,
+00:09:34.280 um, haven't used it before.
+00:09:36.920 So,
+00:09:38.320 Open Spec is a framework. It's not a
+00:09:40.080 replacement for your agent or or
+00:09:42.200 anything like that. Um, it's a framework
+00:09:44.640 for, uh, spec-driven development, um,
+00:09:48.000 workflows with AI.
+00:09:49.880 And it allows you to capture your change
+00:09:51.840 before you write the code. So,
+00:09:54.440 there are there are tons of different
+00:09:56.280 workflows that you can that you can get
+00:09:58.080 into with this, but um, there is
+00:09:59.720 generally a three-step cycle I like to
+00:10:02.320 condense this down into the three-step
+00:10:04.360 cycle to make it easy. The first one is
+00:10:06.200 propose. So, you propose within your
+00:10:08.800 agent using the Open Spec framework what
+00:10:11.280 needs to change. That could be the
+00:10:13.240 prototype, which we're going to be doing
+00:10:14.760 today, or it could be the you know, a
+00:10:17.440 bug fix, it could be a refactor, it
+00:10:19.160 could be a new feature, anything. You
+00:10:20.720 propose it, you work through it, and you
+00:10:23.840 make sure it looks good before or you go
+00:10:25.920 ahead and apply it. The apply process
+00:10:28.160 will take the spec or the proposal, hand
+00:10:30.520 it over to your agent, and it will
+00:10:31.720 implement against it. So, by this point,
+00:10:34.200 you're pretty confident that your spec
+00:10:37.360 or the proposal is good enough and
+00:10:39.320 you're you're confident this is going to
+00:10:40.640 be built pretty much spot on the first
+00:10:43.000 time.
+00:10:44.240 Now, really important step is once
+00:10:46.120 you're done with that proposal and
+00:10:47.360 you've implemented that, you then
+00:10:48.640 archive this into
+00:10:51.280 the living spec or you fold it into a
+00:10:53.400 living spec, so your project has a
+00:10:56.680 or your application, whatever you want
+00:10:58.080 to say, has a a history of what has been
+00:11:01.360 done, which is really important for
+00:11:03.240 context, and we'll see this process
+00:11:05.600 later. So, a really quick note on tools,
+00:11:07.680 Open Spec isn't the only tool that you
+00:11:09.960 can use. We're massive believers of
+00:11:12.520 using specs to get really good outcomes,
+00:11:15.880 but you can do whatever you like. Within
+00:11:18.400 Unlearn,
+00:11:19.760 within the workflows that we teach, we
+00:11:21.440 teach this at a really high fundamental
+00:11:23.480 level, so you can understand how
+00:11:25.960 workflows work,
+00:11:28.000 how specs work, the benefits of specs,
+00:11:30.360 how to test your agent, how to make sure
+00:11:33.240 that you have up front or everything you
+00:11:35.240 need before it starts to build. And this
+00:11:37.880 methodology shift is quite difficult for
+00:11:39.760 a lot of people because it's like a lot
+00:11:41.520 of upfront time trying to, you know,
+00:11:45.120 read things. You know, as developers, we
+00:11:47.320 like to jump in and just start to code.
+00:11:49.920 But unfortunately with AI, across teams
+00:11:52.920 that I've seen at least, the the best
+00:11:54.320 way to do this is by putting a little
+00:11:56.120 upfront time in specs. And the best
+00:11:57.640 thing is you don't need to write the
+00:11:58.440 specs yourself, so as we'll see.
+00:12:01.000 Okay, so just before we get started, um
+00:12:04.560 today is super exciting. We are
+00:12:07.880 we have a workshop only offer.
+00:12:10.120 So, what we have done is we've opened up
+00:12:11.960 50 seats. As you saw earlier, seats are
+00:12:14.360 currently full on Unlearn. We've opened
+00:12:17.360 up 50 seats just for the duration of
+00:12:19.680 this workshop. So, you can head over to
+00:12:23.080 the URL which should be coming into the
+00:12:25.080 chat soon, or go ahead and scan this QR
+00:12:27.880 code.
+00:12:28.880 This locks you in membership on Unlearn
+00:12:31.839 to join those thousand other people who
+00:12:33.440 have already joined
+00:12:35.000 for a lot much lower price, that's 169 a
+00:12:37.560 year. That will be locked in,
+00:12:39.720 and you won't pay a penny over that in
+00:12:41.800 time.
+00:12:42.839 So, we'll check back in on this later,
+00:12:45.040 but it's a really good opportunity to
+00:12:46.920 sign up and see what we're doing, and
+00:12:48.600 you know, there's there's a lot of value
+00:12:50.280 in in what we're teaching, so this is
+00:12:52.680 really exciting. So, feel free to
+00:12:56.360 jump in and grab a membership, and I
+00:12:59.160 will see you inside. Let's check in on
+00:13:01.520 this later,
+00:13:03.040 and we'll see here that yeah, we've got
+00:13:05.040 50 50 seats left. We'll come back to
+00:13:07.480 this a little bit later.
+00:13:10.800 Okay, so we're going to go into the main
+00:13:13.600 sort of presentation now, and again, my
+00:13:16.480 screen has stopped sharing itself. I'm
+00:13:18.600 so I don't know why this is happening,
+00:13:20.120 but I'm keeping an eye on things, so
+00:13:21.760 we're all good. Let's pull this down
+00:13:24.080 here. Okay, brilliant. So, we're going
+00:13:25.920 to go into the sort of main spec-driven
+00:13:27.520 development presentation now, and we're
+00:13:29.360 going to
+00:13:30.280 do this a little bit differently. Rather
+00:13:32.320 than me just talk about why vibe coding
+00:13:35.000 isn't good, I'm going to show you a
+00:13:36.760 example of something that I built using
+00:13:40.920 just a simple prompt. So, I gave Claude
+00:13:43.160 Code this prompt earlier, and I just hit
+00:13:45.839 enter. So, this is build me a simple
+00:13:47.880 poll app. Users should be able to create
+00:13:50.440 a poll with a question and some options.
+00:13:53.000 They should be able to share it, let
+00:13:54.640 people vote, and we want to show the
+00:13:56.839 results after voting. And then I gave it
+00:13:59.520 some light technical direction. I'd
+00:14:01.320 already set up a Laravel project, but I
+00:14:03.520 wanted to give it some technical
+00:14:05.040 direction as well. Now, this is pretty
+00:14:07.120 standard. I mean, when we think about a
+00:14:08.960 poll app,
+00:14:10.880 you know, we think actually it's quite
+00:14:12.520 simple. You know, we ask a question, we
+00:14:15.079 add some options, we hit submit, we get
+00:14:18.560 a poll link, we give it to people, we
+00:14:20.240 register the votes. What could go wrong?
+00:14:22.280 What is difficult about this? So, in my
+00:14:24.560 mind, this prompt encapsulated
+00:14:26.360 everything that I wanted.
+00:14:28.520 And it took about 3 minutes 50 seconds
+00:14:30.480 to build, and we did get a working app,
+00:14:33.240 but it missed some things, and it also
+00:14:35.400 made some really really bad choices as
+00:14:37.200 well. So, let's go ahead and just take a
+00:14:39.360 look at this.
+00:14:40.640 So, I have this under
+00:14:42.680 quick poll vibe.test, I think. Yeah.
+00:14:48.920 Let's go ahead and open this up, and I
+00:14:50.839 will show you what it looks like. So,
+00:14:52.560 first
+00:14:53.520 aside from it looking a little bit
+00:14:55.160 boring and sort of, you know, Tailwind
+00:14:57.520 standard,
+00:14:59.160 it's it looks like it could work. So,
+00:15:01.280 let's say something like, &quot;What's your
+00:15:05.120 favorite agent?&quot; Say Claude Code and
+00:15:08.680 Codex.
+00:15:10.000 We can hit add an option here. So,
+00:15:11.839 obviously, we can add a third option.
+00:15:14.040 I did spot a bug here as well, where if
+00:15:15.640 I click create poll on here, I don't
+00:15:17.160 think it works, and it doesn't give us
+00:15:18.520 any feedback, so that's not great. And
+00:15:21.720 let's go ahead and click create poll.
+00:15:23.440 So, we get the the poll link here, and
+00:15:25.959 everything seems good. And then I
+00:15:27.959 thought, &quot;Wow, actually this has done a
+00:15:29.200 pretty good job.&quot;
+00:15:30.760 We can copy the link, we can share the
+00:15:32.400 poll.
+00:15:33.720 We can also vote on it as well, which is
+00:15:35.720 good, but
+00:15:37.160 then I started to think, &quot;Well,
+00:15:39.200 how do I manage this poll as a admin?
+00:15:42.480 And also, how does the browser know that
+00:15:46.280 I have voted on this poll?&quot; And that
+00:15:49.760 started to sort of worry me. So, I came
+00:15:52.240 over to Claude Code, and I said, &quot;How
+00:15:55.720 does the poll know we have voted?&quot;
+00:16:00.520 Obviously, I could look at the code, but
+00:16:02.160 you know, I didn't want to do that.
+00:16:03.800 And this will take a minute to just work
+00:16:05.760 its way through,
+00:16:07.200 but it basically came back with the
+00:16:09.520 answer,
+00:16:10.839 &quot;We're using cookies in the browser to
+00:16:14.240 mark whether
+00:16:16.040 someone has
+00:16:18.280 filled the poll in or not.&quot;
+00:16:20.440 And that's not great. That's a pretty
+00:16:22.839 much a really really bad decision to
+00:16:24.800 make in an application because I can
+00:16:27.000 just come over to storage here.
+00:16:28.440 Obviously, I can come over to cookies,
+00:16:30.720 get rid of that, and then I can, you
+00:16:32.240 know, vote again or vote for the same
+00:16:33.839 one, and basically, you know, ruin the
+00:16:36.000 poll
+00:16:37.200 by creating loads of requests. So,
+00:16:40.000 that's why, let's just check back in on
+00:16:43.000 Claude. Yeah, it sort of explained
+00:16:44.680 itself
+00:16:46.440 in here, and gives us practical
+00:16:48.560 consequences. Now, it didn't give me
+00:16:50.079 them practical consequences before. And
+00:16:52.520 that's the point of of spec-driven
+00:16:54.400 development, where we will see them
+00:16:55.920 upfront. It will ask us the questions
+00:16:57.920 about them before we start to actually
+00:16:59.760 build.
+00:17:01.079 So, one thing that I actually really do
+00:17:03.640 love doing,
+00:17:05.040 if your time allows for it, and if your,
+00:17:07.000 you know, usage within your agent allows
+00:17:08.920 for it, is do a bad build like this. See
+00:17:11.119 what assumptions your agent makes, not
+00:17:13.920 just about a an MVP like what we're
+00:17:15.920 building here, but also about individual
+00:17:18.439 features. You know, create a new branch
+00:17:20.760 and see what it's going to do before you
+00:17:22.800 go in and then fix it. So, I use this
+00:17:25.079 bad build to fill in the gaps here. So,
+00:17:27.599 you know, we've got a a rough vibe-coded
+00:17:30.040 version. We know what's wrong or what's
+00:17:32.320 missing, and it helps us discover the
+00:17:34.120 features that we do actually need. So,
+00:17:36.120 then I came up with this list. I won't
+00:17:37.600 go through them all, but the main ones
+00:17:39.320 are that we don't want auth because we
+00:17:40.920 don't want people to have to sign up for
+00:17:43.240 a
+00:17:44.160 website to vote, but we want some sort
+00:17:47.640 of verification. So, I just chose email
+00:17:49.640 verification here. So, when we do build
+00:17:52.120 this eventually, we want to be able to
+00:17:55.040 ask users to enter their email address,
+00:17:57.679 to click a magic link to verify their
+00:17:59.520 vote. Obviously, there's still room for
+00:18:01.480 abuse here, but it's a lot better.
+00:18:03.920 And
+00:18:06.600 of course, if you were weaving this into
+00:18:08.480 a already existing product, you wouldn't
+00:18:11.080 have that problem because you could
+00:18:12.200 scope this to a user ID. So, using that
+00:18:14.960 bad build, which I always tend to do, I
+00:18:16.840 try to do that as much as possible, I've
+00:18:18.840 got a list of actual features that I
+00:18:20.640 want, and I've got something in my head
+00:18:23.320 that becomes the starting point for our
+00:18:25.679 we are going to now jump in and actually
+00:18:28.600 use Open Code to build out a spec, to
+00:18:30.840 build this project. So, I have got we'll
+00:18:34.240 just get rid of this vibe-coded version
+00:18:36.840 because we do not want to
+00:18:39.600 use this. I've got a base application
+00:18:42.520 set up. Now, if you saw the notes from
+00:18:45.520 the that we shared beforehand, do want
+00:18:47.760 to follow along with this, you can,
+00:18:50.159 but please feel free to practice this
+00:18:51.679 afterwards, and we'll have 15 minutes to
+00:18:53.760 do the the hands-on as well. So, what
+00:18:56.120 I'm going to do here is I'm going to I
+00:18:58.360 already have Open Spec installed.
+00:19:01.440 I'm going to go ahead and initialize
+00:19:03.560 Open Spec within this project. So, to do
+00:19:06.520 that, I'm just going to say Open Spec
+00:19:08.120 init. Now, what this will do is it will
+00:19:10.919 give us some quick start stuff, but it
+00:19:13.120 will allow us to my screen's gone again.
+00:19:17.679 It will allow us to
+00:19:20.600 There we go.
+00:19:21.640 Choose the agent that we're using. So,
+00:19:23.720 I'm using Claude Code here, so I'm just
+00:19:25.800 going to go ahead and select that, and
+00:19:27.960 we're in. Now, what does this do? Well,
+00:19:30.800 let's go over to PHP Storm quickly. It
+00:19:32.440 doesn't matter again what IDE you're
+00:19:34.000 using here.
+00:19:35.200 You'll get here an Open Spec directory
+00:19:38.080 created. Don't worry at the moment if
+00:19:40.720 any of this is like confusing, like,
+00:19:42.640 &quot;What are we actually doing here?&quot; We're
+00:19:44.360 going to dive into what gets created in
+00:19:46.679 here, and and this will start to make
+00:19:48.120 sense. So, what we have here, and I'm
+00:19:51.080 just going to boot Claude up. Um I'm
+00:19:53.360 also going to use um
+00:19:55.880 dangerously skip permissions, which I
+00:19:57.200 wouldn't recommend you do. I'm just
+00:19:58.360 doing it for time,
+00:19:59.880 so I don't have to approve anything
+00:20:01.320 while we're we're going through the
+00:20:02.280 stream. This will now give us um a list
+00:20:05.720 of OPSX commands. So, all of these are
+00:20:07.960 prefixed with OPSX.
+00:20:10.880 And what we're going to do is we're
+00:20:11.680 going to start off by exploring. Now,
+00:20:14.720 you can propose a change immediately, or
+00:20:17.320 you can explore. And these two commands
+00:20:19.080 do pretty much
+00:20:21.240 um they don't do the same thing.
+00:20:23.200 Propose, you'll always propose a change.
+00:20:25.840 So, we will use the propose command.
+00:20:27.760 But, explore is kind of like plan mode
+00:20:30.240 within uh Open Spec. So, we're going to
+00:20:33.040 say um OPSX explore.
+00:20:36.080 And then we're going to paste in a
+00:20:37.120 prompt. Now, I have a prompt over here
+00:20:39.720 based on what I just said, where we have
+00:20:41.600 the bad build.
+00:20:43.440 Um so, let's come over here and paste
+00:20:45.520 this in. Um
+00:20:47.000 once I've hit enter on this, we'll
+00:20:48.320 review it. It's just you can't see at
+00:20:49.600 the moment. So, um I've run the explore
+00:20:52.240 command, and I'm going to say, &quot;Let's
+00:20:53.560 build a simple poll app. It should have
+00:20:55.040 these features.&quot; It's pretty much what I
+00:20:56.400 just showed you in the slideshow.
+00:20:58.680 And um this doesn't need to be complex.
+00:21:01.080 It's it's really just a list of features
+00:21:03.440 I want. There's always going to be some
+00:21:05.240 mistake in here, something I've
+00:21:06.680 forgotten. This does not need to be
+00:21:08.720 perfect whatsoever. We're in an explore
+00:21:11.400 mode, where it's starting to think about
+00:21:13.800 um how viable this is, or if there are
+00:21:16.360 any edge cases, and Open Spec is going
+00:21:19.000 to do that for us. We don't necessarily
+00:21:21.200 need to think about this. We do at some
+00:21:23.760 point, you know, need to actually think
+00:21:25.200 about what we want, but Open Spec will
+00:21:27.440 start to test this out for us.
+00:21:29.520 Um so, we're just going to wait for that
+00:21:31.560 to run through. It shouldn't take very
+00:21:33.960 long at all.
+00:21:35.440 And we should start to see some output
+00:21:37.040 here.
+00:21:38.160 Um so, let's just wait for this.
+00:21:41.360 Pray that Claude doesn't go down.
+00:21:51.680 And yeah, it shouldn't take too much
+00:21:54.480 longer.
+00:22:03.280 Okay, great. So, now we start to see
+00:22:05.120 some output coming through.
+00:22:07.080 Now, because we are, you know, not short
+00:22:09.440 of time on the workshop, but we don't
+00:22:10.880 have hours to to read through this. Um
+00:22:14.240 you would read through this. It's
+00:22:15.800 basically giving you a spec, and giving
+00:22:17.920 you all the issues in my comma cross.
+00:22:20.679 So, this is really really helpful. It's
+00:22:22.120 telling us what we should leave out, um
+00:22:24.880 and all of that kind of stuff. Now, a
+00:22:26.800 lot of the time what it will do, um it
+00:22:28.880 hasn't done in this uh instance, is it
+00:22:31.160 will ask us some questions. And
+00:22:32.800 actually, yeah, it has. So,
+00:22:35.040 um sometimes it puts them into a nice um
+00:22:37.840 a list for us, like a a 1 2 3 list. But,
+00:22:40.640 here it's a little bit broader with the
+00:22:42.040 information. So, um we can go through
+00:22:44.560 here, um and and basically tell it about
+00:22:47.320 these decisions. Or, I could start to
+00:22:49.320 ask questions in this explore mode. I
+00:22:51.600 could say, you know, what might you what
+00:22:53.920 might there be room to creep here within
+00:22:56.040 the scope? Um you know, there's it
+00:22:58.520 really depends on what you're building,
+00:22:59.720 but you really just grill it at this
+00:23:01.640 point, and like really think through um
+00:23:04.880 what you
+00:23:06.400 uh want, what you don't want.
+00:23:08.440 Read the spec. If anything doesn't look
+00:23:10.280 right, you go ahead and change it.
+00:23:11.920 There's a huge amount of information
+00:23:13.240 here.
+00:23:14.040 So, um we're going to go ahead and just
+00:23:16.360 answer some of these questions. So,
+00:23:18.480 let's say um &quot;Cookie-based vs. email,
+00:23:21.040 are they redundant? Your spec lists both
+00:23:22.760 one vote for a browser session,
+00:23:24.440 cookie-based, and hashed email.&quot; So, we
+00:23:27.240 want both. So, we're going to say
+00:23:30.480 um let's say we would like cookie to
+00:23:34.240 render the vote, and email to verify it,
+00:23:39.280 if that makes sense.
+00:23:40.840 Uh let's go ahead and and have a look
+00:23:42.200 here.
+00:23:43.360 Signed routes. So, I know that within
+00:23:45.040 Laravel, I want to use signed routes for
+00:23:46.720 this.
+00:23:47.840 And two slugs, one ID plus signed admin
+00:23:51.240 token.
+00:23:53.000 Yeah, so a signed admin token isn't
+00:23:54.600 probably the best way to do this,
+00:23:58.080 just because uh the link might hover
+00:24:00.400 around in browser history, and it's not
+00:24:02.200 as secure, but we'll go with it just as
+00:24:04.360 a as a start. And I think that's good.
+00:24:07.400 Now, at this point, you can ask any more
+00:24:09.400 questions, for example,
+00:24:11.720 just to check if there is anything that
+00:24:13.360 it's missed. You can add more details,
+00:24:15.440 if you realize you've left something off
+00:24:17.200 by reading this. Uh you can go ahead and
+00:24:20.000 um you know, just start to refine this.
+00:24:22.480 Just remember, at this point, you do not
+00:24:24.520 need to commit to anything at all. What
+00:24:26.960 I love about this is it's a really calm
+00:24:28.840 approach. I'm not going to immediately,
+00:24:31.760 after this spec has been built, and
+00:24:33.560 I've, you know, gone through everything,
+00:24:34.880 I'm not going to immediately say, &quot;Right
+00:24:36.240 now, just build it.&quot; Um
+00:24:39.320 So,
+00:24:41.160 we don't need to commit at this point to
+00:24:44.360 what we're doing.
+00:24:45.760 So, let's just make sure we're all good
+00:24:47.960 here.
+00:24:48.880 Okay, so I'm just going to wait for this
+00:24:50.640 to go through.
+00:24:52.320 And um
+00:24:53.920 again, it will take about a minute. So,
+00:25:02.200 we'll just wait for this to go through.
+00:25:05.800 I'm just checking the chat, just to see
+00:25:07.240 if there are any like questions popping
+00:25:08.960 up while we wait for this.
+00:25:13.840 Okay, it's asking us some more questions
+00:25:15.440 as well.
+00:25:18.920 Brilliant. So, what I'm going to do here
+00:25:20.400 is just say, &quot;You decide.&quot;
+00:25:23.240 Or, at this point,
+00:25:25.000 um
+00:25:25.920 uh yeah, okay. Let's Let's just let it
+00:25:27.679 decide. So,
+00:25:29.200 you would obviously put a lot more time
+00:25:31.000 into this than I have. Uh we would go
+00:25:33.000 through, and we would really really look
+00:25:35.560 at what's going on here. But, bear in
+00:25:37.040 mind, we're still in
+00:25:39.000 um explore mode.
+00:25:40.720 What we're now going to do is we're
+00:25:42.000 going to convert this, the context that
+00:25:44.400 we have in here, not just what's written
+00:25:46.280 here, but just the general context that
+00:25:48.160 we have, we're going to convert this
+00:25:49.960 into a proposal. And to do that, we're
+00:25:52.040 going to use OPSX propose. Now, with
+00:25:54.560 this, bear in mind, we can name this as
+00:25:56.520 well. Or, you could just jump in with
+00:25:58.280 propose, if you wanted to. So, for
+00:25:59.960 example, if I was adding a feature to
+00:26:02.760 this application, I would jump in with
+00:26:04.640 OPSX propose, and I would say um you
+00:26:08.440 know, time limit feature, or something
+00:26:10.679 like that. And then it would go ahead
+00:26:11.920 and create a proposal based on what
+00:26:13.440 you've added
+00:26:15.240 as that argument. And that argument
+00:26:17.320 could be a huge document, or it could be
+00:26:19.080 a one line, it could be a slug, it
+00:26:20.640 doesn't really matter. But, OPSX propose
+00:26:22.920 on its own is going to take all of the
+00:26:24.280 context, you know, the back and forth
+00:26:26.160 that we've gone through, and and um
+00:26:28.440 really thought about this,
+00:26:30.360 and it will add convert it to a
+00:26:32.000 proposal.
+00:26:33.520 And we're going to see in a minute what
+00:26:34.640 that proposal looks like as this goes
+00:26:36.400 through. And I'm just going to move
+00:26:37.800 myself out the way as well, so you can
+00:26:39.280 see this working uh through as well.
+00:26:42.320 Um
+00:26:44.840 So,
+00:26:47.040 yeah, I'm just having a Okay, so,
+00:26:48.280 there's a question, &quot;How would you
+00:26:49.560 compare this to Claude's plan mode?&quot; So,
+00:26:52.280 gen generally, I do actually love using
+00:26:55.360 Claude's plan mode. Um
+00:26:57.840 I find it um the same sort of process,
+00:27:00.720 but what you'll find is
+00:27:03.080 at the moment, this is creating files
+00:27:04.880 for us. So, the reason that Open Spec
+00:27:06.800 works like a framework is it's going to
+00:27:08.280 create um files like the proposal.md
+00:27:11.760 file, which we're going to check out in
+00:27:13.080 a moment, the design.md, um the specs,
+00:27:15.640 and the tasks. These are pretty
+00:27:18.200 consistent every time in the in the same
+00:27:20.360 way that they're created. And what that
+00:27:21.880 means is um we have a really easy way to
+00:27:25.040 review these. We automatically get a
+00:27:27.520 list of checks tasks, which is something
+00:27:29.800 that we cover on on learn, but this does
+00:27:32.120 it for you. So, this will create a
+00:27:34.600 markdown list of tasks for us, which we
+00:27:37.120 can then go ahead and just work through,
+00:27:39.480 or our agent can work through. And that
+00:27:41.480 gives us several benefits, which we'll
+00:27:42.920 talk about. So, although this does feel
+00:27:44.600 like Claude's uh plan mode, um it's um
+00:27:48.120 it's, you know, a lot more powerful uh a
+00:27:50.400 lot more powerful. So, you you'll you'll
+00:27:52.160 start to see the difference as we go
+00:27:53.880 through uh the rest of the workshop. So,
+00:27:56.640 um hopefully that will be answered
+00:27:58.480 already.
+00:28:00.000 Um okay, so, um let's actually jump over
+00:28:02.560 to our editor, because we can start to
+00:28:04.440 look at this. So, notice the specs
+00:28:06.640 directory's empty. Specs, we're going to
+00:28:08.440 talk about later. That's sort of like
+00:28:09.840 what we fold into. But, we now got this
+00:28:11.840 add polls directory. Um and we can open
+00:28:14.720 up the proposal here, and just have a
+00:28:16.240 look. So, this has created a proposal
+00:28:18.640 for this feature. Now, this feature is
+00:28:21.040 an MVP. We're building the whole thing
+00:28:22.640 from scratch, um which I sort of would
+00:28:25.480 and wouldn't recommend doing at the same
+00:28:27.120 time, just because um you don't want too
+00:28:29.840 big of changes.
+00:28:31.440 Um but when you're, you know, building
+00:28:33.480 an MVP, you kind of want to do it all in
+00:28:34.960 one go. We'll talk about a technique
+00:28:36.560 that we can use a little bit later to
+00:28:38.120 get around this.
+00:28:39.400 So, we get a proposal. So, you can go
+00:28:41.080 ahead and read through that. You get a
+00:28:42.720 design document as well, which is sort
+00:28:45.000 of more of the granular decisions that
+00:28:47.040 it makes to actually build this out. You
+00:28:49.320 can read through that as well. Um and
+00:28:51.760 let's just wait for this. My absolute
+00:28:53.800 favorite here, and probably the one of
+00:28:55.720 the reasons that I absolutely love using
+00:28:57.480 this framework, and uh we also have our
+00:29:00.720 own skill over on on learn to generate
+00:29:02.840 checklists, pretty similar to Open Spec.
+00:29:05.760 Um once this comes through, I'll show
+00:29:07.440 you what this looks like.
+00:29:09.360 So, it should come through
+00:29:13.080 very very soon.
+00:29:16.360 And
+00:29:18.520 yeah, looks like that's done. Perfect.
+00:29:20.040 So, you can see here, we've got, which I
+00:29:22.120 love, this broken up into sections. So,
+00:29:24.280 it's like big chunks of what um of what
+00:29:26.840 what the work that we need to do. And
+00:29:28.560 going back to the the plan mode thing
+00:29:30.960 that we spoke about, yes, plan mode does
+00:29:33.760 do this often, but just bear in mind
+00:29:36.800 that this is um
+00:29:39.679 agent agnostic. It will work with any
+00:29:41.520 agent. It works with skill files.
+00:29:43.040 There's no n n MCP servers as well. So,
+00:29:45.919 it's just a bunch of skill files.
+00:29:48.040 So, now that we've got all this stuff,
+00:29:51.200 I just want to really quickly introduce
+00:29:56.640 I didn't build this, I'm not introducing
+00:29:58.520 it, but tell you about a tool here.
+00:30:02.640 Where is it?
+00:30:04.040 Um okay, my my screen's unshared again.
+00:30:09.640 Have a look. Okay. So,
+00:30:12.840 let's have a look here. Tools. Where is
+00:30:15.120 there? Maybe it's just disappeared.
+00:30:19.440 Hmm, that's really weird.
+00:30:22.320 Um
+00:30:23.840 Okay, let me just try and find this
+00:30:25.160 because it is
+00:30:27.280 really
+00:30:29.520 useful.
+00:30:31.240 Um just going to plugins.
+00:30:34.200 And
+00:30:36.400 let's have a look here.
+00:30:40.960 Spec. Ah, needs an update, that's why.
+00:30:43.080 Sorry. Let's just get this updated.
+00:30:47.000 Okay.
+00:30:48.840 Do we need to restart?
+00:30:50.840 Yeah, we do. Okay.
+00:30:55.040 Let me just restart. I promise you this
+00:30:57.000 is worth it because if you do want to
+00:30:58.600 work with Open Spec,
+00:31:01.760 this is going to be
+00:31:04.040 really good. So, Open Spec, spelled s p
+00:31:07.560 e k,
+00:31:08.880 turns this into turns everything that
+00:31:11.480 we've just generated into like a
+00:31:12.960 viewable
+00:31:14.400 spec like this. So, inside of this
+00:31:17.040 directory, we've got ad pulse. Um so, we
+00:31:19.600 can read the proposal. We can look at
+00:31:21.560 the design document, much easier to
+00:31:23.520 read. Um this works in VS Code as well.
+00:31:25.840 So, it's a you know, it's a plugin that
+00:31:27.280 you could probably pull into whatever
+00:31:29.320 editor you're using. Um and therefore,
+00:31:31.600 it would work in cursor. We've got a
+00:31:33.480 list of the tasks here as well. So, I
+00:31:35.360 really love this because um over time,
+00:31:37.840 particularly, this gives us our task
+00:31:40.400 completion rate, you know, what we've
+00:31:42.360 archived, the active changes, super
+00:31:45.240 useful across the team as well. So, a
+00:31:47.400 one to jot down if you're going to use
+00:31:48.960 Open Spec. I absolutely love this.
+00:31:51.440 Okay. So, um we've created our spec.
+00:31:53.679 We've got everything here. Um let me
+00:31:55.520 just pull up my notes because I don't
+00:31:56.880 want to miss anything
+00:31:58.840 um within here. Okay. So, one thing that
+00:32:01.880 I haven't done just yet, which we
+00:32:04.640 probably should have done beforehand,
+00:32:06.400 but there's no problem because we can we
+00:32:08.160 can update this now, is at least have
+00:32:10.520 some basic guard rails in place. Now,
+00:32:12.480 again, we cover guard rails and why
+00:32:14.440 they're important within Unlearn. Um but
+00:32:16.760 particularly for this build, I'm going
+00:32:18.520 to go ahead and just get started with a
+00:32:20.200 really basic agents file. Um and to do
+00:32:22.720 this, I'm just going to come over to um
+00:32:25.560 here and just ask my agent fill in
+00:32:29.440 agents.md with my tech stack.
+00:32:33.520 Now, interestingly as well, we'll go
+00:32:35.040 into this perhaps later, we have a
+00:32:36.560 config here as well specifically for
+00:32:39.040 Open Spec, which you can use. I don't
+00:32:41.720 tend to do that because I like to keep
+00:32:43.320 everything inside of agents. Um but you
+00:32:45.920 know, you can feel free to use that as
+00:32:47.280 well, either one.
+00:32:48.880 Um I also have some very basic
+00:32:51.640 conventions that I'll add to my um
+00:32:56.600 agents.md file. So, we've got the tech
+00:32:58.480 stack in here. We don't necessarily all
+00:33:01.040 need I need all of this stuff here.
+00:33:03.920 Uh so, I'm going to get rid of that and
+00:33:05.280 I'm just going to add a conventions
+00:33:07.480 section. I always kick off my agents.md
+00:33:10.520 with a basic convention section for
+00:33:12.640 things like this. There might be more
+00:33:14.720 and we'll try and add ones as we go
+00:33:16.120 through the build a little bit later.
+00:33:18.360 So, that's what I would do here.
+00:33:21.720 Okay. Um so, we have gone ahead and
+00:33:25.760 explored
+00:33:27.560 some changes or a proposal as we call
+00:33:30.440 it. So, we've explored what we might add
+00:33:32.800 to a proposal using explore mode.
+00:33:35.640 Once we have that in place, we then go
+00:33:37.800 ahead and propose it. But like I said,
+00:33:39.920 if you just want to propose a change and
+00:33:41.880 give a basic prompt in here, you can do
+00:33:44.080 that.
+00:33:45.120 Now, what do we do? And I think I I'm
+00:33:47.920 going to come over to my slideshow for
+00:33:49.480 this.
+00:33:51.040 Um no, I'm not. We're going to we're
+00:33:52.800 going to talk about that now. So, what
+00:33:54.240 do we do if the spec doesn't look
+00:33:55.763 [clears throat] right or if the proposal
+00:33:56.960 doesn't look right? So, I'm obviously
+00:33:58.440 going to read this. And if I spot
+00:33:59.960 something that's not correct, what I
+00:34:02.360 would tend not to do is go in and change
+00:34:04.560 this directly. So, I wouldn't go in and
+00:34:07.200 start adding stuff in here manually.
+00:34:09.879 Um what I would do is I would come over
+00:34:12.159 to my agent and I would change it in
+00:34:15.440 here. So, you just need to ask it
+00:34:17.159 basically. So, can we do X instead of Y?
+00:34:21.760 Have that update the proposal that you
+00:34:24.520 have. Super important to do that. The
+00:34:26.879 reason that it's important to do that is
+00:34:28.520 because Open Spec knows about its own
+00:34:30.800 structure. You might change something in
+00:34:32.800 the proposal that might be inside of the
+00:34:35.120 design document or worse, inside of a
+00:34:38.080 list of tasks, which you would then have
+00:34:40.280 to go ahead and manually change. We
+00:34:41.679 don't You know, the goal here is to be
+00:34:43.199 quick. We don't really want to go ahead
+00:34:44.960 and manually change this stuff.
+00:34:46.918 So, what you are doing now is spending
+00:34:49.040 80% of your upfront time working on the
+00:34:52.359 spec, reviewing the spec, and tweaking
+00:34:55.199 it, which can get a little uh long, but
+00:34:58.480 you need to get used to doing that in
+00:35:00.440 order to get the best results the first
+00:35:02.359 time. So, um yeah, that's that's pretty
+00:35:05.359 much the spec built out. We have some
+00:35:08.359 basic stuff in agents.md. I would also
+00:35:11.000 recommend adding in some like linting
+00:35:12.960 and stuff, but we're going to talk about
+00:35:14.400 that a little bit more later.
+00:35:16.800 Um so, yeah, we have basically now ended
+00:35:19.680 up with a spec. We've potentially
+00:35:22.720 refined the spec as well.
+00:35:24.920 Um and gone ahead and do and done that.
+00:35:27.040 In fact, let's go ahead and let's We've
+00:35:28.600 got a little bit of time. Let's let's
+00:35:29.840 refine the spec. And I'm specifically
+00:35:31.760 going to do this for
+00:35:33.960 the design of the spec. So, I'm just
+00:35:36.600 going to
+00:35:37.680 pull over
+00:35:39.040 a small prompt. So, I'm going to say,
+00:35:40.520 could we adjust the UI design? We want
+00:35:43.080 modern, clean, monotone, minimalist
+00:35:45.120 design with subtle use In fact, now I'm
+00:35:48.080 going to get rid of subtle. I want lots
+00:35:49.440 of transitions. We're going to use
+00:35:50.480 transitions everywhere. So, let's just
+00:35:52.480 watch together what this does.
+00:35:55.840 And we will see
+00:35:59.880 what this looks like. So,
+00:36:02.960 again, I'll just pop over to the chat
+00:36:04.640 just while this is running through.
+00:36:15.120 Um Spec isn't showing in the marketplace
+00:36:17.359 for PHPStorm.
+00:36:19.120 Um yeah, I had that issue actually
+00:36:21.600 before. I don't know what I did to fix
+00:36:24.680 it.
+00:36:25.560 Um it definitely is there, but um
+00:36:28.880 yeah, have another look and see if you
+00:36:30.280 can find it.
+00:36:35.880 Okay, this is coming through now. So,
+00:36:38.560 yeah, okay. So, we've got
+00:36:40.680 um some new design language that's been
+00:36:42.280 added to design.md, of course. Uh design
+00:36:44.760 as well obviously doesn't just mean UI
+00:36:46.280 design, but it's gone ahead and added
+00:36:48.160 that in there anyway. This is great. So,
+00:36:50.200 we can go ahead and um review that. Now,
+00:36:53.400 interestingly, because we've made an
+00:36:54.920 adjustment to our spec, it's
+00:36:57.320 automatically picked up what I added to
+00:36:58.960 agents.md and it now needs our call. So,
+00:37:02.359 um it we've got like a contradiction
+00:37:04.240 now. So, the the great thing is it's
+00:37:06.040 told us this. Um so, yeah, let's say yes
+00:37:09.440 um and it will fold the the convention
+00:37:11.359 fixes into the design and tasks because
+00:37:14.359 inside of tasks, it probably now
+00:37:16.480 conflicts over with like API resources.
+00:37:20.680 I think I added to this that I always
+00:37:22.240 want to make sure that we're using API
+00:37:24.280 resources for passing data down to our
+00:37:26.240 views um to keep structured data. So, we
+00:37:28.840 just going to say yes and let that fold
+00:37:30.480 in.
+00:37:31.560 So, as you can see, this isn't There's
+00:37:34.560 no real skill involved in this. It's you
+00:37:37.160 know, we don't need to learn prompt
+00:37:38.680 engineering. Um we just basically talk
+00:37:41.640 to our spec and just have it, you know,
+00:37:43.760 uh
+00:37:44.480 and do what we want to do. Um so, this
+00:37:46.520 is great. Um
+00:37:49.600 So, yeah, let's just have a look in the
+00:37:50.760 comments. I can't see anything at the
+00:37:52.400 moment. Well, obviously we'll come back
+00:37:54.359 to anything in the Q&amp;A later. Um but
+00:37:56.520 this looks like it's pretty much um you
+00:37:59.640 know, fixing up what we want. Now, I
+00:38:01.440 can't stress this enough that you know,
+00:38:03.120 I have really skipped over the review
+00:38:05.200 part of our spec. If I was to review
+00:38:07.000 this now, we'd be here for hours
+00:38:08.359 probably. Um and also, this is a pretty
+00:38:11.000 big feature cuz it's our MVP. Um but
+00:38:13.600 yeah, you would um
+00:38:15.080 go through and you know, just get it to
+00:38:16.680 the point where you're super happy with
+00:38:17.920 this. It doesn't need to be absolutely
+00:38:19.280 perfect. Um but it's a good idea to make
+00:38:22.200 sure that you are reviewing everything.
+00:38:24.000 And like I said, you can use that spec
+00:38:26.560 um plugin to do that as well.
+00:38:28.640 Um okay. So, yeah, this spec is now
+00:38:32.000 finishing up. We've got everything that
+00:38:33.680 we need in here. We're at the point
+00:38:36.280 let's just pretend we're a review this
+00:38:38.440 really carefully and I'm super happy
+00:38:41.000 with the direction it's going. I do
+00:38:42.560 actually trust this a lot more than, you
+00:38:44.359 know, just prompting alone. Um so, we
+00:38:46.400 should be good. So, um let's go to a
+00:38:49.640 really quick 5-minute break.
+00:38:51.920 And then after that, we'll come back and
+00:38:53.520 we will start actually implement the
+00:38:56.400 stuff that we've created. Um I'll keep
+00:38:58.640 an eye on the chat as well during the
+00:38:59.840 break. So, if there are any questions
+00:39:01.560 that you have specifically, um I'll go
+00:39:04.160 ahead and answer them as well. So, um
+00:39:06.120 yeah, we'll we'll be back in around
+00:39:08.040 about 5 minutes. Um and we will um pick
+00:39:12.120 up on building this from our spec.
+00:43:26.760 >> Hey, we are just coming back now.
+00:43:36.200 My computer here and it's gone.
+00:43:38.080 There we go.
+00:43:45.160 Right. Um, if everyone can hear me
+00:43:46.760 still, um, if you could just pop a quick
+00:43:48.960 message in the chat so I don't start
+00:43:50.480 talking away to myself, that would be
+00:43:52.360 amazing.
+00:43:54.400 And
+00:43:56.560 we'll get started on actually building
+00:43:58.080 this.
+00:44:07.080 Amazing. So, okay, we're going to jump
+00:44:09.000 straight into this because
+00:44:10.880 obviously this can take a little bit of
+00:44:12.160 time. While while this is building, I'm
+00:44:14.160 going to talk you through some other
+00:44:15.240 stuff. Um, but we're now going to go
+00:44:16.920 into the apply phase, the pause, the
+00:44:19.560 adjust guardrails,
+00:44:21.840 um, and and all that kind of stuff.
+00:44:24.720 So, uh, let's jump into it. What does
+00:44:26.960 the apply phase look like? Well, it's
+00:44:29.240 OPSX apply. Super simple. We've already
+00:44:31.400 seen that we have a simple set of
+00:44:33.040 commands here throughout the Open Spec
+00:44:35.080 workflow. You can get more complex than
+00:44:37.160 this. We're covering the absolute
+00:44:38.840 essentials today, but we basically want
+00:44:40.840 to be happy with the proposal that we
+00:44:43.040 have, which we know lives over here.
+00:44:46.200 We go ahead and just apply it. Super
+00:44:48.200 simple. Now, we know, um, that we have a
+00:44:50.720 tasks.md file, but what happens here?
+00:44:53.560 Well, the agent's going to read your
+00:44:55.120 tasks.md file, the proposal, the design.
+00:44:58.240 It will work through each section. It
+00:45:00.080 will work through each task, and it will
+00:45:02.160 check them off as it goes as well. Uh,
+00:45:05.240 it won't always do this in a linear
+00:45:06.560 fashion for each task one by one, but it
+00:45:08.480 will certainly check off the entire
+00:45:10.040 section before it moves on.
+00:45:12.600 Now, a really quick tip, which I'm going
+00:45:14.160 to do now. I sort of left this with
+00:45:15.440 myself. I always forget to do this. Um,
+00:45:18.040 a an official tip from Open Spec is to
+00:45:20.720 clear out your agent context before you
+00:45:23.120 run this apply command. Um, if you've
+00:45:26.080 particularly gone through a long
+00:45:27.280 planning, uh, conversation within
+00:45:29.560 explore or propose, um, it can pollute
+00:45:32.320 the implementation. So, just before I
+00:45:34.440 continue, again, that was a sort of
+00:45:36.560 reminder for me, I'm just going to go
+00:45:38.240 ahead and clear out my context within,
+00:45:40.240 uh, core code.
+00:45:42.040 Um, actually make sure that worked. And,
+00:45:45.000 uh, we should be good. And actually I'm
+00:45:46.320 going to exit out cuz I really don't
+00:45:47.760 trust this. Okay, great. So, um, pausing
+00:45:51.400 and resuming. So, do we, uh,
+00:45:54.359 you know,
+00:45:55.160 but plan out a proposal and then just go
+00:45:57.800 ahead and
+00:45:59.400 let it run and, you know, go and grab a
+00:46:01.359 cup of coffee or something. We can do,
+00:46:04.720 uh, but I just like to sit with it and
+00:46:06.840 see what it's doing, check the code as
+00:46:09.640 it's building. And in between that I
+00:46:11.320 like to pause and resume it so I can,
+00:46:13.920 you know, figure out what's going on.
+00:46:15.840 Um, not everyone likes to do this, but I
+00:46:17.720 like to supervise things so I,
+00:46:20.200 particularly at the start of a project,
+00:46:21.600 so I know which guardrails to adjust,
+00:46:23.840 and I know that generally the agent is
+00:46:26.040 going in the right direction. And like I
+00:46:27.880 said, this is going to compound over
+00:46:29.280 time because as you start to build up
+00:46:32.240 your folded in spec, which we'll look at
+00:46:34.120 later, um, you'll have the conventions
+00:46:36.920 in place. So, you basically just stop
+00:46:38.680 the agent to pause it. There's no
+00:46:40.400 command here. Um, we just stop it. And
+00:46:43.040 your progress already gets saved in
+00:46:45.080 tasks.md. And also, if you're mid-task,
+00:46:47.960 so if you're mid-checklist task and, you
+00:46:50.520 know, it's written like a line of code,
+00:46:52.640 and you exit out, don't worry, it's
+00:46:54.359 going to go back. It will know what's
+00:46:55.600 missing, and it will figure it out.
+00:46:57.600 Um, so to resume, you just rerun OPSX
+00:47:00.320 apply. Um, it will skip completed tasks.
+00:47:02.720 Obviously, it will pick up from the next
+00:47:04.160 open one, uh, even if you stopped
+00:47:06.240 mid-task. And of course, this applies to
+00:47:08.040 multi-day sessions as well, or sessions
+00:47:11.600 across different members of your team.
+00:47:13.840 So, if, you know, someone starts on
+00:47:15.680 quite a large feature and then, you
+00:47:17.400 know, goes off, uh, and someone else
+00:47:19.359 picks it up, or someone else wants to
+00:47:20.880 pick it up, then that's absolutely fine
+00:47:22.720 as well. Probably should have, uh,
+00:47:25.480 mentioned this earlier, but you will
+00:47:27.480 want to commit this Open Spec directory
+00:47:30.000 to your source control. We'll talk
+00:47:32.000 about, um,
+00:47:33.440 that a little bit later as well. So,
+00:47:35.240 guardrails mid-build. This is where I
+00:47:37.440 really like to supervise this. And, um,
+00:47:40.800 if I pull if I see something going
+00:47:42.359 wrong, I pause, update agents.md, update
+00:47:46.680 linting rules, update static analysis
+00:47:49.640 rules, whatever I need to do. So,
+00:47:51.200 examples could be like linting rules,
+00:47:54.200 test requirements. So, for example, um,
+00:47:56.840 you might see a lack of specific tests
+00:47:58.920 that you would normally write, so you
+00:48:00.240 can go in and you can guide it to do
+00:48:01.840 that. Um, naming conventions, forbidden
+00:48:04.880 patterns, like if you spot any, you
+00:48:06.640 know, like any types in TypeScript or
+00:48:08.840 raw SQL. Um, you can go ahead and add
+00:48:12.280 add add that in. Uh, dependency rules as
+00:48:14.800 well. Uh, and again, my screen's gone
+00:48:16.440 off. So, that's not great.
+00:48:20.040 So,
+00:48:22.840 dependency rules is one I love because,
+00:48:24.800 um,
+00:48:25.800 this is one of the things that can, um,
+00:48:29.359 be good. It can figure out what packages
+00:48:31.840 you need, or it can pull in packages you
+00:48:34.040 don't need, or it can pull in packages
+00:48:36.440 that might not have been maintained for
+00:48:37.680 a while and have lots of open issues,
+00:48:39.400 you know, so I really really love this
+00:48:40.920 one. Just keeping an eye on what it's
+00:48:42.400 doing in the background.
+00:48:44.160 Now, once we have, uh,
+00:48:46.600 implemented, uh, something, we then go
+00:48:49.040 ahead and archive it. And why would we
+00:48:51.640 archive it? Well, um, this locks the
+00:48:54.640 change into the project history. So, we
+00:48:57.840 get the context of what we've done
+00:48:59.920 previously.
+00:49:01.359 For example, you know, you then get like
+00:49:03.560 a linear, this is what was added, this
+00:49:05.800 was removed, then it was re-added, then
+00:49:07.920 there was an issue with this, then that
+00:49:09.440 was fixed. You get all of this like rich
+00:49:11.880 project history throughout your project.
+00:49:14.640 So, think of it as just like zipping up
+00:49:16.560 or compressing everything into one, um,
+00:49:19.280 place. Um, so yeah, the next change
+00:49:21.880 builds on what came before. You don't
+00:49:23.359 get a blank slate. Your agent already
+00:49:25.320 knows what the state of your project
+00:49:27.160 kind of looks like by reading code,
+00:49:29.080 obviously, but also looking at the
+00:49:30.720 specs. Uh, and you have a living
+00:49:32.400 document that grows, which is great. So,
+00:49:34.600 we're going to go through and demo this
+00:49:35.640 now, and this is where this could, um,
+00:49:37.240 you know, not go wrong, but it'll
+00:49:38.640 obviously take a little while. Um but
+00:49:40.440 let's go ahead and just do basically
+00:49:41.840 everything I've just said. So, what do
+00:49:43.880 we want to do? Well, we're just going to
+00:49:45.280 do OPSX apply.
+00:49:48.080 And that is it. And it's just going to
+00:49:49.320 start to work through all of the
+00:49:50.480 changes. Um and we'll go through sort of
+00:49:53.080 pausing this and and picking it back up,
+00:49:55.440 all of that good stuff. So,
+00:49:57.920 um let's go on here. And we'll wait for
+00:50:02.840 this to sort of get started. So, it's
+00:50:04.960 reading all of the uh documents that we
+00:50:08.120 need. It already knows how to do this,
+00:50:09.680 obviously. So, it's taking into account
+00:50:11.880 everything that we have here.
+00:50:14.480 And let's just wait for some output to
+00:50:16.400 come through so we can look at what it's
+00:50:18.400 doing. Okay, so it's given us a progress
+00:50:20.960 update to the uh 53 tasks. Um this bit,
+00:50:24.840 obviously, is always going to take a
+00:50:26.160 while because we've cleared out our
+00:50:27.440 context. Um and it's going to go ahead
+00:50:29.880 and read the code base to understand
+00:50:31.600 what is already there. You can see as
+00:50:33.520 well it's specifically
+00:50:35.760 um picking up the feature that we want
+00:50:38.080 to implement. Uh you can, of course,
+00:50:40.520 have multiple features as well. So, you
+00:50:42.280 don't have to just have um
+00:50:44.960 you know, a single feature at a time.
+00:50:46.440 You could you could have a lots of
+00:50:48.000 different proposals going, and you can
+00:50:49.600 only choose to implement one if you
+00:50:50.960 wanted to.
+00:50:52.320 Okay, so yeah, it's going through here
+00:50:54.160 uh starting out with database
+00:50:55.480 migrations, moving on to models, form
+00:50:57.440 requests. And as that goes through, of
+00:51:00.160 course, it's going to
+00:51:02.720 um just work through that.
+00:51:05.120 So, yeah, let's go over to the markdown
+00:51:07.560 checklist uh as well. We're going to
+00:51:10.160 keep an eye on this.
+00:51:12.440 And then we're going to stop this as
+00:51:13.800 well um very shortly. So, we'll just
+00:51:16.360 wait for some of
+00:51:17.840 the code to actually get generated.
+00:51:20.880 And once we've done that, we'll have a
+00:51:22.600 look at that checklist. Then I'm going
+00:51:24.160 to go ahead and stop this mid-build, and
+00:51:26.920 we're going to talk about um what we
+00:51:29.160 want to do. So, I particularly want to
+00:51:30.560 get to the models bit cuz there is one
+00:51:32.440 guard route that I specifically left out
+00:51:35.040 that I want to adjust. So, it's working
+00:51:36.760 on the models here.
+00:51:38.360 Um
+00:51:39.720 So, let's just wait for this to go
+00:51:40.560 through. You can see that these have
+00:51:41.640 been checked off as well.
+00:51:43.800 And yeah, it's already on the models.
+00:51:45.160 So, let's open one of the models that's
+00:51:46.920 been created. Um and let's go ahead and
+00:51:50.320 decide to change something.
+00:51:52.680 So, I'm going to open up let's say vote
+00:51:56.680 option, maybe.
+00:51:58.880 Or poll. Mm let's go with this one. So,
+00:52:02.520 I'm going to adjust something like
+00:52:05.320 fillable here because I typically as a
+00:52:07.720 developer don't uh specify fillable
+00:52:10.600 fields. I set everything to unguarded.
+00:52:13.080 You may or may not agree with that, but
+00:52:15.080 I'm going to go ahead and just notice
+00:52:17.400 that there is something that I want to
+00:52:18.760 change. So, like I said, I'm just
+00:52:20.920 canceling this off. It's been
+00:52:22.360 interrupted now. Um and, you know, I
+00:52:25.560 it's fine. You know, it doesn't matter.
+00:52:27.240 We We don't care about this. We We We've
+00:52:29.800 got that checklist committed, and we we
+00:52:33.400 can just cancel it off. So, I'm going to
+00:52:35.240 go into agents.md, and I'm going to say,
+00:52:37.880 &quot;Can we&quot; and I would typically use my
+00:52:39.720 agent to do this, but I'm going to say,
+00:52:41.160 &quot;Can we uh not use fillable uh unguard
+00:52:45.960 globally in app service provider?&quot;
+00:52:50.760 Um
+00:52:53.160 and I think that's fine. Yeah. So, once
+00:52:55.160 I've adjusted the guard route, and
+00:52:56.360 that's a linting rule, static analysis,
+00:52:59.160 anything that we need to do, um you
+00:53:01.480 know, whatever you need to do here, then
+00:53:03.360 you're just going to run OPSX apply
+00:53:05.000 again. That's going to pick up at the
+00:53:06.880 point that it was on.
+00:53:08.760 Obviously, what it's now going to do is
+00:53:10.600 going forward, it's going to look at
+00:53:13.880 your agents.md file and not make that
+00:53:16.280 same mistake again. Now, um the probably
+00:53:19.800 the confusing part around this is that
+00:53:22.040 well, the change has already been made
+00:53:24.400 to our model here. And you know, it
+00:53:26.360 doesn't matter that this is the change.
+00:53:27.680 If you don't use Laravel or even PHP, it
+00:53:29.840 doesn't matter. But let's just say a
+00:53:31.440 change has been made like this. What do
+00:53:33.000 we do? Do we go back and we do we update
+00:53:35.120 the spec now? Do we cancel it off and
+00:53:37.320 like re-propose it? Well, no. What I
+00:53:40.240 would recommend doing is I would let the
+00:53:42.480 build go through. It is actually doing
+00:53:44.360 this. So, it has actually picked it up,
+00:53:47.080 which is fine. But if it doesn't do
+00:53:49.000 this, what you can do is finish this
+00:53:51.840 proposal application, get it applied,
+00:53:55.000 then go back and create a new proposal
+00:53:56.920 to refactor what you have updated. So,
+00:54:00.040 you know, you don't want to go back and
+00:54:01.680 update your proposal mid-build because
+00:54:05.120 then you're going to get to the point
+00:54:06.120 where you've got a bunch of stuff
+00:54:07.280 checked off that probably will then, you
+00:54:09.800 know, not quite look right. That will uh
+00:54:12.480 give you issues later on when you fold
+00:54:14.200 that into your main spec. So, just keep
+00:54:16.600 things as like individual changes. And
+00:54:18.440 once you start building, don't go back
+00:54:20.000 again.
+00:54:21.480 So, this is still building through. Um
+00:54:23.240 let's just have a look here. Um and have
+00:54:26.160 a look. Okay. So, I'm just going to go
+00:54:29.080 in and make sure just sort of like some
+00:54:32.080 specific technical stuff. Just make sure
+00:54:34.760 that we've got mailer set to log, which
+00:54:36.720 we have.
+00:54:38.640 And the reason I'm doing that is because
+00:54:40.359 when we test this, we don't want to
+00:54:41.560 actually send real emails cuz we don't
+00:54:43.080 have time to hook this up.
+00:54:46.280 Okay.
+00:54:47.760 So, let's go over to here.
+00:54:51.640 Um okay, so progress looks good. Um I'm
+00:54:55.160 just going to jump over to the chat and
+00:54:56.560 answer some questions while this is
+00:54:58.000 going through because otherwise, you're
+00:55:00.120 just going to sit here and watch this.
+00:55:03.240 Um
+00:55:04.840 Okay.
+00:55:06.640 So, does this tool do TDD to validate
+00:55:09.040 each task uh to validate each task is
+00:55:11.359 actually working? Really, really good
+00:55:13.160 question. Um I'm a massive fan of TDD
+00:55:15.920 with AI. I didn't used to be. Now, what
+00:55:18.280 I didn't specify with this is that we
+00:55:20.120 wanted tests to be written up front,
+00:55:22.160 which is something that I generally do
+00:55:24.160 when I'm building with with uh stuff. Um
+00:55:27.240 so, it won't do TDD as in by default
+00:55:30.560 create write a test and then implement
+00:55:32.800 um the feature afterwards. But if you
+00:55:35.040 ask your proposal, um however big it is,
+00:55:38.480 whether it's a huge one like this or or
+00:55:40.359 smaller feature, if you ask it to do
+00:55:42.760 tests first, then yes, of course, it
+00:55:44.640 will. It will do um you know, it will
+00:55:46.760 probably if we just open up
+00:55:49.320 our tasks here, it will probably for
+00:55:52.400 each thing or for each section. Here
+00:55:54.480 we've got, you know, this is broken up
+00:55:56.160 slightly weirdly, so you it wouldn't
+00:55:57.880 quite work out. It would probably create
+00:56:00.120 a task to write a test, um and then it
+00:56:02.720 would run your tests, and then it would
+00:56:03.960 implement the feature against the test.
+00:56:06.120 Um and I tend to find that better when
+00:56:07.720 you're working with AI because it gives
+00:56:09.320 you the opportunity to review what tests
+00:56:11.760 are being written. Um so, you know that
+00:56:13.960 what's important, you know, the testing
+00:56:15.520 functionality. Um we're going to cover
+00:56:17.440 that in a huge amount within the next
+00:56:19.920 workflow that's available on learn. And
+00:56:21.800 we're going to have some uh really good
+00:56:24.320 um
+00:56:25.160 uh tool like workflow steps to go
+00:56:26.720 through and get into um doing that as
+00:56:29.680 well. So, yeah, that's um
+00:56:32.200 that's definitely something that you can
+00:56:33.760 ask your proposal to do.
+00:56:36.240 Um another question here, &quot;What if I
+00:56:37.840 want to apply one task at a time and not
+00:56:40.040 all at once? Is that possible with Open
+00:56:41.880 Spec?&quot; Um yes, it is. So, what I would
+00:56:44.520 do I think this works. I'm going to have
+00:56:46.720 to double-check. And I'm going to say
+00:56:48.200 this now, don't take it at face value,
+00:56:51.400 but I would say um
+00:56:53.280 OPSX apply
+00:56:55.359 task one. So, just like
+00:56:57.920 task one only or whatever it's called,
+00:57:00.880 then you can go ahead and add that. I'm
+00:57:02.720 pretty sure that would then just
+00:57:04.760 implement that task only, and then it
+00:57:06.800 will stop. Um so, yeah, give that a try.
+00:57:09.960 But if not, just cancel it off. And
+00:57:13.240 then, you know, you can you can go
+00:57:14.680 through it. But I'm pretty sure you can
+00:57:16.080 do that.
+00:57:17.800 Um let's have a look here.
+00:57:28.000 Um we've got another question that I
+00:57:30.160 answered a little bit earlier. No, this
+00:57:31.840 doesn't um work exclusively
+00:57:34.640 with Claude code. It works with uh a ton
+00:57:38.200 of uh agents. Maybe I didn't
+00:57:41.840 show that uh clearly earlier. So, let me
+00:57:44.080 just
+00:57:46.440 go into the vibe coded one, and I'll
+00:57:49.240 Open Spec in it to show you.
+00:57:51.480 So, yeah, it will work with Yeah, it
+00:57:53.040 does work with Curse. It works with all
+00:57:54.600 of these agents that you can see here.
+00:57:56.720 So, you can go ahead uh and choose. Let
+00:57:59.359 me just get myself out the way.
+00:58:01.680 You can go ahead and choose whatever you
+00:58:03.160 want in here. And of course, you can
+00:58:04.320 choose multiple as well. You just check
+00:58:05.840 through the ones that you want uh and
+00:58:07.800 the ones that you don't want. So, super
+00:58:10.080 handy. And that's why I like this
+00:58:11.480 because it's um it's agent agnostic
+00:58:14.120 pretty much as long as agents support
+00:58:15.920 skill files, um it's fine.
+00:58:19.600 Uh another question, &quot;What if I need to
+00:58:21.080 code?&quot; Uh yeah, really good question. If
+00:58:23.760 you need to jump in and change anything
+00:58:25.640 manually, that's absolutely fine as
+00:58:27.880 well. Um you can jump in and um
+00:58:31.520 and and just change anything you want.
+00:58:34.160 Um because Open Spec is just a framework
+00:58:37.320 for the specs. It doesn't really matter
+00:58:39.200 as such. Your agent is going to work out
+00:58:41.080 that something has changed. As long as
+00:58:43.000 you're not making great big changes that
+00:58:45.840 are going to sort of interfere with the
+00:58:47.000 spec, then then you can absolutely do
+00:58:49.080 that as well. Um there's no uh there's
+00:58:51.720 no issue uh with doing that.
+00:58:55.000 Um okay, I'm just having a look at some
+00:58:56.880 other questions as well.
+00:59:00.000 And keep Oh, we're nearly done,
+00:59:01.080 actually. So, we'll be able to have a
+00:59:03.480 look at this uh in a minute as well.
+00:59:09.720 Uh let's have a look here.
+00:59:13.560 So, when using spec tools like this, is
+00:59:15.040 there a guide for what level of
+00:59:16.280 subscription is required based on the
+00:59:17.680 token consumption? Okay, so to give you
+00:59:20.800 an idea of this, not really, no. Um
+00:59:23.359 let's just jump into Claude and go over
+00:59:25.440 to my usage here. Um yeah, so obviously,
+00:59:28.600 there's been a little bit of controversy
+00:59:30.400 around this at the moment. Um but you
+00:59:32.480 can see I I haven't really done much
+00:59:34.800 today aside from like a couple of little
+00:59:36.720 adjustments to the slideshow, which is
+00:59:38.800 also built with AI by the way. Um, so
+00:59:41.520 I've used 20% just in this session and
+00:59:44.080 that could just be I'm also on the max
+00:59:46.440 plan five times max plan. So, yeah,
+00:59:49.840 that's a lot of usage and yeah, you
+00:59:51.520 know, you are going through a lot of
+00:59:53.240 tokens here because you've got lots of
+00:59:55.000 text and and and stuff like that. But,
+00:59:57.560 um,
+00:59:58.120 you know, give it a try. See see how it
+01:00:00.520 how it lands and obviously there are
+01:00:02.120 tons of different agents uh that you can
+01:00:04.600 use as well.
+01:00:06.080 So, I've
+01:00:07.920 disappeared from here uh the screen's
+01:00:10.240 disappeared again. Let's pull this up.
+01:00:12.880 Okay.
+01:00:15.000 Okay, so we're very very close to the
+01:00:16.480 end of the build.
+01:00:19.680 Um, let me just have a look uh
+01:00:22.520 or please font size plus. Okay, let's
+01:00:25.800 bump everything up here.
+01:00:32.760 And
+01:00:35.640 Okay, yes, it's doing manual
+01:00:36.680 verification here.
+01:00:40.480 So, let's take a look at this because
+01:00:43.200 manual verification
+01:00:46.760 is for us. So, that's finished now.
+01:00:50.760 Um, now these tasks um and and Open Spec
+01:00:54.440 pretty much always does this. These
+01:00:56.480 tasks are for us to complete. So,
+01:00:59.400 manually go in and test stuff. I'm
+01:01:02.080 actually going to leave these. We are
+01:01:03.200 obviously going to test the app and see
+01:01:04.880 what it actually looks like. Um, but we
+01:01:07.160 would go through and we would check
+01:01:08.400 these off. We could either, you know, go
+01:01:10.240 through them one by one and manually
+01:01:11.600 check them or you could ask your agent
+01:01:13.200 to check them off for you or if you're
+01:01:14.960 using that plugin like Spec, which I can
+01:01:17.080 see a couple of people are having issues
+01:01:18.760 with.
+01:01:19.680 Um, if um you can check it physically
+01:01:21.960 check stuff off in there as well, which
+01:01:23.400 is great. Um, okay, so let's go over to
+01:01:26.200 the browser.
+01:01:27.760 And let's actually have a look at what
+01:01:29.280 this looks like. There we go. Okay, so
+01:01:32.120 already this looks better because I did
+01:01:33.880 give it some design direction. Um, let's
+01:01:36.480 go ahead and test this out. Now, because
+01:01:39.120 we are just demoing this, we
+01:01:42.200 want to get rid of our log because our
+01:01:43.640 emails are going to come through in our
+01:01:45.040 log. Um, so let's ask a question. Uh,
+01:01:48.160 what's your favorite agent? We bump this
+01:01:51.720 up as well in case you're having trouble
+01:01:53.240 seeing it.
+01:01:54.400 Uh, let's say Claude Code and Code X.
+01:01:58.160 Add an option. Already just feels
+01:02:00.760 better.
+01:02:02.040 Um,
+01:02:02.600 I'm going to click create poll. We had
+01:02:05.080 that bug, remember before with the basic
+01:02:07.520 prompt where it, you know, it just
+01:02:09.760 didn't do anything if we left an option
+01:02:11.760 empty, but now obviously we've got
+01:02:13.280 client-side validation, which we would
+01:02:15.640 have probably known if we'd have
+01:02:16.920 actually read the spec. Um, and I'm
+01:02:19.040 pretty sure this is going to have added
+01:02:21.000 proper, you know, feedback validation as
+01:02:23.560 well. So, I'm going to create the poll.
+01:02:25.800 Um, okay.
+01:02:27.480 Um, right. Uh, yeah, okay. So, it
+01:02:32.760 This is not good. Let's um
+01:02:35.400 Let me just
+01:02:37.760 make sure we Okay, let's do this again.
+01:02:40.240 We'll just test this out quick.
+01:02:42.800 Might need I tell you what I need to do.
+01:02:45.480 Then run dev. That would help.
+01:02:48.880 That was probably why. So, I
+01:02:51.200 I'm I'm I'm hoping that's why anyway.
+01:02:53.560 So, let's say what's your favorite
+01:02:57.960 agent. Um, we're going to say Claude
+01:03:00.200 Code, Code X. And I'm going to click
+01:03:02.760 create poll. Okay, so yeah, it actually
+01:03:05.640 wasn't.
+01:03:09.400 Um
+01:03:12.200 Okay.
+01:03:14.000 This is the absolute worst possible
+01:03:16.520 outcome. So, what can we do here?
+01:03:20.280 Let's think. Quick poll.test.
+01:03:23.880 Um
+01:03:24.960 What can we do? What can we do? Okay, so
+01:03:26.800 what I'm going to do
+01:03:28.320 I'm going to pull down the version that
+01:03:29.640 I built earlier. Now, I actually read
+01:03:31.680 the spec from the version that I built
+01:03:33.280 earlier. So, um that's going to, you
+01:03:35.680 know,
+01:03:36.440 be the one that we're going to be adding
+01:03:37.680 the feature to.
+01:03:39.120 Um,
+01:03:39.680 in the meantime I'll I'll see if um if
+01:03:42.600 there any actual issues with that and
+01:03:44.240 why this is actually doing this because
+01:03:46.560 it definitely shouldn't. I'm actually
+01:03:47.920 just going to try it one more time.
+01:03:50.880 Yeah, that's really weird. Okay, right.
+01:03:53.240 Let's let's go ahead and just pull down
+01:03:54.680 the other version. So, this is the
+01:03:56.320 version that we're going to be building
+01:03:57.400 the feature onto a little bit later. So,
+01:04:00.440 let's go into our main directory here.
+01:04:04.080 And
+01:04:06.040 let's pull down this. So, this was the
+01:04:08.080 version that I built earlier when I
+01:04:09.680 actually created
+01:04:12.040 the spec and read the spec. So, we're
+01:04:14.840 going to go and just clone this down.
+01:04:18.280 And let's clone this into quick poll.
+01:04:22.440 And let's just call this built.
+01:04:26.320 Okay, so let's go over to quick poll
+01:04:29.080 built.
+01:04:31.680 And
+01:04:40.480 Okay, let's just enable this real quick.
+01:04:54.080 And let's get everything installed here.
+01:05:12.120 Now, I went through a test run of this
+01:05:14.080 like two times and yeah, it's just uh
+01:05:19.359 amazing that it just didn't work. So,
+01:05:21.080 let's just copy over our ENV example to
+01:05:23.680 ENV. PHP artisan
+01:05:26.800 key generate
+01:05:28.680 and
+01:05:30.520 let's see uh migrate as well. So, it'll
+01:05:33.280 set up instructions that we went over in
+01:05:35.680 the docs. And let's finally run composer
+01:05:40.600 dev.
+01:05:45.080 Okay, so
+01:05:46.840 um I'm going to go back and check out
+01:05:48.359 what went wrong with the other build um
+01:05:51.920 a little bit later um possibly while
+01:05:54.120 you're doing the exercise, but this is
+01:05:56.160 the app that I built um for uh using the
+01:05:59.840 exactly the same method as we've just
+01:06:01.520 seen, but I actually read the spec to
+01:06:03.040 make sure everything looked good. Um, we
+01:06:05.040 might have also broken something as well
+01:06:06.640 when we added the guard rails mid-build.
+01:06:08.760 Um, but we'll, you know, go back and
+01:06:10.080 adjust that and I'll I'll come to you
+01:06:11.400 with the conclusion. So, we can create a
+01:06:13.480 poll. Let's uh get stuck in on this
+01:06:15.440 again. What's your favorite agent? And
+01:06:19.040 we'll do Code X and Claude Code.
+01:06:23.200 And we click create poll. So, now now
+01:06:25.760 that we build something from a spec, we
+01:06:28.160 get pretty much everything we want. Uh,
+01:06:30.560 the ability to copy the link here, which
+01:06:32.280 is what we had before. We can go ahead
+01:06:33.840 and paste that over to people. We get
+01:06:36.240 email verification. We get an admin
+01:06:38.560 panel. Although it's basic, we can
+01:06:40.320 actually see what we're doing here with
+01:06:41.600 the amount of votes. We can close the
+01:06:43.600 poll as well. So, that's something that
+01:06:45.160 we didn't have the ability to do before.
+01:06:47.520 So, although I can vote here and I can
+01:06:49.840 go ahead and add in my email address
+01:06:53.840 to send a magic link. Uh, so there we
+01:06:56.400 go. We've gone ahead and sent that over.
+01:06:58.880 Let's just open this up in
+01:07:01.640 our editor.
+01:07:04.440 And we'll have a look at this. So, we've
+01:07:07.840 got quick poll built.
+01:07:10.840 And we should have over in our Laravel
+01:07:12.680 log. Let's just go ahead and resend that
+01:07:15.920 over.
+01:07:21.880 Uh, send a magic link and there we go.
+01:07:24.080 And that comes through. So, this is
+01:07:25.760 basically just like an email that would
+01:07:27.520 get sent thing sent through.
+01:07:29.840 And we would use the URL. Obviously, we
+01:07:32.800 would actually click on it.
+01:07:35.840 And we would count the vote and then the
+01:07:38.800 vote gets counted. So, although the
+01:07:40.920 build that we just did didn't work, I'll
+01:07:42.600 figure that out and I'll let you know
+01:07:44.000 exactly why it didn't work. Um, this is
+01:07:46.920 the result of um what I did previously
+01:07:49.880 prior to the session with Spec Driven
+01:07:52.040 Development. So,
+01:07:53.800 this is what we end up with um
+01:07:56.520 once we are done, once we've applied the
+01:07:58.680 changes, paused it, fixed guard rails,
+01:08:01.320 resumed it, and all that good stuff.
+01:08:03.680 Um, so the last thing that we're going
+01:08:04.960 to do just before we move on to uh the
+01:08:08.200 hands-on activity
+01:08:10.240 is we're going to archive this. Now,
+01:08:13.200 when do we archive something? Well, we
+01:08:15.040 can archive something at really any
+01:08:16.600 point. If you're working alone,
+01:08:18.120 typically what I would do is I would um
+01:08:20.880 grab the grab the spec and that we need
+01:08:23.439 to go back to
+01:08:27.520 our other one to demo this.
+01:08:29.759 So, I would
+01:08:32.120 basically build out a proposal. I would
+01:08:34.479 have it build it, verify that it works,
+01:08:36.759 of course, and then I would go and I
+01:08:39.120 would fold it immediately into the spec
+01:08:41.200 or archive into the spec. But, you could
+01:08:43.160 also archive it after you pushed it to
+01:08:45.399 source control and it's been reviewed by
+01:08:47.040 someone or reviewed by uh you know, AI
+01:08:49.880 like using a service like Code Rabbit.
+01:08:52.240 Or you could archive it once the feature
+01:08:54.880 has been deployed and is being used by
+01:08:56.680 users and you know that you're not going
+01:08:58.359 to roll it back. So, uh you can archive
+01:09:00.479 it at any point, but the question is how
+01:09:02.640 do we archive something?
+01:09:04.680 Well, we go ahead and we use OPSX
+01:09:07.640 uh
+01:09:08.279 OPSX archive. And then once we've done
+01:09:10.799 that, that will go ahead and archive
+01:09:12.120 that change. Now, it will warn us
+01:09:14.319 because at this point, remember, we have
+01:09:16.799 the If we just open up the tasks, we
+01:09:19.359 have a bunch of tasks that have not been
+01:09:23.000 uh completed, which is our manual
+01:09:24.839 verification, which I'm going to go
+01:09:26.880 through in the break uh while you build
+01:09:30.120 on this and tell you exactly what went
+01:09:32.520 wrong. So, that will archive this out,
+01:09:34.880 but it will
+01:09:36.479 Yeah, you can see here two things to
+01:09:38.200 confirm before archiving. We've got
+01:09:39.799 eight out of 53 tasks still empty.
+01:09:42.680 So, yeah, we can we can go ahead and
+01:09:46.000 sync specs then archive, which is the
+01:09:48.640 recommended. So, we've got the polls and
+01:09:50.720 voting delta specs
+01:09:52.920 in there and then archive and that
+01:09:54.880 leaves the eight manual verification
+01:09:56.840 tasks unchecked. I'm going to leave them
+01:09:59.080 unchecked cuz I'm going to show you what
+01:10:00.200 that looks like, especially within the
+01:10:02.280 the view that we saw.
+01:10:04.560 But, yeah, we're just going to go ahead
+01:10:06.280 and and say that we want that to all be
+01:10:09.840 archived in. So, let's just wait for
+01:10:11.880 this to go through.
+01:10:13.720 I'm going to head to the comments.
+01:10:19.440 And just have a look while that is
+01:10:20.600 doing.
+01:10:28.600 Really good question here. What to do if
+01:10:30.640 my current code base has no specs? Can I
+01:10:32.680 just create a spec for the new feature?
+01:10:34.520 Yeah, so I um
+01:10:36.320 I I
+01:10:37.440 What I would do is if you have an
+01:10:38.880 existing product, just start to build
+01:10:42.760 just start your next proposal and then
+01:10:44.720 start the spec from that point. It's
+01:10:47.000 it's pretty easy to think to go back and
+01:10:48.760 like want to
+01:10:50.720 sort of create a spec for what you
+01:10:52.200 already have, but that will
+01:10:53.960 automatically start to come into your
+01:10:55.760 spec because it will understand what
+01:10:57.120 your system looks like. So,
+01:10:59.440 if you if you have no specs in there,
+01:11:01.360 just start your next proposal, do open
+01:11:03.280 spec in it. Start a new proposal,
+01:11:06.120 archive the spec like we're doing now
+01:11:07.800 and it will just start to build up your
+01:11:09.000 spec from that point as well.
+01:11:11.080 So, let's have a look here.
+01:11:15.040 If we've got any other questions.
+01:11:19.520 Yeah, good point. Can you restore your
+01:11:21.400 logs from your history? You'll see what
+01:11:22.640 went wrong earlier in the generation.
+01:11:24.680 Yeah, I'll I'll have a look at that
+01:11:27.240 in a bit because I don't know what's
+01:11:29.320 going on. It did it perfectly like two
+01:11:31.440 three times I tested this before the
+01:11:33.160 workshop.
+01:11:36.760 So, another good question. If we
+01:11:38.320 introduce open spec into a project, is
+01:11:40.200 it possible to use it for a single
+01:11:41.800 feature rather than across the whole
+01:11:43.360 project? Absolutely. The scope does not
+01:11:46.400 matter at all here. You can you can
+01:11:50.440 you can use it for a tiny feature. You
+01:11:52.440 can probably if you you know, if you
+01:11:54.120 want to get started, maybe just do it
+01:11:55.640 for like a really really tiny change,
+01:11:57.360 like the smallest possible change you
+01:11:58.760 can think of. And just see how the
+01:12:01.560 process goes. The thing about open spec
+01:12:03.840 is if you read the docs, it will
+01:12:06.840 it might sort of overwhelm you. It gives
+01:12:08.520 you like a really
+01:12:10.360 you know, complex scenario for a
+01:12:11.960 workflow, which is fine. Okay, this has
+01:12:14.240 been archived now. We'll come back to
+01:12:15.680 some of the other great questions
+01:12:17.200 shortly, but let's take a look at the
+01:12:18.720 state of our code base.
+01:12:20.960 So, let's go over to our archive here.
+01:12:22.800 So, you can see we've got our open spec
+01:12:25.080 changes archive and that's been put into
+01:12:28.200 and timestamped as well, which is really
+01:12:30.120 helpful. Add polls. That's now out of
+01:12:32.240 way.
+01:12:33.320 The next change you propose will go back
+01:12:35.560 into the changes directory when you
+01:12:37.080 archive it, it'll go back into the
+01:12:38.320 archive directory. So, you've got the
+01:12:39.880 history there. That's another really
+01:12:41.880 good point and again, I'm going to go
+01:12:43.120 back to the question about plan mode. I
+01:12:46.160 love plan mode, but it doesn't give you
+01:12:48.320 this rich history. Then we have the
+01:12:50.720 specs. So, we've got two different
+01:12:54.280 specs here because these are technically
+01:12:56.200 sort of like broken up into polls and
+01:12:59.120 voting and you can see here the
+01:13:00.880 requirement is create a poll.
+01:13:03.400 The system should allow any visitor
+01:13:05.800 blah blah blah and all that kind of
+01:13:07.840 stuff and it gives you all the scenarios
+01:13:09.680 here as well, as well as the voting spec
+01:13:12.920 as well. So, the actual voting
+01:13:14.360 functionality
+01:13:15.880 and that gives you that. And for smaller
+01:13:18.280 proposals, these will be folded into the
+01:13:20.840 specs
+01:13:22.000 as needed and they'll just start to grow
+01:13:23.960 and you'll start to see them
+01:13:26.000 come on. Okay, I'm just going to go over
+01:13:28.400 and check on the sale here. We've got 10
+01:13:31.840 seats left out of the 50. Thank you so
+01:13:34.560 much for the 40 of you that have signed
+01:13:37.600 up
+01:13:38.920 and locked in
+01:13:40.280 access at that price.
+01:13:43.160 Yeah, ends very soon as the workshop
+01:13:45.840 ends and then it's gone and yeah,
+01:13:48.440 unfortunately we're still full of seats
+01:13:50.040 because we're in our closed beta. So,
+01:13:52.720 I really hope you can take advantage of
+01:13:54.360 that.
+01:13:55.240 Have a look around the platform, see
+01:13:56.760 what we're doing.
+01:13:58.240 Really exciting.
+01:14:00.000 So, we're going to go over to the
+01:14:01.520 hands-on activity now. If you're not
+01:14:03.760 doing the hands-on activity, absolutely
+01:14:05.640 fine.
+01:14:06.840 I'm going to head off like just to see
+01:14:10.360 what's going on behind the scenes here.
+01:14:12.800 But, let's just talk through the
+01:14:14.040 hands-on activity and what we're doing
+01:14:15.720 if you did want to go ahead and do it.
+01:14:17.200 So,
+01:14:18.120 you should have got the document before
+01:14:20.920 the workshop. Let's just have a look
+01:14:22.560 here with the prep guide. So, hopefully
+01:14:24.440 you followed this. You've got your agent
+01:14:27.000 ready
+01:14:28.520 and you've installed PHP and composer if
+01:14:30.760 you wanted to follow along and also
+01:14:32.760 globally installed open spec. So, you
+01:14:35.480 might have already looked at the
+01:14:36.520 exercise that we're going through, but
+01:14:38.000 let's just run through this. So,
+01:14:39.200 hopefully you've gone through the get
+01:14:40.560 started if you do want to follow
+01:14:41.920 through. The task that we're doing here
+01:14:46.160 is to propose a new change and basically
+01:14:49.240 just do everything I've just done here,
+01:14:50.560 but we're just going to add an
+01:14:51.880 individual feature. So, if you are
+01:14:54.360 following this, we're going to add I'm
+01:14:56.360 going to let you go ahead and add a time
+01:14:57.920 limit
+01:14:59.120 feature to this poll by creating a
+01:15:01.920 proposal or exploring if you want to,
+01:15:04.440 but that's going to take a little bit
+01:15:05.320 longer. So, creating a proposal and
+01:15:07.800 going ahead and describing the problem
+01:15:09.360 here. I've not given you a prompt
+01:15:10.840 because you can just describe this from
+01:15:12.880 what you want to happen. Review the
+01:15:15.400 proposal
+01:15:17.040 and then once you're happy, go ahead and
+01:15:20.520 apply the proposal and then test it, see
+01:15:23.360 if it did it works and then just see
+01:15:25.240 what happens. Now, the most important
+01:15:26.760 part of this hands-on is the spec itself
+01:15:30.160 and getting into the habit of looking at
+01:15:31.840 the spec, seeing what happens in your
+01:15:33.520 editor, reviewing it. Hopefully you can
+01:15:36.280 get through all of this in the 15
+01:15:38.160 minutes, but if you can't, that's
+01:15:39.400 absolutely fine. The goal here is really
+01:15:41.560 just to get used to the the spec process
+01:15:43.800 and I would spend more time personally
+01:15:46.040 looking at the spec and adjusting the
+01:15:47.920 spec over the actual working example.
+01:15:50.680 You could do that later if you don't
+01:15:52.000 have time. But yeah, I'm going to go
+01:15:55.200 ahead and leave you to do this. So, your
+01:15:57.360 task is to add a time limit to polls.
+01:16:00.120 I'll leave this up.
+01:16:02.400 Well, should I leave the timer up or
+01:16:04.280 this up? You've got the instructions in
+01:16:06.000 notion, so I'll leave the timer up, but
+01:16:07.440 yeah, write the spec, build it, practice
+01:16:09.960 the loop, so review the code, stop it,
+01:16:12.720 restart it. Verify the feature against
+01:16:15.440 the proposal. That's a little sneaky one
+01:16:17.760 that I've added in because I've not
+01:16:19.040 actually gone through how you can verify
+01:16:21.880 an open spec spec against what's being
+01:16:24.760 built. So, you might need to head over
+01:16:26.360 to the open spec docs to have a look at
+01:16:28.440 that and then archive it and then feel
+01:16:30.840 free to share in the chat if something
+01:16:32.520 is going wrong, if it worked beautifully
+01:16:35.360 or if it didn't. So, I'm going to go
+01:16:37.240 ahead and set a timer up here.
+01:16:40.120 And I'll be back with you
+01:16:42.880 really really shortly. So, like in about
+01:16:44.360 15 minutes and we'll discuss what went
+01:16:46.440 wrong what went wrong or
+01:16:48.200 hopefully not not not what happened to
+01:16:50.720 me today. But yeah, hopefully everything
+01:16:54.080 goes good for you. So, yeah,
+01:16:56.160 I'll see you back in 15 minutes.
+01:16:59.040 And let me know if you need anything in
+01:17:00.120 the chat.
+01:17:01.733 >> [snorts]
+01:29:18.480 >> Mhm.
+01:30:58.880 >> Okay, so come back a few minutes early.
+01:31:02.200 Um, I have been looking at some of your
+01:31:03.840 questions as well.
+01:31:06.680 Uh
+01:31:07.800 trying Yeah, so um
+01:31:11.000 I'll answer some more in the Q&amp;A
+01:31:13.000 which might go over we might go over the
+01:31:15.120 time, but that's absolutely fine.
+01:31:17.360 Um, so hopefully you're doing well. If
+01:31:19.840 you are following the um hands-on and
+01:31:23.560 you're adding a feature to the existing
+01:31:27.000 code base, that's great. I have actually
+01:31:28.840 gone ahead and fixed the issue that we
+01:31:30.200 had during the live stream. Um, so let's
+01:31:32.560 just take a look at the actual version
+01:31:34.440 of this.
+01:31:35.920 Let's go to quickpoll.test.
+01:31:39.840 And here we are. So, this wasn't
+01:31:42.120 anything major. I basically just asked
+01:31:44.160 my agent um
+01:31:45.720 you know, it's not right. Now, what we
+01:31:47.240 did do what I what I did ask it to do
+01:31:51.000 um which is something that I haven't
+01:31:53.480 covered, but you can do is
+01:31:56.920 verify your Let me just pull over my
+01:31:59.160 terminal here.
+01:32:01.240 Verify the code against the spec and
+01:32:03.920 this is really important. So
+01:32:06.040 what you can do is if you just come over
+01:32:09.720 to the directory that you're working in
+01:32:12.760 and go ahead and run open spec config
+01:32:14.800 profile, what you can do is you can
+01:32:16.320 enable
+01:32:17.880 additional workflow components to open
+01:32:20.080 spec. So, what I did is I just went
+01:32:21.640 ahead and enabled verify change.
+01:32:24.240 Once you've done that, go ahead and and
+01:32:26.360 get that
+01:32:27.400 saved by hitting enter
+01:32:29.360 and then you can just run open spec
+01:32:30.920 update and I'll go ahead and sync the
+01:32:32.560 changes up to your project. Now, what
+01:32:34.680 that allows you to do is then use the OS
+01:32:37.120 PX where are we at the moment?
+01:32:40.960 Just reopen this up.
+01:32:43.200 Uh OPSX
+01:32:45.520 verify command. Now, I couldn't do this
+01:32:47.560 in this instance because I'd already
+01:32:48.960 demoed to you uh folding in the spec uh
+01:32:53.000 into folding in the proposal into the
+01:32:54.880 spec. So, obviously we didn't have the
+01:32:56.600 proposal to verify the change against.
+01:32:59.400 There might be a way to do this, but it
+01:33:01.440 typically works before you archive
+01:33:03.640 something. So, that is what I would have
+01:33:06.000 reached for have this not worked, but
+01:33:09.440 instead I just asked my agent and that's
+01:33:11.080 absolutely fine and it fixed it pretty
+01:33:13.120 quickly. Um, it was just a a couple of
+01:33:15.480 issues that it had spotted. So, now it's
+01:33:17.720 working really nicely here. So, I'm just
+01:33:20.080 going to very quickly show you this
+01:33:22.440 uh just so you believe me. Um, so what's
+01:33:26.600 your favorite agent? And we've got a
+01:33:30.720 cool code.
+01:33:32.680 codex for example add an option create
+01:33:35.040 poll. We've got the public URL which
+01:33:37.840 obviously if we open up gives us a nice
+01:33:40.560 um
+01:33:41.360 UI here.
+01:33:42.760 It's a lot clearer. We'll send you a
+01:33:44.360 link to confirm your vote. We can go
+01:33:46.080 ahead and
+01:33:48.080 enter this in. Let me just open this up
+01:33:51.840 in here as well. So, let's open up that
+01:33:54.960 log file
+01:33:56.920 and get rid of this.
+01:34:00.920 do do do do Right.
+01:34:03.560 Okay.
+01:34:04.920 Um, so alexander@fusecode.io.
+01:34:08.000 Okay, so check your email. We get the
+01:34:10.120 email in here. This now actually uses uh
+01:34:12.680 Laravel's um signed URLs which is
+01:34:15.920 exactly what we wanted and when we come
+01:34:18.560 over that registers our vote really
+01:34:20.400 nicely here and it uses cookies in the
+01:34:22.120 browser to show that if we come back to
+01:34:24.760 this again. We also have the link here
+01:34:26.800 for the admin panel specifically which
+01:34:29.080 obviously shows us all of the results
+01:34:31.160 and we can also close the poll as well
+01:34:33.680 um which goes ahead and shuts that poll
+01:34:35.120 off and it's now closed. So, there were
+01:34:36.840 just a couple of like small bugs here
+01:34:38.880 that needed ironing out. Nothing super
+01:34:41.080 unusual.
+01:34:42.360 Um, it would have been great if it would
+01:34:43.520 have worked the first time, but the
+01:34:45.880 reality is that the non-deterministic
+01:34:48.120 nature of uh
+01:34:49.880 uh
+01:34:50.800 of uh LLMs means we can't get it right
+01:34:52.760 every time.
+01:34:54.480 Um, okay. So, we've got a couple more
+01:34:55.800 minutes. I'm actually going to cut this
+01:34:56.880 short because um we we don't want to eat
+01:34:59.040 too much into the Q&amp;A. Um, but you know
+01:35:01.680 what you're doing. Feel free to you
+01:35:03.440 know, continue to
+01:35:05.440 work through the hands-on exercise um
+01:35:07.960 and let me know in the comments if
+01:35:11.240 anything went wrong. Um, so yeah, um I
+01:35:14.760 will we'll move on to just wrap up
+01:35:16.520 really quickly and then we'll answer
+01:35:17.840 some questions in the Q&amp;A which I am
+01:35:20.880 looking forward to. There's some great
+01:35:22.200 questions here.
+01:35:23.560 So, um let's just really quickly cover
+01:35:25.560 the loop. We'll just really quickly
+01:35:26.840 summarize this. Um, let me just move
+01:35:28.920 myself out the way. Okay. So, the loop
+01:35:31.320 end to end looks like this. We proposed
+01:35:33.720 a change probably too big of a change,
+01:35:36.600 but you know, you kind of get the idea.
+01:35:38.840 Um, we then refine it and you know, we
+01:35:41.680 keep doing that. So, we've got a sort of
+01:35:43.360 this like uh refinement loop at the
+01:35:46.280 start, but then we've got this inner
+01:35:47.920 loop where we apply a change, we pause
+01:35:51.040 it, we fix anything that we spot going
+01:35:53.200 wrong particularly on new products. You
+01:35:55.880 know, we monitor the code. We don't just
+01:35:57.520 let it do it on itself in the background
+01:36:00.000 and then we resume and we keep doing
+01:36:01.480 that over and over again. And then of
+01:36:03.120 course, the last step once we're happy
+01:36:04.760 with the change, we've we've fixed it
+01:36:07.280 fixed anything up that's gone wrong.
+01:36:09.560 We go ahead and archive this.
+01:36:12.200 So, this is the workflow for a single
+01:36:14.000 change. We've done a massive one today,
+01:36:16.000 but um you know, we've still been
+01:36:17.680 successful just with a tiny hiccup.
+01:36:20.000 Remember I've not had to go through and
+01:36:21.640 I've not had to argue with my agent or
+01:36:24.560 go ahead and fix too much up. I've not
+01:36:26.320 even looked at the code yet really which
+01:36:28.960 you know, usually I would dive in and
+01:36:30.800 look at the code as we go.
+01:36:32.560 I wanted to keep this sort of agnostic
+01:36:34.080 as possible. This pays off because you
+01:36:36.480 and the agent already agree on what
+01:36:38.800 you're building. Um, so the spec is the
+01:36:41.000 source of truth.
+01:36:42.520 Um,
+01:36:43.120 when we come to the next change, the
+01:36:44.480 agent uh next agent session or the next
+01:36:46.960 teammate, we will start from the same
+01:36:48.480 place. Um, we test the spec um so we can
+01:36:52.800 poke at the spec before the code exists
+01:36:55.240 which if we would have spent maybe like
+01:36:57.400 30 to 40 minutes doing in this session
+01:36:59.800 if we had time, we probably would have
+01:37:02.040 got a better result uh
+01:37:04.040 from the start although I'm actually
+01:37:05.400 really happy with what we came out with
+01:37:06.880 today.
+01:37:07.840 Um, and it's slower now, faster later.
+01:37:10.800 So, it does feel really really slow.
+01:37:12.800 I've mentioned this before uh using this
+01:37:15.360 methodology of spec-driven development
+01:37:18.120 and not prompting. It feels slower. It
+01:37:20.600 feels like you're not making any
+01:37:21.800 progress until the end. But actually you
+01:37:24.680 tend to get better results um as you go.
+01:37:28.280 Um, okay. So, I'm just going to check in
+01:37:30.520 on the sale real quick. We've got three
+01:37:32.680 seats left out of 50. Um
+01:37:35.960 So, thank you so much to everyone that
+01:37:37.720 signed up. I'll I'll give them a little
+01:37:39.320 check again in a minute, but that's
+01:37:40.760 absolutely amazing and it's going to be
+01:37:42.600 great to have you on board.
+01:37:45.040 So, we are now going to go to Q&amp;A and
+01:37:49.520 I'm going to answer as many questions as
+01:37:51.240 I possibly can.
+01:37:53.480 Um, so I believe
+01:37:57.280 Let me just have a look here. Our team
+01:38:00.120 will probably like flash some up
+01:38:02.840 behind the scenes and yeah, here we go.
+01:38:04.960 Great.
+01:38:05.960 Um, so what is the seniority level in
+01:38:08.480 Laravel
+01:38:09.880 uh or any framework that we need to
+01:38:11.560 start with spec-driven development? Um,
+01:38:14.840 oh, this is a That that's a really good
+01:38:16.680 question. I mean, I wouldn't say that um
+01:38:20.680 so
+01:38:21.960 So, to go in a completely different
+01:38:23.120 direction, I think before you start to
+01:38:24.719 use any kind of
+01:38:26.440 uh agent to generate code you need to
+01:38:29.240 understand the code to some degree. Like
+01:38:32.240 you need to understand what the code is
+01:38:33.920 doing. You need to understand
+01:38:36.040 um particularly when it comes to like
+01:38:37.680 security and performance, you need to
+01:38:39.520 know what's happening or really adding
+01:38:42.440 open spec um to
+01:38:46.200 um it's almost like adding open spec to
+01:38:48.920 vibe coding otherwise or spec-driven
+01:38:50.840 development to vibe coding. Yes, you're
+01:38:53.360 using a spec, but then you you don't
+01:38:55.120 really understand what's going on behind
+01:38:56.360 the scenes. So, I'd just say as a
+01:38:57.960 general blanket rule for um people who
+01:39:01.200 are
+01:39:02.840 still learning to code, use AI, but use
+01:39:05.160 it to learn to code. Um, but don't you
+01:39:07.760 know, jump in and and do it without any
+01:39:09.440 knowledge. So, I wouldn't say you need
+01:39:11.040 any specific seniority level. You just
+01:39:13.080 need to understand how to
+01:39:16.200 um
+01:39:16.960 how to, you know, review the code that
+01:39:19.320 is being written by specs. Um
+01:39:22.000 and this stuff really helps as well when
+01:39:24.360 you have um have an understanding of
+01:39:28.400 what actually needs to be built. So,
+01:39:31.080 if you're working as part of a team and
+01:39:33.600 someone hands you a task and that task
+01:39:35.360 is unclear, then of course
+01:39:38.040 spec driven development is going to be
+01:39:39.280 difficult. So, it really is a team
+01:39:41.200 effort unless of course you're working
+01:39:42.720 on your own
+01:39:44.120 um to understand what you're building
+01:39:46.480 before you let an agent build it. So,
+01:39:48.760 hopefully that's answered your question.
+01:39:51.720 Um what would be your process for older
+01:39:53.200 apps that you want to do an open spec in
+01:39:56.240 it on? Ah, okay. So, um
+01:39:59.680 what I would So, what you can't do to
+01:40:02.880 start with or what you shouldn't do, you
+01:40:04.560 probably could is you you don't go back
+01:40:06.880 and retrospectively generate
+01:40:09.680 uh a whole spec for your product.
+01:40:12.040 There's no real need to do that. So,
+01:40:14.240 really the process is quite simple. You
+01:40:16.840 um open up your app uh open up your
+01:40:19.080 project in your terminal, you do an open
+01:40:20.880 spec in it on it. That will create the
+01:40:22.440 directory directories that we've seen
+01:40:24.240 through the workshop.
+01:40:25.800 Um and then you just start with your
+01:40:27.480 first proposal. So, just start with, you
+01:40:29.760 know, adding a small feature or making a
+01:40:31.680 change somewhere. Um obviously for like
+01:40:34.200 really tiny changes, don't bother. You
+01:40:36.680 know, we're talking like features here
+01:40:38.480 or or uh real bug fixes or large
+01:40:42.040 refactors or performance uh profiling
+01:40:44.560 stuff like that and fixes.
+01:40:46.320 So, um just start with your first
+01:40:47.800 proposal. Propose it, apply it,
+01:40:51.120 test it, and then archive it, and then
+01:40:52.560 that's done. And fold it into spec. Now,
+01:40:54.400 as you go on from that point, you're
+01:40:55.680 going to get um build up more and more
+01:40:57.480 context about your product. So, you're
+01:40:59.840 going to end up with um a much a much
+01:41:02.200 better spec. So, you don't need to go
+01:41:03.760 back and retrospectively do anything. Um
+01:41:06.440 you just follow the process of proposing
+01:41:08.880 stuff and applying it. That's all you
+01:41:10.640 need to do.
+01:41:14.320 Um how do we avoid conflicts with other
+01:41:17.000 human team human teammates as we each
+01:41:20.240 locally work through the same task list?
+01:41:24.360 It's exactly the same process uh Colin
+01:41:27.360 as um
+01:41:28.920 as get as managing get conflicts. You
+01:41:31.040 you basically if you're, you know, it's
+01:41:32.680 going to be quite unusual for you to
+01:41:34.360 hand over a half-finished task list to
+01:41:36.560 someone. Uh the example that we saw
+01:41:38.760 today was a huge task list because we
+01:41:40.840 were basically building a whole product
+01:41:42.240 from scratch. Um but you would just make
+01:41:46.360 sure you commit the changes. Um and
+01:41:49.160 obviously when you commit, you know, you
+01:41:50.720 you keep that open spec directory within
+01:41:53.000 your source control, so you commit that
+01:41:54.680 open open spec directory uh whichever
+01:41:57.680 framework you're using. Um so, the your
+01:42:00.600 task list lives alongside the changes
+01:42:03.320 that have been made. So, you shouldn't
+01:42:05.480 get any conflicts there. They will pull
+01:42:07.200 down what uh you know, you've left. They
+01:42:10.120 will see which tasks has been done.
+01:42:11.720 Their agent will see which tasks has
+01:42:13.400 been done. The great thing is that they
+01:42:15.560 might be using a completely different
+01:42:17.000 agent and that doesn't matter because
+01:42:18.560 then their agent will just pick up from
+01:42:20.640 the task list as long as you have open
+01:42:22.280 spec installed um and they just need to
+01:42:24.840 do open spec in it and make sure that
+01:42:26.400 they select their
+01:42:28.200 um agent as well. So, you know, nothing
+01:42:30.320 will get overwritten with open spec in
+01:42:31.840 it. Um it will just sync
+01:42:34.080 up. So, um that's that's really all you
+01:42:36.200 need to do. Just do exactly, you know,
+01:42:38.120 commit stuff to source control um make
+01:42:40.400 sure it's up to date. Make sure you're
+01:42:41.960 pulling down stuff like you would do
+01:42:43.480 with any other
+01:42:44.720 um branch like feature branch.
+01:42:49.240 Um how do we move any existing MD files
+01:42:51.520 in outside the project repo for feature
+01:42:54.040 specs
+01:42:55.240 uh into the project to use open spec?
+01:43:00.280 That is a good question. I've never done
+01:43:03.160 this before, but here's what I would
+01:43:05.080 try. So, I would, let's say um let's
+01:43:08.440 pick a feature. Let's pick the one that
+01:43:09.760 we we were talking about to adding a
+01:43:11.480 time limit to polls. Let's say that I
+01:43:13.600 had that document sitting elsewhere.
+01:43:16.200 What I would probably do is I would s-
+01:43:18.480 install and and init open spec. I would
+01:43:21.600 start up a new proposal and I would
+01:43:23.520 pretty much just copy and paste that
+01:43:25.200 entire proposal document into open spec.
+01:43:28.200 Now, the reason I would probably do that
+01:43:30.360 is because that is then going to read
+01:43:31.920 the entire context of the proposal that
+01:43:34.240 you have sitting outside for a feature,
+01:43:37.080 but then it's going to convert it into
+01:43:38.480 its into open spec's format that it that
+01:43:40.880 it that it requires to actually
+01:43:42.640 function. So, you'll probably get
+01:43:45.040 um you know, the it will capture what
+01:43:47.480 you have within your spec, but it will
+01:43:49.200 convert it over. And of course, you just
+01:43:51.280 go through the same process of as
+01:43:52.880 reviewing it. And bear in mind that you
+01:43:54.720 could if you've got multiple feature
+01:43:58.160 mul- multiple MD files with each then,
+01:43:59.920 which it sounds like you probably have,
+01:44:01.920 um then you can just keep proposing. You
+01:44:04.200 don't need to propose and then archive
+01:44:06.080 then re-propose. You can propose and
+01:44:08.200 have like 10, 15, 20 proposals all in
+01:44:11.080 one go. I
+01:44:12.560 You could, I wouldn't recommend that,
+01:44:13.880 but you can add all of your existing
+01:44:15.640 proposals if you want to. Um so, yeah.
+01:44:18.240 You would just um I'd just copy and
+01:44:20.160 paste the markdown file straight into
+01:44:21.880 the proposed command. Remember what you
+01:44:23.920 can do is you can do OPSX propose and
+01:44:28.320 then you can just dump
+01:44:29.800 p- paste a load of code it a load of
+01:44:31.920 markdown in. You don't need to
+01:44:34.080 re-describe it or anything like that.
+01:44:35.560 You can just um you can just paste it
+01:44:37.480 straight in.
+01:44:42.120 Um I'm not familiar with that, so I'm
+01:44:44.480 not uh the best
+01:44:48.560 to answer that. Uh so, I have to we'll
+01:44:51.520 have to skip that one.
+01:44:55.360 Um how would this approach align with a
+01:44:56.800 team of 20 engineers? Yeah, so um one of
+01:44:59.760 the companies that I saw using uh open
+01:45:02.720 spec um when I was researching it was
+01:45:06.520 using probably not 20, but a a good
+01:45:09.760 handful of engineers. So, I'd probably
+01:45:11.080 say like 12 to 15.
+01:45:13.040 Um and it works really well because I I
+01:45:16.160 the question I answered before about the
+01:45:17.680 get history, you're you're, you know,
+01:45:20.400 that's like that's kind of like asking
+01:45:22.400 how does uh how does get work with a
+01:45:25.640 with a a team of 20 engineers? Well, it
+01:45:28.600 does work because, you know, you're
+01:45:29.960 keeping everything in sync. You're keep
+01:45:31.920 you're pushing up to a a remote
+01:45:33.960 repository where everyone can access
+01:45:35.720 everything. So, I would say it works
+01:45:37.600 really well because you can uh you do
+01:45:40.040 keep your specs alongside the features
+01:45:42.240 that you're building. You know, t- if if
+01:45:44.640 10 let's say 20 the all of the 20
+01:45:47.560 engineers were all working on different
+01:45:49.640 uh features,
+01:45:50.880 um everything gets synced up within
+01:45:52.360 source control anyway. Of course, you're
+01:45:54.240 going to get conflicts like you would
+01:45:56.240 any other way like, you know, this
+01:45:58.120 doesn't solve the problem of
+01:46:00.240 um you know, let's say
+01:46:02.400 uh we're we're building like multiple
+01:46:04.120 API endpoints and someone builds like a
+01:46:06.920 service over here and then someone
+01:46:08.520 builds like another service over here
+01:46:10.280 and then they both do the same thing.
+01:46:12.200 Obviously, you know, that's just an
+01:46:14.520 engineering problem that's always been
+01:46:16.480 the case as as long as
+01:46:18.680 um source control has been available.
+01:46:20.480 People are going to do different things,
+01:46:21.840 but you know, you can sync up your specs
+01:46:24.400 and and your proposals. So, um yeah, it
+01:46:26.640 works really well. Um
+01:46:28.320 it scales well as well.
+01:46:35.560 All right. Let me just bring this back.
+01:46:40.480 Um
+01:46:44.480 Okay. So, can uh a new feature work on
+01:46:46.960 top of another spec?
+01:46:50.160 Can the agent use the experience of a
+01:46:51.800 previous spec to continue?
+01:46:54.320 Or even in the current spec, can I say
+01:46:56.040 something like
+01:46:57.800 uh implement this next?
+01:47:00.640 I'm not 100% sure
+01:47:03.840 what you mean. Um
+01:47:07.440 I'm guessing you mean like a adding like
+01:47:09.520 a proposal and then
+01:47:12.600 um
+01:47:16.040 building on top of that. Uh if you can
+01:47:18.440 if you could just clarify in the chat,
+01:47:19.960 that'd be great and then I'll
+01:47:22.080 I'll come back to this question after.
+01:47:23.160 So, I'll just put another pop another
+01:47:24.560 question in.
+01:47:25.760 Um and I'll I'll um happy to answer
+01:47:27.960 that.
+01:47:29.480 Uh what's the benefit of using SED after
+01:47:31.800 the main structure of the project exists
+01:47:35.240 um
+01:47:36.320 compared to using the planning feature
+01:47:39.600 of
+01:47:40.840 uh set? Okay. Yeah, so yeah. I mean,
+01:47:44.000 pretty much like um
+01:47:46.120 you know, why can't we just use plan
+01:47:47.760 mode for this? I totally get that. And
+01:47:49.760 to be honest, I still do use plan mode
+01:47:53.200 um
+01:47:53.760 a lot. So, you know, even for uh
+01:47:57.640 you know, fairly
+01:48:00.200 not large, but like significant
+01:48:01.960 features, I will use plan mode as well.
+01:48:04.640 Um
+01:48:05.719 I've been leaning a lot more into open
+01:48:07.400 spec recently just because of the way
+01:48:09.280 that as we've seen through the workshop,
+01:48:11.920 it retains the history of what I've done
+01:48:14.200 and the decisions that have been made.
+01:48:16.480 And I start to find myself as project as
+01:48:19.240 projects grow, first of all, using more
+01:48:21.400 usage cuz I have to go back and or yeah,
+01:48:23.280 my agent has to go back and figure out
+01:48:24.920 what I've already done.
+01:48:27.200 Whereas if you have the specs, they're a
+01:48:28.880 source of truth of what's, you know,
+01:48:31.200 what's the current what the current
+01:48:32.280 state of your project is. So, as long as
+01:48:34.240 you're like consistently using propose,
+01:48:36.320 you do build up that history and that
+01:48:38.480 context of what's actually there. Um and
+01:48:40.840 I found that I'm I move a little bit
+01:48:43.000 Well, actually I move a lot quicker
+01:48:44.800 using this approach. Um but that's not
+01:48:47.840 to say you you don't you have to use
+01:48:49.920 that. Um bear in mind if you do use plan
+01:48:52.640 mode, for example, if you do use uh the
+01:48:55.040 planning feature inside of cursor to add
+01:48:57.040 a feature
+01:48:58.240 and you are using open spec, too.
+01:49:00.719 Um
+01:49:01.520 that that kind of feels like a conflict
+01:49:03.560 like, &quot;Oh, I've changed something, but
+01:49:04.840 open spec doesn't know about it.&quot; Well,
+01:49:06.800 actually when you come to, you know, use
+01:49:08.920 a new proposal or you come to create a
+01:49:10.560 new proposal, it probably will. I would
+01:49:12.760 personally recommend just sticking with
+01:49:14.760 one thing like Open Spec um and and
+01:49:18.440 staying with it. But, of course, you can
+01:49:20.240 use the you can use plan mode in
+01:49:22.200 between. And I still do that for like
+01:49:23.720 really small changes as well.
+01:49:29.080 Um Open Spec added new skills to my
+01:49:31.840 GitHub folder. How do I avoid conflicts
+01:49:34.560 with my co-pilot agents or are they
+01:49:36.960 meant to work together? Um
+01:49:41.000 Oh, that's weird. Like, I didn't realize
+01:49:44.320 uh
+01:49:44.960 I'm guessing you mean the GitHub folder
+01:49:46.280 inside of your
+01:49:48.560 um inside of your project. I've not
+01:49:51.160 actually seen that before.
+01:49:53.240 Um
+01:49:55.400 But I but
+01:49:56.680 I I'm guessing they're meant to work
+01:49:58.240 together. I mean, it's um it should work
+01:50:00.960 across
+01:50:02.480 um
+01:50:03.160 different agents anyway. So, I'm
+01:50:05.080 guessing that's why that's been done.
+01:50:06.640 I've not seen that. So,
+01:50:09.160 um
+01:50:10.880 Yeah, that's that's really strange.
+01:50:13.480 I haven't seen that before. I haven't
+01:50:14.960 seen that happen.
+01:50:17.400 Um Do you know if this could be also
+01:50:20.080 used in Unity projects at least for
+01:50:22.040 architecture entity definitions and
+01:50:24.560 cohesive interactions between them?
+01:50:26.320 Possibly. Yeah, I mean, um
+01:50:28.720 I've only used it for what I use it for.
+01:50:31.400 So, I can't comment specifically on
+01:50:33.040 Unity. But, I'm guessing that it would
+01:50:36.200 um work in exactly the same way. Bear in
+01:50:38.040 mind that there's no, you know, Open
+01:50:40.440 Spec is a framework, a structured
+01:50:42.680 framework for specs. So, it should work
+01:50:45.360 in, you know, whichever framework you're
+01:50:47.320 using, whichever language or platform
+01:50:49.040 that you're building on. So, um yeah,
+01:50:51.360 I'm guessing it should work. Um I would
+01:50:54.080 uh try and init it, you know, create up
+01:50:56.560 a new branch so you're not
+01:50:58.560 getting anything in the way and just try
+01:51:00.520 and add a fairly small feature just to
+01:51:03.000 see how it actually works with it. But,
+01:51:05.200 bear in mind you can also to guide it
+01:51:09.080 I'm not massively familiar with Unity
+01:51:11.080 products uh projects. But, to guide it,
+01:51:14.160 you can head over to your config here.
+01:51:16.600 Uh it's just YAML. So, you can just fill
+01:51:18.200 this in. Uh you can add in your text
+01:51:20.320 struct text stack here, the domain that
+01:51:22.480 you're working in. You can set per
+01:51:24.440 artifact rules as well. There's there's
+01:51:26.280 a bunch of configuration that you can do
+01:51:28.120 inside of here.
+01:51:29.400 Uh if you need to tweak things and get
+01:51:31.560 things, you know, working working as you
+01:51:33.480 need them.
+01:51:40.880 Um is there any impact to work with uh
+01:51:43.400 spectrum development in a dev team time
+01:51:46.160 related in a sprint?
+01:51:48.440 Um
+01:51:50.400 I'm guessing you mean a negative impact
+01:51:51.840 on the time it takes. I would say um as
+01:51:55.240 you get used to working with specs and
+01:51:58.640 as you you sort of build a culture
+01:52:01.560 of working with specs
+01:52:04.160 rather than just making changes with
+01:52:07.120 agents, you should probably see a
+01:52:11.720 uh increase in, you know,
+01:52:14.120 in productivity because you are
+01:52:17.280 everyone's on board. You can share specs
+01:52:19.120 as well, which is another really great
+01:52:20.480 thing. So,
+01:52:21.840 it's really difficult to share
+01:52:24.760 prompts or the output of prompts with
+01:52:27.320 with team members. Whereas, if you are
+01:52:29.800 doing spectrum development, you can get
+01:52:31.960 other people to agree with an
+01:52:33.520 implementation before you implement it.
+01:52:36.040 It's kind of like a reverse code review
+01:52:38.840 where you can generate a spec, uh
+01:52:41.720 generate a task list, or look at the
+01:52:43.320 technical design decisions, hand it over
+01:52:46.200 to another member of the team, and then
+01:52:48.080 you could say, &quot;Does this feel about
+01:52:49.960 right?&quot; They can say, &quot;No, this is what
+01:52:51.920 needs to change.&quot; You could change it.
+01:52:53.600 And then, obviously, like the the 20 10%
+01:52:55.920 is just letting your agent go ahead and
+01:52:57.440 implement it. So, uh yeah, I think um I
+01:53:00.280 don't I I don't think it should have any
+01:53:01.880 impact on it. Um but um yeah, it's one
+01:53:05.240 to watch for and it's it's a good idea
+01:53:06.800 to experiment with with things like this
+01:53:08.880 as well, for sure.
+01:53:13.240 Um I'm on a team with a few developers.
+01:53:15.640 Um we typically don't commit tooling
+01:53:17.760 files. I reckon it's it's useful to keep
+01:53:19.720 the spec context over time.
+01:53:22.840 Um but, is there a way to persist them
+01:53:25.440 without checking in?
+01:53:28.240 Yeah, this is a this is a difficult one
+01:53:30.080 because I wouldn't necessarily regard it
+01:53:32.600 as um
+01:53:34.640 as like uh you know, it's not like a you
+01:53:37.480 know, you're like a shared skill file or
+01:53:39.480 it kind of is. But, because it's more of
+01:53:41.800 like a framework that the the things
+01:53:43.640 that get generated are artifacts. Um so,
+01:53:47.240 you know, they're artifacts that are
+01:53:48.440 useful for the project. They're like uh
+01:53:51.160 integral to the project that you're
+01:53:52.760 actually building. You know, they they
+01:53:54.880 explain the project. And I think the
+01:53:57.680 great thing about sharing these specific
+01:53:59.640 types of artifacts with teams is that
+01:54:01.720 you uh everyone can build on what
+01:54:03.960 everyone's done. Everyone can see what
+01:54:05.560 everyone is doing as well. I would say,
+01:54:08.320 yeah, sure. Like, if you really want to
+01:54:11.200 use spectrum development and
+01:54:12.960 specifically Open Spec and you don't
+01:54:15.080 want to commit these files,
+01:54:17.080 there's nothing wrong with just using it
+01:54:18.440 as an assisted tool to, you know, get
+01:54:21.000 the spec, generate the feature, you
+01:54:23.280 know, use that as your little like
+01:54:25.400 internal process just for you to to to
+01:54:28.200 look through the spec and then uh go
+01:54:30.160 ahead and have it build it and then just
+01:54:31.440 clear everything out. Like, you could
+01:54:33.280 you absolutely could do that and it's a
+01:54:35.280 massive upgrade over, you know, just
+01:54:37.560 prompting your agent to get something
+01:54:39.320 right. Um So, yeah, you know, why not?
+01:54:42.240 Um there aren't really any rules. You
+01:54:44.040 can you can do what you want. Um I've
+01:54:46.680 not um I've not personally done that.
+01:54:49.080 But, sure. Like, you could absolutely do
+01:54:51.240 that as well. Um in as to in terms of
+01:54:53.960 persisting them,
+01:54:55.480 um yeah, just do a get ignore. Like,
+01:54:57.840 just do a get ignore on the Open Spec
+01:54:59.440 directory and you'll persist them for
+01:55:01.040 your use
+01:55:02.440 um but not for other anyone else. But,
+01:55:04.080 if all members of your team are all
+01:55:06.120 using Open Spec, there's not really any
+01:55:07.600 reason not to commit the the spec files
+01:55:09.960 and the artifacts that get generated
+01:55:12.320 uh to source control.
+01:55:17.120 Um let's say team defined specs already
+01:55:19.040 exist in Notion. How can we integrate
+01:55:21.480 Notion seamlessly
+01:55:23.680 in an Open Spec STD flow? Interesting
+01:55:27.120 question. Uh yeah, this is probably
+01:55:29.400 pretty pretty common, to be honest. Um
+01:55:32.440 Again, what I would do is I would start
+01:55:36.200 to um Yeah, it's difficult. If it's like
+01:55:40.320 a if it's like a living spec across your
+01:55:42.560 whole project, that's going to be really
+01:55:44.640 difficult to generate that Open Spec
+01:55:48.600 sort of spec um
+01:55:50.720 format for that living spec that exists
+01:55:53.400 within.
+01:55:54.560 Personally, that I don't think there's
+01:55:56.080 anything wrong with having a spec
+01:55:57.680 outside of a project. I have multiple
+01:56:01.120 side projects where my specs just live
+01:56:03.240 in Claude, as in the web version of
+01:56:05.680 Claude. And the reason that my specs
+01:56:08.040 live in there with artifacts like
+01:56:09.680 markdown files and stuff and you you
+01:56:11.240 know, Notion, Claude, whatever. It
+01:56:12.640 doesn't really matter where they live.
+01:56:14.320 Um the reason I find that useful is when
+01:56:16.080 I'm working on a project locally,
+01:56:18.560 um I will go to Claude. I will click on
+01:56:21.400 like a starred project um one of my uh
+01:56:24.760 specs live in and I'll say, &quot;I need to
+01:56:27.760 rethink this thing.&quot; Like, or I can ask
+01:56:29.720 a my spec a question, or I can test my
+01:56:32.080 spec, or I can generate new features
+01:56:33.960 from my spec. So, there's nothing wrong
+01:56:35.880 with having that living uh outside of
+01:56:37.840 that. But, as far as I know, there's not
+01:56:39.280 a way to sort of convert it all over or
+01:56:41.920 seamlessly like sync it in or integrate
+01:56:44.480 it. But, what I would say is uh if you
+01:56:46.920 wanted to start using Open Spec or any
+01:56:48.920 of the others, you could just like
+01:56:51.200 propose something and then, you know,
+01:56:53.080 just treat it as like a fresh start.
+01:56:54.600 Like, I think I asked this question uh
+01:56:56.520 earlier as well. So, like, treat each
+01:56:58.680 new proposal as a fresh start, build up
+01:57:00.680 that internal spec within um
+01:57:04.200 within your project. And you actually
+01:57:06.680 might find you might not need Notion
+01:57:09.120 later.
+01:57:10.240 Um but, what you could do, I guess, is
+01:57:12.920 um what would be useful
+01:57:15.240 is you could
+01:57:16.960 sync it back the other way. So, you
+01:57:18.120 could have like your Open Spec spec
+01:57:20.200 living inside of your source control.
+01:57:21.840 But, you could host it on like GitHub
+01:57:23.360 pages or something for everyone to see.
+01:57:25.760 Um yeah, you know, like like I said,
+01:57:27.520 there are no there are no correct ways
+01:57:29.120 to do things. Like, there are
+01:57:30.120 recommended workflows and recommended
+01:57:31.840 ways of doing things.
+01:57:33.400 Um but, you know, whatever works best
+01:57:35.240 for your team. Uh I think this is just
+01:57:36.760 another great great tool to to help you.
+01:57:40.120 Um
+01:57:40.760 but, you can tweak it to whatever you
+01:57:42.040 need to do.
+01:57:46.280 Uh okay. So, as the archive grows, does
+01:57:49.200 the number of tokens also increase? Or
+01:57:51.640 more specifically, is the agent going
+01:57:53.120 through the entire archive or just the
+01:57:54.840 spec proposal we're working on? That is
+01:57:57.440 a really good question that I don't know
+01:57:59.040 the answer to.
+01:58:00.440 I haven't actually monitored that
+01:58:01.560 before.
+01:58:03.120 I'm going to guess that yes. Um with
+01:58:06.719 your existing spec, yes, it's going to
+01:58:10.440 um
+01:58:11.800 it's going to use more tokens cuz
+01:58:13.600 obviously you're sending more data over
+01:58:15.280 to whichever service you're using. So,
+01:58:17.520 I'm going to say yes, it probably does.
+01:58:19.480 I'm not sure it will by a uh significant
+01:58:22.960 amount. Um and also bear in mind that
+01:58:27.280 you if we just take a look at the spec
+01:58:29.280 here that we've got for polls, this is
+01:58:31.240 like a super lightweight version of the
+01:58:33.800 decisions that we've made.
+01:58:35.800 I'm going to make a guess and say that
+01:58:38.160 your agent probably won't be reading
+01:58:40.840 these. Um they might you might need to
+01:58:43.080 tightly control that. You might need to
+01:58:45.600 uh create like a like a Claude ignore or
+01:58:47.920 a Cursed ignore file specifically for
+01:58:50.760 the archive if you're worried about
+01:58:52.360 token usage. So, just go and create that
+01:58:54.719 in the root directory .claud or .cursed
+01:58:57.160 ignore file if you haven't already and
+01:58:59.200 just exclude specifically the archive
+01:59:01.400 that you have here that allows specs, I
+01:59:03.560 think that would be a good good way to
+01:59:05.160 monitor that. Um so you could go ahead
+01:59:07.160 and monitor that and see what it looks
+01:59:08.920 uh looks like. But yeah, really good
+01:59:10.280 question and I'm not I'm not 100% sure,
+01:59:13.400 um but I'm guessing it will use more
+01:59:15.200 tokens, but not significantly and you
+01:59:16.680 can you can exclude stuff as well.
+01:59:21.680 Um is there any problem when other
+01:59:23.280 teammates create changes without a open
+01:59:26.280 spec um
+01:59:28.000 for context of your open spec? Uh
+01:59:30.880 yeah, it can do, yeah. So, um let me let
+01:59:33.760 me think of an example. So, yeah, let's
+01:59:35.880 say you add a feature and you've got
+01:59:37.640 that wrapped up in your open spec
+01:59:40.040 um
+01:59:41.080 um not archive, but like you folded that
+01:59:43.480 into the living spec in your in your
+01:59:45.600 open AI uh sorry, in your open AI in
+01:59:48.280 your open spec uh folder or spec.
+01:59:52.200 Yes, let's just say that then later on
+01:59:55.040 someone removes that, it's not going to
+01:59:57.960 be represented within your spec because
+02:00:01.000 someone else has removed it. Now, that's
+02:00:02.840 an extreme example, of course someone
+02:00:04.560 could change something significant.
+02:00:08.040 In that case, of course,
+02:00:09.920 I think next time that you go and you
+02:00:12.560 uh create a new proposal,
+02:00:14.520 your proposal will then go ahead and it
+02:00:16.640 will see the current state of your code
+02:00:18.360 base and then that current state of your
+02:00:20.040 code base will probably get folded back
+02:00:21.880 into your spec. So, eventually stuff uh
+02:00:24.720 does sync up, um but it is a good idea
+02:00:27.160 to have everyone using the same
+02:00:29.240 framework for specs and proposals um
+02:00:32.960 as time goes on, for sure.
+02:00:38.200 Uh if a feature builds on an archived
+02:00:40.400 spec, uh if a feature builds on an
+02:00:42.880 archived spec, should we reference it or
+02:00:45.400 does it automatically read the archive?
+02:00:48.560 Um yeah, it will know what you have
+02:00:51.640 already done as part of your project,
+02:00:53.800 full stop. So, it will know the features
+02:00:55.600 that you've added by looking through um
+02:00:57.800 the archive files
+02:00:59.760 um or the archive specs. So, um it will
+02:01:02.440 know the behavior of your application,
+02:01:04.400 what features are there.
+02:01:06.160 And of course your agent does a lot of
+02:01:07.480 that work anyway, so this just really
+02:01:09.200 assists with that. So, yeah,
+02:01:11.080 um you don't need to worry about that at
+02:01:12.760 all. It will
+02:01:13.960 it will um it will know what you're
+02:01:15.440 doing.
+02:01:20.040 Um how does Open Spec compare to Spec
+02:01:23.600 Kit? Are there any differences to using
+02:01:25.800 Open Spec over Spec Kit? I knew this
+02:01:28.240 question would come up. Um I have used
+02:01:32.000 Spec Kit. I didn't like it as much. I
+02:01:35.400 can't really tell you why. Like most
+02:01:37.560 tools, I just found Open Spec incredibly
+02:01:40.520 easy to use.
+02:01:42.360 Um I would just try both. Like I'm not
+02:01:46.000 here to tell anyone to use any specific
+02:01:48.640 tools at all.
+02:01:50.280 Not Claude Code, not Open Spec. Um I
+02:01:52.960 would just go ahead and experiment with
+02:01:54.400 them. And more importantly, if you're on
+02:01:56.400 a team, make sure everyone is on board
+02:01:58.400 with that as well. You know, it's like
+02:01:59.640 choosing
+02:02:00.760 um you know, any tool or any framework
+02:02:03.360 or um
+02:02:04.880 you know, anything that you use within a
+02:02:06.280 team. But um I would experiment with
+02:02:08.320 both. The ge- general sort of consensus
+02:02:12.000 I get is that Open Spec is just
+02:02:14.120 generally a lot easier to use in terms
+02:02:16.360 of the workflows and how it folds in the
+02:02:19.360 changes that you already have into a
+02:02:21.520 living spec rather than have the
+02:02:23.120 individual proposals hang around, I
+02:02:24.560 think. But um I haven't used it for a
+02:02:27.040 while, but um yeah, personally I like
+02:02:29.000 Open Spec. Um I would just give both a
+02:02:31.360 try.
+02:02:33.280 Um right, we've got time for like a
+02:02:34.440 couple more questions uh before we go.
+02:02:36.640 So, um I'll answer
+02:02:38.840 uh two more and uh we'll head off. Um
+02:02:42.080 so, if I use Open Spec for a team, say
+02:02:44.280 50 people, does it mean it will keep
+02:02:46.400 using Claude to reread the spec over and
+02:02:48.720 over uh many times? If so, would that
+02:02:50.760 make my cost very high? Yeah, I saw I
+02:02:52.600 guess I sort of answered this earlier.
+02:02:54.360 So, in this in this case, yeah, I
+02:02:56.480 haven't tested this myself, but
+02:02:58.080 potentially um so, what I would do is I
+02:03:01.880 would um
+02:03:03.480 you know,
+02:03:04.440 I'm
+02:03:05.440 So, here's the trade-off. I'm going to
+02:03:06.720 say
+02:03:07.840 that it's less token heavy to read even
+02:03:11.440 the archived features, you know,
+02:03:13.880 depending on how many you have, you
+02:03:15.560 know, let's like keep it reasonable. I
+02:03:17.520 would say, okay, well, let's say just
+02:03:19.400 the spec. So, I'd say it's less token
+02:03:21.240 heavy to read the spec and the behavior
+02:03:23.000 of your application to get an idea of
+02:03:24.880 what your application does and how it
+02:03:26.480 behaves and what features you have,
+02:03:29.240 that's let much less token heavy than
+02:03:32.200 scanning your entire code base um or
+02:03:35.120 large parts of your code base will it
+02:03:36.840 ever be. So, yeah, um maybe just monitor
+02:03:39.840 it. Um so, you know, perhaps exclude the
+02:03:42.600 changes directory. Um this is definitely
+02:03:44.840 something that I want to look into cuz
+02:03:46.160 these are some really good questions
+02:03:48.040 about usage which I hadn't considered.
+02:03:50.400 Um but yeah, um I would say generally
+02:03:54.280 looking at
+02:03:56.200 a few changes that you've made and some
+02:03:58.000 wrapped up specs is probably going to be
+02:03:59.760 less tokens than reading your code base
+02:04:02.640 over and over again as you jump into
+02:04:05.160 Claude and say, I need to build a new
+02:04:08.120 feature or you know, whichever agent I
+02:04:09.840 need to build a new feature and then you
+02:04:12.280 know, when you get it when it starts to
+02:04:13.680 say, right, let me look at the current
+02:04:15.080 state of the code base and you think,
+02:04:16.520 ah, this is going to you know, really
+02:04:18.200 start to ramp up my usage cuz it's
+02:04:20.960 sending half of my code base
+02:04:23.200 up in tokens.
+02:04:28.440 Um can Open Spec be used with multiple
+02:04:31.040 agents like for parallel work? Good
+02:04:33.120 question. Um I haven't actually
+02:04:34.600 experimented experimented with this yet.
+02:04:38.480 Um
+02:04:39.080 yes, it probably could be because, you
+02:04:41.640 know, each proposal that you create is
+02:04:44.080 completely separate.
+02:04:45.800 So, technically you could have, you
+02:04:47.560 know, multiple agents working on the
+02:04:49.040 same code base within like work trees or
+02:04:51.440 or
+02:04:52.080 even just branches, whatever you want to
+02:04:53.640 do, whatever your workflow looks like
+02:04:55.400 personally, um and then have them uh
+02:04:57.920 both create proposals and then both
+02:05:00.000 fulfill them proposals and then, you
+02:05:02.400 know, merge them together. As long as
+02:05:03.800 like with any other any development work
+02:05:06.240 and with any team of either humans or
+02:05:09.480 AI,
+02:05:10.640 uh if they're working on conflicting
+02:05:12.160 things, then of course you're going to
+02:05:13.200 have problems, but I don't see any
+02:05:15.240 reason why it couldn't. Um again, that's
+02:05:17.040 something probably to experiment with as
+02:05:19.640 well.
+02:05:21.640 Um okay, so we're going to wrap up now.
+02:05:23.600 Uh there's probably like millions of
+02:05:24.960 questions. Um please feel free to um
+02:05:28.520 add me on um X if you have any
+02:05:31.640 questions. I'm actually going to open up
+02:05:33.080 my DMs as well, so you can go ahead and
+02:05:35.080 either send me a po- a message or
+02:05:37.960 privately if you've got any other
+02:05:39.040 questions. I'm always happy to help. I'm
+02:05:41.600 always learning, so I'd love to hear
+02:05:42.880 from you. Um and if you did enjoy the
+02:05:44.680 workshop, um we'd absolutely love to
+02:05:46.440 hear from you on Trustpilot as well. So,
+02:05:48.080 you can either go over to
+02:05:48.800 trustpilot.com/review/unlearn.dev
+02:05:52.320 or scan the QR code as well. Um and we
+02:05:55.760 would really really appreciate a review.
+02:05:58.720 Um I'm so sorry that the actual building
+02:06:01.200 go well, but you know, that's just uh
+02:06:03.360 that's just how AI works. But um I hope
+02:06:05.960 you enjoyed this. I hope you found it
+02:06:07.320 useful and even if you don't use Open
+02:06:09.200 Spec, I hope this has given you uh some
+02:06:11.440 food for thought around using specs for
+02:06:14.840 your project as well. So, um yeah, thank
+02:06:17.880 you so much for joining us and I really
+02:06:20.520 look forward to seeing you in the next
+02:06:21.960 workshop as well. Just before we go, I'm
+02:06:23.320 just going to check on seats here um and
+02:06:26.160 yeah, looks like yeah, it's probably uh
+02:06:28.800 sold out here. Yeah, so we've sold out
+02:06:31.600 early access seats for um
+02:06:35.560 the 50 that we're giving away during
+02:06:37.160 this workshop. So, thank you so much to
+02:06:38.600 those 50 that signed up. You joined us
+02:06:41.080 and um yeah, we can't wait. So, yeah,
+02:06:44.360 thanks once again.
+02:06:46.040 And um yeah, um I look forward to seeing
+02:06:49.200 you soon. Um we are launching, let me
+02:06:52.160 just have a really quick look here.
+02:06:55.040 Yeah, if you just um on the screen, if
+02:06:57.680 you missed our door access or if you
+02:06:59.760 missed the early access to Unlearn, um
+02:07:02.800 feel free to go over and add the event
+02:07:04.600 to your calendar.
+02:07:06.320 Um this will, let me just go back to my
+02:07:08.880 slide. This will um
+02:07:11.240 just let you know when we're reopening
+02:07:12.760 access to Unlearn, so you can you can
+02:07:14.560 get in and learn
+02:07:16.000 about this kind of stuff, but also a lot
+02:07:18.320 more as well. We've got huge plans for
+02:07:19.880 it. So, um yeah, we really look forward
+02:07:22.080 to seeing you there. Okay, so once
+02:07:24.000 again, thank you so much for joining and
+02:07:25.960 I will see you again soon.

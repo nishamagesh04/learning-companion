@@ -1,0 +1,254 @@
+# tactiq.io free youtube transcript
+# #debugging challenge - 2 vscode debugging python
+# https://www.youtube.com/watch/l_0ZHMOJf3E
+
+00:00:00.320 Hey, hi YouTube. How are you? I hope you
+00:00:02.320 all guys are doing great. In this video,
+00:00:04.240 we are going to solve another challenge
+00:00:06.480 problem uh in our debugging series. Till
+00:00:09.040 now we have learned about break points
+00:00:10.960 and watch panel and also we have solved
+00:00:13.519 one of the challenge. So in this video
+00:00:15.679 we are going to uh look at challenge
+00:00:18.080 number two. You can also practice by
+00:00:20.080 your own looking at uh just clone this
+00:00:22.240 repo and you can find this challenge
+00:00:23.840 number two here. Okay. So let's see what
+00:00:27.039 actually is in challenge number two.
+00:00:30.080 Before moving to any question, uh, as I
+00:00:32.558 already told you, you should have a
+00:00:33.920 better understanding of the business
+00:00:35.520 need or the requirement. So, let's see
+00:00:37.280 what the requirement is. Uh, so here is
+00:00:39.440 the requirement. Here is a shopping cart
+00:00:41.200 script. The developer says it should
+00:00:43.280 calculate the total price with quantity
+00:00:45.920 and discount rule. But the final total
+00:00:48.640 is getting wrong. Okay. Uh, business
+00:00:52.000 requirement uh is if the cost is more
+00:00:54.399 than 500, offer them 10% discount. Okay.
+00:00:58.079 So let's see uh just let's first run the
+00:01:01.280 program and let's see what we are
+00:01:02.480 getting. So we have a product name
+00:01:04.959 keyboard and the subtotal is 400. So we
+00:01:08.240 don't we are not getting any discount
+00:01:09.680 because uh if the product price is more
+00:01:12.000 than 500 we have to offer 10% discount.
+00:01:14.640 Then in monitor to subtotal is 600. Uh
+00:01:17.200 but the discount we are getting is 30
+00:01:19.439 because we have to give 10%. And if you
+00:01:22.720 do 10% of 600 it will be around 60.
+00:01:26.400 Okay. So discount should be 60. So this
+00:01:28.560 is the first problem that we have
+00:01:29.759 encountered in our program. USB cable
+00:01:32.159 subtotal is 100 and the discount is
+00:01:34.000 zero. So that's correct because uh if
+00:01:36.320 the total cost is not more than 500 we
+00:01:39.520 don't have to offer any discount. So
+00:01:41.759 what is the total? So currently the
+00:01:43.680 total is 400 500 500 and 500 uh 70. So
+00:01:48.720 total is correct. Okay. And discount
+00:01:50.720 applied is also correct because only 30
+00:01:52.880 rupees we have discounted or $30
+00:01:55.040 whatever you need. Okay.
+00:01:57.840 But the problem is uh even if the
+00:02:00.159 subtotal is more than 500, we are just
+00:02:03.200 giving uh it's 5% discount, isn't it? So
+00:02:06.799 we should offer 10% discount. Okay. So
+00:02:09.520 how we can debug it? That's the
+00:02:11.038 important part. Okay. So definitely uh
+00:02:13.680 the first break point should be here.
+00:02:15.200 Why? Because this is the only method
+00:02:16.879 that we are calling and it is
+00:02:18.160 calculating the card total. Then inside
+00:02:20.560 the card total, we have seen that apply
+00:02:22.640 discount method is getting wrong. Okay?
+00:02:25.520 So we can just use a breakpoint at apply
+00:02:27.599 discount. Okay. And let's see what
+00:02:29.200 actually it is happening. Maybe we can
+00:02:30.800 apply breakpoint also here to look at.
+00:02:33.280 Okay. So now let's uh run this
+00:02:36.319 debugging. Okay. Uh debugger. And
+00:02:39.280 currently we have just one variable
+00:02:40.879 which is where we are having about
+00:02:42.879 cards. Okay.
+00:02:45.440 So if you want to see what is inside the
+00:02:48.959 card, you can also do like this uh card
+00:02:52.959 and maybe um
+00:02:55.680 card
+00:02:57.360 you can see at one we what we have. So
+00:03:00.480 we have in one we have monitor price is
+00:03:03.840 600 and quantity is one. Okay, that's
+00:03:06.800 fine. And if you're not sure how we are
+00:03:09.840 calculating the uh the total price, it's
+00:03:13.280 very simple. price into quantity. Okay.
+00:03:16.000 So if uh if we have two uh two quantity
+00:03:19.760 of keyboard whose unit price is 200. So
+00:03:22.560 the total price will be 200 into 2400.
+00:03:24.959 Okay. Okay. No issues. Okay. So we have
+00:03:28.239 the card. Now we are going to move
+00:03:30.560 inside this uh calculate card total
+00:03:33.200 method because something is going wrong
+00:03:34.799 here. So we went here. Total is zero and
+00:03:38.080 total discount we got initially is also
+00:03:41.280 zero. We have just initialized it. So we
+00:03:43.840 are at the first item. Okay. So uh at
+00:03:46.959 the first item
+00:03:48.910 [Music]
+00:03:54.080 okay so the first item will be keyboard.
+00:03:57.200 Okay. So we are at the first item. Item
+00:04:00.080 name is keyboard. Price is 200 and
+00:04:02.400 quantity is two. Okay. Uh then we are
+00:04:06.560 having calculate item total. So item
+00:04:09.200 total what will be the item total? It
+00:04:11.040 will be 400 because uh the price is 200
+00:04:15.120 and quantity is two. So it should return
+00:04:17.279 200 sorry 400. So the item total that we
+00:04:20.720 are going to get is here you can see we
+00:04:23.440 have got 400. Then uh let's move to
+00:04:26.800 discount. Uh so if subtotal is more five
+00:04:29.680 more than 500 and uh so return subtotal
+00:04:34.080 is this. Okay. So maybe we can create uh
+00:04:37.360 a watch here that sub total uh once we
+00:04:41.120 get the subtotal uh more than um or um
+00:04:47.199 uh we can say
+00:04:49.680 look
+00:04:51.199 uh if um sub total
+00:04:57.840 is more than 500
+00:05:01.280 uh else
+00:05:03.600 go
+00:05:05.199 Okay. So it is it is go because uh we
+00:05:07.919 are not having subtotal more than 500.
+00:05:10.400 And definitely this kind of uh watch
+00:05:12.800 statement doesn't uh helps lot in
+00:05:16.240 debugging um such kind of things in
+00:05:19.759 different scenario it can help but for
+00:05:22.000 this type of things we have conditional
+00:05:23.840 break points. So whenever conditionary
+00:05:25.520 is reached that breakpoint set. So we
+00:05:27.680 will study in uh upcoming videos.
+00:05:30.960 So now let's move forward and let's see
+00:05:34.320 uh so currently the discount we got is
+00:05:37.280 zero and total discount is also zero.
+00:05:39.840 Okay. So the name is keyboard the price
+00:05:43.360 is uh sorry the item total is somewhere
+00:05:47.039 here uh which is 400 and the discount we
+00:05:50.240 got is uh where is discount? So discount
+00:05:54.320 is zero. So that's why total discount is
+00:05:56.320 zero. Fair enough. There is no problem.
+00:05:58.800 Okay. So the total will be total item
+00:06:01.199 item total minus discount. So total will
+00:06:03.600 be still I guess it's it will be around
+00:06:06.479 uh 400 only. Okay. So no worries. Okay.
+00:06:10.160 Now we move to next uh iteration and now
+00:06:13.680 we are going to deal with monitor whose
+00:06:16.080 price is 600 and quantity is one. Okay.
+00:06:20.080 So here the price is around
+00:06:23.360 200. Uh if I move to next line you can
+00:06:25.680 see price is sorry 600. Okay. Item price
+00:06:28.400 is 600 and what's the quantity? Quantity
+00:06:30.960 is one. Okay. Now we are going to inside
+00:06:33.440 item calculate item total. So calculate
+00:06:35.919 item total gave us 600. Okay. Why it
+00:06:39.039 gave 600? Because uh price is 600 and
+00:06:42.560 just we have one quantity. So it's 600
+00:06:45.120 into 1 600. Then if we just go into
+00:06:48.639 apply discount what actually is
+00:06:50.160 happening we have to see. So let's go
+00:06:51.919 into discount. Uh see we got to look
+00:06:54.720 because now the subtotal is more than
+00:06:56.960 500. So look look just uh uh just focus
+00:07:01.360 now. Okay. So now the subtotal is more
+00:07:04.080 than uh you can say uh more than what is
+00:07:09.599 six more than 500. Now what we are
+00:07:12.400 getting we have to check. Okay. Now
+00:07:13.919 subtotal is 600 and subtotal is like
+00:07:16.400 this. So um maybe what I can do is um
+00:07:22.080 sub total
+00:07:24.319 uh multiplied by what we want we want um
+00:07:28.800 uh 10% discount. So 10% means 10 / 100
+00:07:32.800 which is uh doing like this 10 divid by
+00:07:36.160 100 which is 0.1.
+00:07:38.400 Okay. So so 2 0.1 it should get 60.
+00:07:43.039 Okay. Because subtotal if subtotal is
+00:07:45.440 more than 500 then we have to multiply
+00:07:48.000 it by
+00:07:49.680 10 by 100 which is 0.1 because we want
+00:07:51.840 to give we want to offer 10% discount.
+00:07:54.560 So it should give 60. Now let's see.
+00:07:58.000 So here what discount we are getting.
+00:08:00.800 Okay. So currently if you move to next
+00:08:02.800 line we will get the discount. Discount
+00:08:04.240 we are getting as 30. So it should be 60
+00:08:08.479 not 30. So what where the problem is
+00:08:11.120 here? This is the problematic code. So
+00:08:13.360 it should be not 5% it should be 10%.
+00:08:16.720 Okay. So this that's it. If you stop
+00:08:20.000 this and just run it run the Python
+00:08:22.800 file. Okay. So now if you see the
+00:08:25.680 subtotal of the first product means uh
+00:08:28.960 price of keyboard 200 into 2 is 400 and
+00:08:31.840 discount will be zero. Then subtotal of
+00:08:34.719 monitor is 600 into 1 600 and discount
+00:08:38.240 will be 60 because 10% of the total
+00:08:40.479 cost. Then subtotal for third product
+00:08:43.279 USB cable price is 100 and quantity is
+00:08:45.440 one. So 100 and discount will be zero.
+00:08:47.600 What will be the final total price? 400
+00:08:49.920 + 100 500 500 + 600 it will be around
+00:08:54.240 1100 plus - 60 uh which will be uh 1040
+00:08:58.399 and the discount applied is only 60. So
+00:09:01.440 that's it. We have solved it. So this
+00:09:03.440 was the thing how you can debug and
+00:09:05.279 definitely there is no hard and fast
+00:09:07.279 rule that this is the only way to
+00:09:09.040 approach and these are the only
+00:09:10.399 conditions that you have to approach.
+00:09:11.680 Maybe most of the time I don't even need
+00:09:14.080 watch statements conditional and uh
+00:09:16.640 normal break points are even fine
+00:09:18.959 because u in real time application it's
+00:09:22.399 it's a luxury just to look at what is
+00:09:25.120 happening inside the payload or whatever
+00:09:27.440 request or response data we are getting
+00:09:29.120 because it's very huge. It's very very
+00:09:31.279 helpful just to look what is happening.
+00:09:33.120 Okay. So even just by break points even
+00:09:36.800 if you are able to do it it's fine.
+00:09:38.560 Okay. These are the very small programs
+00:09:41.040 that I am giving you a bit complex than
+00:09:43.120 the previous one but it's still uh easy.
+00:09:45.839 I I'm not going to I'm not targeting to
+00:09:48.959 test your prior skills or uh maybe you
+00:09:52.720 have just encountered this okay this is
+00:09:54.720 0.05 05 and uh this is a error in the
+00:09:58.000 program. But I want to go I want to
+00:09:59.920 teach you how you can go uh when you see
+00:10:04.320 a new uh problem or new code or legacy
+00:10:07.760 code and how you can deal where to put
+00:10:10.560 the break point that's the important
+00:10:12.000 part where uh when you have to click
+00:10:14.240 into step into and when you have to
+00:10:16.320 click into step over where where you
+00:10:18.720 have to look into the method where when
+00:10:20.959 that part is really really important
+00:10:23.600 that I want to give you a small tour of
+00:10:26.079 and definitely you should do by your own
+00:10:28.399 just looking at the screen or just
+00:10:30.160 having a coffee and looking at the
+00:10:31.680 screen doesn't um help. Okay. So that's
+00:10:35.279 it. Uh meet you in the next video. Uh in
+00:10:37.360 the next video I will try to cover we
+00:10:39.839 have covered the variable section was
+00:10:41.519 section. So in the next video I will try
+00:10:43.200 to cover call stack and then we will see
+00:10:46.000 uh break points conditional break points
+00:10:48.079 trigger break points and some um I guess
+00:10:51.680 we are going to see um what what what
+00:10:54.800 what uh I guess uh it will be better if
+00:10:58.720 we look at um what we can say
+00:11:02.720 maybe
+00:11:05.600 log messages so we can also see blog
+00:11:07.920 messages. Okay, so that's it. Meet you
+00:11:09.920 in the next video. Till then bye-bye.
+00:11:11.279 Thank you.

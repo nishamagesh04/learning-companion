@@ -1,0 +1,605 @@
+# tactiq.io free youtube transcript
+# How To Build an API with Python (LLM Integration, FastAPI, Ollama & More)
+# https://www.youtube.com/watch/cy6EAp4iNN4
+
+00:00:00.080 AI models are powerful tools but in
+00:00:02.240 order to use them properly and securely
+00:00:04.720 you need to control them using an API so
+00:00:07.480 in today's video I'm going to show you
+00:00:09.040 how to write a very simple python API to
+00:00:11.840 control access to an llm or an AI model
+00:00:15.200 now first I want to explain why you
+00:00:17.199 actually need to do this you understand
+00:00:19.160 the security and the importance of
+00:00:20.760 setting this up now let's say that you
+00:00:22.840 want to use an llm something like chat
+00:00:25.000 GPT or something like deep seek right if
+00:00:27.840 that's the case what you're probably
+00:00:29.320 going to do is you're either going to
+00:00:30.599 attempt to run this locally or you're
+00:00:32.759 going to use the cloud provider so
+00:00:34.480 you're going to go to deepseeker open
+00:00:36.160 aai you're going to generate an API key
+00:00:38.840 and then you're going to take that API
+00:00:40.280 key and that's what you send anytime you
+00:00:42.399 want to make a request or use the llm
+00:00:45.079 now this is great and it works well if
+00:00:46.680 you're doing this locally but in a
+00:00:48.480 production environment if you were to
+00:00:50.520 take this API key and you were to use it
+00:00:53.039 directly from your own front end so
+00:00:54.920 something like a website or a mobile
+00:00:56.920 application you'd be introducing a huge
+00:00:59.320 security risk
+00:01:00.600 the reason why that's the case is
+00:01:02.160 because if you use one of these keys
+00:01:03.719 from your front end then anyone who has
+00:01:06.000 access to your front end code will be
+00:01:07.720 able to see and use that key so they
+00:01:10.119 could really take advantage of that and
+00:01:11.960 they could send all kinds of requests
+00:01:14.200 and cost you a ton of money because
+00:01:16.439 anytime you send a request to something
+00:01:18.040 like a cloud provider will it cost you
+00:01:20.040 money and even if you're running this
+00:01:21.560 locally on your own computer it costs
+00:01:23.560 you compute time or resources so the
+00:01:25.960 main idea here is that you only want to
+00:01:27.880 invoke an llm especially if it's it's
+00:01:30.079 coming from a provider like open aai
+00:01:32.159 from something that's secure something
+00:01:33.840 that you control which would be a
+00:01:35.759 backend server or an API the basic flow
+00:01:39.000 would be if someone has access to your
+00:01:40.560 front-end application they would then
+00:01:42.439 send a request to your own backend from
+00:01:45.119 your backend you could then control
+00:01:47.240 whether or not you wanted to send a
+00:01:48.960 request to the llm so you can control
+00:01:51.640 roughly how much it will cost and which
+00:01:53.640 of your users are allowed to use the llm
+00:01:56.360 this is common practice from all of the
+00:01:58.119 AI applications that you've used before
+00:02:00.439 and you'll typically notice that you get
+00:02:02.000 something like credits so maybe you have
+00:02:04.039 10 credits where you're able to call an
+00:02:05.880 llm 10 times and then after that you
+00:02:08.160 would need to pay money to the service
+00:02:10.119 provider to compensate them for how much
+00:02:12.200 the llm is costing hopefully that makes
+00:02:14.640 a little bit of sense but the basic idea
+00:02:16.480 here is that we need to be able to
+00:02:18.000 control the calls to our llm so that we
+00:02:20.519 can decide which users can call it or
+00:02:22.680 not call it and make sure that it
+00:02:24.239 doesn't cost us too much money so with
+00:02:26.200 that in mind let's get into it and start
+00:02:27.840 building this out so like I mentioned
+00:02:29.879 you can control access to any llm that
+00:02:32.000 you want and you can use something like
+00:02:33.800 open AI or deep seek but in my case I'm
+00:02:36.319 just going to run an llm locally on my
+00:02:38.319 own computer using something called AMA
+00:02:41.000 this is completely free it's open source
+00:02:43.080 and it lets you run models on your own
+00:02:44.920 machine assuming you have good enough
+00:02:46.680 Hardware I have an entire video on how
+00:02:48.480 to set this up so I'll leave it on
+00:02:49.959 screen but I'll give you the cliff notes
+00:02:51.879 Here what you need to do is simply
+00:02:53.760 download ama if you want to set this up
+00:02:55.640 on your own computer so once you've
+00:02:57.440 downloaded and installed this you can
+00:02:59.080 open up a ter teral or a command prompt
+00:03:01.360 and inside of here you can just type AMA
+00:03:03.319 to make sure this is working if for some
+00:03:05.360 reason the command isn't recognized you
+00:03:06.879 can try running olama by just typing the
+00:03:08.840 name of the application if you're on
+00:03:10.239 something like Windows and double
+00:03:11.799 clicking it to run now once olama is
+00:03:14.120 working you can pull an olama model that
+00:03:16.440 you want to run locally now to do that
+00:03:18.480 you type a llama pull and then you put
+00:03:20.360 the name of the model in this case I'll
+00:03:22.400 use a model like mistro but you can use
+00:03:24.519 models like llama 3 and any open source
+00:03:27.000 model really you want you can pull it
+00:03:28.400 and run it locally assuming you have
+00:03:30.400 sufficient hardware and all of the
+00:03:31.920 hardware requirements are specified on
+00:03:33.920 the olama website where it lists all of
+00:03:35.840 the different open- Source models so I'm
+00:03:37.799 going to pull the mistal model I already
+00:03:39.799 have this downloaded so now it's on my
+00:03:41.720 machine and then if I wanted to use this
+00:03:43.760 model I could type llama run and then
+00:03:46.400 mistl and then I can just start chatting
+00:03:48.239 with the model like I would in any other
+00:03:50.439 case now to leave I can type slash bu
+00:03:53.200 and that's great and now we'll be able
+00:03:54.599 to use AMA from our python code again I
+00:03:57.640 have an entire video in case you're
+00:03:59.040 confused or more help that I'll leave on
+00:04:00.920 screen okay so now that we've done that
+00:04:03.079 what we're going to do is start setting
+00:04:04.319 up a basic API to use our llm model now
+00:04:07.720 again you can use any llm that you want
+00:04:09.439 here the important thing is that we just
+00:04:10.840 set up the API and we secure it properly
+00:04:13.319 so for this video the IDE that I'm going
+00:04:15.079 to be using is pycharm now this is one
+00:04:17.079 of the best idees when it comes to
+00:04:18.759 working with python especially for
+00:04:20.759 things like apis and dealing with
+00:04:22.520 Frameworks like Fast API Jango or flask
+00:04:25.639 which we'll be using in this video now I
+00:04:27.759 have a long-term partnership with py and
+00:04:30.080 if you guys want to get access to the
+00:04:31.759 professional Edition with an extended
+00:04:33.560 free trial of up to 3 months you can do
+00:04:36.120 that by clicking the link in the
+00:04:37.440 description py charm has two versions
+00:04:39.520 The Community Edition which is
+00:04:40.800 completely free and the professional
+00:04:42.639 Edition which you do need to pay for but
+00:04:44.720 again because you're a viewer of this
+00:04:46.160 channel I can give it to you 3 months
+00:04:47.840 for free so you can try it out and see
+00:04:49.800 if you like it it has all kinds of great
+00:04:51.560 features and we can actually test our
+00:04:53.160 API directly from the IDE which makes
+00:04:55.759 our life a lot easier and you'll see
+00:04:57.400 that in this video again links in the
+00:04:59.199 description so first things first we're
+00:05:01.199 just going to set up the dependencies
+00:05:02.560 for our python project to build this API
+00:05:05.199 so I'm going to make a new file I just
+00:05:06.960 opened a folder here in this IDE so I
+00:05:09.320 went up here and I just opened a folder
+00:05:11.520 I called it API for llm and then from
+00:05:13.800 here I'm going to go new file and then
+00:05:16.320 I'm going to call this
+00:05:18.880 requirements.txt
+00:05:20.440 okay from this requirements.txt file I'm
+00:05:23.600 just going to specify the dependencies
+00:05:25.319 that I'll need for my python project and
+00:05:27.720 obviously you need python installed in
+00:05:29.280 order to follow along with the rest of
+00:05:30.800 these steps so I'm going to install fast
+00:05:33.400 API UV corn olama Python
+00:05:39.280 d.v and then requests okay now fast API
+00:05:43.639 is what we'll use for building our API
+00:05:45.360 it'll be very simple don't worry uicorn
+00:05:47.440 is for running our fast API application
+00:05:50.000 olama is for interfacing with olama to
+00:05:52.600 use a local llm and then python. EnV is
+00:05:55.880 for loading in an environment variable
+00:05:57.759 file and request is for Center request
+00:06:00.280 when we later test our API now we've
+00:06:02.759 specified these in our requirements.txt
+00:06:04.600 so the next step is to Simply install
+00:06:07.039 them so what we're going to do is just
+00:06:08.520 open up a new terminal instance I just
+00:06:10.479 have one here and make sure it's in the
+00:06:12.280 same folder where your requirements.txt
+00:06:14.639 file is if you're opening the terminal
+00:06:16.919 from an IDE or an editor then it should
+00:06:19.319 just already be in the correct directory
+00:06:21.479 from here assuming we have python
+00:06:23.160 installed we're going to type pip
+00:06:24.759 install - R and then requirements.txt
+00:06:27.599 now this is just going to install all of
+00:06:29.840 the dependencies into our main python
+00:06:31.840 installation if you want you can use a
+00:06:34.000 virtual environment but I'm not going to
+00:06:35.479 cover that in the name of time if that
+00:06:37.360 command doesn't work you can try pip 3
+00:06:39.400 install - R requirements.txt and what
+00:06:42.479 this does is install all of the
+00:06:43.800 dependencies from the requirements file
+00:06:46.199 now that we have all of that installed
+00:06:47.919 we can start writing some simple code
+00:06:49.440 and get an API up and running so what
+00:06:51.599 I'm going to do is make a new file and
+00:06:53.360 it's going to be a python file and I'm
+00:06:55.039 just going to call this main.py you can
+00:06:57.520 call it anything you want but I
+00:06:58.800 recommend naming it main just to stick
+00:07:00.639 with the um kind of conventions I'm
+00:07:02.280 using in this tutorial it'll be a little
+00:07:03.960 bit easier to follow along with okay so
+00:07:05.879 from here we're going to make a very
+00:07:07.280 simple API and to do that we're going to
+00:07:09.319 say from Fast API import and then fast
+00:07:13.599 API and then we're going to import o
+00:07:15.840 Lama okay then we're going to make an
+00:07:18.039 app so we're going to say app is equal
+00:07:19.680 to fast API and we're going to Define an
+00:07:21.960 endpoint an endpoint is just a URL on
+00:07:24.400 this server that we can access so for
+00:07:26.520 now we're going to say ATA dopost and
+00:07:29.520 we're going to do slash generate now you
+00:07:31.800 can call this anything that you want but
+00:07:33.599 what this specifies is that you need to
+00:07:35.039 send a post request which is a type of
+00:07:37.160 HTTP request to this URL and then the
+00:07:40.319 function that we write which will be
+00:07:41.840 called generate will run whenever we go
+00:07:44.879 to this/ generate rout now inside of
+00:07:47.720 here we're going to take a prompt which
+00:07:49.479 is a string and what this specifies is
+00:07:52.039 that you need to pass a query parameter
+00:07:54.319 which looks like this prompt is equal to
+00:07:56.560 and then whatever the prompt is whenever
+00:07:58.159 you want to call this rout so we know
+00:08:00.120 what the prompt to the llm should be
+00:08:02.639 from here we can generate a simple
+00:08:04.759 response by saying response is equal to
+00:08:07.360 ol. chat from the chat we're going to
+00:08:10.639 say the model is equal to whatever model
+00:08:13.000 we pulled and we want to use in this
+00:08:15.080 case it's mistal then we're going to say
+00:08:17.440 messages is equal to we're going to
+00:08:19.840 specify a list and we're going to put a
+00:08:22.000 python dictionary in the python
+00:08:24.080 dictionary we need to specify the role
+00:08:26.080 as user and then the content as The
+00:08:29.919 Prompt okay so you can pass multiple
+00:08:32.279 messages here but if you just want to
+00:08:33.599 pass one then you just do it like this
+00:08:35.559 and obviously you can modify the call to
+00:08:37.159 the llm but I'm just keeping it basic
+00:08:38.799 for right now after here we're going to
+00:08:41.039 return the response and the way we'll do
+00:08:42.958 this is we'll return a python dictionary
+00:08:45.200 that has response and then the response
+00:08:47.880 and this is going to be the message and
+00:08:50.800 the content just so that we strip out
+00:08:53.040 the information that we actually want so
+00:08:55.200 that's literally it we're saying okay we
+00:08:56.959 want to chat with AMA this works because
+00:08:59.079 we've downloaded on our machine we
+00:09:00.959 specify the model we want to use the
+00:09:02.720 messages that we want to pass you could
+00:09:04.279 also pass a system message if you wanted
+00:09:06.160 to customize the prompt or something and
+00:09:08.240 then you can have a response we say
+00:09:09.920 response message content okay now we
+00:09:12.279 need to run the API so to run the API we
+00:09:15.160 can open up our terminal and make sure
+00:09:17.279 again you're in the same directory where
+00:09:18.839 your python script is and you can type
+00:09:21.120 uicorn and then main colon app-- reload
+00:09:26.680 now what these variables are right here
+00:09:28.640 main is the name of my file so main.py
+00:09:31.399 and then app is the name of my fast API
+00:09:33.760 application so app so if you've changed
+00:09:35.839 either of those you need to adjust these
+00:09:37.600 right here and the D- reload will run
+00:09:40.000 this in development mode so it will
+00:09:41.880 reload the server anytime any changes
+00:09:43.720 are made so if I hit enter here you can
+00:09:45.760 see that now the API is running it tells
+00:09:48.040 us what port it's running on so Port
+00:09:49.880 8000 on Local Host and now we need to
+00:09:52.560 test it now there's various ways to test
+00:09:54.760 the API but if you're working inside of
+00:09:56.680 py charm then you can open up this
+00:09:58.360 endpoints tab you can find it by
+00:10:00.240 clicking on these three dots and look
+00:10:02.000 for it here or you can see kind of a
+00:10:04.000 circle inside of a half circle from here
+00:10:06.560 you're going to specify the main. apppp
+00:10:08.680 package okay you're going to press the
+00:10:10.920 slash generate so it can automatically
+00:10:13.000 actually read um the endpoint and then
+00:10:15.640 what you can do is see the kind of
+00:10:18.000 sample request right here so you can see
+00:10:20.079 it says post local hostport 8000 SL
+00:10:22.360 generate and then you'll need to add
+00:10:24.079 this query parameter question mark
+00:10:26.240 prompt equal to and then whatever you
+00:10:27.760 want to prompt the llm with once you do
+00:10:30.120 that you can hit submit request you can
+00:10:32.279 wait for this to run it will take a
+00:10:33.880 second and then you can see the response
+00:10:35.680 right here so let me just make this a
+00:10:36.839 little bit bigger so that you guys can
+00:10:38.160 read this and you can see that we get
+00:10:39.839 the response from the llm it says hello
+00:10:41.839 world it's a classic example blah blah
+00:10:43.519 blah blah blah and you can use it as you
+00:10:45.959 see fit now other than that the easiest
+00:10:48.480 way to test this if you're not using
+00:10:50.160 something like py charm is to download a
+00:10:52.120 tool called postmen so I'm just going to
+00:10:54.480 open it up right here this is a free
+00:10:56.120 tool that you can download on your
+00:10:57.440 computer whether it's window Mac Linux
+00:10:59.279 ever that allows you to test your apis
+00:11:01.600 really easily so if you don't have
+00:11:03.200 familiarity testing them simply download
+00:11:05.240 and install this tool and then open it
+00:11:07.440 up and I'll show you how to use it so
+00:11:09.279 assuming our API is still running in our
+00:11:11.480 terminal we can open up the postman
+00:11:13.600 application from here we can press this
+00:11:15.839 little plus button you might need to
+00:11:17.279 make an account or it might ask you for
+00:11:18.920 some stuff you don't need to but just
+00:11:20.200 get into this workspace press on plus
+00:11:23.279 and then what you're going to do is
+00:11:24.320 change get here to say post because
+00:11:26.560 we're sending a post request from here
+00:11:28.600 you're going to type in the URL so HTTP
+00:11:31.079 colon colon SL localhost SL generate
+00:11:36.360 okay and we need to make sure this is
+00:11:37.560 Port 8000 so sorry Local Host Port 8000
+00:11:40.360 SL generate question mark prompt is
+00:11:43.600 equal to whatever you want to prompt so
+00:11:45.639 something like hello world and then what
+00:11:47.839 we can do is we can press on send
+00:11:50.000 Postman will automatically send the
+00:11:51.480 request for us again you just need to
+00:11:52.959 make sure you have a URL that looks like
+00:11:54.680 this when we do this you can then see
+00:11:56.920 that we get the response back from the
+00:11:58.519 llm
+00:11:59.800 okay so now we've written a basic llm
+00:12:02.320 but we want to make this secure we want
+00:12:04.160 to add some kind of authorization or at
+00:12:06.720 least some logic so that not anyone can
+00:12:09.200 just use this so what I'm going to do
+00:12:11.040 now is adjust this code so that only
+00:12:13.320 someone that has access to our function
+00:12:16.040 or to our API will be able to use the
+00:12:18.360 llm because after all that's the entire
+00:12:20.800 point of this we don't want to let just
+00:12:22.399 a random person use the llm we want to
+00:12:24.880 maybe control their access okay so now
+00:12:27.079 let's add our own version of an API key
+00:12:29.880 now this is a key that someone will need
+00:12:31.440 to send to our backend server if they
+00:12:33.880 want to utilize the API now what we can
+00:12:36.399 do with this key is we can just give it
+00:12:38.279 to certain users or we can generate it
+00:12:40.480 however we want in any way that we see
+00:12:42.279 fit and we can have some kind of value
+00:12:44.680 attached to this key to limit the number
+00:12:47.000 of requests that someone could send so
+00:12:48.920 for example any API key that I give to
+00:12:51.360 someone maybe it only has a limit of 10
+00:12:54.079 so after you've used the key 10 times
+00:12:56.160 maybe you need to pay more money or you
+00:12:57.959 need to wait a day or something
+00:12:59.199 something like that before you could use
+00:13:00.800 the key again I'm going to set up some
+00:13:02.839 basic logic but it will give you a sense
+00:13:04.440 of how to do this so what I'm going to
+00:13:06.360 do is I'm going to import a few things
+00:13:08.240 so from Fast API I'm going to import
+00:13:10.680 depends HTTP exception and header okay
+00:13:15.320 I'm then going to import OS and I'm
+00:13:17.760 going to say from.
+00:13:19.680 EnV import load. EnV now I'm going to
+00:13:23.480 call the load. EnV function and what
+00:13:26.160 this is going to do is load a value from
+00:13:28.160 our environment variable iable file
+00:13:29.800 which I'm going to create right now so
+00:13:31.760 inside of our directory we're going to
+00:13:33.240 make a new file and we're going to call
+00:13:35.000 this EnV okay inside of here we're going
+00:13:38.440 to say API key is equal to and then we
+00:13:41.959 can set this to some secret key that we
+00:13:44.480 would only give people that we want to
+00:13:46.120 have access to our API in order to use
+00:13:48.480 the llm now you could have as many API
+00:13:50.759 Keys as you want and typically you would
+00:13:52.720 generate these for users so when people
+00:13:54.959 have an account they would sign in and
+00:13:56.800 then you could issue them an API key and
+00:13:58.800 they need to use that API key to access
+00:14:01.199 the API that's a more advanced topic and
+00:14:03.320 I'll leave a video on screen that shows
+00:14:04.959 exactly how to do that but you'll get
+00:14:06.680 the idea with what I show you right here
+00:14:09.040 so in this EnV file we've specified a
+00:14:11.440 variable called secret key now what
+00:14:13.759 we're going to do is we're going to load
+00:14:15.160 in that value so we're going to say API
+00:14:18.240 Keys is equal to a list or sorry is
+00:14:20.560 equal to a set and inside of here we're
+00:14:22.600 going to say os. getv and then the API
+00:14:27.000 key now this works because we've l
+00:14:29.079 loaded in the environment variable file
+00:14:31.000 and now we can get that environment
+00:14:32.399 variable and we put that in our list of
+00:14:35.120 valid API keys and if we wanted to we
+00:14:37.880 could associate this with a value like
+00:14:39.880 10 and then we could subtract from this
+00:14:43.040 value anytime someone uses the API and
+00:14:45.759 treat this as like their credits so I
+00:14:47.959 can say you know this key has five
+00:14:50.040 credits remaining so we could change
+00:14:51.519 this to API key credits or something and
+00:14:54.240 you know what let's go ahead and do that
+00:14:56.240 okay now that we've done that we're
+00:14:57.759 going to write a simple function that
+00:14:59.800 will verify that a user has an API key
+00:15:02.800 before we allow them to continue so I'm
+00:15:04.759 going to say Define verify uncore aior
+00:15:09.399 key and we're going to specify xcore
+00:15:12.959 aior key we're going to say this is a
+00:15:15.720 string and this is equal to header and
+00:15:19.160 then none okay now what this is going to
+00:15:21.600 do is it's going to look in the headers
+00:15:23.600 of our request which I'll show you in
+00:15:25.279 one second for a variable called X API
+00:15:28.199 key if finds it it's going to associate
+00:15:30.880 it with this parameter right here and
+00:15:32.680 then allow us to read it in and use it
+00:15:34.839 inside of this um what do you call it
+00:15:37.319 function so what we're actually going to
+00:15:38.839 do here is we're going to say credits is
+00:15:40.600 equal to API key credits. getet xapi key
+00:15:44.240 now we're going to specify the default
+00:15:45.720 value is zero and what this means is
+00:15:47.360 that we're going to attempt to get
+00:15:48.759 whatever the number of credits are
+00:15:50.279 associated with our API key but if that
+00:15:52.639 API key doesn't exist then we're just
+00:15:54.759 going to get zero then we're simply
+00:15:56.680 going to check if the credits are equal
+00:15:58.360 to zero so we're going to say if the
+00:15:59.680 credits are less than or equal to zero
+00:16:02.720 then what we're going to do is we're
+00:16:04.440 going to return or sorry we're going to
+00:16:06.759 raise an HTTP exception and we're going
+00:16:10.160 to say status 401 and then we're going
+00:16:12.079 to say invalid API key or no credits
+00:16:16.160 okay just telling them hey you don't
+00:16:17.639 have any credits left or your API key is
+00:16:19.880 expired or actually from here we can
+00:16:22.000 just return the X API key so if they do
+00:16:24.800 have a valid key we can return it so we
+00:16:26.440 can use it later on and then inside of
+00:16:28.440 here we're going to we're going to make
+00:16:29.319 sure that they have an API key and that
+00:16:31.000 it's valid before we allow them to use
+00:16:32.959 this function so to do that inside of
+00:16:35.279 the parameters we're going to add X _
+00:16:37.279 API key we're going to say this is type
+00:16:39.399 string and this is equal to depends on
+00:16:41.800 verify API key now just let me use this
+00:16:44.279 variable and then it will light up so
+00:16:45.519 you can read it easier but what this
+00:16:47.240 means is that we're depending on this
+00:16:49.120 function call and then if this function
+00:16:51.120 call raises an error we just won't do
+00:16:53.319 anything inside of here whereas if it
+00:16:55.319 Returns the API key then we're good to
+00:16:57.120 go and we'll enter this function so
+00:16:59.399 inside of here the first thing we're
+00:17:00.800 going to do is just subtract our credits
+00:17:02.839 so we're going to say API key credits at
+00:17:05.079 X API key and then we're just going to
+00:17:06.959 say minus equals 1 so we're just going
+00:17:08.919 to subtract one from that to specify hey
+00:17:11.439 we're removing one of your credits
+00:17:13.160 because now you've successfully used
+00:17:14.760 this function and that's it that's
+00:17:16.599 literally all that we need and now we've
+00:17:18.599 added kind of control to this API where
+00:17:21.359 you can only use this if you pass us an
+00:17:23.559 API key now again we've just hardcoded
+00:17:26.280 an API key here from our environment
+00:17:28.319 variable file F but you could
+00:17:29.799 dynamically generate these however you
+00:17:31.840 wanted to and you can handle them for
+00:17:33.520 various users so I'm showing you the
+00:17:35.440 logic but obviously you would need to go
+00:17:36.919 a step further with this to have correct
+00:17:38.919 authentication and authorization for a
+00:17:40.799 larger Scale app so now that we've done
+00:17:43.160 this we want to test the authorized API
+00:17:45.720 so we should be able to rerun this so
+00:17:48.400 here it looks like it was rerunning but
+00:17:49.919 I'm just going to shut it down and
+00:17:51.080 restart it to make sure it loads in the
+00:17:52.720 environment variable so same thing
+00:17:54.600 uvicorn main app reload so now to test
+00:17:57.679 the API again there's multiple ways to
+00:17:59.720 do that but I'm just going to use
+00:18:01.039 Postman so that it's universally
+00:18:02.559 available for all of you and I'm going
+00:18:04.200 to keep the same request that I had last
+00:18:06.280 time except this time I'm going to go
+00:18:08.120 into headers now inside of headers here
+00:18:10.840 I'm just going to add the header for my
+00:18:12.640 API key so I'm going to add the header
+00:18:14.640 of xcore API uncore key like that I
+00:18:19.799 believe that's what we called it and
+00:18:21.200 then for the value I'm going to say
+00:18:23.120 secret key okay all right so a silly
+00:18:25.960 mistake here but actually we want to use
+00:18:28.240 uh High when we specify this in the
+00:18:30.360 header not underscores so just x-
+00:18:33.120 api-key and then put the value secret
+00:18:35.760 key you don't need any quotes and now
+00:18:37.600 when we send this you should see that it
+00:18:39.200 works it just takes a second and then we
+00:18:41.000 get the response back and if we try to
+00:18:43.039 do this now five times let's just keep
+00:18:44.880 doing it so that our credits go lower
+00:18:46.559 and lower you should see eventually when
+00:18:48.559 we get to the fifth request that it
+00:18:50.400 doesn't work and it tells us that we run
+00:18:51.919 out of tokens and you can see that's
+00:18:53.240 what we get it says invalid API key or
+00:18:55.480 no credits so there you go we've now
+00:18:57.600 built an authenticated API that allows
+00:19:00.080 us to utilize our llm with this API key
+00:19:03.840 now again you want to manage these Keys
+00:19:05.760 correctly there's a lot of other logic
+00:19:07.559 and things you can do and I will leave a
+00:19:09.159 video on screen that will help you do
+00:19:10.840 that now beyond that I'm quickly just
+00:19:12.880 going to show you a python script that
+00:19:14.440 you can use if you wanted to test the
+00:19:16.240 API from python code so I'm just going
+00:19:18.559 to make a script called test API now
+00:19:21.080 what I'm going to do is just copy in
+00:19:22.799 some code so here is the code you can
+00:19:25.039 see that I import requests I import the
+00:19:27.520 code to load my environment variable
+00:19:29.280 file I specify the URL that I want to
+00:19:31.440 send my request to and the prompt that I
+00:19:33.280 want to pass to the llm I then specify
+00:19:36.200 my headers so I have my API key which is
+00:19:38.440 equal to what I'm loading from the
+00:19:39.679 environment variable file content type
+00:19:41.840 application Json send a post request
+00:19:44.360 with my URL and my headers and then I
+00:19:46.559 print out the response. Json now I just
+00:19:48.799 restarted my server I took a quick cut
+00:19:51.000 so when I restarted the server it will
+00:19:52.919 reset the amount of credits that I have
+00:19:55.159 and now if I run this file just takes a
+00:19:57.480 second and we should see that we get our
+00:19:59.240 response and we do you can see that I
+00:20:01.159 get the response back from the llm okay
+00:20:04.320 so that's pretty much all I wanted to
+00:20:05.600 show you in this video I know there was
+00:20:07.480 a lot but I wanted to explain how you
+00:20:09.320 set up a simple API with this API token
+00:20:12.480 which you can then use to control access
+00:20:14.360 to the llm the llm call here can be
+00:20:16.960 anything that you want but it's
+00:20:18.440 important that you do gate it and you do
+00:20:20.320 control it from a backend server so that
+00:20:22.760 front-end users can't directly access
+00:20:24.919 your tokens now you may be asking well
+00:20:26.840 what about this token right here the
+00:20:28.679 whole point of this token is that you
+00:20:30.120 control this token rather than open AI
+00:20:32.360 or deep seek or something like that so
+00:20:34.400 now if you want to invalidate the token
+00:20:36.280 if you want to have a certain number of
+00:20:37.559 credits if you only want to give it to
+00:20:39.000 premium users or paid users you can do
+00:20:41.559 that right you can control how you want
+00:20:43.200 to issue this token but if you just use
+00:20:45.240 an openai token now anyone that has
+00:20:47.480 access to that can go and utilize open
+00:20:49.640 aai and cost you a ton of money so
+00:20:51.640 that's why you want to set up this own
+00:20:53.200 kind of custom back end where you have
+00:20:55.360 full control as the developer and the
+00:20:57.400 app owner I will leave this code in the
+00:20:59.880 description in case you want to check it
+00:21:01.360 out it'll be available from GitHub if
+00:21:03.240 you enjoyed the video make sure to leave
+00:21:04.440 a like subscribe to the channel and I
+00:21:06.200 will see you in the next one
+00:21:09.030 [Music]

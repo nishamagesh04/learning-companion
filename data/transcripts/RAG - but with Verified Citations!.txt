@@ -1,0 +1,837 @@
+# tactiq.io free youtube transcript
+# RAG - but with Verified Citations!
+# https://www.youtube.com/watch/-wGzSnhQKPM
+
+00:00:00.120 how do you get a large language model to
+00:00:01.719 site its answers well you can give it
+00:00:04.560 access to your documents and prompt the
+00:00:06.600 llm to always respond with
+00:00:09.040 citations but how do you know it's not
+00:00:11.440 just making up those citations well
+00:00:14.000 that's the topic of this video I'll
+00:00:16.039 explain how to prompt an llm so that it
+00:00:18.760 responds with citations to any answers
+00:00:21.400 and further I'll show you how to check
+00:00:23.119 that those citations are contained
+00:00:24.760 within the documents you provided I'll
+00:00:27.359 give you a high level overview of how
+00:00:29.240 this works and then I'll go through some
+00:00:31.199 code step by step so you can implement
+00:00:33.520 this by yourself and here we go for the
+00:00:36.399 video overview I'm going to start by
+00:00:38.360 showing just using chat GPT some of the
+00:00:40.399 problems if you do basic retrieval
+00:00:42.640 methods and why this can result in
+00:00:45.520 answers that aren't always grounded in
+00:00:47.800 the content you've provided the
+00:00:49.079 documents you've provided then I'll talk
+00:00:51.640 about some of the little um nuances
+00:00:54.239 involved in checking that the citations
+00:00:55.879 are valid I'll then move to doing some
+00:00:59.000 code demonstration start to finish of
+00:01:01.039 how you do retrieval on uh some
+00:01:03.800 documents and then verify those
+00:01:06.720 citations and last of all I'm going to
+00:01:08.960 show you uh even how this can be
+00:01:10.560 integrated within an app uh there's an
+00:01:12.880 app called Tris endpoints that's in
+00:01:15.240 Alpha you can check it out right now at
+00:01:17.320 endpoints tr.com it's a one-click rag
+00:01:20.880 endpoint for documents you upload and
+00:01:23.520 here uh We've implemented I've
+00:01:25.439 implemented with the help of Rohan
+00:01:26.759 Sharma uh this citation checking Tech
+00:01:30.159 technique so to start off let's head
+00:01:32.880 over to chat GPT and uh start off a new
+00:01:35.920 chat and I'm going to consider asking a
+00:01:39.280 question that should be grounded in a
+00:01:41.920 document now to do that let's just go
+00:01:44.600 over to Wikipedia and pick out some
+00:01:47.200 random uh article that we'll use as a
+00:01:50.000 basis for the answers so I'll just pick
+00:01:52.560 one here yeah nice let's do one on gaic
+00:01:55.000 football um this is Irish football which
+00:01:58.399 uh the final was played over theek
+00:02:00.200 weekend and um let's just copy
+00:02:03.719 everything so I'm doing a raw copy and
+00:02:06.799 this is maybe representative sometimes
+00:02:08.479 of when you strip text from documents
+00:02:10.199 it's not passed necessarily in a in a
+00:02:12.400 very uh tidy format and I'm going to
+00:02:15.879 copy that into chat GPT and I'm going to
+00:02:18.080 just read this here and pick out a
+00:02:20.239 question um yeah I'll just ask how many
+00:02:23.480 players there are per team so that would
+00:02:25.319 be my question so let's just put in uh
+00:02:29.000 some background here
+00:02:31.319 and rather than providing Snippets I'm
+00:02:33.560 just going to provide the whole
+00:02:35.959 context and now I'm going to ask a
+00:02:39.560 question and I'll say please help me
+00:02:43.920 with my questions your answers should
+00:02:48.280 contain verbatim citations from the
+00:02:52.360 background
+00:02:54.120 information okay and then the question
+00:02:56.400 is how many players on a team in gaic
+00:03:02.640 football so here I've provided a lot of
+00:03:05.280 background and we should have the answer
+00:03:07.400 coming out and so here we have the
+00:03:10.400 answer and this is correct and it
+00:03:11.680 probably knows this already because
+00:03:12.840 there's a lot about gilic football
+00:03:14.440 online by the way it's a bit between
+00:03:16.599 American football and Aussie rules uh
+00:03:18.680 something like that so we have this
+00:03:20.879 citation GIC football it is played
+00:03:22.640 between two teams of 15 players on a
+00:03:24.440 rectangular grass pitch so let me just
+00:03:27.080 copy this piece of text and um
+00:03:30.799 paste and it looks like that is actually
+00:03:34.159 matching exactly so that's good and how
+00:03:36.959 about this here if I copy this full
+00:03:39.879 citation um it is not so what's happened
+00:03:43.959 is we've got an answer it's the correct
+00:03:45.480 answer it's actually fairly nicely cited
+00:03:48.200 uh part of the citation is exactly
+00:03:50.120 represented within the underlying text
+00:03:52.519 but actually if you take the whole
+00:03:54.400 citation it's not actually a correct
+00:03:56.920 citation it's not appearing verbatim
+00:03:59.120 within the text
+00:04:00.640 um and this is kind of classic with
+00:04:02.439 language models they will often be close
+00:04:05.560 but even worse they can sometimes just
+00:04:07.439 hallucinate what the citation is and
+00:04:09.680 this obviously poses a problem because
+00:04:11.799 you've provided the background
+00:04:13.000 information you hope that helps you H it
+00:04:15.319 will be grounded you prompt the m llm to
+00:04:17.440 be grounded in that answer and yet you
+00:04:19.440 will find cases where the llm is just
+00:04:21.839 hallucinating and that is something that
+00:04:23.919 you do not want so how is it we can uh
+00:04:27.320 check that these citations are correct
+00:04:30.600 and the answer is well one thing we can
+00:04:33.120 do is compare like I did with contrl f
+00:04:36.320 whether that little snippet that cited
+00:04:38.440 is provided uh within the original text
+00:04:42.120 and you saw I did that um by doing a
+00:04:44.639 complete match and it failed um and then
+00:04:47.280 I did a partial match and it succeeded
+00:04:50.000 but really what we would like is to get
+00:04:52.639 the language model to respond in a way
+00:04:54.639 that is providing exact Snippets so we
+00:04:57.000 really need to prompt it towards exact
+00:04:58.720 Snippets and we want to cross check
+00:05:01.440 those exact Snippets in the text
+00:05:03.440 allowing for only small amounts of
+00:05:05.160 fuzziness so for example if I have a
+00:05:07.360 word like um the man jumped over the
+00:05:13.000 chair for example if this is the
+00:05:15.720 citation um in the text it's possible
+00:05:18.560 like maybe there's an extra space for
+00:05:20.440 example uh that's accidentally there
+00:05:22.440 during the parsing of the document maybe
+00:05:24.400 there's a space before the dot at the
+00:05:26.080 start uh maybe there's a capitalization
+00:05:28.800 difference so these little differences
+00:05:31.080 are not concerning when we're thinking
+00:05:32.960 about matching and we need to allow for
+00:05:35.000 those uh by doing what's called fuzzy
+00:05:36.919 matching but we don't really want to
+00:05:38.840 allow for a match uh if it says
+00:05:40.960 something like the man and the woman um
+00:05:44.880 because that's going to be too different
+00:05:46.319 and there's too much risk that that
+00:05:47.600 citation is not really represented
+00:05:49.600 within the underlying text now the last
+00:05:52.319 thing I'll say and I'll show this all in
+00:05:53.680 code is sometimes uh even when you
+00:05:56.560 prompt the language model to respond
+00:05:58.759 this way it's not going to get it right
+00:06:00.720 it's not going to provide a citation so
+00:06:02.240 it's just going to fail uh your test so
+00:06:04.039 you do some fuzzy matching and it fails
+00:06:06.759 but what you can do then is feed that
+00:06:08.639 information back to the language model
+00:06:10.720 explaining why it failed and give it
+00:06:12.680 another shot at generating a better
+00:06:15.080 response that is cited and so by using
+00:06:17.800 this kind of iteration you don't want to
+00:06:19.240 iterate forever but if you iterate maybe
+00:06:21.319 once or twice you have a good chance
+00:06:23.080 that the next uh citation is going to be
+00:06:25.160 correct so let's just try a very quick
+00:06:27.240 iteration and I'm going to add an extra
+00:06:29.319 feat which will help me pass the answer
+00:06:31.639 cuz to do the comparison we need some
+00:06:33.360 python code so we like that the answer
+00:06:35.759 is being provided uh in a nice format so
+00:06:38.800 let's um say try that again with a few
+00:06:43.479 more tips so I'll say one make sure the
+00:06:47.599 citation is exactly
+00:06:51.199 verbatim uh from the
+00:06:53.720 background
+00:06:55.479 information and two provide your answer
+00:07:00.240 in Json form so I'm going to
+00:07:03.560 say uh I'm going to give an example so
+00:07:07.319 let's say we
+00:07:09.199 want um I can't do tab so I'm just going
+00:07:12.360 to put it in as adjacent object with
+00:07:16.879 answer and then you would have the
+00:07:20.039 answer here and next we would have
+00:07:23.560 citation the verbatim
+00:07:27.479 citation and I I think that's already a
+00:07:30.479 good start so let's see if we get that
+00:07:34.080 so the idea here is we've now got a
+00:07:36.280 structured response which makes it
+00:07:37.919 easier for us to parse and start now to
+00:07:40.400 do an exact comparison um and we also
+00:07:43.440 have this kind of nicely structured so
+00:07:46.159 that we can either optionally include
+00:07:47.759 the citation in responding to the
+00:07:49.280 customer um yeah or just provide the
+00:07:52.840 answer on its own so let's see if that
+00:07:55.159 helped uh we've got this here gaic
+00:07:57.960 football
+00:08:00.039 and when I
+00:08:01.479 search it's um actually not matching
+00:08:05.840 exactly and what I'm going to say is
+00:08:09.240 that doesn't match exactly background
+00:08:13.000 text and let's see if it gets it
+00:08:21.680 right and now it does so you see there
+00:08:24.319 even by saying that this doesn't match
+00:08:26.319 you have a good chance that it's going
+00:08:27.720 to correct and I'm not saying this is
+00:08:29.199 going to work every time so what do you
+00:08:31.879 do then if it doesn't find the correct
+00:08:33.880 citation uh well quite simply you can
+00:08:36.320 just let the user know that this answer
+00:08:39.519 does not have a verified citation so
+00:08:42.080 although that's uh not ideal because of
+00:08:44.959 course you'd like to provide the answer
+00:08:46.560 it's of course much better when you
+00:08:48.279 provide an answer if you give the
+00:08:49.760 warning that look this isn't uh being
+00:08:52.080 cited so with that I'm going to move and
+00:08:55.600 go through a detailed code example I'm
+00:08:57.800 going to work through um a code example
+00:09:00.200 in the advanced inference repo this is
+00:09:04.079 available if you head just to travis.com
+00:09:06.600 and you go to Advanced let's see
+00:09:09.800 Advanced
+00:09:11.560 inference I'll update this shortly so it
+00:09:14.079 includes some notes on the citations
+00:09:16.000 portion this is a lifetime access repo
+00:09:18.399 if you buy lifetime access you get
+00:09:19.839 access to all the future scripts as well
+00:09:21.720 it includes many scripts for API calling
+00:09:24.079 speed testing um sensitive data
+00:09:26.480 anonymization Monte Carlo simulations
+00:09:29.040 and it will also have now added in the
+00:09:31.399 citations portion so we'll be working
+00:09:33.839 out of this new citations uh folder here
+00:09:36.720 which I have copied or rather get cloned
+00:09:40.560 onto my vs code so you can see here I'm
+00:09:43.680 working within uh this citations folder
+00:09:47.079 here and we'll take a look at the readme
+00:09:49.399 just for doing the setup so here in the
+00:09:52.240 readme file uh first thing I recommend
+00:09:54.560 doing and I'll actually do all the steps
+00:09:56.200 here today is setting up a virtual
+00:09:57.959 environment I'm going to call it site
+00:10:00.120 EnV and then activate that environment
+00:10:02.480 if you're on Windows just check with
+00:10:03.800 chat GPT the fastest way to go with that
+00:10:06.440 uh so you can see here I've activated
+00:10:08.079 site en next um pip install upgrade pip
+00:10:11.600 it's typically a good idea to make sure
+00:10:14.200 pip is at the latest version and then
+00:10:16.279 install this range of packages here um
+00:10:19.760 that are going to help us to do some of
+00:10:21.360 the comparisons and also generate uh
+00:10:23.880 embeddings which will help us to
+00:10:25.600 retrieve chunks so in the example I
+00:10:27.399 showed you with chat GPT I literally
+00:10:29.000 pushed the whole wikkipedia article as
+00:10:30.839 the context um but what I'm going to do
+00:10:33.240 here is I'm going to work with chunks
+00:10:35.360 instead so I will provide the most
+00:10:37.680 relevant junks using cosign similarity
+00:10:40.600 and also using bm25 bm2 is a glorified
+00:10:44.360 keyword search it actually performs
+00:10:46.399 really well often better than cosign
+00:10:48.079 search so when you combine it with
+00:10:49.600 cosign search and you take those chunks
+00:10:51.920 you get pretty beautiful results if you
+00:10:54.040 want to go more in detail on that check
+00:10:56.160 out um the rag video that I made
+00:10:58.519 recently I'll throw up the video uh so
+00:11:01.440 you can have a look in much greater
+00:11:03.279 detail at optimizing
+00:11:05.320 retrieval so I've installed those
+00:11:07.320 packages and now just make sure you have
+00:11:10.240 an A EnV file that has uh your open aai
+00:11:13.959 API key within it because we're going to
+00:11:16.680 use open AI uh GPT 40 for answering the
+00:11:20.720 questions and also for generating
+00:11:22.760 embeddings so next you need to have some
+00:11:25.639 document so I picked a random Wikipedia
+00:11:28.079 article and
+00:11:29.760 again I'm going to use another random
+00:11:31.720 Wikipedia article um for this example
+00:11:35.120 this time it's talking about the great
+00:11:37.279 koku Dove and uh yeah it's just about
+00:11:40.720 this random bird and some information
+00:11:43.720 that has been uh populated here just by
+00:11:46.560 copy paste from Wikipedia so yeah put
+00:11:49.600 together a text file just within the
+00:11:51.560 data folder here once that's ready um
+00:11:54.800 check out in your prepare. py file if
+00:11:58.000 you go down to main just make make sure
+00:11:59.560 that the input file is the text file
+00:12:02.200 that you've set up and the same if you
+00:12:03.959 go to app.py make sure that um you also
+00:12:08.160 have specified the correct input file
+00:12:10.000 sorry it's specified up here a little
+00:12:11.760 bit more yeah here we go it's actually
+00:12:14.320 specifying uh the input file which is
+00:12:16.480 the chunks file I haven't created yet
+00:12:18.399 and the embeddings file so what happens
+00:12:21.000 here it's a two-step process first step
+00:12:23.279 is running prepare. py Python prepare.
+00:12:27.160 py and this should generate chunks so it
+00:12:30.000 takes that Wikipedia text and it will
+00:12:32.880 split it up into 500 word chunks and it
+00:12:35.880 will then create an embedding so a
+00:12:37.800 vector representation for each of those
+00:12:39.399 chunks using the open AI embeddings
+00:12:42.440 endpoint so while that's happening here
+00:12:44.600 let's take a quick look at the prepare
+00:12:46.560 script again this is not the main focus
+00:12:49.399 of this video I talk much more in the
+00:12:51.160 rag video about this um but very quickly
+00:12:55.040 I've got one function that junks the
+00:12:57.000 text um it does so use using word
+00:12:59.720 tokenize from the nltk
+00:13:02.440 library you could use better methods
+00:13:04.720 than I do in the other rag video but
+00:13:06.800 broadly speaking I count all the tokens
+00:13:08.560 and split into 500 token chunks next uh
+00:13:12.399 I have a function to fetch embeddings
+00:13:15.079 that means for each chunk converting it
+00:13:17.160 into a vector that represents its
+00:13:18.800 meaning and it's called Fetch and
+00:13:20.399 beddings parallel because I use multiple
+00:13:22.160 threads uh on my computer to fetch for
+00:13:24.920 multiple chunks at once just speeds up
+00:13:26.800 the process now once those embeddings
+00:13:29.800 are fetched so we have a vector for each
+00:13:32.079 of the chunks they're going to be
+00:13:33.560 written to um a pickled file and that
+00:13:37.279 pickle file will be saved in data so
+00:13:39.240 we'll have one file for junks and we'll
+00:13:40.760 have one file as well uh for the
+00:13:42.800 embeddings themselves which is the
+00:13:44.240 vectors now it looks like I need to pip
+00:13:46.839 install EnV which is to readin my
+00:13:50.680 environment variables so I'm going to
+00:13:53.320 make quick update to the readme file I
+00:13:56.720 need to add in the installation of and
+00:13:59.240 you know what this is a classic mistake
+00:14:01.120 so I'm not going to leave this out of my
+00:14:03.880 recording um pip uninstall N I need to
+00:14:08.079 actually python sorry pip install
+00:14:12.800 python. classic
+00:14:14.720 mistake classic mistake so I fixed that
+00:14:18.680 now and we should be able to run and
+00:14:21.440 generate the chunks using the prepare.
+00:14:25.040 py script so yeah as you can see here
+00:14:28.079 it's it's quite a short script the
+00:14:30.160 prepare data file is going to read in
+00:14:32.600 the input file Define the name for the
+00:14:35.240 chunks file Define the name for the
+00:14:37.120 embeddings file and it's going to create
+00:14:40.120 chunks by chunking the text it read from
+00:14:42.480 the input file and then create
+00:14:44.120 embeddings using the fetch em embeddings
+00:14:46.240 parallel function by inputting the
+00:14:48.079 chunks and inputting the open AI client
+00:14:50.880 and uh yeah when all of that is done we
+00:14:53.600 will end up with a pickle file and an
+00:14:55.440 embeddings file you can't view those CU
+00:14:57.199 they're in pickle format and and yeah
+00:14:59.720 that's pretty much it so this uh prepare
+00:15:01.800 py just calls the prepare data function
+00:15:03.759 and then it will generate uh the
+00:15:05.160 embeddings and generate the chunks so
+00:15:07.720 next we're going to run the app and the
+00:15:10.320 app is going to do a few things so it's
+00:15:12.480 going to prepare a prompt which will
+00:15:14.600 have uh a query it will have the chunks
+00:15:17.360 relevant to the query and then it is
+00:15:20.199 going to have some language that will
+00:15:21.959 encourage it to provide citations in
+00:15:23.600 adjacent form and then it's going to
+00:15:25.360 have a checker that will check how those
+00:15:27.680 S check whether those citation are in
+00:15:29.480 the Raw documents so let's head over to
+00:15:33.319 app.py and this is a little bit of a
+00:15:35.519 longer script it's easiest if I start by
+00:15:38.399 explaining it uh from the main function
+00:15:40.680 so let's go to the main function where
+00:15:43.319 we read in the pickle file for the
+00:15:46.000 chunks that's just um a list of the
+00:15:48.759 chunks and their contents and the
+00:15:51.199 embeddings file which is the vectors
+00:15:52.959 representing those chunks then we're
+00:15:55.199 going to load the chunks from the chunk
+00:15:57.040 file load the embeddings from the
+00:15:58.279 embedding file and specify a query so my
+00:16:01.360 query here on this uh bird database or
+00:16:04.759 this B bird Wikipedia entry is when does
+00:16:07.480 The Great cooku Offspring go off
+00:16:10.759 foraging and why is that it's a bit of a
+00:16:13.120 tongue twister and then I set top n so
+00:16:16.079 top n is saying how many of the top most
+00:16:18.920 relevant chunks do I want to include and
+00:16:21.160 it's not the total chunks it's actually
+00:16:22.720 the chunks per uh retrieval method so it
+00:16:24.959 will take the top two chunks from cosine
+00:16:26.639 retrieval and the top two from bm25
+00:16:28.959 which I said is a glorified word search
+00:16:32.120 so next we do those two retrieval
+00:16:34.519 methods we've the bm25 method where we
+00:16:37.480 retrieve the two most relevant chunks
+00:16:39.519 based on glorified key search and then
+00:16:41.759 we retrieve the two most relevant chunks
+00:16:43.880 based on comparing the um distance or
+00:16:47.000 the angle rouer between the query and
+00:16:48.880 each chunk so we've got a ton of chunks
+00:16:50.480 that are in all different directions and
+00:16:52.160 we find the two that are at the smallest
+00:16:54.839 angle to the query uh this query here
+00:16:57.959 and by the way that means we also have
+00:16:59.399 to embed the query so that means we
+00:17:01.240 convert the query into a vector then we
+00:17:03.319 compare that Vector with each of the
+00:17:04.799 vectors in the chunks in the embeddings
+00:17:07.280 database for the junks okay so once we
+00:17:10.000 fetched those junks you can see we're
+00:17:11.720 passing in top end because we're picking
+00:17:13.199 out the top two um we then merged them
+00:17:16.199 so what happens is often I mean this is
+00:17:19.319 often a good thing if you have two
+00:17:21.760 independent methods of finding relevant
+00:17:23.400 chunks hopefully they'll have some
+00:17:24.760 similarity and find uh similar relevant
+00:17:26.760 chunks and of course there's no point in
+00:17:28.679 in including duplicates so you can just
+00:17:31.000 merge the list as I've done here now we
+00:17:33.799 get to the system prompt part so the way
+00:17:36.440 the system prompting works is we'll have
+00:17:38.039 a system message that's telling GPT uh
+00:17:41.120 40 to uh answer using citations and then
+00:17:46.400 we're going to have the user query so
+00:17:48.000 there'll be a system message that gives
+00:17:49.640 the instructions and then the user query
+00:17:51.280 is just short it's just the user query
+00:17:53.039 that I listed up here so let's look in
+00:17:56.200 detail at the system prompt you're a
+00:17:57.840 research assistant use the provided
+00:17:59.880 document Snippets to answer the query so
+00:18:02.240 yeah we're trying to get it to ground
+00:18:03.679 its answers in the query in the
+00:18:05.200 documents format your response with
+00:18:06.960 citations and structured Json format and
+00:18:10.400 yeah not only am I asking it to respond
+00:18:12.640 in Json I'm actually telling it to
+00:18:14.360 respond in these XML tags why is that
+00:18:17.440 it's because it makes it easy for me to
+00:18:19.080 take the answer um find what's within
+00:18:21.600 the XML tags and then grab the Json load
+00:18:24.520 the Json from there and yeah as I kind
+00:18:26.840 of showed earlier there's going to be a
+00:18:28.240 response port portion and then there's
+00:18:29.600 going to be a citation portion now I'm
+00:18:32.200 going one step further than what I
+00:18:33.720 showed earlier I want it to provide a
+00:18:35.799 snippet for the citation but I also want
+00:18:38.039 it to provide information on the
+00:18:39.919 document it's pulling that snippet from
+00:18:42.159 so if now I've only one document here
+00:18:44.520 but if I had multiple I would want to
+00:18:46.200 know from which document and you could
+00:18:47.600 take this further and tell it um which
+00:18:50.200 page um it's getting the information
+00:18:52.440 from provided your input data has
+00:18:54.360 properly tagged with Pages which this
+00:18:56.280 data is not okay so then some rules on
+00:18:59.880 uh citation rules each citation must be
+00:19:02.720 a complete sentence or phrase from the
+00:19:04.200 original text they must be verbatim and
+00:19:06.600 exact do not use ellipses or any
+00:19:08.919 shortening techniques so one thing that
+00:19:11.039 language models will do is when they
+00:19:12.400 site they'll give this dot dot dot this
+00:19:14.760 makes perfect sense that's what we would
+00:19:16.400 do uh as humans when we site as well but
+00:19:19.559 it makes it harder to do matching and
+00:19:21.799 actually I have some programming logic
+00:19:23.480 later on that will detect even if it
+00:19:26.240 doesn't obey this to avoid ellipses I
+00:19:28.919 will split up any site any Snippets in
+00:19:31.320 citations um remove the ellipses and
+00:19:33.600 check the independent pieces um so yeah
+00:19:36.760 you'll see that later don't paraphrase
+00:19:38.679 or modify the text if you need multiple
+00:19:40.679 sent sentences just include them in full
+00:19:43.400 use multiple citations if needed ensure
+00:19:46.400 that it directly supports a part of your
+00:19:48.640 response so you don't want random
+00:19:50.120 citations that aren't related to the
+00:19:52.080 response um if you cannot find relevant
+00:19:54.720 information State this clearly in your
+00:19:56.600 response so yeah if you ask a question
+00:19:58.840 that's related to like the toucan and
+00:20:00.960 this is the great coku Dove then we just
+00:20:04.159 want the language model to respond uh
+00:20:06.919 look that's not into these documents and
+00:20:09.720 then as is often a good idea we provide
+00:20:12.240 and when we say we I mean I provide an
+00:20:14.919 example of uh relevant uh I provide an
+00:20:18.280 example of a correct response so here's
+00:20:19.960 the kind of Json you want it's got a
+00:20:21.919 response it's got citations it's got a
+00:20:24.280 title presumably leer was a document
+00:20:26.400 that I provided with this name uh and
+00:20:28.679 then a snippet and same for the second
+00:20:30.120 one here so actually yeah you can see
+00:20:32.679 here uh this is an array of
+00:20:35.039 citations now I'm going to continue on
+00:20:38.080 my prompt formatting and next I'm
+00:20:40.080 including the actual chunks and I do
+00:20:42.080 this in a very structured way I start
+00:20:43.919 off by saying okay an XML tag that
+00:20:46.159 starts documents now here's the document
+00:20:48.679 title this is important because remember
+00:20:50.919 earlier I asked that the language model
+00:20:53.320 provide the title in uh the citation so
+00:20:56.520 I provide the document title which is
+00:20:58.120 grabbed from from the uh from the file
+00:21:01.240 the chunks file and then I iterate
+00:21:03.200 through the top chunks so there'll be a
+00:21:05.280 maximum of four chunks two times two
+00:21:07.000 could be less if there's similar like if
+00:21:09.120 there's matching chunks in the two
+00:21:10.240 retrieval methods so I'll I'll put in
+00:21:12.600 the chunks and then I'll close off that
+00:21:15.240 document XML
+00:21:17.000 tag
+00:21:18.559 um
+00:21:20.159 and yes I also you can see I'm closing
+00:21:23.880 two XML Tags I'm closing the specific
+00:21:27.039 document name XML tag and then I'm
+00:21:28.880 closing off to say okay that's the end
+00:21:30.520 of the documents and now I've got a few
+00:21:33.279 extra
+00:21:34.320 reminders here this is probably
+00:21:36.799 Overkill um don't modify shorten ensure
+00:21:40.320 it's directly relevant if you can't find
+00:21:42.000 the answer clearly state in your
+00:21:43.720 response and now I'm saying now uh
+00:21:46.880 please answer the given query using the
+00:21:48.440 provided information and these following
+00:21:50.520 guidelines so I'll print out the system
+00:21:52.600 prompt so you can see it when I run the
+00:21:54.000 script and you'll see here it's very
+00:21:56.240 simple the messages that I pass in I
+00:21:58.840 pass in that simple prompt that big long
+00:22:00.720 Yol there and then I pass in the query
+00:22:02.840 which is the short question okay so
+00:22:05.400 that's getting the first response and
+00:22:06.960 maybe we get it on the first shot we get
+00:22:08.480 a nice citation so now we want to check
+00:22:10.720 if the citation is correct and we're
+00:22:12.760 going to use the iterating approach so
+00:22:14.360 that if the citation is not in the
+00:22:16.039 document originally we're going to do a
+00:22:17.840 Max of three uh three round trips hoping
+00:22:21.240 that the llm will improve its
+00:22:23.840 citation so we get the First Response uh
+00:22:27.080 from GPT 40 Mini then we take out the
+00:22:30.559 response from that and we load the Json
+00:22:35.159 so if um we just get a pure Json we load
+00:22:39.039 that Json and we also just print the
+00:22:41.480 attempt number so we know where where
+00:22:43.320 we're going and next we will print out
+00:22:46.279 the citations so we'll grab the citation
+00:22:49.760 um the citation Keir from within the
+00:22:53.080 Json object that was loaded and print
+00:22:54.799 that out and if there's an error well
+00:22:56.760 we'll print the response so I can just
+00:22:58.640 look at it and examine down here so now
+00:23:01.559 we've kind of extracted adjacent and
+00:23:03.320 we've got um we've got the citations
+00:23:06.039 from it presumably unless we hit an
+00:23:07.679 error so the next step is to check those
+00:23:10.960 citations now I'll go through the
+00:23:12.799 citation check function the verify
+00:23:14.480 citations in a second but assuming that
+00:23:16.559 goes well if we pass the citation check
+00:23:18.799 it will print uh check past here's the
+00:23:21.440 query here's the answer and here are the
+00:23:23.960 citations and we'll just print out the
+00:23:26.679 citations now if we fail the citation
+00:23:29.240 check then we're going to add the
+00:23:31.840 assistant we're going to add an
+00:23:33.200 assistant message which contains uh the
+00:23:35.640 response text and this is where we kind
+00:23:38.120 of iterate so that the language model
+00:23:40.240 realizes that it's not citing properly
+00:23:43.039 and we'll help it by saying the
+00:23:44.880 following citations don't match the
+00:23:46.400 provided text uh so please please
+00:23:49.039 correct your
+00:23:50.159 response um so that's the next user
+00:23:53.080 message we put in and that brings us
+00:23:55.279 back to the start of the loop and we'll
+00:23:57.080 do that Loop a maximum of three times
+00:23:59.360 where we again get it to answer the
+00:24:00.880 question hopefully this time with
+00:24:02.480 citations that are contained within we
+00:24:04.320 run a check if it passes the check we're
+00:24:05.960 done if it's not done we'll do one last
+00:24:08.840 uh attempt at getting the language model
+00:24:10.600 decided properly now if it fails all of
+00:24:13.720 the three uh checks we'll say warning
+00:24:16.520 this response is either lacking citation
+00:24:18.520 or the citations cannot be verified in
+00:24:20.480 the background
+00:24:21.600 materials uh yeah so I mean this is the
+00:24:24.360 best we can do but it's still useful
+00:24:25.880 it's definitely a lot better to know
+00:24:27.480 that the citation right wrong than to
+00:24:29.159 just have an answer that is 90% of the
+00:24:31.399 time correct now the last thing I want
+00:24:33.840 to show is that verify citations
+00:24:35.840 function so let's contrl F and read
+00:24:39.880 through this so it takes in two things
+00:24:42.520 it will take in the response dictionary
+00:24:44.520 which contains the citations the
+00:24:45.960 language model provided and it will also
+00:24:48.240 take in the top chunks cuz at the end of
+00:24:50.480 the day we're trying to compare what the
+00:24:52.159 language model things are the citations
+00:24:53.840 with the actual content it was Fed so
+00:24:56.919 first thing we'll do is grab the
+00:24:58.399 itations from the response dictionary if
+00:25:00.440 there are any if there are no citations
+00:25:02.360 then there's nothing to check so we got
+00:25:03.799 to return saying that we haven't passed
+00:25:05.919 the verification test and next we're
+00:25:08.840 going to normalize the chunks so this is
+00:25:10.760 where I was talking about uh small
+00:25:13.000 differences between the language model
+00:25:14.799 citation and the original text if it's
+00:25:16.640 like a space or a full stop that's not a
+00:25:19.000 problem so we don't want to be that
+00:25:20.559 sensitive and that's why the normalized
+00:25:22.679 text helps so we can take a quick look
+00:25:25.120 at normalized text and it just does some
+00:25:27.960 substit institutions around lowercase
+00:25:29.760 punctuation and normalizing the white
+00:25:32.600 space uh so yeah we will normalize both
+00:25:36.320 the query and we'll also normalize uh
+00:25:38.760 the chunks so this is just normalizing
+00:25:40.320 the chunks but you can see down here we
+00:25:42.520 actually normalize uh the citations so
+00:25:46.159 we go through each of the citations
+00:25:47.760 because there could be multiple we get
+00:25:49.679 the snippet which is the citation part
+00:25:52.760 itself and if there's no sighted text we
+00:25:55.720 again have to return saying there's no
+00:25:57.120 verification but if there is sighted
+00:25:59.279 text we normalize that sighted text and
+00:26:02.120 we now uh for every chunk that was
+00:26:04.799 provided as relevant information we
+00:26:07.279 check if the normalized citation is a
+00:26:09.799 substring of the normalized chunk so
+00:26:11.919 we're just checking that the llm
+00:26:14.039 citation is contained and its portion of
+00:26:17.520 at least uh one of the chunks now we do
+00:26:20.440 that on an exact basis and when I say
+00:26:23.159 exact it's actually a bit looser than
+00:26:25.480 exact because we've already normalized
+00:26:27.320 so actually this will pass uh on the
+00:26:30.520 exact match but if it fails that we'll
+00:26:33.960 allow for a bit more fuzziness using uh
+00:26:36.440 the great fuzzy wuzzy Library so we'll
+00:26:38.679 use fuzz. partial ratio and if the
+00:26:40.799 fuzziness is over 90% then uh we're
+00:26:44.720 going to let it pass uh I think that's
+00:26:47.080 still a fairly high threshold just from
+00:26:49.279 empirically testing through it and you
+00:26:51.120 could probably control that if you want
+00:26:53.320 to if there's stuff that's not passing
+00:26:55.000 and you think it should you can lower
+00:26:56.679 the threshold here below 90
+00:26:59.120 so then once uh we do find a match we
+00:27:01.320 append the match and if everything works
+00:27:04.039 well we'll return the matches so all
+00:27:06.799 matches this will return true if we have
+00:27:10.720 uh the citations all verified and we'll
+00:27:12.640 return the citations as well now what
+00:27:15.559 I'm expecting is every every citation
+00:27:17.840 needs to pass the test for it to be
+00:27:19.799 considered a success if every citation
+00:27:21.960 does not pass it's going to go back
+00:27:23.520 around the loop and get the llm to
+00:27:25.480 answer again so yeah you can't just get
+00:27:28.000 like one or two of them right the bar is
+00:27:30.360 high you should and I say you I mean the
+00:27:32.440 llm should be getting all of the
+00:27:33.880 citations right so moving uh back to the
+00:27:37.640 main function here all right second
+00:27:39.960 recap we load the files we retrieve the
+00:27:42.399 relevant chunks we prepared a system
+00:27:44.480 prompt we um make sure that chunks are
+00:27:47.799 included in the prompt and we Define the
+00:27:50.720 messages which contain the system prompt
+00:27:53.080 and then a user message with the query
+00:27:55.600 we do all of this checking we hopefully
+00:27:58.200 exit the loop uh not through the else
+00:28:00.360 Loop where it says we don't have a match
+00:28:02.720 we hopefully um exit the loop uh via a
+00:28:06.440 success and I showed you the success
+00:28:09.159 already it's uh let's see citation check
+00:28:13.480 passed so hopefully we're we're going to
+00:28:15.519 exit here this is where we want the
+00:28:17.159 program to break uh so let's try it out
+00:28:20.360 python app. p and we'll see how the
+00:28:23.159 retrieval works okay so first of all
+00:28:27.480 let's look at what what the prompt
+00:28:29.360 prompt looks like and you can see here
+00:28:32.480 the system prompt I've just printed this
+00:28:34.159 out uh you can see it's uh giving a
+00:28:37.559 sample of how it should respond giving
+00:28:39.760 some rules uh it's giving another
+00:28:42.919 example here uh not another example
+00:28:45.679 because this is the response format and
+00:28:47.159 this is an example of the response
+00:28:48.559 format actually filled out with some
+00:28:49.840 dummy data then we give the relevant
+00:28:52.399 documents you can see there is one chunk
+00:28:54.840 two chunks three chunks so that means
+00:28:57.240 one was overlapping between bm25 and
+00:29:00.080 cosine and then we close off with XML
+00:29:02.840 tags and then we remind of some things
+00:29:05.840 and ask for the answer so that's the
+00:29:07.799 system prompt and when we iterate
+00:29:10.200 through first attempt we get uh this
+00:29:12.840 answer here uh so they begin foraging
+00:29:15.679 after by themselves 35 days after
+00:29:17.480 hatching and we get this citation
+00:29:19.600 printed here and then I just print out
+00:29:21.840 just for illustrative purposes I print
+00:29:23.960 out the normalized chunks so these are
+00:29:25.760 like space punctuation and
+00:29:27.200 capitalization normal ized so we've
+00:29:29.399 normalized first chunk second chunk and
+00:29:31.399 third chunk and yeah I mean it passed on
+00:29:34.240 the first test here the query is when do
+00:29:37.480 The Offspring go off
+00:29:39.519 foraging and the answer here is um by
+00:29:42.960 themselves after 35 days it's necessary
+00:29:45.240 to gain sufficient strength and skills
+00:29:47.559 and the citation is then provided here
+00:29:50.080 and you can see the citation contains a
+00:29:51.840 name the name of the document and also
+00:29:53.760 the snippet that's being cited and if I
+00:29:56.440 just copy this here
+00:29:58.720 um now I'm not printing the normalized
+00:30:00.399 citation so I won't necessarily be able
+00:30:02.519 to match it but it turns out I am
+00:30:04.120 matching it it's just right there within
+00:30:06.240 uh the third chunk so what you can see
+00:30:10.159 here is you get an answer the answer is
+00:30:12.039 correct the answer is correctly cited if
+00:30:14.480 you want to give it some criticism um
+00:30:16.919 you could maybe argue that this second
+00:30:18.799 answer here is not being is not being
+00:30:21.159 cited so that's maybe a weakness and
+00:30:23.360 that weakness uh will persist you can
+00:30:25.679 maybe improve it through prompting or
+00:30:27.279 through a strong model than mini like
+00:30:29.000 use use the but I think the key point is
+00:30:32.039 because we're pushing on citations we're
+00:30:33.919 forcing the model to do at least one
+00:30:35.559 citation so it's least going to be
+00:30:37.240 somewhat grounded and then we're
+00:30:39.039 checking that citation is valid so we
+00:30:41.600 actually have real information that's
+00:30:43.480 like deterministic on whether the
+00:30:46.039 citation is uh valid or if it's invalid
+00:30:49.200 we can provide a warning based on that
+00:30:52.080 so this is the scripts overview uh that
+00:30:54.200 wraps up the scripts overview and next
+00:30:56.159 I'm going to do uh an app demo
+00:30:59.039 this is a demo now of how you can
+00:31:00.799 integrate uh something like the citation
+00:31:02.919 Checker into an app here's something
+00:31:05.240 I've been working on with Rohan Sharma
+00:31:07.880 who has joined uh trellis as an intern
+00:31:11.919 you can check out the internships
+00:31:13.320 program over at tr.com if you're
+00:31:14.960 interested and I've logged in to
+00:31:17.120 endpoints tr.com uh the app is still in
+00:31:20.679 Alpha and the idea is you can upload
+00:31:23.279 some files so here as uh you might
+00:31:25.440 expect I uploaded the touch rugby intern
+00:31:27.960 naal rules and you can upload multiple
+00:31:30.840 files here and then start to query those
+00:31:33.320 uh documents so for example I'm going to
+00:31:36.159 ask um how many
+00:31:38.840 players on a team uh for touch
+00:31:43.880 rugby say on the field at one time and
+00:31:48.480 then I can run test latency is a little
+00:31:50.799 bit low because um we need to improve
+00:31:55.039 how we are setting up the embeddings so
+00:31:56.919 that should be a little bit faster soon
+00:31:58.919 by the way if you do log in you will
+00:32:00.799 have I think a free credit allowing for
+00:32:03.039 tens of um requests so you should be
+00:32:06.320 able to test it out and here's the
+00:32:07.919 result you've got a team must have a
+00:32:09.919 maximum of six players on the field at
+00:32:11.399 any time and it's got this citation uh
+00:32:14.200 which has been verified so yeah the idea
+00:32:17.000 is to give uh a very easy way to upload
+00:32:20.440 documents and then get kind of cited
+00:32:22.519 results from those now here I can show
+00:32:25.679 you um a possibility of using this as an
+00:32:29.240 endpoint so if you're a developer and
+00:32:31.000 you just want to uh not mess around with
+00:32:33.240 setting up and optimizing rag you can
+00:32:35.279 just upload documents and immediately
+00:32:37.200 get uh an open AI I'm going to call it
+00:32:39.760 an open AI style endpoint it uh doesn't
+00:32:42.080 have parameters like temperature yet but
+00:32:44.440 um you can specify say messages um model
+00:32:48.320 Etc and you do need to put in your
+00:32:50.440 authorization token so you'd have to
+00:32:53.000 click view here but if you just copy
+00:32:55.679 paste this and put it into a terminal
+00:32:57.960 you'll be able to get back a response
+00:33:00.320 that will provide uh an object
+00:33:02.000 containing the answer and containing the
+00:33:03.840 citations so the idea here is a oneclick
+00:33:06.600 end point uh for your documents so I
+00:33:10.080 hope that illustrates how you can make
+00:33:11.960 use of this uh citation approach uh this
+00:33:15.360 is in Alpha so appreciate any feedback
+00:33:17.919 on the tool and um let me know any
+00:33:20.600 questions in general about this video on
+00:33:23.360 citations or other ideas you have to
+00:33:25.519 further prove upon the approach all the
+00:33:28.200 best folks
